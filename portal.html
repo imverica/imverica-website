@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — Imverica Legal Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;
+  --bg:#f4f3f0;--border:#dddad4;--white:#fff;--muted:#666;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a1a;}
+
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:68px;}
+.logo{font-family:'DM Sans',sans-serif;font-size:24px;letter-spacing:-0.5px;color:var(--navy);text-decoration:none;}
+.logo .im{font-weight:300;}.logo .verica{font-weight:700;}
+.nav-back{font-size:13px;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:6px;opacity:0.7;transition:opacity 0.2s;}
+.nav-back:hover{opacity:1;}
+
+.portal-header{background:var(--navy-dark);padding:60px 2.5rem;text-align:center;}
+.portal-header h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:#dde5ee;margin-bottom:0.8rem;}
+.portal-header p{font-size:15px;color:#7a95ae;font-weight:300;}
+
+.portal-body{max-width:680px;margin:0 auto;padding:60px 2.5rem;}
+
+.upload-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:2.5rem;margin-bottom:1.5rem;}
+.upload-box h2{font-size:18px;font-weight:500;color:var(--navy-dark);margin-bottom:0.4rem;}
+.upload-box p{font-size:13px;color:var(--muted);margin-bottom:1.8rem;font-weight:300;line-height:1.6;}
+
+.form-group{margin-bottom:1.2rem;}
+.form-group label{display:block;font-size:12px;font-weight:500;letter-spacing:0.5px;color:#555;margin-bottom:0.4rem;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:3px;font-size:14px;font-family:'DM Sans',sans-serif;color:#1a1a1a;background:#fff;outline:none;transition:border 0.2s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--navy);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+.drop-zone{border:2px dashed var(--border);border-radius:4px;padding:2.5rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:1.2rem;}
+.drop-zone:hover{border-color:var(--navy);background:#f0f4f8;}
+.drop-zone.active{border-color:var(--navy);background:#f0f4f8;}
+.drop-icon{font-size:32px;margin-bottom:0.8rem;opacity:0.4;}
+.drop-text{font-size:14px;color:var(--muted);font-weight:300;}
+.drop-text strong{color:var(--navy);font-weight:500;cursor:pointer;}
+.drop-text small{display:block;font-size:12px;color:#bbb;margin-top:4px;}
+#file-input{display:none;}
+#file-list{margin-bottom:1rem;}
+.file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f8f6;border:1px solid var(--border);border-radius:3px;margin-bottom:6px;font-size:13px;}
+.file-item-name{color:#444;font-weight:400;}
+.file-item-remove{color:#aaa;cursor:pointer;font-size:18px;line-height:1;padding:0 4px;transition:color 0.2s;}
+.file-item-remove:hover{color:#c0392b;}
+
+.submit-btn{width:100%;background:var(--navy);color:#fff;border:none;padding:15px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;}
+.submit-btn:hover{background:var(--navy-light);}
+.submit-btn:disabled{background:#aaa;cursor:not-allowed;}
+
+.success-box{display:none;background:#eef7f0;border:1px solid #b0d8bc;border-left:4px solid #2a7a5a;padding:1.4rem 1.8rem;border-radius:0 3px 3px 0;text-align:left;}
+.success-box h3{color:#1a5a3a;font-size:16px;font-weight:500;margin-bottom:0.4rem;}
+.success-box p{color:#4a7a5a;font-size:13px;font-weight:300;line-height:1.6;}
+
+.info-box{background:#eef2f7;border:1px solid #c5d0de;border-left:4px solid var(--navy);padding:1.2rem 1.6rem;border-radius:0 3px 3px 0;margin-bottom:1.5rem;}
+.info-box p{font-size:13px;color:#444;line-height:1.7;}
+.info-box strong{color:var(--navy);}
+
+footer{background:var(--navy-dark);padding:30px 2.5rem;text-align:center;margin-top:4rem;}
+footer p{font-size:12px;color:#3a5060;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/"><span class="im">im</span><span class="verica">verica</span></a>
+  <a class="nav-back" href="/">&#8592; Back to main site</a>
+</nav>
+
+<div class="portal-header">
+  <h1>Client Document Portal</h1>
+  <p>Securely submit your information and documents to Imverica Legal Solutions</p>
+</div>
+
+<div class="portal-body">
+
+  <div class="info-box">
+    <p><strong>How it works:</strong> Fill out the form below and upload your documents. We will review your submission and contact you within 1 business day to discuss next steps and pricing.</p>
+  </div>
+
+  <div class="upload-box">
+    <h2>Your Information</h2>
+    <p>Please provide your contact details and a brief description of what documents you need prepared.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name *</label>
+        <input type="text" id="fname" placeholder="First name" required>
+      </div>
+      <div class="form-group">
+        <label>Last Name *</label>
+        <input type="text" id="lname" placeholder="Last name" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="phone" placeholder="(916) 000-0000" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="your@email.com">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Service Needed *</label>
+      <select id="service" required>
+        <option value="">Select a service...</option>
+        <option>USCIS / EOIR Immigration</option>
+        <option>California Family Law / Divorce</option>
+        <option>Small Claims &amp; Civil Court Forms</option>
+        <option>Document Translation</option>
+        <option>DMV &amp; Passport Help</option>
+        <option>Notary / Apostille</option>
+        <option>Business Filings</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Brief Description</label>
+      <textarea id="description" placeholder="Briefly describe your situation and what you need help with..."></textarea>
+    </div>
+  </div>
+
+  <div class="upload-box">
+    <h2>Upload Documents</h2>
+    <p>Upload any relevant documents (passport, ID, prior notices, court papers, etc.). Accepted formats: PDF, JPG, PNG, DOCX. Max 20MB per file.</p>
+
+    <div class="drop-zone" id="drop-zone">
+      <div class="drop-icon">&#128196;</div>
+      <div class="drop-text">
+        Drag &amp; drop files here, or <strong onclick="document.getElementById('file-input').click()">browse files</strong>
+        <small>PDF, JPG, PNG, DOCX · Max 20MB each</small>
+      </div>
+    </div>
+    <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.docx">
+    <div id="file-list"></div>
+
+    <div id="success-box" class="success-box">
+      <h3>&#10003; Submission received!</h3>
+      <p>Thank you. We have received your information and documents. A member of our team will contact you within 1 business day at the phone number you provided.</p>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">Submit Documents</button>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · (916) 399-3992</p>
+</footer>
+
+<script>
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const fileList = document.getElementById('file-list');
+let selectedFiles = [];
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('active'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('active');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', () => addFiles(Array.from(fileInput.files)));
+
+function addFiles(files) {
+  files.forEach(f => {
+    if (!selectedFiles.find(x => x.name === f.name)) selectedFiles.push(f);
+  });
+  renderFiles();
+}
+
+function removeFile(name) {
+  selectedFiles = selectedFiles.filter(f => f.name !== name);
+  renderFiles();
+}
+
+function renderFiles() {
+  fileList.innerHTML = selectedFiles.map(f => `
+    <div class="file-item">
+      <span class="file-item-name">&#128196; ${f.name} <span style="color:#bbb;font-size:11px;">(${(f.size/1024/1024).toFixed(1)} MB)</span></span>
+      <span class="file-item-remove" onclick="removeFile('${f.name}')">&times;</span>
+    </div>
+  `).join('');
+}
+
+function handleSubmit() {
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const service = document.getElementById('service').value;
+
+  if (!fname || !lname || !phone || !service) {
+    alert('Please fill in all required fields (First Name, Last Name, Phone, Service).');
+    return;
+  }
+
+  // Build Google Form submission URL
+  // INSTRUCTIONS: Replace the URL below with your Google Form prefilled URL
+  // and map the field IDs to your actual Google Form entry IDs
+  const formData = {
+    name: fname + ' ' + lname,
+    phone: phone,
+    email: document.getElementById('email').value,
+    service: service,
+    description: document.getElementById('description').value,
+    files: selectedFiles.map(f => f.name).join(', ')
+  };
+
+  // Show success (in production this would submit to Google Forms/backend)
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  setTimeout(() => {
+    document.getElementById('success-box').style.display = 'block';
+    btn.style.display = 'none';
+    document.getElementById('success-box').scrollIntoView({behavior:'smooth'});
+  }, 1000);
+}
+</script>
+</body>
+</html>

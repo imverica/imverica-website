@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imverica Legal Solutions — Sacramento, CA</title>
+<meta name="description" content="Imverica Legal Solutions — California Licensed Legal Document Assistant (LDA). Immigration forms, USCIS, EOIR, divorce, small claims, unlawful detainer. Serving clients worldwide remotely.">
+<meta name="keywords" content="legal document assistant Sacramento, immigration forms, USCIS help, EOIR documents, divorce forms California, small claims, unlawful detainer, помощь с документами, иммиграционные документы">
+<meta property="og:title" content="Imverica Legal Solutions — Licensed LDA Sacramento CA">
+<meta property="og:description" content="Professional legal document preparation — immigration, family law, civil courts. Serving clients worldwide remotely.">
+<meta property="og:url" content="https://imverica.com">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;
+  --bg:#f4f3f0;--text:#1a1a1a;--muted:#666;--border:#dddad4;--white:#fff;
+  --col-imm:#1a4fa0;--col-fam:#6b3a8a;--col-civ:#8a3a3a;
+  --col-tra:#2a7a5a;--col-dmv:#7a5a1a;--col-biz:#2a5a6a;
+  --col-about:#4a5a2a;--col-portal:#c0392b;--col-ud:#7a3a5a;--col-bus:#2a5a3a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
+
+/* NAV */
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:100;}
+.logo-img{height:54px;width:auto;display:block;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links a{font-size:13px;font-weight:400;color:#444;text-decoration:none;padding:7px 11px;border-radius:3px;transition:background 0.18s,color 0.18s;display:block;white-space:nowrap;}
+.nav-links a[data-cat="imm"]:hover{background:var(--col-imm);color:#fff;}
+.nav-links a[data-cat="fam"]:hover{background:var(--col-fam);color:#fff;}
+.nav-links a[data-cat="civ"]:hover{background:var(--col-civ);color:#fff;}
+.nav-links a[data-cat="tra"]:hover{background:var(--col-tra);color:#fff;}
+.nav-links a[data-cat="about"]:hover{background:var(--col-about);color:#fff;}
+.nav-sep{width:1px;height:28px;background:var(--border);margin:0 10px;flex-shrink:0;}
+.nav-links a[data-cat="portal"]:hover{background:var(--col-portal);color:#fff;}
+.nav-cta{background:var(--navy);color:#fff;border:none;padding:10px 20px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;text-decoration:none;white-space:nowrap;margin-left:12px;}
+.nav-cta:hover{background:var(--navy-light);}
+
+/* BURGER */
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
+.burger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all 0.3s;}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);z-index:99;padding:1rem 0;}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:12px 2rem;font-size:14px;color:#444;text-decoration:none;border-left:3px solid transparent;transition:all 0.2s;}
+.mobile-menu a[data-cat="imm"]:hover{background:#f0f4ff;border-left-color:var(--col-imm);color:var(--col-imm);}
+.mobile-menu a[data-cat="fam"]:hover{background:#f5f0ff;border-left-color:var(--col-fam);color:var(--col-fam);}
+.mobile-menu a[data-cat="civ"]:hover{background:#fff0f0;border-left-color:var(--col-civ);color:var(--col-civ);}
+.mobile-menu a[data-cat="tra"]:hover{background:#f0fff5;border-left-color:var(--col-tra);color:var(--col-tra);}
+.mobile-menu a[data-cat="about"]:hover{background:#f5fff0;border-left-color:var(--col-about);color:var(--col-about);}
+.mobile-menu a[data-cat="portal"]{color:var(--col-portal);font-weight:500;}
+.mobile-menu-sep{height:1px;background:var(--border);margin:0.5rem 2rem;}
+.mobile-cta{display:block;margin:1rem 2rem;background:var(--navy);color:#fff!important;text-align:center;padding:12px!important;border-radius:3px;font-weight:500!important;border-left:none!important;}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none;}
+  .burger{display:flex;}
+}
+
+/* HERO */
+.hero-wrap{background:#fff;border-bottom:1px solid var(--border);}
+.hero{padding:70px 2.5rem 60px;display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:1100px;margin:0 auto;align-items:center;}
+@media(max-width:768px){.hero{grid-template-columns:1fr;gap:2rem;padding:40px 1.5rem;}}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;opacity:0.65;}
+.hero h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:500;line-height:1.15;color:var(--navy-dark);margin-bottom:1.2rem;}
+@media(max-width:768px){.hero h1{font-size:30px;}}
+.hero-sub{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:1.8rem;font-weight:300;}
+.hero-phone{display:inline-flex;align-items:center;gap:8px;margin-bottom:1.4rem;font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);text-decoration:none;font-weight:500;}
+.hero-phone:hover{opacity:0.8;}
+.hero-actions{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.btn-primary{background:var(--navy);color:#fff;padding:13px 28px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;border:none;cursor:pointer;border-radius:3px;text-decoration:none;display:inline-block;transition:background 0.2s;}
+.btn-primary:hover{background:var(--navy-light);}
+.btn-ghost{font-size:14px;color:#555;text-decoration:none;border-bottom:1px solid #bbb;padding-bottom:2px;}
+.hero-note{font-size:11px;color:#bbb;margin-top:1rem;line-height:1.6;}
+
+.hero-card{background:var(--bg);border:1px solid var(--border);padding:1.8rem;border-radius:4px;}
+.hero-card-label{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:1.2rem;}
+.service-tag{display:inline-block;font-size:12px;background:#fff;border:1px solid var(--border);color:#444;padding:6px 11px;margin:3px 3px 3px 0;font-weight:400;border-radius:2px;cursor:pointer;text-decoration:none;transition:background 0.18s,color 0.18s,border-color 0.18s;}
+.service-tag.t-imm:hover,.service-tag.t-imm.active{background:var(--col-imm);color:#fff;border-color:var(--col-imm);}
+.service-tag.t-fam:hover{background:var(--col-fam);color:#fff;border-color:var(--col-fam);}
+.service-tag.t-civ:hover{background:var(--col-civ);color:#fff;border-color:var(--col-civ);}
+.service-tag.t-tra:hover{background:var(--col-tra);color:#fff;border-color:var(--col-tra);}
+.service-tag.t-other:hover{background:var(--col-biz);color:#fff;border-color:var(--col-biz);}
+.reviews-wrap{border-top:1px solid var(--border);padding-top:1.2rem;margin-top:1.2rem;}
+.reviews-label{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:0.9rem;}
+.review-item{margin-bottom:0.9rem;padding-bottom:0.9rem;border-bottom:1px solid var(--border);}
+.review-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.review-stars{color:#c8a84b;font-size:12px;letter-spacing:1px;margin-bottom:3px;}
+.review-text{font-size:12px;color:#666;line-height:1.5;font-weight:300;}
+.review-author{font-size:11px;color:#aaa;margin-top:3px;}
+
+.trust-bar{background:var(--navy-dark);padding:13px 2rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:8px;color:#99b0c8;font-size:13px;}
+.trust-dot{width:5px;height:5px;background:#4a7aaa;flex-shrink:0;border-radius:50%;}
+
+.section{max-width:1100px;margin:0 auto;padding:80px 2.5rem;}
+.section-label{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:0.6rem;opacity:0.6;}
+.section-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--navy-dark);margin-bottom:0.5rem;}
+.section-sub{font-size:15px;color:var(--muted);font-weight:300;margin-bottom:3rem;}
+
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+@media(max-width:768px){.services-grid{grid-template-columns:1fr;}}
+.service-card{background:#fff;padding:2rem;transition:background 0.2s;cursor:pointer;text-decoration:none;display:block;color:inherit;}
+.service-card.sc-imm:hover{background:var(--col-imm);}
+.service-card.sc-fam:hover{background:var(--col-fam);}
+.service-card.sc-civ:hover{background:var(--col-civ);}
+.service-card.sc-tra:hover{background:var(--col-tra);}
+.service-card.sc-dmv:hover{background:var(--col-dmv);}
+.service-card.sc-biz:hover{background:var(--col-biz);}
+.service-card:hover .service-num,.service-card:hover .service-title,.service-card:hover .service-desc,.service-card:hover .service-note{color:#fff!important;opacity:1;}
+.service-num{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;transition:color 0.2s;}
+.c-imm{color:var(--col-imm);}.c-fam{color:var(--col-fam);}.c-civ{color:var(--col-civ);}
+.c-tra{color:var(--col-tra);}.c-dmv{color:var(--col-dmv);}.c-biz{color:var(--col-biz);}
+.service-title{font-size:16px;font-weight:500;color:var(--navy-dark);margin-bottom:0.5rem;transition:color 0.2s;}
+.service-desc{font-size:13px;color:#888;line-height:1.65;font-weight:300;transition:color 0.2s;}
+.service-note{font-size:11px;color:#bbb;margin-top:0.6rem;font-style:italic;transition:color 0.2s;}
+
+.why-section{background:#1e2835;padding:80px 2.5rem;}
+.why-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+@media(max-width:768px){.why-inner{grid-template-columns:1fr;gap:3rem;}}
+.why-label{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#4a7aaa;margin-bottom:0.6rem;}
+.why-title{font-family:'Playfair Display',serif;font-size:34px;font-weight:400;color:#dde5ee;margin-bottom:1rem;}
+.why-sub{font-size:15px;color:#7a95ae;font-weight:300;line-height:1.7;}
+.why-list{margin-top:2.5rem;list-style:none;}
+.why-list li{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem 0;border-bottom:1px solid #2a3a4a;color:#99b0c5;font-size:14px;font-weight:300;line-height:1.65;}
+.why-list li:last-child{border-bottom:none;}
+.why-num{font-family:'Playfair Display',serif;font-size:26px;color:#2e4460;font-weight:400;line-height:1;min-width:30px;}
+.credential-box{border:1px solid #2a3a4a;padding:1.5rem;margin-bottom:0.8rem;border-radius:3px;}
+.credential-box-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#4a6a88;margin-bottom:0.6rem;}
+.credential-box-val{font-size:14px;color:#99b0c5;font-weight:300;line-height:1.8;}
+.credential-box-val strong{font-weight:500;color:#ccd8e5;}
+.news-header{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#4a6a88;margin-bottom:1.2rem;}
+.news-item{border:1px solid #2a3a4a;border-radius:3px;padding:1.2rem 1.4rem;margin-bottom:0.8rem;transition:border-color 0.2s;}
+.news-item:hover{border-color:#4a7aaa;}
+.news-date{font-size:11px;color:#4a6a88;margin-bottom:0.4rem;}
+.news-title{font-size:14px;color:#ccd8e5;font-weight:500;margin-bottom:0.3rem;line-height:1.4;}
+.news-body{font-size:13px;color:#7a95ae;font-weight:300;line-height:1.6;}
+
+.disclaimer-wrap{background:var(--bg);padding:2rem 2.5rem 0;}
+/* ── DETAIL PANELS ── */
+.detail-panel{display:none;background:#fff;border-top:3px solid var(--navy);}
+.detail-panel.open{display:block;}
+.dp-head{padding:28px 2.5rem;display:flex;justify-content:space-between;align-items:center;}
+.dp-head-inner{max-width:1100px;width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.dp-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:#fff;}
+.dp-sub{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:6px;}
+.dp-close{background:none;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);padding:7px 16px;font-size:12px;cursor:pointer;border-radius:3px;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s;}
+.dp-close:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.dp-body{max-width:1100px;margin:0 auto;padding:32px 2.5rem 48px;}
+.dp-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:2px solid var(--border);}
+.dp-tab{padding:10px 20px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:#888;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;}
+.dp-tab.on{color:var(--navy);border-bottom-color:var(--navy);}
+.dp-pane{display:none;}
+.dp-pane.on{display:block;}
+.dp-note{font-size:13px;color:#888;line-height:1.7;margin-bottom:1.5rem;padding:12px 16px;background:#f8f8f6;border-left:3px solid var(--border);}
+.dp-note.warn{border-left-color:#c0392b;color:#7a2020;}
+.dp-sub-title{font-size:13px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--navy);margin:1.8rem 0 0.8rem;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.forms-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:0.5rem;}
+@media(max-width:700px){.forms-grid{grid-template-columns:1fr;}}
+.fi{background:#fff;padding:14px 16px;}
+.fi-code{font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--navy);margin-bottom:3px;text-transform:uppercase;}
+.fi-name{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:4px;}
+.fi-desc{font-size:12px;color:#888;line-height:1.55;font-weight:300;}
+.fi-atty{font-size:11px;color:#c0392b;margin-top:4px;font-style:italic;}
+.fi-ref{font-size:10px;color:#bbb;margin-top:3px;}
+.fi.atty-req{border-left:3px solid #c0392b;}
+.fi-code.red{color:#c0392b;}
+
+.disclaimer{background:#eef2f7;border:1px solid #c5d0de;border-left:4px solid var(--navy);padding:1.4rem 1.8rem;max-width:1100px;margin:0 auto;border-radius:0 3px 3px 0;}
+.disclaimer p{font-size:13px;color:#333;line-height:1.75;}
+.disclaimer strong{color:var(--navy);font-weight:600;}
+
+.cta-section{background:#fff;padding:80px 2.5rem;text-align:center;border-top:1px solid var(--border);}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:var(--navy-dark);margin-bottom:1rem;}
+@media(max-width:768px){.cta-section h2{font-size:28px;}}
+.cta-section p{font-size:16px;color:var(--muted);margin-bottom:2.5rem;font-weight:300;max-width:540px;margin-left:auto;margin-right:auto;}
+.contact-row{display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.contact-btn{display:flex;align-items:center;gap:10px;padding:14px 24px;border-radius:3px;text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.contact-btn.call{background:var(--navy);color:#fff;}
+.contact-btn.call:hover{background:var(--navy-light);}
+.contact-btn.sms{background:var(--bg);color:var(--navy);border:1px solid var(--border);}
+.contact-btn.sms:hover{background:#e5e8ee;}
+.social-row{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.social-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:3px;text-decoration:none;font-size:13px;font-weight:400;border:1px solid var(--border);color:#444;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.social-btn:hover{border-color:var(--navy);color:var(--navy);background:#f0f4f8;}
+
+footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2.5rem;}
+.footer-info{font-size:12px;color:#4a6070;line-height:1.9;}
+.footer-info strong{color:#7a9ab0;font-weight:500;}
+.footer-info a{color:#4a6070;text-decoration:none;}
+.footer-info a:hover{color:#7a9ab0;}
+.footer-bottom{max-width:1100px;margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid #1e2e3e;font-size:11px;color:#2e4455;line-height:1.7;}
+
+/* CHATBOT */
+.chat-bubble{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1000;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.2s;}
+.chat-bubble:hover{transform:scale(1.08);}
+.chat-bubble svg{width:24px;height:24px;color:#fff;}
+
+.chat-window{position:fixed;bottom:88px;right:24px;width:360px;max-height:560px;background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.18);z-index:999;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--border);}
+.chat-window.open{display:flex;}
+@media(max-width:420px){.chat-window{width:calc(100vw - 48px);right:24px;}}
+
+.chat-header{background:var(--navy);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.chat-header-title{color:#fff;font-size:14px;font-weight:500;}
+.chat-header-sub{color:#99b0c8;font-size:11px;margin-top:2px;}
+.chat-close{background:none;border:none;color:#99b0c8;cursor:pointer;font-size:20px;line-height:1;padding:0 4px;}
+.chat-close:hover{color:#fff;}
+
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.chat-msg{max-width:85%;padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.55;}
+.chat-msg.bot{background:#f0f4f8;color:#1a1a1a;align-self:flex-start;border-bottom-left-radius:3px;}
+.chat-msg.user{background:var(--navy);color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
+
+.chat-options{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px;}
+.chat-opt{background:#fff;border:1px solid var(--border);color:var(--navy);padding:7px 12px;border-radius:20px;font-size:12px;cursor:pointer;transition:all 0.18s;font-family:'DM Sans',sans-serif;font-weight:400;}
+.chat-opt:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+.chat-terms{padding:14px 16px;border-top:1px solid var(--border);background:#f8f8f6;}
+.chat-terms p{font-size:11px;color:#888;line-height:1.6;margin-bottom:8px;}
+.chat-terms-check{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
+.chat-terms-check input{margin-top:2px;cursor:pointer;width:14px;height:14px;}
+.chat-terms-check label{font-size:11px;color:#555;line-height:1.5;cursor:pointer;}
+.chat-terms-check a{color:var(--navy);text-decoration:underline;}
+.chat-start-btn{width:100%;background:var(--navy);color:#fff;border:none;padding:10px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 0.2s;}
+.chat-start-btn:hover{background:var(--navy-light);}
+.chat-start-btn:disabled{background:#ccc;cursor:not-allowed;}
+
+.chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);}
+.chat-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border 0.2s;}
+.chat-input:focus{border-color:var(--navy);}
+.chat-send{background:var(--navy);color:#fff;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s;}
+.chat-send:hover{background:var(--navy-light);}
+.chat-typing{align-self:flex-start;background:#f0f4f8;border-radius:10px;border-bottom-left-radius:3px;padding:10px 14px;font-size:13px;color:#888;}
+
+/* ── VISUAL TILES ── */
+.vt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem;}
+@media(max-width:900px){.vt-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.vt-grid{grid-template-columns:1fr;}}
+
+.vt{position:relative;border-radius:6px;overflow:hidden;cursor:pointer;min-height:130px;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;border:1px solid rgba(255,255,255,0.1);transition:transform 0.2s,box-shadow 0.2s;}
+.vt:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.25);}
+
+.vt-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.3s;}
+.vt-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(10,20,40,0.55) 0%,rgba(10,20,40,0.82) 100%);transition:background 0.3s;}
+.vt:hover .vt-overlay{background:linear-gradient(160deg,rgba(10,20,40,0.3) 0%,rgba(10,20,40,0.7) 100%);}
+
+.vt-content{position:relative;z-index:1;}
+.vt-icon{font-size:22px;margin-bottom:6px;display:block;}
+.vt-code{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:3px;}
+.vt-name{font-size:13px;font-weight:600;color:#fff;line-height:1.3;}
+.vt-hint{font-size:11px;color:rgba(255,255,255,0.55);margin-top:3px;font-weight:300;}
+.vt-atty{font-size:10px;color:#ff9a9a;margin-top:4px;}
+
+/* Detail card (shown when tile clicked) */
+.vt-detail{display:none;background:#f8f8f6;border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:1rem;}
+.vt-detail.open{display:block;}
+.vt-detail-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;}
+.vt-detail-title{font-size:16px;font-weight:600;color:var(--navy-dark);}
+.vt-detail-close{background:none;border:none;font-size:18px;cursor:pointer;color:#aaa;padding:0;}
+.vt-detail-close:hover{color:#333;}
+.vt-detail-body{font-size:13px;color:#555;line-height:1.75;}
+.vt-detail-ref{font-size:11px;color:#aaa;margin-top:8px;}
+.vt-detail-atty{font-size:12px;color:#c0392b;margin-top:8px;padding:8px 12px;background:#fff5f5;border-left:3px solid #c0392b;border-radius:0 3px 3px 0;}
+
+/* Request form at bottom of each panel */
+.req-form{background:var(--navy-dark);padding:2rem 2.5rem;margin-top:2rem;}
+.req-form-title{font-family:'Playfair Display',serif;font-size:20px;color:#dde5ee;margin-bottom:0.4rem;}
+.req-form-sub{font-size:13px;color:#7a95ae;margin-bottom:1.4rem;font-weight:300;}
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+@media(max-width:600px){.req-grid{grid-template-columns:1fr;}}
+.req-field{display:flex;flex-direction:column;gap:4px;}
+.req-field label{font-size:11px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;color:#7a95ae;}
+.req-field input,.req-field textarea,.req-field select{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:3px;padding:10px 12px;font-size:13px;font-family:'DM Sans',sans-serif;color:#fff;outline:none;transition:border 0.2s;}
+.req-field input:focus,.req-field textarea:focus,.req-field select:focus{border-color:rgba(255,255,255,0.4);}
+.req-field input::placeholder,.req-field textarea::placeholder{color:rgba(255,255,255,0.3);}
+.req-field textarea{resize:vertical;min-height:70px;}
+.req-field-full{grid-column:1/-1;}
+.req-btn{margin-top:1rem;background:#fff;color:var(--navy-dark);border:none;padding:12px 28px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;border-radius:3px;transition:background 0.2s;}
+.req-btn:hover{background:#e8eef5;}
+.req-btn:disabled{background:#aaa;cursor:not-allowed;}
+.req-success{display:none;background:rgba(42,122,90,0.2);border:1px solid rgba(42,122,90,0.4);border-radius:3px;padding:12px 16px;color:#7adbb0;font-size:13px;margin-top:1rem;}
+
+</style>
+</head>
+<body>
+
+<!-- Hidden Netlify Forms -->
+<form name="appointment" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name">
+  <input type="text" name="phone">
+  <input type="email" name="email">
+  <input type="text" name="time">
+  <input type="text" name="service">
+</form>
+
+<!-- NAV -->
+<nav>
+  <a href="/"><img class="logo-img" src="logo.png" alt="Imverica Legal Solutions"></a>
+  <ul class="nav-links">
+    <li><a href="#imm" data-cat="imm" onclick="openDetail('imm');return false;">USCIS | EOIR</a></li>
+    <li><a href="#fam" data-cat="fam" onclick="openDetail('fam');return false;">Family Law</a></li>
+    <li><a href="#civ" data-cat="civ" onclick="openDetail('civ');return false;">Small Claims &amp; Civil</a></li>
+    <li><a href="#biz" data-cat="about" onclick="openDetail('biz');return false;">Business</a></li>
+    <li><a href="#about" data-cat="about">About Us</a></li>
+    <li class="nav-sep"></li>
+    <li><a href="portal.html" data-cat="portal">Client Portal</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Get a Quote</a>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#imm" data-cat="imm" onclick="openDetail('imm')">USCIS | EOIR Immigration</a>
+  <a href="#fam" data-cat="fam" onclick="openDetail('fam')">Family Law</a>
+  <a href="#civ" data-cat="civ" onclick="openDetail('civ')">Small Claims &amp; Civil</a>
+  <a href="#biz" data-cat="about" onclick="openDetail('biz')">Business</a>
+  <a href="#about" data-cat="about">About Us</a>
+  <div class="mobile-menu-sep"></div>
+  <a href="portal.html" data-cat="portal">Client Portal</a>
+  <a href="#contact" class="mobile-cta">Book Appointment</a>
+</div>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Sacramento, California · Licensed LDA</div>
+      <h1>Professional Legal Document Preparation — Done With Precision.</h1>
+      <p class="hero-sub">Immigration petitions, family law forms, civil court documents — prepared accurately and on time, at your direction. We serve clients in Sacramento and worldwide remotely by phone, email, and Telegram.</p>
+      <a class="hero-phone" href="tel:9163993992">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (916) 399-3992
+      </a>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#contact">Get a Quote</a>
+        <a class="btn-ghost" href="#services">See all services</a>
+      </div>
+      <p class="hero-note">Imverica Legal Solutions is a registered Legal Document Assistant (LDA) in the State of California. We are not a law firm and do not provide legal advice.</p>
+    </div>
+    <div>
+      <div class="hero-card">
+        <div class="hero-card-label">Popular Services</div>
+        <a class="service-tag t-imm active" href="#imm">USCIS Immigration</a>
+        <a class="service-tag t-imm" href="#imm">EOIR | Asylum</a>
+        <a class="service-tag t-imm" href="#imm">U Visa</a>
+        <a class="service-tag t-imm" href="#imm">Green Card</a>
+        <a class="service-tag t-fam" href="#fam">Divorce Forms</a>
+        <a class="service-tag t-civ" href="#civ">Small Claims</a>
+        <a class="service-tag t-other" href="#other">Notary</a>
+        <a class="service-tag t-tra" href="#tra">Translations</a>
+        <div class="reviews-wrap">
+          <div class="reviews-label">What our clients say</div>
+          <div class="review-item">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">They handled my green card application paperwork flawlessly. Saved me thousands compared to hiring an attorney.</div>
+            <div class="review-author">— A. Morozov, Sacramento</div>
+          </div>
+          <div class="review-item">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">Fast, professional, and affordable. My divorce forms were ready in two days. Highly recommend.</div>
+            <div class="review-author">— N. Petrenko, Citrus Heights</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-bar">
+  <div class="trust-item"><div class="trust-dot"></div>Licensed LDA in California</div>
+  <div class="trust-item"><div class="trust-dot"></div>Multilingual Staff</div>
+  <div class="trust-item"><div class="trust-dot"></div>Serving Clients Worldwide</div>
+  <div class="trust-item"><div class="trust-dot"></div>Flat-fee pricing</div>
+  <div class="trust-item"><div class="trust-dot"></div>(916) 399-3992</div>
+</div>
+
+<div id="services" class="section">
+  <div class="section-label">What we do</div>
+  <div class="section-title">Our Services</div>
+  <p class="section-sub">We handle the paperwork — accurately, on time, and without surprises.</p>
+  <div class="services-grid">
+    <a id="imm" class="service-card sc-imm" href="#services-detail">
+      <div class="service-num c-imm">01 — USCIS | EOIR Immigration</div>
+      <div class="service-title">Immigration Forms &amp; Petitions</div>
+      <div class="service-desc">U4U, TPS, asylum, adjustment of status, U visa, green card, work permits, removal defense documents, visas, and more. Serving clients worldwide remotely.</div>
+    </a>
+    <a id="fam" class="service-card sc-fam" href="#services-detail">
+      <div class="service-num c-fam">02 — California Family Law</div>
+      <div class="service-title">Divorce &amp; Family Forms</div>
+      <div class="service-desc">Dissolution of marriage, summary dissolution, legal separation, child custody, and child support forms. Per California Family Code §2320 et seq.</div>
+      <div class="service-note">California residents only.</div>
+    </a>
+    <a id="civ" class="service-card sc-civ" href="#services-detail">
+      <div class="service-num c-civ">03 — Small Claims &amp; Civil</div>
+      <div class="service-title">California Court Forms</div>
+      <div class="service-desc">Small claims document preparation (current CA limit: $12,500 for individuals per CCP §116.220) and Superior Court civil court forms.</div>
+      <div class="service-note">California residents only.</div>
+    </a>
+    <a id="ud" class="service-card" style="background:#fff;transition:background 0.2s;" onmouseover="this.style.background='var(--col-ud)';this.querySelectorAll('.service-num,.service-title,.service-desc,.service-note').forEach(e=>e.style.color='#fff')" onmouseout="this.style.background='#fff';this.querySelectorAll('.service-num,.service-title,.service-desc,.service-note').forEach(e=>e.style.color='')" href="#services-detail">
+      <div class="service-num" style="color:var(--col-ud);">04 — Unlawful Detainer</div>
+      <div class="service-title">Landlord &amp; Tenant Documents</div>
+      <div class="service-desc">UD document preparation for landlords and tenants. Responses, complaints, and related California court forms. Per CCP §1161 et seq.</div>
+      <div class="service-note">California residents only.</div>
+    </a>
+    <a id="tra" class="service-card sc-tra" href="#services-detail">
+      <div class="service-num c-tra">05 — Translations</div>
+      <div class="service-title">Document Translation</div>
+      <div class="service-desc">We are currently expanding our certified translation department. Contact us to discuss your translation needs — we will do our best to assist.</div>
+      <div class="service-note">Coming soon.</div>
+    </a>
+    <a id="other" class="service-card" style="background:#fff;transition:background 0.2s;" onmouseover="this.style.background='var(--col-bus)';this.querySelectorAll('.service-num,.service-title,.service-desc,.service-note').forEach(e=>e.style.color='#fff')" onmouseout="this.style.background='#fff';this.querySelectorAll('.service-num,.service-title,.service-desc,.service-note').forEach(e=>e.style.color='')" href="#services-detail">
+      <div class="service-num" style="color:var(--col-bus);">06 — Business Filings</div>
+      <div class="service-title">Business &amp; Entity Formation</div>
+      <div class="service-desc">LLC formation, DBA registration, EIN/SS-4 application, and Operating Agreements. Power of Attorney, Notary, and Apostille services coming soon.</div>
+    </a>
+  </div>
+</div>
+
+<div id="about" class="why-section">
+  <div class="why-inner">
+    <div>
+      <div class="why-label">Why Imverica</div>
+      <div class="why-title">Experience. Accuracy. Real savings.</div>
+      <p class="why-sub">We are a small, dedicated team that genuinely loves helping people navigate the document preparation process. Our staff includes a California Licensed Legal Document Assistant (LDA), a California Registered Immigration Consultant, and bonded professionals — not attorneys, but experienced document specialists who know exactly what agencies and courts require.</p>
+      <ul class="why-list">
+        <li><span class="why-num">01</span><span>California Licensed Legal Document Assistant (LDA) registered under Bus. &amp; Prof. Code §6400, bonded and registered with the county clerk.</span></li>
+        <li><span class="why-num">02</span><span>Clients who file pro se (self-represented) save thousands in attorney fees — we make that possible with accurate, complete document packages.</span></li>
+        <li><span class="why-num">03</span><span>Multilingual staff who understand the immigrant experience firsthand. We serve clients in Sacramento and worldwide remotely.</span></li>
+        <li><span class="why-num">04</span><span>Flat, upfront pricing. No hidden charges. For matters requiring a licensed attorney, we can provide referrals from our professional network.</span></li>
+      </ul>
+      <div class="credential-box" style="margin-top:2rem;">
+        <div class="credential-box-label">Our Office</div>
+        <div class="credential-box-val"><strong>Imverica Legal Solutions</strong><br>Sacramento, California<br>(916) 399-3992</div>
+      </div>
+      <div class="credential-box">
+        <div class="credential-box-label">Registration</div>
+        <div class="credential-box-val"><strong>California Licensed LDA</strong><br>Legal Document Assistant registered under Business &amp; Professions Code §6400.</div>
+      </div>
+    </div>
+    <div>
+      <div class="news-header">Latest Updates</div>
+      <div class="news-item">
+        <div class="news-date">April 10, 2026</div>
+        <div class="news-title">Welcome to our new website!</div>
+        <div class="news-body">We launched imverica.com. Submit your documents and contact us directly through the Client Portal.</div>
+      </div>
+      <div class="news-item">
+        <div class="news-date">March 2026</div>
+        <div class="news-title">New: Summary Dissolution packages</div>
+        <div class="news-body">We now prepare summary dissolution packages for eligible California couples — a faster, simpler alternative to standard divorce proceedings.</div>
+      </div>
+      <div class="news-item">
+        <div class="news-date">February 2026</div>
+        <div class="news-title">USCIS fee updates in effect</div>
+        <div class="news-body">New USCIS filing fees are now in effect. Contact us to confirm current fees before submitting any immigration application.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ USCIS | EOIR PANEL ═══════════════ -->
+<div id="dp-imm" class="detail-panel">
+  <div class="dp-head" style="background:var(--navy-dark);">
+    <div class="dp-head-inner">
+      <div><div class="dp-sub">Immigration Services</div><div class="dp-title">USCIS | EOIR | Visas</div></div>
+      <button class="dp-close" onclick="closeDetail('imm')">✕ Close</button>
+    </div>
+  </div>
+  <div class="dp-body">
+    <div class="dp-tabs">
+      <button class="dp-tab on" onclick="switchPane(this,'pane-uscis')">USCIS Forms</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-eoir')">EOIR / Court</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-visas')">Visas</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-eb')">EB Categories</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-nvc')">Consular / NVC</button>
+    </div>
+
+    <!-- ── USCIS PANE ── -->
+    <div id="pane-uscis" class="dp-pane on">
+      <div class="dp-sub-title">Priority — Humanitarian &amp; Status</div>
+      <div class="vt-grid">
+        <div class="vt" onclick="toggleVT('vt-u4u')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1592853598064-3bba3c3f3b86?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🇺🇦</span><div class="vt-code">U4U</div><div class="vt-name">Uniting for Ukraine</div><div class="vt-hint">Parole program</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-tps')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🌍</span><div class="vt-code">I-821</div><div class="vt-name">TPS</div><div class="vt-hint">Temporary Protected Status</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-asylum')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🏜️</span><div class="vt-code">I-589</div><div class="vt-name">Asylum</div><div class="vt-hint">Withholding of removal</div><div class="vt-atty">⚠ Attorney recommended</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i485')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1606788075761-e2d49f9ec187?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">💚</span><div class="vt-code">I-485</div><div class="vt-name">Adjustment of Status</div><div class="vt-hint">Green Card in the U.S.</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i765')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">💼</span><div class="vt-code">I-765</div><div class="vt-name">Work Permit / EAD</div><div class="vt-hint">Employment Authorization</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-n400')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🇺🇸</span><div class="vt-code">N-400</div><div class="vt-name">Naturalization</div><div class="vt-hint">Become a U.S. Citizen</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-n600')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">📋</span><div class="vt-code">N-600</div><div class="vt-name">Certificate of Citizenship</div><div class="vt-hint">Derived/acquired citizenship</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-uvisa')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🛡️</span><div class="vt-code">I-918</div><div class="vt-name">U Visa</div><div class="vt-hint">Crime victims</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-vawa')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🤝</span><div class="vt-code">VAWA</div><div class="vt-name">VAWA Self-Petition</div><div class="vt-hint">Abuse survivors</div></div>
+        </div>
+      </div>
+
+      <!-- VT Details -->
+      <div id="vt-u4u" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">🇺🇦 U4U — Uniting for Ukraine</div><button class="vt-detail-close" onclick="toggleVT('vt-u4u')">✕</button></div>
+        <div class="vt-detail-body">The Uniting for Ukraine (U4U) program allows Ukrainian nationals and their immediate family members to request parole to come to the United States. We prepare the sponsorship declaration and supporting documents for U.S.-based sponsors. The parolee must have been in Ukraine on or after February 11, 2022.</div>
+        <div class="vt-detail-ref">Per INA §212(d)(5) · USCIS Policy Manual Vol. 3</div>
+      </div>
+      <div id="vt-tps" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">🌍 TPS — Temporary Protected Status (I-821)</div><button class="vt-detail-close" onclick="toggleVT('vt-tps')">✕</button></div>
+        <div class="vt-detail-body">TPS provides temporary protection from deportation to nationals of designated countries experiencing ongoing armed conflict, environmental disasters, or other extraordinary conditions. We prepare I-821 (TPS application) and I-765 (work permit) together as a package. TPS does not lead directly to permanent residence but allows authorized stay and work.</div>
+        <div class="vt-detail-ref">Per INA §244 · 8 CFR §244</div>
+      </div>
+      <div id="vt-asylum" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">🏜️ Asylum — I-589</div><button class="vt-detail-close" onclick="toggleVT('vt-asylum')">✕</button></div>
+        <div class="vt-detail-body">Asylum protects individuals who have suffered persecution or have a well-founded fear of persecution based on race, religion, nationality, political opinion, or membership in a particular social group. Must be filed within 1 year of arrival. We prepare the I-589 form and supporting documentation at the client's direction.</div>
+        <div class="vt-detail-atty">⚠ Attorney consultation strongly recommended for asylum cases. Complex legal standards apply. We can provide referrals from our professional network.</div>
+        <div class="vt-detail-ref">Per INA §208 · 8 CFR §208</div>
+      </div>
+      <div id="vt-i485" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">💚 I-485 — Adjustment of Status</div><button class="vt-detail-close" onclick="toggleVT('vt-i485')">✕</button></div>
+        <div class="vt-detail-body">I-485 allows eligible individuals already in the U.S. to apply for lawful permanent residence (green card) without leaving the country. We prepare the complete I-485 package including I-864 (Affidavit of Support), I-765 (EAD), I-131 (Advance Parole), and supporting civil documents.</div>
+        <div class="vt-detail-ref">Per INA §245 · 8 CFR §245</div>
+      </div>
+      <div id="vt-i765" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">💼 I-765 — Work Permit / EAD</div><button class="vt-detail-close" onclick="toggleVT('vt-i765')">✕</button></div>
+        <div class="vt-detail-body">The Employment Authorization Document (EAD) allows eligible noncitizens to work legally in the United States. Available to adjustment of status applicants, TPS holders, asylum applicants, parolees, and other categories. We prepare the I-765 and all required supporting documents.</div>
+        <div class="vt-detail-ref">Per 8 CFR §274a.12</div>
+      </div>
+      <div id="vt-n400" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">🇺🇸 N-400 — Naturalization</div><button class="vt-detail-close" onclick="toggleVT('vt-n400')">✕</button></div>
+        <div class="vt-detail-body">N-400 is the application for U.S. citizenship through naturalization. Generally requires 5 years as a permanent resident (3 years if married to a U.S. citizen). We prepare the complete N-400 application with all supporting documents. The naturalization interview and civics test are conducted by USCIS — we help you prepare the paperwork.</div>
+        <div class="vt-detail-ref">Per INA §316 · 8 CFR §316</div>
+      </div>
+      <div id="vt-n600" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">📋 N-600 — Certificate of Citizenship</div><button class="vt-detail-close" onclick="toggleVT('vt-n600')">✕</button></div>
+        <div class="vt-detail-body">N-600 is filed by individuals who are already U.S. citizens through derivation or acquisition (born abroad to U.S. citizen parents, or automatically acquired citizenship through a parent's naturalization). We prepare the N-600 application and supporting documentation.</div>
+        <div class="vt-detail-ref">Per INA §322 · 8 CFR §341</div>
+      </div>
+      <div id="vt-uvisa" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">🛡️ I-918 — U Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-uvisa')">✕</button></div>
+        <div class="vt-detail-body">The U visa is for victims of qualifying crimes who have suffered substantial mental or physical abuse and are helpful to law enforcement in investigating or prosecuting the crime. Requires law enforcement certification (I-918B). We prepare the complete I-918 package including all Supplement A derivatives and the personal statement.</div>
+        <div class="vt-detail-ref">Per INA §101(a)(15)(U) · 8 CFR §214.14</div>
+      </div>
+      <div id="vt-vawa" class="vt-detail">
+        <div class="vt-detail-head"><div class="vt-detail-title">🤝 VAWA Self-Petition</div><button class="vt-detail-close" onclick="toggleVT('vt-vawa')">✕</button></div>
+        <div class="vt-detail-body">VAWA allows abused spouses, children, and parents of U.S. citizens or lawful permanent residents to self-petition for immigration status without the abuser's knowledge or participation. We prepare the VAWA self-petition package including personal declaration and supporting evidence.</div>
+        <div class="vt-detail-ref">Per INA §204(a)(1)(A)(iii) · 8 CFR §204.2(c)</div>
+      </div>
+
+      <div class="dp-sub-title" style="margin-top:2rem;">Family-Based Immigration</div>
+      <div class="vt-grid">
+        <div class="vt" onclick="toggleVT('vt-i130')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1511895426328-dc8714191011?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">👨‍👩‍👧</span><div class="vt-code">I-130</div><div class="vt-name">Petition for Alien Relative</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i131')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">✈️</span><div class="vt-code">I-131</div><div class="vt-name">Advance Parole</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i131a')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🛂</span><div class="vt-code">I-131A</div><div class="vt-name">Reentry Permit</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i539')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1508780709619-79562169bc64?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">⏰</span><div class="vt-code">I-539</div><div class="vt-name">Extension / Change of Status</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i751')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">💍</span><div class="vt-code">I-751</div><div class="vt-name">Remove Conditions</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-i864')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🤝</span><div class="vt-code">I-864</div><div class="vt-name">Affidavit of Support</div></div>
+        </div>
+      </div>
+
+      <div id="vt-i130" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">👨‍👩‍👧 I-130 — Petition for Alien Relative</div><button class="vt-detail-close" onclick="toggleVT('vt-i130')">✕</button></div><div class="vt-detail-body">Filed by U.S. citizens or lawful permanent residents to establish a qualifying family relationship for a foreign national relative. This is typically the first step in family-based immigration. We prepare the complete I-130 package with all supporting civil documents.</div><div class="vt-detail-ref">Per INA §204 · 8 CFR §204</div></div>
+      <div id="vt-i131" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">✈️ I-131 — Advance Parole</div><button class="vt-detail-close" onclick="toggleVT('vt-i131')">✕</button></div><div class="vt-detail-body">Allows individuals with a pending I-485 to travel outside the U.S. and return without abandoning their adjustment of status application. Traveling without advance parole while I-485 is pending may result in the application being considered abandoned.</div><div class="vt-detail-ref">Per 8 CFR §223</div></div>
+      <div id="vt-i131a" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🛂 I-131A — Reentry Permit</div><button class="vt-detail-close" onclick="toggleVT('vt-i131a')">✕</button></div><div class="vt-detail-body">A reentry permit allows a lawful permanent resident to apply for admission after traveling abroad for up to 2 years without abandoning LPR status. Must be applied for before departing the U.S.</div><div class="vt-detail-ref">Per 8 CFR §223.2</div></div>
+      <div id="vt-i539" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⏰ I-539 — Extension / Change of Status</div><button class="vt-detail-close" onclick="toggleVT('vt-i539')">✕</button></div><div class="vt-detail-body">Filed to extend a nonimmigrant stay or change to a different nonimmigrant status while remaining in the U.S. Must be filed before the current status expires. Common for B-2, F-1, and other nonimmigrant visa holders.</div><div class="vt-detail-ref">Per 8 CFR §248</div></div>
+      <div id="vt-i751" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">💍 I-751 — Remove Conditions on Residence</div><button class="vt-detail-close" onclick="toggleVT('vt-i751')">✕</button></div><div class="vt-detail-body">Conditional permanent residents (those who received a 2-year green card based on marriage) must file I-751 to remove the conditions and obtain a 10-year permanent resident card. Must be filed within 90 days before the 2-year card expires.</div><div class="vt-detail-ref">Per INA §216 · 8 CFR §216</div></div>
+      <div id="vt-i864" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🤝 I-864 — Affidavit of Support</div><button class="vt-detail-close" onclick="toggleVT('vt-i864')">✕</button></div><div class="vt-detail-body">A legally enforceable contract in which the U.S. sponsor agrees to financially support the immigrant. Required for most family-based and some employment-based immigrants. The sponsor must demonstrate income at or above 125% of the federal poverty guidelines.</div><div class="vt-detail-ref">Per INA §213A</div></div>
+    </div>
+
+    <!-- ── EOIR PANE ── -->
+    <div id="pane-eoir" class="dp-pane">
+      <div class="dp-note warn">We prepare documents for immigration court proceedings. We are not attorneys. Many EOIR proceedings are complex — we strongly recommend consulting a licensed immigration attorney for matters marked below. We can provide referrals.</div>
+      <div class="vt-grid">
+        <div class="vt" onclick="toggleVT('vt-eoir33')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">📍</span><div class="vt-code">EOIR-33</div><div class="vt-name">Change of Address</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-continue')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">📅</span><div class="vt-code">Motion</div><div class="vt-name">Motion to Continue</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-venue')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🏛️</span><div class="vt-code">Motion</div><div class="vt-name">Change of Venue</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-master')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">📁</span><div class="vt-code">Hearing</div><div class="vt-name">Master Hearing Package</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-bond')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">⚖️</span><div class="vt-code">Hearing</div><div class="vt-name">Bond Hearing Documents</div></div>
+        </div>
+        <div class="vt" style="border:1px solid rgba(255,100,100,0.3);" onclick="toggleVT('vt-bia')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=60');"></div>
+          <div class="vt-overlay" style="background:linear-gradient(160deg,rgba(80,10,10,0.6) 0%,rgba(80,10,10,0.85) 100%);"></div>
+          <div class="vt-content"><span class="vt-icon">⚠️</span><div class="vt-code">EOIR-26</div><div class="vt-name">Appeal to BIA</div><div class="vt-atty">Attorney required</div></div>
+        </div>
+      </div>
+      <div id="vt-eoir33" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">📍 EOIR-33 — Change of Address</div><button class="vt-detail-close" onclick="toggleVT('vt-eoir33')">✕</button></div><div class="vt-detail-body">Every respondent in removal proceedings must notify the immigration court of any address change within 5 days. Failure to do so can result in an in absentia removal order. We prepare the EOIR-33 form promptly at your direction.</div><div class="vt-detail-ref">Per 8 CFR §1003.15(d)</div></div>
+      <div id="vt-continue" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">📅 Motion to Continue</div><button class="vt-detail-close" onclick="toggleVT('vt-continue')">✕</button></div><div class="vt-detail-body">A written request to postpone a scheduled hearing date. Good cause must be shown. Common reasons include pending applications, need for additional time to gather documents, or obtaining legal representation. We prepare the motion at the client's direction.</div><div class="vt-detail-ref">Per 8 CFR §1003.29</div></div>
+      <div id="vt-venue" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🏛️ Motion to Change Venue</div><button class="vt-detail-close" onclick="toggleVT('vt-venue')">✕</button></div><div class="vt-detail-body">Request to transfer removal proceedings to an immigration court in a different location, typically when a respondent has moved. Must show good cause including current address and reason for transfer. We prepare the motion with supporting documentation.</div><div class="vt-detail-ref">Per 8 CFR §1003.20</div></div>
+      <div id="vt-master" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">📁 Master Hearing Package</div><button class="vt-detail-close" onclick="toggleVT('vt-master')">✕</button></div><div class="vt-detail-body">The Master Calendar Hearing is the initial hearing in removal proceedings where the judge establishes the schedule and the respondent enters pleadings. We prepare the complete document package including written pleadings, exhibit tabs, and supporting documentation.</div></div>
+      <div id="vt-bond" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⚖️ Bond Hearing Documents</div><button class="vt-detail-close" onclick="toggleVT('vt-bond')">✕</button></div><div class="vt-detail-body">Supporting documents for immigration bond redetermination hearings before an immigration judge. We prepare character letters, evidence of community ties, employment records, and other supporting materials at the client's direction.</div><div class="vt-detail-ref">Per INA §236 · 8 CFR §1236</div></div>
+      <div id="vt-bia" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⚠️ EOIR-26 — Appeal to BIA</div><button class="vt-detail-close" onclick="toggleVT('vt-bia')">✕</button></div><div class="vt-detail-body">An appeal from an immigration judge's decision to the Board of Immigration Appeals. Strict 30-day deadline applies. This is a highly complex legal proceeding with significant consequences.</div><div class="vt-detail-atty">⚠ Attorney required. This proceeding is not suitable for self-representation. We can provide a referral from our professional network.</div></div>
+    </div>
+
+    <!-- ── VISAS PANE ── -->
+    <div id="pane-visas" class="dp-pane">
+      <div class="dp-note">We prepare visa application documents at the client's direction. Where we can assist with finding educational institutions or employers, we note it below. We do not provide legal advice.</div>
+      <div class="vt-grid">
+        <div class="vt" onclick="toggleVT('vt-b1b2')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🧳</span><div class="vt-code">B1/B2</div><div class="vt-name">Visitor / Business Visa</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-f1')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🎓</span><div class="vt-code">F-1</div><div class="vt-name">Student Visa</div><div class="vt-hint">College / University help</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-k1')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">💍</span><div class="vt-code">K-1</div><div class="vt-name">Fiancé(e) Visa</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-j1')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🌍</span><div class="vt-code">J-1</div><div class="vt-name">Exchange Visitor</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-e2')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">💰</span><div class="vt-code">E-2</div><div class="vt-name">Investor Visa</div><div class="vt-hint">Treaty investor</div></div>
+        </div>
+      </div>
+      <div id="vt-b1b2" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🧳 B1/B2 — Visitor / Business Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-b1b2')">✕</button></div><div class="vt-detail-body">B-1 is for business visitors; B-2 is for tourism, vacation, or medical treatment. We prepare DS-160 (nonimmigrant visa application) and supporting documentation for the consular interview. Strong ties to home country must be demonstrated.</div><div class="vt-detail-ref">Per INA §101(a)(15)(B)</div></div>
+      <div id="vt-f1" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🎓 F-1 — Student Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-f1')">✕</button></div><div class="vt-detail-body">The F-1 visa allows international students to pursue academic studies at accredited U.S. colleges, universities, and language programs. Requires a Form I-20 from the school and SEVIS registration. We prepare the DS-160 and supporting documents. We can also help you identify suitable colleges or universities that match your academic goals and financial situation — contact us to discuss.</div><div class="vt-detail-ref">Per INA §101(a)(15)(F)</div></div>
+      <div id="vt-k1" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">💍 K-1 — Fiancé(e) Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-k1')">✕</button></div><div class="vt-detail-body">The K-1 visa allows a foreign national fiancé(e) of a U.S. citizen to enter the U.S. to get married within 90 days of arrival. The U.S. citizen files I-129F petition. After marriage, the K-1 holder can apply for I-485 (adjustment of status). We prepare the complete K-1 package.</div><div class="vt-detail-ref">Per INA §101(a)(15)(K)</div></div>
+      <div id="vt-j1" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🌍 J-1 — Exchange Visitor</div><button class="vt-detail-close" onclick="toggleVT('vt-j1')">✕</button></div><div class="vt-detail-body">The J-1 visa supports educational and cultural exchange programs including research scholars, professors, students, interns, and au pairs. Requires a DS-2019 from a designated sponsor organization. We prepare DS-160 and supporting documents.</div><div class="vt-detail-ref">Per INA §101(a)(15)(J)</div></div>
+      <div id="vt-e2" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">💰 E-2 — Treaty Investor Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-e2')">✕</button></div><div class="vt-detail-body">The E-2 visa allows nationals of treaty countries (including Ukraine, Russia, Georgia, Kazakhstan, and others) to enter the U.S. to direct and develop a substantial investment in a bona fide U.S. enterprise. Key requirements: the investment must be substantial (no minimum but typically $50,000–$100,000+), active and at-risk capital, the business cannot be marginal (must generate more than enough income for the investor's family), and the investor must have at least 50% ownership or operational control. We prepare the complete E-2 application package including business plan documentation and financial exhibits.</div><div class="vt-detail-atty">⚠ E-2 applications are complex. Attorney consultation strongly recommended for initial filing.</div><div class="vt-detail-ref">Per INA §101(a)(15)(E) · 22 CFR §41.51</div></div>
+    </div>
+
+    <!-- ── EB CATEGORIES ── -->
+    <div id="pane-eb" class="dp-pane">
+      <div class="dp-note">Employment-based immigration categories. We prepare I-140 petitions and supporting documentation at the client's direction. Per INA §203(b).</div>
+      <div class="vt-grid">
+        <div class="vt" onclick="toggleVT('vt-eb1a')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1603190287605-e6ade32fa852?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">⭐</span><div class="vt-code">EB-1A</div><div class="vt-name">Extraordinary Ability</div><div class="vt-hint">No sponsor needed</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-eb2niw')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🏥</span><div class="vt-code">EB-2 NIW</div><div class="vt-name">National Interest Waiver</div><div class="vt-hint">No PERM needed</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-eb2perm')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">👔</span><div class="vt-code">EB-2</div><div class="vt-name">Advanced Degree + PERM</div><div class="vt-hint">Employer sponsored</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-eb3')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🚛</span><div class="vt-code">EB-3</div><div class="vt-name">Skilled Workers</div><div class="vt-hint">Truck drivers, tradespeople</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-eb4')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1438232992991-995b671e4668?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">⛪</span><div class="vt-code">EB-4</div><div class="vt-name">Special Immigrants</div><div class="vt-hint">Religious workers, pastors</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-eb5')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">💵</span><div class="vt-code">EB-5</div><div class="vt-name">Investor Immigration</div><div class="vt-hint">$1M+ investment</div></div>
+        </div>
+      </div>
+
+      <div id="vt-eb1a" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⭐ EB-1A — Extraordinary Ability</div><button class="vt-detail-close" onclick="toggleVT('vt-eb1a')">✕</button></div><div class="vt-detail-body">EB-1A is for individuals with extraordinary ability in sciences, arts, education, business, or athletics. No job offer or employer sponsor required — you self-petition. Must meet at least 3 of 10 USCIS criteria including awards, published material, judging, high salary, original contributions, critical role, or commercial success. We prepare the complete I-140 petition with evidence package including recommendation letters, publication records, award documentation, and media coverage.</div><div class="vt-detail-ref">Per INA §203(b)(1)(A) · 8 CFR §204.5(h)</div></div>
+
+      <div id="vt-eb2niw" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🏥 EB-2 NIW — National Interest Waiver</div><button class="vt-detail-close" onclick="toggleVT('vt-eb2niw')">✕</button></div><div class="vt-detail-body">EB-2 NIW allows individuals with advanced degrees or exceptional ability to self-petition without an employer sponsor or PERM labor certification. Must demonstrate: (1) substantial merit and national importance of the work, (2) well-positioned to advance the endeavor, (3) balance of factors favors the waiver. Popular for physicians, researchers, engineers, and entrepreneurs. We prepare the complete I-140 NIW petition with evidence package.</div><div class="vt-detail-ref">Per INA §203(b)(2)(B)(i) · Matter of Dhanasar (2016)</div></div>
+
+      <div id="vt-eb2perm" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">👔 EB-2 with PERM Labor Certification</div><button class="vt-detail-close" onclick="toggleVT('vt-eb2perm')">✕</button></div><div class="vt-detail-body">EB-2 for professionals with advanced degrees requires a U.S. employer sponsor and PERM labor certification from the Department of Labor (ETA-9089). The employer must demonstrate no qualified U.S. workers are available. We prepare the I-140 immigrant worker petition once PERM is approved by the employer's attorney.</div><div class="vt-detail-atty">⚠ PERM labor certification requires an employer and an immigration attorney. We prepare I-140 after PERM approval.</div><div class="vt-detail-ref">Per INA §203(b)(2) · 20 CFR §656</div></div>
+
+      <div id="vt-eb3" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🚛 EB-3 — Skilled Workers &amp; Professionals</div><button class="vt-detail-close" onclick="toggleVT('vt-eb3')">✕</button></div><div class="vt-detail-body">EB-3 covers skilled workers (jobs requiring at least 2 years training/experience), professionals (bachelor's degree required), and other workers (unskilled labor). Requires employer sponsorship and PERM labor certification. Common for truck drivers, construction workers, healthcare workers, and other tradespeople with employer sponsors. We prepare the I-140 petition after PERM approval.</div><div class="vt-detail-atty">⚠ Requires employer sponsor and PERM. Contact us to discuss your specific situation.</div><div class="vt-detail-ref">Per INA §203(b)(3) · 20 CFR §656</div></div>
+
+      <div id="vt-eb4" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⛪ EB-4 — Special Immigrants</div><button class="vt-detail-close" onclick="toggleVT('vt-eb4')">✕</button></div><div class="vt-detail-body">EB-4 covers a range of special immigrant categories including religious workers (ministers, pastors, priests, religious professionals working for a nonprofit religious organization), certain broadcasters, armed forces members, and others. Religious worker classification requires proof of membership in a religious denomination and 2 years of qualifying religious work. Filed on Form I-360. No PERM required for religious workers.</div><div class="vt-detail-ref">Per INA §203(b)(4) · 8 CFR §204.5(m)</div></div>
+
+      <div id="vt-eb5" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">💵 EB-5 — Investor Immigration</div><button class="vt-detail-close" onclick="toggleVT('vt-eb5')">✕</button></div><div class="vt-detail-body">EB-5 provides a path to permanent residence through investment. Standard investment: $1,050,000 (or $800,000 in targeted employment areas). Must create or preserve 10 full-time jobs for qualifying U.S. workers. Two pathways: direct investment in a new commercial enterprise, or investment through a USCIS-designated Regional Center. Filed on I-526 (direct) or I-526E (Regional Center). We prepare document packages at the client's direction.</div><div class="vt-detail-atty">⚠ EB-5 involves complex securities and immigration law. Attorney consultation strongly recommended.</div><div class="vt-detail-ref">Per INA §203(b)(5) · 8 CFR §204.6</div></div>
+    </div>
+
+    <!-- ── NVC / CONSULAR PANE ── -->
+    <div id="pane-nvc" class="dp-pane">
+      <div class="dp-note">After USCIS approves an immigrant petition, cases destined for consular processing are transferred to the National Visa Center (NVC) for pre-processing before the consular interview abroad.</div>
+      <div class="vt-grid">
+        <div class="vt" onclick="toggleVT('vt-nvc')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1524168272322-bf73616d9cb5?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">🏛️</span><div class="vt-code">NVC</div><div class="vt-name">NVC Document Submission</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-ds260')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">📋</span><div class="vt-code">DS-260</div><div class="vt-name">Immigrant Visa Application</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-ds261')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">✍️</span><div class="vt-code">DS-261</div><div class="vt-name">Choice of Agent</div></div>
+        </div>
+        <div class="vt" onclick="toggleVT('vt-civil')">
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1606788075761-e2d49f9ec187?w=400&q=60');"></div>
+          <div class="vt-overlay"></div>
+          <div class="vt-content"><span class="vt-icon">📂</span><div class="vt-code">Docs</div><div class="vt-name">Civil Documents Package</div></div>
+        </div>
+      </div>
+      <div id="vt-nvc" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🏛️ NVC — National Visa Center</div><button class="vt-detail-close" onclick="toggleVT('vt-nvc')">✕</button></div><div class="vt-detail-body">After USCIS approves an I-130 or I-140 petition, the case is sent to the NVC for pre-processing. The NVC collects fees, documents, and the DS-260 application before scheduling the immigrant visa interview at the U.S. embassy or consulate abroad. We assist with organizing and preparing all required NVC submissions.</div></div>
+      <div id="vt-ds260" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">📋 DS-260 — Immigrant Visa Application</div><button class="vt-detail-close" onclick="toggleVT('vt-ds260')">✕</button></div><div class="vt-detail-body">The DS-260 is the online immigrant visa application submitted through the Consular Electronic Application Center (CEAC). Required for all consular processing cases. We prepare and review the DS-260 at the client's direction to ensure accuracy and completeness before submission.</div></div>
+      <div id="vt-ds261" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">✍️ DS-261 — Choice of Agent and Address</div><button class="vt-detail-close" onclick="toggleVT('vt-ds261')">✕</button></div><div class="vt-detail-body">The DS-261 designates the agent who will receive correspondence from NVC on behalf of the visa applicant. We prepare the DS-261 and coordinate with the NVC on the client's behalf.</div></div>
+      <div id="vt-civil" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">📂 Civil Documents Package</div><button class="vt-detail-close" onclick="toggleVT('vt-civil')">✕</button></div><div class="vt-detail-body">NVC requires a comprehensive civil documents package including birth certificates, marriage certificates, police clearances, divorce decrees, and other records with certified translations. We organize, review, and coordinate certified translations of all required civil documents for NVC submission and consular interview.</div></div>
+    </div>
+
+    <!-- Request Form -->
+    <div class="req-form">
+      <form name="req-immigration" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-immigration','req-imm-success')">
+        <input type="hidden" name="form-name" value="req-immigration">
+        <input name="bot-field" style="display:none">
+        <div class="req-form-title">Send a Request</div>
+        <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
+        <div class="req-grid">
+          <div class="req-field"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="req-field"><label>Phone *</label><input type="tel" name="phone" placeholder="(916) 000-0000" required></div>
+          <div class="req-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div>
+          <div class="req-field"><label>Service Needed</label><input type="text" name="service" placeholder="e.g. I-485, U visa, N-400..."></div>
+          <div class="req-field req-field-full"><label>Brief Description</label><textarea name="message" placeholder="Briefly describe your situation..."></textarea></div>
+        </div>
+        <button type="submit" class="req-btn">Send Request →</button>
+        <div id="req-imm-success" class="req-success">✓ Request received! We will contact you within 1 business day.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- FAMILY LAW -->
+<div id="dp-fam" class="detail-panel">
+  <div class="dp-head" style="background:var(--col-fam);">
+    <div class="dp-head-inner">
+      <div><div class="dp-sub">Family Law Services</div><div class="dp-title">California Family Law</div></div>
+      <button class="dp-close" onclick="closeDetail('fam')">✕ Close</button>
+    </div>
+  </div>
+  <div class="dp-body">
+    <div class="dp-note">We prepare California family law forms for self-represented (pro se) clients. We are not attorneys and do not provide legal advice. California residents only. Per California Family Code §2320 et seq.</div>
+    <div class="dp-tabs">
+      <button class="dp-tab on" onclick="switchPane(this,'pane-dissolution')">Divorce / Dissolution</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-custody')">Custody &amp; Support</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-dv')">Domestic Violence</button>
+    </div>
+
+    <div id="pane-dissolution" class="dp-pane on">
+      <div class="dp-sub-title">Standard Dissolution of Marriage</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">FL-100</div><div class="fi-name">Petition — Marriage/Domestic Partnership</div><div class="fi-desc">Initial petition to dissolve a marriage or domestic partnership.</div><div class="fi-ref">Per Cal. Fam. Code §2330</div></div>
+        <div class="fi"><div class="fi-code">FL-110</div><div class="fi-name">Summons</div><div class="fi-desc">Summons issued with the petition, includes standard restraining orders.</div><div class="fi-ref">Per Cal. Fam. Code §232</div></div>
+        <div class="fi"><div class="fi-code">FL-115</div><div class="fi-name">Proof of Service of Summons</div><div class="fi-desc">Proof that the respondent was properly served with the petition.</div></div>
+        <div class="fi"><div class="fi-code">FL-120</div><div class="fi-name">Response</div><div class="fi-desc">Respondent's response to the dissolution petition.</div></div>
+        <div class="fi"><div class="fi-code">FL-141</div><div class="fi-name">Declaration re Service</div><div class="fi-desc">Declaration confirming service of preliminary financial disclosures.</div></div>
+        <div class="fi"><div class="fi-code">FL-150</div><div class="fi-name">Income and Expense Declaration</div><div class="fi-desc">Financial disclosure detailing income and monthly expenses.</div><div class="fi-ref">Per Cal. Fam. Code §§2100–2113</div></div>
+        <div class="fi"><div class="fi-code">FL-160</div><div class="fi-name">Property Declaration</div><div class="fi-desc">Declaration of all community and separate property assets and debts.</div></div>
+        <div class="fi"><div class="fi-code">FL-180</div><div class="fi-name">Judgment</div><div class="fi-desc">Final judgment document for dissolution of marriage.</div></div>
+        <div class="fi"><div class="fi-code">FL-190</div><div class="fi-name">Notice of Entry of Judgment</div><div class="fi-desc">Notice confirming the judgment has been entered by the court.</div></div>
+      </div>
+
+      <div class="dp-sub-title">Summary Dissolution (Simplified Divorce)</div>
+      <div class="dp-note">Available for eligible couples married less than 5 years, no children, limited assets/debts. Per Cal. Fam. Code §§2400–2406.</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">FL-800</div><div class="fi-name">Joint Petition for Summary Dissolution</div><div class="fi-desc">Joint petition filed by both spouses to begin summary dissolution.</div></div>
+        <div class="fi"><div class="fi-code">FL-810</div><div class="fi-name">Property Settlement Agreement</div><div class="fi-desc">Agreement dividing all community property and debts.</div></div>
+        <div class="fi"><div class="fi-code">FL-820</div><div class="fi-name">Notice of Revocation</div><div class="fi-desc">Notice to revoke the joint petition if either party changes their mind.</div></div>
+      </div>
+
+      <div class="dp-sub-title">Legal Separation</div>
+      <div class="dp-note">For spouses who wish to separate and divide assets without terminating the marriage. Per Cal. Fam. Code §2310.</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">FL-100</div><div class="fi-name">Petition for Legal Separation</div><div class="fi-desc">Same form package as dissolution, filed as legal separation instead of divorce.</div></div>
+      </div>
+    </div>
+
+    <div id="pane-custody" class="dp-pane">
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">FL-300</div><div class="fi-name">Request for Order</div><div class="fi-desc">Request for court orders regarding custody, visitation, or support.</div><div class="fi-ref">Per Cal. Fam. Code §3020</div></div>
+        <div class="fi"><div class="fi-code">FL-311</div><div class="fi-name">Child Custody and Visitation Attachment</div><div class="fi-desc">Detailed custody and visitation schedule attachment to FL-300.</div></div>
+        <div class="fi"><div class="fi-code">FL-341</div><div class="fi-name">Children's Holiday Schedule</div><div class="fi-desc">Holiday and vacation schedule for shared custody arrangements.</div></div>
+        <div class="fi"><div class="fi-code">FL-342</div><div class="fi-name">Child Support Information</div><div class="fi-desc">Child and spousal/partner support order attachment.</div><div class="fi-ref">Per Cal. Fam. Code §4050 et seq.</div></div>
+      </div>
+    </div>
+
+    <div id="pane-dv" class="dp-pane">
+      <div class="dp-note warn">If you are in immediate danger, call 911. We prepare DV restraining order forms at the client's direction only. We do not provide legal advice. For legal guidance, contact a domestic violence attorney or legal aid organization.</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">DV-100</div><div class="fi-name">Request for DVRO</div><div class="fi-desc">Request for Domestic Violence Restraining Order — initial application form.</div><div class="fi-ref">Per Cal. Fam. Code §6300</div></div>
+        <div class="fi"><div class="fi-code">DV-110</div><div class="fi-name">Temporary Restraining Order</div><div class="fi-desc">Temporary restraining order issued by the court pending the full hearing.</div></div>
+        <div class="fi"><div class="fi-code">DV-200</div><div class="fi-name">Proof of Service</div><div class="fi-desc">Proof that the respondent was served with the restraining order documents.</div></div>
+      </div>
+
+    <div class="req-form">
+      <form name="req-family" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-family','req-fam-success')">
+        <input type="hidden" name="form-name" value="req-family">
+        <input name="bot-field" style="display:none">
+        <div class="req-form-title">Send a Request</div>
+        <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
+        <div class="req-grid">
+          <div class="req-field"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="req-field"><label>Phone *</label><input type="tel" name="phone" placeholder="(916) 000-0000" required></div>
+          <div class="req-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div>
+          <div class="req-field"><label>Service Needed</label><input type="text" name="service" placeholder="e.g. Divorce, Custody, DVRO..."></div>
+          <div class="req-field req-field-full"><label>Brief Description</label><textarea name="message" placeholder="Briefly describe your situation..."></textarea></div>
+        </div>
+        <button type="submit" class="req-btn">Send Request →</button>
+        <div id="req-fam-success" class="req-success">✓ Request received! We will contact you within 1 business day.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- SMALL CLAIMS / CIVIL / UD -->
+<div id="dp-civ" class="detail-panel">
+  <div class="dp-head" style="background:var(--col-civ);">
+    <div class="dp-head-inner">
+      <div><div class="dp-sub">Civil Services</div><div class="dp-title">Small Claims, Civil &amp; Unlawful Detainer</div></div>
+      <button class="dp-close" onclick="closeDetail('civ')">✕ Close</button>
+    </div>
+  </div>
+  <div class="dp-body">
+    <div class="dp-tabs">
+      <button class="dp-tab on" onclick="switchPane(this,'pane-sc')">Small Claims</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-civil')">Civil Court</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-ud')">Unlawful Detainer</button>
+    </div>
+
+    <div id="pane-sc" class="dp-pane on">
+      <div class="dp-note">Small Claims Court allows individuals to resolve disputes without an attorney. Current California limit: <strong>$12,500 for individuals</strong> per CCP §116.220. We prepare the documents — you represent yourself in court. California residents only.</div>
+      <div class="dp-sub-title">Typical Small Claims Situations</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-name">Security Deposit Disputes</div><div class="fi-desc">Landlord refuses to return deposit or provides inadequate accounting. Per Cal. Civ. Code §1950.5.</div></div>
+        <div class="fi"><div class="fi-name">Unpaid Services or Goods</div><div class="fi-desc">Someone owes you money for work performed, goods sold, or a loan not repaid.</div></div>
+        <div class="fi"><div class="fi-name">Property Damage</div><div class="fi-desc">Someone damaged your vehicle, property, or belongings and refuses to pay.</div></div>
+        <div class="fi"><div class="fi-name">Contractor / Service Disputes</div><div class="fi-desc">Contractor did not complete work, did poor work, or refuses refund.</div></div>
+        <div class="fi"><div class="fi-name">Vehicle Accidents</div><div class="fi-desc">Minor accident damages under the Small Claims limit where insurance isn't involved.</div></div>
+        <div class="fi"><div class="fi-name">Consumer Disputes</div><div class="fi-desc">Merchant refuses refund, warranty disputes, or deceptive business practices.</div></div>
+      </div>
+    </div>
+
+    <div id="pane-civil" class="dp-pane">
+      <div class="dp-note">Civil court handles disputes above the Small Claims limit. We prepare Superior Court civil forms at the client's direction. California residents only. We do not provide legal advice — for complex civil matters, consult a licensed California attorney.</div>
+      <div class="dp-sub-title">Civil Court Documents We Prepare</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-name">Civil Complaint</div><div class="fi-desc">Initial complaint to file a civil lawsuit in California Superior Court.</div><div class="fi-ref">Per CCP §425.10</div></div>
+        <div class="fi"><div class="fi-name">Civil Response / Answer</div><div class="fi-desc">Defendant's response to a civil complaint filed against them.</div><div class="fi-ref">Per CCP §431.30</div></div>
+        <div class="fi"><div class="fi-name">Proof of Service</div><div class="fi-desc">Documentation that the other party was properly served with court papers.</div></div>
+        <div class="fi"><div class="fi-name">Request for Entry of Default</div><div class="fi-desc">Request for default when the defendant fails to respond within the deadline.</div><div class="fi-ref">Per CCP §585</div></div>
+      </div>
+    </div>
+
+    <div id="pane-ud" class="dp-pane">
+      <div class="dp-note">Unlawful Detainer is the legal process for eviction in California. We prepare UD documents for both landlords and tenants. We do not provide legal advice. Per CCP §1161 et seq. California residents only.</div>
+      <div class="dp-sub-title">For Landlords</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-name">UD Complaint (UD-100)</div><div class="fi-desc">Unlawful detainer complaint to begin eviction proceedings against a tenant.</div><div class="fi-ref">Per CCP §1166</div></div>
+        <div class="fi"><div class="fi-name">Summons — Unlawful Detainer (UD-105)</div><div class="fi-desc">Summons served on tenant with the UD complaint.</div></div>
+        <div class="fi"><div class="fi-name">Notice to Quit Assistance</div><div class="fi-desc">We help clients understand Notice to Quit requirements. We do not draft notices — consult an attorney for notice preparation.</div></div>
+        <div class="fi"><div class="fi-name">Proof of Service</div><div class="fi-desc">Documentation of proper service of UD documents.</div></div>
+      </div>
+      <div class="dp-sub-title">For Tenants</div>
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-name">UD Answer (UD-105)</div><div class="fi-desc">Tenant's response to an unlawful detainer complaint. Must be filed within 5 business days.</div><div class="fi-ref">Per CCP §1167</div></div>
+        <div class="fi"><div class="fi-name">Demurrer / Motion</div><div class="fi-desc">Procedural responses challenging the UD complaint. Attorney consultation recommended for these filings.</div><div class="fi-atty">Attorney consultation recommended.</div></div>
+      </div>
+
+    <div class="req-form">
+      <form name="req-civil" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-civil','req-civ-success')">
+        <input type="hidden" name="form-name" value="req-civil">
+        <input name="bot-field" style="display:none">
+        <div class="req-form-title">Send a Request</div>
+        <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
+        <div class="req-grid">
+          <div class="req-field"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="req-field"><label>Phone *</label><input type="tel" name="phone" placeholder="(916) 000-0000" required></div>
+          <div class="req-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div>
+          <div class="req-field"><label>Service Needed</label><input type="text" name="service" placeholder="e.g. Small Claims, UD, Civil..."></div>
+          <div class="req-field req-field-full"><label>Brief Description</label><textarea name="message" placeholder="Briefly describe your situation..."></textarea></div>
+        </div>
+        <button type="submit" class="req-btn">Send Request →</button>
+        <div id="req-civ-success" class="req-success">✓ Request received! We will contact you within 1 business day.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- UNLAWFUL DETAINER (separate card click) -->
+<div id="dp-ud" class="detail-panel">
+  <div class="dp-head" style="background:#7a3a5a;">
+    <div class="dp-head-inner">
+      <div><div class="dp-sub">Civil Services</div><div class="dp-title">Unlawful Detainer</div></div>
+      <button class="dp-close" onclick="closeDetail('ud')">✕ Close</button>
+    </div>
+  </div>
+  <div class="dp-body">
+    <div class="dp-note">Unlawful Detainer is the California eviction process. We prepare UD documents for landlords and tenants. We do not provide legal advice. Per CCP §1161 et seq. California residents only.</div>
+    <div class="dp-tabs">
+      <button class="dp-tab on" onclick="switchPane(this,'pane-ud-ll')">For Landlords</button>
+      <button class="dp-tab" onclick="switchPane(this,'pane-ud-tn')">For Tenants</button>
+    </div>
+    <div id="pane-ud-ll" class="dp-pane on">
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">UD-100</div><div class="fi-name">UD Complaint</div><div class="fi-desc">Unlawful detainer complaint to begin eviction proceedings against a tenant.</div><div class="fi-ref">Per CCP §1166</div></div>
+        <div class="fi"><div class="fi-code">UD-105</div><div class="fi-name">Summons — Unlawful Detainer</div><div class="fi-desc">Summons served on the tenant with the UD complaint.</div></div>
+        <div class="fi"><div class="fi-name">Proof of Service</div><div class="fi-desc">Documentation of proper service of UD documents on tenant.</div></div>
+        <div class="fi"><div class="fi-name">Notice to Quit Assistance</div><div class="fi-desc">We help clients understand Notice to Quit requirements. For notice drafting, consult an attorney.</div></div>
+      </div>
+    </div>
+    <div id="pane-ud-tn" class="dp-pane">
+      <div class="forms-grid">
+        <div class="fi"><div class="fi-code">UD-105</div><div class="fi-name">UD Answer</div><div class="fi-desc">Tenant's response to an unlawful detainer complaint. Must be filed within 5 business days of service.</div><div class="fi-ref">Per CCP §1167</div></div>
+        <div class="fi"><div class="fi-name">Supporting Documents</div><div class="fi-desc">Additional supporting documents to accompany the UD answer.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUSINESS -->
+<div id="dp-biz" class="detail-panel">
+  <div class="dp-head" style="background:#2a5a3a;">
+    <div class="dp-head-inner">
+      <div><div class="dp-sub">Business Services</div><div class="dp-title">Business &amp; Entity Formation</div></div>
+      <button class="dp-close" onclick="closeDetail('biz')">✕ Close</button>
+    </div>
+  </div>
+  <div class="dp-body">
+    <div class="dp-sub-title">Available Now</div>
+    <div class="forms-grid">
+      <div class="fi"><div class="fi-code">LLC</div><div class="fi-name">LLC Formation</div><div class="fi-desc">California LLC formation — Articles of Organization preparation and filing coordination.</div><div class="fi-ref">Per Cal. Corp. Code §17701.01 et seq.</div></div>
+      <div class="fi"><div class="fi-code">DBA</div><div class="fi-name">Fictitious Business Name (DBA)</div><div class="fi-desc">Doing Business As registration — DBA document preparation and county filing.</div><div class="fi-ref">Per Cal. Bus. &amp; Prof. Code §17910</div></div>
+      <div class="fi"><div class="fi-code">EIN / SS-4</div><div class="fi-name">Employer Identification Number</div><div class="fi-desc">IRS Form SS-4 preparation to obtain a federal EIN for business entities and individuals.</div></div>
+      <div class="fi"><div class="fi-code">Operating Agreement</div><div class="fi-name">LLC Operating Agreement</div><div class="fi-desc">Operating agreement document preparation defining ownership, management, and operating procedures.</div></div>
+    </div>
+
+    <div class="dp-sub-title" style="color:#888;">Coming Soon</div>
+    <div class="forms-grid">
+      <div class="fi" style="opacity:0.6;"><div class="fi-name">Power of Attorney</div><div class="fi-desc">We are expanding this service. Contact us to discuss your needs.</div></div>
+      <div class="fi" style="opacity:0.6;"><div class="fi-name">Notary Public Services</div><div class="fi-desc">We are expanding this service. Contact us to discuss your needs.</div></div>
+      <div class="fi" style="opacity:0.6;"><div class="fi-name">Apostille Coordination</div><div class="fi-desc">We are expanding this service. Contact us to discuss your needs.</div></div>
+
+    <div class="req-form">
+      <form name="req-business" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-business','req-biz-success')">
+        <input type="hidden" name="form-name" value="req-business">
+        <input name="bot-field" style="display:none">
+        <div class="req-form-title">Send a Request</div>
+        <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
+        <div class="req-grid">
+          <div class="req-field"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="req-field"><label>Phone *</label><input type="tel" name="phone" placeholder="(916) 000-0000" required></div>
+          <div class="req-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div>
+          <div class="req-field"><label>Service Needed</label><input type="text" name="service" placeholder="e.g. LLC, DBA, EIN..."></div>
+          <div class="req-field req-field-full"><label>Brief Description</label><textarea name="message" placeholder="Briefly describe your situation..."></textarea></div>
+        </div>
+        <button type="submit" class="req-btn">Send Request →</button>
+        <div id="req-biz-success" class="req-success">✓ Request received! We will contact you within 1 business day.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSLATIONS -->
+<div id="dp-tra" class="detail-panel">
+  <div class="dp-head" style="background:var(--col-tra);">
+    <div class="dp-head-inner">
+      <div><div class="dp-sub">Translation Services</div><div class="dp-title">Document Translation</div></div>
+      <button class="dp-close" onclick="closeDetail('tra')">✕ Close</button>
+    </div>
+  </div>
+  <div class="dp-body">
+    <div style="text-align:center;padding:3rem 1rem;">
+      <div style="font-size:40px;margin-bottom:1rem;">🌐</div>
+      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--navy-dark);margin-bottom:0.8rem;">Coming Soon</div>
+      <p style="font-size:14px;color:#888;max-width:440px;margin:0 auto 1.5rem;line-height:1.7;">We are currently expanding our certified translation department. Contact us to discuss your translation needs — we will do our best to assist.</p>
+      <a href="#contact" class="btn-primary" onclick="closeDetail('tra')">Contact Us</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="disclaimer-wrap">
+  <div class="disclaimer">
+    <p><strong>⚠ Important Legal Notice:</strong> Imverica Legal Solutions is a registered Legal Document Assistant (LDA) in the State of California. <strong>We are not a law firm and we do not provide legal advice of any kind.</strong> We prepare legal documents solely at the specific direction of our clients. For legal advice, please consult a licensed attorney.</p>
+  </div>
+</div>
+
+<div id="contact" class="cta-section">
+  <h2>Ready to get started?</h2>
+  <p>Contact us to find out which forms apply to your situation and receive a flat-fee quote for document preparation.</p>
+  <div class="contact-row">
+    <a class="contact-btn call" href="tel:9163993992">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Call (916) 399-3992
+    </a>
+    <a class="contact-btn sms" href="sms:9163993992">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Send a Text
+    </a>
+  </div>
+  <div class="social-row">
+    <a class="social-btn" href="https://www.instagram.com/imverica" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      @imverica
+    </a>
+    <a class="social-btn" href="https://www.facebook.com/imverica/" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      Facebook
+    </a>
+    <a class="social-btn" href="https://t.me/imverica" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5L2 10l7 2.5M21.5 2.5L14 22l-5-9.5M21.5 2.5L9 12.5m0 0l2 7"/></svg>
+      Telegram
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:26px;color:#fff;letter-spacing:-0.5px;"><span style="font-weight:300;">im</span><span style="font-weight:700;">verica</span></div>
+      <div class="footer-info" style="margin-top:0.5rem;">Legal Document Assistant · Sacramento, CA<br>(916) 399-3992 · imverica.com</div>
+    </div>
+    <div class="footer-info">
+      <strong>Services</strong><br>
+      Immigration · Family Law · Small Claims<br>Translations · Notary · DMV Help
+    </div>
+    <div class="footer-info">
+      <strong>Registration</strong><br>
+      California Licensed LDA<br>Bus. &amp; Prof. Code §6400
+    </div>
+    <div class="footer-info">
+      <strong>Follow Us</strong><br>
+      <a href="https://www.instagram.com/imverica" target="_blank">Instagram: @imverica</a><br>
+      <a href="https://www.facebook.com/imverica/" target="_blank">Facebook: /imverica</a><br>
+      <a href="https://t.me/imverica" target="_blank">Telegram: @imverica</a>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:2rem auto 0;padding:1.5rem 0;border-top:1px solid #1e2e3e;">
+    <p style="font-size:12px;color:#4a6070;line-height:1.8;">
+      <strong style="color:#7a9ab0;">What is a Legal Document Assistant (LDA)?</strong><br>
+      A Legal Document Assistant is a licensed, non-attorney professional authorized by the State of California to prepare legal documents for members of the public who represent themselves. LDAs are registered with the county clerk and bonded.
+      <a href="https://saclaw.org/resource_library/legal-document-assistants/" target="_blank" rel="noopener" style="color:#6a9abd;text-decoration:underline;">Learn more about LDAs →</a>
+    </p>
+    <p style="font-size:12px;color:#4a6070;line-height:1.8;margin-top:1rem;">
+      <strong style="color:#7a9ab0;">What is a California Immigration Consultant?</strong><br>
+      An Immigration Consultant is a non-attorney professional registered with the State of California who may assist clients with immigration-related documents and forms. Registration is overseen by the California Secretary of State.
+      <a href="https://www.sos.ca.gov/business-programs/special-filings/immigration-consultant-qualifications" target="_blank" rel="noopener" style="color:#6a9abd;text-decoration:underline;">Learn more about Immigration Consultants →</a>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 Imverica Legal Solutions. All rights reserved. &nbsp;·&nbsp; Not a law firm. We prepare documents only. We do not provide legal advice. &nbsp;·&nbsp; <a href="terms.html" style="color:#3a5060;">Terms of Service</a>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="chat-bubble" id="chatBubble" title="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</div>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div>
+      <div class="chat-header-title">Imverica Legal Solutions</div>
+      <div class="chat-header-sub">Licensed LDA · Sacramento, CA</div>
+    </div>
+    <button class="chat-close" id="chatClose">&times;</button>
+  </div>
+
+  <!-- TERMS SCREEN -->
+  <div id="chatTerms" class="chat-terms">
+    <p>Before we begin, please review and accept our Terms of Service.</p>
+    <div class="chat-terms-check">
+      <input type="checkbox" id="termsCheck">
+      <label for="termsCheck">I have read and agree to the <a href="terms.html" target="_blank">Terms of Service</a>. I understand that Imverica Legal Solutions is not a law firm and does not provide legal advice.</label>
+    </div>
+    <button class="chat-start-btn" id="chatStartBtn" disabled>Continue →</button>
+  </div>
+
+  <!-- CHAT SCREEN (hidden until terms accepted) -->
+  <div id="chatMain" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-options" id="chatOptions"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" type="text" placeholder="Type your message...">
+      <button class="chat-send" id="chatSendBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// BURGER MENU
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// CHATBOT
+const chatBubble = document.getElementById('chatBubble');
+const chatWindow = document.getElementById('chatWindow');
+const chatClose = document.getElementById('chatClose');
+const chatTerms = document.getElementById('chatTerms');
+const chatMain = document.getElementById('chatMain');
+const chatBody = document.getElementById('chatBody');
+const chatOptions = document.getElementById('chatOptions');
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+const termsCheck = document.getElementById('termsCheck');
+const chatStartBtn = document.getElementById('chatStartBtn');
+
+chatBubble.addEventListener('click', () => chatWindow.classList.toggle('open'));
+chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
+termsCheck.addEventListener('change', () => chatStartBtn.disabled = !termsCheck.checked);
+
+const LANGS = {
+  en: { name: 'English', greeting: "Hello! How can I help you today? Please select a topic:", topics: ['Immigration (USCIS | EOIR)','Family Law / Divorce','Small Claims & Civil','Document Translations','Pricing','Other'] },
+  es: { name: 'Español', greeting: "¡Hola! ¿En qué puedo ayudarle hoy? Por favor seleccione un tema:", topics: ['Inmigración (USCIS | EOIR)','Derecho de Familia / Divorcio','Reclamos Menores','Traducciones','Precios','Otro'] },
+  ru: { name: 'Русский', greeting: "Здравствуйте! Чем могу помочь? Выберите тему:", topics: ['Иммиграция (USCIS | EOIR)','Семейное право / Развод','Малые иски','Переводы документов','Цены','Другое'] },
+  uk: { name: 'Українська', greeting: "Доброго дня! Чим можу допомогти? Оберіть тему:", topics: ['Імміграція (USCIS | EOIR)','Сімейне право / Розлучення','Малі позови','Переклади документів','Ціни','Інше'] }
+};
+
+let selectedLang = 'en';
+let conversationHistory = [];
+
+chatStartBtn.addEventListener('click', () => {
+  chatTerms.style.display = 'none';
+  chatMain.style.display = 'flex';
+  chatMain.style.flexDirection = 'column';
+  chatMain.style.flex = '1';
+  chatMain.style.overflow = 'hidden';
+  showLangSelect();
+});
+
+function showLangSelect() {
+  addBotMsg("Welcome to Imverica Legal Solutions. Please select your language:");
+  showOptions([
+    { label: '🇺🇸 English', action: () => selectLang('en') },
+    { label: '🇲🇽 Español', action: () => selectLang('es') },
+    { label: '🇷🇺 Русский', action: () => selectLang('ru') },
+    { label: '🇺🇦 Українська', action: () => selectLang('uk') }
+  ]);
+}
+
+function selectLang(lang) {
+  selectedLang = lang;
+  clearOptions();
+  addUserMsg(LANGS[lang].name);
+  conversationHistory = [];
+  setTimeout(() => {
+    addBotMsg(LANGS[lang].greeting);
+    showOptions(LANGS[lang].topics.map(t => ({ label: t, action: () => selectTopic(t) })));
+  }, 400);
+}
+
+function selectTopic(topic) {
+  clearOptions();
+  addUserMsg(topic);
+  sendToAI(topic);
+}
+
+function addBotMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot';
+  div.textContent = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  div.textContent = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.className = 'chat-typing';
+  div.id = 'typingIndicator';
+  div.textContent = '...';
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function showOptions(opts) {
+  chatOptions.innerHTML = '';
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'chat-opt';
+    btn.textContent = opt.label;
+    btn.addEventListener('click', opt.action);
+    chatOptions.appendChild(btn);
+  });
+}
+
+function clearOptions() { chatOptions.innerHTML = ''; }
+
+async function sendToAI(userMessage) {
+  showTyping();
+  conversationHistory.push({ role: 'user', content: userMessage });
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: conversationHistory })
+    });
+    if (!response.ok) {
+      document.getElementById('chatWindow').classList.remove('open');
+      document.getElementById('chatBubble').style.display = 'none';
+      return;
+    }
+    const data = await response.json();
+    const reply = data.reply || 'Sorry, please call us at (916) 399-3992.';
+    removeTyping();
+    conversationHistory.push({ role: 'assistant', content: reply });
+    addBotMsg(reply);
+    showOptions([
+      { label: LANGS[selectedLang].name === 'Русский' ? '← Главное меню' : LANGS[selectedLang].name === 'Español' ? '← Menú principal' : LANGS[selectedLang].name === 'Українська' ? '← Головне меню' : '← Main menu', action: () => { clearOptions(); conversationHistory = []; addBotMsg(LANGS[selectedLang].greeting); showOptions(LANGS[selectedLang].topics.map(t => ({ label: t, action: () => selectTopic(t) }))); } },
+      { label: '🌐 Change language', action: () => { clearOptions(); conversationHistory = []; showLangSelect(); } }
+    ]);
+  } catch(e) {
+    removeTyping();
+    addBotMsg('Sorry, something went wrong. Please call us at (916) 399-3992 or message @imverica on Telegram.');
+  }
+}
+
+chatSendBtn.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
+
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if (!msg) return;
+  chatInput.value = '';
+  clearOptions();
+  addUserMsg(msg);
+  sendToAI(msg);
+}
+
+
+// ── VISUAL TILES ──
+function toggleVT(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  // Close all vt-details in same panel
+  const panel = el.closest('.dp-pane');
+  if (panel) panel.querySelectorAll('.vt-detail').forEach(d => d.classList.remove('open'));
+  if (!isOpen) {
+    el.classList.add('open');
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+
+// ── DETAIL PANELS ──
+function openDetail(id) {
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.add('open');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function closeDetail(id) {
+  const panel = document.getElementById('dp-' + id);
+  if (panel) panel.classList.remove('open');
+  document.getElementById('services').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function switchPane(tabEl, paneId) {
+  const panel = tabEl.closest('.detail-panel');
+  panel.querySelectorAll('.dp-tab').forEach(t => t.classList.remove('on'));
+  panel.querySelectorAll('.dp-pane').forEach(p => p.classList.remove('on'));
+  // Close all vt-details when switching panes
+  panel.querySelectorAll('.vt-detail').forEach(d => d.classList.remove('open'));
+  tabEl.classList.add('on');
+  document.getElementById(paneId).classList.add('on');
+}
+
+// ── REQUEST FORMS ──
+async function submitReq(e, formName, successId) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.req-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  const data = new URLSearchParams(new FormData(form));
+  try {
+    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data.toString() });
+    document.getElementById(successId).style.display = 'block';
+    form.reset();
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Send Request →';
+    alert('Error sending. Please call us at (916) 399-3992.');
+  }
+}
+
+// legacy placeholder
+function _legacy() {
+  // Close all panels
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.add('open');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+  // Close mobile menu
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function closeDetail(id) {
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.remove('open');
+    document.getElementById('services').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function switchPane(tabEl, paneId) {
+  const panel = tabEl.closest('.detail-panel');
+  panel.querySelectorAll('.dp-tab').forEach(t => t.classList.remove('on'));
+  panel.querySelectorAll('.dp-pane').forEach(p => p.classList.remove('on'));
+  tabEl.classList.add('on');
+  document.getElementById(paneId).classList.add('on');
+}
+</script>
+</body>
+</html>
