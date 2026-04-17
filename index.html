@@ -250,15 +250,32 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 @media(max-width:900px){.vt-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:500px){.vt-grid{grid-template-columns:1fr;}}
 
-.vt{position:relative;border-radius:6px;overflow:hidden;cursor:pointer;min-height:130px;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;border:1px solid rgba(255,255,255,0.1);transition:transform 0.2s,box-shadow 0.2s;}
-.vt:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.25);}
+.vt{position:relative;border-radius:6px;overflow:hidden;cursor:pointer;min-height:130px;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;border:1px solid rgba(255,255,255,0.1);transition:transform 0.2s,box-shadow 0.2s;background:#1a2e4a;}
+.vt:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.35);}
 
-.vt-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.3s;}
-.vt-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(5,15,35,0.65) 0%,rgba(5,15,35,0.88) 100%);transition:background 0.3s;}
-.vt:hover .vt-overlay{background:linear-gradient(160deg,rgba(10,20,40,0.3) 0%,rgba(10,20,40,0.7) 100%);}
+/* Photo background: hidden by default, revealed on hover/tap */
+.vt-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 0.45s ease;}
+.vt-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(5,15,35,0.0) 0%,rgba(5,15,35,0.0) 100%);transition:background 0.45s;}
 
-.vt-content{position:relative;z-index:1;}
-.vt-icon{font-size:22px;margin-bottom:6px;display:block;}
+.vt:hover .vt-bg,.vt.photo-active .vt-bg{opacity:1;}
+.vt:hover .vt-overlay,.vt.photo-active .vt-overlay{background:linear-gradient(160deg,rgba(5,15,35,0.45) 0%,rgba(5,15,35,0.80) 100%);}
+
+/* Icon layer: visible by default, hidden on hover */
+.vt-icon-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity 0.35s;}
+.vt-icon-wrap span{font-size:48px;line-height:1;}
+.vt:hover .vt-icon-wrap,.vt.photo-active .vt-icon-wrap{opacity:0;pointer-events:none;}
+
+/* Hide all text content on hover - only photo shows */
+.vt-content{position:relative;z-index:1;transition:opacity 0.3s;}
+.vt:hover .vt-content,.vt.photo-active .vt-content{opacity:0;}
+
+/* Subtle colored bottom strip per category */
+.vt.cat-blue{border-bottom:3px solid #1a6bc4;}
+.vt.cat-purple{border-bottom:3px solid #7b4fba;}
+.vt.cat-amber{border-bottom:3px solid #c4952a;}
+.vt.cat-green{border-bottom:3px solid #2a8a5a;}
+.vt.cat-red{border-bottom:3px solid #c0392b;}
+
 .vt-code{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:3px;}
 .vt-name{font-size:13px;font-weight:600;color:#fff;line-height:1.3;}
 .vt-hint{font-size:11px;color:rgba(255,255,255,0.55);margin-top:3px;font-weight:300;}
@@ -495,49 +512,58 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <div id="pane-uscis" class="dp-pane on">
       <div class="dp-sub-title">Priority — Humanitarian &amp; Status</div>
       <div class="vt-grid">
-        <div class="vt" onclick="toggleVT('vt-u4u')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1655198862785-df65b17d2a5a?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-u4u')">
+          <div class="vt-bg" style="background-image:url('https://www.ukrainer.net/wp-content/uploads/2022/08/1_foto-YUriy-Stefaniak.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🇺🇦</span></div>
           <div class="vt-content"><div class="vt-code">U4U</div><div class="vt-name">Uniting for Ukraine</div><div class="vt-hint">Parole program</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-tps')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-tps')">
+          <div class="vt-bg" style="background-image:url('https://davisvanguard.org/wp-content/uploads/2025/09/TPS-US.webp');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🌍</span></div>
           <div class="vt-content"><div class="vt-code">I-821</div><div class="vt-name">TPS</div><div class="vt-hint">Temporary Protected Status</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-asylum')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-asylum')">
+          <div class="vt-bg" style="background-image:url('https://myattorneyusa.com/wp-content/uploads/2024/06/asylum-in-the-us.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🕊️</span></div>
           <div class="vt-content"><div class="vt-code">I-589</div><div class="vt-name">Asylum</div><div class="vt-hint">Withholding of removal</div><div class="vt-atty">⚠ Attorney recommended</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i485')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i485')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/04/civil-documents-nvc-checklist.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>💳</span></div>
           <div class="vt-content"><div class="vt-code">I-485</div><div class="vt-name">Adjustment of Status</div><div class="vt-hint">Green Card in the U.S.</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i765')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i765')">
+          <div class="vt-bg" style="background-image:url('https://www.ilrc.org/sites/default/files/images/2020/immigration_court_building.jpg');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-content"><div class="vt-code">I-765</div><div class="vt-name">Work Permit / EAD</div><div class="vt-hint">Employment Authorization</div></div>
+          <div class="vt-icon-wrap"><span>💼</span></div>
+          <div class="vt-content"><div class="vt-code">I-765</div><div class="vt-name">Work Permit | EAD</div><div class="vt-hint">Employment Authorization</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-n400')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=400&q=60');"></div>
+        <div class="vt cat-amber" onclick="toggleVT('vt-n400')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🇺🇸</span></div>
           <div class="vt-content"><div class="vt-code">N-400</div><div class="vt-name">Naturalization</div><div class="vt-hint">Become a U.S. Citizen</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-n600')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+        <div class="vt cat-amber" onclick="toggleVT('vt-n600')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-content"><div class="vt-code">N-600</div><div class="vt-name">Certificate of Citizenship</div><div class="vt-hint">Derived/acquired citizenship</div></div>
+          <div class="vt-icon-wrap"><span>📜</span></div>
+          <div class="vt-content"><div class="vt-code">N-600</div><div class="vt-name">Certificate of Citizenship</div><div class="vt-hint">Already a citizen</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-uvisa')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=400&q=60');"></div>
+        <div class="vt cat-green" onclick="toggleVT('vt-uvisa')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🛡️</span></div>
           <div class="vt-content"><div class="vt-code">I-918</div><div class="vt-name">U Visa</div><div class="vt-hint">Crime victims</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-vawa')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=60');"></div>
+        <div class="vt cat-green" onclick="toggleVT('vt-vawa')">
+          <div class="vt-bg" style="background-image:url('https://www.luisruizlaw.com/wp-content/uploads/2025/02/USCIS-Pauses-Accepting-Form-I-34A-768x508.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🤝</span></div>
           <div class="vt-content"><div class="vt-code">VAWA</div><div class="vt-name">VAWA Self-Petition</div><div class="vt-hint">Abuse survivors</div></div>
         </div>
       </div>
@@ -565,7 +591,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
         <div class="vt-detail-ref">Per INA §245 · 8 CFR §245</div>
       </div>
       <div id="vt-i765" class="vt-detail">
-        <div class="vt-detail-head"><div class="vt-detail-title">💼 I-765 — Work Permit / EAD</div><button class="vt-detail-close" onclick="toggleVT('vt-i765')">✕</button></div>
+        <div class="vt-detail-head"><div class="vt-detail-title">💼 I-765 — Work Permit | EAD</div><button class="vt-detail-close" onclick="toggleVT('vt-i765')">✕</button></div>
         <div class="vt-detail-body">The Employment Authorization Document (EAD) allows eligible noncitizens to work legally in the United States. Available to adjustment of status applicants, TPS holders, asylum applicants, parolees, and other categories. We prepare the I-765 and all required supporting documents.</div>
         <div class="vt-detail-ref">Per 8 CFR §274a.12</div>
       </div>
@@ -592,34 +618,40 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
       <div class="dp-sub-title" style="margin-top:2rem;">Family-Based Immigration</div>
       <div class="vt-grid">
-        <div class="vt" onclick="toggleVT('vt-i130')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i130')">
+          <div class="vt-bg" style="background-image:url('https://enterlinepartners.com/wp-content/uploads/2019/07/I-130ExpeditedProcessing-1.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>👨‍👩‍👧</span></div>
           <div class="vt-content"><div class="vt-code">I-130</div><div class="vt-name">Petition for Alien Relative</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i131')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i131')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-3-skilled-workers.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>✈️</span></div>
           <div class="vt-content"><div class="vt-code">I-131</div><div class="vt-name">Advance Parole</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i131a')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i131a')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/b1-b2-visitor-visa.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🛂</span></div>
           <div class="vt-content"><div class="vt-code">I-131A</div><div class="vt-name">Reentry Permit</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i539')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i539')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/extension-of-stay.jpg');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-content"><div class="vt-code">I-539</div><div class="vt-name">Extension / Change of Status</div></div>
+          <div class="vt-icon-wrap"><span>⏱️</span></div>
+          <div class="vt-content"><div class="vt-code">I-539</div><div class="vt-name">Extension | Change of Status</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i751')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i751')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/remove-conditions-i-751.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>💍</span></div>
           <div class="vt-content"><div class="vt-code">I-751</div><div class="vt-name">Remove Conditions</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-i864')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-i864')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🤝</span></div>
           <div class="vt-content"><div class="vt-code">I-864</div><div class="vt-name">Affidavit of Support</div></div>
         </div>
       </div>
@@ -627,7 +659,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div id="vt-i130" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">👨‍👩‍👧 I-130 — Petition for Alien Relative</div><button class="vt-detail-close" onclick="toggleVT('vt-i130')">✕</button></div><div class="vt-detail-body">Filed by U.S. citizens or lawful permanent residents to establish a qualifying family relationship for a foreign national relative. This is typically the first step in family-based immigration. We prepare the complete I-130 package with all supporting civil documents.</div><div class="vt-detail-ref">Per INA §204 · 8 CFR §204</div></div>
       <div id="vt-i131" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">✈️ I-131 — Advance Parole</div><button class="vt-detail-close" onclick="toggleVT('vt-i131')">✕</button></div><div class="vt-detail-body">Allows individuals with a pending I-485 to travel outside the U.S. and return without abandoning their adjustment of status application. Traveling without advance parole while I-485 is pending may result in the application being considered abandoned.</div><div class="vt-detail-ref">Per 8 CFR §223</div></div>
       <div id="vt-i131a" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🛂 I-131A — Reentry Permit</div><button class="vt-detail-close" onclick="toggleVT('vt-i131a')">✕</button></div><div class="vt-detail-body">A reentry permit allows a lawful permanent resident to apply for admission after traveling abroad for up to 2 years without abandoning LPR status. Must be applied for before departing the U.S.</div><div class="vt-detail-ref">Per 8 CFR §223.2</div></div>
-      <div id="vt-i539" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⏰ I-539 — Extension / Change of Status</div><button class="vt-detail-close" onclick="toggleVT('vt-i539')">✕</button></div><div class="vt-detail-body">Filed to extend a nonimmigrant stay or change to a different nonimmigrant status while remaining in the U.S. Must be filed before the current status expires. Common for B-2, F-1, and other nonimmigrant visa holders.</div><div class="vt-detail-ref">Per 8 CFR §248</div></div>
+      <div id="vt-i539" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">⏰ I-539 — Extension | Change of Status</div><button class="vt-detail-close" onclick="toggleVT('vt-i539')">✕</button></div><div class="vt-detail-body">Filed to extend a nonimmigrant stay or change to a different nonimmigrant status while remaining in the U.S. Must be filed before the current status expires. Common for B-2, F-1, and other nonimmigrant visa holders.</div><div class="vt-detail-ref">Per 8 CFR §248</div></div>
       <div id="vt-i751" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">💍 I-751 — Remove Conditions on Residence</div><button class="vt-detail-close" onclick="toggleVT('vt-i751')">✕</button></div><div class="vt-detail-body">Conditional permanent residents (those who received a 2-year green card based on marriage) must file I-751 to remove the conditions and obtain a 10-year permanent resident card. Must be filed within 90 days before the 2-year card expires.</div><div class="vt-detail-ref">Per INA §216 · 8 CFR §216</div></div>
       <div id="vt-i864" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🤝 I-864 — Affidavit of Support</div><button class="vt-detail-close" onclick="toggleVT('vt-i864')">✕</button></div><div class="vt-detail-body">A legally enforceable contract in which the U.S. sponsor agrees to financially support the immigrant. Required for most family-based and some employment-based immigrants. The sponsor must demonstrate income at or above 125% of the federal poverty guidelines.</div><div class="vt-detail-ref">Per INA §213A</div></div>
     </div>
@@ -636,34 +668,40 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <div id="pane-eoir" class="dp-pane">
       <div class="dp-note warn">We prepare documents for immigration court proceedings. We are not attorneys. Many EOIR proceedings are complex — we strongly recommend consulting a licensed immigration attorney for matters marked below. We can provide referrals.</div>
       <div class="vt-grid">
-        <div class="vt" onclick="toggleVT('vt-eoir33')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-eoir33')">
+          <div class="vt-bg" style="background-image:url('https://www.ilrc.org/sites/default/files/images/2020/immigration_court_building.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>📍</span></div>
           <div class="vt-content"><div class="vt-code">EOIR-33</div><div class="vt-name">Change of Address</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-continue')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-continue')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-3-skilled-workers.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>📅</span></div>
           <div class="vt-content"><div class="vt-code">Motion</div><div class="vt-name">Motion to Continue</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-venue')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-venue')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🏛️</span></div>
           <div class="vt-content"><div class="vt-code">Motion</div><div class="vt-name">Change of Venue</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-master')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-master')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>📁</span></div>
           <div class="vt-content"><div class="vt-code">Hearing</div><div class="vt-name">Master Hearing Package</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-bond')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-bond')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>⚖️</span></div>
           <div class="vt-content"><div class="vt-code">Hearing</div><div class="vt-name">Bond Hearing Documents</div></div>
         </div>
-        <div class="vt" style="border:1px solid rgba(255,100,100,0.3);" onclick="toggleVT('vt-bia')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=400&q=60');"></div>
+        <div class="vt cat-red" style="border:1px solid rgba(255,100,100,0.3);" onclick="toggleVT('vt-bia')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay" style="background:linear-gradient(160deg,rgba(80,10,10,0.6) 0%,rgba(80,10,10,0.85) 100%);"></div>
+          <div class="vt-icon-wrap"><span>⚠️</span></div>
           <div class="vt-content"><div class="vt-code">EOIR-26</div><div class="vt-name">Appeal to BIA</div><div class="vt-atty">Attorney required</div></div>
         </div>
       </div>
@@ -679,33 +717,38 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <div id="pane-visas" class="dp-pane">
       <div class="dp-note">We prepare visa application documents at the client's direction. Where we can assist with finding educational institutions or employers, we note it below. We do not provide legal advice.</div>
       <div class="vt-grid">
-        <div class="vt" onclick="toggleVT('vt-b1b2')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-b1b2')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/b1-b2-visitor-visa.jpg');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-content"><div class="vt-code">B1/B2</div><div class="vt-name">Visitor / Business Visa</div></div>
+          <div class="vt-icon-wrap"><span>🧳</span></div>
+          <div class="vt-content"><div class="vt-code">B1/B2</div><div class="vt-name">Visitor | Business Visa</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-f1')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-f1')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/f1-student-visa.jpg');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-content"><div class="vt-code">F-1</div><div class="vt-name">Student Visa</div><div class="vt-hint">College / University help</div></div>
+          <div class="vt-icon-wrap"><span>🎓</span></div>
+          <div class="vt-content"><div class="vt-code">F-1</div><div class="vt-name">Student Visa</div><div class="vt-hint">College | University help</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-k1')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&q=60');"></div>
+        <div class="vt cat-purple" onclick="toggleVT('vt-k1')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/k1-fiance-visa.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>💍</span></div>
           <div class="vt-content"><div class="vt-code">K-1</div><div class="vt-name">Fiancé(e) Visa</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-j1')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-j1')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/j1-exchange-visitor-visa.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🌐</span></div>
           <div class="vt-content"><div class="vt-code">J-1</div><div class="vt-name">Exchange Visitor</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-e2')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=400&q=60');"></div>
+        <div class="vt cat-amber" onclick="toggleVT('vt-e2')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/e2-investor-visa.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>💰</span></div>
           <div class="vt-content"><div class="vt-code">E-2</div><div class="vt-name">Investor Visa</div><div class="vt-hint">Treaty investor</div></div>
         </div>
       </div>
-      <div id="vt-b1b2" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🧳 B1/B2 — Visitor / Business Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-b1b2')">✕</button></div><div class="vt-detail-body">B-1 is for business visitors; B-2 is for tourism, vacation, or medical treatment. We prepare DS-160 (nonimmigrant visa application) and supporting documentation for the consular interview. Strong ties to home country must be demonstrated.</div><div class="vt-detail-ref">Per INA §101(a)(15)(B)</div></div>
+      <div id="vt-b1b2" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🧳 B1/B2 — Visitor | Business Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-b1b2')">✕</button></div><div class="vt-detail-body">B-1 is for business visitors; B-2 is for tourism, vacation, or medical treatment. We prepare DS-160 (nonimmigrant visa application) and supporting documentation for the consular interview. Strong ties to home country must be demonstrated.</div><div class="vt-detail-ref">Per INA §101(a)(15)(B)</div></div>
       <div id="vt-f1" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🎓 F-1 — Student Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-f1')">✕</button></div><div class="vt-detail-body">The F-1 visa allows international students to pursue academic studies at accredited U.S. colleges, universities, and language programs. Requires a Form I-20 from the school and SEVIS registration. We prepare the DS-160 and supporting documents. We can also help you identify suitable colleges or universities that match your academic goals and financial situation — contact us to discuss.</div><div class="vt-detail-ref">Per INA §101(a)(15)(F)</div></div>
       <div id="vt-k1" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">💍 K-1 — Fiancé(e) Visa</div><button class="vt-detail-close" onclick="toggleVT('vt-k1')">✕</button></div><div class="vt-detail-body">The K-1 visa allows a foreign national fiancé(e) of a U.S. citizen to enter the U.S. to get married within 90 days of arrival. The U.S. citizen files I-129F petition. After marriage, the K-1 holder can apply for I-485 (adjustment of status). We prepare the complete K-1 package.</div><div class="vt-detail-ref">Per INA §101(a)(15)(K)</div></div>
       <div id="vt-j1" class="vt-detail"><div class="vt-detail-head"><div class="vt-detail-title">🌍 J-1 — Exchange Visitor</div><button class="vt-detail-close" onclick="toggleVT('vt-j1')">✕</button></div><div class="vt-detail-body">The J-1 visa supports educational and cultural exchange programs including research scholars, professors, students, interns, and au pairs. Requires a DS-2019 from a designated sponsor organization. We prepare DS-160 and supporting documents.</div><div class="vt-detail-ref">Per INA §101(a)(15)(J)</div></div>
@@ -716,34 +759,40 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <div id="pane-eb" class="dp-pane">
       <div class="dp-note">Employment-based immigration categories. We prepare I-140 petitions and supporting documentation at the client's direction. Per INA §203(b).</div>
       <div class="vt-grid">
-        <div class="vt" onclick="toggleVT('vt-eb1a')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&q=60');"></div>
+        <div class="vt cat-amber" onclick="toggleVT('vt-eb1a')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-1a-extraordinary-ability.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🇺🇸</span></div>
           <div class="vt-content"><div class="vt-code">EB-1A</div><div class="vt-name">Extraordinary Ability</div><div class="vt-hint">No sponsor needed</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-eb2niw')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-eb2niw')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🎯</span></div>
           <div class="vt-content"><div class="vt-code">EB-2 NIW</div><div class="vt-name">National Interest Waiver</div><div class="vt-hint">No PERM needed</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-eb2perm')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-eb2perm')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/04/civil-documents-nvc-checklist.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>👔</span></div>
           <div class="vt-content"><div class="vt-code">EB-2</div><div class="vt-name">Advanced Degree + PERM</div><div class="vt-hint">Employer sponsored</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-eb3')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-eb3')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-3-skilled-workers.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🔧</span></div>
           <div class="vt-content"><div class="vt-code">EB-3</div><div class="vt-name">Skilled Workers</div><div class="vt-hint">Truck drivers, tradespeople</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-eb4')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1438232992991-995b671e4668?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-eb4')">
+          <div class="vt-bg" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Chartres_Cathedral_Exterior_02.jpg/600px-Chartres_Cathedral_Exterior_02.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>⛪</span></div>
           <div class="vt-content"><div class="vt-code">EB-4</div><div class="vt-name">Special Immigrants</div><div class="vt-hint">Religious workers, pastors</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-eb5')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472355-536de3962603?w=400&q=60');"></div>
+        <div class="vt cat-amber" onclick="toggleVT('vt-eb5')">
+          <div class="vt-bg" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg/800px-Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>💰</span></div>
           <div class="vt-content"><div class="vt-code">EB-5</div><div class="vt-name">Investor Immigration</div><div class="vt-hint">$1M+ investment</div></div>
         </div>
       </div>
@@ -765,24 +814,28 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <div id="pane-nvc" class="dp-pane">
       <div class="dp-note">After USCIS approves an immigrant petition, cases destined for consular processing are transferred to the National Visa Center (NVC) for pre-processing before the consular interview abroad.</div>
       <div class="vt-grid">
-        <div class="vt" onclick="toggleVT('vt-nvc')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1555848962-6e79363ec58f?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-nvc')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/nvc-national-visa-center.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>🏛️</span></div>
           <div class="vt-content"><div class="vt-code">NVC</div><div class="vt-name">NVC Document Submission</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-ds260')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-ds260')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>📋</span></div>
           <div class="vt-content"><div class="vt-code">DS-260</div><div class="vt-name">Immigrant Visa Application</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-ds261')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-ds261')">
+          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>✍️</span></div>
           <div class="vt-content"><div class="vt-code">DS-261</div><div class="vt-name">Choice of Agent</div></div>
         </div>
-        <div class="vt" onclick="toggleVT('vt-civil')">
-          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=60');"></div>
+        <div class="vt cat-blue" onclick="toggleVT('vt-civil')">
+          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/04/civil-documents-nvc-checklist.jpg');"></div>
           <div class="vt-overlay"></div>
+          <div class="vt-icon-wrap"><span>📂</span></div>
           <div class="vt-content"><div class="vt-code">Docs</div><div class="vt-name">Civil Documents Package</div></div>
         </div>
       </div>
@@ -1350,6 +1403,27 @@ function toggleVT(id) {
   }
 }
 
+// Mobile tap: toggle photo-active on .vt tiles (shows bg photo on first tap, hides on second)
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.vt').forEach(function(tile) {
+    tile.addEventListener('touchstart', function(e) {
+      // Only on touch devices — toggle photo visibility
+      const isActive = tile.classList.contains('photo-active');
+      // First touch: show photo. If already showing, let the onclick (toggleVT) fire normally.
+      if (!isActive) {
+        e.preventDefault();
+        tile.classList.add('photo-active');
+        // Auto-hide after 2.5s
+        clearTimeout(tile._photoTimer);
+        tile._photoTimer = setTimeout(function() {
+          tile.classList.remove('photo-active');
+        }, 2500);
+      }
+      // If already active, let click through to toggleVT
+    }, { passive: false });
+  });
+});
+
 // ── DETAIL PANELS ──
 function openDetail(id) {
   document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
@@ -1426,6 +1500,83 @@ function switchPane(tabEl, paneId) {
   tabEl.classList.add('on');
   document.getElementById(paneId).classList.add('on');
 }
+</script>
+
+<script>
+// Unsplash API photo loader for tiles
+(function() {
+  const UNSPLASH_KEY = '9JPwqfxzC2dy5eSlc0uPkRHycM0wB4Oo3XvWW3Xo8l8';
+  const cache = {};
+  const keywords = {
+    'vt-u4u': 'ukraine flag blue yellow',
+    'vt-tps': 'refugees displaced people temporary',
+    'vt-asylum': 'refugees family border crossing',
+    'vt-i485': 'green card permanent resident',
+    'vt-i765': 'employment authorization work permit card',
+    'vt-n400': 'naturalization ceremony american flag citizenship',
+    'vt-n600': 'certificate citizenship document official',
+    'vt-uvisa': 'crime victim protection help',
+    'vt-vawa': 'women support group domestic violence',
+    'vt-i130': 'family reunion airport arrival embrace',
+    'vt-i131': 'airplane travel passport document',
+    'vt-i131a': 'passport border control reentry',
+    'vt-i539': 'hourglass time extension visa',
+    'vt-i751': 'wedding rings marriage couple',
+    'vt-i864': 'signing contract document pen paper',
+    'vt-eoir33': 'map address location immigration court',
+    'vt-continue': 'calendar deadline schedule court',
+    'vt-venue': 'courthouse justice building law',
+    'vt-master': 'courtroom judge hearing law',
+    'vt-bond': 'scales justice law gavel court',
+    'vt-bia': 'supreme court appeal law serious',
+    'vt-b1b2': 'passport travel tourist suitcase',
+    'vt-f1': 'university campus students education graduation',
+    'vt-k1': 'couple engagement ring love wedding',
+    'vt-j1': 'international exchange students globe',
+    'vt-e2': 'business investment handshake entrepreneur',
+    'vt-eb1a': 'business conference professional achievement award',
+    'vt-eb2niw': 'scientist researcher laboratory science',
+    'vt-eb2perm': 'office professional team work employer',
+    'vt-eb3': 'construction worker skilled trade tools',
+    'vt-eb4': 'church religious worship community',
+    'vt-eb5': 'city skyline investment finance building',
+    'vt-nvc': 'embassy consulate official building',
+    'vt-ds260': 'visa application form immigration',
+    'vt-ds261': 'document agent representative official',
+    'vt-civil': 'documents papers folder civil records'
+  };
+
+  function loadPhoto(tile) {
+    const id = tile.id;
+    if (!keywords[id]) return;
+    if (cache[id]) {
+      applyPhoto(tile, cache[id]);
+      return;
+    }
+    const query = encodeURIComponent(keywords[id]);
+    fetch(`https://api.unsplash.com/photos/random?query=${query}&orientation=landscape&client_id=${UNSPLASH_KEY}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.urls && data.urls.regular) {
+          cache[id] = data.urls.regular;
+          applyPhoto(tile, data.urls.regular);
+        }
+      })
+      .catch(() => {});
+  }
+
+  function applyPhoto(tile, url) {
+    const bg = tile.querySelector('.vt-bg');
+    if (bg) bg.style.backgroundImage = `url('${url}')`;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.vt').forEach(function(tile) {
+      tile.addEventListener('mouseenter', function() { loadPhoto(tile); });
+      tile.addEventListener('touchstart', function() { loadPhoto(tile); }, {passive: true});
+    });
+  });
+})();
 </script>
 </body>
 </html>
