@@ -356,6 +356,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .iw-form textarea{resize:vertical;min-height:80px;}
 .iw-form button{background:#1a2e4a;color:#fff;border:none;border-radius:6px;padding:12px;cursor:pointer;font-size:14px;font-family:inherit;}
 .iw-success{padding:14px;color:#1a5a3a;font-size:14px;text-align:center;}
+.iw-presets{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px;}
+.iw-preset{background:#f0f4f8;border:1px solid #c5d0de;color:#1a2e4a;border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit;transition:background 0.15s;}
+.iw-preset:hover{background:#1a2e4a;color:#fff;border-color:#1a2e4a;}
 .iw-disclaimer-wrap{padding:10px 14px 14px;border-top:1px solid #eee;margin-top:4px;}
 .iw-disclaimer-label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:11px;color:#555;line-height:1.5;}
 .iw-disclaimer-label input[type=checkbox]{margin-top:2px;flex-shrink:0;width:15px;height:15px;cursor:pointer;accent-color:#1a2e4a;}
@@ -1456,7 +1459,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       chatPlaceholder: 'Type your message...',
       chatGreeting: 'Hello! Ask me about USCIS forms, family law, civil court, or our services.',
       chatError: 'Sorry, please try again or call us at (916) 399-3992.',
-      tosText: 'I understand that Imverica Legal Solutions is a registered Legal Document Assistant (LDA), not a law firm. We prepare documents only at the client\'s direction and do not provide legal advice. For legal advice, consult a licensed attorney. I agree to the <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Terms of Service</a>.'
+      tosText: 'I understand that Imverica Legal Solutions is a registered Legal Document Assistant (LDA), not a law firm. We prepare documents only at the client\'s direction and do not provide legal advice. For legal advice, consult a licensed attorney. I agree to the <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Terms of Service</a>.',
+      presets: ['Green Card', 'Asylum', 'U Visa', 'Divorce', 'Small Claims', 'DMV']
     },
     ru: {
       menuTitle: 'Как мы можем помочь?',
@@ -1471,7 +1475,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       chatPlaceholder: 'Напишите ваше сообщение...',
       chatGreeting: 'Здравствуйте! Спросите меня о формах USCIS, семейном праве, гражданских делах или наших услугах.',
       chatError: 'Извините, попробуйте еще раз или позвоните нам (916) 399-3992.',
-      tosText: 'Я понимаю, что Imverica Legal Solutions является зарегистрированным помощником по юридическим документам (LDA), а не юридической фирмой. Мы только готовим документы по указанию клиента и не предоставляем юридических консультаций. Для юридической консультации обратитесь к лицензированному адвокату. Я соглашаюсь с <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Условиями использования</a>.'
+      tosText: 'Я понимаю, что Imverica Legal Solutions является зарегистрированным помощником по юридическим документам (LDA), а не юридической фирмой. Мы только готовим документы по указанию клиента и не предоставляем юридических консультаций. Для юридической консультации обратитесь к лицензированному адвокату. Я соглашаюсь с <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Условиями использования</a>.',
+      presets: ['Грин карта', 'Убежище', 'Виза U', 'Развод', 'Малые иски', 'DMV']
     },
     uk: {
       menuTitle: 'Як ми можемо допомогти?',
@@ -1486,7 +1491,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       chatPlaceholder: 'Напишіть ваше повідомлення...',
       chatGreeting: 'Вітаю! Запитайте мене про форми USCIS, сімейне право, цивільні справи або наші послуги.',
       chatError: 'Вибачте, спробуйте ще раз або зателефонуйте нам (916) 399-3992.',
-      tosText: 'Я розумію, що Imverica Legal Solutions є зареєстрованим помічником з юридичних документів (LDA), а не юридичною фірмою. Ми лише готуємо документи за вказівкою клієнта і не надаємо юридичних консультацій. Для юридичної консультації зверніться до ліцензованого адвоката. Я погоджуюся з <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Умовами використання</a>.'
+      tosText: 'Я розумію, що Imverica Legal Solutions є зареєстрованим помічником з юридичних документів (LDA), а не юридичною фірмою. Ми лише готуємо документи за вказівкою клієнта і не надаємо юридичних консультацій. Для юридичної консультації зверніться до ліцензованого адвоката. Я погоджуюся з <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Умовами використання</a>.',
+      presets: ['Грін карта', 'Притулок', 'Віза U', 'Розлучення', 'Малі позови', 'DMV']
     },
     es: {
       menuTitle: '¿Cómo podemos ayudarle?',
@@ -1501,7 +1507,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       chatPlaceholder: 'Escriba su mensaje...',
       chatGreeting: '¡Hola! Pregúnteme sobre formularios USCIS, derecho familiar, tribunales civiles o nuestros servicios.',
       chatError: 'Lo siento, inténtelo de nuevo o llámenos al (916) 399-3992.',
-      tosText: 'Entiendo que Imverica Legal Solutions es un Asistente de Documentos Legales (LDA) registrado, no un bufete de abogados. Solo preparamos documentos bajo la dirección del cliente y no brindamos asesoramiento legal. Para asesoramiento legal, consulte a un abogado con licencia. Acepto los <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Términos de Servicio</a>.'
+      tosText: 'Entiendo que Imverica Legal Solutions es un Asistente de Documentos Legales (LDA) registrado, no un bufete de abogados. Solo preparamos documentos bajo la dirección del cliente y no brindamos asesoramiento legal. Para asesoramiento legal, consulte a un abogado con licencia. Acepto los <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Términos de Servicio</a>.',
+      presets: ['Tarjeta Verde', 'Asilo', 'Visa U', 'Divorcio', 'Demanda Civil', 'DMV']
     }
   };
   
@@ -1632,10 +1639,14 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   function renderChat() {
     const t = T[currentLang];
     conversationHistory = [];
+    const presetBtns = (t.presets || []).map(p =>
+      `<button class="iw-preset" data-text="${p}">${p}</button>`
+    ).join('');
     content.innerHTML = `
       <button class="iw-back" id="iw-back-btn">${t.back}</button>
       <div class="iw-chat-body" id="iw-chat-body" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;">
         <div class="iw-msg iw-msg-bot">${t.chatGreeting}</div>
+        <div class="iw-presets" id="iw-presets">${presetBtns}</div>
       </div>
       <div class="iw-input-row" style="flex-shrink:0;display:flex;border-top:1px solid #eee;padding:10px;gap:8px;">
         <input class="iw-input" id="iw-chat-input" type="text" placeholder="${t.chatPlaceholder}" style="flex:1;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:14px;font-family:inherit;outline:none;">
@@ -1646,11 +1657,21 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     const input = document.getElementById('iw-chat-input');
     const sendBtn = document.getElementById('iw-chat-send');
     const body = document.getElementById('iw-chat-body');
+    let sending = false;
+
+    // preset buttons
+    document.querySelectorAll('.iw-preset').forEach(btn => {
+      btn.addEventListener('click', function() {
+        input.value = this.dataset.text;
+        const presets = document.getElementById('iw-presets');
+        if (presets) presets.remove();
+        send();
+      });
+    });
     
     function addMsg(text, who) {
       const div = document.createElement('div');
       div.className = 'iw-msg iw-msg-' + who;
-      // render **bold** and line breaks
       div.innerHTML = text
         .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
         .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
@@ -1660,8 +1681,11 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     }
     
     async function send() {
+      if (sending) return;
       const txt = input.value.trim();
       if (!txt) return;
+      sending = true;
+      sendBtn.style.opacity = '0.5';
       addMsg(txt, 'user');
       conversationHistory.push({role:'user', content: txt});
       input.value = '';
@@ -1681,15 +1705,18 @@ mobileMenu.querySelectorAll('a').forEach(a => {
         typing.remove();
         if (!res.ok) {
           addMsg(t.chatError, 'bot');
-          return;
+        } else {
+          const data = await res.json();
+          const reply = data.reply || t.chatError;
+          conversationHistory.push({role:'assistant', content: reply});
+          addMsg(reply, 'bot');
         }
-        const data = await res.json();
-        const reply = data.reply || t.chatError;
-        conversationHistory.push({role:'assistant', content: reply});
-        addMsg(reply, 'bot');
       } catch(err) {
         typing.remove();
         addMsg(t.chatError, 'bot');
+      } finally {
+        sending = false;
+        sendBtn.style.opacity = '1';
       }
     }
     
