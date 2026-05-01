@@ -205,7 +205,8 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .footer-bottom{max-width:1100px;margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid #1e2e3e;font-size:11px;color:#2e4455;line-height:1.7;}
 
 /* CHATBOT */
-.chat-bubble{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10000;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.2s;}
+.chat-bubble{position:fixed!important;bottom:24px!important;right:24px!important;width:56px!important;height:56px!important;background:#1a2e4a!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;z-index:999999!important;box-shadow:0 4px 16px rgba(0,0,0,0.25)!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+.chat-bubble svg{width:26px!important;height:26px!important;color:#fff!important;}
 .chat-bubble:hover{transform:scale(1.08);}
 .chat-bubble svg{width:24px;height:24px;color:#fff;}
 
@@ -1373,6 +1374,7 @@ async function sendToAI(userMessage) {
     });
     if (!response.ok) {
       document.getElementById('chatWindow').classList.remove('open');
+      document.getElementById('chatBubble').style.display = 'none';
       return;
     }
     const data = await response.json();
@@ -1685,5 +1687,28 @@ function switchPane(tabEl, paneId) {
 })();
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var bubble = document.querySelector(".chat-bubble");
+  if (!bubble) {
+    bubble = document.createElement("div");
+    bubble.className = "chat-bubble";
+    bubble.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg>';
+    document.body.appendChild(bubble);
+  }
+  bubble.style.display = "flex";
+  bubble.style.visibility = "visible";
+  bubble.style.opacity = "1";
+  bubble.style.pointerEvents = "auto";
+  bubble.style.zIndex = "999999";
+  bubble.onclick = function () {
+    var chatWindow = document.querySelector(".chat-window");
+    if (chatWindow) {
+      chatWindow.classList.toggle("open");
+      chatWindow.style.display = chatWindow.classList.contains("open") ? "flex" : "none";
+    }
+  };
+});
+</script>
 </body>
 </html>
