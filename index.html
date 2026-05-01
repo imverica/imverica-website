@@ -1373,8 +1373,8 @@ async function sendToAI(userMessage) {
       body: JSON.stringify({ messages: conversationHistory })
     });
     if (!response.ok) {
-      document.getElementById('chatWindow').classList.remove('open');
-      document.getElementById('chatBubble').style.display = 'none';
+      removeTyping();
+      addBotMsg('Chat is temporarily unavailable. Please call us at (916) 399-3992 or use Get a Quote.');
       return;
     }
     const data = await response.json();
@@ -1688,27 +1688,71 @@ function switchPane(tabEl, paneId) {
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  var bubble = document.querySelector(".chat-bubble");
-  if (!bubble) {
-    bubble = document.createElement("div");
-    bubble.className = "chat-bubble";
-    bubble.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg>';
-    document.body.appendChild(bubble);
-  }
-  bubble.style.display = "flex";
-  bubble.style.visibility = "visible";
-  bubble.style.opacity = "1";
-  bubble.style.pointerEvents = "auto";
-  bubble.style.zIndex = "999999";
-  bubble.onclick = function () {
-    var chatWindow = document.querySelector(".chat-window");
-    if (chatWindow) {
-      chatWindow.classList.toggle("open");
-      chatWindow.style.display = chatWindow.classList.contains("open") ? "flex" : "none";
+(function () {
+  function restoreChatBubble() {
+    var bubble = document.getElementById('chatBubble') || document.querySelector('.chat-bubble');
+
+    if (!bubble) {
+      bubble = document.createElement('div');
+      bubble.id = 'chatBubble';
+      bubble.className = 'chat-bubble';
+      bubble.title = 'Chat with us';
+      bubble.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+      document.body.appendChild(bubble);
     }
-  };
-});
+
+    if (bubble.parentNode !== document.body) {
+      document.body.appendChild(bubble);
+    }
+
+    bubble.style.setProperty('position', 'fixed', 'important');
+    bubble.style.setProperty('right', '24px', 'important');
+    bubble.style.setProperty('bottom', '24px', 'important');
+    bubble.style.setProperty('width', '56px', 'important');
+    bubble.style.setProperty('height', '56px', 'important');
+    bubble.style.setProperty('background', '#1a2e4a', 'important');
+    bubble.style.setProperty('border-radius', '50%', 'important');
+    bubble.style.setProperty('display', 'flex', 'important');
+    bubble.style.setProperty('align-items', 'center', 'important');
+    bubble.style.setProperty('justify-content', 'center', 'important');
+    bubble.style.setProperty('visibility', 'visible', 'important');
+    bubble.style.setProperty('opacity', '1', 'important');
+    bubble.style.setProperty('pointer-events', 'auto', 'important');
+    bubble.style.setProperty('z-index', '2147483647', 'important');
+    bubble.style.setProperty('box-shadow', '0 4px 16px rgba(0,0,0,0.25)', 'important');
+    bubble.style.setProperty('cursor', 'pointer', 'important');
+
+    var icon = bubble.querySelector('svg');
+    if (icon) {
+      icon.style.setProperty('width', '26px', 'important');
+      icon.style.setProperty('height', '26px', 'important');
+      icon.style.setProperty('color', '#fff', 'important');
+      icon.style.setProperty('display', 'block', 'important');
+    }
+
+    bubble.onclick = function (event) {
+      event.preventDefault();
+      var chatWindow = document.getElementById('chatWindow') || document.querySelector('.chat-window');
+      if (!chatWindow) return;
+      var isOpen = chatWindow.classList.toggle('open');
+      chatWindow.style.setProperty('display', isOpen ? 'flex' : 'none', 'important');
+    };
+  }
+
+  window.restoreChatBubble = restoreChatBubble;
+
+  restoreChatBubble();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restoreChatBubble);
+  } else {
+    restoreChatBubble();
+  }
+
+  window.addEventListener('load', restoreChatBubble);
+  setTimeout(restoreChatBubble, 300);
+  setTimeout(restoreChatBubble, 1200);
+})();
 </script>
 </body>
 </html>
