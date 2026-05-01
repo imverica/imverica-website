@@ -1761,9 +1761,6 @@ function switchPane(tabEl, paneId) {
     const chatWindow = document.getElementById('chatWindow');
     if (!bubble || !chatWindow) return;
 
-    const cleanBubble = bubble.cloneNode(true);
-    bubble.replaceWith(cleanBubble);
-    bubble = cleanBubble;
     document.body.appendChild(bubble);
 
     bubble.style.setProperty('position', 'fixed', 'important');
