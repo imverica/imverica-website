@@ -1267,6 +1267,20 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 
+// DETAIL PANELS
+function openDetail(id) {
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.add('open');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+function closeDetail(id) {
+  const panel = document.getElementById('dp-' + id);
+  if (panel) panel.classList.remove('open');
+}
+
 </script>
 
 <script>
