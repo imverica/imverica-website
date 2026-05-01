@@ -1253,7 +1253,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <!-- CHATBOT -->
 
 <script>
-// BURGER MENU
+function openDetail(id){document.querySelectorAll(".detail-panel").forEach(p=>p.classList.remove("open"));var p=document.getElementById("dp-"+id);if(p){p.classList.add("open");p.scrollIntoView({behavior:"smooth",block:"start"});}}function closeDetail(id){var p=document.getElementById("dp-"+id);if(p)p.classList.remove("open");}// BURGER MENU
 const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
 burger.addEventListener('click', () => {
