@@ -1270,7 +1270,6 @@ const chatSendBtn = document.getElementById('chatSendBtn');
 const termsCheck = document.getElementById('termsCheck');
 const chatStartBtn = document.getElementById('chatStartBtn');
 
-chatBubble.addEventListener('click', () => chatWindow.classList.toggle('open'));
 chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
 termsCheck.addEventListener('change', () => chatStartBtn.disabled = !termsCheck.checked);
 
@@ -1687,113 +1686,28 @@ function switchPane(tabEl, paneId) {
 })();
 </script>
 
+
+
 <script>
-(function () {
-  function restoreChatBubble() {
-    var bubble = document.getElementById('chatBubble') || document.querySelector('.chat-bubble');
-
-    if (!bubble) {
-      bubble = document.createElement('div');
-      bubble.id = 'chatBubble';
-      bubble.className = 'chat-bubble';
-      bubble.title = 'Chat with us';
-      bubble.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
-      document.body.appendChild(bubble);
+document.addEventListener('DOMContentLoaded', function() {
+  var bubble = document.getElementById('chatBubble');
+  var chatWindow = document.getElementById('chatWindow');
+  if (!bubble || !chatWindow) return;
+  
+  bubble.style.cssText = 'position:fixed!important;bottom:24px!important;right:24px!important;width:56px!important;height:56px!important;background:#1a2e4a!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;z-index:2147483647!important;box-shadow:0 4px 16px rgba(0,0,0,0.25)!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;';
+  
+  bubble.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (chatWindow.classList.contains('open')) {
+      chatWindow.classList.remove('open');
+      chatWindow.style.display = 'none';
+    } else {
+      chatWindow.classList.add('open');
+      chatWindow.style.display = 'flex';
     }
-
-    if (bubble.parentNode !== document.body) {
-      document.body.appendChild(bubble);
-    }
-
-    bubble.style.setProperty('position', 'fixed', 'important');
-    bubble.style.setProperty('right', '24px', 'important');
-    bubble.style.setProperty('bottom', '24px', 'important');
-    bubble.style.setProperty('width', '56px', 'important');
-    bubble.style.setProperty('height', '56px', 'important');
-    bubble.style.setProperty('background', '#1a2e4a', 'important');
-    bubble.style.setProperty('border-radius', '50%', 'important');
-    bubble.style.setProperty('display', 'flex', 'important');
-    bubble.style.setProperty('align-items', 'center', 'important');
-    bubble.style.setProperty('justify-content', 'center', 'important');
-    bubble.style.setProperty('visibility', 'visible', 'important');
-    bubble.style.setProperty('opacity', '1', 'important');
-    bubble.style.setProperty('pointer-events', 'auto', 'important');
-    bubble.style.setProperty('z-index', '2147483647', 'important');
-    bubble.style.setProperty('box-shadow', '0 4px 16px rgba(0,0,0,0.25)', 'important');
-    bubble.style.setProperty('cursor', 'pointer', 'important');
-
-    var icon = bubble.querySelector('svg');
-    if (icon) {
-      icon.style.setProperty('width', '26px', 'important');
-      icon.style.setProperty('height', '26px', 'important');
-      icon.style.setProperty('color', '#fff', 'important');
-      icon.style.setProperty('display', 'block', 'important');
-    }
-
-    bubble.onclick = function (event) {
-      event.preventDefault();
-      var chatWindow = document.getElementById('chatWindow') || document.querySelector('.chat-window');
-      if (!chatWindow) return;
-      var isOpen = chatWindow.classList.toggle('open');
-      chatWindow.style.setProperty('display', isOpen ? 'flex' : 'none', 'important');
-    };
-  }
-
-  window.restoreChatBubble = restoreChatBubble;
-
-  restoreChatBubble();
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', restoreChatBubble);
-  } else {
-    restoreChatBubble();
-  }
-
-  window.addEventListener('load', restoreChatBubble);
-  setTimeout(restoreChatBubble, 300);
-  setTimeout(restoreChatBubble, 1200);
-})();
-</script>
-<script>
-(function () {
-  function fixChatBubble() {
-    let bubble = document.getElementById('chatBubble');
-    const chatWindow = document.getElementById('chatWindow');
-    if (!bubble || !chatWindow) return;
-
-    document.body.appendChild(bubble);
-
-    bubble.style.setProperty('position', 'fixed', 'important');
-    bubble.style.setProperty('bottom', '24px', 'important');
-    bubble.style.setProperty('right', '24px', 'important');
-    bubble.style.setProperty('width', '56px', 'important');
-    bubble.style.setProperty('height', '56px', 'important');
-    bubble.style.setProperty('display', 'flex', 'important');
-    bubble.style.setProperty('visibility', 'visible', 'important');
-    bubble.style.setProperty('opacity', '1', 'important');
-    bubble.style.setProperty('pointer-events', 'auto', 'important');
-    bubble.style.setProperty('z-index', '2147483647', 'important');
-    bubble.style.setProperty('cursor', 'pointer', 'important');
-    chatWindow.style.setProperty('z-index', '2147483646', 'important');
-
-    bubble.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      chatWindow.classList.toggle('open');
-      if (chatWindow.classList.contains('open')) {
-        chatWindow.style.setProperty('display', 'flex', 'important');
-      } else {
-        chatWindow.style.setProperty('display', 'none', 'important');
-      }
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fixChatBubble);
-  } else {
-    fixChatBubble();
-  }
-})();
+  });
+});
 </script>
 </body>
 </html>
