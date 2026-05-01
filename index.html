@@ -30,10 +30,10 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
 
 /* NAV */
-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:120px;position:sticky;top:0;z-index:100;}
-.logo-img{height:110px;width:auto;display:block;}
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:100;}
+.logo-img{height:54px;width:auto;display:block;}
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
-.nav-links a{font-size:16px;font-weight:400;color:#444;text-decoration:none;padding:7px 11px;border-radius:3px;transition:background 0.18s,color 0.18s;display:block;white-space:nowrap;}
+.nav-links a{font-size:13px;font-weight:400;color:#444;text-decoration:none;padding:7px 11px;border-radius:3px;transition:background 0.18s,color 0.18s;display:block;white-space:nowrap;}
 .nav-links a[data-cat="imm"]:hover{background:var(--col-imm);color:#fff;}
 .nav-links a[data-cat="fam"]:hover{background:var(--col-fam);color:#fff;}
 .nav-links a[data-cat="civ"]:hover{background:var(--col-civ);color:#fff;}
@@ -204,47 +204,46 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .footer-info a:hover{color:#7a9ab0;}
 .footer-bottom{max-width:1100px;margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid #1e2e3e;font-size:11px;color:#2e4455;line-height:1.7;}
 
+/* CHATBOT */
+.chat-bubble{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:1000;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.2s;}
+.chat-bubble:hover{transform:scale(1.08);}
+.chat-bubble svg{width:24px;height:24px;color:#fff;}
 
+.chat-window{position:fixed;bottom:88px;right:24px;width:360px;max-height:560px;background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.18);z-index:999;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--border);}
+.chat-window.open{display:flex;}
+@media(max-width:420px){.chat-window{width:calc(100vw - 48px);right:24px;}}
 
+.chat-header{background:var(--navy);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.chat-header-title{color:#fff;font-size:14px;font-weight:500;}
+.chat-header-sub{color:#99b0c8;font-size:11px;margin-top:2px;}
+.chat-close{background:none;border:none;color:#99b0c8;cursor:pointer;font-size:20px;line-height:1;padding:0 4px;}
+.chat-close:hover{color:#fff;}
 
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.chat-msg{max-width:85%;padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.55;}
+.chat-msg.bot{background:#f0f4f8;color:#1a1a1a;align-self:flex-start;border-bottom-left-radius:3px;}
+.chat-msg.user{background:var(--navy);color:#fff;align-self:flex-end;border-bottom-right-radius:3px;}
 
-
-
-
-
-@media(max-width:420px){}
-
-
-
-
-
-
-
-
-
-
-
-
-
+.chat-options{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px;}
 .chat-opt{background:#fff;border:1px solid var(--border);color:var(--navy);padding:7px 12px;border-radius:20px;font-size:12px;cursor:pointer;transition:all 0.18s;font-family:'DM Sans',sans-serif;font-weight:400;}
 .chat-opt:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
 
+.chat-terms{padding:14px 16px;border-top:1px solid var(--border);background:#f8f8f6;}
+.chat-terms p{font-size:11px;color:#888;line-height:1.6;margin-bottom:8px;}
+.chat-terms-check{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;}
+.chat-terms-check input{margin-top:2px;cursor:pointer;width:14px;height:14px;}
+.chat-terms-check label{font-size:11px;color:#555;line-height:1.5;cursor:pointer;}
+.chat-terms-check a{color:var(--navy);text-decoration:underline;}
+.chat-start-btn{width:100%;background:var(--navy);color:#fff;border:none;padding:10px;border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 0.2s;}
+.chat-start-btn:hover{background:var(--navy-light);}
+.chat-start-btn:disabled{background:#ccc;cursor:not-allowed;}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.chat-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);}
+.chat-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border 0.2s;}
+.chat-input:focus{border-color:var(--navy);}
+.chat-send{background:var(--navy);color:#fff;border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s;}
+.chat-send:hover{background:var(--navy-light);}
+.chat-typing{align-self:flex-start;background:#f0f4f8;border-radius:10px;border-bottom-left-radius:3px;padding:10px 14px;font-size:13px;color:#888;}
 
 /* ── VISUAL TILES ── */
 .vt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem;}
@@ -261,14 +260,10 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .vt:hover .vt-bg,.vt.photo-active .vt-bg{opacity:1;}
 .vt:hover .vt-overlay,.vt.photo-active .vt-overlay{background:linear-gradient(160deg,rgba(5,15,35,0.45) 0%,rgba(5,15,35,0.80) 100%);}
 
-/* Icon layer: visible by default, hidden on hover */
+/* Icon layer: visible by default, fades slightly on hover */
 .vt-icon-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity 0.35s;}
-.vt-icon-wrap span{font-size:48px;line-height:1;}
+.vt-icon-wrap svg{width:42px;height:42px;opacity:0.85;transition:opacity 0.35s;}
 .vt:hover .vt-icon-wrap,.vt.photo-active .vt-icon-wrap{opacity:0;pointer-events:none;}
-
-/* Hide all text content on hover - only photo shows */
-.vt-content{position:relative;z-index:1;transition:opacity 0.3s;}
-.vt:hover .vt-content,.vt.photo-active .vt-content{opacity:0;}
 
 /* Subtle colored bottom strip per category */
 .vt.cat-blue{border-bottom:3px solid #1a6bc4;}
@@ -277,6 +272,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .vt.cat-green{border-bottom:3px solid #2a8a5a;}
 .vt.cat-red{border-bottom:3px solid #c0392b;}
 
+.vt-content{position:relative;z-index:1;}
 .vt-code{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:3px;}
 .vt-name{font-size:13px;font-weight:600;color:#fff;line-height:1.3;}
 .vt-hint{font-size:11px;color:rgba(255,255,255,0.55);margin-top:3px;font-weight:300;}
@@ -295,15 +291,6 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
 /* Request form at bottom of each panel */
 .req-form{background:var(--navy-dark);padding:2rem 2.5rem;margin-top:2rem;}
-
-/* Get a Quote Modal */
-.quote-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:60px 20px;}
-.quote-modal.open{display:flex;}
-.quote-modal-inner{background:var(--navy-dark);border-radius:8px;max-width:600px;width:100%;padding:2.5rem;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
-.quote-modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#7a95ae;font-size:24px;cursor:pointer;line-height:1;padding:8px;border-radius:4px;transition:background 0.2s;}
-.quote-modal-close:hover{background:rgba(255,255,255,0.1);color:#fff;}
-.quote-modal h2{font-family:'Playfair Display',serif;font-size:28px;color:#dde5ee;margin-bottom:0.5rem;font-weight:400;}
-.quote-modal-sub{font-size:14px;color:#7a95ae;margin-bottom:1.8rem;font-weight:300;}
 .req-form-title{font-family:'Playfair Display',serif;font-size:20px;color:#dde5ee;margin-bottom:0.4rem;}
 .req-form-sub{font-size:13px;color:#7a95ae;margin-bottom:1.4rem;font-weight:300;}
 .req-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
@@ -321,46 +308,11 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .req-success{display:none;background:rgba(42,122,90,0.2);border:1px solid rgba(42,122,90,0.4);border-radius:3px;padding:12px 16px;color:#7adbb0;font-size:13px;margin-top:1rem;}
 
 </style>
-
-<style id="imverica-chat-widget-css">
-#iw-launcher{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:#1a2e4a;color:#fff;border:none;cursor:pointer;z-index:9998;box-shadow:0 4px 16px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;font-size:28px;transition:transform 0.2s;}
-#iw-launcher:hover{transform:scale(1.08);}
-#iw-window{position:fixed;bottom:96px;right:24px;width:360px;max-width:calc(100vw - 48px);height:520px;background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.25);z-index:9997;display:none;flex-direction:column;overflow:hidden;font-family:'DM Sans',sans-serif;}
-#iw-window.open{display:flex;}
-.iw-header{background:#1a2e4a;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;}
-.iw-header-title{font-weight:500;font-size:15px;}
-.iw-close{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:0;}
-.iw-langs{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid #eee;background:#f8f8f6;}
-.iw-lang{flex:1;padding:6px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:12px;color:#444;font-family:inherit;}
-.iw-lang.active{background:#1a2e4a;color:#fff;border-color:#1a2e4a;}
-.iw-menu{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto;}
-.iw-menu-btn{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#333;text-decoration:none;font-family:inherit;text-align:left;transition:background 0.15s;}
-.iw-menu-btn:hover{background:#f4f3f0;}
-.iw-menu-icon{font-size:22px;}
-.iw-menu-text{flex:1;}
-.iw-menu-title{font-weight:500;color:#1a2e4a;}
-.iw-menu-sub{font-size:12px;color:#888;margin-top:2px;}
-.iw-back{background:none;border:none;color:#1a2e4a;font-size:13px;cursor:pointer;padding:8px 14px;font-family:inherit;text-align:left;border-bottom:1px solid #eee;}
-.iw-chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;}
-.iw-msg{padding:10px 14px;border-radius:12px;max-width:85%;font-size:14px;line-height:1.4;}
-.iw-msg-bot{background:#f0f4f8;color:#333;align-self:flex-start;}
-.iw-msg-user{background:#1a2e4a;color:#fff;align-self:flex-end;}
-.iw-typing{font-style:italic;color:#888;font-size:13px;padding:8px 14px;}
-.iw-input-row{display:flex;border-top:1px solid #eee;padding:10px;gap:8px;}
-.iw-input{flex:1;border:1px solid #ddd;border-radius:6px;padding:10px;font-size:14px;font-family:inherit;outline:none;}
-.iw-input:focus{border-color:#1a2e4a;}
-.iw-send{background:#1a2e4a;color:#fff;border:none;border-radius:6px;padding:0 16px;cursor:pointer;font-size:16px;}
-.iw-form{padding:14px;display:flex;flex-direction:column;gap:10px;}
-.iw-form input,.iw-form textarea{border:1px solid #ddd;border-radius:6px;padding:10px;font-size:14px;font-family:inherit;outline:none;}
-.iw-form textarea{resize:vertical;min-height:80px;}
-.iw-form button{background:#1a2e4a;color:#fff;border:none;border-radius:6px;padding:12px;cursor:pointer;font-size:14px;font-family:inherit;}
-.iw-success{padding:14px;color:#1a5a3a;font-size:14px;text-align:center;}
-</style>
 </head>
 <body>
 
 <!-- Hidden Netlify Forms -->
-<form name="appointment" hidden>
+<form name="appointment" netlify netlify-honeypot="bot-field" hidden>
   <input type="text" name="name">
   <input type="text" name="phone">
   <input type="email" name="email">
@@ -380,7 +332,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <li class="nav-sep"></li>
     <li><a href="portal.html" data-cat="portal">Client Portal</a></li>
   </ul>
-  <a class="nav-cta" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
+  <a class="nav-cta" href="#contact">Get a Quote</a>
   <button class="burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -410,7 +362,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
         (916) 399-3992
       </a>
       <div class="hero-actions">
-        <a class="btn-primary" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
+        <a class="btn-primary" href="#contact">Get a Quote</a>
         <a class="btn-ghost" href="#services">See all services</a>
       </div>
       <p class="hero-note">Imverica Legal Solutions is a registered Legal Document Assistant (LDA) in the State of California. We are not a law firm and do not provide legal advice.</p>
@@ -497,28 +449,22 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <div id="about" class="why-section">
   <div class="why-inner">
     <div>
-      <div class="why-label">Our Story</div>
-      <div class="why-title">Built by an immigrant. For immigrants.</div>
-      <p class="why-sub">The founder of Imverica came to the United States as an immigrant and experienced firsthand what it means to navigate an unfamiliar legal system in a foreign language — without money for an attorney, without knowing where to turn. Those years were not easy. But they taught something invaluable: that most people don't need an attorney to file their documents. They need someone who knows the forms, speaks their language, and actually shows up.</p>
-
-      <p class="why-sub" style="margin-top:1rem;">Over the past <strong>10+ years</strong>, our founder has worked closely alongside a licensed California attorney, preparing immigration petitions, court forms, and civil documents for hundreds of clients across the Russian-speaking community in Sacramento and beyond. That hands-on experience, combined with formal registration as a California Licensed Legal Document Assistant, is the foundation of Imverica.</p>
-
-      <p class="why-sub" style="margin-top:1rem;">Hiring an immigration attorney in California can cost <strong>$3,000 to $10,000 or more</strong> per case. Most people filing routine USCIS forms, family court documents, or small claims paperwork don't need that. They need accurate, complete document packages — prepared correctly, on time, and at a price that doesn't wipe out their savings. That's exactly what we do.</p>
-
-      <ul class="why-list" style="margin-top:1.5rem;">
-        <li><span class="why-num">01</span><span>California Licensed Legal Document Assistant (LDA) — registered under Bus. &amp; Prof. Code §6400, bonded and registered with the county clerk. We prepare documents at your direction. We are not attorneys and do not provide legal advice.</span></li>
-        <li><span class="why-num">02</span><span>10+ years of hands-on experience preparing USCIS petitions, EOIR court documents, and California civil forms — under the supervision of a licensed California attorney.</span></li>
-        <li><span class="why-num">03</span><span>Russian-speaking staff. We understand the immigrant experience — not from a textbook, but from living it. Sacramento and remote clients worldwide welcome.</span></li>
-        <li><span class="why-num">04</span><span>Flat, transparent pricing. No hidden fees. For matters that genuinely require an attorney, we maintain referral relationships with licensed immigration counsel.</span></li>
+      <div class="why-label">Why Imverica</div>
+      <div class="why-title">Experience. Accuracy. Real savings.</div>
+      <p class="why-sub">We are a small, dedicated team that genuinely loves helping people navigate the document preparation process. Our staff includes a California Licensed Legal Document Assistant (LDA), a California Registered Immigration Consultant, and bonded professionals — not attorneys, but experienced document specialists who know exactly what agencies and courts require.</p>
+      <ul class="why-list">
+        <li><span class="why-num">01</span><span>California Licensed Legal Document Assistant (LDA) registered under Bus. &amp; Prof. Code §6400, bonded and registered with the county clerk.</span></li>
+        <li><span class="why-num">02</span><span>Clients who file pro se (self-represented) save thousands in attorney fees — we make that possible with accurate, complete document packages.</span></li>
+        <li><span class="why-num">03</span><span>Multilingual staff who understand the immigrant experience firsthand. We serve clients in Sacramento and worldwide remotely.</span></li>
+        <li><span class="why-num">04</span><span>Flat, upfront pricing. No hidden charges. For matters requiring a licensed attorney, we can provide referrals from our professional network.</span></li>
       </ul>
-
       <div class="credential-box" style="margin-top:2rem;">
         <div class="credential-box-label">Our Office</div>
         <div class="credential-box-val"><strong>Imverica Legal Solutions</strong><br>Sacramento, California<br>(916) 399-3992</div>
       </div>
       <div class="credential-box">
         <div class="credential-box-label">Registration</div>
-        <div class="credential-box-val"><strong>California Licensed LDA</strong><br>Registered under Business &amp; Professions Code §6400. Bonded. County registered.<br><br><em style="font-size:11px;color:#888;">Imverica Legal Solutions is not a law firm. We are not attorneys. We do not provide legal advice. Documents are prepared at the client's specific direction.</em></div>
+        <div class="credential-box-val"><strong>California Licensed LDA</strong><br>Legal Document Assistant registered under Business &amp; Professions Code §6400.</div>
       </div>
     </div>
     <div>
@@ -564,57 +510,57 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="dp-sub-title">Priority — Humanitarian &amp; Status</div>
       <div class="vt-grid">
         <div class="vt cat-blue" onclick="toggleVT('vt-u4u')">
-          <div class="vt-bg" style="background-image:url('https://www.ukrainer.net/wp-content/uploads/2022/08/1_foto-YUriy-Stefaniak.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1655198862785-df65b17d2a5a?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🇺🇦</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
           <div class="vt-content"><div class="vt-code">U4U</div><div class="vt-name">Uniting for Ukraine</div><div class="vt-hint">Parole program</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-tps')">
-          <div class="vt-bg" style="background-image:url('https://davisvanguard.org/wp-content/uploads/2025/09/TPS-US.webp');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🌍</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-821</div><div class="vt-name">TPS</div><div class="vt-hint">Temporary Protected Status</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-asylum')">
-          <div class="vt-bg" style="background-image:url('https://myattorneyusa.com/wp-content/uploads/2024/06/asylum-in-the-us.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1532375810709-75b1da00537c?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🕊️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 12a11.05 11.05 0 01-22 0zm-5-7a3 3 0 00-6 0v7h6z"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-589</div><div class="vt-name">Asylum</div><div class="vt-hint">Withholding of removal</div><div class="vt-atty">⚠ Attorney recommended</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i485')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/04/civil-documents-nvc-checklist.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>💳</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-485</div><div class="vt-name">Adjustment of Status</div><div class="vt-hint">Green Card in the U.S.</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i765')">
-          <div class="vt-bg" style="background-image:url('https://www.ilrc.org/sites/default/files/images/2020/immigration_court_building.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>💼</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-765</div><div class="vt-name">Work Permit | EAD</div><div class="vt-hint">Employment Authorization</div></div>
         </div>
         <div class="vt cat-amber" onclick="toggleVT('vt-n400')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🇺🇸</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#f0b840" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div class="vt-content"><div class="vt-code">N-400</div><div class="vt-name">Naturalization</div><div class="vt-hint">Become a U.S. Citizen</div></div>
         </div>
         <div class="vt cat-amber" onclick="toggleVT('vt-n600')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>📜</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#f0b840" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg></div>
           <div class="vt-content"><div class="vt-code">N-600</div><div class="vt-name">Certificate of Citizenship</div><div class="vt-hint">Already a citizen</div></div>
         </div>
         <div class="vt cat-green" onclick="toggleVT('vt-uvisa')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🛡️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#50d89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-918</div><div class="vt-name">U Visa</div><div class="vt-hint">Crime victims</div></div>
         </div>
         <div class="vt cat-green" onclick="toggleVT('vt-vawa')">
-          <div class="vt-bg" style="background-image:url('https://www.luisruizlaw.com/wp-content/uploads/2025/02/USCIS-Pauses-Accepting-Form-I-34A-768x508.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🤝</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#50d89a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
           <div class="vt-content"><div class="vt-code">VAWA</div><div class="vt-name">VAWA Self-Petition</div><div class="vt-hint">Abuse survivors</div></div>
         </div>
       </div>
@@ -670,39 +616,39 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="dp-sub-title" style="margin-top:2rem;">Family-Based Immigration</div>
       <div class="vt-grid">
         <div class="vt cat-purple" onclick="toggleVT('vt-i130')">
-          <div class="vt-bg" style="background-image:url('https://enterlinepartners.com/wp-content/uploads/2019/07/I-130ExpeditedProcessing-1.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>👨‍👩‍👧</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-130</div><div class="vt-name">Petition for Alien Relative</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i131')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-3-skilled-workers.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>✈️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-131</div><div class="vt-name">Advance Parole</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i131a')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/b1-b2-visitor-visa.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🛂</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-131A</div><div class="vt-name">Reentry Permit</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i539')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/extension-of-stay.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>⏱️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-539</div><div class="vt-name">Extension | Change of Status</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i751')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/remove-conditions-i-751.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>💍</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-751</div><div class="vt-name">Remove Conditions</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-i864')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🤝</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
           <div class="vt-content"><div class="vt-code">I-864</div><div class="vt-name">Affidavit of Support</div></div>
         </div>
       </div>
@@ -720,39 +666,39 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="dp-note warn">We prepare documents for immigration court proceedings. We are not attorneys. Many EOIR proceedings are complex — we strongly recommend consulting a licensed immigration attorney for matters marked below. We can provide referrals.</div>
       <div class="vt-grid">
         <div class="vt cat-blue" onclick="toggleVT('vt-eoir33')">
-          <div class="vt-bg" style="background-image:url('https://www.ilrc.org/sites/default/files/images/2020/immigration_court_building.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>📍</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="vt-content"><div class="vt-code">EOIR-33</div><div class="vt-name">Change of Address</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-continue')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-3-skilled-workers.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>📅</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
           <div class="vt-content"><div class="vt-code">Motion</div><div class="vt-name">Motion to Continue</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-venue')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🏛️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
           <div class="vt-content"><div class="vt-code">Motion</div><div class="vt-name">Change of Venue</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-master')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>📁</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></div>
           <div class="vt-content"><div class="vt-code">Hearing</div><div class="vt-name">Master Hearing Package</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-bond')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>⚖️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
           <div class="vt-content"><div class="vt-code">Hearing</div><div class="vt-name">Bond Hearing Documents</div></div>
         </div>
         <div class="vt cat-red" style="border:1px solid rgba(255,100,100,0.3);" onclick="toggleVT('vt-bia')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=400&q=60');"></div>
           <div class="vt-overlay" style="background:linear-gradient(160deg,rgba(80,10,10,0.6) 0%,rgba(80,10,10,0.85) 100%);"></div>
-          <div class="vt-icon-wrap"><span>⚠️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#ff8080" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="vt-content"><div class="vt-code">EOIR-26</div><div class="vt-name">Appeal to BIA</div><div class="vt-atty">Attorney required</div></div>
         </div>
       </div>
@@ -769,33 +715,33 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="dp-note">We prepare visa application documents at the client's direction. Where we can assist with finding educational institutions or employers, we note it below. We do not provide legal advice.</div>
       <div class="vt-grid">
         <div class="vt cat-blue" onclick="toggleVT('vt-b1b2')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/b1-b2-visitor-visa.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🧳</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><circle cx="16" cy="16" r="1"/></svg></div>
           <div class="vt-content"><div class="vt-code">B1/B2</div><div class="vt-name">Visitor | Business Visa</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-f1')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/f1-student-visa.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🎓</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
           <div class="vt-content"><div class="vt-code">F-1</div><div class="vt-name">Student Visa</div><div class="vt-hint">College | University help</div></div>
         </div>
         <div class="vt cat-purple" onclick="toggleVT('vt-k1')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/k1-fiance-visa.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1606800052052-a08af7148866?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>💍</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#b48aff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
           <div class="vt-content"><div class="vt-code">K-1</div><div class="vt-name">Fiancé(e) Visa</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-j1')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/j1-exchange-visitor-visa.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🌐</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
           <div class="vt-content"><div class="vt-code">J-1</div><div class="vt-name">Exchange Visitor</div></div>
         </div>
         <div class="vt cat-amber" onclick="toggleVT('vt-e2')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/e2-investor-visa.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>💰</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#f0b840" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
           <div class="vt-content"><div class="vt-code">E-2</div><div class="vt-name">Investor Visa</div><div class="vt-hint">Treaty investor</div></div>
         </div>
       </div>
@@ -811,39 +757,39 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="dp-note">Employment-based immigration categories. We prepare I-140 petitions and supporting documentation at the client's direction. Per INA §203(b).</div>
       <div class="vt-grid">
         <div class="vt cat-amber" onclick="toggleVT('vt-eb1a')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-1a-extraordinary-ability.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🇺🇸</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#f0b840" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div class="vt-content"><div class="vt-code">EB-1A</div><div class="vt-name">Extraordinary Ability</div><div class="vt-hint">No sponsor needed</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-eb2niw')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🎯</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
           <div class="vt-content"><div class="vt-code">EB-2 NIW</div><div class="vt-name">National Interest Waiver</div><div class="vt-hint">No PERM needed</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-eb2perm')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/04/civil-documents-nvc-checklist.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>👔</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
           <div class="vt-content"><div class="vt-code">EB-2</div><div class="vt-name">Advanced Degree + PERM</div><div class="vt-hint">Employer sponsored</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-eb3')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/05/eb-3-skilled-workers.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🔧</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg></div>
           <div class="vt-content"><div class="vt-code">EB-3</div><div class="vt-name">Skilled Workers</div><div class="vt-hint">Truck drivers, tradespeople</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-eb4')">
-          <div class="vt-bg" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Chartres_Cathedral_Exterior_02.jpg/600px-Chartres_Cathedral_Exterior_02.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1438232992991-995b671e4668?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>⛪</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
           <div class="vt-content"><div class="vt-code">EB-4</div><div class="vt-name">Special Immigrants</div><div class="vt-hint">Religious workers, pastors</div></div>
         </div>
         <div class="vt cat-amber" onclick="toggleVT('vt-eb5')">
-          <div class="vt-bg" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg/800px-Southwest_corner_of_Central_Park%2C_looking_east%2C_NYC.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472355-536de3962603?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>💰</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#f0b840" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
           <div class="vt-content"><div class="vt-code">EB-5</div><div class="vt-name">Investor Immigration</div><div class="vt-hint">$1M+ investment</div></div>
         </div>
       </div>
@@ -866,27 +812,27 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="dp-note">After USCIS approves an immigrant petition, cases destined for consular processing are transferred to the National Visa Center (NVC) for pre-processing before the consular interview abroad.</div>
       <div class="vt-grid">
         <div class="vt cat-blue" onclick="toggleVT('vt-nvc')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/nvc-national-visa-center.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1555848962-6e79363ec58f?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>🏛️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg></div>
           <div class="vt-content"><div class="vt-code">NVC</div><div class="vt-name">NVC Document Submission</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-ds260')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>📋</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
           <div class="vt-content"><div class="vt-code">DS-260</div><div class="vt-name">Immigrant Visa Application</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-ds261')">
-          <div class="vt-bg" style="background-image:url('https://www.boundless.com/wp-content/uploads/2020/07/ds-261-choice-of-agent.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>✍️</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
           <div class="vt-content"><div class="vt-code">DS-261</div><div class="vt-name">Choice of Agent</div></div>
         </div>
         <div class="vt cat-blue" onclick="toggleVT('vt-civil')">
-          <div class="vt-bg" style="background-image:url('https://citizenpath.com/cpwp/wp-content/uploads/2022/04/civil-documents-nvc-checklist.jpg');"></div>
+          <div class="vt-bg" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&q=60');"></div>
           <div class="vt-overlay"></div>
-          <div class="vt-icon-wrap"><span>📂</span></div>
+          <div class="vt-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#60a8ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
           <div class="vt-content"><div class="vt-code">Docs</div><div class="vt-name">Civil Documents Package</div></div>
         </div>
       </div>
@@ -898,9 +844,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
     <!-- Request Form -->
     <div class="req-form">
-      <form name="req-immigration" onsubmit="submitReq(event,'req-immigration','req-imm-success')">
-        
-        
+      <form name="req-immigration" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-immigration','req-imm-success')">
+        <input type="hidden" name="form-name" value="req-immigration">
+        <input name="bot-field" style="display:none">
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -981,9 +927,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </div>
 
     <div class="req-form">
-      <form name="req-family" onsubmit="submitReq(event,'req-family','req-fam-success')">
-        
-        
+      <form name="req-family" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-family','req-fam-success')">
+        <input type="hidden" name="form-name" value="req-family">
+        <input name="bot-field" style="display:none">
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -998,7 +944,6 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </form>
     </div>
   </div>
-</div>
 </div>
 
 <!-- SMALL CLAIMS / CIVIL / UD -->
@@ -1056,9 +1001,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </div>
 
     <div class="req-form">
-      <form name="req-civil" onsubmit="submitReq(event,'req-civil','req-civ-success')">
-        
-        
+      <form name="req-civil" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-civil','req-civ-success')">
+        <input type="hidden" name="form-name" value="req-civil">
+        <input name="bot-field" style="display:none">
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -1073,7 +1018,6 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </form>
     </div>
   </div>
-</div>
 </div>
 
 <!-- UNLAWFUL DETAINER (separate card click) -->
@@ -1131,9 +1075,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="fi" style="opacity:0.6;"><div class="fi-name">Apostille Coordination</div><div class="fi-desc">We are expanding this service. Contact us to discuss your needs.</div></div>
 
     <div class="req-form">
-      <form name="req-business" onsubmit="submitReq(event,'req-business','req-biz-success')">
-        
-        
+      <form name="req-business" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-business','req-biz-success')">
+        <input type="hidden" name="form-name" value="req-business">
+        <input name="bot-field" style="display:none">
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -1148,7 +1092,6 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </form>
     </div>
   </div>
-</div>
 </div>
 
 <!-- TRANSLATIONS -->
@@ -1244,6 +1187,41 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 </footer>
 
 <!-- CHATBOT -->
+<div class="chat-bubble" id="chatBubble" title="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</div>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div>
+      <div class="chat-header-title">Imverica Legal Solutions</div>
+      <div class="chat-header-sub">Licensed LDA · Sacramento, CA</div>
+    </div>
+    <button class="chat-close" id="chatClose">&times;</button>
+  </div>
+
+  <!-- TERMS SCREEN -->
+  <div id="chatTerms" class="chat-terms">
+    <p>Before we begin, please review and accept our Terms of Service.</p>
+    <div class="chat-terms-check">
+      <input type="checkbox" id="termsCheck">
+      <label for="termsCheck">I have read and agree to the <a href="terms.html" target="_blank">Terms of Service</a>. I understand that Imverica Legal Solutions is not a law firm and does not provide legal advice.</label>
+    </div>
+    <button class="chat-start-btn" id="chatStartBtn" disabled>Continue →</button>
+  </div>
+
+  <!-- CHAT SCREEN (hidden until terms accepted) -->
+  <div id="chatMain" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-options" id="chatOptions"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" type="text" placeholder="Type your message...">
+      <button class="chat-send" id="chatSendBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
 // BURGER MENU
@@ -1260,410 +1238,265 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 
-</script>
+// CHATBOT
+const chatBubble = document.getElementById('chatBubble');
+const chatWindow = document.getElementById('chatWindow');
+const chatClose = document.getElementById('chatClose');
+const chatTerms = document.getElementById('chatTerms');
+const chatMain = document.getElementById('chatMain');
+const chatBody = document.getElementById('chatBody');
+const chatOptions = document.getElementById('chatOptions');
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+const termsCheck = document.getElementById('termsCheck');
+const chatStartBtn = document.getElementById('chatStartBtn');
 
-<script>
-// Unsplash API photo loader for tiles
-(function() {
-  const UNSPLASH_KEY = '9JPwqfxzC2dy5eSlc0uPkRHycM0wB4Oo3XvWW3Xo8l8';
-  const cache = {};
-  const keywords = {
-    'vt-u4u': 'ukraine flag blue yellow',
-    'vt-tps': 'refugees displaced people temporary',
-    'vt-asylum': 'refugees family border crossing',
-    'vt-i485': 'green card permanent resident',
-    'vt-i765': 'employment authorization work permit card',
-    'vt-n400': 'naturalization ceremony american flag citizenship',
-    'vt-n600': 'certificate citizenship document official',
-    'vt-uvisa': 'crime victim protection help',
-    'vt-vawa': 'women support group domestic violence',
-    'vt-i130': 'family reunion airport arrival embrace',
-    'vt-i131': 'airplane travel passport document',
-    'vt-i131a': 'passport border control reentry',
-    'vt-i539': 'hourglass time extension visa',
-    'vt-i751': 'wedding rings marriage couple',
-    'vt-i864': 'signing contract document pen paper',
-    'vt-eoir33': 'map address location immigration court',
-    'vt-continue': 'calendar deadline schedule court',
-    'vt-venue': 'courthouse justice building law',
-    'vt-master': 'courtroom judge hearing law',
-    'vt-bond': 'scales justice law gavel court',
-    'vt-bia': 'supreme court appeal law serious',
-    'vt-b1b2': 'passport travel tourist suitcase',
-    'vt-f1': 'university campus students education graduation',
-    'vt-k1': 'couple engagement ring love wedding',
-    'vt-j1': 'international exchange students globe',
-    'vt-e2': 'business investment handshake entrepreneur',
-    'vt-eb1a': 'business conference professional achievement award',
-    'vt-eb2niw': 'scientist researcher laboratory science',
-    'vt-eb2perm': 'office professional team work employer',
-    'vt-eb3': 'construction worker skilled trade tools',
-    'vt-eb4': 'church religious worship community',
-    'vt-eb5': 'city skyline investment finance building',
-    'vt-nvc': 'embassy consulate official building',
-    'vt-ds260': 'visa application form immigration',
-    'vt-ds261': 'document agent representative official',
-    'vt-civil': 'documents papers folder civil records'
-  };
+chatBubble.addEventListener('click', () => chatWindow.classList.toggle('open'));
+chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
+termsCheck.addEventListener('change', () => chatStartBtn.disabled = !termsCheck.checked);
 
-  function loadPhoto(tile) {
-    const id = tile.id;
-    if (!keywords[id]) return;
-    if (cache[id]) {
-      applyPhoto(tile, cache[id]);
+const LANGS = {
+  en: { name: 'English', greeting: "Hello! How can I help you today? Please select a topic:", topics: ['Immigration (USCIS | EOIR)','Family Law / Divorce','Small Claims & Civil','Document Translations','Pricing','Other'] },
+  es: { name: 'Español', greeting: "¡Hola! ¿En qué puedo ayudarle hoy? Por favor seleccione un tema:", topics: ['Inmigración (USCIS | EOIR)','Derecho de Familia / Divorcio','Reclamos Menores','Traducciones','Precios','Otro'] },
+  ru: { name: 'Русский', greeting: "Здравствуйте! Чем могу помочь? Выберите тему:", topics: ['Иммиграция (USCIS | EOIR)','Семейное право / Развод','Малые иски','Переводы документов','Цены','Другое'] },
+  uk: { name: 'Українська', greeting: "Доброго дня! Чим можу допомогти? Оберіть тему:", topics: ['Імміграція (USCIS | EOIR)','Сімейне право / Розлучення','Малі позови','Переклади документів','Ціни','Інше'] }
+};
+
+let selectedLang = 'en';
+let conversationHistory = [];
+
+chatStartBtn.addEventListener('click', () => {
+  chatTerms.style.display = 'none';
+  chatMain.style.display = 'flex';
+  chatMain.style.flexDirection = 'column';
+  chatMain.style.flex = '1';
+  chatMain.style.overflow = 'hidden';
+  showLangSelect();
+});
+
+function showLangSelect() {
+  addBotMsg("Welcome to Imverica Legal Solutions. Please select your language:");
+  showOptions([
+    { label: '🇺🇸 English', action: () => selectLang('en') },
+    { label: '🇲🇽 Español', action: () => selectLang('es') },
+    { label: '🇷🇺 Русский', action: () => selectLang('ru') },
+    { label: '🇺🇦 Українська', action: () => selectLang('uk') }
+  ]);
+}
+
+function selectLang(lang) {
+  selectedLang = lang;
+  clearOptions();
+  addUserMsg(LANGS[lang].name);
+  conversationHistory = [];
+  setTimeout(() => {
+    addBotMsg(LANGS[lang].greeting);
+    showOptions(LANGS[lang].topics.map(t => ({ label: t, action: () => selectTopic(t) })));
+  }, 400);
+}
+
+function selectTopic(topic) {
+  clearOptions();
+  addUserMsg(topic);
+  sendToAI(topic);
+}
+
+function addBotMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot';
+  div.textContent = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  div.textContent = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.className = 'chat-typing';
+  div.id = 'typingIndicator';
+  div.textContent = '...';
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function showOptions(opts) {
+  chatOptions.innerHTML = '';
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'chat-opt';
+    btn.textContent = opt.label;
+    btn.addEventListener('click', opt.action);
+    chatOptions.appendChild(btn);
+  });
+}
+
+function clearOptions() { chatOptions.innerHTML = ''; }
+
+async function sendToAI(userMessage) {
+  showTyping();
+  conversationHistory.push({ role: 'user', content: userMessage });
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: conversationHistory })
+    });
+    if (!response.ok) {
+      document.getElementById('chatWindow').classList.remove('open');
+      document.getElementById('chatBubble').style.display = 'none';
       return;
     }
-    const query = encodeURIComponent(keywords[id]);
-    fetch(`https://api.unsplash.com/photos/random?query=${query}&orientation=landscape&client_id=${UNSPLASH_KEY}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data && data.urls && data.urls.regular) {
-          cache[id] = data.urls.regular;
-          applyPhoto(tile, data.urls.regular);
-        }
-      })
-      .catch(() => {});
+    const data = await response.json();
+    const reply = data.reply || 'Sorry, please call us at (916) 399-3992.';
+    removeTyping();
+    conversationHistory.push({ role: 'assistant', content: reply });
+    addBotMsg(reply);
+    showOptions([
+      { label: LANGS[selectedLang].name === 'Русский' ? '← Главное меню' : LANGS[selectedLang].name === 'Español' ? '← Menú principal' : LANGS[selectedLang].name === 'Українська' ? '← Головне меню' : '← Main menu', action: () => { clearOptions(); conversationHistory = []; addBotMsg(LANGS[selectedLang].greeting); showOptions(LANGS[selectedLang].topics.map(t => ({ label: t, action: () => selectTopic(t) }))); } },
+      { label: '🌐 Change language', action: () => { clearOptions(); conversationHistory = []; showLangSelect(); } }
+    ]);
+  } catch(e) {
+    removeTyping();
+    addBotMsg('Sorry, something went wrong. Please call us at (916) 399-3992 or message @imverica on Telegram.');
   }
+}
 
-  function applyPhoto(tile, url) {
-    const bg = tile.querySelector('.vt-bg');
-    if (bg) bg.style.backgroundImage = `url('${url}')`;
+chatSendBtn.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
+
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if (!msg) return;
+  chatInput.value = '';
+  clearOptions();
+  addUserMsg(msg);
+  sendToAI(msg);
+}
+
+
+// ── VISUAL TILES ──
+function toggleVT(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  // Close all vt-details in same panel
+  const panel = el.closest('.dp-pane');
+  if (panel) panel.querySelectorAll('.vt-detail').forEach(d => d.classList.remove('open'));
+  if (!isOpen) {
+    el.classList.add('open');
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
   }
+}
 
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.vt').forEach(function(tile) {
-      tile.addEventListener('mouseenter', function() { loadPhoto(tile); });
-      tile.addEventListener('touchstart', function() { loadPhoto(tile); }, {passive: true});
-    });
-  });
-})();
-</script>
-<!-- Get a Quote Modal -->
-<div id="quoteModal" class="quote-modal" onclick="if(event.target===this)closeQuoteModal()">
-  <div class="quote-modal-inner">
-    <button class="quote-modal-close" onclick="closeQuoteModal()">✕</button>
-    <h2>Get a Quote</h2>
-    <div class="quote-modal-sub">Tell us what you need — we'll get back to you within 1 business day with a flat-fee quote.</div>
-    <form name="req-quote" onsubmit="submitReq(event,'req-quote','req-quote-success')">
-      <div class="req-grid">
-        <div class="req-field"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required></div>
-        <div class="req-field"><label>Phone *</label><input type="tel" name="phone" placeholder="(916) 000-0000" required></div>
-        <div class="req-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div>
-        <div class="req-field"><label>Service Needed</label><input type="text" name="service" placeholder="e.g. I-485, U visa, N-400..."></div>
-        <div class="req-field req-field-full"><label>Brief Description</label><textarea name="message" placeholder="Briefly describe your situation..."></textarea></div>
-      </div>
-      <button type="submit" class="req-btn">Send Request →</button>
-      <div id="req-quote-success" class="req-success">✓ Request received! We will contact you within 1 business day.</div>
-    </form>
-  </div>
-</div>
-
-<script>
-(function () {
-  function forceShowQuoteModal() {
-    var modal = document.getElementById('quoteModal');
-    if (!modal) return;
-    if (modal.parentNode !== document.body) document.body.appendChild(modal);
-    modal.classList.add('open');
-    modal.style.setProperty('display', 'flex', 'important');
-    modal.style.setProperty('position', 'fixed', 'important');
-    modal.style.setProperty('top', '0', 'important');
-    modal.style.setProperty('right', '0', 'important');
-    modal.style.setProperty('bottom', '0', 'important');
-    modal.style.setProperty('left', '0', 'important');
-    modal.style.setProperty('z-index', '2147483647', 'important');
-    modal.style.setProperty('background', 'rgba(0,0,0,0.72)', 'important');
-    modal.style.setProperty('align-items', 'flex-start', 'important');
-    modal.style.setProperty('justify-content', 'center', 'important');
-    modal.style.setProperty('overflow-y', 'auto', 'important');
-    modal.style.setProperty('padding', '60px 20px', 'important');
-  }
-
-  function forceHideQuoteModal() {
-    var modal = document.getElementById('quoteModal');
-    if (!modal) return;
-    modal.classList.remove('open');
-    modal.style.setProperty('display', 'none', 'important');
-    document.body.style.overflow = '';
-  }
-
-  window.openQuoteModal = forceShowQuoteModal;
-  window.closeQuoteModal = forceHideQuoteModal;
-
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.nav-cta, .btn-primary').forEach(function (btn) {
-      var text = (btn.textContent || '').trim().toLowerCase();
-      if (text === 'get a quote') {
-        btn.removeAttribute('onclick');
-        btn.addEventListener('click', function (event) {
-          event.preventDefault();
-          forceShowQuoteModal();
-        });
+// Mobile tap: toggle photo-active on .vt tiles (shows bg photo on first tap, hides on second)
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.vt').forEach(function(tile) {
+    tile.addEventListener('touchstart', function(e) {
+      // Only on touch devices — toggle photo visibility
+      const isActive = tile.classList.contains('photo-active');
+      // First touch: show photo. If already showing, let the onclick (toggleVT) fire normally.
+      if (!isActive) {
+        e.preventDefault();
+        tile.classList.add('photo-active');
+        // Auto-hide after 2.5s
+        clearTimeout(tile._photoTimer);
+        tile._photoTimer = setTimeout(function() {
+          tile.classList.remove('photo-active');
+        }, 2500);
       }
-    });
-    var modal = document.getElementById('quoteModal');
-    if (modal) {
-      modal.addEventListener('click', function (event) {
-        if (event.target === modal) forceHideQuoteModal();
-      });
-    }
+      // If already active, let click through to toggleVT
+    }, { passive: false });
   });
+});
 
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') forceHideQuoteModal();
-  });
-})();
-</script>
-
-
-
-<!-- IMVERICA CHAT WIDGET -->
-<button id="iw-launcher" aria-label="Open chat">💬</button>
-
-<div id="iw-window">
-  <div class="iw-header">
-    <div class="iw-header-title">Imverica Legal Solutions</div>
-    <button class="iw-close" id="iw-close">×</button>
-  </div>
-  <div class="iw-langs">
-    <button class="iw-lang active" data-lang="en">EN</button>
-    <button class="iw-lang" data-lang="ru">RU</button>
-    <button class="iw-lang" data-lang="uk">UK</button>
-    <button class="iw-lang" data-lang="es">ES</button>
-  </div>
-  <div id="iw-content"></div>
-</div>
-
-<script>
-(function(){
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1-Im71BEZQMEL8elsKTQekokZCqqV0Mj7D6d44G1ueAIDIiqV6QXvR0p6Btqs7WaFnA/exec';
-  
-  const T = {
-    en: {
-      menuTitle: 'How can we help you?',
-      ai: 'Chat with our assistant', aiSub: 'Get instant answers',
-      msg: 'Send us a message', msgSub: 'We reply within 1 business day',
-      tg: 'Telegram', tgSub: 'Chat on Telegram',
-      call: 'Call us', callSub: '(916) 399-3992',
-      back: '← Back',
-      formName: 'Your name', formPhone: 'Phone', formEmail: 'Email (optional)', formMsg: 'Message',
-      send: 'Send', sending: 'Sending...',
-      success: '✓ Message received! We will contact you within 1 business day.',
-      chatPlaceholder: 'Type your message...',
-      chatGreeting: 'Hello! Ask me about USCIS forms, family law, civil court, or our services.',
-      chatError: 'Sorry, please try again or call us at (916) 399-3992.'
-    },
-    ru: {
-      menuTitle: 'Как мы можем помочь?',
-      ai: 'Чат с ассистентом', aiSub: 'Мгновенные ответы',
-      msg: 'Отправить сообщение', msgSub: 'Ответим в течение 1 рабочего дня',
-      tg: 'Telegram', tgSub: 'Чат в Telegram',
-      call: 'Позвонить', callSub: '(916) 399-3992',
-      back: '← Назад',
-      formName: 'Ваше имя', formPhone: 'Телефон', formEmail: 'Email (необязательно)', formMsg: 'Сообщение',
-      send: 'Отправить', sending: 'Отправка...',
-      success: '✓ Сообщение получено! Мы свяжемся с вами в течение 1 рабочего дня.',
-      chatPlaceholder: 'Напишите ваше сообщение...',
-      chatGreeting: 'Здравствуйте! Спросите меня о формах USCIS, семейном праве, гражданских делах или наших услугах.',
-      chatError: 'Извините, попробуйте еще раз или позвоните нам (916) 399-3992.'
-    },
-    uk: {
-      menuTitle: 'Як ми можемо допомогти?',
-      ai: 'Чат з асистентом', aiSub: 'Миттєві відповіді',
-      msg: 'Надіслати повідомлення', msgSub: 'Відповімо протягом 1 робочого дня',
-      tg: 'Telegram', tgSub: 'Чат у Telegram',
-      call: 'Зателефонувати', callSub: '(916) 399-3992',
-      back: '← Назад',
-      formName: 'Ваше ім\'я', formPhone: 'Телефон', formEmail: 'Email (за бажанням)', formMsg: 'Повідомлення',
-      send: 'Надіслати', sending: 'Надсилання...',
-      success: '✓ Повідомлення отримано! Ми зв\'яжемось з вами протягом 1 робочого дня.',
-      chatPlaceholder: 'Напишіть ваше повідомлення...',
-      chatGreeting: 'Вітаю! Запитайте мене про форми USCIS, сімейне право, цивільні справи або наші послуги.',
-      chatError: 'Вибачте, спробуйте ще раз або зателефонуйте нам (916) 399-3992.'
-    },
-    es: {
-      menuTitle: '¿Cómo podemos ayudarle?',
-      ai: 'Chat con asistente', aiSub: 'Respuestas instantáneas',
-      msg: 'Enviar mensaje', msgSub: 'Respondemos en 1 día hábil',
-      tg: 'Telegram', tgSub: 'Chat en Telegram',
-      call: 'Llamar', callSub: '(916) 399-3992',
-      back: '← Atrás',
-      formName: 'Su nombre', formPhone: 'Teléfono', formEmail: 'Email (opcional)', formMsg: 'Mensaje',
-      send: 'Enviar', sending: 'Enviando...',
-      success: '✓ ¡Mensaje recibido! Le contactaremos en 1 día hábil.',
-      chatPlaceholder: 'Escriba su mensaje...',
-      chatGreeting: '¡Hola! Pregúnteme sobre formularios USCIS, derecho familiar, tribunales civiles o nuestros servicios.',
-      chatError: 'Lo siento, inténtelo de nuevo o llámenos al (916) 399-3992.'
-    }
-  };
-  
-  let currentLang = 'en';
-  let conversationHistory = [];
-  
-  const launcher = document.getElementById('iw-launcher');
-  const win = document.getElementById('iw-window');
-  const closeBtn = document.getElementById('iw-close');
-  const content = document.getElementById('iw-content');
-  
-  launcher.addEventListener('click', function(){
-    win.classList.toggle('open');
-    if (win.classList.contains('open')) renderMenu();
-  });
-  closeBtn.addEventListener('click', function(){
-    win.classList.remove('open');
-  });
-  
-  document.querySelectorAll('.iw-lang').forEach(btn => {
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.iw-lang').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      currentLang = this.dataset.lang;
-      renderMenu();
-    });
-  });
-  
-  function renderMenu() {
-    const t = T[currentLang];
-    content.innerHTML = `
-      <div class="iw-menu">
-        <button class="iw-menu-btn" id="iw-go-ai">
-          <span class="iw-menu-icon">🤖</span>
-          <span class="iw-menu-text">
-            <div class="iw-menu-title">${t.ai}</div>
-            <div class="iw-menu-sub">${t.aiSub}</div>
-          </span>
-        </button>
-        <button class="iw-menu-btn" id="iw-go-msg">
-          <span class="iw-menu-icon">✉️</span>
-          <span class="iw-menu-text">
-            <div class="iw-menu-title">${t.msg}</div>
-            <div class="iw-menu-sub">${t.msgSub}</div>
-          </span>
-        </button>
-        <a class="iw-menu-btn" href="https://t.me/imverica" target="_blank">
-          <span class="iw-menu-icon">📱</span>
-          <span class="iw-menu-text">
-            <div class="iw-menu-title">${t.tg}</div>
-            <div class="iw-menu-sub">${t.tgSub}</div>
-          </span>
-        </a>
-        <a class="iw-menu-btn" href="tel:+19163993992">
-          <span class="iw-menu-icon">📞</span>
-          <span class="iw-menu-text">
-            <div class="iw-menu-title">${t.call}</div>
-            <div class="iw-menu-sub">${t.callSub}</div>
-          </span>
-        </a>
-      </div>
-    `;
-    document.getElementById('iw-go-ai').onclick = renderChat;
-    document.getElementById('iw-go-msg').onclick = renderForm;
+// ── DETAIL PANELS ──
+function openDetail(id) {
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.add('open');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
-  
-  function renderForm() {
-    const t = T[currentLang];
-    content.innerHTML = `
-      <button class="iw-back" id="iw-back-btn">${t.back}</button>
-      <form class="iw-form" id="iw-msg-form">
-        <input type="text" name="name" placeholder="${t.formName}" required>
-        <input type="tel" name="phone" placeholder="${t.formPhone}" required>
-        <input type="email" name="email" placeholder="${t.formEmail}">
-        <textarea name="message" placeholder="${t.formMsg}" required></textarea>
-        <button type="submit">${t.send}</button>
-      </form>
-    `;
-    document.getElementById('iw-back-btn').onclick = renderMenu;
-    document.getElementById('iw-msg-form').onsubmit = async function(e){
-      e.preventDefault();
-      const btn = e.target.querySelector('button[type=submit]');
-      btn.disabled = true;
-      btn.textContent = t.sending;
-      const fd = new FormData(e.target);
-      const payload = {
-        name: fd.get('name'), phone: fd.get('phone'),
-        email: fd.get('email'), service: 'Chat widget',
-        message: fd.get('message')
-      };
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST', mode: 'no-cors',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify(payload)
-        });
-        content.innerHTML = `<div class="iw-success">${t.success}</div><button class="iw-back" onclick="document.getElementById('iw-launcher').click();document.getElementById('iw-launcher').click();">${t.back}</button>`;
-      } catch(err) {
-        btn.disabled = false;
-        btn.textContent = t.send;
-        alert('Error. Call (916) 399-3992');
-      }
-    };
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function closeDetail(id) {
+  const panel = document.getElementById('dp-' + id);
+  if (panel) panel.classList.remove('open');
+  document.getElementById('services').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function switchPane(tabEl, paneId) {
+  const panel = tabEl.closest('.detail-panel');
+  panel.querySelectorAll('.dp-tab').forEach(t => t.classList.remove('on'));
+  panel.querySelectorAll('.dp-pane').forEach(p => p.classList.remove('on'));
+  // Close all vt-details when switching panes
+  panel.querySelectorAll('.vt-detail').forEach(d => d.classList.remove('open'));
+  tabEl.classList.add('on');
+  document.getElementById(paneId).classList.add('on');
+}
+
+// ── REQUEST FORMS ──
+async function submitReq(e, formName, successId) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.req-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  const data = new URLSearchParams(new FormData(form));
+  try {
+    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data.toString() });
+    document.getElementById(successId).style.display = 'block';
+    form.reset();
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Send Request →';
+    alert('Error sending. Please call us at (916) 399-3992.');
   }
-  
-  function renderChat() {
-    const t = T[currentLang];
-    conversationHistory = [];
-    content.innerHTML = `
-      <button class="iw-back" id="iw-back-btn">${t.back}</button>
-      <div class="iw-chat-body" id="iw-chat-body">
-        <div class="iw-msg iw-msg-bot">${t.chatGreeting}</div>
-      </div>
-      <div class="iw-input-row">
-        <input class="iw-input" id="iw-chat-input" type="text" placeholder="${t.chatPlaceholder}">
-        <button class="iw-send" id="iw-chat-send">→</button>
-      </div>
-    `;
-    document.getElementById('iw-back-btn').onclick = renderMenu;
-    const input = document.getElementById('iw-chat-input');
-    const sendBtn = document.getElementById('iw-chat-send');
-    const body = document.getElementById('iw-chat-body');
-    
-    function addMsg(text, who) {
-      const div = document.createElement('div');
-      div.className = 'iw-msg iw-msg-' + who;
-      div.textContent = text;
-      body.appendChild(div);
-      body.scrollTop = body.scrollHeight;
-    }
-    
-    async function send() {
-      const txt = input.value.trim();
-      if (!txt) return;
-      addMsg(txt, 'user');
-      conversationHistory.push({role:'user', content: txt});
-      input.value = '';
-      
-      const typing = document.createElement('div');
-      typing.className = 'iw-typing';
-      typing.textContent = '...';
-      body.appendChild(typing);
-      body.scrollTop = body.scrollHeight;
-      
-      try {
-        const res = await fetch('/.netlify/functions/chat', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({messages: conversationHistory})
-        });
-        typing.remove();
-        if (!res.ok) {
-          addMsg(t.chatError, 'bot');
-          return;
-        }
-        const data = await res.json();
-        const reply = data.reply || t.chatError;
-        conversationHistory.push({role:'assistant', content: reply});
-        addMsg(reply, 'bot');
-      } catch(err) {
-        typing.remove();
-        addMsg(t.chatError, 'bot');
-      }
-    }
-    
-    sendBtn.onclick = send;
-    input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
-    input.focus();
+}
+
+// legacy placeholder
+function _legacy() {
+  // Close all panels
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.add('open');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
-})();
+  // Close mobile menu
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function closeDetail(id) {
+  const panel = document.getElementById('dp-' + id);
+  if (panel) {
+    panel.classList.remove('open');
+    document.getElementById('services').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function switchPane(tabEl, paneId) {
+  const panel = tabEl.closest('.detail-panel');
+  panel.querySelectorAll('.dp-tab').forEach(t => t.classList.remove('on'));
+  panel.querySelectorAll('.dp-pane').forEach(p => p.classList.remove('on'));
+  tabEl.classList.add('on');
+  document.getElementById(paneId).classList.add('on');
+}
 </script>
 </body>
 </html>
