@@ -1756,5 +1756,24 @@ function closeDetail(id) {
   }
 })();
 </script>
+
+<script>
+function toggleVT(id){
+  var d = document.getElementById(id);
+  if (!d) return;
+  var wasOpen = d.classList.contains('open');
+  document.querySelectorAll('.vt-detail').forEach(function(e){ e.classList.remove('open'); });
+  if (!wasOpen) { d.classList.add('open'); setTimeout(function(){ d.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 50); }
+}
+function openDetail(id){
+  document.querySelectorAll('.detail-panel').forEach(function(p){ p.classList.remove('open'); });
+  var panel = document.getElementById('dp-' + id);
+  if (panel) { panel.classList.add('open'); panel.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+function closeDetail(id){
+  var panel = document.getElementById('dp-' + id);
+  if (panel) panel.classList.remove('open');
+}
+</script>
 </body>
 </html>
