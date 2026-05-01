@@ -1253,6 +1253,14 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <!-- CHATBOT -->
 
 <script>
+function toggleVT(id){
+  var d = document.getElementById(id);
+  if (!d) return;
+  var wasOpen = d.classList.contains('open');
+  var pane = d.closest('.dp-pane') || document;
+  pane.querySelectorAll('.vt-detail').forEach(function(e){ e.classList.remove('open'); });
+  if (!wasOpen) { d.classList.add('open'); setTimeout(function(){ d.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 50); }
+}
 // BURGER MENU
 const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
