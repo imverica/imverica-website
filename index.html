@@ -315,7 +315,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <body>
 
 <!-- Hidden Netlify Forms -->
-<form name="appointment" netlify netlify-honeypot="bot-field" hidden>
+<form name="appointment" hidden>
   <input type="text" name="name">
   <input type="text" name="phone">
   <input type="email" name="email">
@@ -452,22 +452,28 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <div id="about" class="why-section">
   <div class="why-inner">
     <div>
-      <div class="why-label">Why Imverica</div>
-      <div class="why-title">Experience. Accuracy. Real savings.</div>
-      <p class="why-sub">We are a small, dedicated team that genuinely loves helping people navigate the document preparation process. Our staff includes a California Licensed Legal Document Assistant (LDA), a California Registered Immigration Consultant, and bonded professionals — not attorneys, but experienced document specialists who know exactly what agencies and courts require.</p>
-      <ul class="why-list">
-        <li><span class="why-num">01</span><span>California Licensed Legal Document Assistant (LDA) registered under Bus. &amp; Prof. Code §6400, bonded and registered with the county clerk.</span></li>
-        <li><span class="why-num">02</span><span>Clients who file pro se (self-represented) save thousands in attorney fees — we make that possible with accurate, complete document packages.</span></li>
-        <li><span class="why-num">03</span><span>Multilingual staff who understand the immigrant experience firsthand. We serve clients in Sacramento and worldwide remotely.</span></li>
-        <li><span class="why-num">04</span><span>Flat, upfront pricing. No hidden charges. For matters requiring a licensed attorney, we can provide referrals from our professional network.</span></li>
+      <div class="why-label">Our Story</div>
+      <div class="why-title">Built by an immigrant. For immigrants.</div>
+      <p class="why-sub">The founder of Imverica came to the United States as an immigrant and experienced firsthand what it means to navigate an unfamiliar legal system in a foreign language — without money for an attorney, without knowing where to turn. Those years were not easy. But they taught something invaluable: that most people don't need an attorney to file their documents. They need someone who knows the forms, speaks their language, and actually shows up.</p>
+
+      <p class="why-sub" style="margin-top:1rem;">Over the past <strong>10+ years</strong>, our founder has worked closely alongside a licensed California attorney, preparing immigration petitions, court forms, and civil documents for hundreds of clients across the Russian-speaking community in Sacramento and beyond. That hands-on experience, combined with formal registration as a California Licensed Legal Document Assistant, is the foundation of Imverica.</p>
+
+      <p class="why-sub" style="margin-top:1rem;">Hiring an immigration attorney in California can cost <strong>$3,000 to $10,000 or more</strong> per case. Most people filing routine USCIS forms, family court documents, or small claims paperwork don't need that. They need accurate, complete document packages — prepared correctly, on time, and at a price that doesn't wipe out their savings. That's exactly what we do.</p>
+
+      <ul class="why-list" style="margin-top:1.5rem;">
+        <li><span class="why-num">01</span><span>California Licensed Legal Document Assistant (LDA) — registered under Bus. &amp; Prof. Code §6400, bonded and registered with the county clerk. We prepare documents at your direction. We are not attorneys and do not provide legal advice.</span></li>
+        <li><span class="why-num">02</span><span>10+ years of hands-on experience preparing USCIS petitions, EOIR court documents, and California civil forms — under the supervision of a licensed California attorney.</span></li>
+        <li><span class="why-num">03</span><span>Russian-speaking staff. We understand the immigrant experience — not from a textbook, but from living it. Sacramento and remote clients worldwide welcome.</span></li>
+        <li><span class="why-num">04</span><span>Flat, transparent pricing. No hidden fees. For matters that genuinely require an attorney, we maintain referral relationships with licensed immigration counsel.</span></li>
       </ul>
+
       <div class="credential-box" style="margin-top:2rem;">
         <div class="credential-box-label">Our Office</div>
         <div class="credential-box-val"><strong>Imverica Legal Solutions</strong><br>Sacramento, California<br>(916) 399-3992</div>
       </div>
       <div class="credential-box">
         <div class="credential-box-label">Registration</div>
-        <div class="credential-box-val"><strong>California Licensed LDA</strong><br>Legal Document Assistant registered under Business &amp; Professions Code §6400.</div>
+        <div class="credential-box-val"><strong>California Licensed LDA</strong><br>Registered under Business &amp; Professions Code §6400. Bonded. County registered.<br><br><em style="font-size:11px;color:#888;">Imverica Legal Solutions is not a law firm. We are not attorneys. We do not provide legal advice. Documents are prepared at the client's specific direction.</em></div>
       </div>
     </div>
     <div>
@@ -847,9 +853,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
     <!-- Request Form -->
     <div class="req-form">
-      <form name="req-immigration" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-immigration','req-imm-success')">
-        <input type="hidden" name="form-name" value="req-immigration">
-        <input name="bot-field" style="display:none">
+      <form name="req-immigration" onsubmit="submitReq(event,'req-immigration','req-imm-success')">
+        
+        
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -930,9 +936,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </div>
 
     <div class="req-form">
-      <form name="req-family" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-family','req-fam-success')">
-        <input type="hidden" name="form-name" value="req-family">
-        <input name="bot-field" style="display:none">
+      <form name="req-family" onsubmit="submitReq(event,'req-family','req-fam-success')">
+        
+        
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -1004,9 +1010,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       </div>
 
     <div class="req-form">
-      <form name="req-civil" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-civil','req-civ-success')">
-        <input type="hidden" name="form-name" value="req-civil">
-        <input name="bot-field" style="display:none">
+      <form name="req-civil" onsubmit="submitReq(event,'req-civil','req-civ-success')">
+        
+        
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -1078,9 +1084,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="fi" style="opacity:0.6;"><div class="fi-name">Apostille Coordination</div><div class="fi-desc">We are expanding this service. Contact us to discuss your needs.</div></div>
 
     <div class="req-form">
-      <form name="req-business" netlify netlify-honeypot="bot-field" onsubmit="submitReq(event,'req-business','req-biz-success')">
-        <input type="hidden" name="form-name" value="req-business">
-        <input name="bot-field" style="display:none">
+      <form name="req-business" onsubmit="submitReq(event,'req-business','req-biz-success')">
+        
+        
         <div class="req-form-title">Send a Request</div>
         <div class="req-form-sub">Tell us what you need — we'll get back to you within 1 business day.</div>
         <div class="req-grid">
@@ -1452,18 +1458,40 @@ function switchPane(tabEl, paneId) {
   document.getElementById(paneId).classList.add('on');
 }
 
-// ── REQUEST FORMS ──
+// ── REQUEST FORMS — Google Forms ──
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc9AYIqCg3gqFAtoUNv303_SPYwNc-nDPd45mqwMKymqs35nA/formResponse';
+const ENTRY = {
+  name:    'entry.1357447565',
+  phone:   'entry.196686755',
+  email:   'entry.1125942921',
+  service: 'entry.780167457',
+  message: 'entry.702816258'
+};
+
 async function submitReq(e, formName, successId) {
   e.preventDefault();
   const form = e.target;
   const btn = form.querySelector('.req-btn');
   btn.disabled = true;
   btn.textContent = 'Sending...';
-  const data = new URLSearchParams(new FormData(form));
+
+  const body = new URLSearchParams();
+  body.append(ENTRY.name,    form.querySelector('[name="name"]')?.value    || '');
+  body.append(ENTRY.phone,   form.querySelector('[name="phone"]')?.value   || '');
+  body.append(ENTRY.email,   form.querySelector('[name="email"]')?.value   || '');
+  body.append(ENTRY.service, form.querySelector('[name="service"]')?.value || '');
+  body.append(ENTRY.message, form.querySelector('[name="message"]')?.value || '');
+
   try {
-    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data.toString() });
+    await fetch(GOOGLE_FORM_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
     document.getElementById(successId).style.display = 'block';
     form.reset();
+    btn.textContent = 'Send Request →';
   } catch(err) {
     btn.disabled = false;
     btn.textContent = 'Send Request →';
