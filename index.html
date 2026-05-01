@@ -1703,7 +1703,15 @@ mobileMenu.querySelectorAll('a').forEach(a => {
           body: JSON.stringify({messages: conversationHistory})
         });
         typing.remove();
-        if (!res.ok) {
+        if (res.status === 429) {
+          addMsg(currentLang === 'ru' ? 'Слишком много сообщений. Позвоните нам: (916) 399-3992.' :
+                 currentLang === 'uk' ? 'Забагато повідомлень. Зателефонуйте нам: (916) 399-3992.' :
+                 currentLang === 'es' ? 'Demasiados mensajes. Llámenos: (916) 399-3992.' :
+                 'Too many messages. Please call us: (916) 399-3992.', 'bot');
+          sendBtn.disabled = true;
+          input.disabled = true;
+          input.placeholder = '...';
+        } else if (!res.ok) {
           addMsg(t.chatError, 'bot');
         } else {
           const data = await res.json();
