@@ -356,6 +356,9 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .iw-form textarea{resize:vertical;min-height:80px;}
 .iw-form button{background:#1a2e4a;color:#fff;border:none;border-radius:6px;padding:12px;cursor:pointer;font-size:14px;font-family:inherit;}
 .iw-success{padding:14px;color:#1a5a3a;font-size:14px;text-align:center;}
+.iw-disclaimer-wrap{padding:10px 14px 14px;border-top:1px solid #eee;margin-top:4px;}
+.iw-disclaimer-label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:11px;color:#555;line-height:1.5;}
+.iw-disclaimer-label input[type=checkbox]{margin-top:2px;flex-shrink:0;width:15px;height:15px;cursor:pointer;accent-color:#1a2e4a;}
 </style>
 </head>
 <body>
@@ -1452,7 +1455,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       success: '✓ Message received! We will contact you within 1 business day.',
       chatPlaceholder: 'Type your message...',
       chatGreeting: 'Hello! Ask me about USCIS forms, family law, civil court, or our services.',
-      chatError: 'Sorry, please try again or call us at (916) 399-3992.'
+      chatError: 'Sorry, please try again or call us at (916) 399-3992.',
+      tosText: 'I understand that Imverica Legal Solutions is a registered Legal Document Assistant (LDA), not a law firm. We prepare documents only at the client\'s direction and do not provide legal advice. For legal advice, consult a licensed attorney.'
     },
     ru: {
       menuTitle: 'Как мы можем помочь?',
@@ -1466,7 +1470,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       success: '✓ Сообщение получено! Мы свяжемся с вами в течение 1 рабочего дня.',
       chatPlaceholder: 'Напишите ваше сообщение...',
       chatGreeting: 'Здравствуйте! Спросите меня о формах USCIS, семейном праве, гражданских делах или наших услугах.',
-      chatError: 'Извините, попробуйте еще раз или позвоните нам (916) 399-3992.'
+      chatError: 'Извините, попробуйте еще раз или позвоните нам (916) 399-3992.',
+      tosText: 'Я понимаю, что Imverica Legal Solutions является зарегистрированным помощником по юридическим документам (LDA), а не юридической фирмой. Мы только готовим документы по указанию клиента и не предоставляем юридических консультаций. Для получения юридической консультации обратитесь к лицензированному адвокату.'
     },
     uk: {
       menuTitle: 'Як ми можемо допомогти?',
@@ -1480,7 +1485,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       success: '✓ Повідомлення отримано! Ми зв\'яжемось з вами протягом 1 робочого дня.',
       chatPlaceholder: 'Напишіть ваше повідомлення...',
       chatGreeting: 'Вітаю! Запитайте мене про форми USCIS, сімейне право, цивільні справи або наші послуги.',
-      chatError: 'Вибачте, спробуйте ще раз або зателефонуйте нам (916) 399-3992.'
+      chatError: 'Вибачте, спробуйте ще раз або зателефонуйте нам (916) 399-3992.',
+      tosText: 'Я розумію, що Imverica Legal Solutions є зареєстрованим помічником з юридичних документів (LDA), а не юридичною фірмою. Ми лише готуємо документи за вказівкою клієнта і не надаємо юридичних консультацій. Для отримання юридичної консультації зверніться до ліцензованого адвоката.'
     },
     es: {
       menuTitle: '¿Cómo podemos ayudarle?',
@@ -1494,7 +1500,8 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       success: '✓ ¡Mensaje recibido! Le contactaremos en 1 día hábil.',
       chatPlaceholder: 'Escriba su mensaje...',
       chatGreeting: '¡Hola! Pregúnteme sobre formularios USCIS, derecho familiar, tribunales civiles o nuestros servicios.',
-      chatError: 'Lo siento, inténtelo de nuevo o llámenos al (916) 399-3992.'
+      chatError: 'Lo siento, inténtelo de nuevo o llámenos al (916) 399-3992.',
+      tosText: 'Entiendo que Imverica Legal Solutions es un Asistente de Documentos Legales (LDA) registrado, no un bufete de abogados. Solo preparamos documentos bajo la dirección del cliente y no brindamos asesoramiento legal. Para asesoramiento legal, consulte a un abogado con licencia.'
     }
   };
   
@@ -1541,7 +1548,7 @@ mobileMenu.querySelectorAll('a').forEach(a => {
             <div class="iw-menu-sub">${t.msgSub}</div>
           </span>
         </button>
-        <a class="iw-menu-btn" href="https://t.me/imverica" target="_blank">
+        <a class="iw-menu-btn" id="iw-go-tg" href="https://t.me/imverica" target="_blank">
           <span class="iw-menu-icon">📱</span>
           <span class="iw-menu-text">
             <div class="iw-menu-title">${t.tg}</div>
@@ -1555,10 +1562,32 @@ mobileMenu.querySelectorAll('a').forEach(a => {
             <div class="iw-menu-sub">${t.callSub}</div>
           </span>
         </a>
+        <div class="iw-disclaimer-wrap">
+          <label class="iw-disclaimer-label">
+            <input type="checkbox" id="iw-tos-check">
+            <span>${t.tosText}</span>
+          </label>
+        </div>
       </div>
     `;
-    document.getElementById('iw-go-ai').onclick = renderChat;
-    document.getElementById('iw-go-msg').onclick = renderForm;
+
+    const check = document.getElementById('iw-tos-check');
+    const btnAi = document.getElementById('iw-go-ai');
+    const btnMsg = document.getElementById('iw-go-msg');
+    const btnTg = document.getElementById('iw-go-tg');
+
+    function setBlocked(blocked) {
+      [btnAi, btnMsg, btnTg].forEach(btn => {
+        btn.style.opacity = blocked ? '0.4' : '1';
+        btn.style.pointerEvents = blocked ? 'none' : 'auto';
+        btn.style.cursor = blocked ? 'not-allowed' : 'pointer';
+      });
+    }
+
+    setBlocked(true);
+    check.addEventListener('change', function() { setBlocked(!this.checked); });
+    btnAi.onclick = function() { if (check.checked) renderChat(); };
+    btnMsg.onclick = function() { if (check.checked) renderForm(); };
   }
   
   function renderForm() {
@@ -1621,7 +1650,11 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     function addMsg(text, who) {
       const div = document.createElement('div');
       div.className = 'iw-msg iw-msg-' + who;
-      div.textContent = text;
+      // render **bold** and line breaks
+      div.innerHTML = text
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\n/g,'<br>');
       body.appendChild(div);
       body.scrollTop = body.scrollHeight;
     }
