@@ -1459,14 +1459,7 @@ function switchPane(tabEl, paneId) {
 }
 
 // ── REQUEST FORMS — Google Forms ──
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc9AYIqCg3gqFAtoUNv303_SPYwNc-nDPd45mqwMKymqs35nA/formResponse';
-const ENTRY = {
-  name:    'entry.1357447565',
-  phone:   'entry.196686755',
-  email:   'entry.1125942921',
-  service: 'entry.780167457',
-  message: 'entry.702816258'
-};
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1-Im71BEZQMEL8elsKTQekokZCqqV0Mj7D6d44G1ueAIDIiqV6QXvR0p6Btqs7WaFnA/exec';
 
 async function submitReq(e, formName, successId) {
   e.preventDefault();
@@ -1475,19 +1468,20 @@ async function submitReq(e, formName, successId) {
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  const body = new URLSearchParams();
-  body.append(ENTRY.name,    form.querySelector('[name="name"]')?.value    || '');
-  body.append(ENTRY.phone,   form.querySelector('[name="phone"]')?.value   || '');
-  body.append(ENTRY.email,   form.querySelector('[name="email"]')?.value   || '');
-  body.append(ENTRY.service, form.querySelector('[name="service"]')?.value || '');
-  body.append(ENTRY.message, form.querySelector('[name="message"]')?.value || '');
+  const payload = {
+    name:    form.querySelector('[name="name"]')?.value    || '',
+    phone:   form.querySelector('[name="phone"]')?.value   || '',
+    email:   form.querySelector('[name="email"]')?.value   || '',
+    service: form.querySelector('[name="service"]')?.value || '',
+    message: form.querySelector('[name="message"]')?.value || ''
+  };
 
   try {
-    await fetch(GOOGLE_FORM_URL, {
+    await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body.toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
     document.getElementById(successId).style.display = 'block';
     form.reset();
