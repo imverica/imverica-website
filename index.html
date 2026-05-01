@@ -294,6 +294,15 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
 /* Request form at bottom of each panel */
 .req-form{background:var(--navy-dark);padding:2rem 2.5rem;margin-top:2rem;}
+
+/* Get a Quote Modal */
+.quote-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:60px 20px;}
+.quote-modal.open{display:flex;}
+.quote-modal-inner{background:var(--navy-dark);border-radius:8px;max-width:600px;width:100%;padding:2.5rem;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.quote-modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#7a95ae;font-size:24px;cursor:pointer;line-height:1;padding:8px;border-radius:4px;transition:background 0.2s;}
+.quote-modal-close:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.quote-modal h2{font-family:'Playfair Display',serif;font-size:28px;color:#dde5ee;margin-bottom:0.5rem;font-weight:400;}
+.quote-modal-sub{font-size:14px;color:#7a95ae;margin-bottom:1.8rem;font-weight:300;}
 .req-form-title{font-family:'Playfair Display',serif;font-size:20px;color:#dde5ee;margin-bottom:0.4rem;}
 .req-form-sub{font-size:13px;color:#7a95ae;margin-bottom:1.4rem;font-weight:300;}
 .req-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
@@ -335,7 +344,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <li class="nav-sep"></li>
     <li><a href="portal.html" data-cat="portal">Client Portal</a></li>
   </ul>
-  <a class="nav-cta" href="#contact" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});return false;">Get a Quote</a>
+  <a class="nav-cta" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
   <button class="burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -365,7 +374,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
         (916) 399-3992
       </a>
       <div class="hero-actions">
-        <a class="btn-primary" href="#contact" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});return false;">Get a Quote</a>
+        <a class="btn-primary" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
         <a class="btn-ghost" href="#services">See all services</a>
       </div>
       <p class="hero-note">Imverica Legal Solutions is a registered Legal Document Assistant (LDA) in the State of California. We are not a law firm and do not provide legal advice.</p>
@@ -1600,5 +1609,31 @@ function switchPane(tabEl, paneId) {
   });
 })();
 </script>
+<!-- Get a Quote Modal -->
+<div id="quoteModal" class="quote-modal" onclick="if(event.target===this)closeQuoteModal()">
+  <div class="quote-modal-inner">
+    <button class="quote-modal-close" onclick="closeQuoteModal()">✕</button>
+    <h2>Get a Quote</h2>
+    <div class="quote-modal-sub">Tell us what you need — we'll get back to you within 1 business day with a flat-fee quote.</div>
+    <form name="req-quote" onsubmit="submitReq(event,'req-quote','req-quote-success')">
+      <div class="req-grid">
+        <div class="req-field"><label>Full Name *</label><input type="text" name="name" placeholder="Your name" required></div>
+        <div class="req-field"><label>Phone *</label><input type="tel" name="phone" placeholder="(916) 000-0000" required></div>
+        <div class="req-field"><label>Email</label><input type="email" name="email" placeholder="your@email.com"></div>
+        <div class="req-field"><label>Service Needed</label><input type="text" name="service" placeholder="e.g. I-485, U visa, N-400..."></div>
+        <div class="req-field req-field-full"><label>Brief Description</label><textarea name="message" placeholder="Briefly describe your situation..."></textarea></div>
+      </div>
+      <button type="submit" class="req-btn">Send Request →</button>
+      <div id="req-quote-success" class="req-success">✓ Request received! We will contact you within 1 business day.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openQuoteModal(){document.getElementById('quoteModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeQuoteModal(){document.getElementById('quoteModal').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeQuoteModal();});
+</script>
+
 </body>
 </html>
