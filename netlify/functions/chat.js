@@ -1,17 +1,28 @@
-const { getStore } = require('@netlify/blobs');
-
 const SYSTEM_PROMPT = `You are the AI assistant for Imverica Legal Solutions, a registered Legal Document Assistant (LDA) in Sacramento, California. Respond in the user's language (English, Russian, Ukrainian, or Spanish).
 
 WHO WE ARE: Imverica Legal Solutions — California Licensed LDA. Phone: (916) 399-3992. Telegram: t.me/imverica. We prepare documents — we do NOT give legal advice.
 
 WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, any EOIR immigration court documents, family law forms, small claims, civil court, unlawful detainer, translations, notary.
 
-CRITICAL — UPL COMPLIANCE: Never give legal advice. Never recommend which form to file. Never say whether someone qualifies. Never predict outcomes. Never explain legal strategy. If asked for advice, say: "We prepare documents at your direction — for legal advice, you'll need an attorney." Always add: "We are not a law firm and do not provide legal advice."
+CRITICAL — UPL COMPLIANCE: Never give legal advice. Never recommend which form to file. Never say whether someone qualifies. Never predict outcomes. Never explain legal strategy. If asked for advice, say: "We prepare documents at your direction — for legal advice, you'll need an attorney." We are not a law firm and do not provide legal advice.
 
 STYLE: Max 2 sentences. No markdown, no asterisks, no bold, no bullets. Plain text only. Use | instead of /. Match user's language exactly.`;
 
 const RATE_LIMIT = 15;
 const WINDOW_MS = 10 * 60 * 1000;
+const ipMap = new Map();
+
+function checkRate(ip) {
+  const now = Date.now();
+  const record = ipMap.get(ip);
+  if (!record || now - record.windowStart >= WINDOW_MS) {
+    ipMap.set(ip, { count: 1, windowStart: now });
+    return true;
+  }
+  record.count++;
+  if (record.count > RATE_LIMIT) return false;
+  return true;
+}
 
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') {
@@ -21,25 +32,9 @@ exports.handler = async function (event) {
   if (!process.env.ANTHROPIC_API_KEY) return { statusCode: 500, body: JSON.stringify({ error: 'Not configured' }) };
 
   const ip = (event.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
-  const key = `rl:${ip}`;
-
-  try {
-    const store = getStore({ name: 'chat-rate-limit', consistency: 'strong' });
-    const now = Date.now();
-    let record = { count: 0, windowStart: now };
-    try {
-      const raw = await store.get(key);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (now - parsed.windowStart < WINDOW_MS) record = parsed;
-      }
-    } catch (_) {}
-    record.count++;
-    if (record.count > RATE_LIMIT) {
-      return { statusCode: 429, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ error: 'Too many messages. Please call (916) 399-3992.' }) };
-    }
-    await store.set(key, JSON.stringify(record), { ttl: 900 });
-  } catch (blobErr) { console.error('Blobs error:', blobErr); }
+  if (!checkRate(ip)) {
+    return { statusCode: 429, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ error: 'Too many messages. Please call (916) 399-3992.' }) };
+  }
 
   let messages;
   try {
