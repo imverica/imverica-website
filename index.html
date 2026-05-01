@@ -1750,3 +1750,14 @@ function closeDetail(id) {
 </script>
 </body>
 </html>
+<script>
+function openDetail(id) {
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  var panel = document.getElementById('dp-' + id);
+  if (panel) { panel.classList.add('open'); panel.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+function closeDetail(id) {
+  var panel = document.getElementById('dp-' + id);
+  if (panel) panel.classList.remove('open');
+}
+</script>
