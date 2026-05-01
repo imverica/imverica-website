@@ -1754,5 +1754,49 @@ function switchPane(tabEl, paneId) {
   setTimeout(restoreChatBubble, 1200);
 })();
 </script>
+<script>
+(function () {
+  function fixChatBubble() {
+    let bubble = document.getElementById('chatBubble');
+    const chatWindow = document.getElementById('chatWindow');
+    if (!bubble || !chatWindow) return;
+
+    const cleanBubble = bubble.cloneNode(true);
+    bubble.replaceWith(cleanBubble);
+    bubble = cleanBubble;
+    document.body.appendChild(bubble);
+
+    bubble.style.setProperty('position', 'fixed', 'important');
+    bubble.style.setProperty('bottom', '24px', 'important');
+    bubble.style.setProperty('right', '24px', 'important');
+    bubble.style.setProperty('width', '56px', 'important');
+    bubble.style.setProperty('height', '56px', 'important');
+    bubble.style.setProperty('display', 'flex', 'important');
+    bubble.style.setProperty('visibility', 'visible', 'important');
+    bubble.style.setProperty('opacity', '1', 'important');
+    bubble.style.setProperty('pointer-events', 'auto', 'important');
+    bubble.style.setProperty('z-index', '2147483647', 'important');
+    bubble.style.setProperty('cursor', 'pointer', 'important');
+    chatWindow.style.setProperty('z-index', '2147483646', 'important');
+
+    bubble.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      chatWindow.classList.toggle('open');
+      if (chatWindow.classList.contains('open')) {
+        chatWindow.style.setProperty('display', 'flex', 'important');
+      } else {
+        chatWindow.style.setProperty('display', 'none', 'important');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixChatBubble);
+  } else {
+    fixChatBubble();
+  }
+})();
+</script>
 </body>
 </html>
