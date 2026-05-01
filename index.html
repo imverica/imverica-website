@@ -264,11 +264,11 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 /* Icon layer: visible by default, hidden on hover */
 .vt-icon-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity 0.35s;}
 .vt-icon-wrap span{font-size:48px;line-height:1;}
-.vt:hover .vt-icon-wrap,.vt.photo-active .vt-icon-wrap{opacity:0;pointer-events:none;}
+.vt:hover .vt-icon-wrap,.vt.photo-active .vt-icon-wrap{opacity:0.15;pointer-events:none;}
 
 /* Hide all text content on hover - only photo shows */
 .vt-content{position:relative;z-index:1;transition:opacity 0.3s;}
-.vt:hover .vt-content,.vt.photo-active .vt-content{opacity:0;}
+.vt:hover .vt-content,.vt.photo-active .vt-content{opacity:1;}
 
 /* Subtle colored bottom strip per category */
 .vt.cat-blue{border-bottom:3px solid #1a6bc4;}
