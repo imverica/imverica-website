@@ -71,19 +71,40 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 
 /* HERO */
 .hero-wrap{background:#fff;border-bottom:1px solid var(--border);}
-.hero{padding:70px 2.5rem 60px;display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:1100px;margin:0 auto;align-items:center;}
-@media(max-width:768px){.hero{grid-template-columns:1fr;gap:2rem;padding:40px 1.5rem;}}
-.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;opacity:0.65;}
-.hero h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:500;line-height:1.15;color:var(--navy-dark);margin-bottom:1.2rem;}
+.hero{padding:56px 2.5rem 50px;max-width:980px;margin:0 auto;text-align:center;}
+@media(max-width:768px){.hero{padding:38px 1.5rem 42px;}}
+.hero-main{max-width:900px;margin:0 auto;}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:0.9rem;opacity:0.62;}
+.hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:500;line-height:1.13;color:var(--navy-dark);margin:0 auto 1rem;max-width:760px;}
 @media(max-width:768px){.hero h1{font-size:30px;}}
-.hero-sub{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:1.8rem;font-weight:300;}
-.hero-phone{display:inline-flex;align-items:center;gap:8px;margin-bottom:1.4rem;font-family:'Playfair Display',serif;font-size:24px;color:var(--navy);text-decoration:none;font-weight:500;}
+.hero-sub{font-size:15px;color:var(--muted);line-height:1.65;margin:0 auto 1.35rem;font-weight:300;max-width:760px;}
+.hero-phone{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);text-decoration:none;font-weight:500;}
 .hero-phone:hover{opacity:0.8;}
-.hero-actions{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-top:1rem;}
 .btn-primary{background:var(--navy);color:#fff;padding:13px 28px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;border:none;cursor:pointer;border-radius:3px;text-decoration:none;display:inline-block;transition:background 0.2s;}
 .btn-primary:hover{background:var(--navy-light);}
 .btn-ghost{font-size:14px;color:#555;text-decoration:none;border-bottom:1px solid #bbb;padding-bottom:2px;}
-.hero-note{font-size:11px;color:#bbb;margin-top:1rem;line-height:1.6;}
+.hero-note{font-size:11px;color:#9b9b9b;margin-top:0.9rem;line-height:1.6;}
+.ai-finder{background:#fff;border:1px solid var(--border);border-radius:6px;box-shadow:0 14px 34px rgba(17,30,48,0.08);padding:0;margin:1.45rem auto 1rem;max-width:820px;text-align:left;}
+.ai-finder-form{position:relative;}
+.ai-finder textarea{width:100%;min-height:156px;resize:vertical;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.55;color:var(--navy-dark);padding:1.25rem 4.2rem 3.4rem 1.25rem;background:#fff;border-radius:6px;}
+.ai-finder textarea::placeholder{color:#8d929a;}
+.ai-finder-submit{position:absolute;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:none;background:var(--navy);color:#fff;font-size:22px;line-height:1;cursor:pointer;transition:background 0.2s,transform 0.2s;}
+.ai-finder-submit:hover{background:var(--navy-light);transform:translateY(-1px);}
+.ai-finder-submit:disabled{opacity:0.55;cursor:not-allowed;transform:none;}
+.ai-examples{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1rem auto 0;max-width:820px;}
+.ai-example{background:#fff;border:1px solid var(--border);border-radius:4px;padding:13px 12px;text-align:center;font-family:'DM Sans',sans-serif;font-size:13px;color:#333;cursor:pointer;transition:border-color 0.18s,box-shadow 0.18s,color 0.18s;min-height:46px;}
+.ai-example:hover{border-color:var(--navy);box-shadow:0 5px 14px rgba(17,30,48,0.08);color:var(--navy);}
+.ai-result{display:none;background:#f8f8f6;border-top:1px solid var(--border);padding:14px 1.25rem 1.25rem;font-size:13px;line-height:1.65;color:#444;}
+.ai-result.open{display:block;}
+.ai-result-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.ai-result-actions a,.ai-result-actions button{font-family:'DM Sans',sans-serif;font-size:12px;border-radius:3px;padding:9px 13px;text-decoration:none;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);}
+.ai-result-actions .dark{background:var(--navy);border-color:var(--navy);color:#fff;}
+.ai-hero-contact{display:flex;align-items:center;justify-content:center;gap:1.6rem;flex-wrap:wrap;margin-top:1.1rem;}
+.ai-finder-meta{display:flex;justify-content:center;gap:1.3rem;flex-wrap:wrap;margin-top:1rem;font-size:12px;color:#8a8a8a;}
+.ai-finder-meta span{white-space:nowrap;}
+@media(max-width:760px){.ai-examples{grid-template-columns:repeat(2,1fr);}.ai-finder textarea{min-height:140px;}}
+@media(max-width:560px){.ai-examples{grid-template-columns:1fr;}.ai-finder textarea{font-size:15px;min-height:126px;padding-right:3.8rem;}}
 
 .hero-card{background:var(--bg);border:1px solid var(--border);padding:1.8rem;border-radius:4px;}
 .hero-card-label{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:1.2rem;}
@@ -408,44 +429,38 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <!-- HERO -->
 <div class="hero-wrap">
   <div class="hero">
-    <div>
+    <div class="hero-main">
       <div class="hero-eyebrow">Sacramento, California · Licensed LDA</div>
-      <h1>Professional Legal Document Preparation — Done With Precision.</h1>
-      <p class="hero-sub">Immigration petitions, family law forms, civil court documents — prepared accurately and on time, at your direction. We serve clients in Sacramento and worldwide remotely by phone, email, and Telegram.</p>
-      <a class="hero-phone" href="tel:9163993992">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-        (916) 399-3992
-      </a>
-      <div class="hero-actions">
-        <a class="btn-primary" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
-        <a class="btn-ghost" href="#services">See all services</a>
+      <h1>What document do you need prepared?</h1>
+      <p class="hero-sub">Describe your situation or enter a form number. We identify possible document-preparation options across USCIS, EOIR, California court, family law, small claims, restraining order, probate, and fee waiver forms.</p>
+
+      <div class="ai-finder" id="aiFinder">
+        <form class="ai-finder-form" id="aiFinderForm">
+          <textarea id="aiFinderInput" placeholder="Enter a form number or describe what you need prepared..." aria-label="Describe the document you need"></textarea>
+          <button class="ai-finder-submit" id="aiFinderSubmit" type="submit" aria-label="Find possible documents">→</button>
+        </form>
+        <div class="ai-result" id="aiFinderResult"></div>
       </div>
-      <p class="hero-note">Imverica Legal Solutions is a registered Legal Document Assistant (LDA) in the State of California. We are not a law firm and do not provide legal advice.</p>
-    </div>
-    <div>
-      <div class="hero-card">
-        <div class="hero-card-label">Popular Services</div>
-        <a class="service-tag t-imm active" href="#" onclick="openDetail('imm');return false;">USCIS Immigration</a>
-        <a class="service-tag t-imm" href="#" onclick="openDetail('imm');return false;">EOIR | Asylum</a>
-        <a class="service-tag t-imm" href="#" onclick="openDetail('imm');return false;">U Visa</a>
-        <a class="service-tag t-imm" href="#" onclick="openDetail('imm');return false;">Green Card</a>
-        <a class="service-tag t-fam" href="#" onclick="openDetail('fam');return false;">Divorce Forms</a>
-        <a class="service-tag t-civ" href="#" onclick="openDetail('civ');return false;">Small Claims</a>
-        <a class="service-tag t-other" href="#" onclick="openDetail('biz');return false;">Notary</a>
-        <a class="service-tag t-tra" href="#" onclick="openDetail('tra');return false;">Translations</a>
-        <div class="reviews-wrap">
-          <div class="reviews-label">What our clients say</div>
-          <div class="review-item">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">They handled my green card application paperwork flawlessly. Saved me thousands compared to hiring an attorney.</div>
-            <div class="review-author">— A. Morozov, Sacramento</div>
-          </div>
-          <div class="review-item">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">Fast, professional, and affordable. My divorce forms were ready in two days. Highly recommend.</div>
-            <div class="review-author">— N. Petrenko, Citrus Heights</div>
-          </div>
-        </div>
+
+      <div class="ai-examples" id="aiExamples" aria-label="Rotating document examples">
+        <button class="ai-example" type="button" data-ai-example="I need to renew my green card">Renew green card</button>
+        <button class="ai-example" type="button" data-ai-example="I need divorce forms prepared in California">Divorce forms</button>
+        <button class="ai-example" type="button" data-ai-example="I need to file a small claims case in California">Small claims</button>
+        <button class="ai-example" type="button" data-ai-example="My neighbor is stalking me and threatening me">Restraining order</button>
+      </div>
+
+      <div class="ai-finder-meta">
+        <span>Document preparation only</span>
+        <span>No legal advice</span>
+        <span>English · Russian · Ukrainian · Spanish</span>
+      </div>
+
+      <div class="ai-hero-contact">
+        <a class="hero-phone" href="tel:9163993992">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (916) 399-3992
+        </a>
+        <a class="btn-ghost" href="#services">See services</a>
       </div>
     </div>
   </div>
@@ -1457,6 +1472,116 @@ function closeDetail(id) {
 
 
 <!-- IMVERICA CHAT WIDGET -->
+
+<script>
+(function(){
+  var form = document.getElementById('aiFinderForm');
+  var input = document.getElementById('aiFinderInput');
+  var result = document.getElementById('aiFinderResult');
+  var submit = document.getElementById('aiFinderSubmit');
+  if (!form || !input || !result || !submit) return;
+
+  function escapeHtml(text) {
+    return String(text || '').replace(/[&<>]/g, function(ch) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;'}[ch];
+    });
+  }
+
+  function showResult(html) {
+    result.innerHTML = html;
+    result.classList.add('open');
+  }
+
+  async function askFinder(text) {
+    var query = String(text || '').trim();
+    if (!query) return;
+    input.value = query;
+    submit.disabled = true;
+    showResult('Checking possible document-preparation options...');
+
+    try {
+      var res = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({messages:[{role:'user', content: query}]})
+      });
+      if (!res.ok) throw new Error('Request failed');
+      var data = await res.json();
+      var reply = data.reply || 'Please call us at (916) 399-3992 and we will help identify the document package.';
+      showResult(
+        '<div>' + escapeHtml(reply).replace(/\n/g, '<br>') + '</div>' +
+        '<div class="ai-result-actions">' +
+          '<a class="dark" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>' +
+          '<a href="https://t.me/imverica" target="_blank" rel="noopener">Telegram</a>' +
+          '<a href="tel:9163993992">Call (916) 399-3992</a>' +
+        '</div>'
+      );
+    } catch (err) {
+      showResult('Sorry, please try again or call us at (916) 399-3992.');
+    } finally {
+      submit.disabled = false;
+    }
+  }
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    askFinder(input.value);
+  });
+
+  var examplesWrap = document.getElementById('aiExamples');
+  var exampleLanes = [
+    [
+      {label:'Renew green card', prompt:'I need to renew my green card'},
+      {label:'Citizenship', prompt:'I want to apply for U.S. citizenship'},
+      {label:'Work permit', prompt:'I need a work permit application prepared'},
+      {label:'Family petition', prompt:'I want to petition for my spouse or relative'},
+      {label:'TPS', prompt:'I need Temporary Protected Status paperwork'}
+    ],
+    [
+      {label:'Divorce forms', prompt:'I need divorce forms prepared in California'},
+      {label:'Child custody', prompt:'I need child custody forms prepared'},
+      {label:'Child support', prompt:'I need child support paperwork'},
+      {label:'Legal separation', prompt:'I need legal separation forms prepared'},
+      {label:'Response to divorce', prompt:'I was served with divorce papers and need a response prepared'}
+    ],
+    [
+      {label:'Small claims', prompt:'I need to file a small claims case in California'},
+      {label:'Civil complaint', prompt:'I need civil complaint forms prepared'},
+      {label:'Eviction response', prompt:'I received unlawful detainer papers and need a response prepared'},
+      {label:'Fee waiver', prompt:'I cannot afford court filing fees and need a fee waiver'},
+      {label:'Proof of service', prompt:'I need proof of service forms prepared'}
+    ],
+    [
+      {label:'Restraining order', prompt:'My neighbor is stalking me and threatening me'},
+      {label:'Elder protection', prompt:'I need elder abuse restraining order paperwork'},
+      {label:'Probate estate', prompt:'I need probate documents for a deceased family member'},
+      {label:'Conservatorship', prompt:'I need conservatorship forms for an adult'},
+      {label:'Business filing', prompt:'I need LLC or business filing documents prepared'}
+    ]
+  ];
+  var exampleStep = 0;
+
+  function renderExamples() {
+    if (!examplesWrap) return;
+    examplesWrap.innerHTML = exampleLanes.map(function(lane, laneIndex) {
+      var item = lane[(exampleStep + laneIndex) % lane.length];
+      return '<button class="ai-example" type="button" data-ai-example="' + escapeHtml(item.prompt) + '">' + escapeHtml(item.label) + '</button>';
+    }).join('');
+    exampleStep = (exampleStep + 1) % 1000;
+  }
+
+  if (examplesWrap) {
+    renderExamples();
+    setInterval(renderExamples, 5500);
+    examplesWrap.addEventListener('click', function(event) {
+      var btn = event.target.closest('[data-ai-example]');
+      if (!btn) return;
+      askFinder(btn.getAttribute('data-ai-example'));
+    });
+  }
+})();
+</script>
+
 <button id="iw-launcher" aria-label="Open chat">💬</button>
 
 <div id="iw-window">
