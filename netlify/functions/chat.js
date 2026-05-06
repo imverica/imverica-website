@@ -9,7 +9,7 @@ WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing
 
 CRITICAL — UPL COMPLIANCE: Never give legal advice. Never recommend which form to file. Never say whether someone qualifies. Never predict outcomes. Never explain legal strategy. If asked for advice, say: "We prepare documents at your direction — for legal advice, you'll need an attorney." We are not a law firm and do not provide legal advice.
 
-STYLE: Max 2 sentences. No markdown, no asterisks, no bold, no bullets. Plain text only. Use | instead of /. Match user's language exactly.`;
+STYLE: Max 3 short sentences. No markdown, no asterisks, no bold, no bullets. Plain text only. Use | instead of /. Match user's language exactly.`;
 
 
 function loadFormsCatalog() {
@@ -50,7 +50,7 @@ const FORMS_CATALOG = loadFormsCatalog();
 const SYSTEM_WITH_FORMS = `${SYSTEM_PROMPT}
 
 FORM ROUTING CATALOG:
-Use this catalog to identify likely California document-preparation categories and possible form codes by user facts, language, keywords, and form names. Covers immigration/USCIS, civil, family law, small claims, unlawful detainer, restraining orders, probate, fee waiver, interpreter, accessibility, and proof of service forms. Do not tell the user which form they legally should file; say which forms may be relevant for document preparation and ask one short clarifying question if facts are missing.
+Use this catalog to identify likely document-preparation categories and possible form codes by user facts, language, keywords, and form names. Covers immigration/USCIS, civil, family law, small claims, unlawful detainer, restraining orders, probate, fee waiver, interpreter, accessibility, and proof of service forms. When a user describes a document need, never answer only with a question if a likely catalog match exists: first list 2 to 5 possible forms with codes and plain names using 'may include', then ask one short clarifying question if needed. Do not tell the user which form they legally should file; say forms may be relevant for document preparation at the client's direction.
 
 ${FORMS_CATALOG}`;
 
@@ -94,7 +94,7 @@ exports.handler = async function (event) {
     const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 256, system: SYSTEM_WITH_FORMS, messages })
+      body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 360, system: SYSTEM_WITH_FORMS, messages })
     });
     if (!apiRes.ok) { const t = await apiRes.text(); console.error(apiRes.status, t); return { statusCode: 502, body: JSON.stringify({ error: 'Upstream error' }) }; }
     const data = await apiRes.json();
