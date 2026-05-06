@@ -28,6 +28,7 @@
   --col-about:#4a5a2a;--col-portal:#c0392b;--col-ud:#7a3a5a;--col-bus:#2a5a3a;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-padding-top:var(--nav-height);}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
 
 /* NAV */
@@ -76,7 +77,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 /* HERO */
 .hero-wrap{background:#fff;border-bottom:1px solid var(--border);}
 .hero{padding:56px 2.5rem 50px;max-width:980px;margin:0 auto;text-align:center;}
-@media(max-width:768px){.hero{padding:38px 1.5rem 42px;}}
+@media(max-width:768px){.hero{padding:76px 1.5rem 42px;}}
 .hero-main{max-width:900px;margin:0 auto;}
 .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:0.9rem;opacity:0.62;}
 .hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:500;line-height:1.13;color:var(--navy-dark);margin:0 auto 1rem;max-width:760px;}
@@ -344,6 +345,59 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .req-btn:hover{background:#e8eef5;}
 .req-btn:disabled{background:#aaa;cursor:not-allowed;}
 .req-success{display:none;background:rgba(42,122,90,0.2);border:1px solid rgba(42,122,90,0.4);border-radius:3px;padding:12px 16px;color:#7adbb0;font-size:13px;margin-top:1rem;}
+
+/* Guided intake */
+.intake-modal{display:none;position:fixed;inset:0;background:rgba(17,30,48,0.78);z-index:10000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:34px 18px;}
+.intake-modal.open{display:flex;}
+.intake-shell{position:relative;width:min(1120px,100%);background:#fbfaf7;border:1px solid rgba(255,255,255,0.34);border-radius:8px;box-shadow:0 28px 80px rgba(0,0,0,0.34);overflow:hidden;color:var(--navy-dark);}
+.intake-top{display:grid;grid-template-columns:260px 1fr;min-height:680px;}
+.intake-rail{background:#111e30;color:#fff;padding:28px 24px;display:flex;flex-direction:column;gap:22px;}
+.intake-brand{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;line-height:1.1;}
+.intake-brand span{display:block;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#86a4c3;margin-top:8px;}
+.intake-steps{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.intake-step-dot{display:flex;align-items:center;gap:10px;font-size:13px;color:#9eb2c6;}
+.intake-step-dot span{width:24px;height:24px;border-radius:50%;border:1px solid rgba(255,255,255,0.28);display:flex;align-items:center;justify-content:center;font-size:11px;color:#9eb2c6;flex:none;}
+.intake-step-dot.active{color:#fff;}
+.intake-step-dot.active span{background:#fff;color:#111e30;border-color:#fff;}
+.intake-rail-note{margin-top:auto;border-top:1px solid rgba(255,255,255,0.12);padding-top:18px;font-size:12px;line-height:1.6;color:#9eb2c6;}
+.intake-main{padding:28px 32px 32px;display:flex;flex-direction:column;gap:24px;}
+.intake-close{position:absolute;right:18px;top:14px;border:none;background:rgba(17,30,48,0.08);color:var(--navy);width:38px;height:38px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer;z-index:2;}
+.intake-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;border-bottom:1px solid var(--border);padding-bottom:18px;}
+.intake-kicker{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;color:#68788a;margin-bottom:8px;}
+.intake-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--navy-dark);line-height:1.1;}
+.intake-sub{font-size:14px;line-height:1.65;color:#667;margin-top:10px;max-width:690px;}
+.intake-lang{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.intake-lang button{border:1px solid var(--border);background:#fff;color:#445;padding:8px 10px;border-radius:4px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.intake-lang button.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.intake-progress{height:8px;background:#e5e3dc;border-radius:999px;overflow:hidden;}
+.intake-progress span{display:block;height:100%;width:0;background:#4a7aaa;border-radius:999px;transition:width 0.25s ease;}
+.intake-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:24px;box-shadow:0 14px 28px rgba(17,30,48,0.06);}
+.intake-question{font-size:24px;line-height:1.25;color:var(--navy-dark);margin-bottom:10px;font-weight:500;}
+.intake-help{font-size:14px;line-height:1.6;color:#667;margin-bottom:18px;}
+.intake-options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.intake-option{border:1px solid var(--border);background:#fbfaf7;border-radius:6px;padding:16px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--navy-dark);transition:border-color 0.18s,box-shadow 0.18s,background 0.18s;min-height:92px;}
+.intake-option strong{display:block;font-size:15px;margin-bottom:6px;}
+.intake-option span{display:block;font-size:12px;line-height:1.45;color:#667;}
+.intake-option.active,.intake-option:hover{border-color:#4a7aaa;background:#f3f7fb;box-shadow:0 8px 18px rgba(17,30,48,0.08);}
+.intake-field{display:flex;flex-direction:column;gap:8px;}
+.intake-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
+.intake-field input,.intake-field textarea,.intake-field select{width:100%;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.45;color:var(--navy-dark);background:#fff;outline:none;}
+.intake-field textarea{min-height:150px;resize:vertical;}
+.intake-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.intake-review{display:grid;gap:10px;font-size:14px;}
+.intake-review-row{display:grid;grid-template-columns:210px 1fr;gap:12px;border-bottom:1px solid #eeece6;padding-bottom:10px;}
+.intake-review-row b{color:#68788a;font-weight:500;}
+.intake-choice-row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.intake-account-card{border:1px solid var(--border);border-radius:8px;padding:18px;background:#fbfaf7;cursor:pointer;}
+.intake-account-card.active{border-color:var(--navy);background:#f3f7fb;}
+.intake-account-card h4{font-size:17px;margin-bottom:8px;color:var(--navy-dark);}
+.intake-account-card p{font-size:13px;line-height:1.55;color:#667;}
+.intake-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;}
+.intake-btn{border:1px solid var(--navy);border-radius:4px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:var(--navy);}
+.intake-btn.primary{background:var(--navy);color:#fff;}
+.intake-btn:disabled{opacity:0.45;cursor:not-allowed;}
+.intake-disclaimer{font-size:12px;line-height:1.55;color:#777;background:#f5f3ee;border-left:3px solid #b94c3f;padding:12px 14px;}
+@media(max-width:860px){.intake-top{grid-template-columns:1fr;}.intake-rail{display:none;}.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row{grid-template-columns:1fr;}.intake-title{font-size:30px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}}
 
 </style>
 
@@ -1396,6 +1450,37 @@ function closeDetail(id) {
   });
 })();
 </script>
+<!-- Guided Intake Modal -->
+<div id="intakeModal" class="intake-modal" onclick="if(event.target===this)closeIntakeModal()">
+  <div class="intake-shell" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
+    <button class="intake-close" type="button" onclick="closeIntakeModal()" aria-label="Close intake">×</button>
+    <div class="intake-top">
+      <aside class="intake-rail">
+        <div class="intake-brand">Imverica Intake<span>Document preparation</span></div>
+        <div class="intake-steps" id="intakeSteps"></div>
+        <div class="intake-rail-note" id="intakeRailNote"></div>
+      </aside>
+      <main class="intake-main">
+        <div class="intake-head">
+          <div>
+            <div class="intake-kicker" id="intakeKicker"></div>
+            <div class="intake-title" id="intakeTitle"></div>
+            <div class="intake-sub" id="intakeSub"></div>
+          </div>
+          <div class="intake-lang" id="intakeLang"></div>
+        </div>
+        <div class="intake-progress" aria-hidden="true"><span id="intakeProgress"></span></div>
+        <div class="intake-card" id="intakeCard"></div>
+        <div class="intake-disclaimer" id="intakeDisclaimer"></div>
+        <div class="intake-actions">
+          <button class="intake-btn" type="button" id="intakeBack">Back</button>
+          <button class="intake-btn primary" type="button" id="intakeNext">Next</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
 <!-- Get a Quote Modal -->
 <div id="quoteModal" class="quote-modal" onclick="if(event.target===this)closeQuoteModal()">
   <div class="quote-modal-inner">
@@ -1415,6 +1500,351 @@ function closeDetail(id) {
     </form>
   </div>
 </div>
+
+<script>
+(function () {
+  var modal = document.getElementById('intakeModal');
+  var card = document.getElementById('intakeCard');
+  var title = document.getElementById('intakeTitle');
+  var sub = document.getElementById('intakeSub');
+  var kicker = document.getElementById('intakeKicker');
+  var stepsEl = document.getElementById('intakeSteps');
+  var railNote = document.getElementById('intakeRailNote');
+  var disclaimer = document.getElementById('intakeDisclaimer');
+  var progress = document.getElementById('intakeProgress');
+  var backBtn = document.getElementById('intakeBack');
+  var nextBtn = document.getElementById('intakeNext');
+  var langEl = document.getElementById('intakeLang');
+  if (!modal || !card) return;
+
+  var state = {
+    lang: 'en',
+    step: 0,
+    service: '',
+    formCode: '',
+    situation: '',
+    contact: { name: '', phone: '', email: '' },
+    accountMode: 'guest'
+  };
+
+  var i18n = {
+    en: {
+      kicker: 'Guided intake',
+      title: 'Start document preparation',
+      sub: 'Answer a few questions. We will identify possible forms, prepare documents at your direction, and confirm fees before filing anything.',
+      rail: 'You can pause and continue later. Imverica is not a law firm and does not provide legal advice.',
+      steps: ['Language', 'Document type', 'Details', 'Review', 'Account & payment'],
+      qLanguage: 'Choose your preferred language',
+      hLanguage: 'The intake can support multiple languages from the first screen.',
+      qService: 'What do you need prepared?',
+      hService: 'Choose the closest category. We can adjust it after reviewing your answers.',
+      qDetails: 'Tell us what happened or enter a form number',
+      hDetails: 'Use your own words. If you know the form code, include it here.',
+      qContact: 'Who should we contact about this intake?',
+      hContact: 'We use this to save your request and send the next steps.',
+      qReview: 'Review your intake summary',
+      hReview: 'Nothing is filed from this screen. We will verify forms and fees before preparing final documents.',
+      qAccount: 'How do you want to continue?',
+      hAccount: 'Create a client portal account or continue as a guest before payment.',
+      name: 'Full name', phone: 'Phone', email: 'Email',
+      back: 'Back', next: 'Next', finish: 'Save intake and request payment link',
+      guest: 'Continue as guest', guestSub: 'Use phone/email for this order without creating a password.',
+      portal: 'Create client portal', portalSub: 'Save drafts, upload documents, and track this order later.',
+      sent: 'Intake saved locally. Next backend step: connect this to portal accounts, Stripe checkout, and PDF filling.',
+      disclaimer: 'Document preparation only. Possible forms may include official USCIS or California court forms. Imverica is not a law firm or attorney and does not provide legal advice.',
+      services: [
+        ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
+        ['family', 'California family law', 'Divorce, custody, support, FL-300 and related forms'],
+        ['civil', 'Small claims & civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
+        ['restraining', 'Restraining orders', 'CH, EA, GV, WV and related court forms'],
+        ['ud', 'Unlawful detainer', 'Landlord and tenant document preparation'],
+        ['business', 'Business filings', 'LLC, DBA, EIN and entity documents']
+      ]
+    },
+    ru: {
+      kicker: 'Пошаговый intake',
+      title: 'Начать подготовку документов',
+      sub: 'Ответьте на несколько вопросов. Мы определим возможные формы, подготовим документы по вашему поручению и подтвердим стоимость до подачи.',
+      rail: 'Можно остановиться и продолжить позже. Imverica не является юридической фирмой и не дает юридические консультации.',
+      steps: ['Язык', 'Тип документов', 'Детали', 'Проверка', 'Кабинет и оплата'],
+      qLanguage: 'Выберите удобный язык',
+      hLanguage: 'Intake должен поддерживать несколько языков с самого первого экрана.',
+      qService: 'Какие документы нужно подготовить?',
+      hService: 'Выберите ближайшую категорию. Мы сможем уточнить ее после проверки ответов.',
+      qDetails: 'Опишите ситуацию или введите номер формы',
+      hDetails: 'Пишите своими словами. Если знаете код формы, укажите его здесь.',
+      qContact: 'С кем связаться по этому intake?',
+      hContact: 'Эти данные нужны, чтобы сохранить запрос и отправить следующие шаги.',
+      qReview: 'Проверьте краткое резюме',
+      hReview: 'С этого экрана ничего не подается. Мы сначала проверим формы и стоимость.',
+      qAccount: 'Как хотите продолжить?',
+      hAccount: 'Создайте личный кабинет или продолжите как гость перед оплатой.',
+      name: 'Полное имя', phone: 'Телефон', email: 'Email',
+      back: 'Назад', next: 'Дальше', finish: 'Сохранить intake и запросить ссылку на оплату',
+      guest: 'Продолжить как гость', guestSub: 'Без пароля, только через телефон/email для этого заказа.',
+      portal: 'Создать личный кабинет', portalSub: 'Сохранять черновики, загружать документы и отслеживать заказ.',
+      sent: 'Intake сохранен локально. Следующий backend-шаг: подключить portal accounts, Stripe checkout и заполнение PDF.',
+      disclaimer: 'Только подготовка документов. Возможные формы могут включать официальные формы USCIS или California court. Imverica не является юридической фирмой или адвокатом и не дает юридические консультации.',
+      services: [
+        ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
+        ['family', 'Семейное право California', 'Развод, custody, support, FL-300 и связанные формы'],
+        ['civil', 'Small claims и civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
+        ['restraining', 'Restraining orders', 'CH, EA, GV, WV и связанные формы'],
+        ['ud', 'Unlawful detainer', 'Документы landlord/tenant'],
+        ['business', 'Business filings', 'LLC, DBA, EIN и entity documents']
+      ]
+    },
+    uk: {
+      kicker: 'Покроковий intake',
+      title: 'Почати підготовку документів',
+      sub: 'Дайте відповіді на кілька питань. Ми визначимо можливі форми, підготуємо документи за вашим дорученням і підтвердимо оплату до подання.',
+      rail: 'Можна зупинитися і продовжити пізніше. Imverica не є юридичною фірмою і не надає юридичних консультацій.',
+      steps: ['Мова', 'Тип документів', 'Деталі', 'Перевірка', 'Кабінет і оплата'],
+      qLanguage: 'Оберіть зручну мову',
+      hLanguage: 'Intake може підтримувати кілька мов із першого екрана.',
+      qService: 'Які документи потрібно підготувати?',
+      hService: 'Оберіть найближчу категорію. Ми уточнимо її після перегляду відповідей.',
+      qDetails: 'Опишіть ситуацію або введіть номер форми',
+      hDetails: 'Пишіть своїми словами. Якщо знаєте код форми, вкажіть його тут.',
+      qContact: 'З ким зв’язатися щодо цього intake?',
+      hContact: 'Ці дані потрібні, щоб зберегти запит і надіслати наступні кроки.',
+      qReview: 'Перевірте коротке резюме',
+      hReview: 'З цього екрана нічого не подається. Спочатку ми перевіримо форми і вартість.',
+      qAccount: 'Як хочете продовжити?',
+      hAccount: 'Створіть особистий кабінет або продовжіть як гість перед оплатою.',
+      name: 'Повне ім’я', phone: 'Телефон', email: 'Email',
+      back: 'Назад', next: 'Далі', finish: 'Зберегти intake і запросити посилання на оплату',
+      guest: 'Продовжити як гість', guestSub: 'Без пароля, через телефон/email для цього замовлення.',
+      portal: 'Створити кабінет', portalSub: 'Зберігати чернетки, завантажувати документи і відстежувати замовлення.',
+      sent: 'Intake збережено локально. Наступний backend-крок: portal accounts, Stripe checkout і заповнення PDF.',
+      disclaimer: 'Тільки підготовка документів. Можливі форми можуть включати офіційні форми USCIS або California court. Imverica не є юридичною фірмою чи адвокатом і не надає юридичних консультацій.',
+      services: [
+        ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
+        ['family', 'Сімейне право California', 'Розлучення, custody, support, FL-300 та пов’язані форми'],
+        ['civil', 'Small claims і civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
+        ['restraining', 'Restraining orders', 'CH, EA, GV, WV та пов’язані форми'],
+        ['ud', 'Unlawful detainer', 'Документи landlord/tenant'],
+        ['business', 'Business filings', 'LLC, DBA, EIN та entity documents']
+      ]
+    },
+    es: {
+      kicker: 'Intake guiado',
+      title: 'Iniciar preparación de documentos',
+      sub: 'Responda algunas preguntas. Identificaremos posibles formularios, prepararemos documentos bajo su dirección y confirmaremos costos antes de presentar nada.',
+      rail: 'Puede pausar y continuar después. Imverica no es un bufete de abogados y no brinda asesoría legal.',
+      steps: ['Idioma', 'Tipo de documento', 'Detalles', 'Revisión', 'Cuenta y pago'],
+      qLanguage: 'Elija su idioma preferido',
+      hLanguage: 'El intake puede admitir varios idiomas desde la primera pantalla.',
+      qService: '¿Qué necesita preparar?',
+      hService: 'Elija la categoría más cercana. Podemos ajustarla después de revisar sus respuestas.',
+      qDetails: 'Cuéntenos qué pasó o ingrese un número de formulario',
+      hDetails: 'Use sus propias palabras. Si sabe el código del formulario, inclúyalo aquí.',
+      qContact: '¿A quién debemos contactar?',
+      hContact: 'Usamos esto para guardar su solicitud y enviar los próximos pasos.',
+      qReview: 'Revise el resumen',
+      hReview: 'Nada se presenta desde esta pantalla. Verificaremos formularios y costos primero.',
+      qAccount: '¿Cómo desea continuar?',
+      hAccount: 'Cree un portal de cliente o continúe como invitado antes del pago.',
+      name: 'Nombre completo', phone: 'Teléfono', email: 'Email',
+      back: 'Atrás', next: 'Siguiente', finish: 'Guardar intake y solicitar enlace de pago',
+      guest: 'Continuar como invitado', guestSub: 'Use teléfono/email para este pedido sin crear contraseña.',
+      portal: 'Crear portal de cliente', portalSub: 'Guardar borradores, subir documentos y seguir el pedido.',
+      sent: 'Intake guardado localmente. Próximo paso backend: portal accounts, Stripe checkout y llenado de PDF.',
+      disclaimer: 'Solo preparación de documentos. Los posibles formularios pueden incluir formularios oficiales de USCIS o California court. Imverica no es un bufete ni abogado y no brinda asesoría legal.',
+      services: [
+        ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
+        ['family', 'Derecho familiar de California', 'Divorcio, custodia, manutención, FL-300 y relacionados'],
+        ['civil', 'Small claims y civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
+        ['restraining', 'Restraining orders', 'CH, EA, GV, WV y formularios relacionados'],
+        ['ud', 'Unlawful detainer', 'Documentos de landlord/tenant'],
+        ['business', 'Business filings', 'LLC, DBA, EIN y documentos de entidad']
+      ]
+    }
+  };
+
+  function t() { return i18n[state.lang] || i18n.en; }
+  function esc(value) { return String(value || '').replace(/[&<>"]/g, function (ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }); }
+  function selectedService() { return (t().services.find(function (item) { return item[0] === state.service; }) || [state.service, state.service || '-', '']); }
+
+  function renderLangButtons() {
+    langEl.innerHTML = ['en','ru','uk','es'].map(function (lang) {
+      return '<button type="button" class="' + (state.lang === lang ? 'active' : '') + '" data-intake-lang="' + lang + '">' + lang.toUpperCase() + '</button>';
+    }).join('');
+  }
+
+  function renderSteps() {
+    stepsEl.innerHTML = t().steps.map(function (label, index) {
+      return '<div class="intake-step-dot ' + (index === state.step ? 'active' : '') + '"><span>' + (index + 1) + '</span>' + esc(label) + '</div>';
+    }).join('');
+  }
+
+  function render() {
+    var copy = t();
+    kicker.textContent = copy.kicker;
+    title.textContent = copy.title;
+    sub.textContent = copy.sub;
+    railNote.textContent = copy.rail;
+    disclaimer.textContent = copy.disclaimer;
+    backBtn.textContent = copy.back;
+    nextBtn.textContent = state.step === 4 ? copy.finish : copy.next;
+    backBtn.disabled = state.step === 0;
+    progress.style.width = ((state.step + 1) / 5 * 100) + '%';
+    renderLangButtons();
+    renderSteps();
+
+    if (state.step === 0) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.qLanguage) + '</div><div class="intake-help">' + esc(copy.hLanguage) + '</div><div class="intake-options">' +
+        [['en','English','English intake'],['ru','Русский','Русскоязычный intake'],['uk','Українська','Україномовний intake'],['es','Español','Intake en español']].map(function (item) {
+          return '<button type="button" class="intake-option ' + (state.lang === item[0] ? 'active' : '') + '" data-intake-lang="' + item[0] + '"><strong>' + item[1] + '</strong><span>' + item[2] + '</span></button>';
+        }).join('') + '</div>';
+      return;
+    }
+
+    if (state.step === 1) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.qService) + '</div><div class="intake-help">' + esc(copy.hService) + '</div><div class="intake-options">' +
+        copy.services.map(function (item) {
+          return '<button type="button" class="intake-option ' + (state.service === item[0] ? 'active' : '') + '" data-service="' + item[0] + '"><strong>' + esc(item[1]) + '</strong><span>' + esc(item[2]) + '</span></button>';
+        }).join('') + '</div>';
+      return;
+    }
+
+    if (state.step === 2) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
+        '<div class="intake-field"><label>Form code</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
+        '<div class="intake-field" style="margin-top:14px;"><label>Details</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>';
+      return;
+    }
+
+    if (state.step === 3) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.qReview) + '</div><div class="intake-help">' + esc(copy.hReview) + '</div><div class="intake-review">' +
+        '<div class="intake-review-row"><b>Language</b><span>' + state.lang.toUpperCase() + '</span></div>' +
+        '<div class="intake-review-row"><b>Service</b><span>' + esc(selectedService()[1]) + '</span></div>' +
+        '<div class="intake-review-row"><b>Form code</b><span>' + esc(state.formCode || '-') + '</span></div>' +
+        '<div class="intake-review-row"><b>Details</b><span>' + esc(state.situation || '-') + '</span></div>' +
+      '</div>';
+      return;
+    }
+
+    card.innerHTML = '<div class="intake-question">' + esc(copy.qAccount) + '</div><div class="intake-help">' + esc(copy.hAccount) + '</div>' +
+      '<div class="intake-choice-row">' +
+        '<div class="intake-account-card ' + (state.accountMode === 'portal' ? 'active' : '') + '" data-account-mode="portal"><h4>' + esc(copy.portal) + '</h4><p>' + esc(copy.portalSub) + '</p></div>' +
+        '<div class="intake-account-card ' + (state.accountMode === 'guest' ? 'active' : '') + '" data-account-mode="guest"><h4>' + esc(copy.guest) + '</h4><p>' + esc(copy.guestSub) + '</p></div>' +
+      '</div>' +
+      '<div class="intake-grid" style="margin-top:16px;">' +
+        '<div class="intake-field"><label>' + esc(copy.name) + '</label><input id="intakeName" value="' + esc(state.contact.name) + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><input id="intakePhone" value="' + esc(state.contact.phone) + '"></div>' +
+        '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" value="' + esc(state.contact.email) + '"></div>' +
+      '</div><div id="intakeSaved" class="intake-help" style="display:none;margin-top:16px;color:#2a7a5a;"></div>';
+  }
+
+  function captureStep() {
+    var formCode = document.getElementById('intakeFormCode');
+    var situation = document.getElementById('intakeSituation');
+    var name = document.getElementById('intakeName');
+    var phone = document.getElementById('intakePhone');
+    var email = document.getElementById('intakeEmail');
+    if (formCode) state.formCode = formCode.value.trim();
+    if (situation) state.situation = situation.value.trim();
+    if (name) state.contact.name = name.value.trim();
+    if (phone) state.contact.phone = phone.value.trim();
+    if (email) state.contact.email = email.value.trim();
+  }
+
+  function saveIntake() {
+    captureStep();
+    var payload = {
+      createdAt: new Date().toISOString(),
+      language: state.lang,
+      service: state.service,
+      serviceLabel: selectedService()[1],
+      formCode: state.formCode,
+      situation: state.situation,
+      contact: state.contact,
+      accountMode: state.accountMode
+    };
+    localStorage.setItem('imvericaIntakeDraft', JSON.stringify(payload));
+    var saved = document.getElementById('intakeSaved');
+    if (saved) {
+      saved.textContent = t().sent;
+      saved.style.display = 'block';
+    }
+  }
+
+  card.addEventListener('click', function (event) {
+    var lang = event.target.closest('[data-intake-lang]');
+    var service = event.target.closest('[data-service]');
+    var account = event.target.closest('[data-account-mode]');
+    if (lang) {
+      state.lang = lang.getAttribute('data-intake-lang');
+      if (state.step === 0) state.step = 1;
+      render();
+      return;
+    }
+    if (service) {
+      state.service = service.getAttribute('data-service');
+      if (state.step === 1) state.step = 2;
+      render();
+      return;
+    }
+    if (account) {
+      state.accountMode = account.getAttribute('data-account-mode');
+      render();
+    }
+  });
+
+  langEl.addEventListener('click', function (event) {
+    var btn = event.target.closest('[data-intake-lang]');
+    if (!btn) return;
+    state.lang = btn.getAttribute('data-intake-lang');
+    render();
+  });
+
+  backBtn.addEventListener('click', function () {
+    captureStep();
+    if (state.step > 0) state.step -= 1;
+    render();
+  });
+
+  nextBtn.addEventListener('click', function () {
+    captureStep();
+    if (state.step < 4) {
+      state.step += 1;
+      render();
+      return;
+    }
+    saveIntake();
+  });
+
+  window.openIntakeModal = function (prefill) {
+    if (prefill && typeof prefill === 'string') {
+      var text = prefill.trim();
+      var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
+      state.situation = text;
+      if (codeMatch) {
+        state.formCode = codeMatch[0].toUpperCase();
+        if (/^(I|N|G|EOIR)-/i.test(state.formCode)) state.service = 'immigration';
+        if (/^(FL|DV)-/i.test(state.formCode)) state.service = 'family';
+        if (/^(SC|FW|POS|CIV|CM|SUM|PLD)-/i.test(state.formCode)) state.service = 'civil';
+        if (/^(CH|EA|GV|WV)-/i.test(state.formCode)) state.service = 'restraining';
+        if (/^UD-/i.test(state.formCode)) state.service = 'ud';
+        state.step = 2;
+      }
+    }
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    render();
+  };
+
+  window.closeIntakeModal = function () {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') window.closeIntakeModal();
+  });
+})();
+</script>
 
 <script>
 (function () {
@@ -1445,7 +1875,10 @@ function closeDetail(id) {
     document.body.style.overflow = '';
   }
 
-  window.openQuoteModal = forceShowQuoteModal;
+  window.openQuoteModal = function () {
+    if (window.openIntakeModal) window.openIntakeModal();
+    else forceShowQuoteModal();
+  };
   window.closeQuoteModal = forceHideQuoteModal;
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -1455,7 +1888,7 @@ function closeDetail(id) {
         btn.removeAttribute('onclick');
         btn.addEventListener('click', function (event) {
           event.preventDefault();
-          forceShowQuoteModal();
+          window.openQuoteModal();
         });
       }
     });
@@ -1504,7 +1937,10 @@ function closeDetail(id) {
     showResult('Checking possible document-preparation options...');
 
     try {
-      var res = await fetch('/.netlify/functions/chat', {
+      var chatUrl = window.location.protocol === 'file:'
+        ? 'https://imverica.com/.netlify/functions/chat'
+        : '/.netlify/functions/chat';
+      var res = await fetch(chatUrl, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({messages:[{role:'user', content: query}]})
@@ -1515,11 +1951,18 @@ function closeDetail(id) {
       showResult(
         '<div>' + escapeHtml(reply).replace(/\n/g, '<br>') + '</div>' +
         '<div class="ai-result-actions">' +
-          '<a class="dark" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>' +
+          '<button class="dark" type="button" id="aiStartIntake">Start intake</button>' +
           '<a href="https://t.me/imverica" target="_blank" rel="noopener">Telegram</a>' +
           '<a href="tel:9163993992">Call (916) 399-3992</a>' +
         '</div>'
       );
+      var startIntake = result.querySelector('#aiStartIntake');
+      if (startIntake) {
+        startIntake.addEventListener('click', function () {
+          if (window.openIntakeModal) window.openIntakeModal(query);
+          else window.openQuoteModal();
+        });
+      }
     } catch (err) {
       showResult('Sorry, please try again or call us at (916) 399-3992.');
     } finally {
@@ -1858,7 +2301,10 @@ function closeDetail(id) {
       body.scrollTop = body.scrollHeight;
       
       try {
-        const res = await fetch('/.netlify/functions/chat', {
+        const chatUrl = window.location.protocol === 'file:'
+          ? 'https://imverica.com/.netlify/functions/chat'
+          : '/.netlify/functions/chat';
+        const res = await fetch(chatUrl, {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({messages: conversationHistory})
