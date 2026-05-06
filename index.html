@@ -20,6 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
+  --nav-height:120px;
   --navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;
   --bg:#f4f3f0;--text:#1a1a1a;--muted:#666;--border:#dddad4;--white:#fff;
   --col-imm:#1a4fa0;--col-fam:#6b3a8a;--col-civ:#8a3a3a;
@@ -30,7 +31,7 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
 
 /* NAV */
-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:120px;position:sticky;top:0;z-index:100;}
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-height);position:sticky;top:0;z-index:100;}
 .logo-img{height:110px;width:auto;display:block;}
 .nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
 .nav-links a{font-size:16px;font-weight:400;color:#444;text-decoration:none;padding:7px 11px;border-radius:3px;transition:background 0.18s,color 0.18s;display:block;white-space:nowrap;}
@@ -52,7 +53,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* MOBILE MENU */
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);z-index:99;padding:1rem 0;}
+.mobile-menu{display:none;position:fixed;top:var(--nav-height);left:0;right:0;background:#fff;border-bottom:1px solid var(--border);z-index:99;padding:1rem 0;max-height:calc(100vh - var(--nav-height));overflow-y:auto;}
 .mobile-menu.open{display:block;}
 .mobile-menu a{display:block;padding:12px 2rem;font-size:14px;color:#444;text-decoration:none;border-left:3px solid transparent;transition:all 0.2s;}
 .mobile-menu a[data-cat="imm"]:hover{background:#f0f4ff;border-left-color:var(--col-imm);color:var(--col-imm);}
@@ -65,6 +66,9 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .mobile-cta{display:block;margin:1rem 2rem;background:var(--navy);color:#fff!important;text-align:center;padding:12px!important;border-radius:3px;font-weight:500!important;border-left:none!important;}
 
 @media(max-width:900px){
+  :root{--nav-height:72px;}
+  nav{padding:0 1rem;}
+  .logo-img{height:64px;}
   .nav-links,.nav-cta{display:none;}
   .burger{display:flex;}
 }
