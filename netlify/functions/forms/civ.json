@@ -1,0 +1,700 @@
+{
+  "category": "civ",
+  "category_name": {
+    "en": "Civil Litigation",
+    "ru": "Гражданские иски",
+    "uk": "Цивільні позови",
+    "es": "Litigación Civil"
+  },
+  "forms": [
+    {
+      "code": "CM-010",
+      "subcategory": "filing",
+      "names": {
+        "en": "Civil Case Cover Sheet",
+        "ru": "Титульный лист гражданского дела",
+        "uk": "Титульний аркуш цивільної справи",
+        "es": "Hoja de Portada de Caso Civil"
+      },
+      "keywords": [
+        "case cover sheet",
+        "civil cover",
+        "титульный лист",
+        "титульний аркуш",
+        "hoja portada"
+      ],
+      "description": "Mandatory cover sheet for all new civil case filings. Classifies case type."
+    },
+    {
+      "code": "CM-110",
+      "subcategory": "case_management",
+      "names": {
+        "en": "Case Management Statement",
+        "ru": "Заявление по управлению делом",
+        "uk": "Заява щодо управління справою",
+        "es": "Declaración de Manejo de Caso"
+      },
+      "keywords": [
+        "case management",
+        "CMC",
+        "управление делом",
+        "управління справою"
+      ],
+      "description": "Filed before Case Management Conference. Describes case status and trial readiness."
+    },
+    {
+      "code": "SUM-100",
+      "subcategory": "filing",
+      "names": {
+        "en": "Summons (Civil)",
+        "ru": "Повестка (гражданская)",
+        "uk": "Повістка (цивільна)",
+        "es": "Citación (Civil)"
+      },
+      "keywords": [
+        "civil summons",
+        "summons",
+        "повестка",
+        "повістка",
+        "citacion civil"
+      ],
+      "description": "Mandatory summons served with civil complaint. Notifies defendant of lawsuit."
+    },
+    {
+      "code": "SUM-200",
+      "subcategory": "filing",
+      "names": {
+        "en": "Summons (Cross-Complaint)",
+        "ru": "Повестка (встречный иск)",
+        "uk": "Повістка (зустрічний позов)",
+        "es": "Citación (Contrademanda)"
+      },
+      "keywords": [
+        "cross-complaint summons",
+        "встречный иск",
+        "зустрічний позов",
+        "contrademanda"
+      ],
+      "description": "Summons for cross-complaint against existing party."
+    },
+    {
+      "code": "PLD-C-001",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Complaint - Contract",
+        "ru": "Иск - Договор",
+        "uk": "Позов - Договір",
+        "es": "Demanda - Contrato"
+      },
+      "keywords": [
+        "contract complaint",
+        "breach of contract",
+        "нарушение договора",
+        "порушення договору",
+        "incumplimiento contrato",
+        "owe money"
+      ],
+      "description": "Complaint for breach of contract, common counts, or fraud."
+    },
+    {
+      "code": "PLD-PI-001",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Complaint - Personal Injury, Property Damage, Wrongful Death",
+        "ru": "Иск - Травма, ущерб имуществу, смерть по неосторожности",
+        "uk": "Позов - Травма, шкода майну, смерть з необережності",
+        "es": "Demanda - Lesiones Personales, Daños a Propiedad"
+      },
+      "keywords": [
+        "personal injury",
+        "PI complaint",
+        "wrongful death",
+        "property damage",
+        "травма",
+        "ущерб",
+        "шкода",
+        "lesiones",
+        "car accident",
+        "авария",
+        "ДТП"
+      ],
+      "description": "Complaint for personal injury, property damage, or wrongful death."
+    },
+    {
+      "code": "PLD-050",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Complaint - General Form",
+        "ru": "Иск - Общая форма",
+        "uk": "Позов - Загальна форма",
+        "es": "Demanda - Formulario General"
+      },
+      "keywords": [
+        "general complaint",
+        "общий иск",
+        "загальний позов"
+      ],
+      "description": "Generic complaint form for civil matters not covered by specific forms."
+    },
+    {
+      "code": "PLD-PI-002",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - Motor Vehicle",
+        "ru": "Основание иска - ДТП",
+        "uk": "Підстава позову - ДТП",
+        "es": "Causa de Acción - Vehículo de Motor"
+      },
+      "keywords": [
+        "motor vehicle",
+        "car accident cause",
+        "ДТП основание",
+        "ДТП підстава"
+      ],
+      "description": "Attachment to PLD-PI-001 for car accident cases."
+    },
+    {
+      "code": "PLD-PI-003",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - General Negligence",
+        "ru": "Основание иска - Халатность",
+        "uk": "Підстава позову - Недбалість",
+        "es": "Causa de Acción - Negligencia General"
+      },
+      "keywords": [
+        "negligence",
+        "халатность",
+        "недбалість",
+        "negligencia"
+      ],
+      "description": "Attachment to PLD-PI-001 for general negligence cases."
+    },
+    {
+      "code": "PLD-PI-004",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - Intentional Tort",
+        "ru": "Основание иска - Умышленный деликт",
+        "uk": "Підстава позову - Умисне правопорушення",
+        "es": "Causa de Acción - Agravio Intencional"
+      },
+      "keywords": [
+        "intentional tort",
+        "умышленный",
+        "умисний",
+        "agravio intencional",
+        "assault",
+        "battery"
+      ],
+      "description": "Attachment to PLD-PI-001 for assault, battery, or other intentional torts."
+    },
+    {
+      "code": "PLD-PI-005",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - Premises Liability",
+        "ru": "Основание иска - Ответственность владельца помещения",
+        "uk": "Підстава позову - Відповідальність власника приміщення",
+        "es": "Causa de Acción - Responsabilidad de Propiedad"
+      },
+      "keywords": [
+        "premises liability",
+        "slip and fall",
+        "падение",
+        "падіння",
+        "responsabilidad propiedad"
+      ],
+      "description": "Attachment to PLD-PI-001 for slip-and-fall or premises injuries."
+    },
+    {
+      "code": "PLD-C-010",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - Breach of Contract",
+        "ru": "Основание иска - Нарушение договора",
+        "uk": "Підстава позову - Порушення договору",
+        "es": "Causa de Acción - Incumplimiento de Contrato"
+      },
+      "keywords": [
+        "breach of contract cause",
+        "нарушение договора",
+        "порушення договору"
+      ],
+      "description": "Attachment to PLD-C-001 for breach of contract claims."
+    },
+    {
+      "code": "PLD-C-020",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - Common Counts",
+        "ru": "Основание иска - Общие требования",
+        "uk": "Підстава позову - Загальні вимоги",
+        "es": "Causa de Acción - Cuentas Comunes"
+      },
+      "keywords": [
+        "common counts",
+        "money owed",
+        "общие требования",
+        "загальні вимоги"
+      ],
+      "description": "Attachment for unpaid money, services, goods sold, or open accounts."
+    },
+    {
+      "code": "PLD-C-040",
+      "subcategory": "complaint",
+      "names": {
+        "en": "Cause of Action - Fraud",
+        "ru": "Основание иска - Мошенничество",
+        "uk": "Підстава позову - Шахрайство",
+        "es": "Causa de Acción - Fraude"
+      },
+      "keywords": [
+        "fraud",
+        "мошенничество",
+        "шахрайство",
+        "fraude",
+        "обман"
+      ],
+      "description": "Attachment to PLD-C-001 for fraud claims."
+    },
+    {
+      "code": "PLD-050-A",
+      "subcategory": "answer",
+      "names": {
+        "en": "Answer - General Form",
+        "ru": "Ответ на иск - Общая форма",
+        "uk": "Відповідь на позов - Загальна форма",
+        "es": "Respuesta - Formulario General"
+      },
+      "keywords": [
+        "answer complaint",
+        "ответ на иск",
+        "відповідь на позов",
+        "respuesta demanda",
+        "respond lawsuit"
+      ],
+      "description": "Generic answer to civil complaint."
+    },
+    {
+      "code": "PLD-C-010-A",
+      "subcategory": "answer",
+      "names": {
+        "en": "Answer - Contract",
+        "ru": "Ответ на иск - Договор",
+        "uk": "Відповідь на позов - Договір",
+        "es": "Respuesta - Contrato"
+      },
+      "keywords": [
+        "answer contract",
+        "ответ договор",
+        "відповідь договір"
+      ],
+      "description": "Answer to PLD-C-001 contract complaint."
+    },
+    {
+      "code": "PLD-PI-010-A",
+      "subcategory": "answer",
+      "names": {
+        "en": "Answer - Personal Injury",
+        "ru": "Ответ на иск о травме",
+        "uk": "Відповідь на позов про травму",
+        "es": "Respuesta - Lesiones Personales"
+      },
+      "keywords": [
+        "answer PI",
+        "ответ травма",
+        "відповідь травма"
+      ],
+      "description": "Answer to PLD-PI-001 personal injury complaint."
+    },
+    {
+      "code": "POS-010",
+      "subcategory": "service",
+      "names": {
+        "en": "Proof of Service of Summons",
+        "ru": "Подтверждение вручения повестки",
+        "uk": "Підтвердження вручення повістки",
+        "es": "Prueba de Entrega de Citación"
+      },
+      "keywords": [
+        "proof of service",
+        "POS",
+        "подтверждение вручения",
+        "підтвердження вручення",
+        "prueba entrega"
+      ],
+      "description": "Proves civil summons and complaint were served on defendant."
+    },
+    {
+      "code": "POS-015",
+      "subcategory": "service",
+      "names": {
+        "en": "Notice and Acknowledgment of Receipt",
+        "ru": "Уведомление и подтверждение получения",
+        "uk": "Повідомлення та підтвердження отримання",
+        "es": "Aviso y Acuse de Recibo"
+      },
+      "keywords": [
+        "acknowledgment civil",
+        "получение civil",
+        "отримання civil"
+      ],
+      "description": "Alternative to personal service when defendant agrees to acknowledge."
+    },
+    {
+      "code": "POS-020",
+      "subcategory": "service",
+      "names": {
+        "en": "Proof of Personal Service",
+        "ru": "Подтверждение личного вручения",
+        "uk": "Підтвердження особистого вручення",
+        "es": "Prueba de Entrega Personal"
+      },
+      "keywords": [
+        "personal service",
+        "личное вручение",
+        "особисте вручення"
+      ],
+      "description": "Proof of service for documents other than summons."
+    },
+    {
+      "code": "POS-030",
+      "subcategory": "service",
+      "names": {
+        "en": "Proof of Service by First-Class Mail",
+        "ru": "Подтверждение вручения почтой",
+        "uk": "Підтвердження вручення поштою",
+        "es": "Prueba de Entrega por Correo"
+      },
+      "keywords": [
+        "mail service",
+        "вручение почтой",
+        "вручення поштою"
+      ],
+      "description": "Proves service of motions and other documents by mail."
+    },
+    {
+      "code": "POS-040",
+      "subcategory": "service",
+      "names": {
+        "en": "Proof of Service",
+        "ru": "Подтверждение вручения",
+        "uk": "Підтвердження вручення",
+        "es": "Prueba de Entrega"
+      },
+      "keywords": [
+        "proof service general",
+        "подтверждение общее",
+        "підтвердження загальне"
+      ],
+      "description": "General proof of service for various civil documents."
+    },
+    {
+      "code": "CIV-100",
+      "subcategory": "default",
+      "names": {
+        "en": "Request for Entry of Default",
+        "ru": "Запрос вынесения решения по умолчанию",
+        "uk": "Запит винесення рішення за замовчуванням",
+        "es": "Solicitud de Inscripción en Rebeldía"
+      },
+      "keywords": [
+        "default civil",
+        "по умолчанию",
+        "за замовчуванням",
+        "rebeldia civil",
+        "no answer"
+      ],
+      "description": "Filed when defendant fails to answer within 30 days."
+    },
+    {
+      "code": "CIV-105",
+      "subcategory": "default",
+      "names": {
+        "en": "Request for Entry of Default Judgment",
+        "ru": "Запрос решения по умолчанию",
+        "uk": "Запит рішення за замовчуванням",
+        "es": "Solicitud de Sentencia en Rebeldía"
+      },
+      "keywords": [
+        "default judgment",
+        "решение по умолчанию",
+        "рішення за замовчуванням"
+      ],
+      "description": "Request for judgment after default has been entered."
+    },
+    {
+      "code": "CIV-110",
+      "subcategory": "dismissal",
+      "names": {
+        "en": "Request for Dismissal",
+        "ru": "Запрос о прекращении дела",
+        "uk": "Запит про припинення справи",
+        "es": "Solicitud de Desestimación"
+      },
+      "keywords": [
+        "dismiss case",
+        "dismissal",
+        "прекращение дела",
+        "припинення справи",
+        "desestimacion",
+        "drop lawsuit"
+      ],
+      "description": "Voluntary dismissal of civil case by plaintiff."
+    },
+    {
+      "code": "CIV-120",
+      "subcategory": "dismissal",
+      "names": {
+        "en": "Notice of Entry of Dismissal",
+        "ru": "Уведомление о прекращении",
+        "uk": "Повідомлення про припинення",
+        "es": "Aviso de Desestimación"
+      },
+      "keywords": [
+        "notice dismissal",
+        "уведомление прекращение",
+        "повідомлення припинення"
+      ],
+      "description": "Court notice that case has been dismissed."
+    },
+    {
+      "code": "CIV-130",
+      "subcategory": "judgment",
+      "names": {
+        "en": "Notice of Entry of Judgment",
+        "ru": "Уведомление о вынесении решения",
+        "uk": "Повідомлення про винесення рішення",
+        "es": "Aviso de Ingreso de Sentencia"
+      },
+      "keywords": [
+        "notice judgment civil",
+        "уведомление решение",
+        "повідомлення рішення"
+      ],
+      "description": "Court notice that judgment has been entered."
+    },
+    {
+      "code": "CIV-200",
+      "subcategory": "judgment",
+      "names": {
+        "en": "Notice of Hearing on Judgment Debtor's Statement",
+        "ru": "Уведомление о слушании по заявлению должника",
+        "uk": "Повідомлення про слухання заяви боржника",
+        "es": "Aviso de Audiencia sobre Declaración del Deudor"
+      },
+      "keywords": [
+        "judgment debtor hearing",
+        "должник слушание",
+        "боржник слухання"
+      ],
+      "description": "Notice for examination of judgment debtor."
+    },
+    {
+      "code": "DISC-001",
+      "subcategory": "discovery",
+      "names": {
+        "en": "Form Interrogatories - General",
+        "ru": "Опросный лист - Общий",
+        "uk": "Опитувальний лист - Загальний",
+        "es": "Interrogatorios de Forma - General"
+      },
+      "keywords": [
+        "interrogatories",
+        "discovery",
+        "опросный лист",
+        "опитувальний лист",
+        "interrogatorios"
+      ],
+      "description": "Standard written questions sent to opposing party."
+    },
+    {
+      "code": "DISC-002",
+      "subcategory": "discovery",
+      "names": {
+        "en": "Form Interrogatories - Limited Civil",
+        "ru": "Опросный лист - Ограниченный гражданский",
+        "uk": "Опитувальний лист - Обмежений цивільний",
+        "es": "Interrogatorios - Civil Limitado"
+      },
+      "keywords": [
+        "limited civil interrogatories",
+        "ограниченный civil",
+        "обмежений civil"
+      ],
+      "description": "Form interrogatories for Limited Civil cases (under 35000 dollars)."
+    },
+    {
+      "code": "DISC-003",
+      "subcategory": "discovery",
+      "names": {
+        "en": "Form Interrogatories - Employment",
+        "ru": "Опросный лист - Трудовой",
+        "uk": "Опитувальний лист - Трудовий",
+        "es": "Interrogatorios - Empleo"
+      },
+      "keywords": [
+        "employment interrogatories",
+        "трудовой опросный",
+        "трудовий опитувальний"
+      ],
+      "description": "Interrogatories for employment law cases."
+    },
+    {
+      "code": "DISC-005",
+      "subcategory": "discovery",
+      "names": {
+        "en": "Request for Statement of Damages",
+        "ru": "Запрос заявления об убытках",
+        "uk": "Запит заяви про збитки",
+        "es": "Solicitud de Declaración de Daños"
+      },
+      "keywords": [
+        "statement of damages",
+        "заявление убытки",
+        "заява збитки"
+      ],
+      "description": "Request defendant to specify damages claimed."
+    },
+    {
+      "code": "DISC-020",
+      "subcategory": "discovery",
+      "names": {
+        "en": "Request for Admission",
+        "ru": "Запрос о признании фактов",
+        "uk": "Запит про визнання фактів",
+        "es": "Solicitud de Admisión"
+      },
+      "keywords": [
+        "request admission",
+        "RFA",
+        "признание фактов",
+        "визнання фактів",
+        "admision"
+      ],
+      "description": "Asks opposing party to admit or deny specific facts."
+    },
+    {
+      "code": "MC-005",
+      "subcategory": "motion",
+      "names": {
+        "en": "Notice of Motion",
+        "ru": "Уведомление о ходатайстве",
+        "uk": "Повідомлення про клопотання",
+        "es": "Aviso de Moción"
+      },
+      "keywords": [
+        "notice motion",
+        "уведомление ходатайство",
+        "повідомлення клопотання"
+      ],
+      "description": "Notice of any motion filed in civil case."
+    },
+    {
+      "code": "MC-030",
+      "subcategory": "motion",
+      "names": {
+        "en": "Declaration",
+        "ru": "Декларация",
+        "uk": "Декларація",
+        "es": "Declaración"
+      },
+      "keywords": [
+        "declaration",
+        "декларация",
+        "декларація",
+        "declaracion"
+      ],
+      "description": "Sworn statement under penalty of perjury used as evidence."
+    },
+    {
+      "code": "MC-031",
+      "subcategory": "motion",
+      "names": {
+        "en": "Attached Declaration",
+        "ru": "Приложенная декларация",
+        "uk": "Додана декларація",
+        "es": "Declaración Adjunta"
+      },
+      "keywords": [
+        "attached declaration",
+        "приложенная декларация",
+        "додана декларація"
+      ],
+      "description": "Continuation page for declarations."
+    },
+    {
+      "code": "MC-050",
+      "subcategory": "substitution",
+      "names": {
+        "en": "Substitution of Attorney - Civil",
+        "ru": "Замена адвоката - Гражданское",
+        "uk": "Заміна адвоката - Цивільне",
+        "es": "Sustitución de Abogado - Civil"
+      },
+      "keywords": [
+        "substitution attorney",
+        "замена адвоката",
+        "заміна адвоката",
+        "sustitucion abogado",
+        "fire lawyer"
+      ],
+      "description": "Replaces attorney of record in civil case or self-represents."
+    },
+    {
+      "code": "CM-180",
+      "subcategory": "case_management",
+      "names": {
+        "en": "Stipulation to Use Alternative Dispute Resolution",
+        "ru": "Соглашение об альтернативном разрешении споров",
+        "uk": "Угода про альтернативне вирішення спорів",
+        "es": "Estipulación de Resolución Alternativa"
+      },
+      "keywords": [
+        "ADR",
+        "mediation",
+        "медиация",
+        "медіація",
+        "mediacion"
+      ],
+      "description": "Agreement to use mediation or arbitration instead of trial."
+    },
+    {
+      "code": "CIV-010",
+      "subcategory": "cross_complaint",
+      "names": {
+        "en": "Cross-Complaint",
+        "ru": "Встречный иск",
+        "uk": "Зустрічний позов",
+        "es": "Contrademanda"
+      },
+      "keywords": [
+        "cross-complaint",
+        "counterclaim",
+        "встречный иск",
+        "зустрічний позов",
+        "contrademanda"
+      ],
+      "description": "Defendant complaint against plaintiff or third party."
+    },
+    {
+      "code": "CIV-050",
+      "subcategory": "demurrer",
+      "names": {
+        "en": "Notice of Demurrer",
+        "ru": "Уведомление о возражении",
+        "uk": "Повідомлення про заперечення",
+        "es": "Aviso de Demurrer"
+      },
+      "keywords": [
+        "demurrer",
+        "возражение",
+        "заперечення",
+        "objection complaint"
+      ],
+      "description": "Challenges legal sufficiency of complaint without answering."
+    }
+  ],
+  "subcategory_pane": "civ"
+}

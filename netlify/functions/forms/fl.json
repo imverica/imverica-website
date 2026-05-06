@@ -1,0 +1,760 @@
+{
+  "category": "fam",
+  "category_name": {
+    "en": "Family Law",
+    "ru": "Семейное право",
+    "uk": "Сімейне право",
+    "es": "Derecho Familiar"
+  },
+  "forms": [
+    {
+      "code": "FL-100",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Petition for Dissolution of Marriage",
+        "ru": "Заявление о расторжении брака",
+        "uk": "Заява про розірвання шлюбу",
+        "es": "Petición de Disolución de Matrimonio"
+      },
+      "keywords": [
+        "divorce",
+        "dissolution",
+        "развод",
+        "развестись",
+        "развожусь",
+        "розлучення",
+        "divorcio",
+        "petition",
+        "separation",
+        "filing for divorce"
+      ],
+      "description": "Initiates divorce, legal separation, or nullity proceedings."
+    },
+    {
+      "code": "FL-105",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Declaration Under UCCJEA (Children)",
+        "ru": "Декларация UCCJEA (по детям)",
+        "uk": "Декларація UCCJEA (про дітей)",
+        "es": "Declaración Bajo UCCJEA (Menores)"
+      },
+      "keywords": [
+        "UCCJEA",
+        "children declaration",
+        "дети декларация",
+        "діти декларація",
+        "menores"
+      ],
+      "description": "Required attachment to FL-100/FL-200 when minor children are involved."
+    },
+    {
+      "code": "FL-110",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Summons (Family Law)",
+        "ru": "Повестка (семейное право)",
+        "uk": "Повістка (сімейне право)",
+        "es": "Citación (Derecho Familiar)"
+      },
+      "keywords": [
+        "summons",
+        "повестка",
+        "повістка",
+        "citacion",
+        "vyzov"
+      ],
+      "description": "Mandatory summons filed with FL-100. Includes ATROs."
+    },
+    {
+      "code": "FL-115",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Proof of Service of Summons",
+        "ru": "Подтверждение вручения повестки",
+        "uk": "Підтвердження вручення повістки",
+        "es": "Prueba de Entrega de Citación"
+      },
+      "keywords": [
+        "proof of service",
+        "service summons",
+        "доказательство вручения",
+        "вручення"
+      ],
+      "description": "Proves the respondent was personally served with FL-100 and FL-110."
+    },
+    {
+      "code": "FL-117",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Notice and Acknowledgment of Receipt",
+        "ru": "Уведомление и подтверждение получения",
+        "uk": "Повідомлення та підтвердження отримання",
+        "es": "Aviso y Acuse de Recibo"
+      },
+      "keywords": [
+        "acknowledgment receipt",
+        "notice",
+        "уведомление",
+        "повідомлення"
+      ],
+      "description": "Alternative to personal service when respondent agrees to acknowledge."
+    },
+    {
+      "code": "FL-120",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Response to Petition",
+        "ru": "Ответ на заявление о разводе",
+        "uk": "Відповідь на заяву про розлучення",
+        "es": "Respuesta a Petición"
+      },
+      "keywords": [
+        "response",
+        "answer divorce",
+        "ответ",
+        "відповідь",
+        "respuesta",
+        "respond to divorce"
+      ],
+      "description": "Filed by the respondent within 30 days after being served FL-100."
+    },
+    {
+      "code": "FL-130",
+      "subcategory": "divorce",
+      "names": {
+        "en": "Appearance, Stipulation, and Waivers",
+        "ru": "Явка, соглашение и отказы",
+        "uk": "Явка, угода та відмови",
+        "es": "Comparecencia, Estipulación y Renuncias"
+      },
+      "keywords": [
+        "stipulation",
+        "appearance",
+        "соглашение",
+        "угода"
+      ],
+      "description": "Used when respondent agrees and parties want to proceed by stipulation."
+    },
+    {
+      "code": "FL-141",
+      "subcategory": "disclosure",
+      "names": {
+        "en": "Declaration Regarding Service of Disclosure",
+        "ru": "Декларация о вручении раскрытия",
+        "uk": "Декларація про вручення розкриття",
+        "es": "Declaración Sobre Entrega de Divulgación"
+      },
+      "keywords": [
+        "disclosure declaration",
+        "раскрытие",
+        "розкриття",
+        "divulgacion"
+      ],
+      "description": "Confirms financial disclosures were exchanged between parties."
+    },
+    {
+      "code": "FL-142",
+      "subcategory": "disclosure",
+      "names": {
+        "en": "Schedule of Assets and Debts",
+        "ru": "Список активов и долгов",
+        "uk": "Перелік активів та боргів",
+        "es": "Lista de Bienes y Deudas"
+      },
+      "keywords": [
+        "assets debts",
+        "schedule",
+        "активы долги",
+        "активи борги",
+        "bienes deudas"
+      ],
+      "description": "Required financial disclosure listing all community and separate property."
+    },
+    {
+      "code": "FL-150",
+      "subcategory": "disclosure",
+      "names": {
+        "en": "Income and Expense Declaration",
+        "ru": "Декларация доходов и расходов",
+        "uk": "Декларація доходів та витрат",
+        "es": "Declaración de Ingresos y Gastos"
+      },
+      "keywords": [
+        "income expense",
+        "доходы расходы",
+        "доходи витрати",
+        "ingresos gastos",
+        "money",
+        "salary"
+      ],
+      "description": "Mandatory financial disclosure for support, custody, and attorney fee matters."
+    },
+    {
+      "code": "FL-155",
+      "subcategory": "disclosure",
+      "names": {
+        "en": "Financial Statement (Simplified)",
+        "ru": "Финансовая декларация (упрощённая)",
+        "uk": "Фінансова декларація (спрощена)",
+        "es": "Estado Financiero (Simplificado)"
+      },
+      "keywords": [
+        "simplified financial",
+        "упрощенная финансовая",
+        "спрощена фінансова"
+      ],
+      "description": "Alternative to FL-150 when income is from public assistance only."
+    },
+    {
+      "code": "FL-160",
+      "subcategory": "disclosure",
+      "names": {
+        "en": "Property Declaration",
+        "ru": "Декларация имущества",
+        "uk": "Декларація майна",
+        "es": "Declaración de Bienes"
+      },
+      "keywords": [
+        "property declaration",
+        "имущество",
+        "майно",
+        "propiedad"
+      ],
+      "description": "Itemized list of community and separate property attached to FL-142."
+    },
+    {
+      "code": "FL-165",
+      "subcategory": "default",
+      "names": {
+        "en": "Request to Enter Default",
+        "ru": "Запрос на вынесение решения по умолчанию",
+        "uk": "Запит на винесення рішення за замовчуванням",
+        "es": "Solicitud para Inscribir en Rebeldía"
+      },
+      "keywords": [
+        "default",
+        "по умолчанию",
+        "за замовчуванням",
+        "rebeldia"
+      ],
+      "description": "Filed when respondent fails to respond within 30 days."
+    },
+    {
+      "code": "FL-170",
+      "subcategory": "judgment",
+      "names": {
+        "en": "Declaration for Default or Uncontested Judgment",
+        "ru": "Декларация о решении по умолчанию или без оспаривания",
+        "uk": "Декларація про рішення за замовчуванням або без оскарження",
+        "es": "Declaración para Sentencia en Rebeldía"
+      },
+      "keywords": [
+        "uncontested judgment",
+        "default judgment",
+        "без оспаривания",
+        "без оскарження"
+      ],
+      "description": "Required when seeking judgment without trial."
+    },
+    {
+      "code": "FL-180",
+      "subcategory": "judgment",
+      "names": {
+        "en": "Judgment (Family Law)",
+        "ru": "Решение суда (семейное право)",
+        "uk": "Рішення суду (сімейне право)",
+        "es": "Sentencia (Derecho Familiar)"
+      },
+      "keywords": [
+        "judgment",
+        "решение суда",
+        "рішення суду",
+        "sentencia",
+        "final divorce"
+      ],
+      "description": "Final judgment of dissolution, legal separation, or nullity."
+    },
+    {
+      "code": "FL-190",
+      "subcategory": "judgment",
+      "names": {
+        "en": "Notice of Entry of Judgment",
+        "ru": "Уведомление о вступлении решения в силу",
+        "uk": "Повідомлення про набрання рішенням чинності",
+        "es": "Aviso de Ingreso de Sentencia"
+      },
+      "keywords": [
+        "notice judgment",
+        "уведомление о решении",
+        "повідомлення про рішення"
+      ],
+      "description": "Filed by court clerk after judgment is entered. Triggers 6-month termination waiting period."
+    },
+    {
+      "code": "FL-195",
+      "subcategory": "support",
+      "names": {
+        "en": "Income Withholding for Support",
+        "ru": "Удержание доходов на алименты",
+        "uk": "Утримання доходів на аліменти",
+        "es": "Retención de Ingresos para Manutención"
+      },
+      "keywords": [
+        "wage garnishment support",
+        "income withholding",
+        "удержание",
+        "утримання",
+        "retencion"
+      ],
+      "description": "Orders employer to withhold child or spousal support from wages."
+    },
+    {
+      "code": "FL-200",
+      "subcategory": "parentage",
+      "names": {
+        "en": "Petition to Establish Parental Relationship",
+        "ru": "Заявление об установлении отцовства/материнства",
+        "uk": "Заява про встановлення батьківства/материнства",
+        "es": "Petición para Establecer Relación Parental"
+      },
+      "keywords": [
+        "paternity",
+        "parentage",
+        "отцовство",
+        "батьківство",
+        "paternidad",
+        "establish father"
+      ],
+      "description": "Used by unmarried parents to establish legal parentage."
+    },
+    {
+      "code": "FL-210",
+      "subcategory": "parentage",
+      "names": {
+        "en": "Summons (Uniform Parentage)",
+        "ru": "Повестка (отцовство)",
+        "uk": "Повістка (батьківство)",
+        "es": "Citación (Paternidad)"
+      },
+      "keywords": [
+        "parentage summons",
+        "повестка отцовство",
+        "повістка батьківство"
+      ],
+      "description": "Summons filed with FL-200."
+    },
+    {
+      "code": "FL-220",
+      "subcategory": "parentage",
+      "names": {
+        "en": "Response to Petition to Establish Parental Relationship",
+        "ru": "Ответ на заявление об установлении отцовства",
+        "uk": "Відповідь на заяву про батьківство",
+        "es": "Respuesta a Petición de Paternidad"
+      },
+      "keywords": [
+        "parentage response",
+        "ответ отцовство",
+        "відповідь батьківство"
+      ],
+      "description": "Response to FL-200 within 30 days of service."
+    },
+    {
+      "code": "FL-235",
+      "subcategory": "parentage",
+      "names": {
+        "en": "Stipulation for Genetic Testing",
+        "ru": "Соглашение о генетическом тесте",
+        "uk": "Угода про генетичний тест",
+        "es": "Estipulación para Prueba Genética"
+      },
+      "keywords": [
+        "DNA test",
+        "genetic",
+        "тест ДНК",
+        "ADN"
+      ],
+      "description": "Agreement to undergo paternity testing."
+    },
+    {
+      "code": "FL-260",
+      "subcategory": "parentage",
+      "names": {
+        "en": "Judgment Regarding Parental Obligations",
+        "ru": "Решение об обязательствах родителей",
+        "uk": "Рішення про обов'язки батьків",
+        "es": "Sentencia Sobre Obligaciones Parentales"
+      },
+      "keywords": [
+        "parentage judgment",
+        "решение отцовство",
+        "рішення батьківство"
+      ],
+      "description": "Final judgment in parentage case."
+    },
+    {
+      "code": "FL-300",
+      "subcategory": "rfo",
+      "names": {
+        "en": "Request for Order",
+        "ru": "Запрос судебного приказа",
+        "uk": "Запит судового наказу",
+        "es": "Solicitud de Orden"
+      },
+      "keywords": [
+        "RFO",
+        "request order",
+        "modification",
+        "modify custody",
+        "modify support",
+        "изменить опеку",
+        "изменить алименты",
+        "змінити опіку",
+        "modificar custodia"
+      ],
+      "description": "Used to modify custody, visitation, support, or request other orders."
+    },
+    {
+      "code": "FL-305",
+      "subcategory": "rfo",
+      "names": {
+        "en": "Temporary Emergency Orders",
+        "ru": "Временные экстренные приказы",
+        "uk": "Тимчасові екстрені накази",
+        "es": "Órdenes Temporales de Emergencia"
+      },
+      "keywords": [
+        "emergency orders",
+        "ex parte",
+        "экстренные",
+        "екстрені",
+        "emergencia"
+      ],
+      "description": "Ex parte emergency orders for custody, visitation, or property."
+    },
+    {
+      "code": "FL-311",
+      "subcategory": "custody",
+      "names": {
+        "en": "Child Custody and Visitation Application Attachment",
+        "ru": "Приложение по опеке и общению с детьми",
+        "uk": "Додаток щодо опіки та спілкування з дітьми",
+        "es": "Anexo de Custodia y Visitas"
+      },
+      "keywords": [
+        "custody visitation",
+        "опека общение",
+        "опіка спілкування",
+        "custodia visitas",
+        "child custody"
+      ],
+      "description": "Specifies custody and visitation arrangements requested."
+    },
+    {
+      "code": "FL-320",
+      "subcategory": "rfo",
+      "names": {
+        "en": "Responsive Declaration to Request for Order",
+        "ru": "Декларация в ответ на запрос приказа",
+        "uk": "Декларація у відповідь на запит наказу",
+        "es": "Declaración en Respuesta a Solicitud de Orden"
+      },
+      "keywords": [
+        "respond RFO",
+        "ответ запрос приказа",
+        "відповідь на запит наказу"
+      ],
+      "description": "Response to FL-300 filed by other party."
+    },
+    {
+      "code": "FL-341",
+      "subcategory": "custody",
+      "names": {
+        "en": "Child Custody and Visitation Order Attachment",
+        "ru": "Приложение к приказу об опеке",
+        "uk": "Додаток до наказу про опіку",
+        "es": "Anexo de Orden de Custodia"
+      },
+      "keywords": [
+        "custody order",
+        "приказ опека",
+        "наказ опіка",
+        "orden custodia"
+      ],
+      "description": "Attachment specifying custody/visitation as ordered by court."
+    },
+    {
+      "code": "FL-342",
+      "subcategory": "support",
+      "names": {
+        "en": "Child Support Information and Order Attachment",
+        "ru": "Приложение об алиментах на детей",
+        "uk": "Додаток про аліменти на дітей",
+        "es": "Anexo de Manutención Infantil"
+      },
+      "keywords": [
+        "child support",
+        "алименты дети",
+        "аліменти діти",
+        "manutencion infantil"
+      ],
+      "description": "Calculates and orders child support."
+    },
+    {
+      "code": "FL-343",
+      "subcategory": "support",
+      "names": {
+        "en": "Spousal, Partner, or Family Support Order Attachment",
+        "ru": "Приложение об алиментах супругу",
+        "uk": "Додаток про аліменти подружжю",
+        "es": "Anexo de Manutención Conyugal"
+      },
+      "keywords": [
+        "spousal support",
+        "alimony",
+        "алименты супруга",
+        "аліменти подружжя",
+        "manutencion conyugal"
+      ],
+      "description": "Orders spousal or partner support."
+    },
+    {
+      "code": "FL-435",
+      "subcategory": "support",
+      "names": {
+        "en": "Earnings Assignment Order for Spousal Support",
+        "ru": "Приказ об удержании зарплаты на алименты супругу",
+        "uk": "Наказ про утримання зарплати на аліменти подружжю",
+        "es": "Orden de Asignación de Ingresos"
+      },
+      "keywords": [
+        "earnings assignment",
+        "удержание зарплаты",
+        "утримання зарплати"
+      ],
+      "description": "Court order to employer for wage withholding for spousal support."
+    },
+    {
+      "code": "FL-800",
+      "subcategory": "summary",
+      "names": {
+        "en": "Joint Petition for Summary Dissolution",
+        "ru": "Совместное заявление об упрощённом разводе",
+        "uk": "Спільна заява про спрощене розлучення",
+        "es": "Petición Conjunta de Disolución Sumaria"
+      },
+      "keywords": [
+        "summary dissolution",
+        "simple divorce",
+        "упрощенный развод",
+        "спрощене розлучення",
+        "divorcio sumario"
+      ],
+      "description": "Simplified divorce for couples married <5 years, no children, limited property."
+    },
+    {
+      "code": "FL-810",
+      "subcategory": "summary",
+      "names": {
+        "en": "Summary Dissolution Information",
+        "ru": "Информация об упрощённом разводе",
+        "uk": "Інформація про спрощене розлучення",
+        "es": "Información de Disolución Sumaria"
+      },
+      "keywords": [
+        "summary info",
+        "информация развод",
+        "інформація розлучення"
+      ],
+      "description": "Information sheet about FL-800 process."
+    },
+    {
+      "code": "FL-820",
+      "subcategory": "summary",
+      "names": {
+        "en": "Request for Judgment, Notice of Entry of Judgment (Summary)",
+        "ru": "Запрос решения по упрощённому разводу",
+        "uk": "Запит рішення зі спрощеного розлучення",
+        "es": "Solicitud de Sentencia (Sumaria)"
+      },
+      "keywords": [
+        "summary judgment request",
+        "запрос решения упрощенный"
+      ],
+      "description": "Filed after 6-month waiting period in summary dissolution."
+    },
+    {
+      "code": "FL-825",
+      "subcategory": "summary",
+      "names": {
+        "en": "Judgment of Dissolution (Summary)",
+        "ru": "Решение об упрощённом разводе",
+        "uk": "Рішення зі спрощеного розлучення",
+        "es": "Sentencia de Disolución Sumaria"
+      },
+      "keywords": [
+        "summary judgment",
+        "упрощенное решение",
+        "спрощене рішення"
+      ],
+      "description": "Final judgment in summary dissolution."
+    },
+    {
+      "code": "DV-100",
+      "subcategory": "dv",
+      "names": {
+        "en": "Request for Domestic Violence Restraining Order",
+        "ru": "Запрос охранного приказа (домашнее насилие)",
+        "uk": "Запит охоронного наказу (домашнє насильство)",
+        "es": "Solicitud de Orden de Restricción por Violencia Doméstica"
+      },
+      "keywords": [
+        "domestic violence",
+        "DVRO",
+        "restraining order",
+        "домашнее насилие",
+        "домашнє насильство",
+        "violencia domestica",
+        "abuse",
+        "избиение",
+        "abuser"
+      ],
+      "description": "Initial request for DVRO. Filed by victim of domestic abuse."
+    },
+    {
+      "code": "DV-109",
+      "subcategory": "dv",
+      "names": {
+        "en": "Notice of Court Hearing (DV)",
+        "ru": "Уведомление о слушании (домашнее насилие)",
+        "uk": "Повідомлення про слухання (домашнє насильство)",
+        "es": "Aviso de Audiencia (VD)"
+      },
+      "keywords": [
+        "DV hearing notice",
+        "уведомление слушание",
+        "повідомлення слухання"
+      ],
+      "description": "Notice of court hearing date for DVRO request."
+    },
+    {
+      "code": "DV-110",
+      "subcategory": "dv",
+      "names": {
+        "en": "Temporary Restraining Order (DV)",
+        "ru": "Временный охранный приказ (домашнее насилие)",
+        "uk": "Тимчасовий охоронний наказ (домашнє насильство)",
+        "es": "Orden de Restricción Temporal (VD)"
+      },
+      "keywords": [
+        "TRO",
+        "temporary restraining",
+        "временный приказ",
+        "тимчасовий наказ"
+      ],
+      "description": "Issued by judge before full hearing, lasts up to 25 days."
+    },
+    {
+      "code": "DV-120",
+      "subcategory": "dv",
+      "names": {
+        "en": "Response to Request for Domestic Violence Restraining Order",
+        "ru": "Ответ на запрос охранного приказа",
+        "uk": "Відповідь на запит охоронного наказу",
+        "es": "Respuesta a Solicitud de Orden de Restricción"
+      },
+      "keywords": [
+        "DV response",
+        "ответ DV",
+        "відповідь DV"
+      ],
+      "description": "Filed by restrained person to oppose DV-100."
+    },
+    {
+      "code": "DV-130",
+      "subcategory": "dv",
+      "names": {
+        "en": "Restraining Order After Hearing (DV)",
+        "ru": "Охранный приказ после слушания",
+        "uk": "Охоронний наказ після слухання",
+        "es": "Orden de Restricción Después de Audiencia"
+      },
+      "keywords": [
+        "DVRO permanent",
+        "permanent restraining",
+        "постоянный приказ",
+        "постійний наказ"
+      ],
+      "description": "Final DVRO issued after full hearing, lasts up to 5 years."
+    },
+    {
+      "code": "DV-140",
+      "subcategory": "dv",
+      "names": {
+        "en": "Child Custody and Visitation Order (DV)",
+        "ru": "Приказ об опеке (по делу о домашнем насилии)",
+        "uk": "Наказ про опіку (у справі про домашнє насильство)",
+        "es": "Orden de Custodia (VD)"
+      },
+      "keywords": [
+        "DV custody",
+        "опека DV",
+        "опіка DV"
+      ],
+      "description": "Custody orders attached to DVRO."
+    },
+    {
+      "code": "DV-200",
+      "subcategory": "dv",
+      "names": {
+        "en": "Proof of Personal Service (DV)",
+        "ru": "Подтверждение вручения (DV)",
+        "uk": "Підтвердження вручення (DV)",
+        "es": "Prueba de Entrega Personal (VD)"
+      },
+      "keywords": [
+        "DV service",
+        "вручение DV",
+        "вручення DV"
+      ],
+      "description": "Proves DV-100/DV-110 was served on respondent."
+    },
+    {
+      "code": "FW-001",
+      "subcategory": "fee_waiver",
+      "names": {
+        "en": "Request to Waive Court Fees",
+        "ru": "Запрос на освобождение от судебных пошлин",
+        "uk": "Запит на звільнення від судових зборів",
+        "es": "Solicitud de Exención de Cuotas"
+      },
+      "keywords": [
+        "fee waiver",
+        "waive fees",
+        "освобождение пошлин",
+        "звільнення зборів",
+        "exencion cuotas",
+        "no money court"
+      ],
+      "description": "Request to waive filing fees based on income."
+    },
+    {
+      "code": "FW-003",
+      "subcategory": "fee_waiver",
+      "names": {
+        "en": "Order on Court Fee Waiver",
+        "ru": "Решение об освобождении от пошлин",
+        "uk": "Рішення про звільнення від зборів",
+        "es": "Orden sobre Exención de Cuotas"
+      },
+      "keywords": [
+        "fee waiver order",
+        "решение освобождение",
+        "рішення звільнення"
+      ],
+      "description": "Court order granting or denying FW-001."
+    }
+  ],
+  "subcategory_pane": "fl"
+}
