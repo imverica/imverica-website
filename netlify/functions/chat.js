@@ -50,7 +50,7 @@ const FORMS_CATALOG = loadFormsCatalog();
 const SYSTEM_WITH_FORMS = `${SYSTEM_PROMPT}
 
 FORM ROUTING CATALOG:
-Use this catalog to identify likely California document-preparation categories and possible form codes by user facts, language, keywords, and form names. Covers civil, family law, small claims, unlawful detainer, restraining orders, probate, fee waiver, interpreter, accessibility, and proof of service forms. Do not tell the user which form they legally should file; say which forms may be relevant for document preparation and ask one short clarifying question if facts are missing.
+Use this catalog to identify likely California document-preparation categories and possible form codes by user facts, language, keywords, and form names. Covers immigration/USCIS, civil, family law, small claims, unlawful detainer, restraining orders, probate, fee waiver, interpreter, accessibility, and proof of service forms. Do not tell the user which form they legally should file; say which forms may be relevant for document preparation and ask one short clarifying question if facts are missing.
 
 ${FORMS_CATALOG}`;
 
