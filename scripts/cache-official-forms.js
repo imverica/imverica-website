@@ -16,6 +16,7 @@ const uscisForm = require(path.join(ROOT, 'netlify/functions/uscis-form.js'));
 
 const DEFAULT_CONCURRENCY = 6;
 const USER_AGENT = 'Imverica official form cache builder (+https://imverica.com)';
+let previousByCode;
 
 function normalizeCode(value) {
   return String(value || '').trim().toUpperCase().replace(/\s+/g, ' ');
@@ -34,19 +35,35 @@ function parseArgs() {
   const options = {
     limit: 0,
     codes: new Set(),
-    concurrency: DEFAULT_CONCURRENCY
+    concurrency: DEFAULT_CONCURRENCY,
+    force: false
   };
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
     if (arg === '--limit') options.limit = Number(args[++i] || 0);
     else if (arg === '--concurrency') options.concurrency = Number(args[++i] || DEFAULT_CONCURRENCY);
+    else if (arg === '--force') options.force = true;
     else if (arg === '--codes') {
       String(args[++i] || '').split(',').map(normalizeCode).filter(Boolean).forEach((code) => options.codes.add(code));
     }
   }
 
   return options;
+}
+
+async function loadPreviousManifest() {
+  if (previousByCode) return previousByCode;
+
+  previousByCode = new Map();
+  try {
+    const data = JSON.parse(await fs.readFile(FUNCTIONS_MANIFEST, 'utf8'));
+    for (const form of data.forms || []) {
+      previousByCode.set(normalizeCode(form.code), form);
+    }
+  } catch {}
+
+  return previousByCode;
 }
 
 async function loadCatalog() {
@@ -168,6 +185,7 @@ function buildBaseRecord(entry) {
 async function processEntry(entry) {
   const record = buildBaseRecord(entry);
   const targetFile = path.join(ROOT, record.cachedFile);
+  const options = processEntry.options || {};
 
   try {
     const resolved = await resolveForm(entry);
@@ -190,11 +208,17 @@ async function processEntry(entry) {
       return record;
     }
 
+    const previous = (await loadPreviousManifest()).get(entry.code);
     const existing = await existingPdfInfo(targetFile);
-    const cached = existing || await downloadPdf(pdfUrl, targetFile);
+    const cacheLooksCurrent = previous
+      && existing
+      && previous.officialPdfUrl === pdfUrl
+      && String(previous.editionDate || '') === String(record.editionDate || '')
+      && String(previous.effectiveDate || '') === String(record.effectiveDate || '');
+    const cached = !options.force && cacheLooksCurrent ? existing : await downloadPdf(pdfUrl, targetFile);
     Object.assign(record, cached, {
       cacheStatus: 'cached',
-      cacheReused: Boolean(existing),
+      cacheReused: !options.force && cacheLooksCurrent,
       cachedAt: new Date().toISOString()
     });
     return record;
@@ -226,6 +250,7 @@ async function runQueue(items, concurrency, worker) {
 async function main() {
   const options = parseArgs();
   let catalog = await loadCatalog();
+  const isPartialRefresh = options.codes.size > 0 || options.limit > 0;
   const totalCatalogRows = (await Promise.all((await fs.readdir(FORMS_DIR)).filter((file) => file.endsWith('.json')).map(async (file) => {
     const data = JSON.parse(await fs.readFile(path.join(FORMS_DIR, file), 'utf8'));
     return (Array.isArray(data.forms) ? data.forms : Array.isArray(data) ? data : []).length;
@@ -236,7 +261,16 @@ async function main() {
 
   await fs.mkdir(PDF_DIR, { recursive: true });
 
-  const forms = await runQueue(catalog, options.concurrency, processEntry);
+  processEntry.options = options;
+  const refreshedForms = await runQueue(catalog, options.concurrency, processEntry);
+  let forms = refreshedForms;
+  if (isPartialRefresh) {
+    const refreshedCodes = new Set(refreshedForms.map((form) => normalizeCode(form.code)));
+    const previousForms = [...(await loadPreviousManifest()).values()]
+      .filter((form) => !refreshedCodes.has(normalizeCode(form.code)));
+    forms = [...previousForms, ...refreshedForms].sort((a, b) => normalizeCode(a.code).localeCompare(normalizeCode(b.code)));
+  }
+
   const generatedAt = new Date().toISOString();
   const summary = forms.reduce((acc, form) => {
     acc[form.cacheStatus] = (acc[form.cacheStatus] || 0) + 1;

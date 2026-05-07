@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { cachedFallbackBody, cachedFields } = require('./lib/form-cache');
+const { cachedFallbackBody, refreshCachedFormIfNeeded } = require('./lib/form-cache');
 
 const COURTS_BASE = 'https://www.courts.ca.gov';
 const SELF_HELP_BASE = 'https://selfhelp.courts.ca.gov';
@@ -227,17 +227,31 @@ exports.handler = async function (event) {
       });
     }
 
+    const effectiveDate = extractEffectiveDate(html);
+    const title = extractTitle(html, code) || catalogEntry?.title || code;
+    const cache = await refreshCachedFormIfNeeded(code, 'california-courts', {
+      officialPdfUrl: pdfUrl,
+      officialPageUrl,
+      effectiveDate,
+      title,
+      category: catalogEntry?.category || '',
+      pane: catalogEntry?.pane || '',
+      subcategory: catalogEntry?.subcategory || '',
+      status: pdfUrl ? 'current-pdf-found' : 'page-found-no-pdf-link',
+      checkedAt: new Date().toISOString()
+    });
+
     return json(200, {
       code,
-      title: extractTitle(html, code) || catalogEntry?.title || code,
+      title,
       category: catalogEntry?.category || '',
       pane: catalogEntry?.pane || '',
       subcategory: catalogEntry?.subcategory || '',
       officialPageUrl,
       selfHelpPageUrl: html ? page.url : '',
       pdfUrl,
-      ...cachedFields(code, 'california-courts'),
-      effectiveDate: extractEffectiveDate(html),
+      ...cache,
+      effectiveDate,
       source: 'Judicial Branch of California official websites',
       checkedAt: new Date().toISOString(),
       status: pdfUrl ? 'current-pdf-found' : 'page-found-no-pdf-link',

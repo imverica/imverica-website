@@ -1,4 +1,4 @@
-const { cachedFallbackBody, cachedFields } = require('./lib/form-cache');
+const { cachedFallbackBody, refreshCachedFormIfNeeded } = require('./lib/form-cache');
 
 const USCIS_BASE = 'https://www.uscis.gov';
 
@@ -193,12 +193,22 @@ exports.handler = async function (event) {
       const instructionsUrl = await directPdfUrl(code, true);
 
       if (pdfUrl) {
+        const cache = await refreshCachedFormIfNeeded(code, 'uscis', {
+          officialPdfUrl: pdfUrl,
+          officialPageUrl: pageUrl,
+          pageUrl,
+          editionDate: '',
+          title: code,
+          status: 'direct-pdf',
+          checkedAt: new Date().toISOString()
+        });
+
         return json(200, {
           code,
           title: code,
           uscisPageUrl: pageUrl,
           pdfUrl,
-          ...cachedFields(code, 'uscis'),
+          ...cache,
           instructionsUrl,
           editionDate: '',
           source: 'USCIS official website',
@@ -223,15 +233,26 @@ exports.handler = async function (event) {
 
     const pdfUrl = findPdfLink(html, code, false) || await directPdfUrl(code, false);
     const instructionsUrl = findPdfLink(html, code, true) || await directPdfUrl(code, true);
+    const editionDate = extractEditionDate(html);
+    const title = extractTitle(html, code);
+    const cache = await refreshCachedFormIfNeeded(code, 'uscis', {
+      officialPdfUrl: pdfUrl,
+      officialPageUrl: pageUrl,
+      pageUrl,
+      editionDate,
+      title,
+      status: pdfUrl ? 'current-pdf-found' : 'page-found-no-pdf-link',
+      checkedAt: new Date().toISOString()
+    });
 
     return json(200, {
       code,
-      title: extractTitle(html, code),
+      title,
       uscisPageUrl: pageUrl,
       pdfUrl,
-      ...cachedFields(code, 'uscis'),
+      ...cache,
       instructionsUrl,
-      editionDate: extractEditionDate(html),
+      editionDate,
       source: 'USCIS official website',
       checkedAt: new Date().toISOString(),
       status: pdfUrl ? 'current-pdf-found' : 'page-found-no-pdf-link',
