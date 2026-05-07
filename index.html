@@ -1523,6 +1523,7 @@ function closeDetail(id) {
     service: '',
     formCode: '',
     situation: '',
+    i765: { basis: '', legalName: '', dob: '', address: '', immigrationStatus: '', priorEad: '', evidence: '' },
     contact: { name: '', phone: '', email: '' },
     accountMode: 'guest'
   };
@@ -1542,6 +1543,20 @@ function closeDetail(id) {
       hDetails: 'Use your own words. If you know the form code, include it here.',
       formCodeLabel: 'Form code',
       detailsLabel: 'Details',
+      i765BasisQ: 'What is the work permit based on?',
+      i765BasisH: 'Select the closest reason. We will verify the correct category before preparing the form.',
+      i765ApplicantQ: 'Applicant information',
+      i765ApplicantH: 'Enter the name and date of birth exactly as they should appear on the form.',
+      i765AddressQ: 'Address and current status',
+      i765AddressH: 'These answers help us prepare the work permit application fields.',
+      i765EvidenceQ: 'Documents to upload later',
+      i765EvidenceH: 'Tell us what documents you already have. You can upload files after account/guest checkout.',
+      basisPendingAos: 'Pending green card / adjustment of status',
+      basisAsylum: 'Asylum or pending asylum',
+      basisTps: 'TPS',
+      basisDaca: 'DACA',
+      basisOther: 'Other or not sure',
+      legalName: 'Legal name', dob: 'Date of birth', address: 'Mailing address', immigrationStatus: 'Current immigration status', priorEad: 'Prior EAD?', evidence: 'Available evidence',
       qContact: 'Who should we contact?',
       hContact: 'We use this to save your request and send the next steps.',
       qAccount: 'How do you want to continue?',
@@ -1575,6 +1590,20 @@ function closeDetail(id) {
       hDetails: 'Пишите своими словами. Если знаете код формы, укажите его здесь.',
       formCodeLabel: 'Код формы',
       detailsLabel: 'Детали',
+      i765BasisQ: 'На чем основан work permit?',
+      i765BasisH: 'Выберите ближайший вариант. Мы проверим правильную категорию перед подготовкой формы.',
+      i765ApplicantQ: 'Данные заявителя',
+      i765ApplicantH: 'Введите имя и дату рождения так, как они должны быть в форме.',
+      i765AddressQ: 'Адрес и текущий статус',
+      i765AddressH: 'Эти ответы нужны для полей заявления на разрешение на работу.',
+      i765EvidenceQ: 'Документы для загрузки позже',
+      i765EvidenceH: 'Напишите, какие документы уже есть. Файлы можно будет загрузить после кабинета/гостевого оформления.',
+      basisPendingAos: 'Pending green card / adjustment of status',
+      basisAsylum: 'Asylum или pending asylum',
+      basisTps: 'TPS',
+      basisDaca: 'DACA',
+      basisOther: 'Другое или не знаю',
+      legalName: 'Имя по документам', dob: 'Дата рождения', address: 'Почтовый адрес', immigrationStatus: 'Текущий иммиграционный статус', priorEad: 'Был ли EAD раньше?', evidence: 'Какие документы есть',
       qContact: 'С кем связаться?',
       hContact: 'Эти данные нужны, чтобы сохранить запрос и отправить следующие шаги.',
       qAccount: 'Как хотите продолжить?',
@@ -1608,6 +1637,20 @@ function closeDetail(id) {
       hDetails: 'Пишіть своїми словами. Якщо знаєте код форми, вкажіть його тут.',
       formCodeLabel: 'Код форми',
       detailsLabel: 'Деталі',
+      i765BasisQ: 'На чому базується work permit?',
+      i765BasisH: 'Оберіть найближчий варіант. Ми перевіримо правильну категорію перед підготовкою форми.',
+      i765ApplicantQ: 'Дані заявника',
+      i765ApplicantH: 'Введіть ім’я та дату народження так, як вони мають бути у формі.',
+      i765AddressQ: 'Адреса і поточний статус',
+      i765AddressH: 'Ці відповіді потрібні для полів заяви на дозвіл на роботу.',
+      i765EvidenceQ: 'Документи для завантаження пізніше',
+      i765EvidenceH: 'Напишіть, які документи вже є. Файли можна буде завантажити після кабінету/гостьового оформлення.',
+      basisPendingAos: 'Pending green card / adjustment of status',
+      basisAsylum: 'Asylum або pending asylum',
+      basisTps: 'TPS',
+      basisDaca: 'DACA',
+      basisOther: 'Інше або не знаю',
+      legalName: 'Ім’я за документами', dob: 'Дата народження', address: 'Поштова адреса', immigrationStatus: 'Поточний імміграційний статус', priorEad: 'Чи був EAD раніше?', evidence: 'Які документи є',
       qContact: 'З ким зв’язатися?',
       hContact: 'Ці дані потрібні, щоб зберегти запит і надіслати наступні кроки.',
       qAccount: 'Як хочете продовжити?',
@@ -1641,6 +1684,20 @@ function closeDetail(id) {
       hDetails: 'Use sus propias palabras. Si sabe el código del formulario, inclúyalo aquí.',
       formCodeLabel: 'Código del formulario',
       detailsLabel: 'Detalles',
+      i765BasisQ: '¿En qué se basa el permiso de trabajo?',
+      i765BasisH: 'Elija la opción más cercana. Verificaremos la categoría correcta antes de preparar el formulario.',
+      i765ApplicantQ: 'Información del solicitante',
+      i765ApplicantH: 'Ingrese el nombre y fecha de nacimiento tal como deben aparecer en el formulario.',
+      i765AddressQ: 'Dirección y estado actual',
+      i765AddressH: 'Estas respuestas ayudan a preparar los campos del permiso de trabajo.',
+      i765EvidenceQ: 'Documentos para subir después',
+      i765EvidenceH: 'Díganos qué documentos ya tiene. Podrá subir archivos después de cuenta/invitado.',
+      basisPendingAos: 'Pending green card / adjustment of status',
+      basisAsylum: 'Asylum o pending asylum',
+      basisTps: 'TPS',
+      basisDaca: 'DACA',
+      basisOther: 'Otro o no estoy seguro',
+      legalName: 'Nombre legal', dob: 'Fecha de nacimiento', address: 'Dirección postal', immigrationStatus: 'Estatus migratorio actual', priorEad: '¿EAD anterior?', evidence: 'Evidencia disponible',
       qContact: '¿A quién debemos contactar?',
       hContact: 'Usamos esto para guardar su solicitud y enviar los próximos pasos.',
       qAccount: '¿Cómo desea continuar?',
@@ -1665,6 +1722,21 @@ function closeDetail(id) {
   function t() { return i18n[state.lang] || i18n.en; }
   function esc(value) { return String(value || '').replace(/[&<>"]/g, function (ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }); }
   function selectedService() { return (t().services.find(function (item) { return item[0] === state.service; }) || [state.service, state.service || '-', '']); }
+  function isI765Flow() { return String(state.formCode || '').toUpperCase() === 'I-765' || /ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead/i.test(state.situation || ''); }
+  function activeSteps() {
+    var copy = t();
+    if (isI765Flow()) return [copy.steps[0], copy.steps[1], copy.steps[2], 'I-765', copy.i765ApplicantQ, copy.i765AddressQ, copy.i765EvidenceQ, copy.steps[3]];
+    return copy.steps;
+  }
+  function finalStep() { return activeSteps().length - 1; }
+  function inferIntakeFormCode(value) {
+    var text = normalizeIntakeText(value);
+    if (/ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead|i-765/.test(text)) return 'I-765';
+    if (/смол+\s+кле[ий]м|small\s*claims?|sc-100/.test(text)) return 'SC-100';
+    if (/ф[иі]\s*в[еэ]йв[еэ]р|fee\s*waiver|fw-001/.test(text)) return 'FW-001';
+    if (/рестре[ий]нинг|ристре[ий]нинг|ch-100/.test(text)) return 'CH-100';
+    return '';
+  }
   function normalizeIntakeText(value) { return String(value || '').toLowerCase(); }
   function detectIntakeLang(value) {
     var text = normalizeIntakeText(value);
@@ -1691,7 +1763,7 @@ function closeDetail(id) {
   }
 
   function renderSteps() {
-    stepsEl.innerHTML = t().steps.map(function (label, index) {
+    stepsEl.innerHTML = activeSteps().map(function (label, index) {
       return '<div class="intake-step-dot ' + (index === state.step ? 'active' : '') + '"><span>' + (index + 1) + '</span>' + esc(label) + '</div>';
     }).join('');
   }
@@ -1704,9 +1776,9 @@ function closeDetail(id) {
     railNote.textContent = copy.rail;
     disclaimer.textContent = copy.disclaimer;
     backBtn.textContent = copy.back;
-    nextBtn.textContent = state.step === 3 ? copy.finish : copy.next;
+    nextBtn.textContent = state.step === finalStep() ? copy.finish : copy.next;
     backBtn.disabled = state.step === 0;
-    progress.style.width = ((state.step + 1) / copy.steps.length * 100) + '%';
+    progress.style.width = ((state.step + 1) / activeSteps().length * 100) + '%';
     renderLangButtons();
     renderSteps();
 
@@ -1733,6 +1805,45 @@ function closeDetail(id) {
       return;
     }
 
+    if (isI765Flow() && state.step === 3) {
+      var basisOptions = [
+        ['pending_aos', copy.basisPendingAos],
+        ['asylum', copy.basisAsylum],
+        ['tps', copy.basisTps],
+        ['daca', copy.basisDaca],
+        ['other', copy.basisOther]
+      ];
+      card.innerHTML = '<div class="intake-question">' + esc(copy.i765BasisQ) + '</div><div class="intake-help">' + esc(copy.i765BasisH) + '</div><div class="intake-options">' +
+        basisOptions.map(function (item) {
+          return '<button type="button" class="intake-option ' + (state.i765.basis === item[0] ? 'active' : '') + '" data-i765-basis="' + item[0] + '"><strong>' + esc(item[1]) + '</strong></button>';
+        }).join('') + '</div>';
+      return;
+    }
+
+    if (isI765Flow() && state.step === 4) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.i765ApplicantQ) + '</div><div class="intake-help">' + esc(copy.i765ApplicantH) + '</div><div class="intake-grid">' +
+        '<div class="intake-field"><label>' + esc(copy.legalName) + '</label><input id="i765LegalName" value="' + esc(state.i765.legalName) + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.dob) + '</label><input id="i765Dob" value="' + esc(state.i765.dob) + '" placeholder="MM/DD/YYYY"></div>' +
+      '</div>';
+      return;
+    }
+
+    if (isI765Flow() && state.step === 5) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.i765AddressQ) + '</div><div class="intake-help">' + esc(copy.i765AddressH) + '</div>' +
+        '<div class="intake-field"><label>' + esc(copy.address) + '</label><textarea id="i765Address">' + esc(state.i765.address) + '</textarea></div>' +
+        '<div class="intake-grid" style="margin-top:14px;">' +
+          '<div class="intake-field"><label>' + esc(copy.immigrationStatus) + '</label><input id="i765Status" value="' + esc(state.i765.immigrationStatus) + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.priorEad) + '</label><input id="i765PriorEad" value="' + esc(state.i765.priorEad) + '"></div>' +
+        '</div>';
+      return;
+    }
+
+    if (isI765Flow() && state.step === 6) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.i765EvidenceQ) + '</div><div class="intake-help">' + esc(copy.i765EvidenceH) + '</div>' +
+        '<div class="intake-field"><label>' + esc(copy.evidence) + '</label><textarea id="i765Evidence" placeholder="Passport, I-94, prior EAD, receipt notices...">' + esc(state.i765.evidence) + '</textarea></div>';
+      return;
+    }
+
     card.innerHTML = '<div class="intake-question">' + esc(copy.qAccount) + '</div><div class="intake-help">' + esc(copy.hAccount) + '</div>' +
       '<div class="intake-choice-row">' +
         '<div class="intake-account-card ' + (state.accountMode === 'portal' ? 'active' : '') + '" data-account-mode="portal"><h4>' + esc(copy.portal) + '</h4><p>' + esc(copy.portalSub) + '</p></div>' +
@@ -1751,8 +1862,20 @@ function closeDetail(id) {
     var name = document.getElementById('intakeName');
     var phone = document.getElementById('intakePhone');
     var email = document.getElementById('intakeEmail');
+    var i765LegalName = document.getElementById('i765LegalName');
+    var i765Dob = document.getElementById('i765Dob');
+    var i765Address = document.getElementById('i765Address');
+    var i765Status = document.getElementById('i765Status');
+    var i765PriorEad = document.getElementById('i765PriorEad');
+    var i765Evidence = document.getElementById('i765Evidence');
     if (formCode) state.formCode = formCode.value.trim();
     if (situation) state.situation = situation.value.trim();
+    if (i765LegalName) state.i765.legalName = i765LegalName.value.trim();
+    if (i765Dob) state.i765.dob = i765Dob.value.trim();
+    if (i765Address) state.i765.address = i765Address.value.trim();
+    if (i765Status) state.i765.immigrationStatus = i765Status.value.trim();
+    if (i765PriorEad) state.i765.priorEad = i765PriorEad.value.trim();
+    if (i765Evidence) state.i765.evidence = i765Evidence.value.trim();
     if (name) state.contact.name = name.value.trim();
     if (phone) state.contact.phone = phone.value.trim();
     if (email) state.contact.email = email.value.trim();
@@ -1767,6 +1890,7 @@ function closeDetail(id) {
       serviceLabel: selectedService()[1],
       formCode: state.formCode,
       situation: state.situation,
+      i765: state.i765,
       contact: state.contact,
       accountMode: state.accountMode
     };
@@ -1781,6 +1905,7 @@ function closeDetail(id) {
   card.addEventListener('click', function (event) {
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
+    var i765Basis = event.target.closest('[data-i765-basis]');
     var account = event.target.closest('[data-account-mode]');
     if (lang) {
       state.lang = lang.getAttribute('data-intake-lang');
@@ -1791,6 +1916,12 @@ function closeDetail(id) {
     if (service) {
       state.service = service.getAttribute('data-service');
       if (state.step === 1) state.step = 2;
+      render();
+      return;
+    }
+    if (i765Basis) {
+      state.i765.basis = i765Basis.getAttribute('data-i765-basis');
+      if (state.step === 3) state.step = 4;
       render();
       return;
     }
@@ -1815,7 +1946,7 @@ function closeDetail(id) {
 
   nextBtn.addEventListener('click', function () {
     captureStep();
-    if (state.step < 3) {
+    if (state.step < finalStep()) {
       state.step += 1;
       render();
       return;
@@ -1829,9 +1960,11 @@ function closeDetail(id) {
       var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
       var detectedLang = detectIntakeLang(text);
       var inferredService = inferIntakeService(text);
+      var inferredFormCode = inferIntakeFormCode(text);
       state.situation = text;
       if (detectedLang) state.lang = detectedLang;
       if (inferredService) state.service = inferredService;
+      if (inferredFormCode) state.formCode = inferredFormCode;
       if (codeMatch) {
         state.formCode = codeMatch[0].toUpperCase();
         if (/^(I|N|G|EOIR)-/i.test(state.formCode)) state.service = 'immigration';
@@ -1839,6 +1972,8 @@ function closeDetail(id) {
         if (/^(SC|FW|POS|CIV|CM|SUM|PLD)-/i.test(state.formCode)) state.service = 'civil';
         if (/^(CH|EA|GV|WV)-/i.test(state.formCode)) state.service = 'restraining';
         if (/^UD-/i.test(state.formCode)) state.service = 'ud';
+        state.step = 2;
+      } else if (state.formCode) {
         state.step = 2;
       } else if (state.service) {
         state.step = 2;
