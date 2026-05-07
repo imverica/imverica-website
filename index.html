@@ -394,6 +394,13 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-account-card.active{border-color:var(--navy);background:#f3f7fb;}
 .intake-account-card h4{font-size:17px;margin-bottom:8px;color:var(--navy-dark);}
 .intake-account-card p{font-size:13px;line-height:1.55;color:#667;}
+.intake-complete-list{display:grid;gap:12px;margin-top:18px;}
+.intake-complete-item{border:1px solid var(--border);border-radius:8px;background:#fbfaf7;padding:16px;}
+.intake-complete-item strong{display:block;font-size:15px;color:var(--navy-dark);margin-bottom:5px;}
+.intake-complete-item span{display:block;font-size:13px;line-height:1.55;color:#667;}
+.intake-complete-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+.intake-complete-actions a{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:4px;padding:12px 16px;color:var(--navy);text-decoration:none;font-weight:600;font-size:14px;}
+.intake-complete-actions a.dark{background:var(--navy);border-color:var(--navy);color:#fff;}
 .intake-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;}
 .intake-btn{border:1px solid var(--navy);border-radius:4px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:var(--navy);}
 .intake-btn.primary{background:var(--navy);color:#fff;}
@@ -1527,7 +1534,9 @@ function closeDetail(id) {
     situation: '',
     i765: { basis: '', legalName: '', dob: '', address: '', immigrationStatus: '', priorEad: '', evidence: '' },
     contact: { name: '', phone: '', email: '' },
-    accountMode: 'guest'
+    accountMode: 'guest',
+    completed: false,
+    savedPayload: null
   };
 
   var i18n = {
@@ -1569,6 +1578,17 @@ function closeDetail(id) {
       portal: 'Create client portal', portalSub: 'Save drafts, upload documents, and track this order later.',
       sent: 'Application saved. Next step: connect to portal, Stripe checkout, and PDF filling.',
       contactError: 'Please enter a valid full name, phone number, and email address.',
+      doneTitle: 'Request saved',
+      doneHelp: 'We saved your request. Next we confirm the document package and fee, then send a secure payment link before preparing final PDFs.',
+      doneSaved: 'Draft saved',
+      doneSavedSub: 'Your answers and contact information are stored for this order.',
+      donePayment: 'Payment link requested',
+      donePaymentSub: 'A secure payment link is sent after the package and fee are confirmed.',
+      donePdf: 'PDF preparation after payment',
+      donePdfSub: 'After payment, your answers are reviewed and used to prepare the official PDF forms.',
+      telegram: 'Telegram',
+      callOffice: 'Call (916) 399-3992',
+      close: 'Close',
       disclaimer: 'Document preparation only. Possible forms may include official USCIS or California court forms. Imverica is not a law firm or attorney and does not provide legal advice.',
       services: [
         ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
@@ -1617,6 +1637,17 @@ function closeDetail(id) {
       portal: 'Создать личный кабинет', portalSub: 'Сохранять черновики, загружать документы и отслеживать заказ.',
       sent: 'Заявка сохранена. Следующий шаг: подключить портал, оплату и заполнение PDF.',
       contactError: 'Введите корректное полное имя, телефон и email.',
+      doneTitle: 'Заявка сохранена',
+      doneHelp: 'Заявка сохранена. Дальше мы подтверждаем пакет документов и стоимость, затем отправляем безопасную ссылку на оплату перед подготовкой финальных PDF.',
+      doneSaved: 'Черновик сохранен',
+      doneSavedSub: 'Ответы и контактные данные сохранены для этого заказа.',
+      donePayment: 'Ссылка на оплату запрошена',
+      donePaymentSub: 'Безопасная ссылка на оплату отправляется после подтверждения пакета и стоимости.',
+      donePdf: 'Подготовка PDF после оплаты',
+      donePdfSub: 'После оплаты ответы проверяются и используются для подготовки официальных PDF-форм.',
+      telegram: 'Telegram',
+      callOffice: 'Позвонить (916) 399-3992',
+      close: 'Закрыть',
       disclaimer: 'Только подготовка документов. Возможные формы могут включать официальные формы USCIS или California court. Imverica не является юридической фирмой или адвокатом и не дает юридические консультации.',
       services: [
         ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
@@ -1665,6 +1696,17 @@ function closeDetail(id) {
       portal: 'Створити кабінет', portalSub: 'Зберігати чернетки, завантажувати документи і відстежувати замовлення.',
       sent: 'Заявку збережено. Наступний крок: портал, оплата і заповнення PDF.',
       contactError: 'Введіть коректне повне ім’я, телефон і email.',
+      doneTitle: 'Заявку збережено',
+      doneHelp: 'Заявку збережено. Далі ми підтверджуємо пакет документів і вартість, потім надсилаємо безпечне посилання на оплату перед підготовкою фінальних PDF.',
+      doneSaved: 'Чернетку збережено',
+      doneSavedSub: 'Відповіді та контактні дані збережено для цього замовлення.',
+      donePayment: 'Посилання на оплату запитано',
+      donePaymentSub: 'Безпечне посилання на оплату надсилається після підтвердження пакета і вартості.',
+      donePdf: 'Підготовка PDF після оплати',
+      donePdfSub: 'Після оплати відповіді перевіряються і використовуються для підготовки офіційних PDF-форм.',
+      telegram: 'Telegram',
+      callOffice: 'Зателефонувати (916) 399-3992',
+      close: 'Закрити',
       disclaimer: 'Тільки підготовка документів. Можливі форми можуть включати офіційні форми USCIS або California court. Imverica не є юридичною фірмою чи адвокатом і не надає юридичних консультацій.',
       services: [
         ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
@@ -1713,6 +1755,17 @@ function closeDetail(id) {
       portal: 'Crear portal de cliente', portalSub: 'Guardar borradores, subir documentos y seguir el pedido.',
       sent: 'Solicitud guardada. Próximo paso: portal, pago y llenado de PDF.',
       contactError: 'Ingrese un nombre completo, teléfono y email válidos.',
+      doneTitle: 'Solicitud guardada',
+      doneHelp: 'Guardamos su solicitud. Luego confirmamos el paquete de documentos y el costo, y enviamos un enlace de pago seguro antes de preparar los PDF finales.',
+      doneSaved: 'Borrador guardado',
+      doneSavedSub: 'Sus respuestas y datos de contacto están guardados para este pedido.',
+      donePayment: 'Enlace de pago solicitado',
+      donePaymentSub: 'El enlace de pago seguro se envía después de confirmar el paquete y el costo.',
+      donePdf: 'Preparación del PDF después del pago',
+      donePdfSub: 'Después del pago, sus respuestas se revisan y se usan para preparar los formularios PDF oficiales.',
+      telegram: 'Telegram',
+      callOffice: 'Llamar (916) 399-3992',
+      close: 'Cerrar',
       disclaimer: 'Solo preparación de documentos. Los posibles formularios pueden incluir formularios oficiales de USCIS o California court. Imverica no es un bufete ni abogado y no brinda asesoría legal.',
       services: [
         ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
@@ -1774,6 +1827,24 @@ function closeDetail(id) {
     }).join('');
   }
 
+  function renderCompleted() {
+    var copy = t();
+    progress.style.width = '100%';
+    backBtn.style.display = 'none';
+    nextBtn.textContent = copy.close;
+    nextBtn.style.display = '';
+    card.innerHTML = '<div class="intake-question">' + esc(copy.doneTitle) + '</div><div class="intake-help">' + esc(copy.doneHelp) + '</div>' +
+      '<div class="intake-complete-list">' +
+        '<div class="intake-complete-item"><strong>' + esc(copy.doneSaved) + '</strong><span>' + esc(copy.doneSavedSub) + '</span></div>' +
+        '<div class="intake-complete-item"><strong>' + esc(copy.donePayment) + '</strong><span>' + esc(copy.donePaymentSub) + '</span></div>' +
+        '<div class="intake-complete-item"><strong>' + esc(copy.donePdf) + '</strong><span>' + esc(copy.donePdfSub) + '</span></div>' +
+      '</div>' +
+      '<div class="intake-complete-actions">' +
+        '<a class="dark" href="https://t.me/imverica" target="_blank" rel="noopener">' + esc(copy.telegram) + '</a>' +
+        '<a href="tel:9163993992">' + esc(copy.callOffice) + '</a>' +
+      '</div>';
+  }
+
   function render() {
     var copy = t();
     kicker.textContent = copy.kicker;
@@ -1783,10 +1854,16 @@ function closeDetail(id) {
     disclaimer.textContent = copy.disclaimer;
     backBtn.textContent = copy.back;
     nextBtn.textContent = state.step === finalStep() ? copy.finish : copy.next;
+    backBtn.style.display = '';
+    nextBtn.style.display = '';
     backBtn.disabled = state.step === 0;
     progress.style.width = ((state.step + 1) / activeSteps().length * 100) + '%';
     renderLangButtons();
     renderSteps();
+    if (state.completed) {
+      renderCompleted();
+      return;
+    }
 
     if (state.step === 0) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qLanguage) + '</div><div class="intake-help">' + esc(copy.hLanguage) + '</div><div class="intake-options">' +
@@ -1947,10 +2024,9 @@ function closeDetail(id) {
       accountMode: state.accountMode
     };
     localStorage.setItem('imvericaIntakeDraft', JSON.stringify(payload));
-    if (saved) {
-      saved.textContent = t().sent;
-      saved.style.display = 'block';
-    }
+    state.savedPayload = payload;
+    state.completed = true;
+    render();
   }
 
   card.addEventListener('click', function (event) {
@@ -1996,6 +2072,10 @@ function closeDetail(id) {
   });
 
   nextBtn.addEventListener('click', function () {
+    if (state.completed) {
+      window.closeIntakeModal();
+      return;
+    }
     captureStep();
     if (state.step < finalStep()) {
       state.step += 1;
@@ -2006,6 +2086,8 @@ function closeDetail(id) {
   });
 
   window.openIntakeModal = function (prefill) {
+    state.completed = false;
+    state.savedPayload = null;
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
       var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
