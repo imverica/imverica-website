@@ -23,6 +23,58 @@ function normalizeText(value) {
     .trim();
 }
 
+const COMMUNITY_TERM_ALIASES = [
+  { pattern: /смол+\s+кле[ий]м\w*/i, expansion: 'small claims small claim SC-100 SC-104 SC-120' },
+  { pattern: /мал\w*\s+иск\w*/i, expansion: 'small claims small claim SC-100 SC-104 SC-120' },
+  { pattern: /ворк\s+п[еэ]рмит\w*/i, expansion: 'work permit employment authorization EAD I-765' },
+  { pattern: /разрешен[а-яіїєґёa-z0-9-]*\s+на\s+работ[а-яіїєґёa-z0-9-]*/i, expansion: 'work permit employment authorization EAD I-765' },
+  { pattern: /грин\s+карт[а-яіїєґёa-z0-9-]*/i, expansion: 'green card permanent resident card I-90 I-485' },
+  { pattern: /грин\s+кард[а-яіїєґёa-z0-9-]*/i, expansion: 'green card permanent resident card I-90 I-485' },
+  { pattern: /аджаст[а-яіїєґёa-z0-9-]*\s+(статус[а-яіїєґёa-z0-9-]*|оф\s+статус)/i, expansion: 'adjustment of status adjust status I-485 I-130 I-864 I-765 I-131' },
+  { pattern: /[эе]джаст[а-яіїєґёa-z0-9-]*\s+(статус[а-яіїєґёa-z0-9-]*|оф\s+статус)/i, expansion: 'adjustment of status adjust status I-485 I-130 I-864 I-765 I-131' },
+  { pattern: /ф[иі]\s*в[еэ]йв[еэ]р[а-яіїєґёa-z0-9-]*/i, expansion: 'fee waiver filing fee waiver FW-001 FW-003' },
+  { pattern: /ф[иі]\s*вайв[еэ]р[а-яіїєґёa-z0-9-]*/i, expansion: 'fee waiver filing fee waiver FW-001 FW-003' },
+  { pattern: /освобожд[а-яіїєґёa-z0-9-]*\s+от\s+пошлин[а-яіїєґёa-z0-9-]*/i, expansion: 'fee waiver filing fee waiver FW-001 FW-003' },
+  { pattern: /uscis\s+ф[иі]\s*в[еэ]йв[еэ]р[а-яіїєґёa-z0-9-]*/i, expansion: 'USCIS fee waiver I-912' },
+  { pattern: /иммиграц[а-яіїєґёa-z0-9-]*\s+ф[иі]\s*в[еэ]йв[еэ]р[а-яіїєґёa-z0-9-]*/i, expansion: 'immigration fee waiver I-912' },
+  { pattern: /рестре[ий]нинг\s+орд[еэ]р\w*/i, expansion: 'restraining order civil harassment CH-100 CH-110' },
+  { pattern: /ристре[ий]нинг\s+орд[еэ]р\w*/i, expansion: 'restraining order civil harassment CH-100 CH-110' },
+  { pattern: /защитн\w*\s+ордер\w*/i, expansion: 'restraining order protective order CH-100 DV-100 EA-100 GV-100 WV-100' },
+  { pattern: /[эе]викш\w*/i, expansion: 'eviction unlawful detainer tenant landlord UD-100 UD-105 UD-110' },
+  { pattern: /анлофул\s+дет[еэ]йн\w*/i, expansion: 'unlawful detainer eviction UD-100 UD-105 UD-110' },
+  { pattern: /выселен\w*/i, expansion: 'eviction unlawful detainer tenant landlord UD-100 UD-105 UD-110' },
+  { pattern: /диворс\w*/i, expansion: 'divorce dissolution FL-100 FL-110 FL-120 FL-180' },
+  { pattern: /кастоди\w*/i, expansion: 'child custody visitation parenting time FL-300 FL-311 FL-341' },
+  { pattern: /костоди\w*/i, expansion: 'child custody visitation parenting time FL-300 FL-311 FL-341' },
+  { pattern: /саппорт\w*/i, expansion: 'child support spousal support FL-150 FL-342 FL-343' },
+  { pattern: /тревел\s+документ\w*/i, expansion: 'travel document advance parole reentry permit I-131' },
+  { pattern: /адванс\s+парол\w*/i, expansion: 'advance parole travel document I-131' },
+  { pattern: /ситизеншип\w*/i, expansion: 'citizenship naturalization N-400 N-600' },
+  { pattern: /натурал[иі]зац\w*/i, expansion: 'citizenship naturalization N-400' },
+  { pattern: /[аэе]сайл\w*/i, expansion: 'asylum I-589 I-765' },
+  { pattern: /убежищ\w*/i, expansion: 'asylum I-589 I-765' },
+  { pattern: /т[иі]\s*п[иі]\s*[эе]с/i, expansion: 'TPS temporary protected status I-821 I-765' },
+  { pattern: /дака/i, expansion: 'DACA deferred action childhood arrivals I-821D I-765' },
+  { pattern: /ю\s*виз\w*/i, expansion: 'U visa I-918 I-765' },
+  { pattern: /вава/i, expansion: 'VAWA I-360 I-485 I-765' },
+  { pattern: /пруф\s+оф\s+с[еэ]рвис\w*/i, expansion: 'proof of service service papers POS-010 POS-020 SC-104' },
+  { pattern: /сам+онс\w*/i, expansion: 'summons SUM-100 SUM-110 SC-100' },
+  { pattern: /компле[ий]нт\w*/i, expansion: 'complaint civil complaint small claims SC-100 PLD-C-001 PLD-PI-001' },
+  { pattern: /компла[ий]нт\w*/i, expansion: 'complaint civil complaint small claims SC-100 PLD-C-001 PLD-PI-001' },
+  { pattern: /пробе[ий]т\w*/i, expansion: 'probate estate deceased DE-111 DE-120 DE-150' },
+  { pattern: /консерваторшип\w*/i, expansion: 'conservatorship GC-310 GC-312 GC-340' },
+  { pattern: /гардианшип\w*/i, expansion: 'guardianship minor child guardian GC-210 GC-211 GC-240' }
+];
+
+function expandCommunityTerms(value) {
+  const text = String(value || '');
+  const expansions = [];
+  for (const alias of COMMUNITY_TERM_ALIASES) {
+    if (alias.pattern.test(text)) expansions.push(alias.expansion);
+  }
+  return expansions.length ? `${text} ${expansions.join(' ')}` : text;
+}
+
 function loadFormsCatalog() {
   const formsDir = path.join(__dirname, 'forms');
   const index = [];
@@ -98,13 +150,13 @@ const ROUTER_STOP_WORDS = new Set([
 ]);
 
 function tokenizeQuery(text) {
-  return normalizeText(text)
+  return normalizeText(expandCommunityTerms(text))
     .split(' ')
     .filter((token) => token.length >= 3 && !ROUTER_STOP_WORDS.has(token));
 }
 
 function scoreForm(form, queryText, tokens) {
-  const query = normalizeText(queryText);
+  const query = normalizeText(expandCommunityTerms(queryText));
   const text = form.searchText;
   const code = normalizeText(form.code);
   let score = 0;
@@ -134,7 +186,8 @@ function scoreForm(form, queryText, tokens) {
 }
 
 function queryHasAny(query, phrases) {
-  return phrases.some((phrase) => query.includes(normalizeText(phrase)));
+  const expandedQuery = normalizeText(expandCommunityTerms(query));
+  return phrases.some((phrase) => expandedQuery.includes(normalizeText(phrase)));
 }
 
 function codeIn(code, codes) {
@@ -142,7 +195,7 @@ function codeIn(code, codes) {
 }
 
 function applyRoutingBoosts(form, queryText, baseScore) {
-  const query = normalizeText(queryText);
+  const query = normalizeText(expandCommunityTerms(queryText));
   const code = String(form.code || '').toUpperCase();
   const pane = form.pane || '';
   const subcategory = normalizeText(form.subcategory);
