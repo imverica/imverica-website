@@ -382,6 +382,8 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-field{display:flex;flex-direction:column;gap:8px;}
 .intake-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
 .intake-field input,.intake-field textarea,.intake-field select{width:100%;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.45;color:var(--navy-dark);background:#fff;outline:none;}
+.intake-field input.intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
+.intake-error{display:none;margin-top:16px;color:#9c3329;background:#fff8f6;border-left:3px solid #b94c3f;padding:12px 14px;font-size:13px;line-height:1.5;}
 .intake-field textarea{min-height:150px;resize:vertical;}
 .intake-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .intake-review{display:grid;gap:10px;font-size:14px;}
@@ -1566,6 +1568,7 @@ function closeDetail(id) {
       guest: 'Continue as guest', guestSub: 'Use phone/email for this order without creating a password.',
       portal: 'Create client portal', portalSub: 'Save drafts, upload documents, and track this order later.',
       sent: 'Application saved. Next step: connect to portal, Stripe checkout, and PDF filling.',
+      contactError: 'Please enter a valid full name, phone number, and email address.',
       disclaimer: 'Document preparation only. Possible forms may include official USCIS or California court forms. Imverica is not a law firm or attorney and does not provide legal advice.',
       services: [
         ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
@@ -1613,6 +1616,7 @@ function closeDetail(id) {
       guest: 'Продолжить как гость', guestSub: 'Без пароля, только через телефон/email для этого заказа.',
       portal: 'Создать личный кабинет', portalSub: 'Сохранять черновики, загружать документы и отслеживать заказ.',
       sent: 'Заявка сохранена. Следующий шаг: подключить портал, оплату и заполнение PDF.',
+      contactError: 'Введите корректное полное имя, телефон и email.',
       disclaimer: 'Только подготовка документов. Возможные формы могут включать официальные формы USCIS или California court. Imverica не является юридической фирмой или адвокатом и не дает юридические консультации.',
       services: [
         ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
@@ -1660,6 +1664,7 @@ function closeDetail(id) {
       guest: 'Продовжити як гість', guestSub: 'Без пароля, через телефон/email для цього замовлення.',
       portal: 'Створити кабінет', portalSub: 'Зберігати чернетки, завантажувати документи і відстежувати замовлення.',
       sent: 'Заявку збережено. Наступний крок: портал, оплата і заповнення PDF.',
+      contactError: 'Введіть коректне повне ім’я, телефон і email.',
       disclaimer: 'Тільки підготовка документів. Можливі форми можуть включати офіційні форми USCIS або California court. Imverica не є юридичною фірмою чи адвокатом і не надає юридичних консультацій.',
       services: [
         ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
@@ -1707,6 +1712,7 @@ function closeDetail(id) {
       guest: 'Continuar como invitado', guestSub: 'Use teléfono/email para este pedido sin crear contraseña.',
       portal: 'Crear portal de cliente', portalSub: 'Guardar borradores, subir documentos y seguir el pedido.',
       sent: 'Solicitud guardada. Próximo paso: portal, pago y llenado de PDF.',
+      contactError: 'Ingrese un nombre completo, teléfono y email válidos.',
       disclaimer: 'Solo preparación de documentos. Los posibles formularios pueden incluir formularios oficiales de USCIS o California court. Imverica no es un bufete ni abogado y no brinda asesoría legal.',
       services: [
         ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
@@ -1850,10 +1856,10 @@ function closeDetail(id) {
         '<div class="intake-account-card ' + (state.accountMode === 'guest' ? 'active' : '') + '" data-account-mode="guest"><h4>' + esc(copy.guest) + '</h4><p>' + esc(copy.guestSub) + '</p></div>' +
       '</div>' +
       '<div class="intake-grid" style="margin-top:16px;">' +
-        '<div class="intake-field"><label>' + esc(copy.name) + '</label><input id="intakeName" value="' + esc(state.contact.name) + '"></div>' +
-        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><input id="intakePhone" value="' + esc(state.contact.phone) + '"></div>' +
-        '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" value="' + esc(state.contact.email) + '"></div>' +
-      '</div><div id="intakeSaved" class="intake-help" style="display:none;margin-top:16px;color:#2a7a5a;"></div>';
+        '<div class="intake-field"><label>' + esc(copy.name) + '</label><input id="intakeName" autocomplete="name" value="' + esc(state.contact.name) + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><input id="intakePhone" type="tel" inputmode="tel" autocomplete="tel" value="' + esc(state.contact.phone) + '"></div>' +
+        '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" inputmode="email" autocomplete="email" value="' + esc(state.contact.email) + '"></div>' +
+      '</div><div id="intakeContactError" class="intake-error"></div><div id="intakeSaved" class="intake-help" style="display:none;margin-top:16px;color:#2a7a5a;"></div>';
   }
 
   function captureStep() {
@@ -1881,8 +1887,54 @@ function closeDetail(id) {
     if (email) state.contact.email = email.value.trim();
   }
 
+  function isValidContactName(value) {
+    var text = String(value || '').trim().replace(/\s+/g, ' ');
+    var letters = (text.match(/[A-Za-zА-Яа-яЁёІіЇїЄєҐґÁÉÍÓÚÜÑáéíóúüñ]/g) || []).length;
+    return letters >= 4 && /^[A-Za-zА-Яа-яЁёІіЇїЄєҐґÁÉÍÓÚÜÑáéíóúüñ'’.\-\s]+$/.test(text);
+  }
+
+  function isValidPhone(value) {
+    var text = String(value || '').trim();
+    var digits = text.replace(/\D/g, '');
+    return digits.length >= 10 && digits.length <= 15 && /^[+\d\s().-]+$/.test(text);
+  }
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || '').trim());
+  }
+
+  function validateContact() {
+    var fields = {
+      name: document.getElementById('intakeName'),
+      phone: document.getElementById('intakePhone'),
+      email: document.getElementById('intakeEmail')
+    };
+    var invalid = [];
+    Object.keys(fields).forEach(function (key) {
+      if (fields[key]) fields[key].classList.remove('intake-invalid');
+    });
+    if (!isValidContactName(state.contact.name)) invalid.push(fields.name);
+    if (!isValidPhone(state.contact.phone)) invalid.push(fields.phone);
+    if (!isValidEmail(state.contact.email)) invalid.push(fields.email);
+    invalid.forEach(function (field) {
+      if (field) field.classList.add('intake-invalid');
+    });
+    return invalid.length === 0;
+  }
+
   function saveIntake() {
     captureStep();
+    var saved = document.getElementById('intakeSaved');
+    var error = document.getElementById('intakeContactError');
+    if (saved) saved.style.display = 'none';
+    if (error) error.style.display = 'none';
+    if (!validateContact()) {
+      if (error) {
+        error.textContent = t().contactError;
+        error.style.display = 'block';
+      }
+      return;
+    }
     var payload = {
       createdAt: new Date().toISOString(),
       language: state.lang,
@@ -1895,7 +1947,6 @@ function closeDetail(id) {
       accountMode: state.accountMode
     };
     localStorage.setItem('imvericaIntakeDraft', JSON.stringify(payload));
-    var saved = document.getElementById('intakeSaved');
     if (saved) {
       saved.textContent = t().sent;
       saved.style.display = 'block';
