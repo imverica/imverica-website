@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { cachedFallbackBody, cachedFields } = require('./lib/form-cache');
 
 const COURTS_BASE = 'https://www.courts.ca.gov';
 const SELF_HELP_BASE = 'https://selfhelp.courts.ca.gov';
@@ -205,6 +206,13 @@ exports.handler = async function (event) {
     const officialPageUrl = html ? page.url : `${COURTS_BASE}/rules-forms/court-forms`;
 
     if (!html && !pdfUrl) {
+      const cached = cachedFallbackBody(code, 'california-courts', { officialPageUrl });
+      if (cached) {
+        return json(200, cached, {
+          'Cache-Control': 'public, max-age=3600'
+        });
+      }
+
       return json(404, {
         error: 'Could not locate an official California Judicial Council form page or PDF',
         code,
@@ -214,6 +222,8 @@ exports.handler = async function (event) {
         status: catalogEntry ? 'catalog-only-no-official-pdf-found' : 'not-found',
         note: 'Some notices or local court templates may not be statewide Judicial Council forms. Check the county Superior Court for local forms.',
         disclaimer: 'Document preparation only. Imverica is not a law firm or attorney and does not provide legal advice.'
+      }, {
+        'Cache-Control': 'public, max-age=3600'
       });
     }
 
@@ -226,6 +236,7 @@ exports.handler = async function (event) {
       officialPageUrl,
       selfHelpPageUrl: html ? page.url : '',
       pdfUrl,
+      ...cachedFields(code, 'california-courts'),
       effectiveDate: extractEffectiveDate(html),
       source: 'Judicial Branch of California official websites',
       checkedAt: new Date().toISOString(),
@@ -237,6 +248,12 @@ exports.handler = async function (event) {
     });
   } catch (err) {
     console.error(err);
+    const cached = cachedFallbackBody(code, 'california-courts', { officialPageUrl: selfHelpPageUrl });
+    if (cached) {
+      return json(200, cached, {
+        'Cache-Control': 'public, max-age=3600'
+      });
+    }
     return json(500, {
       error: 'California Judicial Council form lookup failed',
       code,

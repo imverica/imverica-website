@@ -1,3 +1,5 @@
+const { cachedFallbackBody, cachedFields } = require('./lib/form-cache');
+
 const USCIS_BASE = 'https://www.uscis.gov';
 
 const CORS_HEADERS = {
@@ -196,6 +198,7 @@ exports.handler = async function (event) {
           title: code,
           uscisPageUrl: pageUrl,
           pdfUrl,
+          ...cachedFields(code, 'uscis'),
           instructionsUrl,
           editionDate: '',
           source: 'USCIS official website',
@@ -204,6 +207,13 @@ exports.handler = async function (event) {
           note: 'No public USCIS landing page was found; using the official USCIS direct PDF URL.',
           disclaimer: 'Document preparation only. Imverica is not a law firm or attorney and does not provide legal advice.'
         }, {
+          'Cache-Control': 'public, max-age=3600'
+        });
+      }
+
+      const cached = cachedFallbackBody(code, 'uscis', { uscisPageUrl: pageUrl, pageUrl });
+      if (cached) {
+        return json(200, cached, {
           'Cache-Control': 'public, max-age=3600'
         });
       }
@@ -219,6 +229,7 @@ exports.handler = async function (event) {
       title: extractTitle(html, code),
       uscisPageUrl: pageUrl,
       pdfUrl,
+      ...cachedFields(code, 'uscis'),
       instructionsUrl,
       editionDate: extractEditionDate(html),
       source: 'USCIS official website',
@@ -230,6 +241,12 @@ exports.handler = async function (event) {
     });
   } catch (err) {
     console.error(err);
+    const cached = cachedFallbackBody(code, 'uscis', { uscisPageUrl: requestedPageUrl, pageUrl: requestedPageUrl });
+    if (cached) {
+      return json(200, cached, {
+        'Cache-Control': 'public, max-age=3600'
+      });
+    }
     return json(500, { error: 'USCIS lookup failed', code, pageUrl: requestedPageUrl });
   }
 };
