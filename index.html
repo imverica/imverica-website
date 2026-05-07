@@ -1536,7 +1536,8 @@ function closeDetail(id) {
     contact: { name: '', phone: '', email: '' },
     accountMode: 'guest',
     completed: false,
-    savedPayload: null
+    savedPayload: null,
+    orderId: ''
   };
 
   var i18n = {
@@ -1573,13 +1574,16 @@ function closeDetail(id) {
       qAccount: 'How do you want to continue?',
       hAccount: 'Create a client portal account or continue as a guest before payment.',
       name: 'Full name', phone: 'Phone', email: 'Email',
-      back: 'Back', next: 'Next', finish: 'Save and request payment link',
+      back: 'Back', next: 'Next', finish: 'Save and request payment link', saving: 'Saving securely...',
       guest: 'Continue as guest', guestSub: 'Use phone/email for this order without creating a password.',
       portal: 'Create client portal', portalSub: 'Save drafts, upload documents, and track this order later.',
       sent: 'Application saved. Next step: connect to portal, Stripe checkout, and PDF filling.',
       contactError: 'Please enter a valid full name, phone number, and email address.',
+      saveError: 'We could not save this request securely. Please try again or contact us directly.',
       doneTitle: 'Request saved',
       doneHelp: 'We saved your request. Next we confirm the document package and fee, then send a secure payment link before preparing final PDFs.',
+      doneReference: 'Reference number',
+      doneReferenceSub: 'Keep this number for this request.',
       doneSaved: 'Draft saved',
       doneSavedSub: 'Your answers and contact information are stored for this order.',
       donePayment: 'Payment link requested',
@@ -1632,13 +1636,16 @@ function closeDetail(id) {
       qAccount: 'Как хотите продолжить?',
       hAccount: 'Создайте личный кабинет или продолжите как гость перед оплатой.',
       name: 'Полное имя', phone: 'Телефон', email: 'Email',
-      back: 'Назад', next: 'Дальше', finish: 'Сохранить и запросить ссылку на оплату',
+      back: 'Назад', next: 'Дальше', finish: 'Сохранить и запросить ссылку на оплату', saving: 'Безопасно сохраняем...',
       guest: 'Продолжить как гость', guestSub: 'Без пароля, только через телефон/email для этого заказа.',
       portal: 'Создать личный кабинет', portalSub: 'Сохранять черновики, загружать документы и отслеживать заказ.',
       sent: 'Заявка сохранена. Следующий шаг: подключить портал, оплату и заполнение PDF.',
       contactError: 'Введите корректное полное имя, телефон и email.',
+      saveError: 'Не удалось безопасно сохранить заявку. Попробуйте еще раз или свяжитесь с нами напрямую.',
       doneTitle: 'Заявка сохранена',
       doneHelp: 'Заявка сохранена. Дальше мы подтверждаем пакет документов и стоимость, затем отправляем безопасную ссылку на оплату перед подготовкой финальных PDF.',
+      doneReference: 'Номер заявки',
+      doneReferenceSub: 'Сохраните этот номер для этого запроса.',
       doneSaved: 'Черновик сохранен',
       doneSavedSub: 'Ответы и контактные данные сохранены для этого заказа.',
       donePayment: 'Ссылка на оплату запрошена',
@@ -1691,13 +1698,16 @@ function closeDetail(id) {
       qAccount: 'Як хочете продовжити?',
       hAccount: 'Створіть особистий кабінет або продовжіть як гість перед оплатою.',
       name: 'Повне ім’я', phone: 'Телефон', email: 'Email',
-      back: 'Назад', next: 'Далі', finish: 'Зберегти і запросити посилання на оплату',
+      back: 'Назад', next: 'Далі', finish: 'Зберегти і запросити посилання на оплату', saving: 'Безпечно зберігаємо...',
       guest: 'Продовжити як гість', guestSub: 'Без пароля, через телефон/email для цього замовлення.',
       portal: 'Створити кабінет', portalSub: 'Зберігати чернетки, завантажувати документи і відстежувати замовлення.',
       sent: 'Заявку збережено. Наступний крок: портал, оплата і заповнення PDF.',
       contactError: 'Введіть коректне повне ім’я, телефон і email.',
+      saveError: 'Не вдалося безпечно зберегти заявку. Спробуйте ще раз або зв’яжіться з нами напряму.',
       doneTitle: 'Заявку збережено',
       doneHelp: 'Заявку збережено. Далі ми підтверджуємо пакет документів і вартість, потім надсилаємо безпечне посилання на оплату перед підготовкою фінальних PDF.',
+      doneReference: 'Номер заявки',
+      doneReferenceSub: 'Збережіть цей номер для цього запиту.',
       doneSaved: 'Чернетку збережено',
       doneSavedSub: 'Відповіді та контактні дані збережено для цього замовлення.',
       donePayment: 'Посилання на оплату запитано',
@@ -1750,13 +1760,16 @@ function closeDetail(id) {
       qAccount: '¿Cómo desea continuar?',
       hAccount: 'Cree un portal de cliente o continúe como invitado antes del pago.',
       name: 'Nombre completo', phone: 'Teléfono', email: 'Email',
-      back: 'Atrás', next: 'Siguiente', finish: 'Guardar y solicitar enlace de pago',
+      back: 'Atrás', next: 'Siguiente', finish: 'Guardar y solicitar enlace de pago', saving: 'Guardando de forma segura...',
       guest: 'Continuar como invitado', guestSub: 'Use teléfono/email para este pedido sin crear contraseña.',
       portal: 'Crear portal de cliente', portalSub: 'Guardar borradores, subir documentos y seguir el pedido.',
       sent: 'Solicitud guardada. Próximo paso: portal, pago y llenado de PDF.',
       contactError: 'Ingrese un nombre completo, teléfono y email válidos.',
+      saveError: 'No pudimos guardar esta solicitud de forma segura. Inténtelo de nuevo o contáctenos directamente.',
       doneTitle: 'Solicitud guardada',
       doneHelp: 'Guardamos su solicitud. Luego confirmamos el paquete de documentos y el costo, y enviamos un enlace de pago seguro antes de preparar los PDF finales.',
+      doneReference: 'Número de referencia',
+      doneReferenceSub: 'Guarde este número para esta solicitud.',
       doneSaved: 'Borrador guardado',
       doneSavedSub: 'Sus respuestas y datos de contacto están guardados para este pedido.',
       donePayment: 'Enlace de pago solicitado',
@@ -1835,6 +1848,7 @@ function closeDetail(id) {
     nextBtn.style.display = '';
     card.innerHTML = '<div class="intake-question">' + esc(copy.doneTitle) + '</div><div class="intake-help">' + esc(copy.doneHelp) + '</div>' +
       '<div class="intake-complete-list">' +
+        (state.orderId ? '<div class="intake-complete-item"><strong>' + esc(copy.doneReference) + ': ' + esc(state.orderId) + '</strong><span>' + esc(copy.doneReferenceSub) + '</span></div>' : '') +
         '<div class="intake-complete-item"><strong>' + esc(copy.doneSaved) + '</strong><span>' + esc(copy.doneSavedSub) + '</span></div>' +
         '<div class="intake-complete-item"><strong>' + esc(copy.donePayment) + '</strong><span>' + esc(copy.donePaymentSub) + '</span></div>' +
         '<div class="intake-complete-item"><strong>' + esc(copy.donePdf) + '</strong><span>' + esc(copy.donePdfSub) + '</span></div>' +
@@ -1999,7 +2013,30 @@ function closeDetail(id) {
     return invalid.length === 0;
   }
 
-  function saveIntake() {
+  function intakeEndpoint() {
+    var localHost = window.location.protocol === 'file:' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'localhost';
+    return localHost ? 'https://imverica.com/.netlify/functions/intake' : '/.netlify/functions/intake';
+  }
+
+  async function submitIntake(payload) {
+    var response = await fetch(intakeEndpoint(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    var data = {};
+    try {
+      data = await response.json();
+    } catch (err) {}
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || 'Could not save intake');
+    }
+    return data;
+  }
+
+  async function saveIntake() {
     captureStep();
     var saved = document.getElementById('intakeSaved');
     var error = document.getElementById('intakeContactError');
@@ -2023,10 +2060,26 @@ function closeDetail(id) {
       contact: state.contact,
       accountMode: state.accountMode
     };
-    localStorage.setItem('imvericaIntakeDraft', JSON.stringify(payload));
-    state.savedPayload = payload;
-    state.completed = true;
-    render();
+    localStorage.setItem('imvericaIntakeDraft', JSON.stringify({ syncStatus: 'pending', payload: payload }));
+    nextBtn.disabled = true;
+    nextBtn.textContent = t().saving;
+    try {
+      var result = await submitIntake(payload);
+      payload.orderId = result.orderId;
+      payload.syncStatus = 'synced';
+      localStorage.setItem('imvericaIntakeDraft', JSON.stringify(payload));
+      state.savedPayload = payload;
+      state.orderId = result.orderId || '';
+      state.completed = true;
+      render();
+    } catch (err) {
+      if (error) {
+        error.textContent = t().saveError;
+        error.style.display = 'block';
+      }
+      nextBtn.disabled = false;
+      nextBtn.textContent = t().finish;
+    }
   }
 
   card.addEventListener('click', function (event) {
@@ -2071,7 +2124,7 @@ function closeDetail(id) {
     render();
   });
 
-  nextBtn.addEventListener('click', function () {
+  nextBtn.addEventListener('click', async function () {
     if (state.completed) {
       window.closeIntakeModal();
       return;
@@ -2082,12 +2135,13 @@ function closeDetail(id) {
       render();
       return;
     }
-    saveIntake();
+    await saveIntake();
   });
 
   window.openIntakeModal = function (prefill) {
     state.completed = false;
     state.savedPayload = null;
+    state.orderId = '';
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
       var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
