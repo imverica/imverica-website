@@ -1533,7 +1533,7 @@ function closeDetail(id) {
       title: 'Start document preparation',
       sub: 'Answer a few questions. We will identify possible forms, prepare documents at your direction, and confirm fees before filing anything.',
       rail: 'You can pause and continue later. Imverica is not a law firm and does not provide legal advice.',
-      steps: ['Language', 'Document type', 'Details', 'Review', 'Account & payment'],
+      steps: ['Language', 'Document type', 'Details', 'Account & payment'],
       qLanguage: 'Choose your preferred language',
       hLanguage: 'We support multiple languages from the first screen.',
       qService: 'What do you need prepared?',
@@ -1544,8 +1544,6 @@ function closeDetail(id) {
       detailsLabel: 'Details',
       qContact: 'Who should we contact?',
       hContact: 'We use this to save your request and send the next steps.',
-      qReview: 'Review your application',
-      hReview: 'Nothing is filed from this screen. We will verify forms and fees before preparing final documents.',
       qAccount: 'How do you want to continue?',
       hAccount: 'Create a client portal account or continue as a guest before payment.',
       name: 'Full name', phone: 'Phone', email: 'Email',
@@ -1568,7 +1566,7 @@ function closeDetail(id) {
       title: 'Начать подготовку документов',
       sub: 'Ответьте на несколько вопросов. Мы определим возможные формы, подготовим документы по вашему поручению и подтвердим стоимость до подачи.',
       rail: 'Можно остановиться и продолжить позже. Imverica не является юридической фирмой и не дает юридические консультации.',
-      steps: ['Язык', 'Тип документов', 'Детали', 'Проверка', 'Кабинет и оплата'],
+      steps: ['Язык', 'Тип документов', 'Детали', 'Кабинет и оплата'],
       qLanguage: 'Выберите удобный язык',
       hLanguage: 'Выберите удобный язык.',
       qService: 'Какие документы нужно подготовить?',
@@ -1579,8 +1577,6 @@ function closeDetail(id) {
       detailsLabel: 'Детали',
       qContact: 'С кем связаться?',
       hContact: 'Эти данные нужны, чтобы сохранить запрос и отправить следующие шаги.',
-      qReview: 'Проверьте краткое резюме',
-      hReview: 'С этого экрана ничего не подается. Мы сначала проверим формы и стоимость.',
       qAccount: 'Как хотите продолжить?',
       hAccount: 'Создайте личный кабинет или продолжите как гость перед оплатой.',
       name: 'Полное имя', phone: 'Телефон', email: 'Email',
@@ -1603,7 +1599,7 @@ function closeDetail(id) {
       title: 'Почати підготовку документів',
       sub: 'Дайте відповіді на кілька питань. Ми визначимо можливі форми, підготуємо документи за вашим дорученням і підтвердимо оплату до подання.',
       rail: 'Можна зупинитися і продовжити пізніше. Imverica не є юридичною фірмою і не надає юридичних консультацій.',
-      steps: ['Мова', 'Тип документів', 'Деталі', 'Перевірка', 'Кабінет і оплата'],
+      steps: ['Мова', 'Тип документів', 'Деталі', 'Кабінет і оплата'],
       qLanguage: 'Оберіть зручну мову',
       hLanguage: 'Оберіть зручну мову.',
       qService: 'Які документи потрібно підготувати?',
@@ -1614,8 +1610,6 @@ function closeDetail(id) {
       detailsLabel: 'Деталі',
       qContact: 'З ким зв’язатися?',
       hContact: 'Ці дані потрібні, щоб зберегти запит і надіслати наступні кроки.',
-      qReview: 'Перевірте коротке резюме',
-      hReview: 'З цього екрана нічого не подається. Спочатку ми перевіримо форми і вартість.',
       qAccount: 'Як хочете продовжити?',
       hAccount: 'Створіть особистий кабінет або продовжіть як гість перед оплатою.',
       name: 'Повне ім’я', phone: 'Телефон', email: 'Email',
@@ -1638,7 +1632,7 @@ function closeDetail(id) {
       title: 'Iniciar preparación de documentos',
       sub: 'Responda algunas preguntas. Identificaremos posibles formularios, prepararemos documentos bajo su dirección y confirmaremos costos antes de presentar nada.',
       rail: 'Puede pausar y continuar después. Imverica no es un bufete de abogados y no brinda asesoría legal.',
-      steps: ['Idioma', 'Tipo de documento', 'Detalles', 'Revisión', 'Cuenta y pago'],
+      steps: ['Idioma', 'Tipo de documento', 'Detalles', 'Cuenta y pago'],
       qLanguage: 'Elija su idioma preferido',
       hLanguage: 'Seleccione su idioma.',
       qService: '¿Qué necesita preparar?',
@@ -1649,8 +1643,6 @@ function closeDetail(id) {
       detailsLabel: 'Detalles',
       qContact: '¿A quién debemos contactar?',
       hContact: 'Usamos esto para guardar su solicitud y enviar los próximos pasos.',
-      qReview: 'Revise el resumen',
-      hReview: 'Nada se presenta desde esta pantalla. Verificaremos formularios y costos primero.',
       qAccount: '¿Cómo desea continuar?',
       hAccount: 'Cree un portal de cliente o continúe como invitado antes del pago.',
       name: 'Nombre completo', phone: 'Teléfono', email: 'Email',
@@ -1712,9 +1704,9 @@ function closeDetail(id) {
     railNote.textContent = copy.rail;
     disclaimer.textContent = copy.disclaimer;
     backBtn.textContent = copy.back;
-    nextBtn.textContent = state.step === 4 ? copy.finish : copy.next;
+    nextBtn.textContent = state.step === 3 ? copy.finish : copy.next;
     backBtn.disabled = state.step === 0;
-    progress.style.width = ((state.step + 1) / 5 * 100) + '%';
+    progress.style.width = ((state.step + 1) / copy.steps.length * 100) + '%';
     renderLangButtons();
     renderSteps();
 
@@ -1738,16 +1730,6 @@ function closeDetail(id) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
         '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
         '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>';
-      return;
-    }
-
-    if (state.step === 3) {
-      card.innerHTML = '<div class="intake-question">' + esc(copy.qReview) + '</div><div class="intake-help">' + esc(copy.hReview) + '</div><div class="intake-review">' +
-        '<div class="intake-review-row"><b>Language</b><span>' + state.lang.toUpperCase() + '</span></div>' +
-        '<div class="intake-review-row"><b>Service</b><span>' + esc(selectedService()[1]) + '</span></div>' +
-        '<div class="intake-review-row"><b>Form code</b><span>' + esc(state.formCode || '-') + '</span></div>' +
-        '<div class="intake-review-row"><b>Details</b><span>' + esc(state.situation || '-') + '</span></div>' +
-      '</div>';
       return;
     }
 
@@ -1833,7 +1815,7 @@ function closeDetail(id) {
 
   nextBtn.addEventListener('click', function () {
     captureStep();
-    if (state.step < 4) {
+    if (state.step < 3) {
       state.step += 1;
       render();
       return;
