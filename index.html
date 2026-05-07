@@ -1540,6 +1540,8 @@ function closeDetail(id) {
       hService: 'Choose the closest category. We can adjust it after reviewing your answers.',
       qDetails: 'Tell us what happened or enter a form number',
       hDetails: 'Use your own words. If you know the form code, include it here.',
+      formCodeLabel: 'Form code',
+      detailsLabel: 'Details',
       qContact: 'Who should we contact?',
       hContact: 'We use this to save your request and send the next steps.',
       qReview: 'Review your application',
@@ -1573,6 +1575,8 @@ function closeDetail(id) {
       hService: 'Выберите ближайшую категорию. Мы сможем уточнить ее после проверки ответов.',
       qDetails: 'Опишите ситуацию или введите номер формы',
       hDetails: 'Пишите своими словами. Если знаете код формы, укажите его здесь.',
+      formCodeLabel: 'Код формы',
+      detailsLabel: 'Детали',
       qContact: 'С кем связаться?',
       hContact: 'Эти данные нужны, чтобы сохранить запрос и отправить следующие шаги.',
       qReview: 'Проверьте краткое резюме',
@@ -1606,6 +1610,8 @@ function closeDetail(id) {
       hService: 'Оберіть найближчу категорію. Ми уточнимо її після перегляду відповідей.',
       qDetails: 'Опишіть ситуацію або введіть номер форми',
       hDetails: 'Пишіть своїми словами. Якщо знаєте код форми, вкажіть його тут.',
+      formCodeLabel: 'Код форми',
+      detailsLabel: 'Деталі',
       qContact: 'З ким зв’язатися?',
       hContact: 'Ці дані потрібні, щоб зберегти запит і надіслати наступні кроки.',
       qReview: 'Перевірте коротке резюме',
@@ -1639,6 +1645,8 @@ function closeDetail(id) {
       hService: 'Elija la categoría más cercana. Podemos ajustarla después de revisar sus respuestas.',
       qDetails: 'Cuéntenos qué pasó o ingrese un número de formulario',
       hDetails: 'Use sus propias palabras. Si sabe el código del formulario, inclúyalo aquí.',
+      formCodeLabel: 'Código del formulario',
+      detailsLabel: 'Detalles',
       qContact: '¿A quién debemos contactar?',
       hContact: 'Usamos esto para guardar su solicitud y enviar los próximos pasos.',
       qReview: 'Revise el resumen',
@@ -1665,6 +1673,24 @@ function closeDetail(id) {
   function t() { return i18n[state.lang] || i18n.en; }
   function esc(value) { return String(value || '').replace(/[&<>"]/g, function (ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }); }
   function selectedService() { return (t().services.find(function (item) { return item[0] === state.service; }) || [state.service, state.service || '-', '']); }
+  function normalizeIntakeText(value) { return String(value || '').toLowerCase(); }
+  function detectIntakeLang(value) {
+    var text = normalizeIntakeText(value);
+    if (/[іїєґ]/i.test(text)) return 'uk';
+    if (/[а-яё]/i.test(text)) return 'ru';
+    if (/[¿¡áéíóúñ]/i.test(text)) return 'es';
+    return '';
+  }
+  function inferIntakeService(value) {
+    var text = normalizeIntakeText(value);
+    if (/uscis|eoir|immigration|иммиграц|імміграц|грин|green\s*card|ворк\s+п[еэ]рмит|work\s+permit|i-\d+|n-\d+|g-\d+|свадьб|брак|женит|замуж|marriage|spouse|супруг|супруга|чоловік|дружин/.test(text)) return 'immigration';
+    if (/fl-\d+|dv-\d+|divorce|family|custody|развод|розлуч|алим[еє]нт|кастоди|опек|сімейн|семейн/.test(text)) return 'family';
+    if (/small\s*claims?|смол+\s+кле[ий]м|мал\w*\s+иск|sc-\d+|civil|complaint|компле[ий]нт|суд/.test(text)) return 'civil';
+    if (/restraining|рестре[ий]нинг|ристре[ий]нинг|защитн\w*\s+ордер|ch-\d+|ea-\d+|gv-\d+|wv-\d+|угрож|преслед|harass|stalk/.test(text)) return 'restraining';
+    if (/eviction|unlawful|detainer|уд-\d+|ud-\d+|выселен|аренд|tenant|landlord/.test(text)) return 'ud';
+    if (/llc|dba|ein|business|бизнес|компан|корпорац/.test(text)) return 'business';
+    return '';
+  }
 
   function renderLangButtons() {
     langEl.innerHTML = ['en','ru','uk','es'].map(function (lang) {
@@ -1710,8 +1736,8 @@ function closeDetail(id) {
 
     if (state.step === 2) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
-        '<div class="intake-field"><label>Form code</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
-        '<div class="intake-field" style="margin-top:14px;"><label>Details</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>';
+        '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
+        '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>';
       return;
     }
 
@@ -1819,7 +1845,11 @@ function closeDetail(id) {
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
       var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
+      var detectedLang = detectIntakeLang(text);
+      var inferredService = inferIntakeService(text);
       state.situation = text;
+      if (detectedLang) state.lang = detectedLang;
+      if (inferredService) state.service = inferredService;
       if (codeMatch) {
         state.formCode = codeMatch[0].toUpperCase();
         if (/^(I|N|G|EOIR)-/i.test(state.formCode)) state.service = 'immigration';
@@ -1828,6 +1858,10 @@ function closeDetail(id) {
         if (/^(CH|EA|GV|WV)-/i.test(state.formCode)) state.service = 'restraining';
         if (/^UD-/i.test(state.formCode)) state.service = 'ud';
         state.step = 2;
+      } else if (state.service) {
+        state.step = 2;
+      } else if (detectedLang) {
+        state.step = 1;
       }
     }
     modal.classList.add('open');
