@@ -1929,15 +1929,36 @@ function closeDetail(id) {
     result.classList.add('open');
   }
 
+  function detectUiLang(text) {
+    var value = String(text || '').toLowerCase();
+    if (/[іїєґ]/i.test(value)) return 'uk';
+    if (/[а-яё]/i.test(value)) return 'ru';
+    if (/[¿¡áéíóúñ]/i.test(value)) return 'es';
+    return 'en';
+  }
+
+  function finderLabels(lang) {
+    return {
+      en: {checking:'Checking possible document-preparation options...', continue:'Continue', call:'Call (916) 399-3992', error:'Sorry, please try again or call us at (916) 399-3992.'},
+      ru: {checking:'Проверяем возможные варианты подготовки документов...', continue:'Продолжить', call:'Позвонить (916) 399-3992', error:'Извините, попробуйте еще раз или позвоните нам: (916) 399-3992.'},
+      uk: {checking:'Перевіряємо можливі варіанти підготовки документів...', continue:'Продовжити', call:'Зателефонувати (916) 399-3992', error:'Вибачте, спробуйте ще раз або зателефонуйте нам: (916) 399-3992.'},
+      es: {checking:'Verificando posibles opciones de preparación de documentos...', continue:'Continuar', call:'Llamar (916) 399-3992', error:'Lo sentimos, inténtelo de nuevo o llámenos al (916) 399-3992.'}
+    }[lang] || finderLabels('en');
+  }
+
   async function askFinder(text) {
     var query = String(text || '').trim();
     if (!query) return;
+    var labels = finderLabels(detectUiLang(query));
     input.value = query;
     submit.disabled = true;
-    showResult('Checking possible document-preparation options...');
+    showResult(labels.checking);
 
     try {
-      var chatUrl = window.location.protocol === 'file:'
+      var useLiveChatApi = window.location.protocol === 'file:' ||
+        window.location.hostname === '127.0.0.1' ||
+        window.location.hostname === 'localhost';
+      var chatUrl = useLiveChatApi
         ? 'https://imverica.com/.netlify/functions/chat'
         : '/.netlify/functions/chat';
       var res = await fetch(chatUrl, {
@@ -1948,12 +1969,13 @@ function closeDetail(id) {
       if (!res.ok) throw new Error('Request failed');
       var data = await res.json();
       var reply = data.reply || 'Please call us at (916) 399-3992 and we will help identify the document package.';
+      labels = finderLabels(detectUiLang(query + ' ' + reply));
       showResult(
         '<div>' + escapeHtml(reply).replace(/\n/g, '<br>') + '</div>' +
         '<div class="ai-result-actions">' +
-          '<button class="dark" type="button" id="aiStartIntake">Continue</button>' +
+          '<button class="dark" type="button" id="aiStartIntake">' + escapeHtml(labels.continue) + '</button>' +
           '<a href="https://t.me/imverica" target="_blank" rel="noopener">Telegram</a>' +
-          '<a href="tel:9163993992">Call (916) 399-3992</a>' +
+          '<a href="tel:9163993992">' + escapeHtml(labels.call) + '</a>' +
         '</div>'
       );
       var startIntake = result.querySelector('#aiStartIntake');
@@ -1964,7 +1986,7 @@ function closeDetail(id) {
         });
       }
     } catch (err) {
-      showResult('Sorry, please try again or call us at (916) 399-3992.');
+      showResult(labels.error);
     } finally {
       submit.disabled = false;
     }
@@ -2301,7 +2323,10 @@ function closeDetail(id) {
       body.scrollTop = body.scrollHeight;
       
       try {
-        const chatUrl = window.location.protocol === 'file:'
+        const useLiveChatApi = window.location.protocol === 'file:' ||
+          window.location.hostname === '127.0.0.1' ||
+          window.location.hostname === 'localhost';
+        const chatUrl = useLiveChatApi
           ? 'https://imverica.com/.netlify/functions/chat'
           : '/.netlify/functions/chat';
         const res = await fetch(chatUrl, {
