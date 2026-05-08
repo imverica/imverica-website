@@ -1547,6 +1547,9 @@ function closeDetail(id) {
     service: '',
     formCode: '',
     situation: '',
+    routeResult: null,
+    routeLoading: false,
+    routeError: '',
     flowSchema: null,
     flowLoading: false,
     flowError: '',
@@ -1619,6 +1622,8 @@ function closeDetail(id) {
       requiredError: 'Please complete the required fields before continuing.',
       officialForm: 'Official form checked',
       cachedFallback: 'Cached PDF fallback available',
+      routing: 'Identifying the right document route...',
+      routeError: 'We could not identify the exact route automatically. You can continue with the details you entered.',
       services: [
         ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
         ['family', 'California family law', 'Divorce, custody, support, FL-300 and related forms'],
@@ -1686,6 +1691,8 @@ function closeDetail(id) {
       requiredError: 'Заполните обязательные поля перед продолжением.',
       officialForm: 'Официальная форма проверена',
       cachedFallback: 'Локальная PDF-копия доступна',
+      routing: 'Определяем правильный маршрут документов...',
+      routeError: 'Не удалось автоматически определить точный маршрут. Можно продолжить с введенными деталями.',
       services: [
         ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
         ['family', 'Семейное право California', 'Развод, custody, support, FL-300 и связанные формы'],
@@ -1753,6 +1760,8 @@ function closeDetail(id) {
       requiredError: 'Заповніть обов’язкові поля перед продовженням.',
       officialForm: 'Офіційну форму перевірено',
       cachedFallback: 'Локальна PDF-копія доступна',
+      routing: 'Визначаємо правильний маршрут документів...',
+      routeError: 'Не вдалося автоматично визначити точний маршрут. Можна продовжити з введеними деталями.',
       services: [
         ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
         ['family', 'Сімейне право California', 'Розлучення, custody, support, FL-300 та пов’язані форми'],
@@ -1820,6 +1829,8 @@ function closeDetail(id) {
       requiredError: 'Complete los campos obligatorios antes de continuar.',
       officialForm: 'Formulario oficial verificado',
       cachedFallback: 'Copia PDF local disponible',
+      routing: 'Identificando la ruta correcta de documentos...',
+      routeError: 'No pudimos identificar la ruta exacta automáticamente. Puede continuar con los detalles ingresados.',
       services: [
         ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
         ['family', 'Derecho familiar de California', 'Divorcio, custodia, manutención, FL-300 y relacionados'],
@@ -1921,6 +1932,39 @@ function closeDetail(id) {
       window.location.hostname === 'localhost';
     var path = '/.netlify/functions/immigration-flow?code=' + encodeURIComponent(code) + '&lang=' + encodeURIComponent(state.lang);
     return localHost ? 'https://imverica.com' + path : path;
+  }
+
+  function routeEndpoint(query) {
+    var localHost = window.location.protocol === 'file:' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'localhost';
+    var path = '/.netlify/functions/route?q=' + encodeURIComponent(query || '');
+    return localHost ? 'https://imverica.com' + path : path;
+  }
+
+  async function loadRoute() {
+    var query = [state.formCode, state.situation].filter(Boolean).join(' ').trim();
+    if (!query) return false;
+    state.routeLoading = true;
+    state.routeError = '';
+    render();
+
+    try {
+      var response = await fetch(routeEndpoint(query), { headers: { 'Accept': 'application/json' } });
+      var data = await response.json();
+      if (!response.ok || !data.ok || !data.route) throw new Error(data.error || 'Could not route request');
+      state.routeResult = data;
+      if (data.language) state.lang = data.language;
+      if (data.route.service) state.service = data.route.service;
+      if (data.route.formCode) state.formCode = data.route.formCode;
+      state.routeLoading = false;
+      state.routeError = '';
+      return true;
+    } catch (err) {
+      state.routeLoading = false;
+      state.routeError = t().routeError;
+      return false;
+    }
   }
 
   async function loadImmigrationFlow() {
@@ -2062,11 +2106,16 @@ function closeDetail(id) {
       return;
     }
 
+    if (state.routeLoading) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.routing) + '</div><div class="intake-help">' + esc(state.situation || state.formCode || '') + '</div>';
+      return;
+    }
+
     if (state.step === 2) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
         '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
         '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>' +
-        '<div class="intake-error" style="' + (state.flowError ? 'display:block;' : '') + '">' + esc(state.flowError) + '</div>';
+        '<div class="intake-error" style="' + (state.flowError || state.routeError ? 'display:block;' : '') + '">' + esc(state.flowError || state.routeError) + '</div>';
       return;
     }
 
@@ -2235,10 +2284,11 @@ function closeDetail(id) {
       serviceLabel: selectedService()[1],
       formCode: state.formCode,
       situation: state.situation,
+      routeResult: state.routeResult,
       flowSchemaVersion: state.flowSchema ? state.flowSchema.schemaVersion : '',
       officialForm: state.officialForm || null,
       formAnswers: state.formAnswers,
-      packageForms: state.flowSchema ? [state.flowSchema.code] : [],
+      packageForms: state.routeResult && state.routeResult.route ? state.routeResult.route.packageForms : (state.flowSchema ? [state.flowSchema.code] : []),
       i765: state.i765,
       contact: state.contact,
       accountMode: state.accountMode
@@ -2307,6 +2357,9 @@ function closeDetail(id) {
     }
     captureStep();
     if (!validateCurrentFlowStep()) return;
+    if (state.step === 2) {
+      await loadRoute();
+    }
     if (state.step === 2 && shouldUseImmigrationFlow()) {
       var loaded = await loadImmigrationFlow();
       if (loaded && flowSteps().length) {
@@ -2332,6 +2385,9 @@ function closeDetail(id) {
     state.service = '';
     state.formCode = '';
     state.situation = '';
+    state.routeResult = null;
+    state.routeLoading = false;
+    state.routeError = '';
     state.flowSchema = null;
     state.flowLoading = false;
     state.flowError = '';

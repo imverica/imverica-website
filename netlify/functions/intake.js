@@ -86,6 +86,7 @@ function normalizePayload(body, event) {
   const contact = body.contact || {};
   const i765 = body.i765 || {};
   const officialForm = body.officialForm || {};
+  const routeResult = body.routeResult || {};
   const id = makeOrderId();
   const now = new Date().toISOString();
 
@@ -100,6 +101,7 @@ function normalizePayload(body, event) {
     serviceLabel: clean(body.serviceLabel, 160),
     formCode: clean(body.formCode, 40).toUpperCase(),
     situation: cleanLong(body.situation),
+    routeResult: cleanStructured(routeResult),
     flowSchemaVersion: clean(body.flowSchemaVersion, 80),
     packageForms: cleanCodeList(body.packageForms),
     officialForm: {
@@ -219,6 +221,7 @@ function summarizeRecord(record) {
     service: record.service,
     serviceLabel: record.serviceLabel,
     formCode: record.formCode,
+    routeResult: record.routeResult,
     flowSchemaVersion: record.flowSchemaVersion,
     packageForms: record.packageForms,
     officialForm: record.officialForm,
