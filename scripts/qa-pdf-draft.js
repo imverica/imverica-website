@@ -98,6 +98,9 @@ async function main() {
   const datasets = parsedOutput.objects
     .filter((object) => object.objectNumber === 154 && object.source === 'inflated-stream')
     .at(-1)?.body || '';
+  const template = parsedOutput.objects
+    .filter((object) => object.objectNumber === 152 && object.source === 'inflated-stream')
+    .at(-1)?.body || '';
   assert(hasXfaValue(datasets, 'Line1a_FamilyName', 'Petrov'), 'draft should fill XFA family name for visible PDF viewers');
   assert(hasXfaValue(datasets, 'Line1b_GivenName', 'Ivan'), 'draft should fill XFA given name for visible PDF viewers');
   assert(hasXfaValue(datasets, 'Line4b_StreetNumberName', '8305 Deer Spring Circle'), 'draft should fill XFA mailing street for visible PDF viewers');
@@ -117,6 +120,8 @@ async function main() {
   const birthProvinceField = parsedOutput.objects.filter((object) => object.objectNumber === 484).at(-1)?.body || '';
   assert(/\/AP\s*<<\s*\/N\s+\d+\s+0\s+R\s*>>/.test(birthCityField), 'birth city field should include a visible appearance stream');
   assert(/\/AP\s*<<\s*\/N\s+\d+\s+0\s+R\s*>>/.test(birthProvinceField), 'birth province field should include a visible appearance stream');
+  assert(/name="Line18a_CityTownOfBirth"[\s\S]*?<bind match="global"\/>/.test(template), 'birth city XFA template should bind to datasets');
+  assert(/name="Line18b_CityTownOfBirth"[\s\S]*?<bind match="global"\/>/.test(template), 'birth province XFA template should bind to datasets');
 
   const missing = await callDraft({ formCode: 'I-765', formAnswers: {} });
   assert(missing.statusCode === 422, `missing required fields expected 422, got ${missing.statusCode}`);

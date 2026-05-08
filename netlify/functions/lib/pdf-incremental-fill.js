@@ -433,6 +433,19 @@ function xfaPageForName(name) {
   return '';
 }
 
+function setXfaTemplateBinding(xml, fieldName) {
+  const rawName = xfaNameFromField(fieldName);
+  const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`(<field\\b(?=[^>]*\\bname="${escapedName}")[\\s\\S]*?)(<bind\\s+match="none"\\s*/>)([\\s\\S]*?</field\\s*>)`, 'g');
+  return xml.replace(pattern, '$1<bind match="global"/>$3');
+}
+
+function setXfaTemplateBindings(xml, fieldNames) {
+  let next = xml;
+  for (const fieldName of fieldNames) next = setXfaTemplateBinding(next, fieldName);
+  return next;
+}
+
 function setXfaValue(xml, fieldName, value) {
   const rawName = xfaNameFromField(fieldName);
   const name = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -625,6 +638,20 @@ function incrementalFillPdf(input, fieldValues) {
         generation: datasetsRef.generation,
         body: xfaStreamBody(datasetsRef.objectNumber, datasetsRef.generation, xml, parsed.encryption)
       });
+    }
+
+    const templateRef = xfaPacketRef(acroForm.body, 'template');
+    const template = templateRef
+      ? parsed.objects.filter((object) => object.objectNumber === templateRef.objectNumber && object.source === 'inflated-stream').at(-1)
+      : null;
+    if (template && xfaValues.size) {
+      const xml = setXfaTemplateBindings(template.body, xfaValues.keys());
+      if (xml !== template.body) {
+        updates.set(templateRef.objectNumber, {
+          generation: templateRef.generation,
+          body: xfaStreamBody(templateRef.objectNumber, templateRef.generation, xml, parsed.encryption)
+        });
+      }
     }
   }
 
