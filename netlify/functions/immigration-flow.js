@@ -1,6 +1,6 @@
 const catalog = require('./forms/immigration.json');
 const uscisForm = require('./uscis-form');
-const { buildImmigrationFlow, normalizeCode } = require('./lib/immigration-flow-schema');
+const { buildImmigrationFlow, localizeFlow, normalizeCode } = require('./lib/immigration-flow-schema');
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -49,6 +49,7 @@ exports.handler = async function (event) {
   if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
 
   const code = normalizeCode(event.queryStringParameters?.code);
+  const lang = String(event.queryStringParameters?.lang || 'en').toLowerCase();
   if (!code) return json(400, { ok: false, error: 'Missing immigration form code' });
 
   const entry = catalogEntry(code);
@@ -62,7 +63,7 @@ exports.handler = async function (event) {
 
   try {
     const official = await officialLookup(code);
-    const flow = buildImmigrationFlow(code, entry, official.body || {});
+    const flow = localizeFlow(buildImmigrationFlow(code, entry, official.body || {}), lang);
 
     return json(200, {
       ok: true,
@@ -73,11 +74,11 @@ exports.handler = async function (event) {
     });
   } catch (err) {
     console.error('Could not build immigration flow:', err);
-    const flow = buildImmigrationFlow(code, entry, {
+    const flow = localizeFlow(buildImmigrationFlow(code, entry, {
       title: entry.names?.en || code,
       status: 'official-lookup-failed',
       checkedAt: new Date().toISOString()
-    });
+    }), lang);
 
     return json(200, {
       ok: true,

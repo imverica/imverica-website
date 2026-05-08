@@ -2,6 +2,193 @@ const SCHEMA_VERSION = 'immigration-flow-v1';
 
 const DISCLAIMER = 'Document preparation only. Possible forms may include official USCIS forms. Imverica is not a law firm or attorney and does not provide legal advice.';
 
+const LOCALIZATION = {
+  ru: {
+    steps: {
+      purpose: 'Назначение формы',
+      applicant: 'Данные заявителя',
+      address_contact: 'Адрес и контакт',
+      immigration_history: 'Иммиграционная история',
+      documents_review: 'Документы и проверка',
+      work_authorization: 'Основание для work permit',
+      family_petition: 'Детали семейной петиции',
+      spouse_biographic: 'Биографические данные супруга',
+      travel_document: 'Запрос travel document',
+      adjustment_basis: 'Основание для adjustment of status',
+      asylum_claim: 'Asylum / withholding request',
+      support_affidavit: 'Affidavit of support',
+      fee_waiver: 'Основание fee waiver',
+      naturalization: 'Подготовка naturalization'
+    },
+    stepHelp: {
+      purpose: 'Подтвердите, зачем готовится эта форма и есть ли связанные подачи.',
+      applicant: 'Укажите данные так, как они должны быть в форме.',
+      address_contact: 'Автозаполнение телефона может помочь с именем, телефоном, email и адресом.',
+      immigration_history: 'Эти ответы помогают подготовить USCIS-поля и список документов.',
+      documents_review: 'Укажите, какие документы уже есть. Файлы можно будет загрузить после checkout или кабинета.'
+    },
+    fields: {
+      form_code_confirmed: 'Запрошенная форма',
+      preparation_goal: 'Что нужно подготовить по этой форме?',
+      related_forms_known: 'Вы уже знаете связанные формы или receipt numbers?',
+      deadline_or_notice: 'Есть deadline, RFE, court date или USCIS notice?',
+      applicant_full_name: 'Полное имя заявителя по документам',
+      applicant_given_name: 'Имя',
+      applicant_family_name: 'Фамилия',
+      other_names_used: 'Другие имена, которые использовались',
+      date_of_birth: 'Дата рождения',
+      country_of_birth: 'Страна рождения',
+      country_of_citizenship: 'Гражданство / nationality',
+      alien_number: 'A-number, если есть',
+      uscis_online_account_number: 'USCIS online account number, если есть',
+      mailing_address_line1: 'Почтовый адрес, строка 1',
+      mailing_address_line2: 'Квартира, suite или unit',
+      mailing_city: 'Город',
+      mailing_state: 'Штат',
+      mailing_zip: 'ZIP code',
+      mailing_country: 'Страна',
+      physical_same_as_mailing: 'Физический адрес совпадает с почтовым?',
+      daytime_phone: 'Телефон',
+      email_address: 'Email',
+      current_immigration_status: 'Текущий иммиграционный статус или категория',
+      last_arrival_date: 'Дата последнего въезда в США',
+      i94_number: 'I-94 number, если есть',
+      passport_number: 'Номер паспорта, если относится к форме',
+      passport_expiration: 'Дата окончания паспорта',
+      prior_uscis_filings: 'Предыдущие или pending USCIS filings',
+      identity_documents_available: 'Какие identity documents есть',
+      supporting_documents_available: 'Какие supporting documents есть',
+      translation_needed: 'Нужен перевод документов?',
+      interpreter_or_preparer_needed: 'Нужна секция interpreter/preparer?',
+      extra_notes_for_preparer: 'Что еще должен знать preparer?',
+      ead_basis: 'На чем основан work permit?',
+      eligibility_category_code: 'Eligibility category code, если знаете',
+      prior_ead: 'EAD уже был раньше?',
+      pending_application_receipt: 'Receipt number связанного pending case, если есть',
+      petitioner_status: 'Статус petitioner',
+      relationship_to_beneficiary: 'Отношение к beneficiary',
+      beneficiary_full_name: 'Полное имя beneficiary',
+      beneficiary_location: 'Beneficiary находится в США?',
+      marriage_date: 'Если spouse case, дата брака',
+      prior_marriages: 'Были ли предыдущие браки у кого-либо?',
+      adjustment_basis: 'Основание для adjustment',
+      petitioner_or_sponsor: 'Имя petitioner, employer или sponsor',
+      underlying_receipt_number: 'Receipt number основной петиции, если есть',
+      inside_us_now: 'Вы сейчас физически находитесь в США?',
+      inspection_or_parole: 'Последний въезд был inspected, admitted или paroled?',
+      medical_exam_status: 'Статус medical exam I-693',
+      travel_document_type: 'Тип travel document',
+      planned_departure_date: 'Планируемая дата выезда',
+      planned_return_date: 'Планируемая дата возвращения',
+      countries_to_visit: 'Страны поездки',
+      purpose_of_travel: 'Цель поездки',
+      asylum_basis: 'Основание asylum по описанию заявителя',
+      harm_or_fear_summary: 'Краткое описание harm/fear',
+      family_members_included: 'Family members для включения',
+      sponsor_full_name: 'Полное имя sponsor',
+      household_size: 'Household size',
+      current_annual_income: 'Текущий годовой income',
+      fee_waiver_basis: 'Основание fee waiver',
+      household_income: 'Household income',
+      green_card_date: 'Дата получения permanent resident status',
+      basis_for_naturalization: 'Основание naturalization'
+    },
+    options: {
+      Yes: 'Да',
+      No: 'Нет',
+      'Not sure': 'Не знаю',
+      Other: 'Другое',
+      'Other or not sure': 'Другое или не знаю',
+      'Pending green card / adjustment of status': 'Pending green card / adjustment of status',
+      'Asylum or pending asylum': 'Asylum или pending asylum',
+      TPS: 'TPS',
+      DACA: 'DACA',
+      'Student category': 'Студенческая категория',
+      'Parole or humanitarian category': 'Parole или humanitarian category'
+    }
+  },
+  uk: {
+    steps: {
+      purpose: 'Призначення форми',
+      applicant: 'Дані заявника',
+      address_contact: 'Адреса і контакт',
+      immigration_history: 'Імміграційна історія',
+      documents_review: 'Документи і перевірка',
+      work_authorization: 'Підстава для work permit',
+      family_petition: 'Деталі сімейної петиції',
+      travel_document: 'Запит travel document',
+      adjustment_basis: 'Підстава для adjustment of status',
+      fee_waiver: 'Підстава fee waiver',
+      naturalization: 'Підготовка naturalization'
+    },
+    fields: {
+      form_code_confirmed: 'Запитана форма',
+      preparation_goal: 'Що потрібно підготувати за цією формою?',
+      related_forms_known: 'Ви вже знаєте пов’язані форми або receipt numbers?',
+      deadline_or_notice: 'Є deadline, RFE, court date або USCIS notice?',
+      applicant_full_name: 'Повне ім’я заявника за документами',
+      applicant_given_name: 'Ім’я',
+      applicant_family_name: 'Прізвище',
+      date_of_birth: 'Дата народження',
+      country_of_birth: 'Країна народження',
+      country_of_citizenship: 'Громадянство / nationality',
+      mailing_address_line1: 'Поштова адреса, рядок 1',
+      mailing_city: 'Місто',
+      mailing_state: 'Штат',
+      mailing_zip: 'ZIP code',
+      daytime_phone: 'Телефон',
+      email_address: 'Email',
+      current_immigration_status: 'Поточний імміграційний статус або категорія',
+      ead_basis: 'На чому базується work permit?',
+      eligibility_category_code: 'Eligibility category code, якщо знаєте',
+      prior_ead: 'EAD вже був раніше?',
+      beneficiary_full_name: 'Повне ім’я beneficiary',
+      inside_us_now: 'Ви зараз фізично перебуваєте у США?'
+    },
+    options: { Yes: 'Так', No: 'Ні', 'Not sure': 'Не знаю', Other: 'Інше', 'Other or not sure': 'Інше або не знаю' }
+  },
+  es: {
+    steps: {
+      purpose: 'Propósito del formulario',
+      applicant: 'Información del solicitante',
+      address_contact: 'Dirección y contacto',
+      immigration_history: 'Historial migratorio',
+      documents_review: 'Documentos y revisión',
+      work_authorization: 'Base del permiso de trabajo',
+      family_petition: 'Detalles de petición familiar',
+      travel_document: 'Solicitud de travel document',
+      adjustment_basis: 'Base para adjustment of status',
+      fee_waiver: 'Base de fee waiver',
+      naturalization: 'Preparación de naturalization'
+    },
+    fields: {
+      form_code_confirmed: 'Formulario solicitado',
+      preparation_goal: '¿Qué desea preparar con este formulario?',
+      related_forms_known: '¿Conoce formularios relacionados o receipt numbers?',
+      deadline_or_notice: '¿Hay deadline, RFE, court date o USCIS notice?',
+      applicant_full_name: 'Nombre legal completo del solicitante',
+      applicant_given_name: 'Nombre',
+      applicant_family_name: 'Apellido',
+      date_of_birth: 'Fecha de nacimiento',
+      country_of_birth: 'País de nacimiento',
+      country_of_citizenship: 'Ciudadanía / nationality',
+      mailing_address_line1: 'Dirección postal línea 1',
+      mailing_city: 'Ciudad',
+      mailing_state: 'Estado',
+      mailing_zip: 'ZIP code',
+      daytime_phone: 'Teléfono',
+      email_address: 'Email',
+      current_immigration_status: 'Estado migratorio actual o categoría',
+      ead_basis: '¿En qué se basa el permiso de trabajo?',
+      eligibility_category_code: 'Eligibility category code, si lo sabe',
+      prior_ead: '¿Ha tenido EAD antes?',
+      beneficiary_full_name: 'Nombre completo del beneficiario',
+      inside_us_now: '¿Está físicamente dentro de Estados Unidos ahora?'
+    },
+    options: { Yes: 'Sí', No: 'No', 'Not sure': 'No estoy seguro', Other: 'Otro', 'Other or not sure': 'Otro o no estoy seguro' }
+  }
+};
+
 const TEXT = {
   purpose: {
     title: 'Form purpose',
@@ -465,8 +652,30 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
   };
 }
 
+function localizeFlow(flow, langValue = 'en') {
+  const lang = String(langValue || 'en').toLowerCase();
+  const copy = LOCALIZATION[lang];
+  if (!copy) return flow;
+
+  const translated = JSON.parse(JSON.stringify(flow));
+  translated.steps = translated.steps.map((item) => ({
+    ...item,
+    title: copy.steps?.[item.id] || item.title,
+    help: copy.stepHelp?.[item.id] || item.help,
+    fields: (item.fields || []).map((fieldItem) => ({
+      ...fieldItem,
+      label: copy.fields?.[fieldItem.id] || fieldItem.label,
+      options: Array.isArray(fieldItem.options)
+        ? fieldItem.options.map((option) => copy.options?.[option] || option)
+        : fieldItem.options
+    }))
+  }));
+  return translated;
+}
+
 module.exports = {
   SCHEMA_VERSION,
   buildImmigrationFlow,
+  localizeFlow,
   normalizeCode
 };

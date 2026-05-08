@@ -4,10 +4,10 @@ const flow = require('../netlify/functions/immigration-flow');
 
 const ROOT = path.resolve(__dirname, '..');
 
-async function callFlow(code) {
+async function callFlow(code, lang = 'en') {
   const response = await flow.handler({
     httpMethod: 'GET',
-    queryStringParameters: { code },
+    queryStringParameters: { code, lang },
     headers: {}
   });
 
@@ -59,6 +59,9 @@ async function main() {
 
   const invalid = await callFlow('NOPE-999');
   assert(invalid.response.statusCode === 404, `invalid code: expected 404, got ${invalid.response.statusCode}`);
+
+  const localized = await callFlow('I-765', 'ru');
+  assert(/Назначение формы|Основание/.test(localized.body.steps[0].title + localized.body.steps[1].title), 'ru localization missing for I-765 flow');
 
   const scriptCount = syntaxCheckInlineScripts();
   console.log(`index.html inline scripts syntax ok: ${scriptCount}`);
