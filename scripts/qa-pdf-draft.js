@@ -2,6 +2,8 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+const { execFileSync } = require('child_process');
 const draft = require('../netlify/functions/pdf-draft');
 const { parsePdf } = require('../netlify/functions/lib/pdf-incremental-fill');
 
@@ -12,10 +14,25 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-function hasXfaValue(xml, fieldName, value) {
-  const escapedField = fieldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const escapedValue = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(`<${escapedField}\\s*>${escapedValue}</${escapedField}>`).test(xml);
+function acroFormObject(parsed) {
+  const root = parsed.trailer.root ? parsed.byObjectNumber.get(parsed.trailer.root.objectNumber) : null;
+  const match = root?.body.match(/\/AcroForm\s+(\d+)\s+(\d+)\s+R/);
+  return match ? parsed.byObjectNumber.get(Number(match[1])) : null;
+}
+
+function renderQuickLookSmoke(pdfPath) {
+  const quickLook = '/usr/bin/qlmanage';
+  if (!fs.existsSync(quickLook)) return;
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'imverica-pdf-render-'));
+  execFileSync(quickLook, ['-t', '-s', '900', '-o', outputDir, pdfPath], {
+    cwd: ROOT,
+    timeout: 15000,
+    stdio: 'pipe'
+  });
+  const pngs = fs.readdirSync(outputDir).filter((file) => file.endsWith('.png'));
+  assert(pngs.length > 0, 'draft should render a Quick Look PNG thumbnail');
+  const png = fs.statSync(path.join(outputDir, pngs[0]));
+  assert(png.size > 50000, 'draft Quick Look thumbnail should not be empty');
 }
 
 async function callDraft(payload) {
@@ -90,38 +107,20 @@ async function main() {
   const text = output.toString('latin1');
   assert(output.subarray(0, 5).toString('latin1') === '%PDF-', 'draft should start with PDF signature');
   assert(output.length > source.length, 'draft should append an incremental PDF update');
-  assert(/xref\s+\d+\s+\d+/.test(text.slice(-30000)), 'draft should include an incremental xref table');
-  assert(/\/NeedAppearances true/.test(text.slice(-60000)), 'draft should request viewer-generated field appearances');
+  assert(/\/Type\s*\/XRef/.test(text.slice(-80000)), 'draft should append an incremental xref stream');
   assert(!/^<<>>\/MaxLen/m.test(text.slice(-60000)), 'draft should not corrupt field dictionaries');
 
   const parsedOutput = parsePdf(output);
-  const datasets = parsedOutput.objects
-    .filter((object) => object.objectNumber === 154 && object.source === 'inflated-stream')
-    .at(-1)?.body || '';
-  const template = parsedOutput.objects
-    .filter((object) => object.objectNumber === 152 && object.source === 'inflated-stream')
-    .at(-1)?.body || '';
-  assert(hasXfaValue(datasets, 'Line1a_FamilyName', 'Petrov'), 'draft should fill XFA family name for visible PDF viewers');
-  assert(hasXfaValue(datasets, 'Line1b_GivenName', 'Ivan'), 'draft should fill XFA given name for visible PDF viewers');
-  assert(hasXfaValue(datasets, 'Line4b_StreetNumberName', '8305 Deer Spring Circle'), 'draft should fill XFA mailing street for visible PDF viewers');
-  assert(hasXfaValue(datasets, 'Part1_Checkbox', '1'), 'draft should select I-765 initial permission reason');
-  assert(hasXfaValue(datasets, 'Line18a_CityTownOfBirth', 'Kyiv'), 'draft should fill birth city');
-  assert(hasXfaValue(datasets, 'Line18b_CityTownOfBirth', 'Kyiv Oblast'), 'draft should fill birth state/province');
-  assert(hasXfaValue(datasets, 'Line18c_CountryOfBirth', 'Ukraine'), 'draft should fill birth country');
-  assert(hasXfaValue(datasets, 'Line9_Checkbox', 'Y'), 'draft should select male sex');
-  assert(hasXfaValue(datasets, 'Line10_Checkbox', 'Married'), 'draft should select married marital status');
-  assert(hasXfaValue(datasets, 'Line20d_CountryOfIssuance', 'Ukraine'), 'draft should fill passport/travel document issuing country');
-  assert(hasXfaValue(datasets, 'place_entry', 'San Francisco, CA'), 'draft should fill place of last U.S. arrival');
-  assert(hasXfaValue(datasets, 'Pt3Line1Checkbox', 'A'), 'draft should select English applicant statement');
-  assert(hasXfaValue(datasets, 'Pt3Line3_DaytimePhoneNumber1', '9165551212'), 'draft should normalize daytime phone to USCIS digits only');
-  assert(hasXfaValue(datasets, 'Pt3Line4_MobileNumber1', '9165551212'), 'draft should normalize mobile phone to USCIS digits only');
-  assert(!datasets.includes('+1 916'), 'draft should not write phone with country code or spaces');
+  const acroForm = acroFormObject(parsedOutput);
+  assert(acroForm && !/\/XFA\b/.test(acroForm.body), 'draft AcroForm should remove XFA so browser and mobile viewers use widget appearances');
+  assert(/\/NeedAppearances\s+false/.test(acroForm.body), 'draft should rely on generated appearance streams');
   const birthCityField = parsedOutput.objects.filter((object) => object.objectNumber === 483).at(-1)?.body || '';
   const birthProvinceField = parsedOutput.objects.filter((object) => object.objectNumber === 484).at(-1)?.body || '';
   assert(/\/AP\s*<<\s*\/N\s+\d+\s+0\s+R\s*>>/.test(birthCityField), 'birth city field should include a visible appearance stream');
   assert(/\/AP\s*<<\s*\/N\s+\d+\s+0\s+R\s*>>/.test(birthProvinceField), 'birth province field should include a visible appearance stream');
-  assert(/name="Line18a_CityTownOfBirth"[\s\S]*?<bind match="global"\/>/.test(template), 'birth city XFA template should bind to datasets');
-  assert(/name="Line18b_CityTownOfBirth"[\s\S]*?<bind match="global"\/>/.test(template), 'birth province XFA template should bind to datasets');
+  const tempPdfPath = path.join(os.tmpdir(), `imverica-i-765-draft-${Date.now()}.pdf`);
+  fs.writeFileSync(tempPdfPath, output);
+  renderQuickLookSmoke(tempPdfPath);
 
   const missing = await callDraft({ formCode: 'I-765', formAnswers: {} });
   assert(missing.statusCode === 422, `missing required fields expected 422, got ${missing.statusCode}`);

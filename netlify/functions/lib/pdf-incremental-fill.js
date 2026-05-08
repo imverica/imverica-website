@@ -119,12 +119,6 @@ function firstPdfArray(body, key) {
   return match ? match[1].trim().split(/\s+/).map(Number).filter(Number.isFinite) : [];
 }
 
-function xfaPacketRef(body, packetName) {
-  const escaped = String(packetName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = body.match(new RegExp(`\\(${escaped}\\)\\s*(\\d+)\\s+(\\d+)\\s+R`));
-  return match ? { objectNumber: Number(match[1]), generation: Number(match[2]) } : null;
-}
-
 function hasFlateFilter(body) {
   return /\/Filter\s*(?:\/FlateDecode|\[[^\]]*\/FlateDecode[^\]]*\])/m.test(body);
 }
@@ -407,72 +401,6 @@ function stringToken(encryption, objectNumber, generation, value) {
   return encryption ? encryptedStringToken(encryption, objectNumber, generation, value) : plainStringToken(value);
 }
 
-function xmlEscape(value) {
-  return String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
-function pdfNameValue(value) {
-  return String(value || '').replace(/#([0-9A-Fa-f]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16))).trim();
-}
-
-function xfaNameFromField(fieldName) {
-  return String(fieldName || '').replace(/\[\d+\]$/, '');
-}
-
-function xfaPageForName(name) {
-  if (/^(?:Line4|Line8|Line12|Line17|Pt2Line5|Pt2Line7)/.test(name)) return 'Page2';
-  if (/^(?:Line18|Line19|Line20|Line21|Line23|Line24|Line26|Line27|Line28|Line30|section_|place_entry)/.test(name)) return 'Page3';
-  if (/^(?:Pt3|Part3)/.test(name)) return 'Page4';
-  if (/^(?:Pt4|Part4)/.test(name)) return 'Page5';
-  if (/^(?:Pt5|Part5)/.test(name)) return 'Page6';
-  return '';
-}
-
-function setXfaTemplateBinding(xml, fieldName) {
-  const rawName = xfaNameFromField(fieldName);
-  const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = new RegExp(`(<field\\b(?=[^>]*\\bname="${escapedName}")[\\s\\S]*?)(<bind\\s+match="none"\\s*/>)([\\s\\S]*?</field\\s*>)`, 'g');
-  return xml.replace(pattern, '$1<bind match="global"/>$3');
-}
-
-function setXfaTemplateBindings(xml, fieldNames) {
-  let next = xml;
-  for (const fieldName of fieldNames) next = setXfaTemplateBinding(next, fieldName);
-  return next;
-}
-
-function setXfaValue(xml, fieldName, value) {
-  const rawName = xfaNameFromField(fieldName);
-  const name = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  if (!name) return xml;
-  const next = xmlEscape(value);
-  const pattern = new RegExp(`<(${name})(\\s[^>]*)?\\s*/>|<(${name})(\\s[^>]*)?>([\\s\\S]*?)<\\/\\3>`, 'g');
-  let replaced = false;
-  const updated = xml.replace(pattern, (match, selfName, selfAttrs, pairedName, pairedAttrs) => {
-    replaced = true;
-    const tag = selfName || pairedName;
-    const attrs = selfAttrs || pairedAttrs || '';
-    return `<${tag}${attrs}>${next}</${tag}>`;
-  });
-  if (replaced) return updated;
-
-  const pageName = xfaPageForName(rawName);
-  if (!pageName) return updated;
-  const closing = new RegExp(`</${pageName}\\s*>`);
-  return updated.replace(closing, `<${rawName}>${next}</${rawName}></${pageName}>`);
-}
-
-function xfaStreamBody(objectNumber, generation, xml, encryption) {
-  const compressed = zlib.deflateSync(Buffer.from(xml, 'utf8'), { level: 6 });
-  const encrypted = encryptObjectBytes(encryption, objectNumber, generation, compressed, 'stream');
-  return `<< /Filter [/FlateDecode] /Length ${encrypted.length} /Type /EmbeddedFile >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
-}
-
 function pdfContentText(value) {
   return String(value || '')
     .replace(/[^\x20-\x7e]/g, '')
@@ -502,6 +430,12 @@ function normalizeFieldBodyStrings(body, object, encryption) {
 function removeDictionaryEntry(body, key) {
   return body
     .replace(new RegExp(`\\/${key}\\s+(?:\\((?:\\\\.|[^\\\\)])*\\)|<[^>]*>|\\/[^\\s<>()\\[\\]{}%]+|\\d+\\s+\\d+\\s+R)`, 'g'), '')
+    .replace(/\s+>>\s*$/, ' >>');
+}
+
+function removeDictionaryArrayEntry(body, key) {
+  return body
+    .replace(new RegExp(`\\/${key}\\s*\\[[\\s\\S]*?\\]\\s*`, 'g'), '')
     .replace(/\s+>>\s*$/, ' >>');
 }
 
@@ -540,38 +474,50 @@ function updateButtonFieldBody(object, checked, encryption) {
 
 function updateAcroFormBody(object, encryption) {
   let body = normalizeFieldBodyStrings(object.body, object, encryption);
+  body = removeDictionaryArrayEntry(body, 'XFA');
   body = body.replace(/\/NeedAppearances\s+(?:true|false)/g, '');
-  return addDictionaryEntries(body, { NeedAppearances: 'true' });
+  return addDictionaryEntries(body, { NeedAppearances: 'false' });
 }
 
 function objectToBuffer(objectNumber, generation, body) {
-  return Buffer.from(`\n${objectNumber} ${generation} obj\n${body.trim()}\nendobj\n`, 'latin1');
+  const text = String(body);
+  const separator = text.endsWith('\n') || text.endsWith('\r') ? '' : '\n';
+  return Buffer.from(`\n${objectNumber} ${generation} obj\n${text}${separator}endobj\n`, 'latin1');
 }
 
-function buildXref(offsets) {
-  const sorted = [...offsets.entries()].sort((a, b) => a[0] - b[0]);
-  const sections = [];
+function xrefStreamBody(entries, trailer, size, prev) {
+  const sorted = [...entries.entries()].sort((a, b) => a[0] - b[0]);
+  const index = [];
+  const rows = [];
   let i = 0;
+
   while (i < sorted.length) {
     const start = sorted[i][0];
-    const rows = [];
-    while (i < sorted.length && sorted[i][0] === start + rows.length) {
-      rows.push(`${String(sorted[i][1]).padStart(10, '0')} 00000 n \n`);
+    const section = [];
+    while (i < sorted.length && sorted[i][0] === start + section.length) {
+      section.push(sorted[i]);
       i += 1;
     }
-    sections.push(`${start} ${rows.length}\n${rows.join('')}`);
+    index.push(start, section.length);
+    for (const [, offset] of section) {
+      rows.push(1, (offset >>> 24) & 0xff, (offset >>> 16) & 0xff, (offset >>> 8) & 0xff, offset & 0xff, 0, 0);
+    }
   }
-  return sections.join('');
-}
 
-function trailerDictionary(trailer, maxObjectNumber, prev) {
-  const pieces = [`/Size ${Math.max(trailer.size || 0, maxObjectNumber + 1)}`];
+  const stream = Buffer.from(rows);
+  const pieces = [
+    '/Type /XRef',
+    `/Size ${size}`,
+    `/W [1 4 2]`,
+    `/Index [${index.join(' ')}]`,
+    `/Length ${stream.length}`
+  ];
   if (trailer.root) pieces.push(`/Root ${trailer.root.objectNumber} ${trailer.root.generation} R`);
   if (trailer.info) pieces.push(`/Info ${trailer.info.objectNumber} ${trailer.info.generation} R`);
   if (trailer.encrypt) pieces.push(`/Encrypt ${trailer.encrypt.objectNumber} ${trailer.encrypt.generation} R`);
   if (trailer.id) pieces.push(`/ID [<${trailer.id[0]}> <${trailer.id[1]}>]`);
   if (Number.isFinite(prev)) pieces.push(`/Prev ${prev}`);
-  return `<< ${pieces.join(' ')} >>`;
+  return `<< ${pieces.join(' ')} >>\nstream\n${stream.toString('latin1')}\nendstream`;
 }
 
 function incrementalFillPdf(input, fieldValues) {
@@ -579,7 +525,6 @@ function incrementalFillPdf(input, fieldValues) {
   const parsed = parsePdf(original);
   const fields = extractFieldObjects(parsed);
   const updates = new Map();
-  const xfaValues = new Map();
   let nextObjectNumber = Math.max(parsed.trailer.size || 0, ...parsed.objects.map((object) => object.objectNumber)) + 1;
   const filledFields = [];
   const skippedFields = [];
@@ -594,7 +539,6 @@ function incrementalFillPdf(input, fieldValues) {
     let body;
     if (object.pdfFieldType === 'Btn') {
       body = updateButtonFieldBody(object, Boolean(rawValue), parsed.encryption);
-      if (rawValue) xfaValues.set(xfaNameFromField(fieldName), pdfNameValue(object.appearanceStates[0] || '1'));
     } else if (object.pdfFieldType === 'Ch') {
       const appearanceObjectNumber = nextObjectNumber;
       nextObjectNumber += 1;
@@ -603,7 +547,6 @@ function incrementalFillPdf(input, fieldValues) {
         generation: 0,
         body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption)
       });
-      xfaValues.set(xfaNameFromField(fieldName), rawValue);
     } else {
       const appearanceObjectNumber = nextObjectNumber;
       nextObjectNumber += 1;
@@ -612,7 +555,6 @@ function incrementalFillPdf(input, fieldValues) {
         generation: 0,
         body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption)
       });
-      xfaValues.set(xfaNameFromField(fieldName), rawValue);
     }
     updates.set(object.objectNumber, { generation: object.generation, body });
     filledFields.push(fieldName);
@@ -627,32 +569,9 @@ function incrementalFillPdf(input, fieldValues) {
       body: updateAcroFormBody(acroForm, parsed.encryption)
     });
 
-    const datasetsRef = xfaPacketRef(acroForm.body, 'datasets');
-    const datasets = datasetsRef
-      ? parsed.objects.filter((object) => object.objectNumber === datasetsRef.objectNumber && object.source === 'inflated-stream').at(-1)
-      : null;
-    if (datasets && xfaValues.size) {
-      let xml = datasets.body;
-      for (const [fieldName, value] of xfaValues.entries()) xml = setXfaValue(xml, fieldName, value);
-      updates.set(datasetsRef.objectNumber, {
-        generation: datasetsRef.generation,
-        body: xfaStreamBody(datasetsRef.objectNumber, datasetsRef.generation, xml, parsed.encryption)
-      });
-    }
-
-    const templateRef = xfaPacketRef(acroForm.body, 'template');
-    const template = templateRef
-      ? parsed.objects.filter((object) => object.objectNumber === templateRef.objectNumber && object.source === 'inflated-stream').at(-1)
-      : null;
-    if (template && xfaValues.size) {
-      const xml = setXfaTemplateBindings(template.body, xfaValues.keys());
-      if (xml !== template.body) {
-        updates.set(templateRef.objectNumber, {
-          generation: templateRef.generation,
-          body: xfaStreamBody(templateRef.objectNumber, templateRef.generation, xml, parsed.encryption)
-        });
-      }
-    }
+    // The USCIS XFA packet is poorly supported by browser, Preview, and mobile
+    // viewers. We remove the XFA pointer from the draft AcroForm and rely on
+    // visible widget appearance streams instead.
   }
 
   const buffers = [];
@@ -665,12 +584,19 @@ function incrementalFillPdf(input, fieldValues) {
     offset += buffer.length;
   }
 
+  const xrefObjectNumber = nextObjectNumber;
   const xrefOffset = offset;
+  offsets.set(xrefObjectNumber, xrefOffset);
   const maxObjectNumber = Math.max(...offsets.keys(), parsed.trailer.size || 0);
-  const xref = Buffer.from(
-    `xref\n${buildXref(offsets)}trailer\n${trailerDictionary(parsed.trailer, maxObjectNumber, parsed.trailer.prev)}\nstartxref\n${xrefOffset}\n%%EOF\n`,
-    'latin1'
+  const xrefObject = objectToBuffer(
+    xrefObjectNumber,
+    0,
+    xrefStreamBody(offsets, parsed.trailer, maxObjectNumber + 1, parsed.trailer.prev)
   );
+  const xref = Buffer.concat([
+    xrefObject,
+    Buffer.from(`startxref\n${xrefOffset}\n%%EOF\n`, 'latin1')
+  ]);
 
   return {
     buffer: Buffer.concat([original, ...buffers, xref]),
