@@ -37,6 +37,28 @@ function cleanLong(value) {
   return clean(value, MAX_TEXT);
 }
 
+function cleanStructured(value, depth = 0) {
+  if (depth > 5) return '';
+  if (Array.isArray(value)) {
+    return value.slice(0, 80).map((item) => cleanStructured(item, depth + 1));
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value).slice(0, 300).reduce((acc, [key, item]) => {
+      const safeKey = clean(key, 120).replace(/[^\w.\-:]/g, '_');
+      if (safeKey) acc[safeKey] = cleanStructured(item, depth + 1);
+      return acc;
+    }, {});
+  }
+  if (typeof value === 'number' || typeof value === 'boolean') return value;
+  return cleanLong(value);
+}
+
+function cleanCodeList(value) {
+  return Array.isArray(value)
+    ? value.slice(0, 30).map((item) => clean(item, 60).toUpperCase()).filter(Boolean)
+    : [];
+}
+
 function isValidName(value) {
   const text = clean(value);
   const letters = (text.match(/[A-Za-zА-Яа-яЁёІіЇїЄєҐґÁÉÍÓÚÜÑáéíóúüñ]/g) || []).length;
@@ -63,6 +85,7 @@ function normalizePayload(body, event) {
   const headers = event.headers || {};
   const contact = body.contact || {};
   const i765 = body.i765 || {};
+  const officialForm = body.officialForm || {};
   const id = makeOrderId();
   const now = new Date().toISOString();
 
@@ -77,6 +100,20 @@ function normalizePayload(body, event) {
     serviceLabel: clean(body.serviceLabel, 160),
     formCode: clean(body.formCode, 40).toUpperCase(),
     situation: cleanLong(body.situation),
+    flowSchemaVersion: clean(body.flowSchemaVersion, 80),
+    packageForms: cleanCodeList(body.packageForms),
+    officialForm: {
+      title: clean(officialForm.title, 240),
+      pdfUrl: clean(officialForm.pdfUrl, 600),
+      cachedPdfUrl: clean(officialForm.cachedPdfUrl, 600),
+      instructionsUrl: clean(officialForm.instructionsUrl, 600),
+      editionDate: clean(officialForm.editionDate, 80),
+      status: clean(officialForm.status, 80),
+      cacheStatus: clean(officialForm.cacheStatus, 80),
+      cacheNeedsRefresh: Boolean(officialForm.cacheNeedsRefresh),
+      checkedAt: clean(officialForm.checkedAt, 80)
+    },
+    formAnswers: cleanStructured(body.formAnswers || {}),
     accountMode: clean(body.accountMode, 30) || 'guest',
     contact: {
       name: clean(contact.name, 160),
@@ -182,6 +219,9 @@ function summarizeRecord(record) {
     service: record.service,
     serviceLabel: record.serviceLabel,
     formCode: record.formCode,
+    flowSchemaVersion: record.flowSchemaVersion,
+    packageForms: record.packageForms,
+    officialForm: record.officialForm,
     accountMode: record.accountMode,
     contact: record.contact
   };

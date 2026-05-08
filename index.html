@@ -382,7 +382,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-field{display:flex;flex-direction:column;gap:8px;}
 .intake-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
 .intake-field input,.intake-field textarea,.intake-field select{width:100%;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.45;color:var(--navy-dark);background:#fff;outline:none;}
-.intake-field input.intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
+.intake-field input.intake-invalid,.intake-field textarea.intake-invalid,.intake-field select.intake-invalid,.intake-field.intake-invalid,.intake-field[data-flow-radio-group].intake-invalid,.intake-field[data-flow-checkbox-group].intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
 .intake-error{display:none;margin-top:16px;color:#9c3329;background:#fff8f6;border-left:3px solid #b94c3f;padding:12px 14px;font-size:13px;line-height:1.5;}
 .intake-field textarea{min-height:150px;resize:vertical;}
 .intake-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -1547,6 +1547,11 @@ function closeDetail(id) {
     service: '',
     formCode: '',
     situation: '',
+    flowSchema: null,
+    flowLoading: false,
+    flowError: '',
+    formAnswers: {},
+    officialForm: null,
     i765: { basis: '', legalName: '', dob: '', address: '', immigrationStatus: '', priorEad: '', evidence: '' },
     contact: { name: '', phone: '', email: '' },
     accountMode: 'guest',
@@ -1609,6 +1614,11 @@ function closeDetail(id) {
       callOffice: 'Call (916) 399-3992',
       close: 'Close',
       disclaimer: 'Document preparation only. Possible forms may include official USCIS or California court forms. Imverica is not a law firm or attorney and does not provide legal advice.',
+      loadingFlow: 'Checking the current official USCIS form and building the questions...',
+      flowError: 'We could not load the form-specific questions. You can continue with general details or call us directly.',
+      requiredError: 'Please complete the required fields before continuing.',
+      officialForm: 'Official form checked',
+      cachedFallback: 'Cached PDF fallback available',
       services: [
         ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
         ['family', 'California family law', 'Divorce, custody, support, FL-300 and related forms'],
@@ -1671,6 +1681,11 @@ function closeDetail(id) {
       callOffice: 'Позвонить (916) 399-3992',
       close: 'Закрыть',
       disclaimer: 'Только подготовка документов. Возможные формы могут включать официальные формы USCIS или California court. Imverica не является юридической фирмой или адвокатом и не дает юридические консультации.',
+      loadingFlow: 'Проверяем актуальную форму USCIS и собираем вопросы...',
+      flowError: 'Не удалось загрузить вопросы для этой формы. Можно продолжить с общими деталями или связаться с нами напрямую.',
+      requiredError: 'Заполните обязательные поля перед продолжением.',
+      officialForm: 'Официальная форма проверена',
+      cachedFallback: 'Локальная PDF-копия доступна',
       services: [
         ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
         ['family', 'Семейное право California', 'Развод, custody, support, FL-300 и связанные формы'],
@@ -1733,6 +1748,11 @@ function closeDetail(id) {
       callOffice: 'Зателефонувати (916) 399-3992',
       close: 'Закрити',
       disclaimer: 'Тільки підготовка документів. Можливі форми можуть включати офіційні форми USCIS або California court. Imverica не є юридичною фірмою чи адвокатом і не надає юридичних консультацій.',
+      loadingFlow: 'Перевіряємо актуальну форму USCIS і збираємо питання...',
+      flowError: 'Не вдалося завантажити питання для цієї форми. Можна продовжити із загальними деталями або зв’язатися з нами напряму.',
+      requiredError: 'Заповніть обов’язкові поля перед продовженням.',
+      officialForm: 'Офіційну форму перевірено',
+      cachedFallback: 'Локальна PDF-копія доступна',
       services: [
         ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
         ['family', 'Сімейне право California', 'Розлучення, custody, support, FL-300 та пов’язані форми'],
@@ -1795,6 +1815,11 @@ function closeDetail(id) {
       callOffice: 'Llamar (916) 399-3992',
       close: 'Cerrar',
       disclaimer: 'Solo preparación de documentos. Los posibles formularios pueden incluir formularios oficiales de USCIS o California court. Imverica no es un bufete ni abogado y no brinda asesoría legal.',
+      loadingFlow: 'Verificando el formulario oficial actual de USCIS y creando las preguntas...',
+      flowError: 'No pudimos cargar las preguntas específicas del formulario. Puede continuar con detalles generales o llamarnos directamente.',
+      requiredError: 'Complete los campos obligatorios antes de continuar.',
+      officialForm: 'Formulario oficial verificado',
+      cachedFallback: 'Copia PDF local disponible',
       services: [
         ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
         ['family', 'Derecho familiar de California', 'Divorcio, custodia, manutención, FL-300 y relacionados'],
@@ -1809,16 +1834,32 @@ function closeDetail(id) {
   function t() { return i18n[state.lang] || i18n.en; }
   function esc(value) { return String(value || '').replace(/[&<>"]/g, function (ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }); }
   function selectedService() { return (t().services.find(function (item) { return item[0] === state.service; }) || [state.service, state.service || '-', '']); }
-  function isI765Flow() { return String(state.formCode || '').toUpperCase() === 'I-765' || /ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead/i.test(state.situation || ''); }
+  function normalizeFormCode(value) { return String(value || '').trim().toUpperCase().replace(/\s+/g, ' '); }
+  function isImmigrationFormCode(value) { return /^(?:I|N|G)-[0-9A-Z]+(?:\s+SUPPLEMENT(?:\s+[A-Z])?)?$/.test(normalizeFormCode(value)) || normalizeFormCode(value) === 'AR-11'; }
+  function shouldUseImmigrationFlow() { return state.service === 'immigration' && isImmigrationFormCode(state.formCode || inferIntakeFormCode(state.situation)); }
+  function flowStepStart() { return 3; }
+  function flowSteps() { return state.flowSchema && Array.isArray(state.flowSchema.steps) ? state.flowSchema.steps : []; }
+  function accountStepIndex() { return flowStepStart() + flowSteps().length; }
   function activeSteps() {
     var copy = t();
-    if (isI765Flow()) return [copy.steps[0], copy.steps[1], copy.steps[2], 'I-765', copy.i765ApplicantQ, copy.i765AddressQ, copy.i765EvidenceQ, copy.steps[3]];
+    if (state.service === 'immigration' && flowSteps().length) {
+      return [copy.steps[0], copy.steps[1], copy.steps[2]].concat(flowSteps().map(function (item) {
+        return item.title || item.id || copy.qDetails;
+      }), [copy.steps[3]]);
+    }
     return copy.steps;
   }
   function finalStep() { return activeSteps().length - 1; }
   function inferIntakeFormCode(value) {
     var text = normalizeIntakeText(value);
     if (/ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead|i-765/.test(text)) return 'I-765';
+    if (/грин\s*карт|green\s*card|adjustment|adjust\s*status|i-485|статус|изменени[ея]\s+статус/.test(text)) return 'I-485';
+    if (/свадьб|брак|женит|замуж|spouse|marriage|family\s*petition|i-130/.test(text)) return 'I-130';
+    if (/трев[еэ]л|travel|advance\s*parole|разрешени[ея]\s+на\s+выезд|i-131/.test(text)) return 'I-131';
+    if (/замен[аы]\s+грин|renew\s+green|replace\s+green|i-90/.test(text)) return 'I-90';
+    if (/гражданств|citizenship|naturalization|n-400/.test(text)) return 'N-400';
+    if (/убежищ|асайл|asylum|i-589/.test(text)) return 'I-589';
+    if (/fee\s*waiver|ф[иі]\s*в[еэ]йв[еэ]р|i-912/.test(text)) return 'I-912';
     if (/смол+\s+кле[ий]м|small\s*claims?|sc-100/.test(text)) return 'SC-100';
     if (/ф[иі]\s*в[еэ]йв[еэ]р|fee\s*waiver|fw-001/.test(text)) return 'FW-001';
     if (/рестре[ий]нинг|ристре[ий]нинг|ch-100/.test(text)) return 'CH-100';
@@ -1874,6 +1915,112 @@ function closeDetail(id) {
       '</div>';
   }
 
+  function immigrationFlowEndpoint(code) {
+    var localHost = window.location.protocol === 'file:' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'localhost';
+    var path = '/.netlify/functions/immigration-flow?code=' + encodeURIComponent(code) + '&lang=' + encodeURIComponent(state.lang);
+    return localHost ? 'https://imverica.com' + path : path;
+  }
+
+  async function loadImmigrationFlow() {
+    var code = normalizeFormCode(state.formCode || inferIntakeFormCode(state.situation));
+    if (!isImmigrationFormCode(code)) return false;
+    if (state.flowSchema && normalizeFormCode(state.flowSchema.code) === code) return true;
+
+    state.formCode = code;
+    state.service = 'immigration';
+    state.flowLoading = true;
+    state.flowError = '';
+    render();
+
+    try {
+      var response = await fetch(immigrationFlowEndpoint(code), { headers: { 'Accept': 'application/json' } });
+      var data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || 'Could not load flow');
+      state.flowSchema = data;
+      state.officialForm = data.official || null;
+      state.flowLoading = false;
+      state.flowError = '';
+      return true;
+    } catch (err) {
+      state.flowSchema = null;
+      state.officialForm = null;
+      state.flowLoading = false;
+      state.flowError = t().flowError;
+      return false;
+    }
+  }
+
+  function fieldDomId(id) {
+    return 'flow_' + String(id || '').replace(/[^A-Za-z0-9_-]/g, '_');
+  }
+
+  function fieldValue(field) {
+    if (Object.prototype.hasOwnProperty.call(state.formAnswers, field.id)) return state.formAnswers[field.id];
+    return field.value || '';
+  }
+
+  function attrsForField(field) {
+    var attrs = ' id="' + esc(fieldDomId(field.id)) + '" data-flow-field="' + esc(field.id) + '"';
+    if (field.required) attrs += ' required';
+    if (field.autocomplete) attrs += ' autocomplete="' + esc(field.autocomplete) + '"';
+    if (field.inputmode) attrs += ' inputmode="' + esc(field.inputmode) + '"';
+    if (field.placeholder) attrs += ' placeholder="' + esc(field.placeholder) + '"';
+    return attrs;
+  }
+
+  function renderFlowField(field) {
+    var value = fieldValue(field);
+    var label = '<label for="' + esc(fieldDomId(field.id)) + '">' + esc(field.label) + (field.required ? ' *' : '') + '</label>';
+    var help = field.help ? '<div class="intake-help" style="margin:4px 0 0;">' + esc(field.help) + '</div>' : '';
+    var options = Array.isArray(field.options) ? field.options : [];
+
+    if (field.type === 'textarea') {
+      return '<div class="intake-field">' + label + '<textarea' + attrsForField(field) + '>' + esc(value) + '</textarea>' + help + '</div>';
+    }
+
+    if (field.type === 'select') {
+      return '<div class="intake-field">' + label + '<select' + attrsForField(field) + '><option value=""></option>' +
+        options.map(function (option) {
+          return '<option value="' + esc(option) + '"' + (String(value) === String(option) ? ' selected' : '') + '>' + esc(option) + '</option>';
+        }).join('') + '</select>' + help + '</div>';
+    }
+
+    if (field.type === 'radio') {
+      return '<div class="intake-field" data-flow-radio-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
+        options.map(function (option) {
+          var checked = String(value) === String(option) ? ' checked' : '';
+          return '<label class="intake-option"><input type="radio" name="' + esc(fieldDomId(field.id)) + '" data-flow-radio="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '> <strong>' + esc(option) + '</strong></label>';
+        }).join('') + '</div>' + help + '</div>';
+    }
+
+    if (field.type === 'checkboxes') {
+      var selected = Array.isArray(value) ? value : String(value || '').split('|').filter(Boolean);
+      return '<div class="intake-field" data-flow-checkbox-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
+        options.map(function (option) {
+          var checked = selected.indexOf(option) !== -1 ? ' checked' : '';
+          return '<label class="intake-option"><input type="checkbox" data-flow-checkbox="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '> <strong>' + esc(option) + '</strong></label>';
+        }).join('') + '</div>' + help + '</div>';
+    }
+
+    var type = field.type === 'date' || field.type === 'email' || field.type === 'tel' || field.type === 'number' ? field.type : 'text';
+    return '<div class="intake-field">' + label + '<input type="' + esc(type) + '"' + attrsForField(field) + ' value="' + esc(value) + '">' + help + '</div>';
+  }
+
+  function renderFlowStep(schemaStep) {
+    var copy = t();
+    var official = state.officialForm || {};
+    var officialNote = '';
+    if (schemaStep.id === 'purpose' && official.pdfUrl) {
+      officialNote = '<div class="intake-help"><strong>' + esc(copy.officialForm) + ':</strong> ' + esc(official.title || state.formCode) +
+        (official.editionDate ? ' · ' + esc(official.editionDate) : '') +
+        (official.cachedPdfUrl ? ' · ' + esc(copy.cachedFallback) : '') + '</div>';
+    }
+    card.innerHTML = '<div class="intake-question">' + esc(schemaStep.title) + '</div><div class="intake-help">' + esc(schemaStep.help || '') + '</div>' + officialNote +
+      '<div class="intake-grid">' + (schemaStep.fields || []).map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
+  }
+
   function render() {
     var copy = t();
     kicker.textContent = copy.kicker;
@@ -1910,49 +2057,21 @@ function closeDetail(id) {
       return;
     }
 
+    if (state.flowLoading) {
+      card.innerHTML = '<div class="intake-question">' + esc(copy.loadingFlow) + '</div><div class="intake-help">' + esc(state.formCode || '') + '</div>';
+      return;
+    }
+
     if (state.step === 2) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
         '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
-        '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>';
+        '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>' +
+        '<div class="intake-error" style="' + (state.flowError ? 'display:block;' : '') + '">' + esc(state.flowError) + '</div>';
       return;
     }
 
-    if (isI765Flow() && state.step === 3) {
-      var basisOptions = [
-        ['pending_aos', copy.basisPendingAos],
-        ['asylum', copy.basisAsylum],
-        ['tps', copy.basisTps],
-        ['daca', copy.basisDaca],
-        ['other', copy.basisOther]
-      ];
-      card.innerHTML = '<div class="intake-question">' + esc(copy.i765BasisQ) + '</div><div class="intake-help">' + esc(copy.i765BasisH) + '</div><div class="intake-options">' +
-        basisOptions.map(function (item) {
-          return '<button type="button" class="intake-option ' + (state.i765.basis === item[0] ? 'active' : '') + '" data-i765-basis="' + item[0] + '"><strong>' + esc(item[1]) + '</strong></button>';
-        }).join('') + '</div>';
-      return;
-    }
-
-    if (isI765Flow() && state.step === 4) {
-      card.innerHTML = '<div class="intake-question">' + esc(copy.i765ApplicantQ) + '</div><div class="intake-help">' + esc(copy.i765ApplicantH) + '</div><div class="intake-grid">' +
-        '<div class="intake-field"><label>' + esc(copy.legalName) + '</label><input id="i765LegalName" value="' + esc(state.i765.legalName) + '"></div>' +
-        '<div class="intake-field"><label>' + esc(copy.dob) + '</label><input id="i765Dob" value="' + esc(state.i765.dob) + '" placeholder="MM/DD/YYYY"></div>' +
-      '</div>';
-      return;
-    }
-
-    if (isI765Flow() && state.step === 5) {
-      card.innerHTML = '<div class="intake-question">' + esc(copy.i765AddressQ) + '</div><div class="intake-help">' + esc(copy.i765AddressH) + '</div>' +
-        '<div class="intake-field"><label>' + esc(copy.address) + '</label><textarea id="i765Address">' + esc(state.i765.address) + '</textarea></div>' +
-        '<div class="intake-grid" style="margin-top:14px;">' +
-          '<div class="intake-field"><label>' + esc(copy.immigrationStatus) + '</label><input id="i765Status" value="' + esc(state.i765.immigrationStatus) + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.priorEad) + '</label><input id="i765PriorEad" value="' + esc(state.i765.priorEad) + '"></div>' +
-        '</div>';
-      return;
-    }
-
-    if (isI765Flow() && state.step === 6) {
-      card.innerHTML = '<div class="intake-question">' + esc(copy.i765EvidenceQ) + '</div><div class="intake-help">' + esc(copy.i765EvidenceH) + '</div>' +
-        '<div class="intake-field"><label>' + esc(copy.evidence) + '</label><textarea id="i765Evidence" placeholder="Passport, I-94, prior EAD, receipt notices...">' + esc(state.i765.evidence) + '</textarea></div>';
+    if (state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex()) {
+      renderFlowStep(flowSteps()[state.step - flowStepStart()]);
       return;
     }
 
@@ -1980,7 +2099,7 @@ function closeDetail(id) {
     var i765Status = document.getElementById('i765Status');
     var i765PriorEad = document.getElementById('i765PriorEad');
     var i765Evidence = document.getElementById('i765Evidence');
-    if (formCode) state.formCode = formCode.value.trim();
+    if (formCode) state.formCode = normalizeFormCode(formCode.value);
     if (situation) state.situation = situation.value.trim();
     if (i765LegalName) state.i765.legalName = i765LegalName.value.trim();
     if (i765Dob) state.i765.dob = i765Dob.value.trim();
@@ -1991,6 +2110,29 @@ function closeDetail(id) {
     if (name) state.contact.name = name.value.trim();
     if (phone) state.contact.phone = phone.value.trim();
     if (email) state.contact.email = email.value.trim();
+
+    card.querySelectorAll('[data-flow-field]').forEach(function (input) {
+      var key = input.getAttribute('data-flow-field');
+      if (!key) return;
+      if (input.type === 'checkbox' || input.type === 'radio') return;
+      state.formAnswers[key] = input.value.trim();
+    });
+    card.querySelectorAll('[data-flow-radio-group]').forEach(function (group) {
+      var key = group.getAttribute('data-flow-radio-group');
+      var checked = group.querySelector('input[data-flow-radio]:checked');
+      if (key) state.formAnswers[key] = checked ? checked.value : '';
+    });
+    card.querySelectorAll('[data-flow-checkbox-group]').forEach(function (group) {
+      var key = group.getAttribute('data-flow-checkbox-group');
+      if (key) {
+        state.formAnswers[key] = Array.prototype.slice.call(group.querySelectorAll('input[data-flow-checkbox]:checked')).map(function (item) {
+          return item.value;
+        });
+      }
+    });
+
+    if (!state.formCode) state.formCode = normalizeFormCode(inferIntakeFormCode(state.situation));
+    if (isImmigrationFormCode(state.formCode)) state.service = 'immigration';
   }
 
   function isValidContactName(value) {
@@ -2025,6 +2167,28 @@ function closeDetail(id) {
     invalid.forEach(function (field) {
       if (field) field.classList.add('intake-invalid');
     });
+    return invalid.length === 0;
+  }
+
+  function validateCurrentFlowStep() {
+    if (!(state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex())) return true;
+    var schemaStep = flowSteps()[state.step - flowStepStart()];
+    var invalid = [];
+    (schemaStep.fields || []).forEach(function (field) {
+      var value = state.formAnswers[field.id];
+      var empty = Array.isArray(value) ? value.length === 0 : !String(value || '').trim();
+      if (!field.required || !empty) return;
+      var input = document.getElementById(fieldDomId(field.id));
+      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"]');
+      invalid.push(input || group);
+    });
+    card.querySelectorAll('.intake-invalid').forEach(function (item) { item.classList.remove('intake-invalid'); });
+    invalid.forEach(function (item) { if (item) item.classList.add('intake-invalid'); });
+    var error = document.getElementById('intakeFlowError');
+    if (error) {
+      error.textContent = invalid.length ? t().requiredError : '';
+      error.style.display = invalid.length ? 'block' : 'none';
+    }
     return invalid.length === 0;
   }
 
@@ -2071,6 +2235,10 @@ function closeDetail(id) {
       serviceLabel: selectedService()[1],
       formCode: state.formCode,
       situation: state.situation,
+      flowSchemaVersion: state.flowSchema ? state.flowSchema.schemaVersion : '',
+      officialForm: state.officialForm || null,
+      formAnswers: state.formAnswers,
+      packageForms: state.flowSchema ? [state.flowSchema.code] : [],
       i765: state.i765,
       contact: state.contact,
       accountMode: state.accountMode
@@ -2100,7 +2268,6 @@ function closeDetail(id) {
   card.addEventListener('click', function (event) {
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
-    var i765Basis = event.target.closest('[data-i765-basis]');
     var account = event.target.closest('[data-account-mode]');
     if (lang) {
       state.lang = lang.getAttribute('data-intake-lang');
@@ -2111,12 +2278,6 @@ function closeDetail(id) {
     if (service) {
       state.service = service.getAttribute('data-service');
       if (state.step === 1) state.step = 2;
-      render();
-      return;
-    }
-    if (i765Basis) {
-      state.i765.basis = i765Basis.getAttribute('data-i765-basis');
-      if (state.step === 3) state.step = 4;
       render();
       return;
     }
@@ -2145,6 +2306,17 @@ function closeDetail(id) {
       return;
     }
     captureStep();
+    if (!validateCurrentFlowStep()) return;
+    if (state.step === 2 && shouldUseImmigrationFlow()) {
+      var loaded = await loadImmigrationFlow();
+      if (loaded && flowSteps().length) {
+        state.step = flowStepStart();
+        render();
+      } else {
+        render();
+      }
+      return;
+    }
     if (state.step < finalStep()) {
       state.step += 1;
       render();
@@ -2154,6 +2326,20 @@ function closeDetail(id) {
   });
 
   window.openIntakeModal = function (prefill) {
+    var rememberedLang = state.lang || 'en';
+    state.lang = rememberedLang;
+    state.step = 0;
+    state.service = '';
+    state.formCode = '';
+    state.situation = '';
+    state.flowSchema = null;
+    state.flowLoading = false;
+    state.flowError = '';
+    state.formAnswers = {};
+    state.officialForm = null;
+    state.i765 = { basis: '', legalName: '', dob: '', address: '', immigrationStatus: '', priorEad: '', evidence: '' };
+    state.contact = { name: '', phone: '', email: '' };
+    state.accountMode = 'guest';
     state.completed = false;
     state.savedPayload = null;
     state.orderId = '';
