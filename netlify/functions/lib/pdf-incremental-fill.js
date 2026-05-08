@@ -419,16 +419,34 @@ function xfaNameFromField(fieldName) {
   return String(fieldName || '').replace(/\[\d+\]$/, '');
 }
 
+function xfaPageForName(name) {
+  if (/^(?:Line4|Line8|Line12|Line17|Pt2Line5|Pt2Line7)/.test(name)) return 'Page2';
+  if (/^(?:Line18|Line19|Line20|Line21|Line23|Line24|Line26|Line27|Line28|Line30|section_|place_entry)/.test(name)) return 'Page3';
+  if (/^(?:Pt3|Part3)/.test(name)) return 'Page4';
+  if (/^(?:Pt4|Part4)/.test(name)) return 'Page5';
+  if (/^(?:Pt5|Part5)/.test(name)) return 'Page6';
+  return '';
+}
+
 function setXfaValue(xml, fieldName, value) {
-  const name = xfaNameFromField(fieldName).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const rawName = xfaNameFromField(fieldName);
+  const name = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   if (!name) return xml;
   const next = xmlEscape(value);
   const pattern = new RegExp(`<(${name})(\\s[^>]*)?\\s*/>|<(${name})(\\s[^>]*)?>([\\s\\S]*?)<\\/\\3>`, 'g');
-  return xml.replace(pattern, (match, selfName, selfAttrs, pairedName, pairedAttrs) => {
+  let replaced = false;
+  const updated = xml.replace(pattern, (match, selfName, selfAttrs, pairedName, pairedAttrs) => {
+    replaced = true;
     const tag = selfName || pairedName;
     const attrs = selfAttrs || pairedAttrs || '';
     return `<${tag}${attrs}>${next}</${tag}>`;
   });
+  if (replaced) return updated;
+
+  const pageName = xfaPageForName(rawName);
+  if (!pageName) return updated;
+  const closing = new RegExp(`</${pageName}\\s*>`);
+  return updated.replace(closing, `<${rawName}>${next}</${rawName}></${pageName}>`);
 }
 
 function xfaStreamBody(objectNumber, generation, xml, encryption) {

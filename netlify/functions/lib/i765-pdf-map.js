@@ -9,6 +9,16 @@ function digits(value, max = 30) {
   return clean(value, max).replace(/\D/g, '').slice(0, max);
 }
 
+function usPhoneDigits(value) {
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return digits(`${value.areaCode || ''}${value.number || ''}`, 10);
+  }
+  const raw = digits(value, 20);
+  if (raw.length === 11 && raw.startsWith('1')) return raw.slice(1);
+  if (raw.length > 10) return raw.slice(-10);
+  return raw;
+}
+
 function dateMdY(value) {
   const text = clean(value, 40);
   const match = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -58,6 +68,41 @@ function checkboxPair(values, yesField, noField) {
   return {};
 }
 
+function i765ApplicationReasonFields(reasonValue, priorEadValue) {
+  const reason = clean(reasonValue, 140).toLowerCase();
+  const priorEad = yesNo(priorEadValue);
+  let selected = '';
+  if (/replacement|lost|stolen|damaged|replace|коррек|замен|восстанов/i.test(reason)) selected = 'replacement';
+  else if (/renewal|renew|extension|продлен|renew/i.test(reason)) selected = 'renewal';
+  else if (/initial|first|первич|new/i.test(reason)) selected = 'initial';
+  else if (priorEad === true) selected = 'renewal';
+  else if (priorEad === false) selected = 'initial';
+
+  if (!selected) return {};
+  return {
+    'Part1_Checkbox[0]': selected === 'initial',
+    'Part1_Checkbox[1]': selected === 'replacement',
+    'Part1_Checkbox[2]': selected === 'renewal'
+  };
+}
+
+function applicantStatementFields(statementValue) {
+  const statement = clean(statementValue, 160).toLowerCase();
+  if (/interpreter|translator|перевод|переклад|intérprete|interprete/.test(statement)) {
+    return {
+      'Pt3Line1Checkbox[0]': true,
+      'Pt3Line1Checkbox[1]': false
+    };
+  }
+  if (/english|англ|англі|ingl[eé]s/.test(statement)) {
+    return {
+      'Pt3Line1Checkbox[0]': false,
+      'Pt3Line1Checkbox[1]': true
+    };
+  }
+  return {};
+}
+
 function unitCheckbox(unitValue, aptField, suiteField, floorField) {
   const text = clean(unitValue, 40).toLowerCase();
   if (/ste|suite/.test(text)) return { [suiteField]: true, [aptField]: false, [floorField]: false };
@@ -99,7 +144,7 @@ function i765FieldValues(payload = {}) {
   const fallbackName = splitNameParts(contact.name);
   const category = categoryParts(answers.eligibility_category_code);
   const priorEad = yesNo(answers.prior_ead);
-  const phone = clean(answers.daytime_phone || contact.phone, 80);
+  const phone = usPhoneDigits(answers.daytime_phone || contact.phone);
   const email = clean(answers.email_address || contact.email, 180);
 
   const values = {
@@ -112,7 +157,7 @@ function i765FieldValues(payload = {}) {
     'Line8_ElisAccountNumber[0]': clean(answers.uscis_online_account_number, 12),
     'Line12b_SSN[0]': digits(answers.ssn, 9),
     'Line17a_CountryOfBirth[0]': answers.country_of_citizenship,
-    'Line18a_CityTownOfBirth[0]': answers.city_of_birth,
+    'Line18a_CityTownOfBirth[0]': answers.city_of_birth || answers.place_of_birth_city,
     'Line18b_CityTownOfBirth[0]': answers.state_or_province_of_birth,
     'Line18c_CountryOfBirth[0]': answers.country_of_birth,
     'Line19_DOB[0]': dateMdY(answers.date_of_birth),
@@ -123,6 +168,7 @@ function i765FieldValues(payload = {}) {
     'Line21_DateOfLastEntry[0]': dateMdY(answers.last_arrival_date),
     'Line23_StatusLastEntry[0]': answers.status_at_last_entry,
     'Line24_CurrentStatus[0]': answers.current_immigration_status,
+    'place_entry[0]': answers.place_entry,
     'Line28_ReceiptNumber[0]': answers.pending_application_receipt,
     'Pt3Line3_DaytimePhoneNumber1[0]': phone,
     'Pt3Line4_MobileNumber1[0]': phone,
@@ -131,6 +177,8 @@ function i765FieldValues(payload = {}) {
     'section_1[0]': category[0],
     'section_2[0]': category[1],
     'section_3[0]': category[2],
+    ...i765ApplicationReasonFields(answers.i765_application_reason, answers.prior_ead),
+    ...applicantStatementFields(answers.applicant_statement),
     ...mappedAddress(answers),
     ...physicalAddress(answers),
     ...checkboxPair(priorEad, 'Line19_Checkbox[1]', 'Line19_Checkbox[0]')

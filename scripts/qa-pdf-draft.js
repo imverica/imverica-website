@@ -12,6 +12,12 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function hasXfaValue(xml, fieldName, value) {
+  const escapedField = fieldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escapedValue = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`<${escapedField}\\s*>${escapedValue}</${escapedField}>`).test(xml);
+}
+
 async function callDraft(payload) {
   return await draft.handler({
     httpMethod: 'POST',
@@ -24,10 +30,13 @@ function sampleI765Payload() {
   return {
     formCode: 'I-765',
     formAnswers: {
+      i765_application_reason: 'Initial permission to accept employment',
       applicant_given_name: 'Ivan',
       applicant_family_name: 'Petrov',
       applicant_middle_name: 'A',
       date_of_birth: '1990-04-12',
+      city_of_birth: 'Kyiv',
+      state_or_province_of_birth: 'Kyiv Oblast',
       country_of_birth: 'Ukraine',
       country_of_citizenship: 'Ukraine',
       alien_number: 'A123456789',
@@ -48,11 +57,13 @@ function sampleI765Payload() {
       current_immigration_status: 'Pending asylum',
       status_at_last_entry: 'Parolee',
       last_arrival_date: '2023-01-15',
+      place_entry: 'San Francisco, CA',
       i94_number: '12345678901',
       passport_number: 'AB1234567',
       passport_expiration: '2030-01-01',
       eligibility_category_code: '(c)(8)',
       prior_ead: 'No',
+      applicant_statement: 'I can read and understand English',
       pending_application_receipt: 'IOE1234567890'
     },
     contact: {
@@ -84,9 +95,18 @@ async function main() {
   const datasets = parsedOutput.objects
     .filter((object) => object.objectNumber === 154 && object.source === 'inflated-stream')
     .at(-1)?.body || '';
-  assert(datasets.includes('<Line1a_FamilyName\n>Petrov</Line1a_FamilyName>'), 'draft should fill XFA family name for visible PDF viewers');
-  assert(datasets.includes('<Line1b_GivenName\n>Ivan</Line1b_GivenName>'), 'draft should fill XFA given name for visible PDF viewers');
-  assert(datasets.includes('<Line4b_StreetNumberName\n>8305 Deer Spring Circle</Line4b_StreetNumberName>'), 'draft should fill XFA mailing street for visible PDF viewers');
+  assert(hasXfaValue(datasets, 'Line1a_FamilyName', 'Petrov'), 'draft should fill XFA family name for visible PDF viewers');
+  assert(hasXfaValue(datasets, 'Line1b_GivenName', 'Ivan'), 'draft should fill XFA given name for visible PDF viewers');
+  assert(hasXfaValue(datasets, 'Line4b_StreetNumberName', '8305 Deer Spring Circle'), 'draft should fill XFA mailing street for visible PDF viewers');
+  assert(hasXfaValue(datasets, 'Part1_Checkbox', '1'), 'draft should select I-765 initial permission reason');
+  assert(hasXfaValue(datasets, 'Line18a_CityTownOfBirth', 'Kyiv'), 'draft should fill birth city');
+  assert(hasXfaValue(datasets, 'Line18b_CityTownOfBirth', 'Kyiv Oblast'), 'draft should fill birth state/province');
+  assert(hasXfaValue(datasets, 'Line18c_CountryOfBirth', 'Ukraine'), 'draft should fill birth country');
+  assert(hasXfaValue(datasets, 'place_entry', 'San Francisco, CA'), 'draft should fill place of last U.S. arrival');
+  assert(hasXfaValue(datasets, 'Pt3Line1Checkbox', 'A'), 'draft should select English applicant statement');
+  assert(hasXfaValue(datasets, 'Pt3Line3_DaytimePhoneNumber1', '9165551212'), 'draft should normalize daytime phone to USCIS digits only');
+  assert(hasXfaValue(datasets, 'Pt3Line4_MobileNumber1', '9165551212'), 'draft should normalize mobile phone to USCIS digits only');
+  assert(!datasets.includes('+1 916'), 'draft should not write phone with country code or spaces');
 
   const missing = await callDraft({ formCode: 'I-765', formAnswers: {} });
   assert(missing.statusCode === 422, `missing required fields expected 422, got ${missing.statusCode}`);

@@ -69,6 +69,17 @@ async function main() {
   assert(Array.isArray(history.countryOptions) && history.countryOptions.length > 100, 'history country dropdown should be available');
   assert(optionLabel(optionByValue(history.countryOptions, 'Ukraine')).includes('Украина'), 'history country dropdown should localize common countries');
 
+  const i765 = await callFlow('I-765', 'ru');
+  const workAuthorization = i765.steps.find((step) => step.id === 'work_authorization');
+  assert(field(workAuthorization, 'i765_application_reason')?.required === true, 'I-765 application reason should be required');
+  assert(optionLabel(optionByValue(field(workAuthorization, 'i765_application_reason').options, 'Initial permission to accept employment')) === 'Первичное разрешение на работу', 'I-765 reason option should be localized');
+  assert(field(workAuthorization, 'applicant_statement')?.required === true, 'I-765 applicant statement should be required');
+  assert(optionLabel(optionByValue(field(workAuthorization, 'applicant_statement').options, 'I can read and understand English')) === 'Я читаю и понимаю английский', 'I-765 English statement should be localized');
+  const i765Applicant = i765.steps.find((step) => step.id === 'applicant');
+  assert(field(i765Applicant, 'city_of_birth')?.label === 'Город/населенный пункт рождения', 'birth city label should be localized');
+  const i765History = i765.steps.find((step) => step.id === 'immigration_history');
+  assert(field(i765History, 'place_entry')?.label === 'Место последнего въезда в США', 'last arrival place label should be localized');
+
   console.log('localization QA passed');
 }
 

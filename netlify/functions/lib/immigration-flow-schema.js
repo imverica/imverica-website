@@ -55,6 +55,8 @@ const LOCALIZATION = {
       applicant_family_name: 'Фамилия',
       other_names_used: 'Другие имена, которые использовались',
       date_of_birth: 'Дата рождения',
+      city_of_birth: 'Город/населенный пункт рождения',
+      state_or_province_of_birth: 'Штат/провинция рождения',
       country_of_birth: 'Страна рождения',
       country_of_citizenship: 'Страна гражданства или национальности',
       alien_number: 'A-number, если есть',
@@ -70,6 +72,7 @@ const LOCALIZATION = {
       email_address: 'Email',
       current_immigration_status: 'Текущий иммиграционный статус или категория',
       last_arrival_date: 'Дата последнего въезда в США',
+      place_entry: 'Место последнего въезда в США',
       i94_number: 'I-94 number, если есть',
       passport_number: 'Номер паспорта, если относится к форме',
       passport_expiration: 'Дата окончания паспорта',
@@ -80,8 +83,10 @@ const LOCALIZATION = {
       interpreter_or_preparer_needed: 'Нужна секция interpreter/preparer?',
       extra_notes_for_preparer: 'Что еще должен знать preparer?',
       ead_basis: 'Основание для разрешения на работу',
+      i765_application_reason: 'Причина подачи I-765',
       eligibility_category_code: 'Код категории права на разрешение, если знаете',
       prior_ead: 'EAD уже был раньше?',
+      applicant_statement: 'Заявление заявителя',
       pending_application_receipt: 'Receipt number связанного pending дела, если есть',
       petitioner_status: 'Статус петиционера',
       relationship_to_beneficiary: 'Степень родства с бенефициаром',
@@ -178,6 +183,11 @@ const LOCALIZATION = {
       'VAWA / special immigrant': 'VAWA / special immigrant',
       'Pending green card / adjustment of status': 'Ожидающее заявление на green card / изменение статуса',
       'Asylum or pending asylum': 'Asylum или pending asylum',
+      'Initial permission to accept employment': 'Первичное разрешение на работу',
+      'Replacement of lost, stolen, or damaged EAD': 'Замена потерянного, украденного или поврежденного EAD',
+      'Renewal of permission to accept employment': 'Продление разрешения на работу',
+      'I can read and understand English': 'Я читаю и понимаю английский',
+      'Interpreter read the application to me': 'Interpreter прочитал(а) мне заявление',
       TPS: 'TPS',
       DACA: 'DACA',
       'Student category': 'Студенческая категория',
@@ -278,6 +288,8 @@ const LOCALIZATION = {
       applicant_given_name: 'Ім’я',
       applicant_family_name: 'Прізвище',
       date_of_birth: 'Дата народження',
+      city_of_birth: 'Місто/населений пункт народження',
+      state_or_province_of_birth: 'Штат/провінція народження',
       country_of_birth: 'Країна народження',
       country_of_citizenship: 'Громадянство / nationality',
       mailing_address_line1: 'Поштова адреса, рядок 1',
@@ -287,9 +299,13 @@ const LOCALIZATION = {
       daytime_phone: 'Телефон',
       email_address: 'Email',
       current_immigration_status: 'Поточний імміграційний статус або категорія',
+      last_arrival_date: 'Дата останнього в’їзду до США',
+      place_entry: 'Місце останнього в’їзду до США',
       ead_basis: 'На чому базується work permit?',
+      i765_application_reason: 'Причина подання I-765',
       eligibility_category_code: 'Eligibility category code, якщо знаєте',
       prior_ead: 'EAD вже був раніше?',
+      applicant_statement: 'Заява заявника',
       beneficiary_full_name: 'Повне ім’я beneficiary',
       inside_us_now: 'Ви зараз фізично перебуваєте у США?',
       addresses_last_five_years: 'Адреси за останні 5 років',
@@ -299,7 +315,18 @@ const LOCALIZATION = {
       g325a_residence_history: 'Адреси за останні 5 років',
       g325a_employment_history: 'Робота за останні 5 років'
     },
-    options: { Yes: 'Так', No: 'Ні', 'Not sure': 'Не знаю', Other: 'Інше', 'Other or not sure': 'Інше або не знаю' }
+    options: {
+      Yes: 'Так',
+      No: 'Ні',
+      'Not sure': 'Не знаю',
+      Other: 'Інше',
+      'Other or not sure': 'Інше або не знаю',
+      'Initial permission to accept employment': 'Первинний дозвіл на роботу',
+      'Replacement of lost, stolen, or damaged EAD': 'Заміна втраченого, викраденого або пошкодженого EAD',
+      'Renewal of permission to accept employment': 'Продовження дозволу на роботу',
+      'I can read and understand English': 'Я читаю і розумію англійську',
+      'Interpreter read the application to me': 'Перекладач прочитав мені заяву'
+    }
   },
   es: {
     steps: {
@@ -324,6 +351,8 @@ const LOCALIZATION = {
       applicant_given_name: 'Nombre',
       applicant_family_name: 'Apellido',
       date_of_birth: 'Fecha de nacimiento',
+      city_of_birth: 'Ciudad/pueblo de nacimiento',
+      state_or_province_of_birth: 'Estado/provincia de nacimiento',
       country_of_birth: 'País de nacimiento',
       country_of_citizenship: 'Ciudadanía / nationality',
       mailing_address_line1: 'Dirección postal línea 1',
@@ -333,9 +362,13 @@ const LOCALIZATION = {
       daytime_phone: 'Teléfono',
       email_address: 'Email',
       current_immigration_status: 'Estado migratorio actual o categoría',
+      last_arrival_date: 'Fecha de la última entrada a Estados Unidos',
+      place_entry: 'Lugar de la última entrada a Estados Unidos',
       ead_basis: '¿En qué se basa el permiso de trabajo?',
+      i765_application_reason: 'Motivo de la solicitud I-765',
       eligibility_category_code: 'Eligibility category code, si lo sabe',
       prior_ead: '¿Ha tenido EAD antes?',
+      applicant_statement: 'Declaración del solicitante',
       beneficiary_full_name: 'Nombre completo del beneficiario',
       inside_us_now: '¿Está físicamente dentro de Estados Unidos ahora?',
       addresses_last_five_years: 'Direcciones de los últimos 5 años',
@@ -345,7 +378,18 @@ const LOCALIZATION = {
       g325a_residence_history: 'Direcciones de los últimos 5 años',
       g325a_employment_history: 'Trabajo de los últimos 5 años'
     },
-    options: { Yes: 'Sí', No: 'No', 'Not sure': 'No estoy seguro', Other: 'Otro', 'Other or not sure': 'Otro o no estoy seguro' }
+    options: {
+      Yes: 'Sí',
+      No: 'No',
+      'Not sure': 'No estoy seguro',
+      Other: 'Otro',
+      'Other or not sure': 'Otro o no estoy seguro',
+      'Initial permission to accept employment': 'Permiso inicial para aceptar empleo',
+      'Replacement of lost, stolen, or damaged EAD': 'Reemplazo de EAD perdido, robado o dañado',
+      'Renewal of permission to accept employment': 'Renovación del permiso para aceptar empleo',
+      'I can read and understand English': 'Puedo leer y entender inglés',
+      'Interpreter read the application to me': 'Un intérprete me leyó la solicitud'
+    }
   }
 };
 
@@ -433,6 +477,12 @@ function applicantFields() {
       required: true,
       autocomplete: 'bday'
     }),
+    field('city_of_birth', 'City/town/village of birth', 'text', {
+      autocomplete: 'off'
+    }),
+    field('state_or_province_of_birth', 'State/province of birth', 'text', {
+      autocomplete: 'off'
+    }),
     field('country_of_birth', 'Country of birth', 'select', {
       autocomplete: 'country-name',
       options: COUNTRY_OPTIONS
@@ -518,6 +568,9 @@ function immigrationHistoryFields() {
       placeholder: 'Example: pending asylum, TPS, F-1, parolee, no status, lawful permanent resident.'
     }),
     field('last_arrival_date', 'Most recent U.S. arrival date', 'date'),
+    field('place_entry', 'Place of your last arrival into the United States', 'text', {
+      placeholder: 'Example: Los Angeles, CA; San Ysidro, CA; JFK, New York.'
+    }),
     field('i94_number', 'I-94 number, if any', 'text', {
       autocomplete: 'off'
     }),
@@ -658,12 +711,20 @@ const FORM_OVERRIDES = {
   ],
   'I-765': [
     step('work_authorization', 'Work permit basis', 'Select the closest category. We verify the exact eligibility category before preparing the form.', [
+      field('i765_application_reason', 'Reason for applying on I-765', 'select', {
+        required: true,
+        options: ['Initial permission to accept employment', 'Replacement of lost, stolen, or damaged EAD', 'Renewal of permission to accept employment']
+      }),
       field('ead_basis', 'What is the work permit based on?', 'select', {
         required: true,
         options: ['Pending green card / adjustment of status', 'Asylum or pending asylum', 'TPS', 'DACA', 'Student category', 'Parole or humanitarian category', 'Other or not sure']
       }),
       field('eligibility_category_code', 'Eligibility category code, if known', 'text', { placeholder: 'Example: (c)(9), (c)(8), (a)(12)' }),
       field('prior_ead', 'Have you had an EAD before?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('applicant_statement', 'Applicant statement', 'radio', {
+        required: true,
+        options: ['I can read and understand English', 'Interpreter read the application to me']
+      }),
       field('pending_application_receipt', 'Related pending application receipt number, if any', 'text', { autocomplete: 'off' })
     ])
   ],
