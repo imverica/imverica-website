@@ -63,6 +63,28 @@ async function main() {
   const localized = await callFlow('I-765', 'ru');
   assert(/Назначение формы|Основание/.test(localized.body.steps[0].title + localized.body.steps[1].title), 'ru localization missing for I-765 flow');
 
+  const i765Address = localized.body.steps.find((step) => step.id === 'address_contact');
+  assert(i765Address, 'I-765: missing address/contact step');
+  const mailingState = i765Address.fields.find((field) => field.id === 'mailing_state');
+  const mailingAddress = i765Address.fields.find((field) => field.id === 'mailing_address_line1');
+  const daytimePhone = i765Address.fields.find((field) => field.id === 'daytime_phone');
+  assert(mailingAddress?.type === 'addressAutocomplete', 'I-765: mailing address should use address autocomplete');
+  assert(mailingState?.type === 'select', 'I-765: state should be a select field');
+  assert(mailingState?.options?.includes('CA - California'), 'I-765: state select should include California');
+  assert(mailingState?.options?.includes('PR - Puerto Rico'), 'I-765: state select should include territories');
+  assert(daytimePhone?.type === 'phone', 'I-765: phone should be split phone field');
+
+  const n400 = await callFlow('N-400', 'ru');
+  const n400Naturalization = n400.body.steps.find((step) => step.id === 'naturalization');
+  assert(n400Naturalization, 'N-400: missing naturalization step');
+  assert(n400Naturalization.fields.find((field) => field.id === 'addresses_last_five_years')?.type === 'addressHistory', 'N-400: address history should be structured');
+  assert(n400Naturalization.fields.find((field) => field.id === 'employment_school_last_five_years')?.type === 'employmentHistory', 'N-400: employment history should be structured');
+
+  const i130a = await callFlow('I-130A', 'en');
+  const spouseBio = i130a.body.steps.find((step) => step.id === 'spouse_biographic');
+  assert(spouseBio?.fields.find((field) => field.id === 'spouse_residence_history')?.type === 'addressHistory', 'I-130A: spouse residence history should be structured');
+  assert(spouseBio?.fields.find((field) => field.id === 'spouse_employment_history')?.type === 'employmentHistory', 'I-130A: spouse employment history should be structured');
+
   const scriptCount = syntaxCheckInlineScripts();
   console.log(`index.html inline scripts syntax ok: ${scriptCount}`);
   console.log('immigration flow QA passed');

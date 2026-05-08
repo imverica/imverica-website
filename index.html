@@ -378,14 +378,27 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-option{border:1px solid var(--border);background:#fbfaf7;border-radius:6px;padding:16px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--navy-dark);transition:border-color 0.18s,box-shadow 0.18s,background 0.18s;min-height:92px;}
 .intake-option strong{display:block;font-size:15px;margin-bottom:6px;}
 .intake-option span{display:block;font-size:12px;line-height:1.45;color:#667;}
+.intake-option input{position:absolute;opacity:0;pointer-events:none;}
 .intake-option.active,.intake-option:hover{border-color:#4a7aaa;background:#f3f7fb;box-shadow:0 8px 18px rgba(17,30,48,0.08);}
 .intake-field{display:flex;flex-direction:column;gap:8px;}
 .intake-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
 .intake-field input,.intake-field textarea,.intake-field select{width:100%;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.45;color:var(--navy-dark);background:#fff;outline:none;}
-.intake-field input.intake-invalid,.intake-field textarea.intake-invalid,.intake-field select.intake-invalid,.intake-field.intake-invalid,.intake-field[data-flow-radio-group].intake-invalid,.intake-field[data-flow-checkbox-group].intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
+.intake-field input.intake-invalid,.intake-field textarea.intake-invalid,.intake-field select.intake-invalid,.intake-field.intake-invalid,.intake-field[data-flow-radio-group].intake-invalid,.intake-field[data-flow-checkbox-group].intake-invalid,.intake-phone-grid.intake-invalid,.intake-history.intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
 .intake-error{display:none;margin-top:16px;color:#9c3329;background:#fff8f6;border-left:3px solid #b94c3f;padding:12px 14px;font-size:13px;line-height:1.5;}
 .intake-field textarea{min-height:150px;resize:vertical;}
 .intake-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.intake-field-full{grid-column:1/-1;}
+.intake-phone-grid{display:grid;grid-template-columns:120px 130px 1fr;gap:10px;}
+.intake-address-wrap{position:relative;}
+.intake-address-suggestions{display:none;position:absolute;z-index:5;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:6px;box-shadow:0 14px 28px rgba(17,30,48,0.14);overflow:hidden;}
+.intake-address-suggestions.open{display:block;}
+.intake-address-suggestion{display:block;width:100%;border:none;background:#fff;text-align:left;padding:11px 12px;color:var(--navy-dark);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;}
+.intake-address-suggestion:hover{background:#f3f7fb;}
+.intake-address-note{font-size:12px;line-height:1.45;color:#667;margin-top:6px;}
+.intake-history{grid-column:1/-1;border:1px solid var(--border);border-radius:8px;background:#fbfaf7;padding:14px;display:grid;gap:12px;}
+.intake-history-title{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
+.intake-history-entry{border:1px solid #eeece6;background:#fff;border-radius:8px;padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.intake-history-entry h4{grid-column:1/-1;font-size:14px;color:var(--navy-dark);font-weight:600;}
 .intake-review{display:grid;gap:10px;font-size:14px;}
 .intake-review-row{display:grid;grid-template-columns:210px 1fr;gap:12px;border-bottom:1px solid #eeece6;padding-bottom:10px;}
 .intake-review-row b{color:#68788a;font-weight:500;}
@@ -406,7 +419,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-btn.primary{background:var(--navy);color:#fff;}
 .intake-btn:disabled{opacity:0.45;cursor:not-allowed;}
 .intake-disclaimer{font-size:12px;line-height:1.55;color:#777;background:#f5f3ee;border-left:3px solid #b94c3f;padding:12px 14px;}
-@media(max-width:860px){.intake-top{grid-template-columns:1fr;}.intake-rail{display:none;}.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row{grid-template-columns:1fr;}.intake-title{font-size:30px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}}
+@media(max-width:860px){.intake-top{grid-template-columns:1fr;}.intake-rail{display:none;}.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row,.intake-phone-grid,.intake-history-entry{grid-template-columns:1fr;}.intake-title{font-size:30px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}}
 @media(max-width:430px){
   .intake-modal{padding:12px 10px;}
   .intake-shell{border-radius:7px;}
@@ -1543,6 +1556,7 @@ function closeDetail(id) {
 
   var state = {
     lang: 'en',
+    langManual: false,
     step: 0,
     service: '',
     formCode: '',
@@ -1554,6 +1568,7 @@ function closeDetail(id) {
     flowLoading: false,
     flowError: '',
     formAnswers: {},
+    addressSuggestions: {},
     officialForm: null,
     i765: { basis: '', legalName: '', dob: '', address: '', immigrationStatus: '', priorEad: '', evidence: '' },
     contact: { name: '', phone: '', email: '' },
@@ -1562,6 +1577,7 @@ function closeDetail(id) {
     savedPayload: null,
     orderId: ''
   };
+  var addressSuggestTimer = null;
 
   var i18n = {
     en: {
@@ -1624,6 +1640,24 @@ function closeDetail(id) {
       cachedFallback: 'Cached PDF fallback available',
       routing: 'Identifying the right document route...',
       routeError: 'We could not identify the exact route automatically. You can continue with the details you entered.',
+      phoneCountry: 'Country code',
+      phoneArea: 'Area code',
+      phoneNumber: 'Number',
+      historyEntry: 'Entry',
+      historyFrom: 'From',
+      historyTo: 'To',
+      historyPresent: 'Present',
+      historyAddress1: 'Address line 1',
+      historyAddress2: 'Apt, suite, unit',
+      historyCity: 'City',
+      historyState: 'State',
+      historyZip: 'ZIP',
+      historyCountry: 'Country',
+      historyEmployerSchool: 'Employer or school',
+      historyActivity: 'Work, school, unemployed, other',
+      historyOccupation: 'Occupation or role',
+      addressSuggestion: 'Use USPS/local suggested address',
+      addressChecking: 'Checking address...',
       services: [
         ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
         ['family', 'California family law', 'Divorce, custody, support, FL-300 and related forms'],
@@ -1693,6 +1727,24 @@ function closeDetail(id) {
       cachedFallback: 'Локальная PDF-копия доступна',
       routing: 'Определяем правильный маршрут документов...',
       routeError: 'Не удалось автоматически определить точный маршрут. Можно продолжить с введенными деталями.',
+      phoneCountry: 'Код страны',
+      phoneArea: 'Код города',
+      phoneNumber: 'Номер',
+      historyEntry: 'Запись',
+      historyFrom: 'С',
+      historyTo: 'По',
+      historyPresent: 'По настоящее время',
+      historyAddress1: 'Адрес, строка 1',
+      historyAddress2: 'Квартира, suite, unit',
+      historyCity: 'Город',
+      historyState: 'Штат',
+      historyZip: 'ZIP',
+      historyCountry: 'Страна',
+      historyEmployerSchool: 'Работодатель или учеба',
+      historyActivity: 'Работа, учеба, без работы, другое',
+      historyOccupation: 'Должность или роль',
+      addressSuggestion: 'Использовать предложенный адрес',
+      addressChecking: 'Проверяем адрес...',
       services: [
         ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
         ['family', 'Семейное право California', 'Развод, custody, support, FL-300 и связанные формы'],
@@ -1762,6 +1814,24 @@ function closeDetail(id) {
       cachedFallback: 'Локальна PDF-копія доступна',
       routing: 'Визначаємо правильний маршрут документів...',
       routeError: 'Не вдалося автоматично визначити точний маршрут. Можна продовжити з введеними деталями.',
+      phoneCountry: 'Код країни',
+      phoneArea: 'Код міста',
+      phoneNumber: 'Номер',
+      historyEntry: 'Запис',
+      historyFrom: 'З',
+      historyTo: 'До',
+      historyPresent: 'До сьогодні',
+      historyAddress1: 'Адреса, рядок 1',
+      historyAddress2: 'Квартира, suite, unit',
+      historyCity: 'Місто',
+      historyState: 'Штат',
+      historyZip: 'ZIP',
+      historyCountry: 'Країна',
+      historyEmployerSchool: 'Роботодавець або навчання',
+      historyActivity: 'Робота, навчання, без роботи, інше',
+      historyOccupation: 'Посада або роль',
+      addressSuggestion: 'Використати запропоновану адресу',
+      addressChecking: 'Перевіряємо адресу...',
       services: [
         ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
         ['family', 'Сімейне право California', 'Розлучення, custody, support, FL-300 та пов’язані форми'],
@@ -1831,6 +1901,24 @@ function closeDetail(id) {
       cachedFallback: 'Copia PDF local disponible',
       routing: 'Identificando la ruta correcta de documentos...',
       routeError: 'No pudimos identificar la ruta exacta automáticamente. Puede continuar con los detalles ingresados.',
+      phoneCountry: 'Código de país',
+      phoneArea: 'Código de área',
+      phoneNumber: 'Número',
+      historyEntry: 'Entrada',
+      historyFrom: 'Desde',
+      historyTo: 'Hasta',
+      historyPresent: 'Presente',
+      historyAddress1: 'Dirección línea 1',
+      historyAddress2: 'Apt, suite, unit',
+      historyCity: 'Ciudad',
+      historyState: 'Estado',
+      historyZip: 'ZIP',
+      historyCountry: 'País',
+      historyEmployerSchool: 'Empleador o escuela',
+      historyActivity: 'Trabajo, escuela, desempleado, otro',
+      historyOccupation: 'Ocupación o rol',
+      addressSuggestion: 'Usar dirección sugerida',
+      addressChecking: 'Verificando dirección...',
       services: [
         ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
         ['family', 'Derecho familiar de California', 'Divorcio, custodia, manutención, FL-300 y relacionados'],
@@ -1942,6 +2030,14 @@ function closeDetail(id) {
     return localHost ? 'https://imverica.com' + path : path;
   }
 
+  function addressSuggestEndpoint(query) {
+    var localHost = window.location.protocol === 'file:' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'localhost';
+    var path = '/.netlify/functions/address-suggest?q=' + encodeURIComponent(query || '');
+    return localHost ? 'https://imverica.com' + path : path;
+  }
+
   async function loadRoute() {
     var query = [state.formCode, state.situation].filter(Boolean).join(' ').trim();
     if (!query) return false;
@@ -1954,7 +2050,7 @@ function closeDetail(id) {
       var data = await response.json();
       if (!response.ok || !data.ok || !data.route) throw new Error(data.error || 'Could not route request');
       state.routeResult = data;
-      if (data.language) state.lang = data.language;
+      if (data.language && !state.langManual) state.lang = data.language;
       if (data.route.service) state.service = data.route.service;
       if (data.route.formCode) state.formCode = data.route.formCode;
       state.routeLoading = false;
@@ -2014,6 +2110,91 @@ function closeDetail(id) {
     return attrs;
   }
 
+  function optionMatchesValue(option, value) {
+    var optionText = String(option || '');
+    var valueText = String(value || '');
+    if (optionText === valueText) return true;
+    var code = optionText.match(/^([A-Z]{2})\s+-\s+/);
+    return Boolean(code && code[1] === valueText.toUpperCase());
+  }
+
+  function renderSelectOptions(options, value) {
+    return (Array.isArray(options) ? options : []).map(function (option) {
+      return '<option value="' + esc(option) + '"' + (optionMatchesValue(option, value) ? ' selected' : '') + '>' + esc(option) + '</option>';
+    }).join('');
+  }
+
+  function renderStateSelect(name, value, options) {
+    return '<select data-history-part="' + esc(name) + '"><option value=""></option>' + renderSelectOptions(options, value) + '</select>';
+  }
+
+  function phoneValue(value, field) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      return {
+        countryCode: value.countryCode || field.countryCodeDefault || '+1',
+        areaCode: value.areaCode || '',
+        number: value.number || ''
+      };
+    }
+    var text = String(value || '').trim();
+    var digits = text.replace(/\D/g, '');
+    if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
+    return {
+      countryCode: /^\+/.test(text) ? (text.match(/^\+\d{1,4}/) || ['+1'])[0] : (field.countryCodeDefault || '+1'),
+      areaCode: digits.length >= 10 ? digits.slice(0, 3) : '',
+      number: digits.length >= 10 ? digits.slice(3) : digits
+    };
+  }
+
+  function historyRows(value, count) {
+    var rows = Array.isArray(value) ? value.slice() : [];
+    while (rows.length < count) rows.push({});
+    return rows.slice(0, count);
+  }
+
+  function renderAddressHistoryField(field) {
+    var copy = t();
+    var rows = historyRows(fieldValue(field), field.entries || 4);
+    var options = field.stateOptions || [];
+    return '<div class="intake-history" data-flow-address-history="' + esc(field.id) + '">' +
+      '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
+      rows.map(function (row, index) {
+        return '<div class="intake-history-entry" data-history-index="' + index + '">' +
+          '<h4>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</h4>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><input type="text" data-history-part="line1" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyCountry) + '</label><input type="text" data-history-part="country" autocomplete="country-name" value="' + esc(row.country || 'United States') + '"></div>' +
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  function renderEmploymentHistoryField(field) {
+    var copy = t();
+    var rows = historyRows(fieldValue(field), field.entries || 4);
+    var options = field.stateOptions || [];
+    return '<div class="intake-history" data-flow-employment-history="' + esc(field.id) + '">' +
+      '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
+      rows.map(function (row, index) {
+        return '<div class="intake-history-entry" data-history-index="' + index + '">' +
+          '<h4>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</h4>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyEmployerSchool) + '</label><input type="text" data-history-part="name" autocomplete="organization" value="' + esc(row.name || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyActivity) + '</label><input type="text" data-history-part="activity" value="' + esc(row.activity || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyOccupation) + '</label><input type="text" data-history-part="occupation" value="' + esc(row.occupation || '') + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><input type="text" data-history-part="line1" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
+        '</div>';
+      }).join('') + '</div>';
+  }
+
   function renderFlowField(field) {
     var value = fieldValue(field);
     var label = '<label for="' + esc(fieldDomId(field.id)) + '">' + esc(field.label) + (field.required ? ' *' : '') + '</label>';
@@ -2026,16 +2207,14 @@ function closeDetail(id) {
 
     if (field.type === 'select') {
       return '<div class="intake-field">' + label + '<select' + attrsForField(field) + '><option value=""></option>' +
-        options.map(function (option) {
-          return '<option value="' + esc(option) + '"' + (String(value) === String(option) ? ' selected' : '') + '>' + esc(option) + '</option>';
-        }).join('') + '</select>' + help + '</div>';
+        renderSelectOptions(options, value) + '</select>' + help + '</div>';
     }
 
     if (field.type === 'radio') {
       return '<div class="intake-field" data-flow-radio-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
         options.map(function (option) {
           var checked = String(value) === String(option) ? ' checked' : '';
-          return '<label class="intake-option"><input type="radio" name="' + esc(fieldDomId(field.id)) + '" data-flow-radio="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '> <strong>' + esc(option) + '</strong></label>';
+          return '<label class="intake-option ' + (checked ? 'active' : '') + '"><input type="radio" name="' + esc(fieldDomId(field.id)) + '" data-flow-radio="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '><strong>' + esc(option) + '</strong></label>';
         }).join('') + '</div>' + help + '</div>';
     }
 
@@ -2044,9 +2223,26 @@ function closeDetail(id) {
       return '<div class="intake-field" data-flow-checkbox-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
         options.map(function (option) {
           var checked = selected.indexOf(option) !== -1 ? ' checked' : '';
-          return '<label class="intake-option"><input type="checkbox" data-flow-checkbox="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '> <strong>' + esc(option) + '</strong></label>';
+          return '<label class="intake-option ' + (checked ? 'active' : '') + '"><input type="checkbox" data-flow-checkbox="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '><strong>' + esc(option) + '</strong></label>';
         }).join('') + '</div>' + help + '</div>';
     }
+
+    if (field.type === 'addressAutocomplete') {
+      return '<div class="intake-field">' + label + '<div class="intake-address-wrap"><input type="text"' + attrsForField(field) + ' data-address-autocomplete="' + esc(field.id) + '" value="' + esc(value) + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(field.id) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(field.id) + '"></div>' + help + '</div>';
+    }
+
+    if (field.type === 'phone') {
+      var phone = phoneValue(value, field);
+      return '<div class="intake-field">' + label + '<div class="intake-phone-grid" data-flow-phone-group="' + esc(field.id) + '">' +
+        '<input type="tel" inputmode="tel" autocomplete="tel-country-code" data-flow-phone-part="countryCode" placeholder="' + esc(t().phoneCountry) + '" value="' + esc(phone.countryCode) + '">' +
+        '<input type="tel" inputmode="numeric" autocomplete="tel-area-code" data-flow-phone-part="areaCode" placeholder="' + esc(t().phoneArea) + '" value="' + esc(phone.areaCode) + '">' +
+        '<input type="tel" inputmode="numeric" autocomplete="tel-local" data-flow-phone-part="number" placeholder="' + esc(t().phoneNumber) + '" value="' + esc(phone.number) + '">' +
+      '</div>' + help + '</div>';
+    }
+
+    if (field.type === 'addressHistory') return renderAddressHistoryField(field);
+
+    if (field.type === 'employmentHistory') return renderEmploymentHistoryField(field);
 
     var type = field.type === 'date' || field.type === 'email' || field.type === 'tel' || field.type === 'number' ? field.type : 'text';
     return '<div class="intake-field">' + label + '<input type="' + esc(type) + '"' + attrsForField(field) + ' value="' + esc(value) + '">' + help + '</div>';
@@ -2124,6 +2320,7 @@ function closeDetail(id) {
       return;
     }
 
+    var contactPhone = phoneValue(state.contact.phone, { countryCodeDefault: '+1' });
     card.innerHTML = '<div class="intake-question">' + esc(copy.qAccount) + '</div><div class="intake-help">' + esc(copy.hAccount) + '</div>' +
       '<div class="intake-choice-row">' +
         '<div class="intake-account-card ' + (state.accountMode === 'portal' ? 'active' : '') + '" data-account-mode="portal"><h4>' + esc(copy.portal) + '</h4><p>' + esc(copy.portalSub) + '</p></div>' +
@@ -2131,7 +2328,11 @@ function closeDetail(id) {
       '</div>' +
       '<div class="intake-grid" style="margin-top:16px;">' +
         '<div class="intake-field"><label>' + esc(copy.name) + '</label><input id="intakeName" autocomplete="name" value="' + esc(state.contact.name) + '"></div>' +
-        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><input id="intakePhone" type="tel" inputmode="tel" autocomplete="tel" value="' + esc(state.contact.phone) + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><div id="intakeContactPhoneField" class="intake-phone-grid">' +
+          '<input id="intakePhoneCountry" type="tel" inputmode="tel" autocomplete="tel-country-code" placeholder="' + esc(copy.phoneCountry) + '" value="' + esc(contactPhone.countryCode) + '">' +
+          '<input id="intakePhoneArea" type="tel" inputmode="numeric" autocomplete="tel-area-code" placeholder="' + esc(copy.phoneArea) + '" value="' + esc(contactPhone.areaCode) + '">' +
+          '<input id="intakePhoneNumber" type="tel" inputmode="numeric" autocomplete="tel-local" placeholder="' + esc(copy.phoneNumber) + '" value="' + esc(contactPhone.number) + '">' +
+        '</div></div>' +
         '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" inputmode="email" autocomplete="email" value="' + esc(state.contact.email) + '"></div>' +
       '</div><div id="intakeContactError" class="intake-error"></div><div id="intakeSaved" class="intake-help" style="display:none;margin-top:16px;color:#2a7a5a;"></div>';
   }
@@ -2141,6 +2342,9 @@ function closeDetail(id) {
     var situation = document.getElementById('intakeSituation');
     var name = document.getElementById('intakeName');
     var phone = document.getElementById('intakePhone');
+    var phoneCountry = document.getElementById('intakePhoneCountry');
+    var phoneArea = document.getElementById('intakePhoneArea');
+    var phoneNumber = document.getElementById('intakePhoneNumber');
     var email = document.getElementById('intakeEmail');
     var i765LegalName = document.getElementById('i765LegalName');
     var i765Dob = document.getElementById('i765Dob');
@@ -2158,6 +2362,13 @@ function closeDetail(id) {
     if (i765Evidence) state.i765.evidence = i765Evidence.value.trim();
     if (name) state.contact.name = name.value.trim();
     if (phone) state.contact.phone = phone.value.trim();
+    if (phoneCountry || phoneArea || phoneNumber) {
+      state.contact.phone = [
+        phoneCountry ? phoneCountry.value.trim() : '',
+        phoneArea ? phoneArea.value.trim() : '',
+        phoneNumber ? phoneNumber.value.trim() : ''
+      ].filter(Boolean).join(' ');
+    }
     if (email) state.contact.email = email.value.trim();
 
     card.querySelectorAll('[data-flow-field]').forEach(function (input) {
@@ -2165,6 +2376,29 @@ function closeDetail(id) {
       if (!key) return;
       if (input.type === 'checkbox' || input.type === 'radio') return;
       state.formAnswers[key] = input.value.trim();
+    });
+    card.querySelectorAll('[data-flow-phone-group]').forEach(function (group) {
+      var key = group.getAttribute('data-flow-phone-group');
+      if (!key) return;
+      state.formAnswers[key] = {
+        countryCode: (group.querySelector('[data-flow-phone-part="countryCode"]') || {}).value?.trim() || '',
+        areaCode: (group.querySelector('[data-flow-phone-part="areaCode"]') || {}).value?.trim() || '',
+        number: (group.querySelector('[data-flow-phone-part="number"]') || {}).value?.trim() || ''
+      };
+    });
+    card.querySelectorAll('[data-flow-address-history], [data-flow-employment-history]').forEach(function (group) {
+      var key = group.getAttribute('data-flow-address-history') || group.getAttribute('data-flow-employment-history');
+      if (!key) return;
+      var rows = Array.prototype.slice.call(group.querySelectorAll('[data-history-index]')).map(function (row) {
+        var item = {};
+        row.querySelectorAll('[data-history-part]').forEach(function (input) {
+          item[input.getAttribute('data-history-part')] = input.value.trim();
+        });
+        return item;
+      }).filter(function (item) {
+        return Object.keys(item).some(function (name) { return String(item[name] || '').trim(); });
+      });
+      state.formAnswers[key] = rows;
     });
     card.querySelectorAll('[data-flow-radio-group]').forEach(function (group) {
       var key = group.getAttribute('data-flow-radio-group');
@@ -2203,7 +2437,7 @@ function closeDetail(id) {
   function validateContact() {
     var fields = {
       name: document.getElementById('intakeName'),
-      phone: document.getElementById('intakePhone'),
+      phone: document.getElementById('intakePhone') || document.getElementById('intakeContactPhoneField'),
       email: document.getElementById('intakeEmail')
     };
     var invalid = [];
@@ -2219,16 +2453,33 @@ function closeDetail(id) {
     return invalid.length === 0;
   }
 
+  function isEmptyFlowValue(field, value) {
+    if (field.type === 'phone') {
+      return !value || !String(value.areaCode || '').trim() || !String(value.number || '').trim();
+    }
+    if (field.type === 'addressHistory') {
+      return !Array.isArray(value) || !value.some(function (row) {
+        return String(row.line1 || '').trim() && String(row.city || '').trim();
+      });
+    }
+    if (field.type === 'employmentHistory') {
+      return !Array.isArray(value) || !value.some(function (row) {
+        return String(row.name || row.activity || '').trim();
+      });
+    }
+    return Array.isArray(value) ? value.length === 0 : !String(value || '').trim();
+  }
+
   function validateCurrentFlowStep() {
     if (!(state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex())) return true;
     var schemaStep = flowSteps()[state.step - flowStepStart()];
     var invalid = [];
     (schemaStep.fields || []).forEach(function (field) {
       var value = state.formAnswers[field.id];
-      var empty = Array.isArray(value) ? value.length === 0 : !String(value || '').trim();
+      var empty = isEmptyFlowValue(field, value);
       if (!field.required || !empty) return;
       var input = document.getElementById(fieldDomId(field.id));
-      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"]');
+      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
       invalid.push(input || group);
     });
     card.querySelectorAll('.intake-invalid').forEach(function (item) { item.classList.remove('intake-invalid'); });
@@ -2239,6 +2490,74 @@ function closeDetail(id) {
       error.style.display = invalid.length ? 'block' : 'none';
     }
     return invalid.length === 0;
+  }
+
+  function matchingStateOption(value, select) {
+    var text = String(value || '').trim();
+    if (!text || !select) return text;
+    var options = Array.prototype.slice.call(select.options || []);
+    var match = options.find(function (option) { return optionMatchesValue(option.value, text) || optionMatchesValue(option.textContent, text); });
+    return match ? match.value : text;
+  }
+
+  function setAnswerAndInput(id, value) {
+    var input = document.getElementById(fieldDomId(id));
+    var nextValue = String(value || '');
+    if (input) {
+      if (input.tagName === 'SELECT') nextValue = matchingStateOption(nextValue, input);
+      input.value = nextValue;
+    }
+    state.formAnswers[id] = nextValue;
+  }
+
+  function applyAddressSuggestion(fieldId, suggestion) {
+    if (!suggestion) return;
+    setAnswerAndInput(fieldId, suggestion.line1 || '');
+    if (fieldId === 'mailing_address_line1') {
+      setAnswerAndInput('mailing_city', suggestion.city || '');
+      setAnswerAndInput('mailing_state', suggestion.state || '');
+      setAnswerAndInput('mailing_zip', suggestion.zip || '');
+      setAnswerAndInput('mailing_country', suggestion.country || 'United States');
+    }
+    var box = card.querySelector('[data-address-suggestions="' + fieldId + '"]');
+    var note = card.querySelector('[data-address-note="' + fieldId + '"]');
+    if (box) box.classList.remove('open');
+    if (note) note.textContent = suggestion.verified ? 'USPS verified.' : (suggestion.source === 'local-parse' ? 'Address parsed locally. USPS validation will run when configured.' : '');
+  }
+
+  function renderAddressSuggestions(fieldId, suggestions) {
+    var box = card.querySelector('[data-address-suggestions="' + fieldId + '"]');
+    var note = card.querySelector('[data-address-note="' + fieldId + '"]');
+    if (!box) return;
+    state.addressSuggestions[fieldId] = suggestions || [];
+    if (!suggestions || !suggestions.length) {
+      box.innerHTML = '';
+      box.classList.remove('open');
+      if (note) note.textContent = '';
+      return;
+    }
+    box.innerHTML = suggestions.map(function (suggestion, index) {
+      return '<button type="button" class="intake-address-suggestion" data-address-suggestion-index="' + index + '" data-address-suggestion-field="' + esc(fieldId) + '">' + esc(t().addressSuggestion) + ': ' + esc(suggestion.label || suggestion.line1 || '') + '</button>';
+    }).join('');
+    box.classList.add('open');
+    if (note) note.textContent = suggestions[0].verified ? 'USPS verified.' : 'Select the closest address. USPS can standardize it when credentials are connected.';
+  }
+
+  async function suggestAddress(fieldId, query) {
+    if (!query || query.trim().length < 8) {
+      renderAddressSuggestions(fieldId, []);
+      return;
+    }
+    var note = card.querySelector('[data-address-note="' + fieldId + '"]');
+    if (note) note.textContent = t().addressChecking;
+    try {
+      var response = await fetch(addressSuggestEndpoint(query), { headers: { 'Accept': 'application/json' } });
+      var data = await response.json();
+      renderAddressSuggestions(fieldId, data.ok ? (data.suggestions || []) : []);
+    } catch (err) {
+      renderAddressSuggestions(fieldId, []);
+      if (note) note.textContent = '';
+    }
   }
 
   function intakeEndpoint() {
@@ -2315,14 +2634,32 @@ function closeDetail(id) {
     }
   }
 
-  card.addEventListener('click', function (event) {
+  async function changeIntakeLanguage(lang, advanceFromLanguageStep) {
+    state.lang = lang;
+    state.langManual = true;
+    if (advanceFromLanguageStep && state.step === 0) state.step = 1;
+    if (state.service === 'immigration' && state.formCode && state.flowSchema) {
+      state.flowSchema = null;
+      await loadImmigrationFlow();
+      render();
+      return;
+    }
+    render();
+  }
+
+  card.addEventListener('click', async function (event) {
+    var addressSuggestion = event.target.closest('[data-address-suggestion-index]');
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
     var account = event.target.closest('[data-account-mode]');
+    if (addressSuggestion) {
+      var fieldId = addressSuggestion.getAttribute('data-address-suggestion-field');
+      var index = Number(addressSuggestion.getAttribute('data-address-suggestion-index'));
+      applyAddressSuggestion(fieldId, (state.addressSuggestions[fieldId] || [])[index]);
+      return;
+    }
     if (lang) {
-      state.lang = lang.getAttribute('data-intake-lang');
-      if (state.step === 0) state.step = 1;
-      render();
+      await changeIntakeLanguage(lang.getAttribute('data-intake-lang'), true);
       return;
     }
     if (service) {
@@ -2337,11 +2674,39 @@ function closeDetail(id) {
     }
   });
 
-  langEl.addEventListener('click', function (event) {
+  card.addEventListener('input', function (event) {
+    var addressInput = event.target.closest('[data-address-autocomplete]');
+    if (!addressInput) return;
+    var fieldId = addressInput.getAttribute('data-address-autocomplete');
+    state.formAnswers[fieldId] = addressInput.value.trim();
+    clearTimeout(addressSuggestTimer);
+    addressSuggestTimer = setTimeout(function () {
+      suggestAddress(fieldId, addressInput.value.trim());
+    }, 280);
+  });
+
+  card.addEventListener('change', function (event) {
+    var radio = event.target.closest('[data-flow-radio]');
+    var checkbox = event.target.closest('[data-flow-checkbox]');
+    if (!radio && !checkbox) return;
+    var group = event.target.closest('[data-flow-radio-group], [data-flow-checkbox-group]');
+    if (!group) return;
+    if (radio) {
+      group.querySelectorAll('.intake-option').forEach(function (item) { item.classList.remove('active'); });
+      var radioLabel = radio.closest('.intake-option');
+      if (radioLabel) radioLabel.classList.add('active');
+    }
+    if (checkbox) {
+      var checkboxLabel = checkbox.closest('.intake-option');
+      if (checkboxLabel) checkboxLabel.classList.toggle('active', checkbox.checked);
+    }
+    captureStep();
+  });
+
+  langEl.addEventListener('click', async function (event) {
     var btn = event.target.closest('[data-intake-lang]');
     if (!btn) return;
-    state.lang = btn.getAttribute('data-intake-lang');
-    render();
+    await changeIntakeLanguage(btn.getAttribute('data-intake-lang'), false);
   });
 
   backBtn.addEventListener('click', function () {
@@ -2381,6 +2746,7 @@ function closeDetail(id) {
   window.openIntakeModal = function (prefill) {
     var rememberedLang = state.lang || 'en';
     state.lang = rememberedLang;
+    state.langManual = false;
     state.step = 0;
     state.service = '';
     state.formCode = '';
@@ -2392,6 +2758,7 @@ function closeDetail(id) {
     state.flowLoading = false;
     state.flowError = '';
     state.formAnswers = {};
+    state.addressSuggestions = {};
     state.officialForm = null;
     state.i765 = { basis: '', legalName: '', dob: '', address: '', immigrationStatus: '', priorEad: '', evidence: '' };
     state.contact = { name: '', phone: '', email: '' };
@@ -2406,7 +2773,10 @@ function closeDetail(id) {
       var inferredService = inferIntakeService(text);
       var inferredFormCode = inferIntakeFormCode(text);
       state.situation = text;
-      if (detectedLang) state.lang = detectedLang;
+      if (detectedLang) {
+        state.lang = detectedLang;
+        state.langManual = true;
+      }
       if (inferredService) state.service = inferredService;
       if (inferredFormCode) state.formCode = inferredFormCode;
       if (codeMatch) {

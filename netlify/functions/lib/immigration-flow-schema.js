@@ -1,4 +1,5 @@
 const SCHEMA_VERSION = 'immigration-flow-v1';
+const { stateSelectOptions } = require('./us-address');
 
 const DISCLAIMER = 'Document preparation only. Possible forms may include official USCIS forms. Imverica is not a law firm or attorney and does not provide legal advice.';
 
@@ -91,7 +92,11 @@ const LOCALIZATION = {
       fee_waiver_basis: 'Основание fee waiver',
       household_income: 'Household income',
       green_card_date: 'Дата получения permanent resident status',
-      basis_for_naturalization: 'Основание naturalization'
+      basis_for_naturalization: 'Основание naturalization',
+      addresses_last_five_years: 'Адреса за последние 5 лет',
+      employment_school_last_five_years: 'Работа или учеба за последние 5 лет',
+      spouse_residence_history: 'Адреса beneficiary за последние 5 лет',
+      spouse_employment_history: 'Работа beneficiary за последние 5 лет'
     },
     options: {
       Yes: 'Да',
@@ -143,7 +148,11 @@ const LOCALIZATION = {
       eligibility_category_code: 'Eligibility category code, якщо знаєте',
       prior_ead: 'EAD вже був раніше?',
       beneficiary_full_name: 'Повне ім’я beneficiary',
-      inside_us_now: 'Ви зараз фізично перебуваєте у США?'
+      inside_us_now: 'Ви зараз фізично перебуваєте у США?',
+      addresses_last_five_years: 'Адреси за останні 5 років',
+      employment_school_last_five_years: 'Робота або навчання за останні 5 років',
+      spouse_residence_history: 'Адреси beneficiary за останні 5 років',
+      spouse_employment_history: 'Робота beneficiary за останні 5 років'
     },
     options: { Yes: 'Так', No: 'Ні', 'Not sure': 'Не знаю', Other: 'Інше', 'Other or not sure': 'Інше або не знаю' }
   },
@@ -183,7 +192,11 @@ const LOCALIZATION = {
       eligibility_category_code: 'Eligibility category code, si lo sabe',
       prior_ead: '¿Ha tenido EAD antes?',
       beneficiary_full_name: 'Nombre completo del beneficiario',
-      inside_us_now: '¿Está físicamente dentro de Estados Unidos ahora?'
+      inside_us_now: '¿Está físicamente dentro de Estados Unidos ahora?',
+      addresses_last_five_years: 'Direcciones de los últimos 5 años',
+      employment_school_last_five_years: 'Trabajo o escuela de los últimos 5 años',
+      spouse_residence_history: 'Direcciones del beneficiary de los últimos 5 años',
+      spouse_employment_history: 'Trabajo del beneficiary de los últimos 5 años'
     },
     options: { Yes: 'Sí', No: 'No', 'Not sure': 'No estoy seguro', Other: 'Otro', 'Other or not sure': 'Otro o no estoy seguro' }
   }
@@ -219,6 +232,8 @@ function field(id, label, type = 'text', options = {}) {
 function step(id, title, help, fields) {
   return { id, title, help, fields };
 }
+
+const US_STATE_OPTIONS = stateSelectOptions();
 
 function normalizeCode(value) {
   return String(value || '').trim().toUpperCase().replace(/\s+/g, ' ');
@@ -286,7 +301,7 @@ function applicantFields() {
 
 function addressFields() {
   return [
-    field('mailing_address_line1', 'Mailing address line 1', 'text', {
+    field('mailing_address_line1', 'Mailing address line 1', 'addressAutocomplete', {
       required: true,
       autocomplete: 'address-line1'
     }),
@@ -297,9 +312,10 @@ function addressFields() {
       required: true,
       autocomplete: 'address-level2'
     }),
-    field('mailing_state', 'State', 'text', {
+    field('mailing_state', 'State', 'select', {
       required: true,
-      autocomplete: 'address-level1'
+      autocomplete: 'address-level1',
+      options: US_STATE_OPTIONS
     }),
     field('mailing_zip', 'ZIP code', 'text', {
       required: true,
@@ -313,15 +329,32 @@ function addressFields() {
     field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', {
       options: ['Yes', 'No']
     }),
-    field('daytime_phone', 'Daytime phone', 'tel', {
+    field('daytime_phone', 'Daytime phone', 'phone', {
       autocomplete: 'tel',
-      inputmode: 'tel'
+      inputmode: 'tel',
+      countryCodeDefault: '+1'
     }),
     field('email_address', 'Email address', 'email', {
       autocomplete: 'email',
       inputmode: 'email'
     })
   ];
+}
+
+function addressHistoryField(id, label, options = {}) {
+  return field(id, label, 'addressHistory', {
+    entries: options.entries || 4,
+    required: Boolean(options.required),
+    stateOptions: US_STATE_OPTIONS
+  });
+}
+
+function employmentHistoryField(id, label, options = {}) {
+  return field(id, label, 'employmentHistory', {
+    entries: options.entries || 4,
+    required: Boolean(options.required),
+    stateOptions: US_STATE_OPTIONS
+  });
 }
 
 function immigrationHistoryFields() {
@@ -397,8 +430,8 @@ const FORM_OVERRIDES = {
   ],
   'I-130A': [
     step('spouse_biographic', 'Spouse beneficiary biographic details', 'Form I-130A usually supports a spouse petition.', [
-      field('spouse_residence_history', 'Beneficiary residence history for the last five years', 'textarea', { required: true }),
-      field('spouse_employment_history', 'Beneficiary employment history for the last five years', 'textarea'),
+      addressHistoryField('spouse_residence_history', 'Beneficiary residence history for the last five years', { required: true }),
+      employmentHistoryField('spouse_employment_history', 'Beneficiary employment history for the last five years'),
       field('spouse_parents_names', 'Beneficiary parents names and places of birth', 'textarea'),
       field('last_address_together', 'Last address where spouses lived together', 'textarea')
     ])
@@ -522,8 +555,8 @@ const FORM_OVERRIDES = {
       field('green_card_date', 'Date you became a permanent resident', 'date', { required: true }),
       field('basis_for_naturalization', 'Basis for naturalization', 'select', { options: ['5-year permanent resident', '3-year marriage to U.S. citizen', 'Military', 'Other or not sure'] }),
       field('trips_outside_us', 'Trips outside the U.S. during eligibility period', 'textarea'),
-      field('addresses_last_five_years', 'Addresses for the last five years', 'textarea'),
-      field('employment_school_last_five_years', 'Employment or school for the last five years', 'textarea'),
+      addressHistoryField('addresses_last_five_years', 'Addresses for the last five years', { required: true }),
+      employmentHistoryField('employment_school_last_five_years', 'Employment or school for the last five years', { required: true }),
       field('citizenship_exemptions_needed', 'Any disability/accommodation or language exemption documents?', 'textarea')
     ])
   ],
