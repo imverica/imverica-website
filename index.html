@@ -2110,22 +2110,37 @@ function closeDetail(id) {
     return attrs;
   }
 
+  function optionValue(option) {
+    if (option && typeof option === 'object') return String(option.value || option.label || '');
+    return String(option || '');
+  }
+
+  function optionLabel(option) {
+    if (option && typeof option === 'object') return String(option.label || option.value || '');
+    return String(option || '');
+  }
+
   function optionMatchesValue(option, value) {
-    var optionText = String(option || '');
+    var optionText = optionValue(option);
+    var labelText = optionLabel(option);
     var valueText = String(value || '');
-    if (optionText === valueText) return true;
+    if (optionText === valueText || labelText === valueText) return true;
     var code = optionText.match(/^([A-Z]{2})\s+-\s+/);
     return Boolean(code && code[1] === valueText.toUpperCase());
   }
 
   function renderSelectOptions(options, value) {
     return (Array.isArray(options) ? options : []).map(function (option) {
-      return '<option value="' + esc(option) + '"' + (optionMatchesValue(option, value) ? ' selected' : '') + '>' + esc(option) + '</option>';
+      return '<option value="' + esc(optionValue(option)) + '"' + (optionMatchesValue(option, value) ? ' selected' : '') + '>' + esc(optionLabel(option)) + '</option>';
     }).join('');
   }
 
   function renderStateSelect(name, value, options) {
     return '<select data-history-part="' + esc(name) + '"><option value=""></option>' + renderSelectOptions(options, value) + '</select>';
+  }
+
+  function renderCountrySelect(name, value, options) {
+    return '<select data-history-part="' + esc(name) + '"><option value=""></option>' + renderSelectOptions(options, value || 'United States') + '</select>';
   }
 
   function phoneValue(value, field) {
@@ -2156,6 +2171,7 @@ function closeDetail(id) {
     var copy = t();
     var rows = historyRows(fieldValue(field), field.entries || 4);
     var options = field.stateOptions || [];
+    var countryOptions = field.countryOptions || [];
     return '<div class="intake-history" data-flow-address-history="' + esc(field.id) + '">' +
       '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
       rows.map(function (row, index) {
@@ -2168,7 +2184,7 @@ function closeDetail(id) {
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
           '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
-          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyCountry) + '</label><input type="text" data-history-part="country" autocomplete="country-name" value="' + esc(row.country || 'United States') + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyCountry) + '</label>' + renderCountrySelect('country', row.country || 'United States', countryOptions) + '</div>' +
         '</div>';
       }).join('') + '</div>';
   }
@@ -2177,6 +2193,7 @@ function closeDetail(id) {
     var copy = t();
     var rows = historyRows(fieldValue(field), field.entries || 4);
     var options = field.stateOptions || [];
+    var countryOptions = field.countryOptions || [];
     return '<div class="intake-history" data-flow-employment-history="' + esc(field.id) + '">' +
       '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
       rows.map(function (row, index) {
@@ -2191,6 +2208,7 @@ function closeDetail(id) {
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
           '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyCountry) + '</label>' + renderCountrySelect('country', row.country || 'United States', countryOptions) + '</div>' +
         '</div>';
       }).join('') + '</div>';
   }
@@ -2213,8 +2231,9 @@ function closeDetail(id) {
     if (field.type === 'radio') {
       return '<div class="intake-field" data-flow-radio-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
         options.map(function (option) {
-          var checked = String(value) === String(option) ? ' checked' : '';
-          return '<label class="intake-option ' + (checked ? 'active' : '') + '"><input type="radio" name="' + esc(fieldDomId(field.id)) + '" data-flow-radio="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '><strong>' + esc(option) + '</strong></label>';
+          var optionVal = optionValue(option);
+          var checked = optionMatchesValue(option, value) ? ' checked' : '';
+          return '<label class="intake-option ' + (checked ? 'active' : '') + '"><input type="radio" name="' + esc(fieldDomId(field.id)) + '" data-flow-radio="' + esc(field.id) + '" value="' + esc(optionVal) + '"' + checked + '><strong>' + esc(optionLabel(option)) + '</strong></label>';
         }).join('') + '</div>' + help + '</div>';
     }
 
@@ -2222,8 +2241,9 @@ function closeDetail(id) {
       var selected = Array.isArray(value) ? value : String(value || '').split('|').filter(Boolean);
       return '<div class="intake-field" data-flow-checkbox-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
         options.map(function (option) {
-          var checked = selected.indexOf(option) !== -1 ? ' checked' : '';
-          return '<label class="intake-option ' + (checked ? 'active' : '') + '"><input type="checkbox" data-flow-checkbox="' + esc(field.id) + '" value="' + esc(option) + '"' + checked + '><strong>' + esc(option) + '</strong></label>';
+          var optionVal = optionValue(option);
+          var checked = selected.indexOf(optionVal) !== -1 || selected.indexOf(optionLabel(option)) !== -1 ? ' checked' : '';
+          return '<label class="intake-option ' + (checked ? 'active' : '') + '"><input type="checkbox" data-flow-checkbox="' + esc(field.id) + '" value="' + esc(optionVal) + '"' + checked + '><strong>' + esc(optionLabel(option)) + '</strong></label>';
         }).join('') + '</div>' + help + '</div>';
     }
 

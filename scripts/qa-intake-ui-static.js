@@ -23,6 +23,8 @@ includes('intakePhoneNumber', 'split contact phone number field');
 includes('data-flow-address-history', 'structured address history renderer');
 includes('data-flow-employment-history', 'structured employment history renderer');
 includes('.intake-option input{position:absolute;opacity:0;pointer-events:none;}', 'hidden radio/checkbox dots CSS');
+includes('function optionValue(option)', 'canonical option value helper');
+includes('function optionLabel(option)', 'localized option label helper');
 includes('renderSelectOptions(options, value)', 'state dropdown selection renderer');
 
 assert(!/if \(data\.language\) state\.lang = data\.language;/.test(html), 'route should not blindly override selected language');

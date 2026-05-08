@@ -1,5 +1,6 @@
 const SCHEMA_VERSION = 'immigration-flow-v1';
 const { stateSelectOptions } = require('./us-address');
+const { countrySelectOptions } = require('./country-options');
 
 const DISCLAIMER = 'Document preparation only. Possible forms may include official USCIS forms. Imverica is not a law firm or attorney and does not provide legal advice.';
 
@@ -11,22 +12,38 @@ const LOCALIZATION = {
       address_contact: 'Адрес и контакт',
       immigration_history: 'Иммиграционная история',
       documents_review: 'Документы и проверка',
-      work_authorization: 'Основание для work permit',
+      work_authorization: 'Основание для разрешения на работу',
       family_petition: 'Детали семейной петиции',
       spouse_biographic: 'Биографические данные супруга',
-      travel_document: 'Запрос travel document',
-      adjustment_basis: 'Основание для adjustment of status',
-      asylum_claim: 'Asylum / withholding request',
-      support_affidavit: 'Affidavit of support',
-      fee_waiver: 'Основание fee waiver',
-      naturalization: 'Подготовка naturalization'
+      travel_document: 'Запрос проездного документа',
+      adjustment_basis: 'Основание для изменения статуса',
+      asylum_claim: 'Запрос asylum / withholding',
+      support_affidavit: 'Финансовая поддержка спонсора',
+      fee_waiver: 'Основание для освобождения от пошлины',
+      naturalization: 'Подготовка гражданства',
+      green_card_replacement: 'Замена или продление green card',
+      nonimmigrant_extension: 'Изменение или продление статуса',
+      remove_conditions: 'Снятие условий с green card',
+      tps_details: 'Детали TPS',
+      daca_details: 'Детали DACA',
+      household_member_contract: 'Доход члена household',
+      certificate_replacement: 'Замена сертификата',
+      citizenship_certificate: 'Сертификат гражданства',
+      biographic_history: 'Адреса и работа за 5 лет'
     },
     stepHelp: {
       purpose: 'Подтвердите, зачем готовится эта форма и есть ли связанные подачи.',
       applicant: 'Укажите данные так, как они должны быть в форме.',
       address_contact: 'Автозаполнение телефона может помочь с именем, телефоном, email и адресом.',
       immigration_history: 'Эти ответы помогают подготовить USCIS-поля и список документов.',
-      documents_review: 'Укажите, какие документы уже есть. Файлы можно будет загрузить после checkout или кабинета.'
+      documents_review: 'Укажите, какие документы уже есть. Файлы можно будет загрузить после checkout или кабинета.',
+      adjustment_basis: 'Это помогает определить возможные связанные формы и подтверждающие документы.',
+      work_authorization: 'Выберите ближайшее основание. Точную категорию проверим перед подготовкой формы.',
+      family_petition: 'Информация о петиционере, бенефициаре и родстве.',
+      spouse_biographic: 'Данные супруга-бенефициара для семейной петиции.',
+      travel_document: 'Укажите, какой проездной документ нужен и для какой поездки.',
+      naturalization: 'Базовые вопросы для подготовки N-400.',
+      biographic_history: 'USCIS может требовать адреса и работу за последние 5 лет.'
     },
     fields: {
       form_code_confirmed: 'Запрошенная форма',
@@ -39,7 +56,7 @@ const LOCALIZATION = {
       other_names_used: 'Другие имена, которые использовались',
       date_of_birth: 'Дата рождения',
       country_of_birth: 'Страна рождения',
-      country_of_citizenship: 'Гражданство / nationality',
+      country_of_citizenship: 'Страна гражданства или национальности',
       alien_number: 'A-number, если есть',
       uscis_online_account_number: 'USCIS online account number, если есть',
       mailing_address_line1: 'Почтовый адрес, строка 1',
@@ -56,29 +73,29 @@ const LOCALIZATION = {
       i94_number: 'I-94 number, если есть',
       passport_number: 'Номер паспорта, если относится к форме',
       passport_expiration: 'Дата окончания паспорта',
-      prior_uscis_filings: 'Предыдущие или pending USCIS filings',
-      identity_documents_available: 'Какие identity documents есть',
-      supporting_documents_available: 'Какие supporting documents есть',
+      prior_uscis_filings: 'Предыдущие или ожидающие подачи в USCIS',
+      identity_documents_available: 'Какие документы личности есть',
+      supporting_documents_available: 'Какие подтверждающие документы есть',
       translation_needed: 'Нужен перевод документов?',
       interpreter_or_preparer_needed: 'Нужна секция interpreter/preparer?',
       extra_notes_for_preparer: 'Что еще должен знать preparer?',
-      ead_basis: 'На чем основан work permit?',
-      eligibility_category_code: 'Eligibility category code, если знаете',
+      ead_basis: 'Основание для разрешения на работу',
+      eligibility_category_code: 'Код категории права на разрешение, если знаете',
       prior_ead: 'EAD уже был раньше?',
-      pending_application_receipt: 'Receipt number связанного pending case, если есть',
-      petitioner_status: 'Статус petitioner',
-      relationship_to_beneficiary: 'Отношение к beneficiary',
-      beneficiary_full_name: 'Полное имя beneficiary',
-      beneficiary_location: 'Beneficiary находится в США?',
-      marriage_date: 'Если spouse case, дата брака',
+      pending_application_receipt: 'Receipt number связанного pending дела, если есть',
+      petitioner_status: 'Статус петиционера',
+      relationship_to_beneficiary: 'Степень родства с бенефициаром',
+      beneficiary_full_name: 'Полное имя бенефициара',
+      beneficiary_location: 'Бенефициар находится в США?',
+      marriage_date: 'Если дело супруга, дата брака',
       prior_marriages: 'Были ли предыдущие браки у кого-либо?',
-      adjustment_basis: 'Основание для adjustment',
-      petitioner_or_sponsor: 'Имя petitioner, employer или sponsor',
+      adjustment_basis: 'Основание для изменения статуса',
+      petitioner_or_sponsor: 'Имя петиционера, работодателя или спонсора',
       underlying_receipt_number: 'Receipt number основной петиции, если есть',
       inside_us_now: 'Вы сейчас физически находитесь в США?',
-      inspection_or_parole: 'Последний въезд был inspected, admitted или paroled?',
-      medical_exam_status: 'Статус medical exam I-693',
-      travel_document_type: 'Тип travel document',
+      inspection_or_parole: 'Последний въезд был официально разрешен на границе или через parole?',
+      medical_exam_status: 'Статус медосмотра I-693',
+      travel_document_type: 'Тип проездного документа',
       planned_departure_date: 'Планируемая дата выезда',
       planned_return_date: 'Планируемая дата возвращения',
       countries_to_visit: 'Страны поездки',
@@ -86,19 +103,67 @@ const LOCALIZATION = {
       asylum_basis: 'Основание asylum по описанию заявителя',
       harm_or_fear_summary: 'Краткое описание harm/fear',
       family_members_included: 'Family members для включения',
-      sponsor_full_name: 'Полное имя sponsor',
-      household_size: 'Household size',
-      current_annual_income: 'Текущий годовой income',
-      fee_waiver_basis: 'Основание fee waiver',
-      household_income: 'Household income',
-      green_card_date: 'Дата получения permanent resident status',
-      basis_for_naturalization: 'Основание naturalization',
+      sponsor_full_name: 'Полное имя спонсора',
+      household_size: 'Размер household',
+      current_annual_income: 'Текущий годовой доход',
+      fee_waiver_basis: 'Основание для освобождения от пошлины',
+      household_income: 'Доход household',
+      green_card_date: 'Дата получения статуса permanent resident',
+      basis_for_naturalization: 'Основание для гражданства',
       addresses_last_five_years: 'Адреса за последние 5 лет',
       employment_school_last_five_years: 'Работа или учеба за последние 5 лет',
       spouse_residence_history: 'Адреса beneficiary за последние 5 лет',
       spouse_employment_history: 'Работа beneficiary за последние 5 лет',
       g325a_residence_history: 'Адреса за последние 5 лет',
-      g325a_employment_history: 'Работа за последние 5 лет'
+      g325a_employment_history: 'Работа за последние 5 лет',
+      i90_reason: 'Причина подготовки I-90',
+      green_card_expiration: 'Дата окончания текущей green card',
+      green_card_lost_or_stolen_details: 'Если карта потеряна, украдена или повреждена, опишите что произошло',
+      biographic_change_details: 'Если изменились имя или биографические данные, опишите изменение',
+      spouse_residence_history: 'Адреса супруга-бенефициара за последние 5 лет',
+      spouse_employment_history: 'Работа супруга-бенефициара за последние 5 лет',
+      spouse_parents_names: 'Имена родителей бенефициара и места рождения',
+      last_address_together: 'Последний общий адрес супругов',
+      pending_case_receipt: 'Receipt number ожидающего USCIS-дела, если есть',
+      current_nonimmigrant_status: 'Текущий неиммиграционный статус',
+      requested_status: 'Запрашиваемый статус',
+      current_i94_expiration: 'Дата окончания текущего I-94',
+      dependents_included: 'Включены ли члены семьи/dependents?',
+      reason_for_extension_or_change: 'Причина изменения или продления статуса',
+      date_last_entered_us: 'Дата последнего въезда в США',
+      one_year_deadline_issue: 'Подача близко к одному году после въезда или позже?',
+      i751_filing_type: 'Тип подачи I-751',
+      conditional_green_card_expiration: 'Дата окончания conditional green card',
+      marriage_status_now: 'Текущий статус брака',
+      joint_evidence_available: 'Какие совместные доказательства есть',
+      tps_country: 'Страна TPS designation',
+      initial_or_reregistration: 'Первичная подача TPS или повторная регистрация?',
+      continuous_residence_date: 'Дата начала непрерывного проживания в США',
+      tps_prior_approval: 'Предыдущие TPS approval или receipt numbers',
+      daca_request_type: 'Тип запроса DACA',
+      arrival_before_age_16: 'Въехали до 16 лет?',
+      education_or_military_status: 'Школа, GED, окончание учебы или military status',
+      prior_daca_dates: 'Предыдущие DACA approval dates и receipt numbers',
+      sponsor_status: 'Статус спонсора',
+      tax_returns_available: 'Какие налоговые декларации доступны',
+      joint_sponsor_needed: 'Нужен ли дополнительный спонсор?',
+      household_member_name: 'Полное имя члена household',
+      relationship_to_sponsor: 'Отношение к спонсору',
+      household_member_income: 'Годовой доход члена household',
+      proof_of_residence_available: 'Есть подтверждение общего адреса или household relationship?',
+      benefits_received: 'Получаемые социальные пособия/public benefits, если есть',
+      household_size_fee_waiver: 'Размер household',
+      hardship_explanation: 'Объяснение финансовых трудностей',
+      trips_outside_us: 'Поездки за пределы США за нужный период',
+      citizenship_exemptions_needed: 'Нужны документы для disability/accommodation или language exemption?',
+      certificate_type: 'Тип сертификата',
+      replacement_reason: 'Причина замены или исправления',
+      certificate_number: 'Номер сертификата, если знаете',
+      name_change_details: 'Детали смены имени или исправления',
+      citizenship_claim_basis: 'Основание заявления о гражданстве',
+      us_citizen_parent_details: 'Данные родителя-гражданина США',
+      parent_citizenship_evidence: 'Доказательства гражданства родителя',
+      custody_or_residence_history: 'История custody и проживания'
     },
     options: {
       Yes: 'Да',
@@ -106,12 +171,88 @@ const LOCALIZATION = {
       'Not sure': 'Не знаю',
       Other: 'Другое',
       'Other or not sure': 'Другое или не знаю',
-      'Pending green card / adjustment of status': 'Pending green card / adjustment of status',
+      'Family petition': 'Семейная петиция',
+      'Employment petition': 'Петиция через работодателя',
+      'Diversity visa': 'Diversity visa',
+      'Asylee or refugee': 'Получивший asylum или refugee',
+      'VAWA / special immigrant': 'VAWA / special immigrant',
+      'Pending green card / adjustment of status': 'Ожидающее заявление на green card / изменение статуса',
       'Asylum or pending asylum': 'Asylum или pending asylum',
       TPS: 'TPS',
       DACA: 'DACA',
       'Student category': 'Студенческая категория',
-      'Parole or humanitarian category': 'Parole или humanitarian category'
+      'Parole or humanitarian category': 'Parole или гуманитарная категория',
+      'Already completed': 'Уже пройден',
+      'Need to schedule': 'Нужно записаться',
+      'Will submit later if allowed': 'Предоставлю позже, если возможно',
+      'U.S. citizen': 'Гражданин США',
+      'Lawful permanent resident': 'Постоянный резидент',
+      'U.S. national': 'U.S. national',
+      Spouse: 'Супруг/супруга',
+      Parent: 'Родитель',
+      Child: 'Ребенок',
+      Sibling: 'Брат/сестра',
+      'Advance parole': 'Advance parole (разрешение на выезд)',
+      'Re-entry permit': 'Re-entry permit',
+      'Refugee travel document': 'Проездной документ refugee',
+      'TPS travel authorization': 'TPS travel authorization',
+      Race: 'Раса',
+      Religion: 'Религия',
+      Nationality: 'Национальность',
+      'Political opinion': 'Политическое мнение',
+      'Particular social group': 'Particular social group',
+      'CAT / torture concern': 'CAT / риск пыток',
+      'Joint filing with spouse': 'Совместная подача с супругом',
+      'Divorce waiver': 'Waiver после развода',
+      'Abuse or extreme cruelty waiver': 'Waiver из-за abuse / extreme cruelty',
+      'Hardship waiver': 'Hardship waiver',
+      'Married living together': 'В браке, проживают вместе',
+      Separated: 'Раздельно проживают',
+      Divorced: 'Разведены',
+      Widowed: 'Вдовец/вдова',
+      'Initial TPS': 'Первичная подача TPS',
+      'Re-registration': 'Re-registration',
+      'Late initial filing': 'Late initial filing',
+      Renewal: 'Продление',
+      Initial: 'Первичная подача',
+      'Means-tested benefit': 'Means-tested benefit',
+      'Household income at or below guideline': 'Доход household на уровне guideline или ниже',
+      'Financial hardship': 'Финансовые трудности',
+      '5-year permanent resident': 'Permanent resident 5 лет',
+      '3-year marriage to U.S. citizen': '3 года в браке с гражданином США',
+      Military: 'Military',
+      'Naturalization certificate': 'Сертификат naturalization',
+      'Citizenship certificate': 'Сертификат гражданства',
+      'Declaration of intention': 'Declaration of intention',
+      'Repatriation certificate': 'Repatriation certificate',
+      Lost: 'Потерян',
+      Stolen: 'Украден',
+      Damaged: 'Поврежден',
+      'Name change': 'Смена имени',
+      'USCIS error': 'Ошибка USCIS',
+      'Gender change': 'Смена gender marker',
+      'U.S. citizen parent at birth': 'Родитель был гражданином США при рождении',
+      'Derived citizenship after birth': 'Derived citizenship после рождения',
+      Adoption: 'Adoption',
+      Passport: 'Паспорт',
+      'Birth certificate': 'Свидетельство о рождении',
+      'State ID / driver license': 'State ID / водительские права',
+      'Green card': 'Green card',
+      'EAD card': 'EAD card',
+      'I-94': 'I-94',
+      'United States': 'United States / США',
+      Russia: 'Russia / Россия',
+      Ukraine: 'Ukraine / Украина',
+      Belarus: 'Belarus / Беларусь',
+      Kazakhstan: 'Kazakhstan / Казахстан',
+      Uzbekistan: 'Uzbekistan / Узбекистан',
+      Moldova: 'Moldova / Молдова',
+      Georgia: 'Georgia / Грузия',
+      Armenia: 'Armenia / Армения',
+      Azerbaijan: 'Azerbaijan / Азербайджан',
+      Kyrgyzstan: 'Kyrgyzstan / Кыргызстан',
+      Tajikistan: 'Tajikistan / Таджикистан',
+      Turkmenistan: 'Turkmenistan / Туркменистан'
     }
   },
   uk: {
@@ -240,6 +381,7 @@ function step(id, title, help, fields) {
 }
 
 const US_STATE_OPTIONS = stateSelectOptions();
+const COUNTRY_OPTIONS = countrySelectOptions();
 
 function normalizeCode(value) {
   return String(value || '').trim().toUpperCase().replace(/\s+/g, ' ');
@@ -277,9 +419,11 @@ function applicantFields() {
       autocomplete: 'name'
     }),
     field('applicant_given_name', 'Given name', 'text', {
+      required: true,
       autocomplete: 'given-name'
     }),
     field('applicant_family_name', 'Family name', 'text', {
+      required: true,
       autocomplete: 'family-name'
     }),
     field('other_names_used', 'Other names used', 'textarea', {
@@ -289,11 +433,13 @@ function applicantFields() {
       required: true,
       autocomplete: 'bday'
     }),
-    field('country_of_birth', 'Country of birth', 'text', {
-      autocomplete: 'country-name'
+    field('country_of_birth', 'Country of birth', 'select', {
+      autocomplete: 'country-name',
+      options: COUNTRY_OPTIONS
     }),
-    field('country_of_citizenship', 'Country of citizenship or nationality', 'text', {
-      autocomplete: 'country-name'
+    field('country_of_citizenship', 'Country of citizenship or nationality', 'select', {
+      autocomplete: 'country-name',
+      options: COUNTRY_OPTIONS
     }),
     field('alien_number', 'A-number, if any', 'text', {
       autocomplete: 'off',
@@ -328,9 +474,10 @@ function addressFields() {
       autocomplete: 'postal-code',
       inputmode: 'numeric'
     }),
-    field('mailing_country', 'Country', 'text', {
+    field('mailing_country', 'Country', 'select', {
       autocomplete: 'country-name',
-      value: 'United States'
+      value: 'United States',
+      options: COUNTRY_OPTIONS
     }),
     field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', {
       options: ['Yes', 'No']
@@ -351,7 +498,8 @@ function addressHistoryField(id, label, options = {}) {
   return field(id, label, 'addressHistory', {
     entries: options.entries || 4,
     required: Boolean(options.required),
-    stateOptions: US_STATE_OPTIONS
+    stateOptions: US_STATE_OPTIONS,
+    countryOptions: COUNTRY_OPTIONS
   });
 }
 
@@ -359,7 +507,8 @@ function employmentHistoryField(id, label, options = {}) {
   return field(id, label, 'employmentHistory', {
     entries: options.entries || 4,
     required: Boolean(options.required),
-    stateOptions: US_STATE_OPTIONS
+    stateOptions: US_STATE_OPTIONS,
+    countryOptions: COUNTRY_OPTIONS
   });
 }
 
@@ -520,7 +669,7 @@ const FORM_OVERRIDES = {
   ],
   'I-821': [
     step('tps_details', 'TPS request details', 'Temporary Protected Status preparation details.', [
-      field('tps_country', 'TPS country designation', 'text', { required: true }),
+      field('tps_country', 'TPS country designation', 'select', { required: true, options: COUNTRY_OPTIONS }),
       field('initial_or_reregistration', 'Initial TPS or re-registration?', 'select', { required: true, options: ['Initial TPS', 'Re-registration', 'Late initial filing', 'Not sure'] }),
       field('continuous_residence_date', 'Date of continuous residence in the U.S.', 'date'),
       field('tps_prior_approval', 'Prior TPS approval or receipt numbers', 'textarea')
@@ -704,6 +853,21 @@ function localizeFlow(flow, langValue = 'en') {
   const copy = LOCALIZATION[lang];
   if (!copy) return flow;
 
+  const localizeOption = (option) => {
+    if (option && typeof option === 'object') {
+      const value = String(option.value ?? option.label ?? '');
+      return {
+        ...option,
+        value,
+        label: copy.options?.[value] || option.label || value
+      };
+    }
+
+    const value = String(option || '');
+    const label = copy.options?.[value];
+    return label ? { value, label } : option;
+  };
+
   const translated = JSON.parse(JSON.stringify(flow));
   translated.steps = translated.steps.map((item) => ({
     ...item,
@@ -713,8 +877,11 @@ function localizeFlow(flow, langValue = 'en') {
       ...fieldItem,
       label: copy.fields?.[fieldItem.id] || fieldItem.label,
       options: Array.isArray(fieldItem.options)
-        ? fieldItem.options.map((option) => copy.options?.[option] || option)
-        : fieldItem.options
+        ? fieldItem.options.map(localizeOption)
+        : fieldItem.options,
+      countryOptions: Array.isArray(fieldItem.countryOptions)
+        ? fieldItem.countryOptions.map(localizeOption)
+        : fieldItem.countryOptions
     }))
   }));
   return translated;
