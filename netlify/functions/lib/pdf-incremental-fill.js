@@ -114,6 +114,12 @@ function firstPdfRef(body, key) {
   return match ? { objectNumber: Number(match[1]), generation: Number(match[2]) } : null;
 }
 
+function xfaPacketRef(body, packetName) {
+  const escaped = String(packetName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = body.match(new RegExp(`\\(${escaped}\\)\\s*(\\d+)\\s+(\\d+)\\s+R`));
+  return match ? { objectNumber: Number(match[1]), generation: Number(match[2]) } : null;
+}
+
 function hasFlateFilter(body) {
   return /\/Filter\s*(?:\/FlateDecode|\[[^\]]*\/FlateDecode[^\]]*\])/m.test(body);
 }
@@ -396,6 +402,41 @@ function stringToken(encryption, objectNumber, generation, value) {
   return encryption ? encryptedStringToken(encryption, objectNumber, generation, value) : plainStringToken(value);
 }
 
+function xmlEscape(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function pdfNameValue(value) {
+  return String(value || '').replace(/#([0-9A-Fa-f]{2})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16))).trim();
+}
+
+function xfaNameFromField(fieldName) {
+  return String(fieldName || '').replace(/\[\d+\]$/, '');
+}
+
+function setXfaValue(xml, fieldName, value) {
+  const name = xfaNameFromField(fieldName).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (!name) return xml;
+  const next = xmlEscape(value);
+  const pattern = new RegExp(`<(${name})(\\s[^>]*)?\\s*/>|<(${name})(\\s[^>]*)?>([\\s\\S]*?)<\\/\\3>`, 'g');
+  return xml.replace(pattern, (match, selfName, selfAttrs, pairedName, pairedAttrs) => {
+    const tag = selfName || pairedName;
+    const attrs = selfAttrs || pairedAttrs || '';
+    return `<${tag}${attrs}>${next}</${tag}>`;
+  });
+}
+
+function xfaStreamBody(objectNumber, generation, xml, encryption) {
+  const compressed = zlib.deflateSync(Buffer.from(xml, 'utf8'), { level: 6 });
+  const encrypted = encryptObjectBytes(encryption, objectNumber, generation, compressed, 'stream');
+  return `<< /Filter [/FlateDecode] /Length ${encrypted.length} /Type /EmbeddedFile >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
+}
+
 function normalizeFieldBodyStrings(body, object, encryption) {
   if (!encryption) return body;
   return body.replace(/(\((?:\\.|[^\\)])*\)|(?<!<)<(?!<)[^>]*>(?!>))/g, (token) => {
@@ -482,6 +523,7 @@ function incrementalFillPdf(input, fieldValues) {
   const parsed = parsePdf(original);
   const fields = extractFieldObjects(parsed);
   const updates = new Map();
+  const xfaValues = new Map();
   const filledFields = [];
   const skippedFields = [];
 
@@ -495,10 +537,13 @@ function incrementalFillPdf(input, fieldValues) {
     let body;
     if (object.pdfFieldType === 'Btn') {
       body = updateButtonFieldBody(object, Boolean(rawValue), parsed.encryption);
+      if (rawValue) xfaValues.set(xfaNameFromField(fieldName), pdfNameValue(object.appearanceStates[0] || '1'));
     } else if (object.pdfFieldType === 'Ch') {
       body = updateChoiceFieldBody(object, rawValue, parsed.encryption);
+      xfaValues.set(xfaNameFromField(fieldName), rawValue);
     } else {
       body = updateTextFieldBody(object, rawValue, parsed.encryption);
+      xfaValues.set(xfaNameFromField(fieldName), rawValue);
     }
     updates.set(object.objectNumber, { generation: object.generation, body });
     filledFields.push(fieldName);
@@ -512,6 +557,19 @@ function incrementalFillPdf(input, fieldValues) {
       generation: acroForm.generation,
       body: updateAcroFormBody(acroForm, parsed.encryption)
     });
+
+    const datasetsRef = xfaPacketRef(acroForm.body, 'datasets');
+    const datasets = datasetsRef
+      ? parsed.objects.filter((object) => object.objectNumber === datasetsRef.objectNumber && object.source === 'inflated-stream').at(-1)
+      : null;
+    if (datasets && xfaValues.size) {
+      let xml = datasets.body;
+      for (const [fieldName, value] of xfaValues.entries()) xml = setXfaValue(xml, fieldName, value);
+      updates.set(datasetsRef.objectNumber, {
+        generation: datasetsRef.generation,
+        body: xfaStreamBody(datasetsRef.objectNumber, datasetsRef.generation, xml, parsed.encryption)
+      });
+    }
   }
 
   const buffers = [];

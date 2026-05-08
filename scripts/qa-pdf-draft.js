@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const draft = require('../netlify/functions/pdf-draft');
+const { parsePdf } = require('../netlify/functions/lib/pdf-incremental-fill');
 
 const ROOT = path.resolve(__dirname, '..');
 const SOURCE_PDF = path.join(ROOT, 'assets/form-cache/pdfs/i-765.pdf');
@@ -78,6 +79,14 @@ async function main() {
   assert(/xref\s+\d+\s+\d+/.test(text.slice(-30000)), 'draft should include an incremental xref table');
   assert(/\/NeedAppearances true/.test(text.slice(-60000)), 'draft should request viewer-generated field appearances');
   assert(!/^<<>>\/MaxLen/m.test(text.slice(-60000)), 'draft should not corrupt field dictionaries');
+
+  const parsedOutput = parsePdf(output);
+  const datasets = parsedOutput.objects
+    .filter((object) => object.objectNumber === 154 && object.source === 'inflated-stream')
+    .at(-1)?.body || '';
+  assert(datasets.includes('<Line1a_FamilyName\n>Petrov</Line1a_FamilyName>'), 'draft should fill XFA family name for visible PDF viewers');
+  assert(datasets.includes('<Line1b_GivenName\n>Ivan</Line1b_GivenName>'), 'draft should fill XFA given name for visible PDF viewers');
+  assert(datasets.includes('<Line4b_StreetNumberName\n>8305 Deer Spring Circle</Line4b_StreetNumberName>'), 'draft should fill XFA mailing street for visible PDF viewers');
 
   const missing = await callDraft({ formCode: 'I-765', formAnswers: {} });
   assert(missing.statusCode === 422, `missing required fields expected 422, got ${missing.statusCode}`);
