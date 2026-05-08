@@ -59,6 +59,8 @@ const LOCALIZATION = {
       state_or_province_of_birth: 'Штат/провинция рождения',
       country_of_birth: 'Страна рождения',
       country_of_citizenship: 'Страна гражданства или национальности',
+      sex: 'Пол',
+      marital_status: 'Семейное положение',
       alien_number: 'A-number, если есть',
       uscis_online_account_number: 'USCIS online account number, если есть',
       mailing_address_line1: 'Почтовый адрес, строка 1',
@@ -75,6 +77,7 @@ const LOCALIZATION = {
       place_entry: 'Место последнего въезда в США',
       i94_number: 'I-94 number, если есть',
       passport_number: 'Номер паспорта, если относится к форме',
+      passport_country_of_issuance: 'Страна, выдавшая паспорт или travel document',
       passport_expiration: 'Дата окончания паспорта',
       prior_uscis_filings: 'Предыдущие или ожидающие подачи в USCIS',
       identity_documents_available: 'Какие документы личности есть',
@@ -188,6 +191,12 @@ const LOCALIZATION = {
       'Renewal of permission to accept employment': 'Продление разрешения на работу',
       'I can read and understand English': 'Я читаю и понимаю английский',
       'Interpreter read the application to me': 'Interpreter прочитал(а) мне заявление',
+      Male: 'Мужской',
+      Female: 'Женский',
+      Single: 'Не в браке',
+      Married: 'В браке',
+      Divorced: 'Разведен(а)',
+      Widowed: 'Вдовец/вдова',
       TPS: 'TPS',
       DACA: 'DACA',
       'Student category': 'Студенческая категория',
@@ -292,6 +301,8 @@ const LOCALIZATION = {
       state_or_province_of_birth: 'Штат/провінція народження',
       country_of_birth: 'Країна народження',
       country_of_citizenship: 'Громадянство / nationality',
+      sex: 'Стать',
+      marital_status: 'Сімейний стан',
       mailing_address_line1: 'Поштова адреса, рядок 1',
       mailing_city: 'Місто',
       mailing_state: 'Штат',
@@ -301,6 +312,7 @@ const LOCALIZATION = {
       current_immigration_status: 'Поточний імміграційний статус або категорія',
       last_arrival_date: 'Дата останнього в’їзду до США',
       place_entry: 'Місце останнього в’їзду до США',
+      passport_country_of_issuance: 'Країна, що видала паспорт або travel document',
       ead_basis: 'На чому базується work permit?',
       i765_application_reason: 'Причина подання I-765',
       eligibility_category_code: 'Eligibility category code, якщо знаєте',
@@ -325,7 +337,13 @@ const LOCALIZATION = {
       'Replacement of lost, stolen, or damaged EAD': 'Заміна втраченого, викраденого або пошкодженого EAD',
       'Renewal of permission to accept employment': 'Продовження дозволу на роботу',
       'I can read and understand English': 'Я читаю і розумію англійську',
-      'Interpreter read the application to me': 'Перекладач прочитав мені заяву'
+      'Interpreter read the application to me': 'Перекладач прочитав мені заяву',
+      Male: 'Чоловіча',
+      Female: 'Жіноча',
+      Single: 'Не в шлюбі',
+      Married: 'У шлюбі',
+      Divorced: 'Розлучений/розлучена',
+      Widowed: 'Вдівець/вдова'
     }
   },
   es: {
@@ -355,6 +373,8 @@ const LOCALIZATION = {
       state_or_province_of_birth: 'Estado/provincia de nacimiento',
       country_of_birth: 'País de nacimiento',
       country_of_citizenship: 'Ciudadanía / nationality',
+      sex: 'Sexo',
+      marital_status: 'Estado civil',
       mailing_address_line1: 'Dirección postal línea 1',
       mailing_city: 'Ciudad',
       mailing_state: 'Estado',
@@ -364,6 +384,7 @@ const LOCALIZATION = {
       current_immigration_status: 'Estado migratorio actual o categoría',
       last_arrival_date: 'Fecha de la última entrada a Estados Unidos',
       place_entry: 'Lugar de la última entrada a Estados Unidos',
+      passport_country_of_issuance: 'País que emitió el pasaporte o travel document',
       ead_basis: '¿En qué se basa el permiso de trabajo?',
       i765_application_reason: 'Motivo de la solicitud I-765',
       eligibility_category_code: 'Eligibility category code, si lo sabe',
@@ -388,7 +409,13 @@ const LOCALIZATION = {
       'Replacement of lost, stolen, or damaged EAD': 'Reemplazo de EAD perdido, robado o dañado',
       'Renewal of permission to accept employment': 'Renovación del permiso para aceptar empleo',
       'I can read and understand English': 'Puedo leer y entender inglés',
-      'Interpreter read the application to me': 'Un intérprete me leyó la solicitud'
+      'Interpreter read the application to me': 'Un intérprete me leyó la solicitud',
+      Male: 'Masculino',
+      Female: 'Femenino',
+      Single: 'Soltero/a',
+      Married: 'Casado/a',
+      Divorced: 'Divorciado/a',
+      Widowed: 'Viudo/a'
     }
   }
 };
@@ -491,6 +518,12 @@ function applicantFields() {
       autocomplete: 'country-name',
       options: COUNTRY_OPTIONS
     }),
+    field('sex', 'Sex', 'radio', {
+      options: ['Male', 'Female']
+    }),
+    field('marital_status', 'Marital status', 'select', {
+      options: ['Single', 'Married', 'Divorced', 'Widowed']
+    }),
     field('alien_number', 'A-number, if any', 'text', {
       autocomplete: 'off',
       placeholder: 'A###-###-###'
@@ -576,6 +609,10 @@ function immigrationHistoryFields() {
     }),
     field('passport_number', 'Passport number, if relevant', 'text', {
       autocomplete: 'off'
+    }),
+    field('passport_country_of_issuance', 'Country that issued passport or travel document', 'select', {
+      autocomplete: 'country-name',
+      options: COUNTRY_OPTIONS
     }),
     field('passport_expiration', 'Passport expiration date', 'date'),
     field('prior_uscis_filings', 'Prior or pending USCIS filings', 'textarea', {

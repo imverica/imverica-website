@@ -77,8 +77,13 @@ async function main() {
   assert(optionLabel(optionByValue(field(workAuthorization, 'applicant_statement').options, 'I can read and understand English')) === 'Я читаю и понимаю английский', 'I-765 English statement should be localized');
   const i765Applicant = i765.steps.find((step) => step.id === 'applicant');
   assert(field(i765Applicant, 'city_of_birth')?.label === 'Город/населенный пункт рождения', 'birth city label should be localized');
+  assert(field(i765Applicant, 'sex')?.label === 'Пол', 'sex label should be localized');
+  assert(optionLabel(optionByValue(field(i765Applicant, 'sex').options, 'Male')) === 'Мужской', 'male option should be localized');
+  assert(field(i765Applicant, 'marital_status')?.label === 'Семейное положение', 'marital status label should be localized');
+  assert(optionLabel(optionByValue(field(i765Applicant, 'marital_status').options, 'Married')) === 'В браке', 'married option should be localized');
   const i765History = i765.steps.find((step) => step.id === 'immigration_history');
   assert(field(i765History, 'place_entry')?.label === 'Место последнего въезда в США', 'last arrival place label should be localized');
+  assert(field(i765History, 'passport_country_of_issuance')?.label === 'Страна, выдавшая паспорт или travel document', 'passport country of issuance label should be localized');
 
   console.log('localization QA passed');
 }

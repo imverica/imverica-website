@@ -39,6 +39,8 @@ function sampleI765Payload() {
       state_or_province_of_birth: 'Kyiv Oblast',
       country_of_birth: 'Ukraine',
       country_of_citizenship: 'Ukraine',
+      sex: 'Male',
+      marital_status: 'Married',
       alien_number: 'A123456789',
       uscis_online_account_number: '123456789012',
       ssn: '123-45-6789',
@@ -60,6 +62,7 @@ function sampleI765Payload() {
       place_entry: 'San Francisco, CA',
       i94_number: '12345678901',
       passport_number: 'AB1234567',
+      passport_country_of_issuance: 'Ukraine',
       passport_expiration: '2030-01-01',
       eligibility_category_code: '(c)(8)',
       prior_ead: 'No',
@@ -102,11 +105,18 @@ async function main() {
   assert(hasXfaValue(datasets, 'Line18a_CityTownOfBirth', 'Kyiv'), 'draft should fill birth city');
   assert(hasXfaValue(datasets, 'Line18b_CityTownOfBirth', 'Kyiv Oblast'), 'draft should fill birth state/province');
   assert(hasXfaValue(datasets, 'Line18c_CountryOfBirth', 'Ukraine'), 'draft should fill birth country');
+  assert(hasXfaValue(datasets, 'Line9_Checkbox', 'Y'), 'draft should select male sex');
+  assert(hasXfaValue(datasets, 'Line10_Checkbox', 'Married'), 'draft should select married marital status');
+  assert(hasXfaValue(datasets, 'Line20d_CountryOfIssuance', 'Ukraine'), 'draft should fill passport/travel document issuing country');
   assert(hasXfaValue(datasets, 'place_entry', 'San Francisco, CA'), 'draft should fill place of last U.S. arrival');
   assert(hasXfaValue(datasets, 'Pt3Line1Checkbox', 'A'), 'draft should select English applicant statement');
   assert(hasXfaValue(datasets, 'Pt3Line3_DaytimePhoneNumber1', '9165551212'), 'draft should normalize daytime phone to USCIS digits only');
   assert(hasXfaValue(datasets, 'Pt3Line4_MobileNumber1', '9165551212'), 'draft should normalize mobile phone to USCIS digits only');
   assert(!datasets.includes('+1 916'), 'draft should not write phone with country code or spaces');
+  const birthCityField = parsedOutput.objects.filter((object) => object.objectNumber === 483).at(-1)?.body || '';
+  const birthProvinceField = parsedOutput.objects.filter((object) => object.objectNumber === 484).at(-1)?.body || '';
+  assert(/\/AP\s*<<\s*\/N\s+\d+\s+0\s+R\s*>>/.test(birthCityField), 'birth city field should include a visible appearance stream');
+  assert(/\/AP\s*<<\s*\/N\s+\d+\s+0\s+R\s*>>/.test(birthProvinceField), 'birth province field should include a visible appearance stream');
 
   const missing = await callDraft({ formCode: 'I-765', formAnswers: {} });
   assert(missing.statusCode === 422, `missing required fields expected 422, got ${missing.statusCode}`);

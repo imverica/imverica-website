@@ -103,6 +103,33 @@ function applicantStatementFields(statementValue) {
   return {};
 }
 
+function sexFields(value) {
+  const sex = clean(value, 80).toLowerCase();
+  if (/^m|male|муж|чолов|masc/.test(sex)) {
+    return { 'Line9_Checkbox[0]': false, 'Line9_Checkbox[1]': true };
+  }
+  if (/^f|female|жен|жін|fem/.test(sex)) {
+    return { 'Line9_Checkbox[0]': true, 'Line9_Checkbox[1]': false };
+  }
+  return {};
+}
+
+function maritalStatusFields(value) {
+  const status = clean(value, 120).toLowerCase();
+  const selected = /widow|вдов/.test(status) ? 'widowed'
+    : /divorc|развед|розлуч/.test(status) ? 'divorced'
+    : /married|spouse|брак|женат|замуж|шлюб|одруж/.test(status) ? 'married'
+    : /single|never|холост|не в браке|не в шлюб/.test(status) ? 'single'
+    : '';
+  if (!selected) return {};
+  return {
+    'Line10_Checkbox[0]': selected === 'widowed',
+    'Line10_Checkbox[1]': selected === 'divorced',
+    'Line10_Checkbox[2]': selected === 'single',
+    'Line10_Checkbox[3]': selected === 'married'
+  };
+}
+
 function unitCheckbox(unitValue, aptField, suiteField, floorField) {
   const text = clean(unitValue, 40).toLowerCase();
   if (/ste|suite/.test(text)) return { [suiteField]: true, [aptField]: false, [floorField]: false };
@@ -157,13 +184,14 @@ function i765FieldValues(payload = {}) {
     'Line8_ElisAccountNumber[0]': clean(answers.uscis_online_account_number, 12),
     'Line12b_SSN[0]': digits(answers.ssn, 9),
     'Line17a_CountryOfBirth[0]': answers.country_of_citizenship,
+    'Line17b_CountryOfBirth[0]': answers.country_of_citizenship,
     'Line18a_CityTownOfBirth[0]': answers.city_of_birth || answers.place_of_birth_city,
     'Line18b_CityTownOfBirth[0]': answers.state_or_province_of_birth,
     'Line18c_CountryOfBirth[0]': answers.country_of_birth,
     'Line19_DOB[0]': dateMdY(answers.date_of_birth),
     'Line20a_I94Number[0]': clean(answers.i94_number, 20),
     'Line20b_Passport[0]': clean(answers.passport_number, 40),
-    'Line20d_CountryOfIssuance[0]': answers.passport_country_of_issuance,
+    'Line20d_CountryOfIssuance[0]': answers.passport_country_of_issuance || answers.country_of_citizenship,
     'Line20e_ExpDate[0]': dateMdY(answers.passport_expiration),
     'Line21_DateOfLastEntry[0]': dateMdY(answers.last_arrival_date),
     'Line23_StatusLastEntry[0]': answers.status_at_last_entry,
@@ -179,6 +207,8 @@ function i765FieldValues(payload = {}) {
     'section_3[0]': category[2],
     ...i765ApplicationReasonFields(answers.i765_application_reason, answers.prior_ead),
     ...applicantStatementFields(answers.applicant_statement),
+    ...sexFields(answers.sex),
+    ...maritalStatusFields(answers.marital_status),
     ...mappedAddress(answers),
     ...physicalAddress(answers),
     ...checkboxPair(priorEad, 'Line19_Checkbox[1]', 'Line19_Checkbox[0]')

@@ -114,6 +114,11 @@ function firstPdfRef(body, key) {
   return match ? { objectNumber: Number(match[1]), generation: Number(match[2]) } : null;
 }
 
+function firstPdfArray(body, key) {
+  const match = body.match(new RegExp(`\\/${key}\\s*\\[([^\\]]+)\\]`));
+  return match ? match[1].trim().split(/\s+/).map(Number).filter(Number.isFinite) : [];
+}
+
 function xfaPacketRef(body, packetName) {
   const escaped = String(packetName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = body.match(new RegExp(`\\(${escaped}\\)\\s*(\\d+)\\s+(\\d+)\\s+R`));
@@ -455,6 +460,24 @@ function xfaStreamBody(objectNumber, generation, xml, encryption) {
   return `<< /Filter [/FlateDecode] /Length ${encrypted.length} /Type /EmbeddedFile >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
 }
 
+function pdfContentText(value) {
+  return String(value || '')
+    .replace(/[^\x20-\x7e]/g, '')
+    .replace(/([\\()])/g, '\\$1')
+    .slice(0, 240);
+}
+
+function textAppearanceBody(object, value, appearanceObjectNumber, encryption) {
+  const rect = firstPdfArray(object.body, 'Rect');
+  const width = Math.max(1, Math.abs((rect[2] || 200) - (rect[0] || 0)));
+  const height = Math.max(1, Math.abs((rect[3] || 20) - (rect[1] || 0)));
+  const fontSize = Math.max(7, Math.min(10, height - 6));
+  const y = Math.max(2, (height - fontSize) / 2);
+  const content = `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g\n2 ${y.toFixed(2)} Td\n(${pdfContentText(value)}) Tj\nET\nQ\n`;
+  const encrypted = encryptObjectBytes(encryption, appearanceObjectNumber, 0, Buffer.from(content, 'latin1'), 'stream');
+  return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 195 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
+}
+
 function normalizeFieldBodyStrings(body, object, encryption) {
   if (!encryption) return body;
   return body.replace(/(\((?:\\.|[^\\)])*\)|(?<!<)<(?!<)[^>]*>(?!>))/g, (token) => {
@@ -477,16 +500,18 @@ function addDictionaryEntries(body, entries) {
   return body.replace(/>>\s*$/, `${addition ? ` ${addition}` : ''} >>`);
 }
 
-function updateTextFieldBody(object, value, encryption) {
+function updateTextFieldBody(object, value, encryption, appearanceObjectNumber) {
   let body = normalizeFieldBodyStrings(object.body, object, encryption);
   body = removeDictionaryEntry(body, 'V');
+  body = removeDictionaryEntry(body, 'AP');
   return addDictionaryEntries(body, {
-    V: stringToken(encryption, object.objectNumber, object.generation, value)
+    V: stringToken(encryption, object.objectNumber, object.generation, value),
+    AP: appearanceObjectNumber ? `<< /N ${appearanceObjectNumber} 0 R >>` : ''
   });
 }
 
-function updateChoiceFieldBody(object, value, encryption) {
-  return updateTextFieldBody(object, value, encryption);
+function updateChoiceFieldBody(object, value, encryption, appearanceObjectNumber) {
+  return updateTextFieldBody(object, value, encryption, appearanceObjectNumber);
 }
 
 function updateButtonFieldBody(object, checked, encryption) {
@@ -542,6 +567,7 @@ function incrementalFillPdf(input, fieldValues) {
   const fields = extractFieldObjects(parsed);
   const updates = new Map();
   const xfaValues = new Map();
+  let nextObjectNumber = Math.max(parsed.trailer.size || 0, ...parsed.objects.map((object) => object.objectNumber)) + 1;
   const filledFields = [];
   const skippedFields = [];
 
@@ -557,10 +583,22 @@ function incrementalFillPdf(input, fieldValues) {
       body = updateButtonFieldBody(object, Boolean(rawValue), parsed.encryption);
       if (rawValue) xfaValues.set(xfaNameFromField(fieldName), pdfNameValue(object.appearanceStates[0] || '1'));
     } else if (object.pdfFieldType === 'Ch') {
-      body = updateChoiceFieldBody(object, rawValue, parsed.encryption);
+      const appearanceObjectNumber = nextObjectNumber;
+      nextObjectNumber += 1;
+      body = updateChoiceFieldBody(object, rawValue, parsed.encryption, appearanceObjectNumber);
+      updates.set(appearanceObjectNumber, {
+        generation: 0,
+        body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption)
+      });
       xfaValues.set(xfaNameFromField(fieldName), rawValue);
     } else {
-      body = updateTextFieldBody(object, rawValue, parsed.encryption);
+      const appearanceObjectNumber = nextObjectNumber;
+      nextObjectNumber += 1;
+      body = updateTextFieldBody(object, rawValue, parsed.encryption, appearanceObjectNumber);
+      updates.set(appearanceObjectNumber, {
+        generation: 0,
+        body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption)
+      });
       xfaValues.set(xfaNameFromField(fieldName), rawValue);
     }
     updates.set(object.objectNumber, { generation: object.generation, body });
