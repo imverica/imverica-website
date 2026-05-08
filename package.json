@@ -2,11 +2,13 @@
   "name": "imverica-website",
   "version": "1.0.0",
   "scripts": {
+    "build:uscis-pdf-maps": "node scripts/extract-uscis-pdf-fields.js",
     "qa:immigration-flow": "node scripts/qa-immigration-flow.js",
     "qa:route": "node scripts/qa-route.js",
     "qa:address": "node scripts/qa-address.js",
     "qa:intake-ui": "node scripts/qa-intake-ui-static.js",
-    "qa:localization": "node scripts/qa-localization.js"
+    "qa:localization": "node scripts/qa-localization.js",
+    "qa:uscis-pdf-maps": "node scripts/qa-uscis-pdf-maps.js"
   },
   "dependencies": {
     "@netlify/blobs": "^8.1.0"

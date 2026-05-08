@@ -4,6 +4,7 @@
 
 [functions]
   node_bundler = "esbuild"
+  included_files = ["netlify/functions/pdf-maps/**"]
 
 [[headers]]
   for = "/*"
@@ -37,6 +38,11 @@
 [[redirects]]
   from = "/api/immigration-flow"
   to = "/.netlify/functions/immigration-flow"
+  status = 200
+
+[[redirects]]
+  from = "/api/uscis-pdf-map"
+  to = "/.netlify/functions/uscis-pdf-map"
   status = 200
 
 [[redirects]]
