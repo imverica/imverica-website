@@ -96,7 +96,9 @@ const LOCALIZATION = {
       addresses_last_five_years: 'Адреса за последние 5 лет',
       employment_school_last_five_years: 'Работа или учеба за последние 5 лет',
       spouse_residence_history: 'Адреса beneficiary за последние 5 лет',
-      spouse_employment_history: 'Работа beneficiary за последние 5 лет'
+      spouse_employment_history: 'Работа beneficiary за последние 5 лет',
+      g325a_residence_history: 'Адреса за последние 5 лет',
+      g325a_employment_history: 'Работа за последние 5 лет'
     },
     options: {
       Yes: 'Да',
@@ -152,7 +154,9 @@ const LOCALIZATION = {
       addresses_last_five_years: 'Адреси за останні 5 років',
       employment_school_last_five_years: 'Робота або навчання за останні 5 років',
       spouse_residence_history: 'Адреси beneficiary за останні 5 років',
-      spouse_employment_history: 'Робота beneficiary за останні 5 років'
+      spouse_employment_history: 'Робота beneficiary за останні 5 років',
+      g325a_residence_history: 'Адреси за останні 5 років',
+      g325a_employment_history: 'Робота за останні 5 років'
     },
     options: { Yes: 'Так', No: 'Ні', 'Not sure': 'Не знаю', Other: 'Інше', 'Other or not sure': 'Інше або не знаю' }
   },
@@ -196,7 +200,9 @@ const LOCALIZATION = {
       addresses_last_five_years: 'Direcciones de los últimos 5 años',
       employment_school_last_five_years: 'Trabajo o escuela de los últimos 5 años',
       spouse_residence_history: 'Direcciones del beneficiary de los últimos 5 años',
-      spouse_employment_history: 'Trabajo del beneficiary de los últimos 5 años'
+      spouse_employment_history: 'Trabajo del beneficiary de los últimos 5 años',
+      g325a_residence_history: 'Direcciones de los últimos 5 años',
+      g325a_employment_history: 'Trabajo de los últimos 5 años'
     },
     options: { Yes: 'Sí', No: 'No', 'Not sure': 'No estoy seguro', Other: 'Otro', 'Other or not sure': 'Otro o no estoy seguro' }
   }
@@ -395,6 +401,14 @@ function evidenceFields() {
 }
 
 const FORM_OVERRIDES = {
+  'G-325A': [
+    step('biographic_history', 'Biographic residence and employment history', 'Biographic information forms commonly require structured residence and employment history.', [
+      addressHistoryField('g325a_residence_history', 'Residence history for the last five years', { required: true }),
+      employmentHistoryField('g325a_employment_history', 'Employment history for the last five years', { required: true }),
+      field('g325a_parents_spouses', 'Parents, spouses, and prior names', 'textarea'),
+      field('g325a_additional_history_notes', 'Additional biographic history notes', 'textarea')
+    ])
+  ],
   'I-90': [
     step('green_card_replacement', 'Green card replacement or renewal', 'Tell us why Form I-90 is being prepared.', [
       field('i90_reason', 'Reason for I-90', 'select', {

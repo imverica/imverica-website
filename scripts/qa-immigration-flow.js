@@ -85,6 +85,11 @@ async function main() {
   assert(spouseBio?.fields.find((field) => field.id === 'spouse_residence_history')?.type === 'addressHistory', 'I-130A: spouse residence history should be structured');
   assert(spouseBio?.fields.find((field) => field.id === 'spouse_employment_history')?.type === 'employmentHistory', 'I-130A: spouse employment history should be structured');
 
+  const g325a = await callFlow('G-325A', 'en');
+  const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
+  assert(biographicHistory?.fields.find((field) => field.id === 'g325a_residence_history')?.type === 'addressHistory', 'G-325A: residence history should be structured');
+  assert(biographicHistory?.fields.find((field) => field.id === 'g325a_employment_history')?.type === 'employmentHistory', 'G-325A: employment history should be structured');
+
   const scriptCount = syntaxCheckInlineScripts();
   console.log(`index.html inline scripts syntax ok: ${scriptCount}`);
   console.log('immigration flow QA passed');
