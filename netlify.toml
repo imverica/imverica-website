@@ -4,7 +4,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  included_files = ["netlify/functions/pdf-maps/**"]
+  included_files = ["netlify/functions/pdf-maps/**", "assets/form-cache/pdfs/i-765.pdf"]
 
 [[headers]]
   for = "/*"
@@ -43,6 +43,11 @@
 [[redirects]]
   from = "/api/uscis-pdf-map"
   to = "/.netlify/functions/uscis-pdf-map"
+  status = 200
+
+[[redirects]]
+  from = "/api/pdf-draft"
+  to = "/.netlify/functions/pdf-draft"
   status = 200
 
 [[redirects]]

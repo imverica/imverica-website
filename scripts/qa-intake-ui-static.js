@@ -26,6 +26,9 @@ includes('.intake-option input{position:absolute;opacity:0;pointer-events:none;}
 includes('function optionValue(option)', 'canonical option value helper');
 includes('function optionLabel(option)', 'localized option label helper');
 includes('renderSelectOptions(options, value)', 'state dropdown selection renderer');
+includes('pdfDraftEndpoint', 'PDF draft endpoint binding');
+includes('pdfDraftEndpoints', 'PDF draft endpoint fallback binding');
+includes('data-generate-pdf-draft', 'I-765 PDF draft button binding');
 
 assert(!/if \(data\.language\) state\.lang = data\.language;/.test(html), 'route should not blindly override selected language');
 

@@ -412,8 +412,12 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-complete-item strong{display:block;font-size:15px;color:var(--navy-dark);margin-bottom:5px;}
 .intake-complete-item span{display:block;font-size:13px;line-height:1.55;color:#667;}
 .intake-complete-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
-.intake-complete-actions a{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:4px;padding:12px 16px;color:var(--navy);text-decoration:none;font-weight:600;font-size:14px;}
-.intake-complete-actions a.dark{background:var(--navy);border-color:var(--navy);color:#fff;}
+.intake-complete-actions a,.intake-complete-actions button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:4px;padding:12px 16px;color:var(--navy);text-decoration:none;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;background:#fff;cursor:pointer;}
+.intake-complete-actions a.dark,.intake-complete-actions button.dark{background:var(--navy);border-color:var(--navy);color:#fff;}
+.intake-complete-actions button:disabled{opacity:0.55;cursor:not-allowed;}
+.intake-draft-status{width:100%;font-size:13px;line-height:1.5;color:#667;}
+.intake-draft-status.ok{color:#247a52;}
+.intake-draft-status.error{color:#a33b31;}
 .intake-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;}
 .intake-btn{border:1px solid var(--navy);border-radius:4px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:var(--navy);}
 .intake-btn.primary{background:var(--navy);color:#fff;}
@@ -1629,6 +1633,10 @@ function closeDetail(id) {
       donePaymentSub: 'A secure payment link is sent after the package and fee are confirmed.',
       donePdf: 'PDF preparation after payment',
       donePdfSub: 'After payment, your answers are reviewed and used to prepare the official PDF forms.',
+      generateDraft: 'Generate I-765 draft PDF',
+      generatingDraft: 'Generating draft PDF...',
+      draftReady: 'I-765 draft PDF generated. Review before filing.',
+      draftError: 'Could not generate the I-765 draft PDF yet. Check the required fields or call us.',
       telegram: 'Telegram',
       callOffice: 'Call (916) 399-3992',
       close: 'Close',
@@ -1716,6 +1724,10 @@ function closeDetail(id) {
       donePaymentSub: 'Безопасная ссылка на оплату отправляется после подтверждения пакета и стоимости.',
       donePdf: 'Подготовка PDF после оплаты',
       donePdfSub: 'После оплаты ответы проверяются и используются для подготовки официальных PDF-форм.',
+      generateDraft: 'Сгенерировать черновик PDF I-765',
+      generatingDraft: 'Генерируем черновик PDF...',
+      draftReady: 'Черновик PDF I-765 сгенерирован. Проверьте перед подачей.',
+      draftError: 'Пока не удалось сгенерировать черновик PDF I-765. Проверьте обязательные поля или свяжитесь с нами.',
       telegram: 'Telegram',
       callOffice: 'Позвонить (916) 399-3992',
       close: 'Закрыть',
@@ -1803,6 +1815,10 @@ function closeDetail(id) {
       donePaymentSub: 'Безпечне посилання на оплату надсилається після підтвердження пакета і вартості.',
       donePdf: 'Підготовка PDF після оплати',
       donePdfSub: 'Після оплати відповіді перевіряються і використовуються для підготовки офіційних PDF-форм.',
+      generateDraft: 'Згенерувати чернетку PDF I-765',
+      generatingDraft: 'Генеруємо чернетку PDF...',
+      draftReady: 'Чернетку PDF I-765 згенеровано. Перевірте перед поданням.',
+      draftError: 'Поки не вдалося згенерувати чернетку PDF I-765. Перевірте обов’язкові поля або зв’яжіться з нами.',
       telegram: 'Telegram',
       callOffice: 'Зателефонувати (916) 399-3992',
       close: 'Закрити',
@@ -1890,6 +1906,10 @@ function closeDetail(id) {
       donePaymentSub: 'El enlace de pago seguro se envía después de confirmar el paquete y el costo.',
       donePdf: 'Preparación del PDF después del pago',
       donePdfSub: 'Después del pago, sus respuestas se revisan y se usan para preparar los formularios PDF oficiales.',
+      generateDraft: 'Generar borrador PDF I-765',
+      generatingDraft: 'Generando borrador PDF...',
+      draftReady: 'Borrador PDF I-765 generado. Revíselo antes de presentar.',
+      draftError: 'Todavía no se pudo generar el borrador PDF I-765. Revise los campos requeridos o llámenos.',
       telegram: 'Telegram',
       callOffice: 'Llamar (916) 399-3992',
       close: 'Cerrar',
@@ -1997,6 +2017,10 @@ function closeDetail(id) {
 
   function renderCompleted() {
     var copy = t();
+    var canGenerateDraft = normalizeFormCode(state.formCode) === 'I-765';
+    var draftAction = canGenerateDraft
+      ? '<button type="button" class="dark" data-generate-pdf-draft>' + esc(copy.generateDraft) + '</button><div id="intakeDraftStatus" class="intake-draft-status"></div>'
+      : '';
     progress.style.width = '100%';
     backBtn.style.display = 'none';
     nextBtn.textContent = copy.close;
@@ -2009,6 +2033,7 @@ function closeDetail(id) {
         '<div class="intake-complete-item"><strong>' + esc(copy.donePdf) + '</strong><span>' + esc(copy.donePdfSub) + '</span></div>' +
       '</div>' +
       '<div class="intake-complete-actions">' +
+        draftAction +
         '<a class="dark" href="https://t.me/imverica" target="_blank" rel="noopener">' + esc(copy.telegram) + '</a>' +
         '<a href="tel:9163993992">' + esc(copy.callOffice) + '</a>' +
       '</div>';
@@ -2587,6 +2612,22 @@ function closeDetail(id) {
     return localHost ? 'https://imverica.com/.netlify/functions/intake' : '/.netlify/functions/intake';
   }
 
+  function pdfDraftEndpoint() {
+    return pdfDraftEndpoints()[0];
+  }
+
+  function pdfDraftEndpoints() {
+    var path = '/.netlify/functions/pdf-draft';
+    var localHost = window.location.protocol === 'file:' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname === 'localhost';
+    var endpoints = [];
+    if (window.location.protocol === 'file:') endpoints.push('http://127.0.0.1:8888' + path);
+    else endpoints.push(path);
+    if (localHost) endpoints.push('https://imverica.com' + path);
+    return endpoints;
+  }
+
   async function submitIntake(payload) {
     var response = await fetch(intakeEndpoint(), {
       method: 'POST',
@@ -2601,6 +2642,69 @@ function closeDetail(id) {
       throw new Error(data.error || 'Could not save intake');
     }
     return data;
+  }
+
+  async function generatePdfDraft() {
+    captureStep();
+    var copy = t();
+    var button = card.querySelector('[data-generate-pdf-draft]');
+    var status = document.getElementById('intakeDraftStatus');
+    if (!button || normalizeFormCode(state.formCode) !== 'I-765') return;
+    if (status) {
+      status.className = 'intake-draft-status';
+      status.textContent = copy.generatingDraft;
+    }
+    button.disabled = true;
+    button.textContent = copy.generatingDraft;
+    var payload = Object.assign({}, state.savedPayload || {}, {
+      formCode: state.formCode,
+      formAnswers: state.formAnswers,
+      contact: state.contact,
+      officialForm: state.officialForm || (state.savedPayload && state.savedPayload.officialForm) || null,
+      orderId: state.orderId || (state.savedPayload && state.savedPayload.orderId) || ''
+    });
+    try {
+      var response = null;
+      var endpoints = pdfDraftEndpoints();
+      for (var i = 0; i < endpoints.length; i += 1) {
+        try {
+          response = await fetch(endpoints[i], {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf, application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (response.ok || i === endpoints.length - 1) break;
+        } catch (endpointErr) {
+          if (i === endpoints.length - 1) throw endpointErr;
+        }
+      }
+      if (!response.ok) {
+        var errorData = {};
+        try { errorData = await response.json(); } catch (err) {}
+        throw new Error(errorData.error || copy.draftError);
+      }
+      var blob = await response.blob();
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'imverica-i-765-draft.pdf';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+      if (status) {
+        status.className = 'intake-draft-status ok';
+        status.textContent = copy.draftReady;
+      }
+    } catch (err) {
+      if (status) {
+        status.className = 'intake-draft-status error';
+        status.textContent = copy.draftError;
+      }
+    } finally {
+      button.disabled = false;
+      button.textContent = copy.generateDraft;
+    }
   }
 
   async function saveIntake() {
@@ -2669,9 +2773,14 @@ function closeDetail(id) {
 
   card.addEventListener('click', async function (event) {
     var addressSuggestion = event.target.closest('[data-address-suggestion-index]');
+    var pdfDraft = event.target.closest('[data-generate-pdf-draft]');
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
     var account = event.target.closest('[data-account-mode]');
+    if (pdfDraft) {
+      await generatePdfDraft();
+      return;
+    }
     if (addressSuggestion) {
       var fieldId = addressSuggestion.getAttribute('data-address-suggestion-field');
       var index = Number(addressSuggestion.getAttribute('data-address-suggestion-index'));
