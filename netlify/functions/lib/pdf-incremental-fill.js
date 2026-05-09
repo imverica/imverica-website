@@ -408,7 +408,23 @@ function pdfContentText(value) {
     .slice(0, 240);
 }
 
-function textAppearanceBody(object, value, appearanceObjectNumber, encryption) {
+function detectBodyFontObjectNumber(parsed) {
+  // Scan for the body-text font. USCIS forms use CourierNewPS-BoldMT; fall back to Helvetica.
+  // I-765 stores fonts as indirect objects; I-485 compresses them into object streams — accept both.
+  const preferred = ['CourierNewPS-BoldMT', 'Helvetica'];
+  for (const fontName of preferred) {
+    for (const obj of parsed.objects) {
+      if ((obj.source === 'indirect-object' || obj.source === 'object-stream')
+          && /\/Type\s*\/Font\b/.test(obj.body)
+          && new RegExp(`\\/BaseFont\\s*\\/${fontName}\\b`).test(obj.body)) {
+        return obj.objectNumber;
+      }
+    }
+  }
+  return 195;
+}
+
+function textAppearanceBody(object, value, appearanceObjectNumber, encryption, fontObjectNumber) {
   const rect = firstPdfArray(object.body, 'Rect');
   const width = Math.max(1, Math.abs((rect[2] || 200) - (rect[0] || 0)));
   const height = Math.max(1, Math.abs((rect[3] || 20) - (rect[1] || 0)));
@@ -422,7 +438,7 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption) {
     ? combAppearanceContent(text, width, height, fontSize, y, maxLength)
     : `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g\n2 ${y.toFixed(2)} Td\n(${text}) Tj\nET\nQ\n`;
   const encrypted = encryptObjectBytes(encryption, appearanceObjectNumber, 0, Buffer.from(content, 'latin1'), 'stream');
-  return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 195 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
+  return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 ${fontObjectNumber} 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
 }
 
 function textOverlayBody(objectNumber, overlays, encryption) {
@@ -584,6 +600,13 @@ function incrementalFillPdf(input, fieldValues) {
   const updates = new Map();
   const pageOverlays = new Map();
   let nextObjectNumber = Math.max(parsed.trailer.size || 0, ...parsed.objects.map((object) => object.objectNumber)) + 1;
+  // Allocate a new direct Helvetica font object in the incremental section so all
+  // appearance XObjects can reference it by number. A new direct indirect object is
+  // always resolvable by the viewer; inline font dicts inside stream dicts of
+  // encrypted PDFs are not reliably handled by macOS Preview.
+  const fontObjectNumber = nextObjectNumber;
+  nextObjectNumber += 1;
+  updates.set(fontObjectNumber, { generation: 0, body: '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>' });
   const filledFields = [];
   const skippedFields = [];
 
@@ -615,7 +638,7 @@ function incrementalFillPdf(input, fieldValues) {
       body = updateChoiceFieldBody(object, rawValue, parsed.encryption, appearanceObjectNumber);
       updates.set(appearanceObjectNumber, {
         generation: 0,
-        body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption)
+        body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption, fontObjectNumber)
       });
     } else {
       const appearanceObjectNumber = nextObjectNumber;
@@ -623,7 +646,7 @@ function incrementalFillPdf(input, fieldValues) {
       body = updateTextFieldBody(object, rawValue, parsed.encryption, appearanceObjectNumber);
       updates.set(appearanceObjectNumber, {
         generation: 0,
-        body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption)
+        body: textAppearanceBody(object, rawValue, appearanceObjectNumber, parsed.encryption, fontObjectNumber)
       });
     }
     updates.set(object.objectNumber, { generation: object.generation, body });
