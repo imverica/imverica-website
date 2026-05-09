@@ -105,6 +105,8 @@ async function main() {
   assert(!('Line1c_MiddleName[0]' in fieldValues), 'blank middle name should not be written');
   assert(fieldValues['Line2a_FamilyName[0]'] === 'N/A', 'no other names should write N/A');
   assert(fieldValues['Pt2Line5_AptSteFlrNumber[0]'] === '2', 'unit field should contain only the apartment number');
+  assert(fieldValues['Line7_AlienNumber[0]'] === '123456789', 'A-number should keep all 9 digits after removing the A prefix');
+  assert(fieldValues['Line12b_SSN[0]'] === '123456789', 'SSN should keep all 9 digits after removing hyphens');
   assert(fieldValues['Line8_ElisAccountNumber[0]'] === '123456789012', 'USCIS online account number should be digits only');
   assert(fieldValues['Line17a_CountryOfBirth[0]'] === 'Ukraine', 'first citizenship country should be filled');
   assert(!('Line17b_CountryOfBirth[0]' in fieldValues), 'second citizenship country should stay blank unless provided');

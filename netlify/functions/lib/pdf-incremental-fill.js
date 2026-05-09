@@ -425,6 +425,45 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption) {
   return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 195 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
 }
 
+function textOverlayBody(objectNumber, overlays, encryption) {
+  const lines = ['q', 'BT', '/TT3 10 Tf', '0 g'];
+  for (const overlay of overlays) {
+    lines.push(`1 0 0 1 ${overlay.x.toFixed(2)} ${overlay.y.toFixed(2)} Tm`);
+    lines.push(`(${pdfContentText(overlay.text)}) Tj`);
+  }
+  lines.push('ET', 'Q', '');
+  const content = Buffer.from(lines.join('\n'), 'latin1');
+  const encrypted = encryptObjectBytes(encryption, objectNumber, 0, content, 'stream');
+  return `<< /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
+}
+
+function appendPageContent(pageBody, contentObjectNumber) {
+  const ref = `${contentObjectNumber} 0 R`;
+  if (/\/Contents\s*\[/.test(pageBody)) {
+    return pageBody.replace(/\/Contents\s*\[([\s\S]*?)\]/, (match, contents) => `/Contents [${contents.trim()} ${ref}]`);
+  }
+  if (/\/Contents\s+\d+\s+\d+\s+R/.test(pageBody)) {
+    return pageBody.replace(/\/Contents\s+(\d+\s+\d+\s+R)/, `/Contents [$1 ${ref}]`);
+  }
+  return pageBody.replace(/>>\s*$/, `/Contents ${ref} >>`);
+}
+
+function eligibilityOverlay(object, value) {
+  const rect = firstPdfArray(object.body, 'Rect');
+  if (rect.length < 4) return null;
+  const width = Math.max(1, Math.abs(rect[2] - rect[0]));
+  const height = Math.max(1, Math.abs(rect[3] - rect[1]));
+  return {
+    text: value,
+    x: rect[0] + (width / 2) - 3,
+    y: rect[1] + ((height - 10) / 2)
+  };
+}
+
+function isEligibilityCategoryField(fieldName) {
+  return /^section_[123]\[0\]$/.test(fieldName);
+}
+
 function combAppearanceContent(text, width, height, fontSize, y, maxLength) {
   const value = String(text || '').slice(0, maxLength);
   const cellWidth = width / maxLength;
@@ -543,6 +582,7 @@ function incrementalFillPdf(input, fieldValues) {
   const parsed = parsePdf(original);
   const fields = extractFieldObjects(parsed);
   const updates = new Map();
+  const pageOverlays = new Map();
   let nextObjectNumber = Math.max(parsed.trailer.size || 0, ...parsed.objects.map((object) => object.objectNumber)) + 1;
   const filledFields = [];
   const skippedFields = [];
@@ -551,6 +591,18 @@ function incrementalFillPdf(input, fieldValues) {
     const object = fields.get(fieldName);
     if (!object) {
       skippedFields.push(fieldName);
+      continue;
+    }
+
+    if (isEligibilityCategoryField(fieldName)) {
+      const pageRef = firstPdfRef(object.body, 'P');
+      const overlay = eligibilityOverlay(object, rawValue);
+      if (pageRef && overlay) {
+        const overlays = pageOverlays.get(pageRef.objectNumber) || [];
+        overlays.push(overlay);
+        pageOverlays.set(pageRef.objectNumber, overlays);
+      }
+      filledFields.push(fieldName);
       continue;
     }
 
@@ -590,6 +642,21 @@ function incrementalFillPdf(input, fieldValues) {
     // The USCIS XFA packet is poorly supported by browser, Preview, and mobile
     // viewers. We remove the XFA pointer from the draft AcroForm and rely on
     // visible widget appearance streams instead.
+  }
+
+  for (const [pageObjectNumber, overlays] of pageOverlays.entries()) {
+    const page = parsed.byObjectNumber.get(pageObjectNumber);
+    if (!page || !overlays.length) continue;
+    const contentObjectNumber = nextObjectNumber;
+    nextObjectNumber += 1;
+    updates.set(contentObjectNumber, {
+      generation: 0,
+      body: textOverlayBody(contentObjectNumber, overlays, parsed.encryption)
+    });
+    updates.set(pageObjectNumber, {
+      generation: page.generation,
+      body: appendPageContent(page.body, contentObjectNumber)
+    });
   }
 
   const buffers = [];

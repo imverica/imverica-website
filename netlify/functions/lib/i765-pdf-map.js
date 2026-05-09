@@ -11,7 +11,7 @@ function noneLike(value) {
 }
 
 function digits(value, max = 30) {
-  return clean(value, max).replace(/\D/g, '').slice(0, max);
+  return clean(value, Math.max(80, max * 4)).replace(/\D/g, '').slice(0, max);
 }
 
 function usPhoneDigits(value) {
