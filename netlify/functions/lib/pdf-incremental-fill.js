@@ -414,9 +414,27 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption) {
   const height = Math.max(1, Math.abs((rect[3] || 20) - (rect[1] || 0)));
   const fontSize = Math.max(7, Math.min(10, height - 6));
   const y = Math.max(2, (height - fontSize) / 2);
-  const content = `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g\n2 ${y.toFixed(2)} Td\n(${pdfContentText(value)}) Tj\nET\nQ\n`;
+  const flags = firstPdfNumber(object.body, 'Ff') || 0;
+  const maxLength = firstPdfNumber(object.body, 'MaxLen') || 0;
+  const text = pdfContentText(value);
+  const isComb = Boolean((flags & 16777216) && maxLength > 1);
+  const content = isComb
+    ? combAppearanceContent(text, width, height, fontSize, y, maxLength)
+    : `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g\n2 ${y.toFixed(2)} Td\n(${text}) Tj\nET\nQ\n`;
   const encrypted = encryptObjectBytes(encryption, appearanceObjectNumber, 0, Buffer.from(content, 'latin1'), 'stream');
   return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 195 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
+}
+
+function combAppearanceContent(text, width, height, fontSize, y, maxLength) {
+  const value = String(text || '').slice(0, maxLength);
+  const cellWidth = width / maxLength;
+  const parts = [`q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g`];
+  for (let index = 0; index < value.length; index += 1) {
+    const x = (cellWidth * index) + (cellWidth / 2) - (fontSize * 0.28);
+    parts.push(`1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm\n(${pdfContentText(value[index])}) Tj`);
+  }
+  parts.push('ET\nQ\n');
+  return `${parts.join('\n')}`;
 }
 
 function normalizeFieldBodyStrings(body, object, encryption) {

@@ -75,6 +75,7 @@ async function main() {
   assert(optionLabel(optionByValue(field(workAuthorization, 'i765_application_reason').options, 'Initial permission to accept employment')) === 'Первичное разрешение на работу', 'I-765 reason option should be localized');
   assert(field(workAuthorization, 'applicant_statement')?.required === true, 'I-765 applicant statement should be required');
   assert(optionLabel(optionByValue(field(workAuthorization, 'applicant_statement').options, 'I can read and understand English')) === 'Я читаю и понимаю английский', 'I-765 English statement should be localized');
+  assert(field(workAuthorization, 'c8_arrested_or_convicted')?.label.includes('(c)(8)'), 'I-765 c8 question should be localized');
   const i765Applicant = i765.steps.find((step) => step.id === 'applicant');
   assert(field(i765Applicant, 'city_of_birth')?.label === 'Город/населенный пункт рождения', 'birth city label should be localized');
   assert(field(i765Applicant, 'sex')?.label === 'Пол', 'sex label should be localized');
@@ -84,6 +85,9 @@ async function main() {
   const i765History = i765.steps.find((step) => step.id === 'immigration_history');
   assert(field(i765History, 'place_entry')?.label === 'Место последнего въезда в США', 'last arrival place label should be localized');
   assert(field(i765History, 'passport_country_of_issuance')?.label === 'Страна, выдавшая паспорт или travel document', 'passport country of issuance label should be localized');
+  const i765Evidence = i765.steps.find((step) => step.id === 'documents_review');
+  assert(field(i765Evidence, 'has_interpreter')?.label === 'Будет interpreter?', 'interpreter question should be localized');
+  assert(field(i765Evidence, 'has_preparer')?.label === 'Будет preparer?', 'preparer question should be localized');
 
   console.log('localization QA passed');
 }

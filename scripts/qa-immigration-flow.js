@@ -73,6 +73,11 @@ async function main() {
   assert(mailingState?.options?.includes('CA - California'), 'I-765: state select should include California');
   assert(mailingState?.options?.includes('PR - Puerto Rico'), 'I-765: state select should include territories');
   assert(daytimePhone?.type === 'phone', 'I-765: phone should be split phone field');
+  const i765Work = localized.body.steps.find((step) => step.id === 'work_authorization');
+  assert(i765Work?.fields.some((field) => field.id === 'c8_arrested_or_convicted'), 'I-765: missing c8 arrest/conviction question');
+  const i765Evidence = localized.body.steps.find((step) => step.id === 'documents_review');
+  assert(i765Evidence?.fields.some((field) => field.id === 'has_interpreter'), 'I-765: missing interpreter question');
+  assert(i765Evidence?.fields.some((field) => field.id === 'has_preparer'), 'I-765: missing preparer question');
 
   const n400 = await callFlow('N-400', 'ru');
   const n400Naturalization = n400.body.steps.find((step) => step.id === 'naturalization');

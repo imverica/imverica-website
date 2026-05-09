@@ -5,6 +5,11 @@ function clean(value, max = 300) {
   return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
 }
 
+function noneLike(value) {
+  const text = clean(value, 80).toLowerCase();
+  return !text || ['n/a', 'na', 'none', 'no', 'нет', 'ні', 'не было', 'не менялось'].includes(text);
+}
+
 function digits(value, max = 30) {
   return clean(value, max).replace(/\D/g, '').slice(0, max);
 }
@@ -32,6 +37,20 @@ function splitOtherNames(value) {
   return text.split(/[;\n,]+/).map((item) => item.trim()).filter(Boolean).slice(0, 2);
 }
 
+function otherNameFields(value) {
+  if (noneLike(value)) {
+    return {
+      'Line2a_FamilyName[0]': 'N/A'
+    };
+  }
+
+  const otherNames = splitOtherNames(value);
+  return {
+    'Line2a_FamilyName[0]': otherNames[0],
+    'Line2b_GivenName[0]': otherNames[1]
+  };
+}
+
 function splitNameParts(value) {
   const parts = clean(value, 160).split(/\s+/).filter(Boolean);
   if (!parts.length) return {};
@@ -52,7 +71,11 @@ function categoryParts(value) {
   const text = clean(value, 40);
   const match = text.match(/\(?\s*([a-zA-Z])\s*\)?\s*\(?\s*([0-9]+)\s*\)?\s*(?:\(?\s*([a-zA-Z0-9]+)\s*\)?)?/);
   if (!match) return [];
-  return [match[1], match[2], match[3] || ''].map((item) => item ? item.toLowerCase() : '');
+  return [
+    match[1].toLowerCase(),
+    String(Number(match[2])),
+    match[3] ? match[3].toLowerCase() : ''
+  ];
 }
 
 function yesNo(value) {
@@ -137,11 +160,66 @@ function unitCheckbox(unitValue, aptField, suiteField, floorField) {
   return { [aptField]: true, [suiteField]: false, [floorField]: false };
 }
 
+function unitNumber(value) {
+  return clean(value, 40)
+    .replace(/^(?:apt|apartment|ste|suite|fl|floor|unit|#)\s*\.?\s*/i, '')
+    .slice(0, 6);
+}
+
+function citizenshipFields(value) {
+  const countries = clean(value, 200)
+    .split(/[;\n,]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .slice(0, 2);
+  return {
+    'Line17a_CountryOfBirth[0]': countries[0],
+    'Line17b_CountryOfBirth[0]': countries[1]
+  };
+}
+
+function c8CrimeHistoryFields(category, value) {
+  if (category[0] !== 'c' || category[1] !== '8') return {};
+  return checkboxPair(yesNo(value), 'PtLine29_YesNo[0]', 'PtLine29_YesNo[1]');
+}
+
+function noInterpreterPreparerFields(answers) {
+  const combined = yesNo(answers.interpreter_or_preparer_needed);
+  const hasInterpreter = yesNo(answers.has_interpreter);
+  const hasPreparer = yesNo(answers.has_preparer);
+  const values = {};
+
+  if (hasInterpreter === true) {
+    values['Pt4Line1a_InterpreterFamilyName[0]'] = answers.interpreter_family_name;
+    values['Pt4Line1b_InterpreterGivenName[0]'] = answers.interpreter_given_name;
+    values['Pt4Line2_InterpreterBusinessorOrg[0]'] = answers.interpreter_business_name;
+  } else if (combined === false || hasInterpreter === false) {
+    values['Pt4Line1a_InterpreterFamilyName[0]'] = 'N/A';
+    values['Pt4Line1b_InterpreterGivenName[0]'] = 'N/A';
+    values['Pt4Line2_InterpreterBusinessorOrg[0]'] = 'N/A';
+  }
+
+  if (hasPreparer === true) {
+    const preparerName = clean(`${answers.preparer_given_name || ''} ${answers.preparer_family_name || ''}`, 160);
+    values['Part3_Checkbox[0]'] = true;
+    values['Pt3Line2_RepresentativeName[0]'] = preparerName;
+    values['Pt5Line1a_PreparerFamilyName[0]'] = answers.preparer_family_name;
+    values['Pt5Line1b_PreparerGivenName[0]'] = answers.preparer_given_name;
+    values['Pt5Line2_BusinessName[0]'] = answers.preparer_business_name;
+  } else if (combined === false || hasPreparer === false) {
+    values['Pt5Line1a_PreparerFamilyName[0]'] = 'N/A';
+    values['Pt5Line1b_PreparerGivenName[0]'] = 'N/A';
+    values['Pt5Line2_BusinessName[0]'] = 'N/A';
+  }
+
+  return values;
+}
+
 function mappedAddress(answers) {
   const unit = clean(answers.mailing_address_line2);
   return {
     'Line4b_StreetNumberName[0]': answers.mailing_address_line1,
-    'Pt2Line5_AptSteFlrNumber[0]': unit,
+    'Pt2Line5_AptSteFlrNumber[0]': unitNumber(unit),
     'Pt2Line5_CityOrTown[0]': answers.mailing_city,
     'Pt2Line5_State[0]': stateCode(answers.mailing_state),
     'Pt2Line5_ZipCode[0]': digits(answers.mailing_zip, 10),
@@ -167,7 +245,6 @@ function i765FieldValues(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
   const contact = payload.contact || {};
   const today = new Date().toISOString().slice(0, 10);
-  const otherNames = splitOtherNames(answers.other_names_used);
   const fallbackName = splitNameParts(contact.name);
   const category = categoryParts(answers.eligibility_category_code);
   const priorEad = yesNo(answers.prior_ead);
@@ -178,13 +255,9 @@ function i765FieldValues(payload = {}) {
     'Line1a_FamilyName[0]': answers.applicant_family_name || fallbackName.family,
     'Line1b_GivenName[0]': answers.applicant_given_name || fallbackName.given,
     'Line1c_MiddleName[0]': answers.applicant_middle_name,
-    'Line2a_FamilyName[0]': otherNames[0],
-    'Line2b_GivenName[0]': otherNames[1],
     'Line7_AlienNumber[0]': digits(answers.alien_number, 9),
-    'Line8_ElisAccountNumber[0]': clean(answers.uscis_online_account_number, 12),
+    'Line8_ElisAccountNumber[0]': digits(answers.uscis_online_account_number, 12),
     'Line12b_SSN[0]': digits(answers.ssn, 9),
-    'Line17a_CountryOfBirth[0]': answers.country_of_citizenship,
-    'Line17b_CountryOfBirth[0]': answers.country_of_citizenship,
     'Line18a_CityTownOfBirth[0]': answers.city_of_birth || answers.place_of_birth_city,
     'Line18b_CityTownOfBirth[0]': answers.state_or_province_of_birth,
     'Line18c_CountryOfBirth[0]': answers.country_of_birth,
@@ -205,10 +278,14 @@ function i765FieldValues(payload = {}) {
     'section_1[0]': category[0],
     'section_2[0]': category[1],
     'section_3[0]': category[2],
+    ...otherNameFields(answers.other_names_used),
+    ...citizenshipFields(answers.country_of_citizenship),
     ...i765ApplicationReasonFields(answers.i765_application_reason, answers.prior_ead),
     ...applicantStatementFields(answers.applicant_statement),
     ...sexFields(answers.sex),
     ...maritalStatusFields(answers.marital_status),
+    ...c8CrimeHistoryFields(category, answers.c8_arrested_or_convicted),
+    ...noInterpreterPreparerFields(answers),
     ...mappedAddress(answers),
     ...physicalAddress(answers),
     ...checkboxPair(priorEad, 'Line19_Checkbox[1]', 'Line19_Checkbox[0]')

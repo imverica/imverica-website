@@ -6,6 +6,7 @@ const os = require('os');
 const { execFileSync } = require('child_process');
 const draft = require('../netlify/functions/pdf-draft');
 const { parsePdf } = require('../netlify/functions/lib/pdf-incremental-fill');
+const { i765FieldValues } = require('../netlify/functions/lib/i765-pdf-map');
 
 const ROOT = path.resolve(__dirname, '..');
 const SOURCE_PDF = path.join(ROOT, 'assets/form-cache/pdfs/i-765.pdf');
@@ -50,7 +51,7 @@ function sampleI765Payload() {
       i765_application_reason: 'Initial permission to accept employment',
       applicant_given_name: 'Ivan',
       applicant_family_name: 'Petrov',
-      applicant_middle_name: 'A',
+      other_names_used: 'No',
       date_of_birth: '1990-04-12',
       city_of_birth: 'Kyiv',
       state_or_province_of_birth: 'Kyiv Oblast',
@@ -81,10 +82,14 @@ function sampleI765Payload() {
       passport_number: 'AB1234567',
       passport_country_of_issuance: 'Ukraine',
       passport_expiration: '2030-01-01',
-      eligibility_category_code: '(c)(8)',
+      eligibility_category_code: 'c08',
+      c8_arrested_or_convicted: 'No',
       prior_ead: 'No',
       applicant_statement: 'I can read and understand English',
-      pending_application_receipt: 'IOE1234567890'
+      pending_application_receipt: 'IOE1234567890',
+      interpreter_or_preparer_needed: 'No',
+      has_interpreter: 'No',
+      has_preparer: 'No'
     },
     contact: {
       name: 'Ivan Petrov',
@@ -95,7 +100,21 @@ function sampleI765Payload() {
 }
 
 async function main() {
-  const response = await callDraft(sampleI765Payload());
+  const payload = sampleI765Payload();
+  const fieldValues = i765FieldValues(payload);
+  assert(!('Line1c_MiddleName[0]' in fieldValues), 'blank middle name should not be written');
+  assert(fieldValues['Line2a_FamilyName[0]'] === 'N/A', 'no other names should write N/A');
+  assert(fieldValues['Pt2Line5_AptSteFlrNumber[0]'] === '2', 'unit field should contain only the apartment number');
+  assert(fieldValues['Line8_ElisAccountNumber[0]'] === '123456789012', 'USCIS online account number should be digits only');
+  assert(fieldValues['Line17a_CountryOfBirth[0]'] === 'Ukraine', 'first citizenship country should be filled');
+  assert(!('Line17b_CountryOfBirth[0]' in fieldValues), 'second citizenship country should stay blank unless provided');
+  assert(fieldValues['section_1[0]'] === 'c' && fieldValues['section_2[0]'] === '8', 'c08 should normalize to category (c)(8)');
+  assert(!('section_3[0]' in fieldValues), 'c08 should not fill a third category segment');
+  assert(fieldValues['PtLine29_YesNo[0]'] === false && fieldValues['PtLine29_YesNo[1]'] === true, 'c8 crime-history item 30 should select No');
+  assert(fieldValues['Pt4Line1a_InterpreterFamilyName[0]'] === 'N/A', 'no interpreter should write N/A');
+  assert(fieldValues['Pt5Line1a_PreparerFamilyName[0]'] === 'N/A', 'no preparer should write N/A');
+
+  const response = await callDraft(payload);
   assert(response.statusCode === 200, `expected 200, got ${response.statusCode}`);
   assert(response.isBase64Encoded === true, 'draft PDF response should be base64 encoded');
   assert(response.headers['Content-Type'] === 'application/pdf', 'draft should return application/pdf');

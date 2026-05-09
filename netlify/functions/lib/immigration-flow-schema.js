@@ -84,10 +84,19 @@ const LOCALIZATION = {
       supporting_documents_available: 'Какие подтверждающие документы есть',
       translation_needed: 'Нужен перевод документов?',
       interpreter_or_preparer_needed: 'Нужна секция interpreter/preparer?',
+      has_interpreter: 'Будет interpreter?',
+      has_preparer: 'Будет preparer?',
+      interpreter_family_name: 'Фамилия interpreter',
+      interpreter_given_name: 'Имя interpreter',
+      interpreter_business_name: 'Организация interpreter, если есть',
+      preparer_family_name: 'Фамилия preparer',
+      preparer_given_name: 'Имя preparer',
+      preparer_business_name: 'Организация preparer, если есть',
       extra_notes_for_preparer: 'Что еще должен знать preparer?',
       ead_basis: 'Основание для разрешения на работу',
       i765_application_reason: 'Причина подачи I-765',
       eligibility_category_code: 'Код категории права на разрешение, если знаете',
+      c8_arrested_or_convicted: 'Для категории (c)(8): были ли аресты или судимости?',
       prior_ead: 'EAD уже был раньше?',
       applicant_statement: 'Заявление заявителя',
       pending_application_receipt: 'Receipt number связанного pending дела, если есть',
@@ -635,6 +644,18 @@ function evidenceFields() {
     field('interpreter_or_preparer_needed', 'Will an interpreter or preparer section be needed?', 'radio', {
       options: ['Yes', 'No', 'Not sure']
     }),
+    field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', {
+      options: ['Yes', 'No', 'Not sure']
+    }),
+    field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', {
+      options: ['Yes', 'No', 'Not sure']
+    }),
+    field('interpreter_family_name', 'Interpreter family name, if any', 'text', { autocomplete: 'family-name' }),
+    field('interpreter_given_name', 'Interpreter given name, if any', 'text', { autocomplete: 'given-name' }),
+    field('interpreter_business_name', 'Interpreter business or organization, if any', 'text', { autocomplete: 'organization' }),
+    field('preparer_family_name', 'Preparer family name, if any', 'text', { autocomplete: 'family-name' }),
+    field('preparer_given_name', 'Preparer given name, if any', 'text', { autocomplete: 'given-name' }),
+    field('preparer_business_name', 'Preparer business or organization, if any', 'text', { autocomplete: 'organization' }),
     field('extra_notes_for_preparer', 'Anything else the preparer should know?', 'textarea')
   ];
 }
@@ -757,6 +778,7 @@ const FORM_OVERRIDES = {
         options: ['Pending green card / adjustment of status', 'Asylum or pending asylum', 'TPS', 'DACA', 'Student category', 'Parole or humanitarian category', 'Other or not sure']
       }),
       field('eligibility_category_code', 'Eligibility category code, if known', 'text', { placeholder: 'Example: (c)(9), (c)(8), (a)(12)' }),
+      field('c8_arrested_or_convicted', 'For category (c)(8), have you ever been arrested for or convicted of any crime?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
       field('prior_ead', 'Have you had an EAD before?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
       field('applicant_statement', 'Applicant statement', 'radio', {
         required: true,
