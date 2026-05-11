@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
 
+const CHECKBOX_X_OFFSET = 2.2;
+
+
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
@@ -29,6 +32,25 @@ function wrapText(text, maxCharsPerLine) {
 
   if (line) lines.push(line);
   return lines;
+}
+
+function drawBoxedDigits(page, field, value, pickFont, rgb) {
+  const digits = String(value || '').replace(/\D/g, '').slice(0, 9);
+  if (!digits) return;
+
+  const size = field.size || 10;
+  const cellCount = 9;
+  const cellWidth = field.width ? field.width / cellCount : 14;
+
+  for (let i = 0; i < digits.length; i++) {
+    page.drawText(digits[i], {
+      x: field.x + (i * cellWidth) + Math.max(1.5, cellWidth * 0.32),
+      y: field.y,
+      size,
+      font: pickFont(field),
+      color: rgb(0, 0, 0)
+    });
+  }
 }
 
 function normalizeValue(value) {
@@ -73,7 +95,7 @@ async function main() {
       if (!selected) continue;
 
       page.drawText('x', {
-        x: selected.x,
+        x: (selected.x) + CHECKBOX_X_OFFSET,
         y: selected.y,
         size: field.size || 10,
         font: pickFont(field),
@@ -89,7 +111,7 @@ async function main() {
       if (!checked) continue;
 
       page.drawText('x', {
-        x: field.x,
+        x: (field.x) + CHECKBOX_X_OFFSET,
         y: field.y,
         size: field.size || 10,
         font: pickFont(field),
@@ -108,6 +130,16 @@ async function main() {
 
       const text = normalizeValue(value);
       const size = field.size || 10;
+      const key = String(field.key || '').toLowerCase();
+
+      if (
+        (key.includes('aliennumber') || key.includes('anumber')) &&
+        field.width &&
+        field.width >= 70
+      ) {
+        drawBoxedDigits(page, field, text, pickFont, rgb);
+        continue;
+      }
 
       if (field.height && field.height > 30 && field.width) {
         const maxCharsPerLine = Math.max(10, Math.floor(field.width / (size * 0.55)));
