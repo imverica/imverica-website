@@ -1,0 +1,39 @@
+{
+  "form": "normalized-test",
+  "source": "test-fixtures/normalized-test.pdf",
+  "output": "generated-filled/normalized-test-output.pdf",
+  "fields": [
+    {
+      "key": "name",
+      "kind": "text",
+      "mode": "text",
+      "page": 1,
+      "x": 125,
+      "y": 680,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "choice",
+      "kind": "checkbox",
+      "mode": "checkbox_group",
+      "page": 1,
+      "size": 10,
+      "font": "HelveticaBold",
+      "options": [
+        { "value": 0, "x": 152, "y": 626 },
+        { "value": 1, "x": 252, "y": 626 }
+      ]
+    },
+    {
+      "key": "confirm",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 1,
+      "x": 172,
+      "y": 576,
+      "size": 10,
+      "font": "HelveticaBold"
+    }
+  ]
+}
