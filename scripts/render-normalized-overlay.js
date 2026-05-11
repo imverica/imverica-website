@@ -78,7 +78,11 @@ async function main() {
       continue;
     }
 
-    if (field.mode === 'text') {
+    if (
+      field.mode === 'text' ||
+      field.mode === 'dropdown' ||
+      field.mode === 'option_list'
+    ) {
       if (isEmpty(value)) continue;
 
       page.drawText(normalizeValue(value), {
