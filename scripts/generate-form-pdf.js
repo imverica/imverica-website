@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 const { spawnSync } = require('child_process');
 
 function exists(file) {
@@ -24,7 +23,8 @@ function main() {
 
   const questionnairePath = `questionnaires/${form}.questionnaire.json`;
   const mapPath = `overlay-maps/normalized/${form}.json`;
-  const payloadPath = `payloads/${form}-generated-payload.json`;
+  const rawPayloadPath = `payloads/${form}-generated-payload.raw.json`;
+  const safePayloadPath = `payloads/${form}-generated-payload.json`;
 
   if (!exists(questionnairePath)) throw new Error(`Missing questionnaire: ${questionnairePath}`);
   if (!exists(mapPath)) throw new Error(`Missing normalized map: ${mapPath}`);
@@ -35,7 +35,7 @@ function main() {
 
   const convert = spawnSync(
     'node',
-    ['scripts/answers-to-payload.js', questionnairePath, answersPath, payloadPath],
+    ['scripts/answers-to-payload.js', questionnairePath, answersPath, rawPayloadPath],
     { stdio: 'inherit' }
   );
 
@@ -43,9 +43,19 @@ function main() {
     throw new Error('answers-to-payload failed');
   }
 
+  const applyRules = spawnSync(
+    'node',
+    ['scripts/apply-form-rules.js', form, questionnairePath, answersPath, rawPayloadPath, safePayloadPath],
+    { stdio: 'inherit' }
+  );
+
+  if (applyRules.status !== 0) {
+    throw new Error('apply-form-rules failed');
+  }
+
   const render = spawnSync(
     'node',
-    ['scripts/render-normalized-overlay.js', mapPath, payloadPath],
+    ['scripts/render-normalized-overlay.js', mapPath, safePayloadPath],
     { stdio: 'inherit' }
   );
 
@@ -58,7 +68,7 @@ function main() {
   console.log('');
   console.log('DONE');
   console.log('Form:', form);
-  console.log('Payload:', payloadPath);
+  console.log('Payload:', safePayloadPath);
   console.log('PDF:', map.output);
 }
 
