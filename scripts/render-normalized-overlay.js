@@ -2,6 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
 
+const TEXT_Y_OFFSET = 3;
+const TEXT_X_OFFSET = 5;
+
 const CHECKBOX_X_OFFSET = 2.2;
 
 
@@ -149,8 +152,8 @@ async function main() {
 
         for (let i = 0; i < Math.min(lines.length, maxLines); i++) {
           page.drawText(lines[i], {
-            x: field.x,
-            y: field.y + field.height - lineHeight - (i * lineHeight),
+            x: field.x + TEXT_X_OFFSET,
+            y: field.y + field.height - lineHeight - (i * lineHeight) + TEXT_Y_OFFSET,
             size,
             font: pickFont(field),
             color: rgb(0, 0, 0)
@@ -158,8 +161,8 @@ async function main() {
         }
       } else {
         page.drawText(text, {
-          x: field.x,
-          y: field.y,
+          x: field.x + TEXT_X_OFFSET,
+          y: field.y + TEXT_Y_OFFSET,
           size,
           font: pickFont(field),
           color: rgb(0, 0, 0)
