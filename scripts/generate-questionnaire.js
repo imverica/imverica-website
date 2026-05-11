@@ -9,12 +9,40 @@ function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
+function loadExclusions() {
+  if (!fs.existsSync('field-exclusions.json')) return {};
+  return JSON.parse(fs.readFileSync('field-exclusions.json', 'utf8'));
+}
+
+function isExcluded(form, field, pageNumber, exclusions) {
+  const config = exclusions[form];
+  if (!config) return false;
+
+  const key = String(field.key || '').toLowerCase();
+  const originalKey = String(field.originalKey || '').toLowerCase();
+
+  const check = (patterns) => {
+    if (!Array.isArray(patterns)) return false;
+    return patterns.some(pattern => {
+      const p = String(pattern).toLowerCase();
+      return key.includes(p) || originalKey.includes(p);
+    });
+  };
+
+  const pagePatterns = config.excludeByPage && config.excludeByPage[String(pageNumber)];
+  if (check(pagePatterns)) return true;
+
+  if (check(config.excludeKeysContaining)) return true;
+
+  return false;
+}
+
 function humanizeKey(key) {
   return String(key)
+    .replace(/^Pt(\d+)Line(\d+)/, 'Part $1 Line $2 ')
     .replace(/^Pt(\d+)/, 'Part $1 ')
     .replace(/^Part(\d+)/, 'Part $1 ')
     .replace(/^Line(\d+)/, 'Line $1 ')
-    .replace(/^Pt(\d+)Line(\d+)/, 'Part $1 Line $2 ')
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/\s+/g, ' ')
@@ -27,13 +55,35 @@ function inputType(field) {
   if (field.mode === 'checkbox_group' || field.mode === 'radio_group') return 'choice';
   if (field.mode === 'checkbox_single' || field.mode === 'radio_single') return 'boolean';
   if (key.includes('email')) return 'email';
-  if (key.includes('phone')) return 'phone';
+  if (key.includes('phone') || key.includes('telephone')) return 'phone';
   if (key.includes('date')) return 'date';
   if (key.includes('zipcode') || key.includes('zip')) return 'zip';
   if (key.includes('state')) return 'state';
   if (key.includes('country')) return 'country';
 
   return 'text';
+}
+
+function normalizeOptions(field) {
+  if (!field.options) return undefined;
+
+  return field.options.map(option => {
+    if (option && typeof option === 'object') {
+      return {
+        value: option.value,
+        label: option.label || `Option ${option.value}`,
+        x: option.x,
+        y: option.y,
+        width: option.width,
+        height: option.height
+      };
+    }
+
+    return {
+      value: option,
+      label: `Option ${option}`
+    };
+  });
 }
 
 function main() {
@@ -45,6 +95,7 @@ function main() {
   }
 
   const schema = readJson(schemaPath);
+  const exclusions = loadExclusions();
 
   const questionnaire = {
     form: schema.form,
@@ -52,21 +103,20 @@ function main() {
   };
 
   for (const [pageNumber, fields] of Object.entries(schema.pages)) {
-    questionnaire.pages.push({
-      page: Number(pageNumber),
-      fields: fields.map(field => ({
+    const visibleFields = fields
+      .filter(field => !isExcluded(schema.form, field, pageNumber, exclusions))
+      .map(field => ({
         key: field.key,
         label: humanizeKey(field.key),
         mode: field.mode,
         type: inputType(field),
         defaultValue: field.defaultValue,
-        options: field.options
-          ? field.options.map(value => ({
-              value,
-              label: `Option ${value}`
-            }))
-          : undefined
-      }))
+        options: normalizeOptions(field)
+      }));
+
+    questionnaire.pages.push({
+      page: Number(pageNumber),
+      fields: visibleFields
     });
   }
 
