@@ -10,6 +10,27 @@ function isEmpty(value) {
   return value === undefined || value === null || String(value).trim() === '';
 }
 
+
+function wrapText(text, maxCharsPerLine) {
+  const words = String(text).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+
+    if (next.length > maxCharsPerLine && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  }
+
+  if (line) lines.push(line);
+  return lines;
+}
+
 function normalizeValue(value) {
   if (value === undefined || value === null) return '';
   return String(value);
@@ -85,13 +106,33 @@ async function main() {
     ) {
       if (isEmpty(value)) continue;
 
-      page.drawText(normalizeValue(value), {
-        x: field.x,
-        y: field.y,
-        size: field.size || 10,
-        font: pickFont(field),
-        color: rgb(0, 0, 0)
-      });
+      const text = normalizeValue(value);
+      const size = field.size || 10;
+
+      if (field.height && field.height > 30 && field.width) {
+        const maxCharsPerLine = Math.max(10, Math.floor(field.width / (size * 0.55)));
+        const lineHeight = size + 2;
+        const lines = wrapText(text, maxCharsPerLine);
+        const maxLines = Math.max(1, Math.floor(field.height / lineHeight));
+
+        for (let i = 0; i < Math.min(lines.length, maxLines); i++) {
+          page.drawText(lines[i], {
+            x: field.x,
+            y: field.y + field.height - lineHeight - (i * lineHeight),
+            size,
+            font: pickFont(field),
+            color: rgb(0, 0, 0)
+          });
+        }
+      } else {
+        page.drawText(text, {
+          x: field.x,
+          y: field.y,
+          size,
+          font: pickFont(field),
+          color: rgb(0, 0, 0)
+        });
+      }
 
       continue;
     }
