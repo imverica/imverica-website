@@ -14,6 +14,14 @@ function main() {
     throw new Error('Usage: node scripts/generate-form-pdf.js g-1145 answers/g-1145-test.answers.json');
   }
 
+  const protectedConfigPath = 'protected-forms.json';
+  if (fs.existsSync(protectedConfigPath)) {
+    const protectedConfig = JSON.parse(fs.readFileSync(protectedConfigPath, 'utf8'));
+    if (protectedConfig.protectedForms && protectedConfig.protectedForms[form]) {
+      throw new Error(`${form} is protected. Use: node scripts/generate-polished-form-pdf.js ${form}`);
+    }
+  }
+
   const questionnairePath = `questionnaires/${form}.questionnaire.json`;
   const mapPath = `overlay-maps/normalized/${form}.json`;
   const payloadPath = `payloads/${form}-generated-payload.json`;
