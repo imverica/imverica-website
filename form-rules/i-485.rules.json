@@ -1,0 +1,76 @@
+{
+  "form": "i-485",
+  "defaultStrategy": "safe_blank_unless_answered",
+  "sections": {
+    "attorney": {
+      "condition": "answers.hasAttorney === true",
+      "default": false,
+      "controls": [
+        "G28",
+        "g28",
+        "volag",
+        "statebar",
+        "barnumber",
+        "attorney",
+        "representative",
+        "uscisonlineacctnumber"
+      ]
+    },
+    "interpreter": {
+      "condition": "answers.hasInterpreter === true",
+      "default": false,
+      "controls": [
+        "pt11",
+        "part11",
+        "interpreter"
+      ]
+    },
+    "preparer": {
+      "condition": "answers.hasPreparer === true",
+      "default": false,
+      "controls": [
+        "pt12",
+        "part12",
+        "preparer"
+      ]
+    },
+    "signature_at_interview": {
+      "condition": "never",
+      "default": false,
+      "controls": [
+        "pt13",
+        "part13",
+        "uscisofficer",
+        "uscissignature",
+        "corrections",
+        "pages"
+      ]
+    },
+    "public_charge_tables": {
+      "condition": "answers.receivedPublicBenefits === true || answers.institutionalizedAtGovernmentExpense === true",
+      "default": false,
+      "controls": [
+        "pt8line68c",
+        "pt8line68d",
+        "pt9line65",
+        "pt9line66",
+        "line65",
+        "line66"
+      ]
+    },
+    "criminal_and_inadmissibility": {
+      "defaultAnswer": "No",
+      "pages": [14, 15, 16, 17, 18, 19, 20, 21],
+      "conditionalRule": "If any answer is Yes, require explanation in Part 14 Additional Information."
+    }
+  },
+  "notes": [
+    "Do not auto fill USCIS Use Only fields.",
+    "Do not auto fill attorney fields unless hasAttorney is true.",
+    "Do not auto fill preparer fields unless hasPreparer is true.",
+    "Do not auto fill interpreter fields unless hasInterpreter is true.",
+    "Do not auto fill Part 13 Signature at Interview.",
+    "Do not auto fill public charge tables unless the triggering answer is Yes.",
+    "Eligibility category must be selected intentionally. Do not select multiple categories by default."
+  ]
+}
