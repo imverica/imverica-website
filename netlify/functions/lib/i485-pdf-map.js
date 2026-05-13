@@ -1,3 +1,5 @@
+const normalizedI485Map = require('../../../overlay-maps/normalized/i-485.json');
+
 function clean(value, max = 300) {
   if (value && typeof value === 'object' && !Array.isArray(value)) {
     return Object.values(value).filter(Boolean).join(' ').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -67,14 +69,14 @@ function alienNumberFields(value) {
   return result;
 }
 
-// Pt1Line6_CB_Sex: [0]=Male, [1]=Female  (form layout: "Male" then "Female")
+// Normalized I-485 map uses the actual PDF field order: [1]=Male, [0]=Female.
 function sexFields(value) {
   const sex = clean(value, 80).toLowerCase();
-  if (/^m|male|муж|чолов|masc/.test(sex)) {
-    return { 'Pt1Line6_CB_Sex[0]': true, 'Pt1Line6_CB_Sex[1]': false };
-  }
-  if (/^f|female|жен|жін|fem/.test(sex)) {
+  if (/^(m|male|муж|чолов|masc)\b/.test(sex)) {
     return { 'Pt1Line6_CB_Sex[0]': false, 'Pt1Line6_CB_Sex[1]': true };
+  }
+  if (/^(f|female|жен|жін|fem)\b/.test(sex)) {
+    return { 'Pt1Line6_CB_Sex[0]': true, 'Pt1Line6_CB_Sex[1]': false };
   }
   return {};
 }
@@ -222,8 +224,83 @@ function usAddress(answers) {
   };
 }
 
+const NORMALIZED_FIELDS = Array.isArray(normalizedI485Map.fields) ? normalizedI485Map.fields : [];
+const NORMALIZED_FIELDS_BY_KEY = NORMALIZED_FIELDS.reduce((map, field) => {
+  if (!field?.key) return map;
+  const entries = map.get(field.key) || [];
+  entries.push(field);
+  map.set(field.key, entries);
+  return map;
+}, new Map());
+
+function pdfFieldNameFromOriginal(originalKey) {
+  return clean(originalKey, 300).split('.').pop();
+}
+
+function originalFieldNames(field) {
+  if (!field) return [];
+  if (Array.isArray(field.originalKeys)) return field.originalKeys.map(pdfFieldNameFromOriginal).filter(Boolean);
+  if (field.originalKey) return [pdfFieldNameFromOriginal(field.originalKey)].filter(Boolean);
+  return [];
+}
+
+function hasExactScenarioFields(answers) {
+  return Object.keys(answers || {}).some((key) => key === 'AlienNumber' || NORMALIZED_FIELDS_BY_KEY.has(key));
+}
+
+function exactText(value, max = 1000) {
+  return String(value).replace(/\s+/g, ' ').trim().slice(0, max);
+}
+
+function isPresentExactValue(value) {
+  return value !== undefined && value !== null && exactText(value, 1000) !== '';
+}
+
+function exactScenarioFieldValues(answers = {}) {
+  if (!hasExactScenarioFields(answers)) return {};
+
+  const result = {};
+
+  for (const [key, rawValue] of Object.entries(answers)) {
+    if (!isPresentExactValue(rawValue)) continue;
+
+    if (key === 'AlienNumber') {
+      Object.assign(result, alienNumberFields(rawValue));
+      continue;
+    }
+
+    const fields = NORMALIZED_FIELDS_BY_KEY.get(key) || [];
+    if (!fields.length) continue;
+
+    for (const field of fields) {
+      const names = originalFieldNames(field);
+      if (!names.length) continue;
+
+      if (field.mode === 'checkbox_group' || field.mode === 'radio_group') {
+        const selectedValue = exactText(rawValue, 80);
+        const options = Array.isArray(field.options) ? field.options : [];
+        options.forEach((option, index) => {
+          const name = names[index];
+          if (!name) return;
+          result[name] = exactText(option.value, 80) === selectedValue;
+        });
+        continue;
+      }
+
+      names.forEach((name) => {
+        result[name] = rawValue;
+      });
+    }
+  }
+
+  return result;
+}
+
 function i485FieldValues(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
+  const exactValues = exactScenarioFieldValues(answers);
+  if (Object.keys(exactValues).length) return exactValues;
+
   const contact = payload.contact || {};
   const today = new Date().toISOString().slice(0, 10);
   const phone = usPhoneDigits(answers.daytime_phone || contact.phone);
