@@ -21,7 +21,8 @@ function anyKey(patterns) {
 function hasAnyValue(patterns) {
   return anyKey(patterns).some(k => {
     const v = payload[k];
-    return v !== undefined && v !== null && String(v).trim() !== '';
+    const normalized = String(v ?? '').trim().toLowerCase();
+    return normalized !== '' && normalized !== 'n/a' && normalized !== 'not applicable';
   });
 }
 

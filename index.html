@@ -2293,6 +2293,27 @@ function closeDetail(id) {
     return '<div class="intake-field">' + label + '<input type="' + esc(type) + '"' + attrsForField(field) + ' value="' + esc(value) + '">' + help + '</div>';
   }
 
+  function flowConditionMatches(condition) {
+    if (!condition || !condition.id) return true;
+    var value = state.formAnswers[condition.id];
+    if (condition.equals !== undefined) return String(value || '') === String(condition.equals);
+    if (condition.notEquals !== undefined) return String(value || '') !== String(condition.notEquals);
+    if (condition.hasValue) return !isEmptyFlowValue({ type: 'text' }, value);
+    return true;
+  }
+
+  function isFlowFieldVisible(field) {
+    var all = Array.isArray(field.showWhen) ? field.showWhen : [];
+    var any = Array.isArray(field.showWhenAny) ? field.showWhenAny : [];
+    if (all.length && !all.every(flowConditionMatches)) return false;
+    if (any.length && !any.some(flowConditionMatches)) return false;
+    return true;
+  }
+
+  function visibleFlowFields(schemaStep) {
+    return (schemaStep.fields || []).filter(isFlowFieldVisible);
+  }
+
   function renderFlowStep(schemaStep) {
     var copy = t();
     var official = state.officialForm || {};
@@ -2303,7 +2324,7 @@ function closeDetail(id) {
         (official.cachedPdfUrl ? ' · ' + esc(copy.cachedFallback) : '') + '</div>';
     }
     card.innerHTML = '<div class="intake-question">' + esc(schemaStep.title) + '</div><div class="intake-help">' + esc(schemaStep.help || '') + '</div>' + officialNote +
-      '<div class="intake-grid">' + (schemaStep.fields || []).map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
+      '<div class="intake-grid">' + visibleFlowFields(schemaStep).map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
   }
 
   function render() {
@@ -2519,7 +2540,7 @@ function closeDetail(id) {
     if (!(state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex())) return true;
     var schemaStep = flowSteps()[state.step - flowStepStart()];
     var invalid = [];
-    (schemaStep.fields || []).forEach(function (field) {
+    visibleFlowFields(schemaStep).forEach(function (field) {
       var value = state.formAnswers[field.id];
       var empty = isEmptyFlowValue(field, value);
       if (!field.required || !empty) return;
@@ -2830,6 +2851,13 @@ function closeDetail(id) {
       if (checkboxLabel) checkboxLabel.classList.toggle('active', checkbox.checked);
     }
     captureStep();
+    if (state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex()) {
+      var schemaStep = flowSteps()[state.step - flowStepStart()];
+      var hasConditionalFields = (schemaStep.fields || []).some(function (field) {
+        return (Array.isArray(field.showWhen) && field.showWhen.length) || (Array.isArray(field.showWhenAny) && field.showWhenAny.length);
+      });
+      if (hasConditionalFields) render();
+    }
   });
 
   langEl.addEventListener('click', async function (event) {

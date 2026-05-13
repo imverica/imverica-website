@@ -1,6 +1,7 @@
 const SCHEMA_VERSION = 'immigration-flow-v1';
 const { stateSelectOptions } = require('./us-address');
 const { countrySelectOptions } = require('./country-options');
+const { buildI485Part9Steps } = require('./i485-part9-flow');
 
 const DISCLAIMER = 'Document preparation only. Possible forms may include official USCIS forms. Imverica is not a law firm or attorney and does not provide legal advice.';
 
@@ -24,6 +25,10 @@ const LOCALIZATION = {
       green_card_replacement: 'Замена или продление green card',
       nonimmigrant_extension: 'Изменение или продление статуса',
       remove_conditions: 'Снятие условий с green card',
+      i485_part9_entries: 'Part 9: въезд и иммиграционные вопросы',
+      i485_part9_criminal: 'Part 9: criminal и trafficking вопросы',
+      i485_part9_security: 'Part 9: security вопросы',
+      i485_part9_other: 'Part 9: другие admissibility вопросы',
       tps_details: 'Детали TPS',
       daca_details: 'Детали DACA',
       household_member_contract: 'Доход члена household',
@@ -43,7 +48,11 @@ const LOCALIZATION = {
       spouse_biographic: 'Данные супруга-бенефициара для семейной петиции.',
       travel_document: 'Укажите, какой проездной документ нужен и для какой поездки.',
       naturalization: 'Базовые вопросы для подготовки N-400.',
-      biographic_history: 'USCIS может требовать адреса и работу за последние 5 лет.'
+      biographic_history: 'USCIS может требовать адреса и работу за последние 5 лет.',
+      i485_part9_entries: 'Отвечайте по официальной логике I-485. Дополнительные поля появятся только если нужны.',
+      i485_part9_criminal: 'Если ответ Yes, flow потребует объяснение для Part 14 перед генерацией PDF.',
+      i485_part9_security: 'Security-related Yes ответы требуют объяснение с датами и местом.',
+      i485_part9_other: 'Оставшиеся вопросы Part 9 помогают определить дополнительные объяснения или документы.'
     },
     fields: {
       form_code_confirmed: 'Запрошенная форма',
@@ -294,6 +303,10 @@ const LOCALIZATION = {
       family_petition: 'Деталі сімейної петиції',
       travel_document: 'Запит travel document',
       adjustment_basis: 'Підстава для adjustment of status',
+      i485_part9_entries: 'Part 9: в’їзд та імміграційні питання',
+      i485_part9_criminal: 'Part 9: criminal та trafficking питання',
+      i485_part9_security: 'Part 9: security питання',
+      i485_part9_other: 'Part 9: інші admissibility питання',
       fee_waiver: 'Підстава fee waiver',
       naturalization: 'Підготовка naturalization'
     },
@@ -366,6 +379,10 @@ const LOCALIZATION = {
       family_petition: 'Detalles de petición familiar',
       travel_document: 'Solicitud de travel document',
       adjustment_basis: 'Base para adjustment of status',
+      i485_part9_entries: 'Parte 9: entrada y preguntas migratorias',
+      i485_part9_criminal: 'Parte 9: preguntas criminales y trafficking',
+      i485_part9_security: 'Parte 9: preguntas de seguridad',
+      i485_part9_other: 'Parte 9: otras preguntas de admisibilidad',
       fee_waiver: 'Base de fee waiver',
       naturalization: 'Preparación de naturalization'
     },
@@ -734,7 +751,8 @@ const FORM_OVERRIDES = {
       field('inside_us_now', 'Are you physically inside the United States now?', 'radio', { required: true, options: ['Yes', 'No'] }),
       field('inspection_or_parole', 'Last entry was inspected, admitted, or paroled?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
       field('medical_exam_status', 'Medical exam I-693 status', 'select', { options: ['Already completed', 'Need to schedule', 'Will submit later if allowed', 'Not sure'] })
-    ])
+    ]),
+    ...buildI485Part9Steps(field, step)
   ],
   'I-539': [
     step('nonimmigrant_extension', 'Change or extend status', 'Information about the status being requested.', [
