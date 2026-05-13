@@ -37,12 +37,11 @@ function wrapText(text, maxCharsPerLine) {
   return lines;
 }
 
-function drawBoxedDigits(page, field, value, pickFont, rgb) {
-  const digits = String(value || '').replace(/\D/g, '').slice(0, 9);
+function drawBoxedDigits(page, field, value, pickFont, rgb, cellCount = 9) {
+  const digits = String(value || '').replace(/\D/g, '').slice(0, cellCount);
   if (!digits) return;
 
   const size = field.size || 10;
-  const cellCount = 9;
   const cellWidth = field.width ? field.width / cellCount : 14;
 
   for (let i = 0; i < digits.length; i++) {
@@ -121,6 +120,12 @@ async function main() {
         color: rgb(0, 0, 0)
       });
 
+      continue;
+    }
+
+    if (field.mode === 'digits_positions') {
+      if (isEmpty(value)) continue;
+      drawBoxedDigits(page, field, normalizeValue(value), pickFont, rgb, field.cellCount || 9);
       continue;
     }
 
