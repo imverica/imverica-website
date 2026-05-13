@@ -442,8 +442,10 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption, f
 }
 
 function textOverlayBody(objectNumber, overlays, encryption) {
-  const lines = ['q', 'BT', '/TT3 10 Tf', '0 g'];
+  const lines = ['q', 'BT', '0 g'];
   for (const overlay of overlays) {
+    const size = Math.max(7, Math.min(12, Number(overlay.size || 10)));
+    lines.push(`/TT1 ${size.toFixed(2)} Tf`);
     lines.push(`1 0 0 1 ${overlay.x.toFixed(2)} ${overlay.y.toFixed(2)} Tm`);
     lines.push(`(${pdfContentText(overlay.text)}) Tj`);
   }
@@ -552,6 +554,38 @@ function updateAcroFormBody(object, encryption) {
   return addDictionaryEntries(body, { NeedAppearances: 'false' });
 }
 
+function extractPageObjects(parsed) {
+  const root = parsed.trailer.root ? parsed.byObjectNumber.get(parsed.trailer.root.objectNumber) : null;
+  const pagesRef = root ? firstPdfRef(root.body, 'Pages') : null;
+  const visited = new Set();
+
+  function kidsRefs(body) {
+    const match = String(body || '').match(/\/Kids\s*\[([\s\S]*?)\]/);
+    if (!match) return [];
+    return [...match[1].matchAll(/(\d+)\s+(\d+)\s+R/g)].map((ref) => Number(ref[1]));
+  }
+
+  function walk(objectNumber) {
+    if (!objectNumber || visited.has(objectNumber)) return [];
+    visited.add(objectNumber);
+
+    const object = parsed.byObjectNumber.get(objectNumber);
+    if (!object) return [];
+
+    if (/\/Type\s*\/Page\b/.test(object.body || '') && !/\/Type\s*\/Pages\b/.test(object.body || '')) {
+      return [object];
+    }
+
+    return kidsRefs(object.body).flatMap(walk);
+  }
+
+  const ordered = walk(pagesRef?.objectNumber);
+  if (ordered.length) return ordered;
+
+  return parsed.objects
+    .filter((object) => /\/Type\s*\/Page\b/.test(object.body || '') && !/\/Type\s*\/Pages\b/.test(object.body || ''));
+}
+
 function objectToBuffer(objectNumber, generation, body) {
   const text = String(body);
   const separator = text.endsWith('\n') || text.endsWith('\r') ? '' : '\n';
@@ -593,10 +627,11 @@ function xrefStreamBody(entries, trailer, size, prev) {
   return `<< ${pieces.join(' ')} >>\nstream\n${stream.toString('latin1')}\nendstream`;
 }
 
-function incrementalFillPdf(input, fieldValues) {
+function incrementalFillPdf(input, fieldValues, textOverlays = []) {
   const original = Buffer.isBuffer(input) ? input : Buffer.from(input);
   const parsed = parsePdf(original);
   const fields = extractFieldObjects(parsed);
+  const pages = extractPageObjects(parsed);
   const updates = new Map();
   const pageOverlays = new Map();
   let nextObjectNumber = Math.max(parsed.trailer.size || 0, ...parsed.objects.map((object) => object.objectNumber)) + 1;
@@ -609,6 +644,21 @@ function incrementalFillPdf(input, fieldValues) {
   updates.set(fontObjectNumber, { generation: 0, body: '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>' });
   const filledFields = [];
   const skippedFields = [];
+
+  for (const overlay of Array.isArray(textOverlays) ? textOverlays : []) {
+    const pageNumber = Number(overlay.page || 0);
+    const page = pages[pageNumber - 1];
+    const text = pdfContentText(overlay.text);
+    if (!page || !text) continue;
+    const overlays = pageOverlays.get(page.objectNumber) || [];
+    overlays.push({
+      text,
+      x: Number(overlay.x || 0),
+      y: Number(overlay.y || 0),
+      size: Number(overlay.size || 10)
+    });
+    pageOverlays.set(page.objectNumber, overlays);
+  }
 
   for (const [fieldName, rawValue] of Object.entries(fieldValues || {})) {
     const object = fields.get(fieldName);
@@ -710,6 +760,7 @@ function incrementalFillPdf(input, fieldValues) {
     buffer: Buffer.concat([original, ...buffers, xref]),
     filledFields,
     skippedFields,
+    overlayFields: Array.isArray(textOverlays) ? textOverlays.length : 0,
     updateCount: updates.size
   };
 }

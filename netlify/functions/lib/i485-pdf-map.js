@@ -244,6 +244,14 @@ function originalFieldNames(field) {
   return [];
 }
 
+function isSyntheticOverlayField(field) {
+  const originals = [
+    ...(Array.isArray(field?.originalKeys) ? field.originalKeys : []),
+    field?.originalKey
+  ].filter(Boolean);
+  return originals.some((original) => /^(imverica-added|imverica\.generated)\./.test(String(original)));
+}
+
 function hasExactScenarioFields(answers) {
   return Object.keys(answers || {}).some((key) => key === 'AlienNumber' || NORMALIZED_FIELDS_BY_KEY.has(key));
 }
@@ -273,6 +281,8 @@ function exactScenarioFieldValues(answers = {}) {
     if (!fields.length) continue;
 
     for (const field of fields) {
+      if (isSyntheticOverlayField(field)) continue;
+
       const names = originalFieldNames(field);
       if (!names.length) continue;
 
@@ -294,6 +304,32 @@ function exactScenarioFieldValues(answers = {}) {
   }
 
   return result;
+}
+
+function i485TextOverlays(payload = {}) {
+  const answers = payload.formAnswers || payload.answers || {};
+  if (!hasExactScenarioFields(answers)) return [];
+
+  const overlays = [];
+
+  for (const [key, rawValue] of Object.entries(answers)) {
+    if (!isPresentExactValue(rawValue)) continue;
+
+    const fields = NORMALIZED_FIELDS_BY_KEY.get(key) || [];
+    for (const field of fields) {
+      if (!isSyntheticOverlayField(field)) continue;
+      overlays.push({
+        key,
+        page: Number(field.page),
+        text: exactText(rawValue, 240),
+        x: Number(field.x || 0) + 5,
+        y: Number(field.y || 0) + 3,
+        size: Number(field.size || 10)
+      });
+    }
+  }
+
+  return overlays;
 }
 
 function i485FieldValues(payload = {}) {
@@ -467,4 +503,4 @@ function i485FieldValues(payload = {}) {
   );
 }
 
-module.exports = { i485FieldValues, dateMdY };
+module.exports = { i485FieldValues, i485TextOverlays, dateMdY };

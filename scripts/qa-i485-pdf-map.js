@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { i485FieldValues } = require('../netlify/functions/lib/i485-pdf-map');
+const { i485FieldValues, i485TextOverlays } = require('../netlify/functions/lib/i485-pdf-map');
 const { incrementalFillPdf } = require('../netlify/functions/lib/pdf-incremental-fill');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -17,8 +17,10 @@ function assertEqual(actual, expected, message) {
 }
 
 const values = i485FieldValues({ formAnswers: scenario.fields, contact: {} });
+const textOverlays = i485TextOverlays({ formAnswers: scenario.fields, contact: {} });
 
-assert(Object.keys(values).length >= 400, `Expected exact I-485 map to produce at least 400 fields, got ${Object.keys(values).length}`);
+assert(Object.keys(values).length >= 400, `Expected exact I-485 map to produce at least 400 real fields, got ${Object.keys(values).length}`);
+assertEqual(textOverlays.length, 13, 'Synthetic overlay field count');
 
 assertEqual(values['AlienNumber[0]'], '208924970', 'A-number page 1');
 assertEqual(values['AlienNumber[23]'], '208924970', 'A-number page 24');
@@ -40,31 +42,14 @@ assertEqual(semanticMale['Pt1Line6_CB_Sex[0]'], false, 'Semantic male checkbox [
 assertEqual(semanticMale['Pt1Line6_CB_Sex[1]'], true, 'Semantic male checkbox [1]');
 
 const inputPdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf'));
-const result = incrementalFillPdf(inputPdf, values);
+const result = incrementalFillPdf(inputPdf, values, textOverlays);
 assert(result.filledFields.length >= 400, `Expected at least 400 incremental fields filled, got ${result.filledFields.length}`);
-
-const knownSkipped = new Set([
-  'Pt4Line7NameOfEmployer',
-  'Pt4Line7Occupation',
-  'PriorSpouseDOB',
-  'PriorMarriagePlaceCity',
-  'PriorMarriagePlaceState',
-  'PriorMarriagePlaceCountry',
-  'MarriageEndedDate',
-  'P14_Line2_Title',
-  'P14_Line2_Address',
-  'P14_Line3_Title',
-  'P14_Line3_Employment',
-  'P14_Line3_Dates',
-  'P14_Line3_Occupation'
-]);
-
-const unknownSkipped = result.skippedFields.filter((field) => !knownSkipped.has(field));
-assert(!unknownSkipped.length, `Unexpected skipped I-485 fields: ${unknownSkipped.join(', ')}`);
+assertEqual(result.skippedFields.length, 0, 'No exact I-485 fields should be skipped');
 
 console.log(JSON.stringify({
   ok: true,
   mappedFields: Object.keys(values).length,
   filledFields: result.filledFields.length,
-  knownSkippedFields: result.skippedFields.length
+  overlayFields: textOverlays.length,
+  skippedFields: result.skippedFields.length
 }, null, 2));

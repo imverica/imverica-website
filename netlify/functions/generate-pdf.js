@@ -64,15 +64,19 @@ function findMap(formCode) {
 
   const mod = require(mapPath);
 
-  const fn =
+  const buildFieldValues =
     Object.values(mod).find(value => typeof value === "function" && /fieldvalues/i.test(value.name)) ||
     Object.values(mod).find(value => typeof value === "function");
 
-  if (!fn) {
+  if (!buildFieldValues) {
     throw new Error("No FieldValues function exported from: " + file);
   }
 
-  return fn;
+  const buildTextOverlays =
+    Object.values(mod).find(value => typeof value === "function" && /textoverlays/i.test(value.name)) ||
+    (() => []);
+
+  return { buildFieldValues, buildTextOverlays };
 }
 
 exports.handler = async function(event) {
@@ -108,15 +112,17 @@ exports.handler = async function(event) {
       };
     }
 
-    const buildFieldValues = findMap(formCode);
+    const { buildFieldValues, buildTextOverlays } = findMap(formCode);
     const inputPdf = fs.readFileSync(pdfPath);
     const fieldValues = buildFieldValues(payload);
-    const result = incrementalFillPdf(inputPdf, fieldValues);
+    const textOverlays = buildTextOverlays(payload);
+    const result = incrementalFillPdf(inputPdf, fieldValues, textOverlays);
 
     console.log("PDF RESULT", {
       formCode,
       pdf: pdfPath,
       mappedFields: Object.keys(fieldValues).length,
+      overlays: textOverlays.length,
       filled: result.filledFields?.length,
       skipped: result.skippedFields?.length,
       skippedFields: result.skippedFields
