@@ -1,0 +1,107 @@
+{
+  "form": "i-485",
+  "scenario": "asylee_paroled",
+  "scenarioPath": "form-scenarios/i-485-asylee.json",
+  "sourcePdf": "/Applications/IMMIGRATION/Hovdan/i-485_YANA.pdf",
+  "expectedPages": 24,
+  "pageChecks": [
+    {
+      "page": 1,
+      "required": ["AlienNumber", "Pt1Line1_FamilyName", "Pt1Line1_GivenName", "Pt1Line2_FamilyName", "Pt1Line2_GivenName", "Pt1Line3_DOB", "Pt1Line3_YN"],
+      "blank": ["Pt1Line1_MiddleName"]
+    },
+    {
+      "page": 2,
+      "required": ["AlienNumber", "Pt1Line4_AlienNumber", "Pt1Line4_YN", "Pt1Line5_YN", "Pt1Line6_CB_Sex", "Pt1Line7_CityTownOfBirth", "Pt1Line7_CountryOfBirth", "Pt1Line8_CountryofCitizenshipNationality", "Pt1Line10_PassportNum", "Pt1Line10_ExpDate", "Pt1Line10_Passport", "Pt1Line10_CityTown", "Pt1Line10_State", "Pt1Line10_DateofArrival", "Pt2Line11_CB", "Pt1Line11_Paroled"]
+    },
+    {
+      "page": 3,
+      "required": ["AlienNumber", "P1Line12_FamilyName", "P1Line13_GivenName", "P1Line12_I94", "Pt1Line12_Date", "Pt1Line12_Status", "Pt1Line13_YN", "Pt1Line14_Status", "Pt1Line15_Date", "Pt1Line16_YN", "Pt1Line17_YN", "Pt1Line18US_Unit", "Pt1Line18US_AptSteFlrNumber", "Pt1Line18_StreetNumberName", "Pt1Line18_CityOrTown", "Pt1Line18_State", "Pt1Line18_ZipCode", "Pt1Line18_Date", "Pt1Line18_YN"]
+    },
+    {
+      "page": 4,
+      "required": ["AlienNumber", "Pt1Line18_last5yrs_YN", "Pt1Line18_PriorStreetName", "Pt1Line18_PriorAddress_Unit", "Pt1Line18_PriorAddress_Number", "Pt1Line18_PriorCity", "Pt1Line18_PriorState", "Pt1Line18_PriorZipCode", "Pt1Line18_PriorCountry", "Pt1Line18_PriorDateFrom", "Pt1Line18PriorDateTo", "Pt1Line18_RecentStreetName", "Pt1Line18_RecentCity", "Pt1Line18_RecentProvince", "Pt1Line18_RecentCountry", "Pt1Line18_RecentDateFrom", "Pt1Line18_RecentDateTo", "Pt1Line19_YN", "Pt1Line19_SSN", "Pt1Line19_SSA_YN", "Pt1Line19_Consent_YN"]
+    },
+    {
+      "page": 5,
+      "required": ["AlienNumber", "Pt2Line2_CB", "Pt2Line2_AlienNumber"]
+    },
+    {
+      "page": 6,
+      "onlyNonBlank": ["AlienNumber"]
+    },
+    {
+      "page": 7,
+      "required": ["AlienNumber", "Pt2Line3d_AsyleeRefugeeCB", "Pt2Line3d_Asylum"]
+    },
+    {
+      "page": 8,
+      "required": ["AlienNumber", "Pt3Line1_CB", "Pt4Line1_YN", "Pt4Line5_YN", "Pt4Line6_YN", "Pt4Line7_EmployerName", "Pt4Line7_NameOfEmployer", "Pt4Line7_Occupation"]
+    },
+    {
+      "page": 9,
+      "required": ["AlienNumber", "Part4Line7_StreetName", "P4Line7_City", "P4Line7_State", "P4Line7_ZipCode", "P4Line7_Country", "Pt4Line7_DateFrom", "Pt4Line8_EmployerName", "Pt4Line8_Occupation", "P4Line8_City", "P4Line8_Province", "P4Line8_Country", "Pt4Line8_DateFrom", "Pt4Line8_DateTo", "Pt5Line1_FamilyName", "Pt5Line1_GivenName", "Pt5Line3_DateofBirth"]
+    },
+    {
+      "page": 10,
+      "required": ["AlienNumber", "Pt5Line5_CityTownOfBirth", "Pt5Line6_FamilyName", "Pt5Line6_GivenName", "Pt5Line7_FamilyName", "Pt5Line7_GivenName", "Pt5Line8_DateofBirth", "Pt5Line10_CityTownOfBirth", "Pt6Line1_MaritalStatus", "Pt6Line3_TimesMarried"]
+    },
+    {
+      "page": 11,
+      "required": ["AlienNumber", "Pt6Line12_FamilyName", "Pt6Line12_GivenName", "Pt6Line13_DateofBirth", "Pt6Line14_Country", "Pt6Line15_Country", "Pt6Line16_DateofBirth", "Pt6Line17_CityTownOfMarriage", "Pt6Line17_State", "Pt6Line17_Country", "Pt6Line18_CityTownOfBirth", "Pt6Line18_State", "Pt6Line18_Country", "Pt6Line18_DateMarriageEnded"]
+    },
+    {
+      "page": 12,
+      "required": ["AlienNumber", "Pt6Line1_TotalChildren", "Pt7Line2_FamilyName", "Pt7Line2_GivenName", "Pt7Line2_AlienNumber", "Pt7Line2_DateofBirth", "Pt7Line2_Country", "Pt7Line2_YN", "Pt7Line2_Relationship"]
+    },
+    {
+      "page": 13,
+      "required": ["AlienNumber", "Pt7Line1_Ethnicity", "Pt7Line2_Race", "Pt7Line3_HeightFeet", "Pt7Line3_HeightInches", "Pt7Line4_Weight1", "Pt7Line4_Weight2", "Pt7Line4_Weight3", "Pt7Line5_Eyecolor", "Pt7Line6_Haircolor", "Pt8Line1_YesNo"]
+    },
+    {
+      "page": 14,
+      "required": ["AlienNumber", "Pt9Line10_YesNo", "Pt9Line11_YesNo", "Pt8Line13_YesNo", "Pt8Line17_YesNo", "Pt8Line18_YesNo", "Pt8Line19_YesNo", "Pt8Line20_YesNo", "Pt8Line22_YesNo", "Pt8Line23_YesNo", "Pt8Line24a_YesNo", "Pt8Line24b_YesNo", "Pt8Line24c_YesNo", "Pt9Line12_YesNo"]
+    },
+    {
+      "page": 15,
+      "required": ["AlienNumber", "Pt9Line23_YesNo", "Pt9Line24_YesNo", "Pt8Line25_YesNo", "Pt8Line26_YesNo", "Pt8Line27_YesNo", "Pt8Line28_YesNo", "Pt8Line29_YesNo", "Pt8Line30_YesNo", "Pt8Line31_YesNo", "Pt8Line32_YesNo", "Pt8Line33_YesNo", "Pt8Line34_YesNo", "Pt8Line35a_YesNo", "Pt8Line35b_YesNo", "Pt8Line36_YesNo", "Pt8Line37_YesNo"]
+    },
+    {
+      "page": 16,
+      "required": ["AlienNumber", "Pt8Line38_YesNo", "Pt9Line39_YesNo", "Pt8Line40_YesNo", "Pt8Line41_YesNo", "a_YesNo", "b_YesNo", "Pt8Line42c_YesNo", "Pt8Line42d_YesNo", "Pt8Line43a_YesNo", "Pt8Line43b_YesNo", "Pt8Line43c_YesNo", "Pt8Line43d_YesNo", "Pt8Line43e_YesNo", "Pt8Line43fYesNo", "Pt8Line43g_YesNo", "Pt8Line43h_YesNo", "Pt8Line43i_YesNo", "Pt8Line44_YesNo", "Pt8Line45_YesNo"]
+    },
+    {
+      "page": 17,
+      "required": ["AlienNumber", "Pt8Line46_YesNo", "Pt8Line47_YesNo", "Pt8Line48_YesNo", "Pt8Line49_YesNo", "Pt8Line50_YesNo", "Pt8Line51_YesNo", "Pt8Line52_YesNo", "Pt8Line53a_YesNo", "Pt8Line53b_YesNo", "Pt8Line53c_YesNo", "Pt8Line53d_YesNo", "Pt8Line54_YesNo", "Pt8Line55_YesNo"]
+    },
+    {
+      "page": 18,
+      "required": ["AlienNumber", "Pt9Line56_CB"]
+    },
+    {
+      "page": 19,
+      "required": ["AlienNumber", "Pt9Line56_CB", "Pt9Line63_YesNo", "Pt9Line64_YesNo"]
+    },
+    {
+      "page": 20,
+      "required": ["AlienNumber", "Pt9Line67_YesNo", "Pt9Line68_YesNo", "Pt9Line69_YesNo", "Pt9Line70_YesNo", "Pt9Line71_YesNo", "Pt9Line72_YesNo", "Pt9Line73_YesNo", "Pt9Line74_YesNo", "Pt9Line75_YesNo"]
+    },
+    {
+      "page": 21,
+      "required": ["AlienNumber", "Pt9Line76_YesNo", "Pt9Line77_YesNo", "Pt9Line78a_YesNo", "Pt9Line78b_YesNo", "Pt9Line79_YesNo", "Pt9Line80_YesNo", "Pt9Line81_YesNo", "Pt9Line82_YesNo", "Pt9Line83_YesNo", "Pt9Line84a_YesNo", "Pt9Line84b_YesNo", "Pt9Line85_YesNo"]
+    },
+    {
+      "page": 22,
+      "required": ["AlienNumber", "Pt3Line3_DaytimePhoneNumber1", "Pt3Line4_MobileNumber1", "Pt3Line5_Email"],
+      "blank": ["Pt11Line1a_FamilyName", "Pt11Line1b_GivenName", "Pt11Line2_OrgName", "P3_Line4_DaytimeTelePhoneNumber", "P3_Line5_MobileTelePhoneNumber", "P3_Line6_Email"]
+    },
+    {
+      "page": 23,
+      "onlyNonBlank": ["AlienNumber"]
+    },
+    {
+      "page": 24,
+      "required": ["AlienNumber", "Pt1Line1_FamilyName", "Pt1Line1_GivenName", "Pt9Line3a_PageNumber", "Pt9Line3b_PartNumber", "Pt9Line3c_ItemNumber", "Pt9Line4a_PageNumber", "Pt9Line4b_PartNumber", "Pt9Line4c_ItemNumber", "P14_Line2_Title", "P14_Line2_Address", "P14_Line3_Title", "P14_Line3_Employment", "P14_Line3_Dates", "P14_Line3_Occupation"]
+    }
+  ]
+}

@@ -1589,7 +1589,7 @@ function closeDetail(id) {
       title: 'Start document preparation',
       sub: 'Answer a few questions. We will identify possible forms, prepare documents at your direction, and confirm fees before filing anything.',
       rail: 'You can pause and continue later. Imverica is not a law firm and does not provide legal advice.',
-      steps: ['Language', 'Document type', 'Details', 'Account & payment'],
+      steps: ['Language', 'Document type', 'Details', 'Review', 'Account & payment'],
       qLanguage: 'Choose your preferred language',
       hLanguage: 'We support multiple languages from the first screen.',
       qService: 'What do you need prepared?',
@@ -1633,6 +1633,12 @@ function closeDetail(id) {
       donePaymentSub: 'A secure payment link is sent after the package and fee are confirmed.',
       donePdf: 'PDF preparation after payment',
       donePdfSub: 'After payment, your answers are reviewed and used to prepare the official PDF forms.',
+      reviewTitle: 'Review before payment',
+      reviewHelp: 'Check the form, package, required answers, and contact details before saving this request.',
+      reviewForm: 'Form',
+      reviewPackage: 'Possible package',
+      reviewAnswers: 'Answers collected',
+      reviewContact: 'Contact',
       generateDraft: 'Generate I-765 draft PDF',
       generatingDraft: 'Generating draft PDF...',
       draftReady: 'I-765 draft PDF generated. Review before filing.',
@@ -1680,7 +1686,7 @@ function closeDetail(id) {
       title: 'Начать подготовку документов',
       sub: 'Ответьте на несколько вопросов. Мы определим возможные формы, подготовим документы по вашему поручению и подтвердим стоимость до подачи.',
       rail: 'Можно остановиться и продолжить позже. Imverica не является юридической фирмой и не дает юридические консультации.',
-      steps: ['Язык', 'Тип документов', 'Детали', 'Кабинет и оплата'],
+      steps: ['Язык', 'Тип документов', 'Детали', 'Проверка', 'Кабинет и оплата'],
       qLanguage: 'Выберите удобный язык',
       hLanguage: 'Выберите удобный язык.',
       qService: 'Какие документы нужно подготовить?',
@@ -1724,6 +1730,12 @@ function closeDetail(id) {
       donePaymentSub: 'Безопасная ссылка на оплату отправляется после подтверждения пакета и стоимости.',
       donePdf: 'Подготовка PDF после оплаты',
       donePdfSub: 'После оплаты ответы проверяются и используются для подготовки официальных PDF-форм.',
+      reviewTitle: 'Проверка перед оплатой',
+      reviewHelp: 'Проверьте форму, пакет, обязательные ответы и контактные данные перед сохранением заявки.',
+      reviewForm: 'Форма',
+      reviewPackage: 'Возможный пакет',
+      reviewAnswers: 'Собранные ответы',
+      reviewContact: 'Контакт',
       generateDraft: 'Сгенерировать черновик PDF I-765',
       generatingDraft: 'Генерируем черновик PDF...',
       draftReady: 'Черновик PDF I-765 сгенерирован. Проверьте перед подачей.',
@@ -1771,7 +1783,7 @@ function closeDetail(id) {
       title: 'Почати підготовку документів',
       sub: 'Дайте відповіді на кілька питань. Ми визначимо можливі форми, підготуємо документи за вашим дорученням і підтвердимо оплату до подання.',
       rail: 'Можна зупинитися і продовжити пізніше. Imverica не є юридичною фірмою і не надає юридичних консультацій.',
-      steps: ['Мова', 'Тип документів', 'Деталі', 'Кабінет і оплата'],
+      steps: ['Мова', 'Тип документів', 'Деталі', 'Перевірка', 'Кабінет і оплата'],
       qLanguage: 'Оберіть зручну мову',
       hLanguage: 'Оберіть зручну мову.',
       qService: 'Які документи потрібно підготувати?',
@@ -1815,6 +1827,12 @@ function closeDetail(id) {
       donePaymentSub: 'Безпечне посилання на оплату надсилається після підтвердження пакета і вартості.',
       donePdf: 'Підготовка PDF після оплати',
       donePdfSub: 'Після оплати відповіді перевіряються і використовуються для підготовки офіційних PDF-форм.',
+      reviewTitle: 'Перевірка перед оплатою',
+      reviewHelp: 'Перевірте форму, пакет, обов’язкові відповіді та контактні дані перед збереженням заявки.',
+      reviewForm: 'Форма',
+      reviewPackage: 'Можливий пакет',
+      reviewAnswers: 'Зібрані відповіді',
+      reviewContact: 'Контакт',
       generateDraft: 'Згенерувати чернетку PDF I-765',
       generatingDraft: 'Генеруємо чернетку PDF...',
       draftReady: 'Чернетку PDF I-765 згенеровано. Перевірте перед поданням.',
@@ -1862,7 +1880,7 @@ function closeDetail(id) {
       title: 'Iniciar preparación de documentos',
       sub: 'Responda algunas preguntas. Identificaremos posibles formularios, prepararemos documentos bajo su dirección y confirmaremos costos antes de presentar nada.',
       rail: 'Puede pausar y continuar después. Imverica no es un bufete de abogados y no brinda asesoría legal.',
-      steps: ['Idioma', 'Tipo de documento', 'Detalles', 'Cuenta y pago'],
+      steps: ['Idioma', 'Tipo de documento', 'Detalles', 'Revisión', 'Cuenta y pago'],
       qLanguage: 'Elija su idioma preferido',
       hLanguage: 'Seleccione su idioma.',
       qService: '¿Qué necesita preparar?',
@@ -1906,6 +1924,12 @@ function closeDetail(id) {
       donePaymentSub: 'El enlace de pago seguro se envía después de confirmar el paquete y el costo.',
       donePdf: 'Preparación del PDF después del pago',
       donePdfSub: 'Después del pago, sus respuestas se revisan y se usan para preparar los formularios PDF oficiales.',
+      reviewTitle: 'Revisión antes del pago',
+      reviewHelp: 'Revise el formulario, paquete, respuestas obligatorias y datos de contacto antes de guardar la solicitud.',
+      reviewForm: 'Formulario',
+      reviewPackage: 'Paquete posible',
+      reviewAnswers: 'Respuestas recopiladas',
+      reviewContact: 'Contacto',
       generateDraft: 'Generar borrador PDF I-765',
       generatingDraft: 'Generando borrador PDF...',
       draftReady: 'Borrador PDF I-765 generado. Revíselo antes de presentar.',
@@ -1958,13 +1982,14 @@ function closeDetail(id) {
   function shouldUseImmigrationFlow() { return state.service === 'immigration' && isImmigrationFormCode(state.formCode || inferIntakeFormCode(state.situation)); }
   function flowStepStart() { return 3; }
   function flowSteps() { return state.flowSchema && Array.isArray(state.flowSchema.steps) ? state.flowSchema.steps : []; }
-  function accountStepIndex() { return flowStepStart() + flowSteps().length; }
+  function reviewStepIndex() { return flowStepStart() + flowSteps().length; }
+  function accountStepIndex() { return reviewStepIndex() + 1; }
   function activeSteps() {
     var copy = t();
     if (state.service === 'immigration' && flowSteps().length) {
       return [copy.steps[0], copy.steps[1], copy.steps[2]].concat(flowSteps().map(function (item) {
         return item.title || item.id || copy.qDetails;
-      }), [copy.steps[3]]);
+      }), [copy.steps[3], copy.steps[4]]);
     }
     return copy.steps;
   }
@@ -2327,6 +2352,31 @@ function closeDetail(id) {
       '<div class="intake-grid">' + visibleFlowFields(schemaStep).map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
   }
 
+  function filledAnswerCount() {
+    return Object.keys(state.formAnswers || {}).filter(function (key) {
+      return !isEmptyFlowValue({ type: Array.isArray(state.formAnswers[key]) ? 'checkboxes' : 'text' }, state.formAnswers[key]);
+    }).length;
+  }
+
+  function renderReviewStep() {
+    var copy = t();
+    var packageForms = state.routeResult && state.routeResult.route && Array.isArray(state.routeResult.route.packageForms)
+      ? state.routeResult.route.packageForms
+      : (state.flowSchema ? [state.flowSchema.code] : []);
+    var contactParts = [
+      state.contact.name,
+      state.contact.phone,
+      state.contact.email
+    ].filter(Boolean);
+    card.innerHTML = '<div class="intake-question">' + esc(copy.reviewTitle) + '</div><div class="intake-help">' + esc(copy.reviewHelp) + '</div>' +
+      '<div class="intake-grid">' +
+        '<div class="intake-field"><label>' + esc(copy.reviewForm) + '</label><input readonly value="' + esc(state.formCode || (state.flowSchema && state.flowSchema.code) || '') + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.reviewPackage) + '</label><input readonly value="' + esc(packageForms.join(', ') || '-') + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.reviewAnswers) + '</label><input readonly value="' + esc(String(filledAnswerCount())) + '"></div>' +
+        '<div class="intake-field"><label>' + esc(copy.reviewContact) + '</label><input readonly value="' + esc(contactParts.join(' · ') || '-') + '"></div>' +
+      '</div><div id="intakeFlowError" class="intake-error"></div>';
+  }
+
   function render() {
     var copy = t();
     kicker.textContent = copy.kicker;
@@ -2381,8 +2431,13 @@ function closeDetail(id) {
       return;
     }
 
-    if (state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex()) {
+    if (state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < reviewStepIndex()) {
       renderFlowStep(flowSteps()[state.step - flowStepStart()]);
+      return;
+    }
+
+    if (state.service === 'immigration' && flowSteps().length && state.step === reviewStepIndex()) {
+      renderReviewStep();
       return;
     }
 
@@ -2537,7 +2592,7 @@ function closeDetail(id) {
   }
 
   function validateCurrentFlowStep() {
-    if (!(state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex())) return true;
+    if (!(state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < reviewStepIndex())) return true;
     var schemaStep = flowSteps()[state.step - flowStepStart()];
     var invalid = [];
     visibleFlowFields(schemaStep).forEach(function (field) {
@@ -2851,7 +2906,7 @@ function closeDetail(id) {
       if (checkboxLabel) checkboxLabel.classList.toggle('active', checkbox.checked);
     }
     captureStep();
-    if (state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < accountStepIndex()) {
+    if (state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < reviewStepIndex()) {
       var schemaStep = flowSteps()[state.step - flowStepStart()];
       var hasConditionalFields = (schemaStep.fields || []).some(function (field) {
         return (Array.isArray(field.showWhen) && field.showWhen.length) || (Array.isArray(field.showWhenAny) && field.showWhenAny.length);

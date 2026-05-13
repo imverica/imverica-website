@@ -165,6 +165,7 @@ function scenarioPathsFromArgs(args) {
   const dir = 'form-scenarios';
   return fs.readdirSync(dir)
     .filter(file => file.endsWith('.json'))
+    .filter(file => !file.endsWith('.checklist.json'))
     .map(file => path.join(dir, file));
 }
 
