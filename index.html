@@ -2372,12 +2372,14 @@ function closeDetail(id) {
       state.contact.phone,
       state.contact.email
     ].filter(Boolean);
+    var finalReviewLabel = contactParts.length ? copy.reviewContact : (copy.steps[4] || copy.qAccount);
+    var finalReviewValue = contactParts.length ? contactParts.join(' · ') : copy.hAccount;
     card.innerHTML = '<div class="intake-question">' + esc(copy.reviewTitle) + '</div><div class="intake-help">' + esc(copy.reviewHelp) + '</div>' +
       '<div class="intake-grid">' +
         '<div class="intake-field"><label>' + esc(copy.reviewForm) + '</label><input readonly value="' + esc(state.formCode || (state.flowSchema && state.flowSchema.code) || '') + '"></div>' +
         '<div class="intake-field"><label>' + esc(copy.reviewPackage) + '</label><input readonly value="' + esc(packageForms.join(', ') || '-') + '"></div>' +
         '<div class="intake-field"><label>' + esc(copy.reviewAnswers) + '</label><input readonly value="' + esc(String(filledAnswerCount())) + '"></div>' +
-        '<div class="intake-field"><label>' + esc(copy.reviewContact) + '</label><input readonly value="' + esc(contactParts.join(' · ') || '-') + '"></div>' +
+        '<div class="intake-field"><label>' + esc(finalReviewLabel) + '</label><input readonly value="' + esc(finalReviewValue) + '"></div>' +
       '</div><div id="intakeFlowError" class="intake-error"></div>';
   }
 

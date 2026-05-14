@@ -34,6 +34,8 @@ includes("link.download = 'imverica-' + formCode.toLowerCase() + '-draft.pdf';",
 includes('function validateBaseStep()', 'base intake step validation');
 includes('state.step === 1 && !state.service', 'service step cannot advance without category');
 includes('state.step === 2 && !state.formCode && !state.situation', 'details step cannot advance without form or situation');
+includes('var finalReviewLabel = contactParts.length ? copy.reviewContact : (copy.steps[4] || copy.qAccount);', 'review step should not show blank contact before account/payment');
+includes('var finalReviewValue = contactParts.length ? contactParts.join(\' · \') : copy.hAccount;', 'review step points to account/payment when contact is not collected yet');
 includes('function usesFilePreview()', 'file preview endpoint helper');
 includes("return usesFilePreview() ? 'https://imverica.com' + path : path;", 'localhost functions should stay local');
 
