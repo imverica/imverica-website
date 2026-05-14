@@ -2073,28 +2073,23 @@ function closeDetail(id) {
       '</div>';
   }
 
+  function usesFilePreview() {
+    return window.location.protocol === 'file:';
+  }
+
   function immigrationFlowEndpoint(code) {
-    var localHost = window.location.protocol === 'file:' ||
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname === 'localhost';
     var path = '/.netlify/functions/immigration-flow?code=' + encodeURIComponent(code) + '&lang=' + encodeURIComponent(state.lang);
-    return localHost ? 'https://imverica.com' + path : path;
+    return usesFilePreview() ? 'https://imverica.com' + path : path;
   }
 
   function routeEndpoint(query) {
-    var localHost = window.location.protocol === 'file:' ||
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname === 'localhost';
     var path = '/.netlify/functions/route?q=' + encodeURIComponent(query || '');
-    return localHost ? 'https://imverica.com' + path : path;
+    return usesFilePreview() ? 'https://imverica.com' + path : path;
   }
 
   function addressSuggestEndpoint(query) {
-    var localHost = window.location.protocol === 'file:' ||
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname === 'localhost';
     var path = '/.netlify/functions/address-suggest?q=' + encodeURIComponent(query || '');
-    return localHost ? 'https://imverica.com' + path : path;
+    return usesFilePreview() ? 'https://imverica.com' + path : path;
   }
 
   async function loadRoute() {
@@ -2418,7 +2413,7 @@ function closeDetail(id) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qService) + '</div><div class="intake-help">' + esc(copy.hService) + '</div><div class="intake-options">' +
         copy.services.map(function (item) {
           return '<button type="button" class="intake-option ' + (state.service === item[0] ? 'active' : '') + '" data-service="' + item[0] + '"><strong>' + esc(item[1]) + '</strong><span>' + esc(item[2]) + '</span></button>';
-        }).join('') + '</div>';
+        }).join('') + '</div><div id="intakeStepError" class="intake-error"></div>';
       return;
     }
 
@@ -2436,7 +2431,7 @@ function closeDetail(id) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
         '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
         '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>' +
-        '<div class="intake-error" style="' + (state.flowError || state.routeError ? 'display:block;' : '') + '">' + esc(state.flowError || state.routeError) + '</div>';
+        '<div id="intakeStepError" class="intake-error" style="' + (state.flowError || state.routeError ? 'display:block;' : '') + '">' + esc(state.flowError || state.routeError) + '</div>';
       return;
     }
 
@@ -2583,6 +2578,26 @@ function closeDetail(id) {
     return invalid.length === 0;
   }
 
+  function showIntakeStepError(message) {
+    var error = document.getElementById('intakeStepError');
+    if (!error) return;
+    error.textContent = message || '';
+    error.style.display = message ? 'block' : 'none';
+  }
+
+  function validateBaseStep() {
+    if (state.step === 1 && !state.service) {
+      showIntakeStepError(t().requiredError);
+      return false;
+    }
+    if (state.step === 2 && !state.formCode && !state.situation) {
+      showIntakeStepError(t().requiredError);
+      return false;
+    }
+    showIntakeStepError('');
+    return true;
+  }
+
   function isEmptyFlowValue(field, value) {
     if (field.type === 'phone') {
       return !value || !String(value.areaCode || '').trim() || !String(value.number || '').trim();
@@ -2691,10 +2706,7 @@ function closeDetail(id) {
   }
 
   function intakeEndpoint() {
-    var localHost = window.location.protocol === 'file:' ||
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname === 'localhost';
-    return localHost ? 'https://imverica.com/.netlify/functions/intake' : '/.netlify/functions/intake';
+    return usesFilePreview() ? 'https://imverica.com/.netlify/functions/intake' : '/.netlify/functions/intake';
   }
 
   function pdfDraftEndpoint() {
@@ -2943,6 +2955,7 @@ function closeDetail(id) {
       return;
     }
     captureStep();
+    if (!validateBaseStep()) return;
     if (!validateCurrentFlowStep()) return;
     if (state.step === 2) {
       await loadRoute();

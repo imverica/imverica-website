@@ -31,7 +31,13 @@ includes('pdfDraftEndpoints', 'PDF draft endpoint fallback binding');
 includes('data-generate-pdf-draft', 'PDF draft button binding');
 includes("['I-765', 'I-485']", 'I-765 and I-485 PDF draft support');
 includes("link.download = 'imverica-' + formCode.toLowerCase() + '-draft.pdf';", 'form-specific PDF draft filename');
+includes('function validateBaseStep()', 'base intake step validation');
+includes('state.step === 1 && !state.service', 'service step cannot advance without category');
+includes('state.step === 2 && !state.formCode && !state.situation', 'details step cannot advance without form or situation');
+includes('function usesFilePreview()', 'file preview endpoint helper');
+includes("return usesFilePreview() ? 'https://imverica.com' + path : path;", 'localhost functions should stay local');
 
 assert(!/if \(data\.language\) state\.lang = data\.language;/.test(html), 'route should not blindly override selected language');
+assert(!/window\.location\.hostname === '127\.0\.0\.1'[\s\S]{0,160}'https:\/\/imverica\.com' \+ path/.test(html), 'localhost route/flow endpoints should not force production');
 
 console.log('intake UI static QA passed');
