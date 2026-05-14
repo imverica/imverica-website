@@ -128,6 +128,80 @@ async function main() {
   const i765Response = await callGeneratePdf(i765);
   const i765Bytes = assertPdfResponse(i765Response, 'I-765', 'i-765.pdf');
 
+  const supportingForms = [
+    {
+      formCode: 'AR-11',
+      pdfName: 'ar-11.pdf',
+      minimumBytes: 100000,
+      payload: {
+        formCode: 'AR-11',
+        formAnswers: {
+          applicant_given_name: 'Yana',
+          applicant_family_name: 'Hovdan',
+          date_of_birth: '1990-01-19',
+          alien_number: 'A208924970',
+          previous_address_line1: '14919 41st Ave',
+          previous_unit_type: 'Apt',
+          previous_address_unit: 'C3',
+          previous_city: 'Bothell',
+          previous_state: 'WA',
+          previous_zip: '98012',
+          present_address_line1: '15 164 ST SW',
+          present_unit_type: 'Apt',
+          present_address_unit: 'B35',
+          present_city: 'Bothell',
+          present_state: 'WA',
+          present_zip: '98012',
+          mailing_address_line1: '15 164 ST SW',
+          mailing_unit_type: 'Apt',
+          mailing_address_unit: 'B35',
+          mailing_city: 'Bothell',
+          mailing_state: 'WA',
+          mailing_zip: '98012'
+        },
+        contact: { name: 'Yana Hovdan' }
+      }
+    },
+    {
+      formCode: 'G-1145',
+      pdfName: 'g-1145.pdf',
+      minimumBytes: 50000,
+      payload: {
+        formCode: 'G-1145',
+        formAnswers: {
+          daytime_phone: { countryCode: '+1', areaCode: '253', number: '4097210' },
+          email_address: 'yana@example.com'
+        },
+        contact: {
+          phone: '+1 253 409 7210',
+          email: 'yana@example.com'
+        }
+      }
+    },
+    {
+      formCode: 'G-1450',
+      pdfName: 'g-1450.pdf',
+      minimumBytes: 50000,
+      payload: {
+        formCode: 'G-1450',
+        formAnswers: {
+          email_address: 'payer@example.com'
+        },
+        contact: {
+          email: 'payer@example.com'
+        }
+      }
+    }
+  ];
+
+  const supportingResults = {};
+  for (const form of supportingForms) {
+    const response = await callGeneratePdf(form.payload);
+    const bytes = assertPdfResponse(response, form.formCode, form.pdfName);
+    assert(bytes > form.minimumBytes, `${form.formCode} generated PDF should not be suspiciously small`);
+    supportingResults[form.formCode] = { bytes };
+  }
+
   console.log(JSON.stringify({
     ok: true,
     forms: {
@@ -139,7 +213,8 @@ async function main() {
       'I-765': {
         mappedFields: Object.keys(i765Values).length,
         bytes: i765Bytes
-      }
+      },
+      ...supportingResults
     }
   }, null, 2));
 }
