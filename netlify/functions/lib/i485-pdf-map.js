@@ -47,6 +47,13 @@ function checkboxPair(value, yesField, noField) {
   return {};
 }
 
+function checkboxGroupValue(value, fieldPrefix, selectedValue, optionCount) {
+  if (selectedValue === undefined || selectedValue === null || selectedValue === '') return {};
+  const result = {};
+  for (let i = 0; i < optionCount; i += 1) result[`${fieldPrefix}[${i}]`] = String(i) === String(selectedValue);
+  return result;
+}
+
 function unitCheckbox(unitValue, aptField, suiteField, floorField) {
   const text = clean(unitValue, 40).toLowerCase();
   if (/ste|suite/.test(text)) return { [suiteField]: true, [aptField]: false, [floorField]: false };
@@ -58,6 +65,28 @@ function unitNumber(value) {
   return clean(value, 40)
     .replace(/^(?:apt|apartment|ste|suite|fl|floor|unit|#)\s*\.?\s*/i, '')
     .slice(0, 6);
+}
+
+function firstHistoryRow(value) {
+  return Array.isArray(value) ? (value.find((row) => row && typeof row === 'object') || {}) : {};
+}
+
+function splitCityState(value) {
+  const text = clean(value, 120);
+  const parts = text.split(',').map((part) => part.trim()).filter(Boolean);
+  return {
+    city: parts[0] || text,
+    state: parts[1] || ''
+  };
+}
+
+function weightParts(value) {
+  const padded = digits(value, 3).padStart(3, '0').slice(-3);
+  return {
+    hundreds: padded[0] || '',
+    tens: padded[1] || '',
+    ones: padded[2] || ''
+  };
 }
 
 // AlienNumber[0..23] repeats as a running header on every page
@@ -81,14 +110,15 @@ function sexFields(value) {
   return {};
 }
 
-// Pt6Line1_MaritalStatus: [0]=Single, [1]=Married, [2]=Divorced, [3]=Widowed, [4]=Annulled, [5]=Legally Separated
+// Pt6Line1_MaritalStatus follows the PDF's actual option order:
+// [1]=Single, [3]=Married, [0]=Divorced, [2]=Widowed, [4]=Annulled, [5]=Legally Separated
 function maritalStatusFields(value) {
   const s = clean(value, 120).toLowerCase();
   let idx = -1;
-  if (/single|never|холост|не в браке|не в шлюб/.test(s)) idx = 0;
-  else if (/married|spouse|брак|женат|замуж|шлюб|одруж/.test(s)) idx = 1;
-  else if (/divorc|развед|розлуч/.test(s)) idx = 2;
-  else if (/widow|вдов/.test(s)) idx = 3;
+  if (/single|never|холост|не в браке|не в шлюб/.test(s)) idx = 1;
+  else if (/married|spouse|брак|женат|замуж|шлюб|одруж/.test(s)) idx = 3;
+  else if (/divorc|развед|розлуч/.test(s)) idx = 0;
+  else if (/widow|вдов/.test(s)) idx = 2;
   else if (/annul/.test(s)) idx = 4;
   else if (/separat/.test(s)) idx = 5;
   if (idx < 0) return {};
@@ -224,6 +254,54 @@ function usAddress(answers) {
   };
 }
 
+function priorUsAddressFields(answers) {
+  const prior = firstHistoryRow(answers.prior_us_addresses || answers.addresses_last_five_years);
+  if (!prior.line1 && !prior.city) return {};
+  const unit = clean(prior.line2);
+  return {
+    'Pt1Line18_PriorStreetName[0]': clean(prior.line1, 80),
+    'Pt1Line18_PriorAddress_Number[0]': unitNumber(unit),
+    'Pt1Line18_PriorCity[0]': clean(prior.city, 60),
+    'Pt1Line18_PriorState[0]': stateCode(prior.state),
+    'Pt1Line18_PriorZipCode[0]': digits(prior.zip, 10),
+    'Pt1Line18_PriorCountry[0]': clean(prior.country || 'United States', 60),
+    'Pt1Line18_PriorDateFrom[0]': dateMdY(prior.from),
+    'Pt1Line18PriorDateTo[0]': dateMdY(prior.to),
+    ...(unit ? unitCheckbox(unit, 'Pt1Line18_PriorAddress_Unit[0]', 'Pt1Line18_PriorAddress_Unit[2]', 'Pt1Line18_PriorAddress_Unit[1]') : {})
+  };
+}
+
+function lastForeignAddressFields(answers) {
+  const foreign = firstHistoryRow(answers.last_foreign_address);
+  if (!foreign.line1 && !foreign.city) return {};
+  const unit = clean(foreign.line2);
+  return {
+    'Pt1Line18_RecentStreetName[0]': clean(foreign.line1, 80),
+    'Pt1Line18_RecentNumber[0]': unitNumber(unit),
+    'Pt1Line18_RecentCity[0]': clean(foreign.city, 60),
+    'Pt1Line18_RecentProvince[0]': clean(foreign.state, 60),
+    'Pt1Line18_RecentPostalCode[0]': clean(foreign.zip, 20),
+    'Pt1Line18_RecentCountry[0]': clean(foreign.country, 60),
+    'Pt1Line18_RecentDateFrom[0]': dateMdY(foreign.from),
+    'Pt1Line18_RecentDateTo[0]': dateMdY(foreign.to),
+    ...(unit ? unitCheckbox(unit, 'Pt1Line18_RecentUnit[0]', 'Pt1Line18_RecentUnit[2]', 'Pt1Line18_RecentUnit[1]') : {})
+  };
+}
+
+function employmentFields(answers) {
+  const current = firstHistoryRow(answers.current_employment_history || answers.employment_school_last_five_years);
+  const foreign = firstHistoryRow(answers.foreign_employment_history);
+  return {
+    'Pt4Line7_EmployerName[0]': clean(answers.employer_name || current.name, 80),
+    'Pt4Line7_DateFrom[0]': dateMdY(current.from),
+    'Pt4Line7_DateTo[0]': dateMdY(current.to),
+    'Pt4Line8_EmployerName[0]': clean(foreign.name, 80),
+    'Pt4Line8_Occupation[0]': clean(foreign.occupation || foreign.activity, 60),
+    'Pt4Line8_DateFrom[0]': dateMdY(foreign.from),
+    'Pt4Line8_DateTo[0]': dateMdY(foreign.to)
+  };
+}
+
 const NORMALIZED_FIELDS = Array.isArray(normalizedI485Map.fields) ? normalizedI485Map.fields : [];
 const NORMALIZED_FIELDS_BY_KEY = NORMALIZED_FIELDS.reduce((map, field) => {
   if (!field?.key) return map;
@@ -264,6 +342,16 @@ function isPresentExactValue(value) {
   return value !== undefined && value !== null && exactText(value, 1000) !== '';
 }
 
+function exactSelectedValue(key, rawValue) {
+  const text = exactText(rawValue, 80);
+  const lower = text.toLowerCase();
+  if (/yesno/i.test(key)) {
+    if (['yes', 'y', 'да', 'так', 'sí', 'si', 'true'].includes(lower)) return '1';
+    if (['no', 'n', 'нет', 'ні', 'false'].includes(lower)) return '0';
+  }
+  return text;
+}
+
 function exactScenarioFieldValues(answers = {}) {
   if (!hasExactScenarioFields(answers)) return {};
 
@@ -287,7 +375,7 @@ function exactScenarioFieldValues(answers = {}) {
       if (!names.length) continue;
 
       if (field.mode === 'checkbox_group' || field.mode === 'radio_group') {
-        const selectedValue = exactText(rawValue, 80);
+        const selectedValue = exactSelectedValue(key, rawValue);
         const options = Array.isArray(field.options) ? field.options : [];
         options.forEach((option, index) => {
           const name = names[index];
@@ -308,7 +396,6 @@ function exactScenarioFieldValues(answers = {}) {
 
 function i485TextOverlays(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
-  if (!hasExactScenarioFields(answers)) return [];
 
   const overlays = [];
 
@@ -329,16 +416,38 @@ function i485TextOverlays(payload = {}) {
     }
   }
 
+  const currentEmployment = firstHistoryRow(answers.current_employment_history || answers.employment_school_last_five_years);
+  [
+    ['Pt4Line7_NameOfEmployer', answers.current_employer_name || answers.employer_name || currentEmployment.name],
+    ['Pt4Line7_Occupation', answers.current_occupation || currentEmployment.occupation || currentEmployment.activity],
+    ['Pt6Line13_DateofBirth', answers.prior_spouse_dob],
+    ['Pt6Line17_CityTownOfMarriage', answers.prior_spouse_marriage_city],
+    ['Pt6Line17_State', answers.prior_spouse_marriage_state],
+    ['Pt6Line17_Country', answers.prior_spouse_marriage_country],
+    ['Pt6Line18_DateMarriageEnded', dateMdY(answers.prior_spouse_marriage_end_date)]
+  ].forEach(([key, value]) => {
+    if (!isPresentExactValue(value)) return;
+    const fields = NORMALIZED_FIELDS_BY_KEY.get(key) || [];
+    for (const field of fields) {
+      if (!isSyntheticOverlayField(field)) continue;
+      overlays.push({
+        key,
+        page: Number(field.page),
+        text: exactText(value, 240),
+        x: Number(field.x || 0) + 5,
+        y: Number(field.y || 0) + 3,
+        size: Number(field.size || 10)
+      });
+    }
+  });
+
   return overlays;
 }
 
 function i485FieldValues(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
   const exactValues = exactScenarioFieldValues(answers);
-  if (Object.keys(exactValues).length) return exactValues;
-
   const contact = payload.contact || {};
-  const today = new Date().toISOString().slice(0, 10);
   const phone = usPhoneDigits(answers.daytime_phone || contact.phone);
   const mobile = usPhoneDigits(answers.mobile_phone || answers.daytime_phone || contact.phone);
   const email = clean(answers.email_address || contact.email, 180);
@@ -355,6 +464,9 @@ function i485FieldValues(payload = {}) {
   const currentlyWorking = yesNo(answers.currently_working);
   const unauthorizedWork = yesNo(answers.worked_without_authorization);
   const concurrentFiling = yesNo(answers.concurrent_filing);
+  const physicalSameAsMailing = yesNo(answers.physical_same_as_mailing);
+  const placeEntry = splitCityState(answers.place_entry);
+  const weight = weightParts(answers.weight_lbs || `${answers.weight_hundreds || ''}${answers.weight_tens || ''}${answers.weight_ones || ''}`);
 
   const values = {
     // Part 1 — Applicant identity
@@ -397,9 +509,9 @@ function i485FieldValues(payload = {}) {
     'Pt1Line10_ExpDate[0]': dateMdY(answers.passport_expiration),
     'Pt1Line10_Passport[0]': clean(answers.passport_country_of_issuance, 60),
     'Pt1Line10_VisaNum[0]': clean(answers.visa_number, 20),
-    'Pt1Line10_CityTown[0]': clean(answers.port_of_entry_city, 60),
-    'Pt1Line10_State[0]': stateCode(answers.port_of_entry_state || ''),
-    'Pt1Line10_DateofArrival[0]': dateMdY(answers.date_of_arrival),
+    'Pt1Line10_CityTown[0]': clean(answers.port_of_entry_city || placeEntry.city, 60),
+    'Pt1Line10_State[0]': stateCode(answers.port_of_entry_state || placeEntry.state),
+    'Pt1Line10_DateofArrival[0]': dateMdY(answers.date_of_arrival || answers.last_arrival_date),
     'Pt1Line10_NonImmDate[0]': clean(answers.status_expiration_date, 20),
 
     // Admission basis and status at entry
@@ -408,7 +520,7 @@ function i485FieldValues(payload = {}) {
 
     // Current immigration status (Part 1, lines 12–17)
     'P1Line12_I94[0]': clean(answers.i94_number, 20),
-    'Pt1Line12_Date[0]': dateMdY(answers.date_of_last_entry),
+    'Pt1Line12_Date[0]': dateMdY(answers.date_of_last_entry || answers.last_arrival_date),
     'Pt1Line12_Status[0]': clean(answers.manner_of_last_entry, 60),
     'Pt1Line14_Status[0]': clean(answers.current_immigration_status, 80),
     'Pt1Line15_Date[0]': clean(answers.authorized_stay_expires, 20),
@@ -417,7 +529,7 @@ function i485FieldValues(payload = {}) {
     ...checkboxPair(everRemoved, 'Pt1Line17_YN[0]', 'Pt1Line17_YN[1]'),
 
     // SSN
-    ...checkboxPair(hasSsn, 'Pt1Line19_YN[0]', 'Pt1Line19_YN[1]'),
+    ...checkboxPair(hasSsn, 'Pt1Line19_YN[1]', 'Pt1Line19_YN[0]'),
     'Pt1Line19_SSN[0]': digits(answers.ssn, 9),
     ...checkboxPair(ssaConsent, 'Pt1Line19_SSA_YN[0]', 'Pt1Line19_SSA_YN[1]'),
     ...checkboxPair(ssaConsent, 'Pt1Line19_Consent_YN[0]', 'Pt1Line19_Consent_YN[1]'),
@@ -432,8 +544,8 @@ function i485FieldValues(payload = {}) {
     ...checkboxPair(concurrentFiling, 'Pt2Line5_CB[0]', 'Pt2Line5_CB[1]'),
 
     // Part 4 — Processing / Employment
-    ...checkboxPair(currentlyWorking, 'Pt4Line5_YN[0]', 'Pt4Line5_YN[1]'),
-    ...checkboxPair(unauthorizedWork, 'Pt4Line6_YN[0]', 'Pt4Line6_YN[1]'),
+    ...checkboxPair(currentlyWorking, 'Pt4Line5_YN[1]', 'Pt4Line5_YN[0]'),
+    ...checkboxPair(unauthorizedWork, 'Pt4Line6_YN[1]', 'Pt4Line6_YN[0]'),
     'Pt4Line7_EmployerName[0]': clean(answers.employer_name, 80),
 
     // Part 5 — Parents
@@ -445,6 +557,9 @@ function i485FieldValues(payload = {}) {
     'Pt5Line6_FamilyName[0]': clean(answers.mother_family_name, 60),
     'Pt5Line6_GivenName[0]': clean(answers.mother_given_name, 60),
     'Pt5Line6_MiddleName[0]': clean(answers.mother_middle_name, 60),
+    'Pt5Line7_FamilyName[0]': clean(answers.mother_birth_family_name, 60),
+    'Pt5Line7_GivenName[0]': clean(answers.mother_birth_given_name, 60),
+    'Pt5Line7_MiddleName[0]': clean(answers.mother_birth_middle_name, 60),
     'Pt5Line8_DateofBirth[0]': dateMdY(answers.mother_dob),
     'Pt5Line10_CityTownOfBirth[0]': clean(answers.mother_city_of_birth, 60),
 
@@ -454,19 +569,53 @@ function i485FieldValues(payload = {}) {
     'Pt6Line4_GivenName[0]': clean(answers.spouse_given_name, 60),
     'Pt6Line4_MiddleName[0]': clean(answers.spouse_middle_name, 60),
     'Pt6Line5_AlienNumber[0]': digits(answers.spouse_alien_number, 9),
+    'Pt6Line7_Country[0]': clean(answers.spouse_country_of_birth, 60),
+    'Pt6Line9_DateofMarriage[0]': dateMdY(answers.current_marriage_date),
+    'Pt6Line10_CityTownOfBirth[0]': clean(answers.current_marriage_city, 60),
+    'Pt6Line10_State[0]': clean(answers.current_marriage_state, 60),
+    'Pt6Line10_Country[0]': clean(answers.current_marriage_country, 60),
+    'Pt6Line12_FamilyName[0]': clean(answers.prior_spouse_family_name, 60),
+    'Pt6Line12_GivenName[0]': clean(answers.prior_spouse_given_name, 60),
+    'Pt6Line12_MiddleName[0]': clean(answers.prior_spouse_middle_name, 60),
+    'Pt6Line14_Country[0]': clean(answers.prior_spouse_country_of_birth, 60),
+    'Pt6Line15_Country[0]': clean(answers.prior_spouse_country_of_citizenship, 60),
+    'Pt6Line16_DateofBirth[0]': dateMdY(answers.prior_spouse_marriage_date),
+    'Pt6Line18_CityTownOfBirth[0]': clean(answers.prior_spouse_marriage_end_city, 60),
+    'Pt6Line18_State[0]': clean(answers.prior_spouse_marriage_end_state, 60),
+    'Pt6Line18_Country[0]': clean(answers.prior_spouse_marriage_end_country, 60),
+    'Pt6Line19_HowMarriageEndedOther[0]': clean(answers.prior_spouse_marriage_end_other, 60),
+
+    // Part 6 / 7 — Children
+    'Pt6Line1_TotalChildren[0]': clean(answers.total_children, 3),
+    'Pt7Line2_FamilyName[0]': clean(answers.child1_family_name, 60),
+    'Pt7Line2_GivenName[0]': clean(answers.child1_given_name, 60),
+    'Pt7Line2_MiddleName[0]': clean(answers.child1_middle_name, 60),
+    'Pt7Line2_AlienNumber[0]': digits(answers.child1_alien_number, 9),
+    'Pt7Line2_DateofBirth[0]': dateMdY(answers.child1_dob),
+    'Pt7Line2_Country[0]': clean(answers.child1_country_of_birth, 60),
+    'Pt7Line2_Relationship[0]': clean(answers.child1_relationship, 60),
+    ...checkboxPair(yesNo(answers.child1_applying_with_you), 'Pt7Line2_YN[1]', 'Pt7Line2_YN[0]'),
+    'Pt7Line3_FamilyName[0]': clean(answers.child2_family_name, 60),
+    'Pt7Line3_GivenName[0]': clean(answers.child2_given_name, 60),
+    'Pt7Line3_MiddleName[0]': clean(answers.child2_middle_name, 60),
+    'Pt7Line3_AlienNumber[0]': digits(answers.child2_alien_number, 9),
+    'Pt7Line3_DateofBirth[0]': dateMdY(answers.child2_dob),
+    'Pt7Line3_Country[0]': clean(answers.child2_country_of_birth, 60),
+    'Pt7Line3_Relationship[0]': clean(answers.child2_relationship, 60),
+    ...checkboxPair(yesNo(answers.child2_applying_with_you), 'Pt7Line3_YN[1]', 'Pt7Line3_YN[0]'),
 
     // Part 7 — Biographic
     'Pt7Line3_HeightFeet[0]': clean(answers.height_feet, 2),
     'Pt7Line3_HeightInches[0]': clean(answers.height_inches, 2),
-    'Pt7Line4_Weight1[0]': clean(answers.weight_hundreds, 1),
-    'Pt7Line4_Weight2[0]': clean(answers.weight_tens, 1),
-    'Pt7Line4_Weight3[0]': clean(answers.weight_ones, 1),
+    'Pt7Line4_Weight1[0]': clean(answers.weight_hundreds || weight.hundreds, 1),
+    'Pt7Line4_Weight2[0]': clean(answers.weight_tens || weight.tens, 1),
+    'Pt7Line4_Weight3[0]': clean(answers.weight_ones || weight.ones, 1),
 
     // Part 10 — Contact / Signature
     'Pt3Line3_DaytimePhoneNumber1[0]': phone,
     'Pt3Line4_MobileNumber1[0]': mobile,
     'Pt3Line5_Email[0]': email,
-    'Pt3Line7b_DateofSignature[0]': dateMdY(today),
+    'Pt3Line7b_DateofSignature[0]': dateMdY(answers.applicant_signature_date),
 
     // Interpreter (Part 11)
     'Pt11Line1a_FamilyName[0]': clean(answers.interpreter_family_name, 60),
@@ -493,14 +642,21 @@ function i485FieldValues(payload = {}) {
     ...hairColorFields(answers.hair_color),
     ...admissionBasisFields(answers.admission_basis || answers.status_at_last_entry),
     ...eligibilityFields(answers.eligibility_basis),
+    ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', answers.prior_spouse_marriage_end_type, 4),
     ...checkboxPair(sameAddress5yrs, 'Pt1Line18_last5yrs_YN[0]', 'Pt1Line18_last5yrs_YN[1]'),
+    ...checkboxPair(physicalSameAsMailing, 'Pt1Line18_YN[0]', 'Pt1Line18_YN[1]'),
+    ...priorUsAddressFields(answers),
+    ...lastForeignAddressFields(answers),
+    ...employmentFields(answers),
     ...usAddress(answers)
   };
 
-  return Object.fromEntries(
+  const semanticValues = Object.fromEntries(
     Object.entries(values)
       .filter(([, value]) => value !== undefined && value !== null && value !== '')
   );
+
+  return { ...semanticValues, ...exactValues };
 }
 
 module.exports = { i485FieldValues, i485TextOverlays, dateMdY };

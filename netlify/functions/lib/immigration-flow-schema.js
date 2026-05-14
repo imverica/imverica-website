@@ -677,6 +677,148 @@ function evidenceFields() {
   ];
 }
 
+function i485CoreSteps() {
+  return [
+    step('i485_entry_details', 'I-485 entry and status details', 'These fields map to the official I-485 arrival and status section.', [
+      field('admission_basis', 'Admission basis at last entry', 'select', {
+        options: ['Immigrant', 'Nonimmigrant', 'Paroled', 'Other']
+      }),
+      field('status_at_last_entry', 'Status at last entry, if admitted', 'text', {
+        placeholder: 'Example: B-2, F-1, parolee, asylee'
+      }),
+      field('paroled_as', 'If paroled, class of admission or parole type', 'text', {
+        placeholder: 'Example: PAROLED, DT, UHP'
+      }),
+      field('date_of_last_entry', 'Date of last entry shown on I-94', 'date'),
+      field('manner_of_last_entry', 'Status on Form I-94 or entry document', 'text', {
+        placeholder: 'Example: ASYLEE, PAROLEE, D/S'
+      }),
+      field('authorized_stay_expires', 'Authorized stay expiration date or D/S', 'text', {
+        placeholder: 'Example: D/S or 05/11/2026'
+      }),
+      field('status_expiration_date', 'Nonimmigrant status expiration date, if any', 'text'),
+      field('visa_number', 'Nonimmigrant visa number, if any', 'text', { autocomplete: 'off' }),
+      field('in_removal_proceedings', 'Are you in removal, exclusion, rescission, or deportation proceedings?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('prior_removal_order', 'Have you ever had a prior removal/deportation order?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('ever_removed_excluded', 'Have you ever been removed, excluded, or deported?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      })
+    ]),
+    step('i485_prior_addresses_ssn', 'I-485 prior addresses and Social Security', 'I-485 asks for prior residence history and Social Security details.', [
+      field('same_address_five_years', 'Have you lived at your current physical address for the required residence period?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      }),
+      addressHistoryField('prior_us_addresses', 'Prior U.S. physical address, if current address does not cover the period', {
+        entries: 1
+      }),
+      addressHistoryField('last_foreign_address', 'Most recent address outside the United States', {
+        entries: 1
+      }),
+      field('has_ssn', 'Has the Social Security Administration ever issued you an SSN?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      }),
+      field('ssn', 'Social Security number', 'text', {
+        inputmode: 'numeric',
+        autocomplete: 'off',
+        placeholder: '9 digits'
+      }),
+      field('ssn_ssa_consent', 'Do you want SSA to issue a replacement/new Social Security card using this application?', 'radio', {
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i485_processing_employment', 'I-485 processing and work history', 'Current and most recent work history helps complete the I-485 employment sections.', [
+      field('petition_previously_filed', 'Was an underlying immigrant petition previously filed?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('petition_receipt_number', 'Underlying petition receipt number', 'text', { autocomplete: 'off' }),
+      field('petition_date', 'Underlying petition filing or approval date', 'date'),
+      field('petitioner_family_name', 'Petitioner family name, if person', 'text', { autocomplete: 'family-name' }),
+      field('petitioner_given_name', 'Petitioner given name, if person', 'text', { autocomplete: 'given-name' }),
+      field('petitioner_alien_number', 'Petitioner A-number, if any', 'text', { autocomplete: 'off' }),
+      field('concurrent_filing', 'Is the underlying petition being filed together with I-485?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('eligibility_basis', 'Exact adjustment category or basis', 'text', {
+        placeholder: 'Example: asylee, refugee, IR-1 spouse of U.S. citizen, EB-3'
+      }),
+      field('currently_working', 'Are you currently employed?', 'radio', { options: ['Yes', 'No'] }),
+      field('worked_without_authorization', 'Have you ever worked in the United States without authorization?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      employmentHistoryField('current_employment_history', 'Current U.S. employment or school', { entries: 1 }),
+      employmentHistoryField('foreign_employment_history', 'Most recent employment outside the United States', { entries: 1 })
+    ]),
+    step('i485_family_history', 'I-485 family history', 'Parents, spouse, prior spouse, and children are structured so the PDF can be filled accurately.', [
+      field('father_family_name', 'Parent 1 family name', 'text', { autocomplete: 'family-name' }),
+      field('father_given_name', 'Parent 1 given name', 'text', { autocomplete: 'given-name' }),
+      field('father_middle_name', 'Parent 1 middle name', 'text'),
+      field('father_dob', 'Parent 1 date of birth', 'date'),
+      field('father_city_of_birth', 'Parent 1 country/place of birth', 'text'),
+      field('mother_family_name', 'Parent 2 current family name', 'text', { autocomplete: 'family-name' }),
+      field('mother_given_name', 'Parent 2 current given name', 'text', { autocomplete: 'given-name' }),
+      field('mother_middle_name', 'Parent 2 middle name', 'text'),
+      field('mother_birth_family_name', 'Parent 2 family name at birth', 'text', { autocomplete: 'family-name' }),
+      field('mother_birth_given_name', 'Parent 2 given name at birth', 'text', { autocomplete: 'given-name' }),
+      field('mother_birth_middle_name', 'Parent 2 middle name at birth', 'text'),
+      field('mother_dob', 'Parent 2 date of birth', 'date'),
+      field('mother_city_of_birth', 'Parent 2 country/place of birth', 'text'),
+      field('times_married', 'How many times have you been married?', 'number', { inputmode: 'numeric' }),
+      field('spouse_family_name', 'Current spouse family name, if any', 'text', { autocomplete: 'family-name' }),
+      field('spouse_given_name', 'Current spouse given name, if any', 'text', { autocomplete: 'given-name' }),
+      field('spouse_alien_number', 'Current spouse A-number, if any', 'text', { autocomplete: 'off' }),
+      field('spouse_country_of_birth', 'Current spouse country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('current_marriage_date', 'Current marriage date', 'date'),
+      field('current_marriage_city', 'Current marriage city or town', 'text'),
+      field('current_marriage_state', 'Current marriage state or province', 'text'),
+      field('current_marriage_country', 'Current marriage country', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i485_prior_spouse_children_bio', 'Prior spouse, children, and biographic details', 'This covers the remaining I-485 family and biographic fields before the admissibility questions.', [
+      field('prior_spouse_family_name', 'Prior spouse family name', 'text', { autocomplete: 'family-name' }),
+      field('prior_spouse_given_name', 'Prior spouse given name', 'text', { autocomplete: 'given-name' }),
+      field('prior_spouse_dob', 'Prior spouse date of birth', 'date'),
+      field('prior_spouse_country_of_birth', 'Prior spouse country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_country_of_citizenship', 'Prior spouse country of citizenship', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_marriage_date', 'Date of marriage to prior spouse', 'date'),
+      field('prior_spouse_marriage_city', 'Marriage city or town with prior spouse', 'text'),
+      field('prior_spouse_marriage_state', 'Marriage state/province with prior spouse', 'text'),
+      field('prior_spouse_marriage_country', 'Marriage country with prior spouse', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_marriage_end_city', 'City/town where prior marriage ended', 'text'),
+      field('prior_spouse_marriage_end_state', 'State/province where prior marriage ended', 'text'),
+      field('prior_spouse_marriage_end_country', 'Country where prior marriage ended', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_marriage_end_date', 'Date prior marriage ended', 'date'),
+      field('prior_spouse_marriage_end_type', 'How prior marriage ended', 'select', {
+        options: [
+          { value: '3', label: 'Divorced' },
+          { value: '1', label: 'Annulled' },
+          { value: '0', label: 'Widowed' },
+          { value: '2', label: 'Other' }
+        ]
+      }),
+      field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
+      field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name' }),
+      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name' }),
+      field('child1_alien_number', 'Child 1 A-number, if any', 'text', { autocomplete: 'off' }),
+      field('child1_dob', 'Child 1 date of birth', 'date'),
+      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('child1_relationship', 'Child 1 relationship', 'text', { placeholder: 'Example: biological child, stepchild' }),
+      field('child1_applying_with_you', 'Is child 1 applying with you?', 'radio', { options: ['Yes', 'No'] }),
+      field('ethnicity', 'Ethnicity', 'select', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('race', 'Race', 'checkboxes', { options: ['White', 'Asian', 'Black or African American', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander'] }),
+      field('height_feet', 'Height feet', 'number', { inputmode: 'numeric' }),
+      field('height_inches', 'Height inches', 'number', { inputmode: 'numeric' }),
+      field('weight_lbs', 'Weight in pounds', 'number', { inputmode: 'numeric' }),
+      field('eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
+      field('hair_color', 'Hair color', 'select', { options: ['Bald', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown'] })
+    ])
+  ];
+}
+
 const FORM_OVERRIDES = {
   'G-325A': [
     step('biographic_history', 'Biographic residence and employment history', 'Biographic information forms commonly require structured residence and employment history.', [
@@ -752,6 +894,7 @@ const FORM_OVERRIDES = {
       field('inspection_or_parole', 'Last entry was inspected, admitted, or paroled?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
       field('medical_exam_status', 'Medical exam I-693 status', 'select', { options: ['Already completed', 'Need to schedule', 'Will submit later if allowed', 'Not sure'] })
     ]),
+    ...i485CoreSteps(),
     ...buildI485Part9Steps(field, step)
   ],
   'I-539': [
