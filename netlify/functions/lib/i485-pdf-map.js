@@ -89,6 +89,15 @@ function weightParts(value) {
   };
 }
 
+function priorMarriageEndTypeValue(value) {
+  const text = clean(value, 80).toLowerCase();
+  if (text === '0' || /widow/.test(text)) return '0';
+  if (text === '1' || /annul/.test(text)) return '1';
+  if (text === '2' || /other/.test(text)) return '2';
+  if (text === '3' || /divorc/.test(text)) return '3';
+  return '';
+}
+
 // AlienNumber[0..23] repeats as a running header on every page
 function alienNumberFields(value) {
   const a = digits(value, 9);
@@ -642,7 +651,7 @@ function i485FieldValues(payload = {}) {
     ...hairColorFields(answers.hair_color),
     ...admissionBasisFields(answers.admission_basis || answers.status_at_last_entry),
     ...eligibilityFields(answers.eligibility_basis),
-    ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', answers.prior_spouse_marriage_end_type, 4),
+    ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', priorMarriageEndTypeValue(answers.prior_spouse_marriage_end_type), 4),
     ...checkboxPair(sameAddress5yrs, 'Pt1Line18_last5yrs_YN[0]', 'Pt1Line18_last5yrs_YN[1]'),
     ...checkboxPair(physicalSameAsMailing, 'Pt1Line18_YN[0]', 'Pt1Line18_YN[1]'),
     ...priorUsAddressFields(answers),

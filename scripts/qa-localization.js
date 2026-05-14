@@ -52,6 +52,35 @@ async function main() {
   assert(optionLabel(optionByValue(basis.options, 'Family petition')) === 'Семейная петиция', 'Family petition option should show Russian label');
   assert(optionLabel(optionByValue(medical.options, 'Already completed')) === 'Уже пройден', 'medical option should show Russian label');
 
+  const entryDetails = i485.steps.find((step) => step.id === 'i485_entry_details');
+  assert(entryDetails?.title === 'I-485: въезд и текущий статус', 'I-485 entry details title should be localized');
+  assert(!/These fields map/i.test(entryDetails.help || ''), 'I-485 entry details help should not be English');
+  assert(field(entryDetails, 'admission_basis')?.label === 'Основание при последнем въезде', 'admission basis label should be localized');
+  assert(optionLabel(optionByValue(field(entryDetails, 'admission_basis').options, 'Paroled')) === 'Paroled', 'Paroled canonical option should render as localized legal term');
+
+  const priorAddress = i485.steps.find((step) => step.id === 'i485_prior_addresses_ssn');
+  assert(priorAddress?.title === 'I-485: адреса и Social Security', 'I-485 prior address title should be localized');
+  assert(field(priorAddress, 'same_address_five_years')?.label === 'Вы жили по текущему физическому адресу весь нужный период?', 'same-address field should be localized');
+  assert(field(priorAddress, 'prior_us_addresses')?.type === 'addressHistory', 'prior U.S. address should use structured address history UI');
+  assert(field(priorAddress, 'last_foreign_address')?.type === 'addressHistory', 'foreign address should use structured address history UI');
+
+  const processing = i485.steps.find((step) => step.id === 'i485_processing_employment');
+  assert(processing?.title === 'I-485: петиция и работа', 'I-485 processing/employment title should be localized');
+  assert(field(processing, 'current_employment_history')?.type === 'employmentHistory', 'current employment should use structured employment UI');
+  assert(field(processing, 'foreign_employment_history')?.type === 'employmentHistory', 'foreign employment should use structured employment UI');
+
+  const familyHistory = i485.steps.find((step) => step.id === 'i485_family_history');
+  assert(familyHistory?.title === 'I-485: родители и супруг', 'I-485 family history title should be localized');
+  assert(field(familyHistory, 'father_family_name')?.label === 'Родитель 1: фамилия', 'parent field should be localized');
+
+  const bio = i485.steps.find((step) => step.id === 'i485_prior_spouse_children_bio');
+  assert(bio?.title === 'I-485: предыдущий супруг, дети и биография', 'I-485 bio title should be localized');
+  assert(field(bio, 'prior_spouse_marriage_end_type')?.label === 'Как закончился предыдущий брак', 'prior spouse end type should be localized');
+  assert(optionLabel(optionByValue(field(bio, 'prior_spouse_marriage_end_type').options, 'Annulled')) === 'Аннулирован', 'Annulled option should be localized');
+  assert(optionLabel(optionByValue(field(bio, 'ethnicity').options, 'Not Hispanic or Latino')) === 'Не латиноамериканское происхождение', 'ethnicity option should be localized');
+  assert(optionLabel(optionByValue(field(bio, 'race').options, 'White')) === 'Белый', 'race option should be localized');
+  assert(optionLabel(optionByValue(field(bio, 'eye_color').options, 'Brown')) === 'Карий/коричневый', 'eye color option should be localized');
+
   const applicant = i485.steps.find((step) => step.id === 'applicant');
   assert(field(applicant, 'applicant_given_name')?.required === true, 'given name should be required');
   assert(field(applicant, 'applicant_family_name')?.required === true, 'family name should be required');
@@ -88,6 +117,15 @@ async function main() {
   const i765Evidence = i765.steps.find((step) => step.id === 'documents_review');
   assert(field(i765Evidence, 'has_interpreter')?.label === 'Будет interpreter?', 'interpreter question should be localized');
   assert(field(i765Evidence, 'has_preparer')?.label === 'Будет preparer?', 'preparer question should be localized');
+
+  for (const lang of ['uk', 'es']) {
+    const translated = await callFlow('I-485', lang);
+    assert(translated.ok === true, `I-485 ${lang} flow should return ok`);
+    const translatedEntry = translated.steps.find((step) => step.id === 'i485_entry_details');
+    assert(translatedEntry && !/I-485 entry and status details/i.test(translatedEntry.title), `I-485 ${lang} entry title should be localized`);
+    const translatedBio = translated.steps.find((step) => step.id === 'i485_prior_spouse_children_bio');
+    assert(translatedBio && !/Prior spouse, children, and biographic details/i.test(translatedBio.title), `I-485 ${lang} bio title should be localized`);
+  }
 
   console.log('localization QA passed');
 }

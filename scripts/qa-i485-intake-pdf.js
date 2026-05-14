@@ -126,7 +126,7 @@ const formAnswers = {
   prior_spouse_marriage_end_state: 'Kherson Oblast',
   prior_spouse_marriage_end_country: 'Ukraine',
   prior_spouse_marriage_end_date: '2010-04-27',
-  prior_spouse_marriage_end_type: '3',
+  prior_spouse_marriage_end_type: 'Divorced',
 
   total_children: '1',
   child1_family_name: 'HOVDAN',
