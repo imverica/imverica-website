@@ -138,8 +138,6 @@ const LOCALIZATION = {
       basis_for_naturalization: 'Основание для гражданства',
       addresses_last_five_years: 'Адреса за последние 5 лет',
       employment_school_last_five_years: 'Работа или учеба за последние 5 лет',
-      spouse_residence_history: 'Адреса beneficiary за последние 5 лет',
-      spouse_employment_history: 'Работа beneficiary за последние 5 лет',
       g325a_residence_history: 'Адреса за последние 5 лет',
       g325a_employment_history: 'Работа за последние 5 лет',
       i90_reason: 'Причина подготовки I-90',
@@ -245,8 +243,6 @@ const LOCALIZATION = {
       'Hardship waiver': 'Hardship waiver',
       'Married living together': 'В браке, проживают вместе',
       Separated: 'Раздельно проживают',
-      Divorced: 'Разведены',
-      Widowed: 'Вдовец/вдова',
       'Initial TPS': 'Первичная подача TPS',
       'Re-registration': 'Re-registration',
       'Late initial filing': 'Late initial filing',
@@ -290,6 +286,16 @@ const LOCALIZATION = {
       Kyrgyzstan: 'Kyrgyzstan / Кыргызстан',
       Tajikistan: 'Tajikistan / Таджикистан',
       Turkmenistan: 'Turkmenistan / Туркменистан'
+    },
+    placeholders: {
+      preparation_goal: 'Опишите запрос своими словами.',
+      related_forms_known: 'Например: I-130 receipt, pending I-485, I-797 notice, A-number.',
+      deadline_or_notice: 'Укажите дату и тип уведомления, если оно есть.',
+      other_names_used: 'Девичья фамилия, прежние legal names, aliases.',
+      current_immigration_status: 'Например: pending asylum, TPS, F-1, parolee, no status, lawful permanent resident.',
+      place_entry: 'Например: Los Angeles, CA; San Ysidro, CA; JFK, New York.',
+      prior_uscis_filings: 'Укажите form codes, receipt numbers, filing dates, approvals, denials, RFEs.',
+      supporting_documents_available: 'Receipt notices, court records, marriage certificate, tax returns, pay stubs, translations, photos, letters и т.д.'
     }
   },
   uk: {
@@ -569,6 +575,15 @@ const I485_EXTRA_LOCALIZATION = {
       Blond: 'Блонд',
       Red: 'Рыжий',
       Sandy: 'Sandy'
+    },
+    placeholders: {
+      status_at_last_entry: 'Например: B-2, F-1, parolee, asylee.',
+      paroled_as: 'Например: PAROLED, DT, UHP.',
+      manner_of_last_entry: 'Например: ASYLEE, PAROLEE, D/S.',
+      authorized_stay_expires: 'Например: D/S или 05/11/2026.',
+      ssn: '9 цифр.',
+      eligibility_basis: 'Например: asylee, refugee, IR-1 spouse of U.S. citizen, EB-3.',
+      child1_relationship: 'Например: biological child, stepchild.'
     }
   },
   uk: {
@@ -687,7 +702,7 @@ const I485_EXTRA_LOCALIZATION = {
 
 Object.entries(I485_EXTRA_LOCALIZATION).forEach(([lang, extra]) => {
   if (!LOCALIZATION[lang]) return;
-  ['steps', 'stepHelp', 'fields', 'options'].forEach((bucket) => {
+  ['steps', 'stepHelp', 'fields', 'options', 'placeholders'].forEach((bucket) => {
     LOCALIZATION[lang][bucket] = {
       ...(LOCALIZATION[lang][bucket] || {}),
       ...(extra[bucket] || {})
@@ -1406,6 +1421,7 @@ function localizeFlow(flow, langValue = 'en') {
     fields: (item.fields || []).map((fieldItem) => ({
       ...fieldItem,
       label: copy.fields?.[fieldItem.id] || fieldItem.label,
+      placeholder: copy.placeholders?.[fieldItem.id] || fieldItem.placeholder,
       options: Array.isArray(fieldItem.options)
         ? fieldItem.options.map(localizeOption)
         : fieldItem.options,

@@ -52,11 +52,15 @@ async function main() {
   assert(optionLabel(optionByValue(basis.options, 'Family petition')) === 'Семейная петиция', 'Family petition option should show Russian label');
   assert(optionLabel(optionByValue(medical.options, 'Already completed')) === 'Уже пройден', 'medical option should show Russian label');
 
+  const purpose = i485.steps.find((step) => step.id === 'purpose');
+  assert(!/Describe the request/i.test(field(purpose, 'preparation_goal')?.placeholder || ''), 'purpose placeholder should be localized');
+
   const entryDetails = i485.steps.find((step) => step.id === 'i485_entry_details');
   assert(entryDetails?.title === 'I-485: въезд и текущий статус', 'I-485 entry details title should be localized');
   assert(!/These fields map/i.test(entryDetails.help || ''), 'I-485 entry details help should not be English');
   assert(field(entryDetails, 'admission_basis')?.label === 'Основание при последнем въезде', 'admission basis label should be localized');
   assert(optionLabel(optionByValue(field(entryDetails, 'admission_basis').options, 'Paroled')) === 'Paroled', 'Paroled canonical option should render as localized legal term');
+  assert(!/Example: B-2/i.test(field(entryDetails, 'status_at_last_entry')?.placeholder || ''), 'I-485 entry placeholder should be localized');
 
   const priorAddress = i485.steps.find((step) => step.id === 'i485_prior_addresses_ssn');
   assert(priorAddress?.title === 'I-485: адреса и Social Security', 'I-485 prior address title should be localized');
