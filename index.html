@@ -2040,11 +2040,20 @@ function closeDetail(id) {
     }).join('');
   }
 
+  function canGeneratePdfDraft(formCode) {
+    return ['I-765', 'I-485'].indexOf(normalizeFormCode(formCode)) !== -1;
+  }
+
+  function draftFormText(text) {
+    var code = normalizeFormCode(state.formCode);
+    return String(text || '').replace(/I-765/g, code || 'PDF');
+  }
+
   function renderCompleted() {
     var copy = t();
-    var canGenerateDraft = normalizeFormCode(state.formCode) === 'I-765';
+    var canGenerateDraft = canGeneratePdfDraft(state.formCode);
     var draftAction = canGenerateDraft
-      ? '<button type="button" class="dark" data-generate-pdf-draft>' + esc(copy.generateDraft) + '</button><div id="intakeDraftStatus" class="intake-draft-status"></div>'
+      ? '<button type="button" class="dark" data-generate-pdf-draft>' + esc(draftFormText(copy.generateDraft)) + '</button><div id="intakeDraftStatus" class="intake-draft-status"></div>'
       : '';
     progress.style.width = '100%';
     backBtn.style.display = 'none';
@@ -2725,13 +2734,14 @@ function closeDetail(id) {
     var copy = t();
     var button = card.querySelector('[data-generate-pdf-draft]');
     var status = document.getElementById('intakeDraftStatus');
-    if (!button || normalizeFormCode(state.formCode) !== 'I-765') return;
+    var formCode = normalizeFormCode(state.formCode);
+    if (!button || !canGeneratePdfDraft(formCode)) return;
     if (status) {
       status.className = 'intake-draft-status';
-      status.textContent = copy.generatingDraft;
+      status.textContent = draftFormText(copy.generatingDraft);
     }
     button.disabled = true;
-    button.textContent = copy.generatingDraft;
+    button.textContent = draftFormText(copy.generatingDraft);
     var payload = Object.assign({}, state.savedPayload || {}, {
       formCode: state.formCode,
       formAnswers: state.formAnswers,
@@ -2763,23 +2773,23 @@ function closeDetail(id) {
       var url = URL.createObjectURL(blob);
       var link = document.createElement('a');
       link.href = url;
-      link.download = 'imverica-i-765-draft.pdf';
+      link.download = 'imverica-' + formCode.toLowerCase() + '-draft.pdf';
       document.body.appendChild(link);
       link.click();
       link.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
       if (status) {
         status.className = 'intake-draft-status ok';
-        status.textContent = copy.draftReady;
+        status.textContent = draftFormText(copy.draftReady);
       }
     } catch (err) {
       if (status) {
         status.className = 'intake-draft-status error';
-        status.textContent = copy.draftError;
+        status.textContent = draftFormText(copy.draftError);
       }
     } finally {
       button.disabled = false;
-      button.textContent = copy.generateDraft;
+      button.textContent = draftFormText(copy.generateDraft);
     }
   }
 

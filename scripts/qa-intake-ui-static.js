@@ -28,7 +28,9 @@ includes('function optionLabel(option)', 'localized option label helper');
 includes('renderSelectOptions(options, value)', 'state dropdown selection renderer');
 includes('pdfDraftEndpoint', 'PDF draft endpoint binding');
 includes('pdfDraftEndpoints', 'PDF draft endpoint fallback binding');
-includes('data-generate-pdf-draft', 'I-765 PDF draft button binding');
+includes('data-generate-pdf-draft', 'PDF draft button binding');
+includes("['I-765', 'I-485']", 'I-765 and I-485 PDF draft support');
+includes("link.download = 'imverica-' + formCode.toLowerCase() + '-draft.pdf';", 'form-specific PDF draft filename');
 
 assert(!/if \(data\.language\) state\.lang = data\.language;/.test(html), 'route should not blindly override selected language');
 
