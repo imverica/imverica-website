@@ -116,12 +116,14 @@ async function main() {
   assert(optionLabel(optionByValue(history.countryOptions, 'Ukraine')).includes('Украина'), 'history country dropdown should localize common countries');
 
   const i765 = await callFlow('I-765', 'ru');
-  const workAuthorization = step(i765, 'work_authorization');
-  assert(field(workAuthorization, 'i765_application_reason')?.required === true, 'I-765 application reason should be required');
-  assert(optionLabel(optionByValue(field(workAuthorization, 'i765_application_reason').options, 'Initial permission to accept employment')) === 'Первичное разрешение на работу', 'I-765 reason option should be localized');
-  assert(field(workAuthorization, 'applicant_statement')?.required === true, 'I-765 applicant statement should be required');
-  assert(optionLabel(optionByValue(field(workAuthorization, 'applicant_statement').options, 'I can read and understand English')) === 'Я читаю и понимаю английский', 'I-765 English statement should be localized');
-  assert(field(workAuthorization, 'c8_arrested_or_convicted')?.label.includes('(c)(8)'), 'I-765 c8 question should be localized');
+  const i765Reason = step(i765, 'i765_application_reason');
+  const i765Statement = step(i765, 'i765_applicant_statement');
+  const i765Category = step(i765, 'i765_eligibility_category');
+  assert(field(i765Reason, 'i765_application_reason')?.required === true, 'I-765 application reason should be required');
+  assert(optionLabel(optionByValue(field(i765Reason, 'i765_application_reason').options, 'Initial permission to accept employment')) === 'Первичное разрешение на работу', 'I-765 reason option should be localized');
+  assert(field(i765Statement, 'applicant_statement')?.required === true, 'I-765 applicant statement should be required');
+  assert(optionLabel(optionByValue(field(i765Statement, 'applicant_statement').options, 'I can read and understand English')) === 'Я читаю и понимаю английский', 'I-765 English statement should be localized');
+  assert(field(i765Category, 'c8_arrested_or_convicted')?.label.includes('(c)(8)'), 'I-765 c8 question should be localized');
   const i765ApplicantBirth = step(i765, 'applicant_birth_place');
   const i765ApplicantIdentity = step(i765, 'applicant_sex_marital');
   assert(field(i765ApplicantBirth, 'city_of_birth')?.label === 'Город/населенный пункт рождения', 'birth city label should be localized');

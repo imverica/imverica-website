@@ -16,20 +16,26 @@ const LOCALIZATION = {
       applicant_birth: 'Рождение и гражданство',
       applicant_birth_date: 'Дата рождения',
       applicant_birth_place: 'Место рождения',
+      applicant_birth_country: 'Страна рождения',
       applicant_citizenship: 'Гражданство / nationality',
       applicant_identity: 'ID номера и биография',
       applicant_sex_marital: 'Пол и семейное положение',
       applicant_uscis_numbers: 'USCIS номера',
-      contact_info: 'Физический адрес и контакт',
+      physical_address_match: 'Физический адрес',
+      contact_info: 'Телефон и email',
       immigration_entry_record: 'I-94 и место въезда',
       immigration_passport: 'Паспорт или travel document',
+      immigration_passport_expiration: 'Срок действия паспорта',
       immigration_prior_filings: 'Предыдущие USCIS подачи',
       documents_identity: 'Документы личности',
       documents_supporting: 'Подтверждающие документы',
       documents_translation: 'Переводы документов',
       documents_interpreter_choice: 'Interpreter / preparer',
+      documents_interpreter_preparer_need: 'Нужна секция interpreter/preparer?',
       documents_interpreter: 'Данные interpreter',
+      documents_interpreter_business: 'Организация interpreter',
       documents_preparer: 'Данные preparer',
+      documents_preparer_business: 'Организация preparer',
       documents_notes: 'Заметки для preparer',
       work_authorization: 'Основание для разрешения на работу',
       family_petition: 'Детали семейной петиции',
@@ -88,6 +94,13 @@ const LOCALIZATION = {
       i485_part9_criminal: 'Part 9: criminal и trafficking вопросы',
       i485_part9_security: 'Part 9: security вопросы',
       i485_part9_other: 'Part 9: другие admissibility вопросы',
+      i765_application_reason: 'I-765: причина подачи',
+      i765_work_permit_basis: 'I-765: основание work permit',
+      i765_eligibility_category: 'I-765: eligibility category',
+      i765_pending_receipt: 'I-765: связанное pending дело',
+      i765_prior_ead: 'I-765: предыдущий EAD',
+      i765_social_security: 'I-765: Social Security',
+      i765_applicant_statement: 'I-765: заявление заявителя',
       tps_details: 'Детали TPS',
       daca_details: 'Детали DACA',
       household_member_contract: 'Доход члена household',
@@ -170,7 +183,14 @@ const LOCALIZATION = {
       i485_part9_entries: 'Отвечайте по официальной логике I-485. Дополнительные поля появятся только если нужны.',
       i485_part9_criminal: 'Если ответ Yes, flow потребует объяснение для Part 14 перед генерацией PDF.',
       i485_part9_security: 'Security-related Yes ответы требуют объяснение с датами и местом.',
-      i485_part9_other: 'Оставшиеся вопросы Part 9 помогают определить дополнительные объяснения или документы.'
+      i485_part9_other: 'Оставшиеся вопросы Part 9 помогают определить дополнительные объяснения или документы.',
+      i765_application_reason: 'Первый официальный блок I-765: initial, replacement или renewal.',
+      i765_work_permit_basis: 'Выберите, на чем основан work permit. Точную категорию проверим отдельно.',
+      i765_eligibility_category: 'Eligibility category должна быть точной. Для (c)(8) Item 30 задается отдельно.',
+      i765_pending_receipt: 'Receipt number нужен только если категория требует связанное pending дело.',
+      i765_prior_ead: 'Отметьте, был ли раньше EAD, чтобы собрать копию или объяснение.',
+      i765_social_security: 'SSN должен быть ровно 9 цифр, если он есть.',
+      i765_applicant_statement: 'Этот блок управляет applicant statement и interpreter/preparer секциями.'
     },
     fields: {
       form_code_confirmed: 'Запрошенная форма',
@@ -453,6 +473,13 @@ const LOCALIZATION = {
       i485_part9_criminal: 'Part 9: criminal та trafficking питання',
       i485_part9_security: 'Part 9: security питання',
       i485_part9_other: 'Part 9: інші admissibility питання',
+      i765_application_reason: 'I-765: причина подання',
+      i765_work_permit_basis: 'I-765: підстава work permit',
+      i765_eligibility_category: 'I-765: eligibility category',
+      i765_pending_receipt: 'I-765: пов’язане pending діло',
+      i765_prior_ead: 'I-765: попередній EAD',
+      i765_social_security: 'I-765: Social Security',
+      i765_applicant_statement: 'I-765: заява заявника',
       fee_waiver: 'Підстава fee waiver',
       naturalization: 'Підготовка naturalization'
     },
@@ -551,6 +578,13 @@ const LOCALIZATION = {
       i485_part9_criminal: 'Parte 9: preguntas criminales y trafficking',
       i485_part9_security: 'Parte 9: preguntas de seguridad',
       i485_part9_other: 'Parte 9: otras preguntas de admisibilidad',
+      i765_application_reason: 'I-765: motivo de solicitud',
+      i765_work_permit_basis: 'I-765: base del work permit',
+      i765_eligibility_category: 'I-765: eligibility category',
+      i765_pending_receipt: 'I-765: caso pending relacionado',
+      i765_prior_ead: 'I-765: EAD anterior',
+      i765_social_security: 'I-765: Social Security',
+      i765_applicant_statement: 'I-765: declaración del solicitante',
       fee_waiver: 'Base de fee waiver',
       naturalization: 'Preparación de naturalization'
     },
@@ -1763,23 +1797,44 @@ const FORM_OVERRIDES = {
     ])
   ],
   'I-765': [
-    step('work_authorization', 'Work permit basis', 'Select the closest category. We verify the exact eligibility category before preparing the form.', [
+    step('i765_application_reason', 'I-765 reason for applying', 'Part 1 of Form I-765: select only one reason for applying.', [
       field('i765_application_reason', 'Reason for applying on I-765', 'select', {
         required: true,
         options: ['Initial permission to accept employment', 'Replacement of lost, stolen, or damaged EAD', 'Renewal of permission to accept employment']
-      }),
+      })
+    ]),
+    step('i765_work_permit_basis', 'I-765 work permit basis', 'Select the closest basis. We verify the exact eligibility category before preparing the form.', [
       field('ead_basis', 'What is the work permit based on?', 'select', {
         required: true,
         options: ['Pending green card / adjustment of status', 'Asylum or pending asylum', 'TPS', 'DACA', 'Student category', 'Parole or humanitarian category', 'Other or not sure']
-      }),
+      })
+    ]),
+    step('i765_eligibility_category', 'I-765 eligibility category', 'Use the exact category code that belongs in Item 27. Do not guess.', [
       field('eligibility_category_code', 'Eligibility category code, if known', 'text', { placeholder: 'Example: (c)(9), (c)(8), (a)(12)' }),
-      field('c8_arrested_or_convicted', 'For category (c)(8), have you ever been arrested for or convicted of any crime?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('prior_ead', 'Have you had an EAD before?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('c8_arrested_or_convicted', 'For category (c)(8), have you ever been arrested for or convicted of any crime?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i765_pending_receipt', 'I-765 related pending case', 'Receipt numbers are needed only for categories that depend on a pending case.', [
+      field('pending_application_receipt', 'Related pending application receipt number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i765_prior_ead', 'I-765 prior EAD', 'Confirm whether the applicant had an EAD before.', [
+      field('prior_ead', 'Have you had an EAD before?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i765_social_security', 'I-765 Social Security', 'SSN must be exactly 9 digits if one was issued.', [
+      field('has_ssn', 'Has the Social Security Administration ever issued you an SSN?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      }),
+      field('ssn', 'Social Security number', 'text', {
+        inputmode: 'numeric',
+        autocomplete: 'off',
+        placeholder: '9 digits'
+      })
+    ]),
+    step('i765_applicant_statement', 'I-765 applicant statement', 'Part 3 of Form I-765: applicant statement and interpreter/preparer routing.', [
       field('applicant_statement', 'Applicant statement', 'radio', {
         required: true,
         options: ['I can read and understand English', 'Interpreter read the application to me']
-      }),
-      field('pending_application_receipt', 'Related pending application receipt number, if any', 'text', { autocomplete: 'off' })
+      })
     ])
   ],
   'I-821': [
@@ -2071,6 +2126,70 @@ function i485OrderedSteps() {
   return uniqueSteps([...ordered, ...leftovers]);
 }
 
+function i765OrderedSteps() {
+  const commonApplicant = applicantSteps();
+  const commonAddress = addressContactSteps();
+  const commonImmigration = immigrationHistorySteps();
+  const commonEvidence = evidenceSteps();
+  const i765Specific = FORM_OVERRIDES['I-765'] || [];
+  const map = stepsById(commonApplicant, commonAddress, commonImmigration, commonEvidence, i765Specific);
+
+  const ordered = orderedSteps(map, [
+    // Form I-765 Part 1, page 1.
+    'i765_application_reason',
+
+    // Form I-765 Part 2, pages 1-3: information about the applicant.
+    'applicant',
+    'applicant_name_parts',
+    'applicant_other_names',
+    'address_contact',
+    'physical_address_match',
+    'applicant_uscis_numbers',
+    'i765_social_security',
+    'applicant_citizenship',
+    'applicant_birth_place',
+    'applicant_birth_country',
+    'applicant_birth_date',
+    'applicant_sex_marital',
+    'immigration_entry_record',
+    'immigration_passport',
+    'immigration_passport_expiration',
+    'immigration_history',
+    'i765_work_permit_basis',
+    'i765_eligibility_category',
+    'i765_pending_receipt',
+    'i765_prior_ead',
+
+    // Form I-765 Parts 3-5, pages 4-6: statement, contact, interpreter, preparer.
+    'i765_applicant_statement',
+    'contact_info',
+    'documents_interpreter_choice',
+    'documents_interpreter_preparer_need',
+    'documents_interpreter',
+    'documents_interpreter_business',
+    'documents_preparer',
+    'documents_preparer_business',
+
+    // Supporting intake layer after official-page sequence.
+    'immigration_prior_filings',
+    'documents_identity',
+    'documents_supporting',
+    'documents_translation',
+    'documents_notes'
+  ]);
+
+  const orderedIds = new Set(ordered.map((item) => item.id));
+  const leftovers = [
+    ...i765Specific,
+    ...commonApplicant,
+    ...commonAddress,
+    ...commonImmigration,
+    ...commonEvidence
+  ].filter((item) => item?.id && !orderedIds.has(item.id));
+
+  return uniqueSteps([...ordered, ...leftovers]);
+}
+
 function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
   const code = normalizeCode(codeValue);
   const title = titleFromEntry(code, entry, official);
@@ -2091,14 +2210,19 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
       ...purposeSteps(code, title),
       ...i485OrderedSteps()
     ]
-    : [
+    : code === 'I-765'
+      ? [
+        ...purposeSteps(code, title),
+        ...i765OrderedSteps()
+      ]
+      : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),
       ...applicantSteps(),
       ...addressContactSteps(),
       ...immigrationHistorySteps(),
       ...evidenceSteps()
-    ];
+      ];
 
   return {
     schemaVersion: SCHEMA_VERSION,

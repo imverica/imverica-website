@@ -72,8 +72,13 @@ async function main() {
   assert(mailingAddress?.stateOptions?.includes('CA - California'), 'I-765: state select should include California');
   assert(mailingAddress?.stateOptions?.includes('PR - Puerto Rico'), 'I-765: state select should include territories');
   assert(daytimePhone?.type === 'phone', 'I-765: phone should be split phone field');
-  const i765Work = localized.body.steps.find((step) => step.id === 'work_authorization');
-  assert(i765Work?.fields.some((field) => field.id === 'c8_arrested_or_convicted'), 'I-765: missing c8 arrest/conviction question');
+  const i765Category = localized.body.steps.find((step) => step.id === 'i765_eligibility_category');
+  assert(i765Category?.fields.some((field) => field.id === 'c8_arrested_or_convicted'), 'I-765: missing c8 arrest/conviction question');
+  const i765Order = localized.body.steps.map((step) => step.id);
+  assert(i765Order.indexOf('i765_application_reason') < i765Order.indexOf('applicant'), 'I-765: reason for applying should come before applicant fields');
+  assert(i765Order.indexOf('applicant') < i765Order.indexOf('i765_work_permit_basis'), 'I-765: applicant fields should come before eligibility-category questions');
+  assert(i765Order.indexOf('i765_eligibility_category') < i765Order.indexOf('i765_applicant_statement'), 'I-765: eligibility category should come before applicant statement');
+  assert(i765Order.indexOf('i765_applicant_statement') < i765Order.indexOf('contact_info'), 'I-765: applicant statement should come before contact info');
   const i765Evidence = localized.body.steps.find((step) => step.id === 'documents_interpreter_choice');
   assert(i765Evidence?.fields.some((field) => field.id === 'has_interpreter'), 'I-765: missing interpreter question');
   assert(i765Evidence?.fields.some((field) => field.id === 'has_preparer'), 'I-765: missing preparer question');
