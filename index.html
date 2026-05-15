@@ -204,8 +204,10 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .fi.atty-req{border-left:3px solid #c0392b;}
 .fi-code.red{color:#c0392b;}
 
-.disclaimer{background:#eef2f7;border:1px solid #c5d0de;border-left:4px solid var(--navy);padding:1.4rem 1.8rem;max-width:1100px;margin:0 auto;border-radius:0 3px 3px 0;}
-.disclaimer p{font-size:13px;color:#333;line-height:1.75;}
+.disclaimer{background:#eef2f7;border:1px solid #c5d0de;border-left:4px solid var(--navy);padding:1.6rem 1.8rem;max-width:1100px;margin:0 auto;border-radius:0 3px 3px 0;}
+.disclaimer h2{font-size:16px;font-weight:600;color:var(--navy-dark);margin-bottom:0.75rem;}
+.disclaimer p{font-size:13px;color:#333;line-height:1.75;margin-bottom:0.75rem;}
+.disclaimer p:last-child{margin-bottom:0;}
 .disclaimer strong{color:var(--navy);font-weight:600;}
 
 .cta-section{background:#fff;padding:80px 2.5rem;text-align:center;border-top:1px solid var(--border);}
@@ -1293,7 +1295,11 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
 <div class="disclaimer-wrap">
   <div class="disclaimer">
-    <p><strong>⚠ Important Legal Notice:</strong> Imverica Legal Solutions is a registered Legal Document Assistant (LDA) in the State of California. <strong>We are not a law firm and we do not provide legal advice of any kind.</strong> We prepare legal documents solely at the specific direction of our clients. For legal advice, please consult a licensed attorney.</p>
+    <h2>Important Legal Disclaimer</h2>
+    <p><strong>Imverica Legal Solutions is a California registered Legal Document Assistant (LDA), not a law firm and not an attorney.</strong> Imverica does not provide legal advice, legal opinions, legal strategy, legal representation, case evaluation, or recommendations about legal rights, remedies, defenses, options, form selection, or filing strategy. Documents are prepared only at the client's specific direction.</p>
+    <p>All information on this website, including AI/chat responses, form names, checklists, price examples, links, downloadable materials, and service descriptions, is provided for general informational and document-preparation purposes only. It may be incomplete, outdated, or not applicable to your situation. Laws, court rules, government forms, filing fees, agency policies, and processing practices can change without notice.</p>
+    <p>Using this website, contacting Imverica, using the client portal, uploading documents, receiving a quote, or receiving prepared documents does not create an attorney-client relationship, legal privilege, fiduciary relationship, or legal representation. Only a licensed attorney or authorized legal representative can advise you about what you should file, whether you qualify, deadlines, risks, consequences, or legal strategy.</p>
+    <p>You remain responsible for choosing what documents to request, reviewing all information before signing or filing, confirming deadlines and filing fees, and deciding whether to submit any document. Imverica does not guarantee acceptance, approval, denial avoidance, processing speed, immigration status, court results, agency action, or any other outcome. Third-party links are provided only for convenience and are not endorsements. This website and its content are provided "as is" without warranties, and liability is disclaimed to the maximum extent permitted by law.</p>
   </div>
 </div>
 
@@ -3287,7 +3293,7 @@ function closeDetail(id) {
       chatPlaceholder: 'Type your message...',
       chatGreeting: 'Hello! Ask me about USCIS forms, family law, civil court, or our services.',
       chatError: 'Sorry, please try again or call us at (916) 399-3992.',
-      tosText: 'I understand that Imverica Legal Solutions is a registered Legal Document Assistant (LDA), not a law firm. We prepare documents only at the client\'s direction and do not provide legal advice. For legal advice, consult a licensed attorney. I agree to the <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Terms of Service</a>.',
+      tosText: 'I understand that Imverica Legal Solutions is a registered Legal Document Assistant (LDA), not a law firm or attorney. Imverica prepares documents only at the client\'s direction, does not provide legal advice, does not choose forms or legal strategy for me, and does not guarantee any result. For legal advice, I should consult a licensed attorney. I agree to the <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Terms of Service</a>.',
       presets: ['Green Card', 'Asylum', 'U Visa', 'Divorce', 'Small Claims', 'DMV']
     },
     ru: {
@@ -3303,7 +3309,7 @@ function closeDetail(id) {
       chatPlaceholder: 'Напишите ваше сообщение...',
       chatGreeting: 'Здравствуйте! Спросите меня о формах USCIS, семейном праве, гражданских делах или наших услугах.',
       chatError: 'Извините, попробуйте еще раз или позвоните нам (916) 399-3992.',
-      tosText: 'Я понимаю, что Imverica Legal Solutions является зарегистрированным помощником по юридическим документам (LDA), а не юридической фирмой. Мы только готовим документы по указанию клиента и не предоставляем юридических консультаций. Для юридической консультации обратитесь к лицензированному адвокату. Я соглашаюсь с <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Условиями использования</a>.',
+      tosText: 'Я понимаю, что Imverica Legal Solutions является зарегистрированным помощником по юридическим документам (LDA), а не юридической фирмой и не адвокатом. Imverica готовит документы только по указанию клиента, не предоставляет юридические консультации, не выбирает за меня формы или правовую стратегию и не гарантирует результат. Для юридической консультации мне следует обратиться к лицензированному адвокату. Я соглашаюсь с <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Условиями использования</a>.',
       presets: ['Грин карта', 'Убежище', 'Виза U', 'Развод', 'Малые иски', 'DMV']
     },
     uk: {
@@ -3319,7 +3325,7 @@ function closeDetail(id) {
       chatPlaceholder: 'Напишіть ваше повідомлення...',
       chatGreeting: 'Вітаю! Запитайте мене про форми USCIS, сімейне право, цивільні справи або наші послуги.',
       chatError: 'Вибачте, спробуйте ще раз або зателефонуйте нам (916) 399-3992.',
-      tosText: 'Я розумію, що Imverica Legal Solutions є зареєстрованим помічником з юридичних документів (LDA), а не юридичною фірмою. Ми лише готуємо документи за вказівкою клієнта і не надаємо юридичних консультацій. Для юридичної консультації зверніться до ліцензованого адвоката. Я погоджуюся з <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Умовами використання</a>.',
+      tosText: 'Я розумію, що Imverica Legal Solutions є зареєстрованим помічником з юридичних документів (LDA), а не юридичною фірмою чи адвокатом. Imverica готує документи лише за вказівкою клієнта, не надає юридичних консультацій, не обирає за мене форми або правову стратегію і не гарантує результат. Для юридичної консультації мені слід звернутися до ліцензованого адвоката. Я погоджуюся з <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Умовами використання</a>.',
       presets: ['Грін карта', 'Притулок', 'Віза U', 'Розлучення', 'Малі позови', 'DMV']
     },
     es: {
@@ -3335,7 +3341,7 @@ function closeDetail(id) {
       chatPlaceholder: 'Escriba su mensaje...',
       chatGreeting: '¡Hola! Pregúnteme sobre formularios USCIS, derecho familiar, tribunales civiles o nuestros servicios.',
       chatError: 'Lo siento, inténtelo de nuevo o llámenos al (916) 399-3992.',
-      tosText: 'Entiendo que Imverica Legal Solutions es un Asistente de Documentos Legales (LDA) registrado, no un bufete de abogados. Solo preparamos documentos bajo la dirección del cliente y no brindamos asesoramiento legal. Para asesoramiento legal, consulte a un abogado con licencia. Acepto los <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Términos de Servicio</a>.',
+      tosText: 'Entiendo que Imverica Legal Solutions es un Asistente de Documentos Legales (LDA) registrado, no un bufete de abogados ni abogado. Imverica solo prepara documentos bajo la dirección del cliente, no brinda asesoramiento legal, no elige formularios ni estrategia legal por mí, y no garantiza ningún resultado. Para asesoramiento legal, debo consultar a un abogado con licencia. Acepto los <a href="/terms.html" target="_blank" style="color:#1a2e4a;text-decoration:underline;">Términos de Servicio</a>.',
       presets: ['Tarjeta Verde', 'Asilo', 'Visa U', 'Divorcio', 'Demanda Civil', 'DMV']
     }
   };
