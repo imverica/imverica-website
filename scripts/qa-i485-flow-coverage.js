@@ -20,6 +20,14 @@ const flow = localizeFlow(
 const fields = collectFields(flow);
 const stepIds = new Set((flow.steps || []).map((step) => step.id));
 const hasStepOrPrefix = (id) => stepIds.has(id) || [...stepIds].some((stepId) => stepId.startsWith(`${id}_`));
+const orderedStepIds = (flow.steps || []).map((step) => step.id);
+const before = (first, second) => {
+  const firstIndex = orderedStepIds.indexOf(first);
+  const secondIndex = orderedStepIds.indexOf(second);
+  assert(firstIndex >= 0, `Missing I-485 ordered step: ${first}`);
+  assert(secondIndex >= 0, `Missing I-485 ordered step: ${second}`);
+  assert(firstIndex < secondIndex, `Expected ${first} before ${second}`);
+};
 
 [
   'purpose',
@@ -138,5 +146,18 @@ for (const item of part9Logic.items || []) {
   'part9_explanation_security_47_55',
   'part9_explanation_military_50_51'
 ].forEach((fieldId) => assert(fields.has(fieldId), `Missing Part 14 explanation frontend field: ${fieldId}`));
+
+before('applicant', 'adjustment_basis');
+before('applicant_birth_date', 'adjustment_basis');
+before('applicant_birth_place', 'adjustment_basis');
+before('applicant_citizenship', 'adjustment_basis');
+before('immigration_entry_record', 'adjustment_basis');
+before('address_contact', 'adjustment_basis');
+before('i485_foreign_address', 'adjustment_basis');
+before('i485_social_security', 'adjustment_basis');
+before('adjustment_basis', 'i485_related_petition');
+before('i485_related_petition', 'i485_parent1_name');
+before('i485_part9_entries_01', 'contact_info');
+before('contact_info', 'documents_interpreter_choice');
 
 console.log('I-485 frontend flow coverage QA passed');

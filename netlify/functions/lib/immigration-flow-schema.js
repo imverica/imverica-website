@@ -1928,6 +1928,149 @@ function groupSpecificSteps(code, entry) {
   ];
 }
 
+function uniqueSteps(steps) {
+  const seen = new Set();
+  return steps.filter((item) => {
+    if (!item || seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
+}
+
+function stepsById(...groups) {
+  const map = new Map();
+  groups.flat().forEach((item) => {
+    if (item?.id && !map.has(item.id)) map.set(item.id, item);
+  });
+  return map;
+}
+
+function orderedSteps(map, ids) {
+  return ids.map((id) => map.get(id)).filter(Boolean);
+}
+
+function i485OrderedSteps() {
+  const commonApplicant = applicantSteps();
+  const commonAddress = addressContactSteps();
+  const commonImmigration = immigrationHistorySteps();
+  const commonEvidence = evidenceSteps();
+  const i485Specific = FORM_OVERRIDES['I-485'] || [];
+  const map = stepsById(commonApplicant, commonAddress, commonImmigration, commonEvidence, i485Specific);
+
+  const ordered = orderedSteps(map, [
+    // Form I-485 Part 1, pages 1-4: information about the applicant.
+    'applicant',
+    'applicant_name_parts',
+    'applicant_other_names',
+    'applicant_birth_date',
+    'applicant_birth_place',
+    'applicant_birth_country',
+    'applicant_citizenship',
+    'applicant_sex_marital',
+    'applicant_uscis_numbers',
+    'immigration_passport',
+    'immigration_passport_expiration',
+    'immigration_entry_record',
+    'i485_last_entry_type',
+    'i485_parole_details',
+    'i485_i94_status',
+    'i485_status_expiration',
+    'i485_visa_number',
+    'address_contact',
+    'physical_address_match',
+    'i485_residence_period',
+    'i485_prior_us_address',
+    'i485_foreign_address',
+    'i485_social_security',
+    'i485_social_security_card',
+
+    // Form I-485 Parts 2-4, pages 5-8: adjustment category and work/school facts.
+    'adjustment_basis',
+    'i485_location_status',
+    'i485_medical_exam',
+    'i485_petition_filing',
+    'i485_related_petition',
+    'i485_petition_person',
+    'i485_petition_date',
+    'i485_petition_category',
+    'i485_eligibility_basis',
+    'i485_work_status',
+    'i485_current_work_history',
+    'i485_foreign_work_history',
+
+    // Form I-485 Parts 5-8, pages 9-13: parents, spouse, children, biographic data.
+    'i485_parent1_name',
+    'i485_parent1_middle_name',
+    'i485_parent1_birth',
+    'i485_parent2_current_name',
+    'i485_parent2_middle_name',
+    'i485_parent2_birth_name',
+    'i485_parent2_birth_middle_name',
+    'i485_parent2_birth',
+    'i485_marriage_count',
+    'i485_current_spouse_name',
+    'i485_current_spouse_number',
+    'i485_current_spouse_birth',
+    'i485_current_marriage',
+    'i485_current_marriage_place',
+    'i485_prior_spouse_name',
+    'i485_prior_spouse_birth',
+    'i485_prior_spouse_citizenship',
+    'i485_prior_spouse_marriage',
+    'i485_prior_spouse_marriage_place',
+    'i485_prior_spouse_end_place',
+    'i485_prior_spouse_end_country',
+    'i485_prior_spouse_end_result',
+    'i485_children_count',
+    'i485_child1_identity',
+    'i485_child1_number',
+    'i485_child1_details',
+    'i485_child1_relationship',
+    'i485_biographic_identity',
+    'i485_biographic_body',
+    'i485_biographic_weight',
+    'i485_biographic_colors',
+
+    // Form I-485 Part 9, pages 14-21: eligibility and inadmissibility grounds.
+    'i485_part9_entries_01',
+    'i485_part9_criminal_01',
+    'i485_part9_criminal_02',
+    'i485_part9_security_01',
+    'i485_part9_security_02',
+    'i485_part9_other_01',
+    'i485_part9_other_02',
+    'i485_part9_other_03',
+
+    // Form I-485 Parts 10-13, pages 22-23: contact, interpreter, preparer.
+    'contact_info',
+    'documents_interpreter_choice',
+    'documents_interpreter_preparer_need',
+    'documents_interpreter',
+    'documents_interpreter_business',
+    'documents_preparer',
+    'documents_preparer_business',
+
+    // Form I-485 supporting intake / review layer after the official-page sequence.
+    'immigration_history',
+    'immigration_prior_filings',
+    'documents_identity',
+    'documents_supporting',
+    'documents_translation',
+    'documents_notes'
+  ]);
+
+  const orderedIds = new Set(ordered.map((item) => item.id));
+  const leftovers = [
+    ...i485Specific,
+    ...commonApplicant,
+    ...commonAddress,
+    ...commonImmigration,
+    ...commonEvidence
+  ].filter((item) => item?.id && !orderedIds.has(item.id));
+
+  return uniqueSteps([...ordered, ...leftovers]);
+}
+
 function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
   const code = normalizeCode(codeValue);
   const title = titleFromEntry(code, entry, official);
@@ -1943,14 +2086,19 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
     checkedAt: official?.checkedAt || ''
   };
 
-  const steps = [
-    ...purposeSteps(code, title),
-    ...groupSpecificSteps(code, entry),
-    ...applicantSteps(),
-    ...addressContactSteps(),
-    ...immigrationHistorySteps(),
-    ...evidenceSteps()
-  ];
+  const steps = code === 'I-485'
+    ? [
+      ...purposeSteps(code, title),
+      ...i485OrderedSteps()
+    ]
+    : [
+      ...purposeSteps(code, title),
+      ...groupSpecificSteps(code, entry),
+      ...applicantSteps(),
+      ...addressContactSteps(),
+      ...immigrationHistorySteps(),
+      ...evidenceSteps()
+    ];
 
   return {
     schemaVersion: SCHEMA_VERSION,
