@@ -24,41 +24,51 @@ function mapFileName(formCode) {
   return aliases[compact] || compact + "-pdf-map.js";
 }
 
-function pdfFileName(formCode) {
-  return normalizeFormCode(formCode)
-    .toLowerCase() + ".pdf";
-}
-
 function findPdfPath(formCode) {
   const normalized = normalizeFormCode(formCode).toLowerCase();
-
-  const candidates = [
-    path.join(process.cwd(), "assets/form-cache/pdfs", normalized + ".pdf"),
-    path.join(process.cwd(), "assets/form-cache/pdfs", normalized.replace(/-/g, "") + ".pdf")
+  const rootFromFunction = path.resolve(__dirname, "..", "..");
+  const pdfDirs = [
+    path.join(process.cwd(), "assets/form-cache/pdfs"),
+    path.join(__dirname, "assets/form-cache/pdfs"),
+    path.join(rootFromFunction, "assets/form-cache/pdfs")
   ];
+  const names = [
+    normalized + ".pdf",
+    normalized.replace(/-/g, "") + ".pdf"
+  ];
+  const candidates = pdfDirs.flatMap(dir => names.map(name => path.join(dir, name)));
 
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) return candidate;
   }
 
-  const dir = path.join(process.cwd(), "assets/form-cache/pdfs");
-  const files = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
   const compact = normalized.replace(/[^a-z0-9]/g, "");
 
-  const match = files.find(file =>
-    file.toLowerCase().replace(/[^a-z0-9]/g, "").replace(/pdf$/, "") === compact
-  );
+  for (const dir of pdfDirs) {
+    const files = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
+    const match = files.find(file =>
+      file.toLowerCase().replace(/[^a-z0-9]/g, "").replace(/pdf$/, "") === compact
+    );
 
-  if (match) return path.join(dir, match);
+    if (match) return path.join(dir, match);
+  }
 
   return null;
 }
 
 function findMap(formCode) {
   const file = mapFileName(formCode);
-  const mapPath = path.join(process.cwd(), "netlify/functions/lib", file);
+  const rootFromFunction = path.resolve(__dirname, "..", "..");
+  const candidates = [
+    path.join(process.cwd(), "netlify/functions/lib", file),
+    path.join(process.cwd(), "lib", file),
+    path.join(__dirname, "lib", file),
+    path.join(__dirname, "netlify/functions/lib", file),
+    path.join(rootFromFunction, "netlify/functions/lib", file)
+  ];
+  const mapPath = candidates.find(candidate => fs.existsSync(candidate));
 
-  if (!fs.existsSync(mapPath)) {
+  if (!mapPath) {
     throw new Error("PDF map not found: " + file);
   }
 

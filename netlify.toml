@@ -5,13 +5,10 @@
 [functions]
 node_bundler = "esbuild"
 included_files = [
+  "netlify/functions/lib/*-pdf-map.js",
   "netlify/functions/pdf-maps/**",
-  "assets/form-cache/pdfs/i-765.pdf",
-  "assets/form-cache/pdfs/i-485.pdf",
-  "assets/form-cache/pdfs/ar-11.pdf",
-  "assets/form-cache/pdfs/g-1145.pdf",
-  "assets/form-cache/pdfs/g-1450.pdf",
-  "overlay-maps/normalized/i-485.json"
+  "assets/form-cache/pdfs/**",
+  "overlay-maps/normalized/**"
 ]
 
 [[headers]]
