@@ -385,12 +385,23 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-field{display:flex;flex-direction:column;gap:8px;}
 .intake-field label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
 .intake-field input,.intake-field textarea,.intake-field select{width:100%;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.45;color:var(--navy-dark);background:#fff;outline:none;}
-.intake-field input.intake-invalid,.intake-field textarea.intake-invalid,.intake-field select.intake-invalid,.intake-field.intake-invalid,.intake-field[data-flow-radio-group].intake-invalid,.intake-field[data-flow-checkbox-group].intake-invalid,.intake-phone-grid.intake-invalid,.intake-history.intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
+.intake-field input.intake-invalid,.intake-field textarea.intake-invalid,.intake-field select.intake-invalid,.intake-field.intake-invalid,.intake-field[data-flow-radio-group].intake-invalid,.intake-field[data-flow-checkbox-group].intake-invalid,.intake-phone-grid.intake-invalid,.intake-history.intake-invalid,.intake-address-block.intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
 .intake-error{display:none;margin-top:16px;color:#9c3329;background:#fff8f6;border-left:3px solid #b94c3f;padding:12px 14px;font-size:13px;line-height:1.5;}
 .intake-field textarea{min-height:150px;resize:vertical;}
-.intake-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.intake-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:760px;}
 .intake-field-full{grid-column:1/-1;}
 .intake-phone-grid{display:grid;grid-template-columns:120px 130px 1fr;gap:10px;}
+.intake-radio-options{display:flex;flex-wrap:wrap;gap:8px;}
+.intake-radio-options .intake-option{min-height:0;padding:11px 14px;display:inline-flex;align-items:center;justify-content:center;text-align:center;min-width:96px;background:#fff;}
+.intake-radio-options .intake-option strong{font-size:13px;margin:0;line-height:1.2;}
+.intake-checkbox-options{grid-template-columns:1fr;}
+.intake-checkbox-options .intake-option{min-height:0;padding:12px 14px;background:#fff;}
+.intake-address-block{border:1px solid var(--border);border-radius:8px;background:#fbfaf7;padding:14px;display:grid;gap:12px;}
+.intake-address-title{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
+.intake-address-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:12px;}
+.intake-address-grid .wide{grid-column:1/-1;}
+.intake-address-grid .city{grid-column:auto;}
+.intake-address-grid .state,.intake-address-grid .zip{grid-column:auto;}
 .intake-address-wrap{position:relative;}
 .intake-address-suggestions{display:none;position:absolute;z-index:5;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:6px;box-shadow:0 14px 28px rgba(17,30,48,0.14);overflow:hidden;}
 .intake-address-suggestions.open{display:block;}
@@ -425,7 +436,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-btn.primary{background:var(--navy);color:#fff;}
 .intake-btn:disabled{opacity:0.45;cursor:not-allowed;}
 .intake-disclaimer{font-size:12px;line-height:1.55;color:#777;background:#f5f3ee;border-left:3px solid #b94c3f;padding:12px 14px;}
-@media(max-width:860px){.intake-top{grid-template-columns:1fr;}.intake-rail{display:none;}.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row,.intake-phone-grid,.intake-history-entry{grid-template-columns:1fr;}.intake-title{font-size:30px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}}
+@media(max-width:860px){.intake-top{grid-template-columns:1fr;}.intake-rail{display:none;}.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row,.intake-phone-grid,.intake-history-entry,.intake-address-grid{grid-template-columns:1fr;}.intake-title{font-size:30px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}}
 @media(max-width:430px){
   .intake-modal{padding:12px 10px;}
   .intake-shell{border-radius:7px;}
@@ -1667,7 +1678,7 @@ function closeDetail(id) {
       historyFrom: 'From',
       historyTo: 'To',
       historyPresent: 'Present',
-      historyAddress1: 'Address line 1',
+      historyAddress1: 'Street number and name',
       historyAddress2: 'Apt, suite, unit',
       historyCity: 'City',
       historyState: 'State',
@@ -1764,7 +1775,7 @@ function closeDetail(id) {
       historyFrom: 'С',
       historyTo: 'По',
       historyPresent: 'По настоящее время',
-      historyAddress1: 'Адрес, строка 1',
+      historyAddress1: 'Номер дома и улица',
       historyAddress2: 'Квартира, suite, unit',
       historyCity: 'Город',
       historyState: 'Штат',
@@ -1861,7 +1872,7 @@ function closeDetail(id) {
       historyFrom: 'З',
       historyTo: 'До',
       historyPresent: 'До сьогодні',
-      historyAddress1: 'Адреса, рядок 1',
+      historyAddress1: 'Номер будинку і вулиця',
       historyAddress2: 'Квартира, suite, unit',
       historyCity: 'Місто',
       historyState: 'Штат',
@@ -1958,7 +1969,7 @@ function closeDetail(id) {
       historyFrom: 'Desde',
       historyTo: 'Hasta',
       historyPresent: 'Presente',
-      historyAddress1: 'Dirección línea 1',
+      historyAddress1: 'Número y calle',
       historyAddress2: 'Apt, suite, unit',
       historyCity: 'Ciudad',
       historyState: 'Estado',
@@ -2203,6 +2214,40 @@ function closeDetail(id) {
     return '<select data-history-part="' + esc(name) + '"><option value=""></option>' + renderSelectOptions(options, value || 'United States') + '</select>';
   }
 
+  function addressPartValue(parts, part, fallback) {
+    var key = parts && parts[part];
+    if (!key) return fallback || '';
+    if (Object.prototype.hasOwnProperty.call(state.formAnswers, key)) return state.formAnswers[key];
+    return fallback || '';
+  }
+
+  function renderAddressBlockField(field) {
+    var copy = t();
+    var parts = field.parts || {};
+    var stateOptions = field.stateOptions || [];
+    var countryOptions = field.countryOptions || [];
+    var country = addressPartValue(parts, 'country', field.countryDefault || 'United States');
+    var title = esc(field.label) + (field.required ? ' *' : '');
+    var help = field.help ? '<div class="intake-help" style="margin:0;">' + esc(field.help) + '</div>' : '';
+    function input(part, label, attrs) {
+      var key = parts[part] || '';
+      var value = addressPartValue(parts, part, '');
+      return '<div class="intake-field ' + esc(part) + '"><label>' + esc(label) + '</label><input type="text" data-flow-address-part="' + esc(part) + '" data-flow-address-key="' + esc(key) + '" value="' + esc(value) + '"' + (attrs || '') + '></div>';
+    }
+    return '<div class="intake-address-block" data-flow-address-block="' + esc(field.id) + '">' +
+      '<div class="intake-address-title">' + title + '</div>' +
+      help +
+      '<div class="intake-address-grid">' +
+        '<div class="intake-field wide"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-flow-address-part="line1" data-flow-address-key="' + esc(parts.line1 || '') + '" data-address-autocomplete="' + esc(parts.line1 || field.id) + '" autocomplete="address-line1" value="' + esc(addressPartValue(parts, 'line1', '')) + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(parts.line1 || field.id) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(parts.line1 || field.id) + '"></div></div>' +
+        input('line2', copy.historyAddress2, ' autocomplete="address-line2"') +
+        input('city', copy.historyCity, ' autocomplete="address-level2"') +
+        '<div class="intake-field state"><label>' + esc(copy.historyState) + '</label><select data-flow-address-part="state" data-flow-address-key="' + esc(parts.state || '') + '" autocomplete="address-level1"><option value=""></option>' + renderSelectOptions(stateOptions, addressPartValue(parts, 'state', '')) + '</select></div>' +
+        '<div class="intake-field zip"><label>' + esc(copy.historyZip) + '</label><input type="text" data-flow-address-part="zip" data-flow-address-key="' + esc(parts.zip || '') + '" inputmode="numeric" autocomplete="postal-code" value="' + esc(addressPartValue(parts, 'zip', '')) + '"></div>' +
+        '<div class="intake-field wide"><label>' + esc(copy.historyCountry) + '</label><select data-flow-address-part="country" data-flow-address-key="' + esc(parts.country || '') + '" autocomplete="country-name"><option value=""></option>' + renderSelectOptions(countryOptions, country) + '</select></div>' +
+      '</div>' +
+    '</div>';
+  }
+
   function phoneValue(value, field) {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       return {
@@ -2265,6 +2310,7 @@ function closeDetail(id) {
           '<div class="intake-field"><label>' + esc(copy.historyActivity) + '</label><input type="text" data-history-part="activity" value="' + esc(row.activity || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyOccupation) + '</label><input type="text" data-history-part="occupation" value="' + esc(row.occupation || '') + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><input type="text" data-history-part="line1" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
           '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
@@ -2289,7 +2335,8 @@ function closeDetail(id) {
     }
 
     if (field.type === 'radio') {
-      return '<div class="intake-field" data-flow-radio-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
+      var compact = options.length <= 3 ? ' intake-radio-options' : '';
+      return '<div class="intake-field" data-flow-radio-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options' + compact + '">' +
         options.map(function (option) {
           var optionVal = optionValue(option);
           var checked = optionMatchesValue(option, value) ? ' checked' : '';
@@ -2299,7 +2346,7 @@ function closeDetail(id) {
 
     if (field.type === 'checkboxes') {
       var selected = Array.isArray(value) ? value : String(value || '').split('|').filter(Boolean);
-      return '<div class="intake-field" data-flow-checkbox-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options">' +
+      return '<div class="intake-field" data-flow-checkbox-group="' + esc(field.id) + '"><label>' + esc(field.label) + (field.required ? ' *' : '') + '</label><div class="intake-options intake-checkbox-options">' +
         options.map(function (option) {
           var optionVal = optionValue(option);
           var checked = selected.indexOf(optionVal) !== -1 || selected.indexOf(optionLabel(option)) !== -1 ? ' checked' : '';
@@ -2323,6 +2370,8 @@ function closeDetail(id) {
     if (field.type === 'addressHistory') return renderAddressHistoryField(field);
 
     if (field.type === 'employmentHistory') return renderEmploymentHistoryField(field);
+
+    if (field.type === 'addressBlock') return renderAddressBlockField(field);
 
     var type = field.type === 'date' || field.type === 'email' || field.type === 'tel' || field.type === 'number' ? field.type : 'text';
     return '<div class="intake-field">' + label + '<input type="' + esc(type) + '"' + attrsForField(field) + ' value="' + esc(value) + '">' + help + '</div>';
@@ -2519,6 +2568,12 @@ function closeDetail(id) {
         number: (group.querySelector('[data-flow-phone-part="number"]') || {}).value?.trim() || ''
       };
     });
+    card.querySelectorAll('[data-flow-address-block]').forEach(function (group) {
+      group.querySelectorAll('[data-flow-address-key]').forEach(function (input) {
+        var key = input.getAttribute('data-flow-address-key');
+        if (key) state.formAnswers[key] = input.value.trim();
+      });
+    });
     card.querySelectorAll('[data-flow-address-history], [data-flow-employment-history]').forEach(function (group) {
       var key = group.getAttribute('data-flow-address-history') || group.getAttribute('data-flow-employment-history');
       if (!key) return;
@@ -2610,6 +2665,14 @@ function closeDetail(id) {
     if (field.type === 'phone') {
       return !value || !String(value.areaCode || '').trim() || !String(value.number || '').trim();
     }
+    if (field.type === 'addressBlock') {
+      var parts = field.parts || {};
+      var requiredParts = field.requiredParts || ['line1', 'city', 'state', 'zip'];
+      return requiredParts.some(function (part) {
+        var key = parts[part];
+        return key && !String(state.formAnswers[key] || '').trim();
+      });
+    }
     if (field.type === 'addressHistory') {
       return !Array.isArray(value) || !value.some(function (row) {
         return String(row.line1 || '').trim() && String(row.city || '').trim();
@@ -2632,7 +2695,7 @@ function closeDetail(id) {
       var empty = isEmptyFlowValue(field, value);
       if (!field.required || !empty) return;
       var input = document.getElementById(fieldDomId(field.id));
-      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
+      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-block="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
       invalid.push(input || group);
     });
     card.querySelectorAll('.intake-invalid').forEach(function (item) { item.classList.remove('intake-invalid'); });
@@ -2654,7 +2717,7 @@ function closeDetail(id) {
   }
 
   function setAnswerAndInput(id, value) {
-    var input = document.getElementById(fieldDomId(id));
+    var input = document.getElementById(fieldDomId(id)) || card.querySelector('[data-flow-address-key="' + id + '"]');
     var nextValue = String(value || '');
     if (input) {
       if (input.tagName === 'SELECT') nextValue = matchingStateOption(nextValue, input);

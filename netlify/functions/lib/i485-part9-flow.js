@@ -181,6 +181,23 @@ function organizationDetailFields(field, itemsByNumber) {
   ];
 }
 
+function organizationDetailSteps(field, step, group, itemsByNumber) {
+  const fields = organizationDetailFields(field, itemsByNumber);
+  const chunks = [
+    ['Pt9Line2_Organization1'],
+    ['Pt9Line3_CityTownOfBirth', 'Pt9Line3_State', 'Pt9Line3_Country'],
+    ['Pt9Line4_FamilyName', 'Pt9Line4_Involvement'],
+    ['Pt9Line5_DateFrom', 'Pt9Line5_DateTo']
+  ];
+
+  return chunks.map((ids, index) => step(
+    `${group.id}_organization_${String(index + 1).padStart(2, '0')}`,
+    `${group.title}: organization details`,
+    group.help,
+    ids.map((id) => fields.find((item) => item.id === id)).filter(Boolean)
+  ));
+}
+
 function explanationFields(field, groupIds, itemsByNumber) {
   return part9Logic.part14Triggers
     .filter((trigger) => trigger.items.some((item) => groupIds.includes(item)))
@@ -195,18 +212,27 @@ function explanationFields(field, groupIds, itemsByNumber) {
 
 function buildI485Part9Steps(field, step) {
   const itemsByNumber = itemMap();
+  const chunkSize = 2;
+  const steps = [];
 
-  return PAGE_GROUPS.map((group) => {
-    const fields = [];
-    for (const itemNumber of group.items) {
-      const item = itemsByNumber.get(itemNumber);
-      if (!item) continue;
-      fields.push(item.type === 'yesNo' ? yesNoField(field, item, itemsByNumber) : item86Field(field, itemsByNumber));
-      if (itemNumber === '1') fields.push(...organizationDetailFields(field, itemsByNumber));
+  for (const group of PAGE_GROUPS) {
+    for (let index = 0; index < group.items.length; index += chunkSize) {
+      const items = group.items.slice(index, index + chunkSize);
+      const fields = [];
+      for (const itemNumber of items) {
+        const item = itemsByNumber.get(itemNumber);
+        if (!item) continue;
+        fields.push(item.type === 'yesNo' ? yesNoField(field, item, itemsByNumber) : item86Field(field, itemsByNumber));
+      }
+      fields.push(...explanationFields(field, items, itemsByNumber));
+
+      const itemRange = items.length > 1 ? `${items[0]}-${items[items.length - 1]}` : items[0];
+      steps.push(step(`${group.id}_${String((index / chunkSize) + 1).padStart(2, '0')}`, `${group.title}: ${itemRange}`, group.help, fields));
+      if (items.includes('1')) steps.push(...organizationDetailSteps(field, step, group, itemsByNumber));
     }
-    fields.push(...explanationFields(field, group.items, itemsByNumber));
-    return step(group.id, group.title, group.help, fields);
-  });
+  }
+
+  return steps;
 }
 
 module.exports = {

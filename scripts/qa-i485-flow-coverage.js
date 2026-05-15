@@ -19,24 +19,54 @@ const flow = localizeFlow(
 
 const fields = collectFields(flow);
 const stepIds = new Set((flow.steps || []).map((step) => step.id));
+const hasStepOrPrefix = (id) => stepIds.has(id) || [...stepIds].some((stepId) => stepId.startsWith(`${id}_`));
 
 [
   'purpose',
   'adjustment_basis',
-  'i485_entry_details',
-  'i485_prior_addresses_ssn',
-  'i485_processing_employment',
-  'i485_family_history',
-  'i485_prior_spouse_children_bio',
+  'i485_related_petition',
+  'i485_location_status',
+  'i485_medical_exam',
+  'i485_last_entry_type',
+  'i485_i94_status',
+  'i485_residence_period',
+  'i485_prior_us_address',
+  'i485_foreign_address',
+  'i485_social_security',
+  'i485_current_work_history',
+  'i485_foreign_work_history',
+  'i485_parent1_name',
+  'i485_parent2_current_name',
+  'i485_prior_spouse_end_place',
+  'i485_prior_spouse_end_result',
+  'i485_child1_identity',
+  'i485_biographic_identity',
+  'i485_biographic_body',
+  'i485_biographic_colors',
   'i485_part9_entries',
   'i485_part9_criminal',
   'i485_part9_security',
   'i485_part9_other',
   'applicant',
+  'applicant_birth_date',
+  'applicant_birth_place',
+  'applicant_citizenship',
+  'applicant_sex_marital',
+  'applicant_uscis_numbers',
   'address_contact',
+  'contact_info',
   'immigration_history',
-  'documents_review'
-].forEach((stepId) => assert(stepIds.has(stepId), `Missing I-485 flow step: ${stepId}`));
+  'immigration_entry_record',
+  'immigration_passport',
+  'immigration_prior_filings',
+  'documents_identity',
+  'documents_supporting',
+  'documents_translation',
+  'documents_interpreter_choice',
+  'documents_interpreter',
+  'documents_preparer',
+  'documents_notes'
+].forEach((stepId) => assert(hasStepOrPrefix(stepId), `Missing I-485 flow step: ${stepId}`));
 
 [
   'form_code_confirmed',
@@ -56,10 +86,7 @@ const stepIds = new Set((flow.steps || []).map((step) => step.id));
   'sex',
   'marital_status',
   'alien_number',
-  'mailing_address_line1',
-  'mailing_city',
-  'mailing_state',
-  'mailing_zip',
+  'mailing_address',
   'daytime_phone',
   'email_address',
   'current_immigration_status',

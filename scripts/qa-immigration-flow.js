@@ -65,17 +65,16 @@ async function main() {
 
   const i765Address = localized.body.steps.find((step) => step.id === 'address_contact');
   assert(i765Address, 'I-765: missing address/contact step');
-  const mailingState = i765Address.fields.find((field) => field.id === 'mailing_state');
-  const mailingAddress = i765Address.fields.find((field) => field.id === 'mailing_address_line1');
-  const daytimePhone = i765Address.fields.find((field) => field.id === 'daytime_phone');
-  assert(mailingAddress?.type === 'addressAutocomplete', 'I-765: mailing address should use address autocomplete');
-  assert(mailingState?.type === 'select', 'I-765: state should be a select field');
-  assert(mailingState?.options?.includes('CA - California'), 'I-765: state select should include California');
-  assert(mailingState?.options?.includes('PR - Puerto Rico'), 'I-765: state select should include territories');
+  const mailingAddress = i765Address.fields.find((field) => field.id === 'mailing_address');
+  const daytimePhone = localized.body.steps.find((step) => step.id === 'contact_info')?.fields.find((field) => field.id === 'daytime_phone');
+  assert(mailingAddress?.type === 'addressBlock', 'I-765: mailing address should use structured address block');
+  assert(mailingAddress?.parts?.state === 'mailing_state', 'I-765: address block should map mailing state key');
+  assert(mailingAddress?.stateOptions?.includes('CA - California'), 'I-765: state select should include California');
+  assert(mailingAddress?.stateOptions?.includes('PR - Puerto Rico'), 'I-765: state select should include territories');
   assert(daytimePhone?.type === 'phone', 'I-765: phone should be split phone field');
   const i765Work = localized.body.steps.find((step) => step.id === 'work_authorization');
   assert(i765Work?.fields.some((field) => field.id === 'c8_arrested_or_convicted'), 'I-765: missing c8 arrest/conviction question');
-  const i765Evidence = localized.body.steps.find((step) => step.id === 'documents_review');
+  const i765Evidence = localized.body.steps.find((step) => step.id === 'documents_interpreter_choice');
   assert(i765Evidence?.fields.some((field) => field.id === 'has_interpreter'), 'I-765: missing interpreter question');
   assert(i765Evidence?.fields.some((field) => field.id === 'has_preparer'), 'I-765: missing preparer question');
 

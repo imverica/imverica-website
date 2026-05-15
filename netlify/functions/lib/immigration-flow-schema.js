@@ -13,11 +13,70 @@ const LOCALIZATION = {
       address_contact: 'Адрес и контакт',
       immigration_history: 'Иммиграционная история',
       documents_review: 'Документы и проверка',
+      applicant_birth: 'Рождение и гражданство',
+      applicant_birth_date: 'Дата рождения',
+      applicant_birth_place: 'Место рождения',
+      applicant_citizenship: 'Гражданство / nationality',
+      applicant_identity: 'ID номера и биография',
+      applicant_sex_marital: 'Пол и семейное положение',
+      applicant_uscis_numbers: 'USCIS номера',
+      contact_info: 'Физический адрес и контакт',
+      immigration_entry_record: 'I-94 и место въезда',
+      immigration_passport: 'Паспорт или travel document',
+      immigration_prior_filings: 'Предыдущие USCIS подачи',
+      documents_identity: 'Документы личности',
+      documents_supporting: 'Подтверждающие документы',
+      documents_translation: 'Переводы документов',
+      documents_interpreter_choice: 'Interpreter / preparer',
+      documents_interpreter: 'Данные interpreter',
+      documents_preparer: 'Данные preparer',
+      documents_notes: 'Заметки для preparer',
       work_authorization: 'Основание для разрешения на работу',
       family_petition: 'Детали семейной петиции',
       spouse_biographic: 'Биографические данные супруга',
       travel_document: 'Запрос проездного документа',
       adjustment_basis: 'Основание для изменения статуса',
+      i485_related_petition: 'I-485: петиция или спонсор',
+      i485_location_status: 'I-485: нахождение в США и въезд',
+      i485_medical_exam: 'I-485: medical exam I-693',
+      i485_last_entry_type: 'I-485: тип последнего въезда',
+      i485_parole_details: 'I-485: parole details',
+      i485_i94_status: 'I-485: I-94 и статус при въезде',
+      i485_status_expiration: 'I-485: срок разрешенного пребывания',
+      i485_visa_number: 'I-485: номер визы',
+      i485_removal_history: 'I-485: removal / deportation',
+      i485_residence_period: 'I-485: проживание по текущему адресу',
+      i485_prior_us_address: 'I-485: предыдущий адрес в США',
+      i485_foreign_address: 'I-485: последний адрес за пределами США',
+      i485_social_security: 'I-485: Social Security',
+      i485_petition_filing: 'I-485: основная петиция',
+      i485_petition_person: 'I-485: данные петиционера',
+      i485_petition_category: 'I-485: категория подачи',
+      i485_work_status: 'I-485: работа в США',
+      i485_current_work_history: 'I-485: текущая работа или учеба',
+      i485_foreign_work_history: 'I-485: последняя работа за пределами США',
+      i485_parent1_name: 'I-485: родитель 1',
+      i485_parent1_birth: 'I-485: рождение родителя 1',
+      i485_parent2_current_name: 'I-485: родитель 2',
+      i485_parent2_birth_name: 'I-485: имя родителя 2 при рождении',
+      i485_parent2_birth: 'I-485: рождение родителя 2',
+      i485_marriage_count: 'I-485: количество браков',
+      i485_current_spouse_name: 'I-485: текущий супруг',
+      i485_current_spouse_birth: 'I-485: страна рождения супруга',
+      i485_current_marriage: 'I-485: текущий брак',
+      i485_prior_spouse_name: 'I-485: предыдущий супруг',
+      i485_prior_spouse_birth: 'I-485: рождение и гражданство бывшего супруга',
+      i485_prior_spouse_marriage: 'I-485: брак с бывшим супругом',
+      i485_prior_spouse_end: 'I-485: окончание предыдущего брака',
+      i485_prior_spouse_end_place: 'I-485: где закончился предыдущий брак',
+      i485_prior_spouse_end_result: 'I-485: дата и тип окончания брака',
+      i485_children_count: 'I-485: количество детей',
+      i485_child1_identity: 'I-485: ребенок 1',
+      i485_child1_details: 'I-485: данные ребенка 1',
+      i485_biographic_identity: 'I-485: ethnicity и race',
+      i485_biographic_physical: 'I-485: рост, вес, глаза и волосы',
+      i485_biographic_body: 'I-485: рост и вес',
+      i485_biographic_colors: 'I-485: глаза и волосы',
       asylum_claim: 'Запрос asylum / withholding',
       support_affidavit: 'Финансовая поддержка спонсора',
       fee_waiver: 'Основание для освобождения от пошлины',
@@ -42,7 +101,66 @@ const LOCALIZATION = {
       address_contact: 'Автозаполнение телефона может помочь с именем, телефоном, email и адресом.',
       immigration_history: 'Эти ответы помогают подготовить USCIS-поля и список документов.',
       documents_review: 'Укажите, какие документы уже есть. Файлы можно будет загрузить после checkout или кабинета.',
+      applicant_birth: 'Место рождения, страна рождения и гражданство должны совпадать с документами.',
+      applicant_birth_date: 'Дата рождения должна совпадать с документами.',
+      applicant_birth_place: 'Город, штат/провинция и страна рождения.',
+      applicant_citizenship: 'Укажите страну гражданства или nationality.',
+      applicant_identity: 'A-number и USCIS account number указывайте только если они есть.',
+      applicant_sex_marital: 'Эти ответы идут в biographic section формы.',
+      applicant_uscis_numbers: 'A-number и USCIS online account number вводятся только если они есть.',
+      contact_info: 'Телефон вводится отдельно: country code, area code, local number.',
+      immigration_entry_record: 'Место въезда и I-94 должны совпадать с entry record.',
+      immigration_passport: 'Паспортные данные вводятся только если относятся к форме.',
+      immigration_prior_filings: 'Receipt numbers и предыдущие подачи помогают собрать правильный пакет.',
+      documents_identity: 'Выберите документы личности, которые уже есть.',
+      documents_supporting: 'Перечислите подтверждающие документы без загрузки файлов на этом шаге.',
+      documents_translation: 'Отметьте, нужны ли переводы.',
+      documents_interpreter_choice: 'Эти ответы управляют секциями interpreter и preparer.',
+      documents_interpreter: 'Заполняется только если будет interpreter.',
+      documents_preparer: 'Заполняется только если будет preparer.',
+      documents_notes: 'Дополнительные заметки для подготовки документов.',
       adjustment_basis: 'Это помогает определить возможные связанные формы и подтверждающие документы.',
+      i485_related_petition: 'Если есть основная петиция, receipt number, employer или sponsor, укажите здесь.',
+      i485_location_status: 'Эти ответы определяют последующие вопросы про последний въезд и статус.',
+      i485_medical_exam: 'I-693 можно приложить сразу или предоставить позже, если это допустимо.',
+      i485_last_entry_type: 'Ответьте строго по последнему въезду в США.',
+      i485_parole_details: 'Если въезд был через parole, укажите parole class или текст из I-94.',
+      i485_i94_status: 'Данные должны совпадать с I-94 или entry record.',
+      i485_status_expiration: 'Если в документе указано D/S, вводите D/S.',
+      i485_visa_number: 'Если визы не было или не относится, оставьте пустым.',
+      i485_removal_history: 'Эти вопросы идут отдельным блоком, потому что Yes требует проверки и объяснения.',
+      i485_residence_period: 'Сначала подтвердите, закрывает ли текущий адрес требуемый период.',
+      i485_prior_us_address: 'Если текущий адрес не покрывает весь период, добавьте предыдущий адрес в США.',
+      i485_foreign_address: 'Последний адрес за пределами США нужен отдельным структурированным блоком.',
+      i485_social_security: 'SSN должен быть 9 цифр, если он есть.',
+      i485_petition_filing: 'Receipt number основной петиции нужен только если такая петиция есть.',
+      i485_petition_person: 'Если петиционер человек, укажите имя. Если организация, используйте поле sponsor/employer выше.',
+      i485_petition_category: 'Эти ответы помогают выбрать правильную часть формы без гадания.',
+      i485_work_status: 'Работа в США влияет на отдельные вопросы I-485.',
+      i485_current_work_history: 'Введите текущую работу или учебу как структурированную запись.',
+      i485_foreign_work_history: 'Введите последнюю работу за пределами США как структурированную запись.',
+      i485_parent1_name: 'Данные родителя 1 должны идти как в форме.',
+      i485_parent1_birth: 'Дата и место рождения родителя 1.',
+      i485_parent2_current_name: 'Текущее имя родителя 2.',
+      i485_parent2_birth_name: 'Имя родителя 2 при рождении, если отличается.',
+      i485_parent2_birth: 'Дата и место рождения родителя 2.',
+      i485_marriage_count: 'Количество браков используется для spouse/prior spouse секций.',
+      i485_current_spouse_name: 'Заполняется только если есть текущий супруг.',
+      i485_current_spouse_birth: 'Страна рождения текущего супруга.',
+      i485_current_marriage: 'Дата и место текущего брака.',
+      i485_prior_spouse_name: 'Заполняется, если был предыдущий супруг.',
+      i485_prior_spouse_birth: 'Дата рождения и страны бывшего супруга.',
+      i485_prior_spouse_marriage: 'Дата и место брака с бывшим супругом.',
+      i485_prior_spouse_end: 'Дата, место и способ окончания предыдущего брака.',
+      i485_prior_spouse_end_place: 'Место, где закончился предыдущий брак.',
+      i485_prior_spouse_end_result: 'Дата и способ окончания предыдущего брака.',
+      i485_children_count: 'Сначала укажите количество детей.',
+      i485_child1_identity: 'Данные первого ребенка.',
+      i485_child1_details: 'Дата рождения, страна и отношение ребенка.',
+      i485_biographic_identity: 'Эти значения идут в biographic section.',
+      i485_biographic_physical: 'Рост, вес, цвет глаз и волос.',
+      i485_biographic_body: 'Рост и вес в американском формате.',
+      i485_biographic_colors: 'Цвет глаз и волос.',
       work_authorization: 'Выберите ближайшее основание. Точную категорию проверим перед подготовкой формы.',
       family_petition: 'Информация о петиционере, бенефициаре и родстве.',
       spouse_biographic: 'Данные супруга-бенефициара для семейной петиции.',
@@ -73,6 +191,7 @@ const LOCALIZATION = {
       alien_number: 'A-number, если есть',
       uscis_online_account_number: 'USCIS online account number, если есть',
       mailing_address_line1: 'Почтовый адрес, строка 1',
+      mailing_address: 'Почтовый адрес',
       mailing_address_line2: 'Квартира, suite или unit',
       mailing_city: 'Город',
       mailing_state: 'Штат',
@@ -305,10 +424,31 @@ const LOCALIZATION = {
       address_contact: 'Адреса і контакт',
       immigration_history: 'Імміграційна історія',
       documents_review: 'Документи і перевірка',
+      applicant_birth: 'Народження і громадянство',
+      applicant_birth_date: 'Дата народження',
+      applicant_birth_place: 'Місце народження',
+      applicant_citizenship: 'Громадянство / nationality',
+      applicant_identity: 'ID номери і біографія',
+      applicant_sex_marital: 'Стать і сімейний стан',
+      applicant_uscis_numbers: 'USCIS номери',
+      contact_info: 'Фізична адреса і контакт',
+      immigration_entry_record: 'I-94 і місце в’їзду',
+      immigration_passport: 'Паспорт або travel document',
+      immigration_prior_filings: 'Попередні USCIS подання',
+      documents_identity: 'Документи особи',
+      documents_supporting: 'Підтверджуючі документи',
+      documents_translation: 'Переклади документів',
+      documents_interpreter_choice: 'Interpreter / preparer',
+      documents_interpreter: 'Дані interpreter',
+      documents_preparer: 'Дані preparer',
+      documents_notes: 'Нотатки для preparer',
       work_authorization: 'Підстава для work permit',
       family_petition: 'Деталі сімейної петиції',
       travel_document: 'Запит travel document',
       adjustment_basis: 'Підстава для adjustment of status',
+      i485_related_petition: 'I-485: петиція або sponsor',
+      i485_location_status: 'I-485: перебування у США і в’їзд',
+      i485_medical_exam: 'I-485: medical exam I-693',
       i485_part9_entries: 'Part 9: в’їзд та імміграційні питання',
       i485_part9_criminal: 'Part 9: criminal та trafficking питання',
       i485_part9_security: 'Part 9: security питання',
@@ -332,6 +472,7 @@ const LOCALIZATION = {
       sex: 'Стать',
       marital_status: 'Сімейний стан',
       mailing_address_line1: 'Поштова адреса, рядок 1',
+      mailing_address: 'Поштова адреса',
       mailing_city: 'Місто',
       mailing_state: 'Штат',
       mailing_zip: 'ZIP code',
@@ -381,10 +522,31 @@ const LOCALIZATION = {
       address_contact: 'Dirección y contacto',
       immigration_history: 'Historial migratorio',
       documents_review: 'Documentos y revisión',
+      applicant_birth: 'Nacimiento y ciudadanía',
+      applicant_birth_date: 'Fecha de nacimiento',
+      applicant_birth_place: 'Lugar de nacimiento',
+      applicant_citizenship: 'Ciudadanía / nationality',
+      applicant_identity: 'Números ID y biografía',
+      applicant_sex_marital: 'Sexo y estado civil',
+      applicant_uscis_numbers: 'Números USCIS',
+      contact_info: 'Dirección física y contacto',
+      immigration_entry_record: 'I-94 y lugar de entrada',
+      immigration_passport: 'Pasaporte o travel document',
+      immigration_prior_filings: 'Solicitudes USCIS anteriores',
+      documents_identity: 'Documentos de identidad',
+      documents_supporting: 'Documentos de apoyo',
+      documents_translation: 'Traducciones de documentos',
+      documents_interpreter_choice: 'Interpreter / preparer',
+      documents_interpreter: 'Datos del interpreter',
+      documents_preparer: 'Datos del preparer',
+      documents_notes: 'Notas para preparer',
       work_authorization: 'Base del permiso de trabajo',
       family_petition: 'Detalles de petición familiar',
       travel_document: 'Solicitud de travel document',
       adjustment_basis: 'Base para adjustment of status',
+      i485_related_petition: 'I-485: petición o sponsor',
+      i485_location_status: 'I-485: presencia en EE.UU. y entrada',
+      i485_medical_exam: 'I-485: medical exam I-693',
       i485_part9_entries: 'Parte 9: entrada y preguntas migratorias',
       i485_part9_criminal: 'Parte 9: preguntas criminales y trafficking',
       i485_part9_security: 'Parte 9: preguntas de seguridad',
@@ -408,6 +570,7 @@ const LOCALIZATION = {
       sex: 'Sexo',
       marital_status: 'Estado civil',
       mailing_address_line1: 'Dirección postal línea 1',
+      mailing_address: 'Dirección postal',
       mailing_city: 'Ciudad',
       mailing_state: 'Estado',
       mailing_zip: 'ZIP code',
@@ -592,7 +755,45 @@ const I485_EXTRA_LOCALIZATION = {
       i485_prior_addresses_ssn: 'I-485: адреси і Social Security',
       i485_processing_employment: 'I-485: петиція і робота',
       i485_family_history: 'I-485: батьки і подружжя',
-      i485_prior_spouse_children_bio: 'I-485: попередній шлюб, діти і біографія'
+      i485_prior_spouse_children_bio: 'I-485: попередній шлюб, діти і біографія',
+      i485_last_entry_type: 'I-485: тип останнього в’їзду',
+      i485_parole_details: 'I-485: parole details',
+      i485_i94_status: 'I-485: I-94 і статус при в’їзді',
+      i485_status_expiration: 'I-485: строк дозволеного перебування',
+      i485_visa_number: 'I-485: номер візи',
+      i485_removal_history: 'I-485: removal / deportation',
+      i485_residence_period: 'I-485: проживання за поточною адресою',
+      i485_prior_us_address: 'I-485: попередня адреса у США',
+      i485_foreign_address: 'I-485: остання адреса за межами США',
+      i485_social_security: 'I-485: Social Security',
+      i485_petition_filing: 'I-485: основна петиція',
+      i485_petition_person: 'I-485: дані петиціонера',
+      i485_petition_category: 'I-485: категорія подання',
+      i485_work_status: 'I-485: робота у США',
+      i485_current_work_history: 'I-485: поточна робота або навчання',
+      i485_foreign_work_history: 'I-485: остання робота за межами США',
+      i485_parent1_name: 'I-485: батько/мати 1',
+      i485_parent1_birth: 'I-485: народження батька/матері 1',
+      i485_parent2_current_name: 'I-485: батько/мати 2',
+      i485_parent2_birth_name: 'I-485: ім’я батька/матері 2 при народженні',
+      i485_parent2_birth: 'I-485: народження батька/матері 2',
+      i485_marriage_count: 'I-485: кількість шлюбів',
+      i485_current_spouse_name: 'I-485: поточний чоловік/дружина',
+      i485_current_spouse_birth: 'I-485: країна народження чоловіка/дружини',
+      i485_current_marriage: 'I-485: поточний шлюб',
+      i485_prior_spouse_name: 'I-485: попередній чоловік/дружина',
+      i485_prior_spouse_birth: 'I-485: народження і громадянство попереднього чоловіка/дружини',
+      i485_prior_spouse_marriage: 'I-485: шлюб з попереднім чоловіком/дружиною',
+      i485_prior_spouse_end: 'I-485: завершення попереднього шлюбу',
+      i485_prior_spouse_end_place: 'I-485: де завершився попередній шлюб',
+      i485_prior_spouse_end_result: 'I-485: дата і тип завершення шлюбу',
+      i485_children_count: 'I-485: кількість дітей',
+      i485_child1_identity: 'I-485: дитина 1',
+      i485_child1_details: 'I-485: дані дитини 1',
+      i485_biographic_identity: 'I-485: ethnicity і race',
+      i485_biographic_physical: 'I-485: зріст, вага, очі та волосся',
+      i485_biographic_body: 'I-485: зріст і вага',
+      i485_biographic_colors: 'I-485: очі та волосся'
     },
     fields: {
       admission_basis: 'Підстава при останньому в’їзді',
@@ -648,7 +849,45 @@ const I485_EXTRA_LOCALIZATION = {
       i485_prior_addresses_ssn: 'I-485: direcciones y Social Security',
       i485_processing_employment: 'I-485: petición y empleo',
       i485_family_history: 'I-485: padres y cónyuge',
-      i485_prior_spouse_children_bio: 'I-485: cónyuge anterior, hijos y biografía'
+      i485_prior_spouse_children_bio: 'I-485: cónyuge anterior, hijos y biografía',
+      i485_last_entry_type: 'I-485: tipo de última entrada',
+      i485_parole_details: 'I-485: detalles de parole',
+      i485_i94_status: 'I-485: I-94 y estado de entrada',
+      i485_status_expiration: 'I-485: vencimiento de estadía autorizada',
+      i485_visa_number: 'I-485: número de visa',
+      i485_removal_history: 'I-485: removal / deportation',
+      i485_residence_period: 'I-485: residencia en dirección actual',
+      i485_prior_us_address: 'I-485: dirección anterior en EE.UU.',
+      i485_foreign_address: 'I-485: última dirección fuera de EE.UU.',
+      i485_social_security: 'I-485: Social Security',
+      i485_petition_filing: 'I-485: petición principal',
+      i485_petition_person: 'I-485: datos del peticionario',
+      i485_petition_category: 'I-485: categoría de solicitud',
+      i485_work_status: 'I-485: trabajo en EE.UU.',
+      i485_current_work_history: 'I-485: trabajo o escuela actual',
+      i485_foreign_work_history: 'I-485: último trabajo fuera de EE.UU.',
+      i485_parent1_name: 'I-485: padre/madre 1',
+      i485_parent1_birth: 'I-485: nacimiento de padre/madre 1',
+      i485_parent2_current_name: 'I-485: padre/madre 2',
+      i485_parent2_birth_name: 'I-485: nombre de nacimiento de padre/madre 2',
+      i485_parent2_birth: 'I-485: nacimiento de padre/madre 2',
+      i485_marriage_count: 'I-485: número de matrimonios',
+      i485_current_spouse_name: 'I-485: cónyuge actual',
+      i485_current_spouse_birth: 'I-485: país de nacimiento del cónyuge',
+      i485_current_marriage: 'I-485: matrimonio actual',
+      i485_prior_spouse_name: 'I-485: cónyuge anterior',
+      i485_prior_spouse_birth: 'I-485: nacimiento y ciudadanía del cónyuge anterior',
+      i485_prior_spouse_marriage: 'I-485: matrimonio con cónyuge anterior',
+      i485_prior_spouse_end: 'I-485: fin del matrimonio anterior',
+      i485_prior_spouse_end_place: 'I-485: lugar del fin del matrimonio anterior',
+      i485_prior_spouse_end_result: 'I-485: fecha y tipo de fin del matrimonio',
+      i485_children_count: 'I-485: número de hijos',
+      i485_child1_identity: 'I-485: hijo/a 1',
+      i485_child1_details: 'I-485: datos de hijo/a 1',
+      i485_biographic_identity: 'I-485: ethnicity y race',
+      i485_biographic_physical: 'I-485: altura, peso, ojos y cabello',
+      i485_biographic_body: 'I-485: altura y peso',
+      i485_biographic_colors: 'I-485: ojos y cabello'
     },
     fields: {
       admission_basis: 'Base de admisión en la última entrada',
@@ -710,10 +949,61 @@ Object.entries(I485_EXTRA_LOCALIZATION).forEach(([lang, extra]) => {
   });
 });
 
+const PURPOSE_SPLIT_LOCALIZATION = {
+  ru: {
+    steps: {
+      related_forms: 'Связанные формы и receipt numbers',
+      deadline_notice: 'Deadline, RFE или notice'
+    },
+    stepHelp: {
+      related_forms: 'Если есть I-797, receipt number, pending case или связанная форма, укажите это отдельно.',
+      deadline_notice: 'Если есть срок, RFE, court date или notice, укажите дату и тип документа.'
+    }
+  },
+  uk: {
+    steps: {
+      related_forms: "Пов'язані форми та receipt numbers",
+      deadline_notice: 'Deadline, RFE або notice'
+    },
+    stepHelp: {
+      related_forms: 'Якщо є I-797, receipt number, pending case або пов’язана форма, вкажіть це окремо.',
+      deadline_notice: 'Якщо є строк, RFE, court date або notice, вкажіть дату та тип документа.'
+    }
+  },
+  es: {
+    steps: {
+      related_forms: 'Formularios relacionados y receipt numbers',
+      deadline_notice: 'Deadline, RFE o notice'
+    },
+    stepHelp: {
+      related_forms: 'Si tiene I-797, receipt number, caso pendiente o formulario relacionado, inclúyalo aquí.',
+      deadline_notice: 'Si existe un plazo, RFE, court date o notice, indique la fecha y el tipo de documento.'
+    }
+  }
+};
+
+Object.entries(PURPOSE_SPLIT_LOCALIZATION).forEach(([lang, extra]) => {
+  if (!LOCALIZATION[lang]) return;
+  ['steps', 'stepHelp'].forEach((bucket) => {
+    LOCALIZATION[lang][bucket] = {
+      ...(LOCALIZATION[lang][bucket] || {}),
+      ...(extra[bucket] || {})
+    };
+  });
+});
+
 const TEXT = {
   purpose: {
     title: 'Form purpose',
     help: 'Confirm why this form is being prepared and whether there are related filings.'
+  },
+  relatedForms: {
+    title: 'Related forms or receipt numbers',
+    help: 'Add any known USCIS receipt numbers, related forms, or pending cases.'
+  },
+  deadlineNotice: {
+    title: 'Deadline, RFE, or notice',
+    help: 'Tell us about any deadline, USCIS notice, RFE, or court date.'
   },
   applicant: {
     title: 'Applicant information',
@@ -752,8 +1042,8 @@ function titleFromEntry(code, entry, official) {
   return official?.title || entry?.names?.en || entry?.name || entry?.title || code;
 }
 
-function commonPurposeFields(code, title) {
-  return [
+function purposeSteps(code, title) {
+  const formRequested = [
     field('form_code_confirmed', 'Form requested', 'text', {
       required: true,
       value: code,
@@ -763,13 +1053,23 @@ function commonPurposeFields(code, title) {
     field('preparation_goal', 'What do you want prepared with this form?', 'textarea', {
       required: true,
       placeholder: 'Describe the request in your own words.'
-    }),
-    field('related_forms_known', 'Do you already know any related forms or receipt numbers?', 'textarea', {
-      placeholder: 'Example: I-130 receipt, I-485 pending, I-797 notice, A-number.'
-    }),
-    field('deadline_or_notice', 'Is there a deadline, RFE, court date, or USCIS notice?', 'textarea', {
-      placeholder: 'Include the date and notice type if you have one.'
     })
+  ];
+
+  return [
+    step('purpose', TEXT.purpose.title, TEXT.purpose.help, formRequested),
+    step('related_forms', TEXT.relatedForms.title, TEXT.relatedForms.help, [
+      field('related_forms_known', 'Do you already know any related forms or receipt numbers?', 'textarea', {
+        placeholder: 'Example: I-130 receipt, I-485 pending, I-797 notice, A-number.',
+        rows: 4
+      })
+    ]),
+    step('deadline_notice', TEXT.deadlineNotice.title, TEXT.deadlineNotice.help, [
+      field('deadline_or_notice', 'Is there a deadline, RFE, court date, or USCIS notice?', 'textarea', {
+        placeholder: 'Include the date and notice type if you have one.',
+        rows: 4
+      })
+    ])
   ];
 }
 
@@ -826,32 +1126,7 @@ function applicantFields() {
 
 function addressFields() {
   return [
-    field('mailing_address_line1', 'Mailing address line 1', 'addressAutocomplete', {
-      required: true,
-      autocomplete: 'address-line1'
-    }),
-    field('mailing_address_line2', 'Apartment, suite, or unit', 'text', {
-      autocomplete: 'address-line2'
-    }),
-    field('mailing_city', 'City', 'text', {
-      required: true,
-      autocomplete: 'address-level2'
-    }),
-    field('mailing_state', 'State', 'select', {
-      required: true,
-      autocomplete: 'address-level1',
-      options: US_STATE_OPTIONS
-    }),
-    field('mailing_zip', 'ZIP code', 'text', {
-      required: true,
-      autocomplete: 'postal-code',
-      inputmode: 'numeric'
-    }),
-    field('mailing_country', 'Country', 'select', {
-      autocomplete: 'country-name',
-      value: 'United States',
-      options: COUNTRY_OPTIONS
-    }),
+    mailingAddressBlockField({ required: true }),
     field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', {
       options: ['Yes', 'No']
     }),
@@ -864,6 +1139,203 @@ function addressFields() {
       autocomplete: 'email',
       inputmode: 'email'
     })
+  ];
+}
+
+function mailingAddressBlockField(options = {}) {
+  return field('mailing_address', 'Mailing address', 'addressBlock', {
+    required: Boolean(options.required),
+    requiredParts: ['line1', 'city', 'state', 'zip'],
+    parts: {
+      line1: 'mailing_address_line1',
+      line2: 'mailing_address_line2',
+      city: 'mailing_city',
+      state: 'mailing_state',
+      zip: 'mailing_zip',
+      country: 'mailing_country'
+    },
+    countryDefault: 'United States',
+    stateOptions: US_STATE_OPTIONS,
+    countryOptions: COUNTRY_OPTIONS
+  });
+}
+
+function applicantSteps() {
+  return [
+    step('applicant', 'Applicant legal name', 'Enter the applicant name exactly as it appears on official documents.', [
+      field('applicant_full_name', 'Applicant full legal name', 'text', {
+        required: true,
+        autocomplete: 'name'
+      })
+    ]),
+    step('applicant_name_parts', 'Applicant first and last name', 'Split the legal name into the exact fields used on USCIS forms.', [
+      field('applicant_given_name', 'Given name', 'text', {
+        required: true,
+        autocomplete: 'given-name'
+      }),
+      field('applicant_family_name', 'Family name', 'text', {
+        required: true,
+        autocomplete: 'family-name'
+      })
+    ]),
+    step('applicant_other_names', 'Other names used', 'If the applicant never used another legal name, leave this blank or enter N/A when the form requires it.', [
+      field('other_names_used', 'Other names used', 'textarea', {
+        placeholder: 'Maiden name, prior legal names, aliases.'
+      })
+    ]),
+    step('applicant_birth_date', 'Birth date', 'Enter the applicant date of birth exactly as shown on documents.', [
+      field('date_of_birth', 'Date of birth', 'date', {
+        required: true,
+        autocomplete: 'bday'
+      })
+    ]),
+    step('applicant_birth_place', 'Place of birth', 'City, state or province, and country of birth.', [
+      field('city_of_birth', 'City/town/village of birth', 'text', {
+        autocomplete: 'off'
+      }),
+      field('state_or_province_of_birth', 'State/province of birth', 'text', {
+        autocomplete: 'off'
+      })
+    ]),
+    step('applicant_birth_country', 'Country of birth', 'Select the country of birth from the official list.', [
+      field('country_of_birth', 'Country of birth', 'select', {
+        autocomplete: 'country-name',
+        options: COUNTRY_OPTIONS
+      })
+    ]),
+    step('applicant_citizenship', 'Citizenship or nationality', 'Use the country where the applicant is currently a citizen or national.', [
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', {
+        autocomplete: 'country-name',
+        options: COUNTRY_OPTIONS
+      })
+    ]),
+    step('applicant_sex_marital', 'Sex and marital status', 'These values map to the biographic section.', [
+      field('sex', 'Sex', 'radio', {
+        options: ['Male', 'Female']
+      }),
+      field('marital_status', 'Marital status', 'select', {
+        options: ['Single', 'Married', 'Divorced', 'Widowed']
+      })
+    ]),
+    step('applicant_uscis_numbers', 'USCIS numbers', 'Use numbers exactly as shown on USCIS records, if available.', [
+      field('alien_number', 'A-number, if any', 'text', {
+        autocomplete: 'off',
+        placeholder: 'A###-###-###'
+      }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', {
+        autocomplete: 'off'
+      })
+    ])
+  ];
+}
+
+function immigrationHistorySteps() {
+  return [
+    step('immigration_history', TEXT.immigration.title, TEXT.immigration.help, [
+      field('current_immigration_status', 'Current immigration status or category', 'text', {
+        placeholder: 'Example: pending asylum, TPS, F-1, parolee, no status, lawful permanent resident.'
+      }),
+      field('last_arrival_date', 'Most recent U.S. arrival date', 'date')
+    ]),
+    step('immigration_entry_record', 'Entry place and I-94', 'Use the most recent U.S. arrival and I-94 record.', [
+      field('place_entry', 'Place of your last arrival into the United States', 'text', {
+        placeholder: 'Example: Los Angeles, CA; San Ysidro, CA; JFK, New York.'
+      }),
+      field('i94_number', 'I-94 number, if any', 'text', {
+        autocomplete: 'off'
+      })
+    ]),
+    step('immigration_passport', 'Passport or travel document', 'Passport fields appear on many USCIS forms.', [
+      field('passport_number', 'Passport number, if relevant', 'text', {
+        autocomplete: 'off'
+      }),
+      field('passport_country_of_issuance', 'Country that issued passport or travel document', 'select', {
+        autocomplete: 'country-name',
+        options: COUNTRY_OPTIONS
+      })
+    ]),
+    step('immigration_passport_expiration', 'Passport expiration', 'Enter the expiration date only if a passport or travel document is used.', [
+      field('passport_expiration', 'Passport expiration date', 'date')
+    ]),
+    step('immigration_prior_filings', 'Prior USCIS filings', 'List previous or pending USCIS filings if known.', [
+      field('prior_uscis_filings', 'Prior or pending USCIS filings', 'textarea', {
+        placeholder: 'List form codes, receipt numbers, filing dates, approvals, denials, RFEs.'
+      })
+    ])
+  ];
+}
+
+function evidenceSteps() {
+  return [
+    step('documents_identity', 'Identity documents', 'Select the identity documents already available.', [
+      field('identity_documents_available', 'Identity documents available', 'checkboxes', {
+        options: ['Passport', 'Birth certificate', 'State ID / driver license', 'Green card', 'EAD card', 'I-94', 'Other']
+      })
+    ]),
+    step('documents_supporting', 'Supporting documents', 'List supporting documents without uploading files yet.', [
+      field('supporting_documents_available', 'Supporting documents available', 'textarea', {
+        placeholder: 'Receipt notices, court records, marriage certificate, tax returns, pay stubs, translations, photos, letters, etc.'
+      })
+    ]),
+    step('documents_translation', 'Document translations', 'Confirm whether any documents need translation.', [
+      field('translation_needed', 'Do any documents need translation?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      })
+    ]),
+    step('documents_interpreter_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter or preparer information is collected.', [
+      field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      })
+    ]),
+    step('documents_interpreter_preparer_need', 'Interpreter or preparer note', 'Use this only when you are not sure which signature section applies.', [
+      field('interpreter_or_preparer_needed', 'Will an interpreter or preparer section be needed?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      })
+    ]),
+    step('documents_interpreter', 'Interpreter information', 'Fill only if an interpreter will be used.', [
+      field('interpreter_family_name', 'Interpreter family name, if any', 'text', { autocomplete: 'family-name' }),
+      field('interpreter_given_name', 'Interpreter given name, if any', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('documents_interpreter_business', 'Interpreter organization', 'Fill only if the interpreter has a business or organization name.', [
+      field('interpreter_business_name', 'Interpreter business or organization, if any', 'text', { autocomplete: 'organization' })
+    ]),
+    step('documents_preparer', 'Preparer information', 'Fill only if someone will prepare this application.', [
+      field('preparer_family_name', 'Preparer family name, if any', 'text', { autocomplete: 'family-name' }),
+      field('preparer_given_name', 'Preparer given name, if any', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('documents_preparer_business', 'Preparer organization', 'Fill only if the preparer has a business or organization name.', [
+      field('preparer_business_name', 'Preparer business or organization, if any', 'text', { autocomplete: 'organization' })
+    ]),
+    step('documents_notes', 'Additional preparer notes', 'Anything else the preparer should know before checkout.', [
+      field('extra_notes_for_preparer', 'Anything else the preparer should know?', 'textarea')
+    ])
+  ];
+}
+
+function addressContactSteps() {
+  return [
+    step('address_contact', 'Mailing address', 'Enter the full mailing address as a structured address block.', [
+      mailingAddressBlockField({ required: true })
+    ]),
+    step('physical_address_match', 'Physical address', 'Confirm whether the physical address is the same as the mailing address.', [
+      field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', {
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('contact_info', 'Phone and email', 'Phone is split for clean USCIS formatting; email is validated before saving.', [
+      field('daytime_phone', 'Daytime phone', 'phone', {
+        autocomplete: 'tel',
+        inputmode: 'tel',
+        countryCodeDefault: '+1'
+      }),
+      field('email_address', 'Email address', 'email', {
+        autocomplete: 'email',
+        inputmode: 'email'
+      })
+    ])
   ];
 }
 
@@ -943,46 +1415,64 @@ function evidenceFields() {
 
 function i485CoreSteps() {
   return [
-    step('i485_entry_details', 'I-485 entry and status details', 'These fields map to the official I-485 arrival and status section.', [
+    step('i485_last_entry_type', 'I-485 last entry type', 'Answer only for the most recent entry into the United States.', [
       field('admission_basis', 'Admission basis at last entry', 'select', {
         options: ['Immigrant', 'Nonimmigrant', 'Paroled', 'Other']
       }),
       field('status_at_last_entry', 'Status at last entry, if admitted', 'text', {
         placeholder: 'Example: B-2, F-1, parolee, asylee'
-      }),
+      })
+    ]),
+    step('i485_parole_details', 'I-485 parole details', 'If the applicant was paroled, capture the parole text exactly as shown.', [
       field('paroled_as', 'If paroled, class of admission or parole type', 'text', {
         placeholder: 'Example: PAROLED, DT, UHP'
-      }),
+      })
+    ]),
+    step('i485_i94_status', 'I-485 I-94 and arrival status', 'Use the I-94 or entry document for these two fields.', [
       field('date_of_last_entry', 'Date of last entry shown on I-94', 'date'),
       field('manner_of_last_entry', 'Status on Form I-94 or entry document', 'text', {
         placeholder: 'Example: ASYLEE, PAROLEE, D/S'
-      }),
+      })
+    ]),
+    step('i485_status_expiration', 'I-485 authorized stay', 'If the document shows D/S, enter D/S.', [
       field('authorized_stay_expires', 'Authorized stay expiration date or D/S', 'text', {
         placeholder: 'Example: D/S or 05/11/2026'
       }),
-      field('status_expiration_date', 'Nonimmigrant status expiration date, if any', 'text'),
+      field('status_expiration_date', 'Nonimmigrant status expiration date, if any', 'text')
+    ]),
+    step('i485_visa_number', 'I-485 visa number', 'Leave blank if there was no visa number or it does not apply.', [
       field('visa_number', 'Nonimmigrant visa number, if any', 'text', { autocomplete: 'off' }),
+    ]),
+    step('i485_removal_history', 'I-485 removal history', 'These official questions must be answered carefully.', [
       field('in_removal_proceedings', 'Are you in removal, exclusion, rescission, or deportation proceedings?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
       }),
       field('prior_removal_order', 'Have you ever had a prior removal/deportation order?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
-      }),
+      })
+    ]),
+    step('i485_removal_exclusion_history', 'I-485 prior removal or exclusion', 'Answer only from your own history or official documents.', [
       field('ever_removed_excluded', 'Have you ever been removed, excluded, or deported?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
       })
     ]),
-    step('i485_prior_addresses_ssn', 'I-485 prior addresses and Social Security', 'I-485 asks for prior residence history and Social Security details.', [
+    step('i485_residence_period', 'I-485 current residence period', 'Confirm whether the current physical address covers the required period.', [
       field('same_address_five_years', 'Have you lived at your current physical address for the required residence period?', 'radio', {
         required: true,
         options: ['Yes', 'No']
-      }),
+      })
+    ]),
+    step('i485_prior_us_address', 'I-485 prior U.S. physical address', 'Add the prior U.S. address only when the current address does not cover the period.', [
       addressHistoryField('prior_us_addresses', 'Prior U.S. physical address, if current address does not cover the period', {
         entries: 1
-      }),
+      })
+    ]),
+    step('i485_foreign_address', 'I-485 last foreign address', 'Enter the most recent address outside the United States as a complete address.', [
       addressHistoryField('last_foreign_address', 'Most recent address outside the United States', {
         entries: 1
-      }),
+      })
+    ]),
+    step('i485_social_security', 'I-485 Social Security', 'SSN must be exactly 9 digits if one was issued.', [
       field('has_ssn', 'Has the Social Security Administration ever issued you an SSN?', 'radio', {
         required: true,
         options: ['Yes', 'No']
@@ -991,70 +1481,126 @@ function i485CoreSteps() {
         inputmode: 'numeric',
         autocomplete: 'off',
         placeholder: '9 digits'
-      }),
+      })
+    ]),
+    step('i485_social_security_card', 'I-485 Social Security card request', 'Answer whether SSA should issue a card using this application.', [
       field('ssn_ssa_consent', 'Do you want SSA to issue a replacement/new Social Security card using this application?', 'radio', {
         options: ['Yes', 'No']
       })
     ]),
-    step('i485_processing_employment', 'I-485 processing and work history', 'Current and most recent work history helps complete the I-485 employment sections.', [
+    step('i485_petition_filing', 'I-485 underlying petition', 'Capture whether a petition exists and its receipt number.', [
       field('petition_previously_filed', 'Was an underlying immigrant petition previously filed?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
       }),
       field('petition_receipt_number', 'Underlying petition receipt number', 'text', { autocomplete: 'off' }),
-      field('petition_date', 'Underlying petition filing or approval date', 'date'),
+    ]),
+    step('i485_petition_person', 'I-485 petitioner identity', 'Use this only when the petitioner is a person.', [
       field('petitioner_family_name', 'Petitioner family name, if person', 'text', { autocomplete: 'family-name' }),
-      field('petitioner_given_name', 'Petitioner given name, if person', 'text', { autocomplete: 'given-name' }),
+      field('petitioner_given_name', 'Petitioner given name, if person', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i485_petition_date', 'I-485 petition date', 'Use this only when there is an underlying petition date.', [
+      field('petition_date', 'Underlying petition filing or approval date', 'date'),
+    ]),
+    step('i485_petition_category', 'I-485 filing category', 'Confirm the petition ID and the exact adjustment basis.', [
       field('petitioner_alien_number', 'Petitioner A-number, if any', 'text', { autocomplete: 'off' }),
       field('concurrent_filing', 'Is the underlying petition being filed together with I-485?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
-      }),
+      })
+    ]),
+    step('i485_eligibility_basis', 'I-485 exact eligibility basis', 'Use the exact category or basis that should appear in the filing.', [
       field('eligibility_basis', 'Exact adjustment category or basis', 'text', {
         placeholder: 'Example: asylee, refugee, IR-1 spouse of U.S. citizen, EB-3'
       }),
+    ]),
+    step('i485_work_status', 'I-485 U.S. work status', 'These two answers drive the employment-history section.', [
       field('currently_working', 'Are you currently employed?', 'radio', { options: ['Yes', 'No'] }),
       field('worked_without_authorization', 'Have you ever worked in the United States without authorization?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
       }),
+    ]),
+    step('i485_current_work_history', 'I-485 current work or school', 'Enter current U.S. employment or school as one structured record.', [
       employmentHistoryField('current_employment_history', 'Current U.S. employment or school', { entries: 1 }),
+    ]),
+    step('i485_foreign_work_history', 'I-485 foreign work history', 'Enter the most recent employment outside the United States.', [
       employmentHistoryField('foreign_employment_history', 'Most recent employment outside the United States', { entries: 1 })
     ]),
-    step('i485_family_history', 'I-485 family history', 'Parents, spouse, prior spouse, and children are structured so the PDF can be filled accurately.', [
+    step('i485_parent1_name', 'I-485 parent 1 name', 'Enter parent 1 name exactly as known.', [
       field('father_family_name', 'Parent 1 family name', 'text', { autocomplete: 'family-name' }),
-      field('father_given_name', 'Parent 1 given name', 'text', { autocomplete: 'given-name' }),
+      field('father_given_name', 'Parent 1 given name', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i485_parent1_middle_name', 'I-485 parent 1 middle name', 'Enter only if there is a middle name.', [
       field('father_middle_name', 'Parent 1 middle name', 'text'),
+    ]),
+    step('i485_parent1_birth', 'I-485 parent 1 birth', 'Enter parent 1 birth date and place.', [
       field('father_dob', 'Parent 1 date of birth', 'date'),
       field('father_city_of_birth', 'Parent 1 country/place of birth', 'text'),
+    ]),
+    step('i485_parent2_current_name', 'I-485 parent 2 current name', 'Enter parent 2 current legal name.', [
       field('mother_family_name', 'Parent 2 current family name', 'text', { autocomplete: 'family-name' }),
-      field('mother_given_name', 'Parent 2 current given name', 'text', { autocomplete: 'given-name' }),
+      field('mother_given_name', 'Parent 2 current given name', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i485_parent2_middle_name', 'I-485 parent 2 middle name', 'Enter only if there is a middle name.', [
       field('mother_middle_name', 'Parent 2 middle name', 'text'),
+    ]),
+    step('i485_parent2_birth_name', 'I-485 parent 2 birth name', 'Enter parent 2 name at birth if known.', [
       field('mother_birth_family_name', 'Parent 2 family name at birth', 'text', { autocomplete: 'family-name' }),
-      field('mother_birth_given_name', 'Parent 2 given name at birth', 'text', { autocomplete: 'given-name' }),
+      field('mother_birth_given_name', 'Parent 2 given name at birth', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i485_parent2_birth_middle_name', 'I-485 parent 2 birth middle name', 'Enter only if the birth middle name is known.', [
       field('mother_birth_middle_name', 'Parent 2 middle name at birth', 'text'),
+    ]),
+    step('i485_parent2_birth', 'I-485 parent 2 birth', 'Enter parent 2 birth date and place.', [
       field('mother_dob', 'Parent 2 date of birth', 'date'),
       field('mother_city_of_birth', 'Parent 2 country/place of birth', 'text'),
+    ]),
+    step('i485_marriage_count', 'I-485 marriage count', 'This controls current-spouse and prior-spouse sections.', [
       field('times_married', 'How many times have you been married?', 'number', { inputmode: 'numeric' }),
+    ]),
+    step('i485_current_spouse_name', 'I-485 current spouse name', 'Fill only if there is a current spouse.', [
       field('spouse_family_name', 'Current spouse family name, if any', 'text', { autocomplete: 'family-name' }),
-      field('spouse_given_name', 'Current spouse given name, if any', 'text', { autocomplete: 'given-name' }),
+      field('spouse_given_name', 'Current spouse given name, if any', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i485_current_spouse_number', 'I-485 current spouse A-number', 'Fill only if the current spouse has an A-number.', [
       field('spouse_alien_number', 'Current spouse A-number, if any', 'text', { autocomplete: 'off' }),
+    ]),
+    step('i485_current_spouse_birth', 'I-485 current spouse birth country', 'Fill only if there is a current spouse.', [
       field('spouse_country_of_birth', 'Current spouse country of birth', 'select', { options: COUNTRY_OPTIONS }),
+    ]),
+    step('i485_current_marriage', 'I-485 current marriage', 'Fill only if there is a current spouse.', [
       field('current_marriage_date', 'Current marriage date', 'date'),
-      field('current_marriage_city', 'Current marriage city or town', 'text'),
+      field('current_marriage_city', 'Current marriage city or town', 'text')
+    ]),
+    step('i485_current_marriage_place', 'I-485 current marriage place', 'State/province and country where the current marriage occurred.', [
       field('current_marriage_state', 'Current marriage state or province', 'text'),
       field('current_marriage_country', 'Current marriage country', 'select', { options: COUNTRY_OPTIONS })
     ]),
-    step('i485_prior_spouse_children_bio', 'Prior spouse, children, and biographic details', 'This covers the remaining I-485 family and biographic fields before the admissibility questions.', [
+    step('i485_prior_spouse_name', 'I-485 prior spouse name', 'Fill only if there was a prior spouse.', [
       field('prior_spouse_family_name', 'Prior spouse family name', 'text', { autocomplete: 'family-name' }),
       field('prior_spouse_given_name', 'Prior spouse given name', 'text', { autocomplete: 'given-name' }),
+    ]),
+    step('i485_prior_spouse_birth', 'I-485 prior spouse birth and citizenship', 'Fill only if there was a prior spouse.', [
       field('prior_spouse_dob', 'Prior spouse date of birth', 'date'),
-      field('prior_spouse_country_of_birth', 'Prior spouse country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_country_of_birth', 'Prior spouse country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i485_prior_spouse_citizenship', 'I-485 prior spouse citizenship', 'Fill only if there was a prior spouse.', [
       field('prior_spouse_country_of_citizenship', 'Prior spouse country of citizenship', 'select', { options: COUNTRY_OPTIONS }),
+    ]),
+    step('i485_prior_spouse_marriage', 'I-485 prior spouse marriage', 'Where and when the prior marriage started.', [
       field('prior_spouse_marriage_date', 'Date of marriage to prior spouse', 'date'),
-      field('prior_spouse_marriage_city', 'Marriage city or town with prior spouse', 'text'),
+      field('prior_spouse_marriage_city', 'Marriage city or town with prior spouse', 'text')
+    ]),
+    step('i485_prior_spouse_marriage_place', 'I-485 prior spouse marriage place', 'State/province and country where the prior marriage occurred.', [
       field('prior_spouse_marriage_state', 'Marriage state/province with prior spouse', 'text'),
       field('prior_spouse_marriage_country', 'Marriage country with prior spouse', 'select', { options: COUNTRY_OPTIONS }),
+    ]),
+    step('i485_prior_spouse_end_place', 'I-485 prior marriage end place', 'Where the prior marriage ended.', [
       field('prior_spouse_marriage_end_city', 'City/town where prior marriage ended', 'text'),
-      field('prior_spouse_marriage_end_state', 'State/province where prior marriage ended', 'text'),
+      field('prior_spouse_marriage_end_state', 'State/province where prior marriage ended', 'text')
+    ]),
+    step('i485_prior_spouse_end_country', 'I-485 prior marriage end country', 'Country where the prior marriage ended.', [
       field('prior_spouse_marriage_end_country', 'Country where prior marriage ended', 'select', { options: COUNTRY_OPTIONS }),
+    ]),
+    step('i485_prior_spouse_end_result', 'I-485 prior marriage end date and type', 'When and how the prior marriage ended.', [
       field('prior_spouse_marriage_end_date', 'Date prior marriage ended', 'date'),
       field('prior_spouse_marriage_end_type', 'How prior marriage ended', 'select', {
         options: [
@@ -1064,19 +1610,37 @@ function i485CoreSteps() {
           'Other'
         ]
       }),
+    ]),
+    step('i485_children_count', 'I-485 children count', 'Start with the total number of children.', [
       field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
+    ]),
+    step('i485_child1_identity', 'I-485 child 1 identity', 'Enter child 1 name and A-number if any.', [
       field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name' }),
-      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name' }),
+      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i485_child1_number', 'I-485 child 1 A-number', 'Enter only if the child has an A-number.', [
       field('child1_alien_number', 'Child 1 A-number, if any', 'text', { autocomplete: 'off' }),
+    ]),
+    step('i485_child1_details', 'I-485 child 1 details', 'Birth date, country, relationship, and whether child 1 is applying.', [
       field('child1_dob', 'Child 1 date of birth', 'date'),
-      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i485_child1_relationship', 'I-485 child 1 relationship', 'Relationship and whether this child is applying with the applicant.', [
       field('child1_relationship', 'Child 1 relationship', 'text', { placeholder: 'Example: biological child, stepchild' }),
       field('child1_applying_with_you', 'Is child 1 applying with you?', 'radio', { options: ['Yes', 'No'] }),
+    ]),
+    step('i485_biographic_identity', 'I-485 ethnicity and race', 'These values map to the biographic information section.', [
       field('ethnicity', 'Ethnicity', 'select', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
       field('race', 'Race', 'checkboxes', { options: ['White', 'Asian', 'Black or African American', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander'] }),
+    ]),
+    step('i485_biographic_body', 'I-485 height and weight', 'Height and weight in U.S. format.', [
       field('height_feet', 'Height feet', 'number', { inputmode: 'numeric' }),
-      field('height_inches', 'Height inches', 'number', { inputmode: 'numeric' }),
+      field('height_inches', 'Height inches', 'number', { inputmode: 'numeric' })
+    ]),
+    step('i485_biographic_weight', 'I-485 weight', 'Weight in pounds.', [
       field('weight_lbs', 'Weight in pounds', 'number', { inputmode: 'numeric' }),
+    ]),
+    step('i485_biographic_colors', 'I-485 eye and hair color', 'Eye color and hair color.', [
       field('eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
       field('hair_color', 'Hair color', 'select', { options: ['Bald', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown'] })
     ])
@@ -1147,15 +1711,21 @@ const FORM_OVERRIDES = {
     ])
   ],
   'I-485': [
-    step('adjustment_basis', 'Adjustment of status basis', 'This helps identify possible related forms and evidence.', [
+    step('adjustment_basis', 'Adjustment of status basis', 'Start with the exact basis shown by the official I-485 category.', [
       field('adjustment_basis', 'Basis for adjustment', 'select', {
         required: true,
         options: ['Family petition', 'Employment petition', 'Diversity visa', 'Asylee or refugee', 'VAWA / special immigrant', 'Other or not sure']
-      }),
+      })
+    ]),
+    step('i485_related_petition', 'Related petition or sponsor', 'If there is an underlying petition, receipt, employer, or sponsor, capture it here.', [
       field('petitioner_or_sponsor', 'Petitioner, employer, or sponsor name', 'text', { autocomplete: 'organization' }),
-      field('underlying_receipt_number', 'Underlying petition receipt number, if any', 'text', { autocomplete: 'off' }),
+      field('underlying_receipt_number', 'Underlying petition receipt number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i485_location_status', 'Physical presence and last admission', 'These two answers drive conditional questions for entry and eligibility.', [
       field('inside_us_now', 'Are you physically inside the United States now?', 'radio', { required: true, options: ['Yes', 'No'] }),
-      field('inspection_or_parole', 'Last entry was inspected, admitted, or paroled?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('inspection_or_parole', 'Last entry was inspected, admitted, or paroled?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i485_medical_exam', 'Medical exam I-693', 'Confirm whether the medical exam is ready or will be handled later.', [
       field('medical_exam_status', 'Medical exam I-693 status', 'select', { options: ['Already completed', 'Need to schedule', 'Will submit later if allowed', 'Not sure'] })
     ]),
     ...i485CoreSteps(),
@@ -1374,12 +1944,12 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
   };
 
   const steps = [
-    step('purpose', TEXT.purpose.title, TEXT.purpose.help, commonPurposeFields(code, title)),
+    ...purposeSteps(code, title),
     ...groupSpecificSteps(code, entry),
-    step('applicant', TEXT.applicant.title, TEXT.applicant.help, applicantFields()),
-    step('address_contact', TEXT.address.title, TEXT.address.help, addressFields()),
-    step('immigration_history', TEXT.immigration.title, TEXT.immigration.help, immigrationHistoryFields()),
-    step('documents_review', TEXT.evidence.title, TEXT.evidence.help, evidenceFields())
+    ...applicantSteps(),
+    ...addressContactSteps(),
+    ...immigrationHistorySteps(),
+    ...evidenceSteps()
   ];
 
   return {
@@ -1413,11 +1983,20 @@ function localizeFlow(flow, langValue = 'en') {
     return label ? { value, label } : option;
   };
 
+  const translatedByStepId = (bucket, id) => {
+    const values = copy[bucket] || {};
+    if (values[id]) return values[id];
+    const prefix = Object.keys(values)
+      .sort((a, b) => b.length - a.length)
+      .find((key) => id.startsWith(`${key}_`));
+    return prefix ? values[prefix] : undefined;
+  };
+
   const translated = JSON.parse(JSON.stringify(flow));
   translated.steps = translated.steps.map((item) => ({
     ...item,
-    title: copy.steps?.[item.id] || item.title,
-    help: copy.stepHelp?.[item.id] || item.help,
+    title: translatedByStepId('steps', item.id) || item.title,
+    help: translatedByStepId('stepHelp', item.id) || item.help,
     fields: (item.fields || []).map((fieldItem) => ({
       ...fieldItem,
       label: copy.fields?.[fieldItem.id] || fieldItem.label,
