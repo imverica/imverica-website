@@ -29,7 +29,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-padding-top:var(--nav-height);}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
 
 /* NAV */
 nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-height);position:sticky;top:0;z-index:100;}
@@ -45,6 +45,13 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .nav-links a[data-cat="portal"]:hover{background:var(--col-portal);color:#fff;}
 .nav-cta{background:var(--navy);color:#fff;border:none;padding:10px 20px;font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;text-decoration:none;white-space:nowrap;margin-left:12px;}
 .nav-cta:hover{background:var(--navy-light);}
+.site-lang{display:flex;align-items:center;gap:6px;margin-left:12px;padding-left:12px;border-left:1px solid var(--border);}
+.site-lang button{display:inline-flex;align-items:center;gap:5px;border:1px solid transparent;background:transparent;color:#4c5664;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;line-height:1;padding:7px 8px;border-radius:4px;cursor:pointer;transition:background 0.18s,border-color 0.18s,color 0.18s;}
+.site-lang button:hover,.site-lang button.active{background:#f3f6fa;border-color:#d5dce6;color:var(--navy);}
+.site-lang .flag{font-size:14px;line-height:1;}
+.mobile-lang{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:1rem 2rem 0;}
+.mobile-lang button{border:1px solid var(--border);background:#fff;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:10px 12px;border-radius:4px;cursor:pointer;text-align:left;}
+.mobile-lang button.active{background:#eef4fb;border-color:var(--navy);}
 
 /* BURGER */
 .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;}
@@ -70,18 +77,29 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
   :root{--nav-height:72px;}
   nav{padding:0 1rem;}
   .logo-img{height:46px;}
-  .nav-links,.nav-cta{display:none;}
+  .nav-links,.nav-cta,.site-lang{display:none;}
   .burger{display:flex;}
 }
 
 /* HERO */
-.hero-wrap{background:#fff;border-bottom:1px solid var(--border);}
-.hero{padding:56px 2.5rem 50px;max-width:980px;margin:0 auto;text-align:center;}
-@media(max-width:768px){.hero{padding:76px 1.5rem 42px;}}
+.hero-wrap{position:relative;overflow:hidden;background:#fff;border-bottom:1px solid var(--border);}
+.hero-wrap::before{content:"";position:absolute;inset:0;background-image:url('assets/hero-justice-bg.svg');background-repeat:no-repeat;background-size:cover;background-position:center top;opacity:0.88;pointer-events:none;}
+.hero-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0.52) 0%,rgba(255,255,255,0.86) 38%,rgba(255,255,255,0.82) 68%,rgba(255,255,255,0.58) 100%);pointer-events:none;}
+.hero{position:relative;z-index:1;padding:70px 2.5rem 58px;max-width:1040px;margin:0 auto;text-align:center;}
+@media(max-width:768px){
+  .hero{padding:62px 1rem 36px;width:100%;max-width:100%;overflow:hidden;}
+  .hero-wrap::before{background-size:auto 100%;background-position:48% top;opacity:0.72;}
+  .hero-wrap::after{background:linear-gradient(180deg,rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.92) 46%,rgba(255,255,255,0.84) 100%);}
+}
 .hero-main{max-width:900px;margin:0 auto;}
 .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:0.9rem;opacity:0.62;}
 .hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:500;line-height:1.13;color:var(--navy-dark);margin:0 auto 1rem;max-width:760px;}
-@media(max-width:768px){.hero h1{font-size:30px;}}
+@media(max-width:768px){
+  .hero-main,.hero h1,.hero-sub,.ai-finder,.ai-examples,.ai-finder-meta,.ai-hero-contact{max-width:100%;width:100%;}
+  .hero-eyebrow{font-size:10px;letter-spacing:1.4px;line-height:1.5;max-width:300px;margin-left:auto;margin-right:auto;}
+  .hero h1{font-size:26px;line-height:1.15;max-width:310px;overflow-wrap:normal;}
+  .hero-sub{font-size:14px;line-height:1.55;max-width:330px;}
+}
 .hero-sub{font-size:15px;color:var(--muted);line-height:1.65;margin:0 auto 1.35rem;font-weight:300;max-width:760px;}
 .hero-phone{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);text-decoration:none;font-weight:500;}
 .hero-phone:hover{opacity:0.8;}
@@ -110,6 +128,17 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 .ai-finder-meta span{white-space:nowrap;}
 @media(max-width:760px){.ai-examples{grid-template-columns:repeat(2,1fr);}.ai-finder textarea{min-height:140px;}}
 @media(max-width:560px){.ai-examples{grid-template-columns:1fr;}.ai-finder textarea{font-size:15px;min-height:126px;padding-right:3.8rem;}}
+@media(max-width:560px){
+  .hero{max-width:390px;margin-left:0;margin-right:0;}
+}
+@media(max-width:430px){
+  .ai-finder{margin-top:1.1rem;}
+  .ai-finder textarea{font-size:14px;line-height:1.5;min-height:118px;padding:1rem 3.7rem 3.1rem 1rem;}
+  .ai-example{font-size:12px;min-height:42px;padding:11px 10px;}
+  .ai-finder-meta{gap:0.45rem;font-size:11px;line-height:1.4;}
+  .ai-finder-meta span{white-space:normal;}
+  .ai-hero-contact{gap:0.85rem;}
+}
 
 .hero-card{background:var(--bg);border:1px solid var(--border);padding:1.8rem;border-radius:4px;}
 .hero-card-label{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:1.2rem;}
@@ -520,6 +549,12 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <li class="nav-sep"></li>
     <li><a href="portal.html" data-cat="portal">Client Portal</a></li>
   </ul>
+  <div class="site-lang" aria-label="Website language">
+    <button type="button" class="active" data-site-lang="en"><span class="flag">🇺🇸</span><span>EN</span></button>
+    <button type="button" data-site-lang="ru"><span class="flag">🇷🇺</span><span>RU</span></button>
+    <button type="button" data-site-lang="uk"><span class="flag">🇺🇦</span><span>UK</span></button>
+    <button type="button" data-site-lang="es"><span class="flag">🇪🇸</span><span>ES</span></button>
+  </div>
   <a class="nav-cta" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
   <button class="burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -535,6 +570,12 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
   <a href="#about" data-cat="about">About Us</a>
   <div class="mobile-menu-sep"></div>
   <a href="portal.html" data-cat="portal">Client Portal</a>
+  <div class="mobile-lang" aria-label="Website language">
+    <button type="button" class="active" data-site-lang="en">🇺🇸 English</button>
+    <button type="button" data-site-lang="ru">🇷🇺 Русский</button>
+    <button type="button" data-site-lang="uk">🇺🇦 Українська</button>
+    <button type="button" data-site-lang="es">🇪🇸 Español</button>
+  </div>
   <a href="#contact" class="mobile-cta">Book Appointment</a>
 </div>
 
@@ -570,7 +611,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
       <div class="ai-hero-contact">
         <a class="hero-phone" href="tel:9163993992">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          (916) 399-3992
+          <span class="hero-phone-text">(916) 399-3992</span>
         </a>
         <a class="btn-ghost" href="#services">See services</a>
       </div>
@@ -1415,6 +1456,118 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     mobileMenu.classList.remove('open');
   });
 });
+
+// TOP LANGUAGE SWITCHER
+(function(){
+  const siteCopy = {
+    en: {
+      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'About Us', 'Client Portal'],
+      mobile: ['USCIS | EOIR Immigration', 'Family Law', 'Small Claims & Civil', 'Business', 'About Us', 'Client Portal', 'Book Appointment'],
+      cta: 'Get a Quote',
+      eyebrow: 'Sacramento, California · Licensed LDA',
+      h1: 'What document do you need prepared?',
+      sub: 'Describe your situation or enter a form number. We identify possible document-preparation options across USCIS, EOIR, California court, family law, small claims, restraining order, probate, and fee waiver forms.',
+      placeholder: 'Enter a form number or describe what you need prepared...',
+      examples: ['Renew green card', 'Divorce forms', 'Small claims', 'Restraining order'],
+      meta: ['Document preparation only', 'No legal advice', 'English · Russian · Ukrainian · Spanish'],
+      phone: '(916) 399-3992',
+      services: 'See services',
+      trust: ['Licensed LDA in California', 'Multilingual Staff', 'Serving Clients Worldwide', 'Flat-fee pricing', '(916) 399-3992']
+    },
+    ru: {
+      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'О нас', 'Кабинет'],
+      mobile: ['USCIS | EOIR иммиграция', 'Family Law', 'Small Claims & Civil', 'Business', 'О нас', 'Кабинет', 'Записаться'],
+      cta: 'Получить цену',
+      eyebrow: 'Сакраменто, Калифорния · Licensed LDA',
+      h1: 'Какие документы вам нужно подготовить?',
+      sub: 'Опишите ситуацию или введите номер формы. Мы определим возможные варианты подготовки документов для USCIS, EOIR, судов Калифорнии, family law, small claims, restraining order, probate и fee waiver.',
+      placeholder: 'Введите номер формы или опишите, какие документы нужны...',
+      examples: ['Продлить green card', 'Документы на развод', 'Small claims', 'Restraining order'],
+      meta: ['Только подготовка документов', 'Не юридическая консультация', 'Английский · Русский · Украинский · Испанский'],
+      phone: '(916) 399-3992',
+      services: 'Услуги',
+      trust: ['Licensed LDA в Калифорнии', 'Многоязычная команда', 'Работаем с клиентами по всему миру', 'Фиксированные цены', '(916) 399-3992']
+    },
+    uk: {
+      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'Про нас', 'Кабінет'],
+      mobile: ['USCIS | EOIR імміграція', 'Family Law', 'Small Claims & Civil', 'Business', 'Про нас', 'Кабінет', 'Записатися'],
+      cta: 'Дізнатися ціну',
+      eyebrow: 'Сакраменто, Каліфорнія · Licensed LDA',
+      h1: 'Які документи вам потрібно підготувати?',
+      sub: 'Опишіть ситуацію або введіть номер форми. Ми визначимо можливі варіанти підготовки документів для USCIS, EOIR, судів Каліфорнії, family law, small claims, restraining order, probate та fee waiver.',
+      placeholder: 'Введіть номер форми або опишіть, які документи потрібні...',
+      examples: ['Поновити green card', 'Документи на розлучення', 'Small claims', 'Restraining order'],
+      meta: ['Тільки підготовка документів', 'Не юридична консультація', 'Англійська · Російська · Українська · Іспанська'],
+      phone: '(916) 399-3992',
+      services: 'Послуги',
+      trust: ['Licensed LDA у Каліфорнії', 'Багатомовна команда', 'Працюємо з клієнтами по всьому світу', 'Фіксовані ціни', '(916) 399-3992']
+    },
+    es: {
+      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'Sobre Nosotros', 'Portal'],
+      mobile: ['USCIS | EOIR inmigración', 'Family Law', 'Small Claims & Civil', 'Business', 'Sobre Nosotros', 'Portal', 'Agendar cita'],
+      cta: 'Cotización',
+      eyebrow: 'Sacramento, California · Licensed LDA',
+      h1: '¿Qué documento necesita preparar?',
+      sub: 'Describa su situación o ingrese un número de formulario. Identificamos posibles opciones de preparación de documentos para USCIS, EOIR, tribunales de California, family law, small claims, restraining order, probate y fee waiver.',
+      placeholder: 'Ingrese un número de formulario o describa qué documentos necesita...',
+      examples: ['Renovar green card', 'Documentos de divorcio', 'Small claims', 'Restraining order'],
+      meta: ['Solo preparación de documentos', 'No es asesoría legal', 'Inglés · Ruso · Ucraniano · Español'],
+      phone: '(916) 399-3992',
+      services: 'Servicios',
+      trust: ['Licensed LDA en California', 'Equipo multilingüe', 'Atendemos clientes en todo el mundo', 'Precios fijos', '(916) 399-3992']
+    }
+  };
+
+  function setText(node, value) { if (node && value) node.textContent = value; }
+
+  function setSiteLanguage(lang) {
+    const copy = siteCopy[lang] || siteCopy.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-site-lang]').forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-site-lang') === lang);
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(function(link, index){
+      if (copy.nav[index]) setText(link, copy.nav[index]);
+    });
+    document.querySelectorAll('#mobileMenu > a:not(.mobile-cta)').forEach(function(link, index){
+      if (copy.mobile[index]) setText(link, copy.mobile[index]);
+    });
+    setText(document.querySelector('.mobile-cta'), copy.mobile[6]);
+    setText(document.querySelector('.nav-cta'), copy.cta);
+    setText(document.querySelector('.hero-eyebrow'), copy.eyebrow);
+    setText(document.querySelector('.hero h1'), copy.h1);
+    setText(document.querySelector('.hero-sub'), copy.sub);
+    const finder = document.getElementById('aiFinderInput');
+    if (finder) finder.placeholder = copy.placeholder;
+    document.querySelectorAll('#aiExamples .ai-example').forEach(function(btn, index){
+      if (copy.examples[index]) setText(btn, copy.examples[index]);
+    });
+    document.querySelectorAll('.ai-finder-meta span').forEach(function(item, index){
+      if (copy.meta[index]) setText(item, copy.meta[index]);
+    });
+    setText(document.querySelector('.hero-phone-text'), copy.phone);
+    setText(document.querySelector('.btn-ghost'), copy.services);
+    document.querySelectorAll('.trust-item').forEach(function(item, index){
+      const dot = item.querySelector('.trust-dot');
+      item.textContent = '';
+      if (dot) item.appendChild(dot);
+      item.appendChild(document.createTextNode(copy.trust[index] || ''));
+    });
+    try { localStorage.setItem('imvericaSiteLang', lang); } catch (err) {}
+  }
+
+  document.querySelectorAll('[data-site-lang]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      setSiteLanguage(btn.getAttribute('data-site-lang') || 'en');
+    });
+  });
+  try {
+    setSiteLanguage(localStorage.getItem('imvericaSiteLang') || 'en');
+  } catch (err) {
+    setSiteLanguage('en');
+  }
+})();
 
 // DETAIL PANELS
 function openDetail(id) {
