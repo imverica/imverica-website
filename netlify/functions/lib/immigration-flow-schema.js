@@ -2213,6 +2213,226 @@ function i131SpecificSteps() {
   ];
 }
 
+function n400SpecificSteps() {
+  return [
+    // N-400 Part 1, page 1: eligibility.
+    step('n400_eligibility_basis', 'N-400 eligibility basis', 'Start with the exact eligibility basis selected in Part 1.', [
+      field('basis_for_naturalization', 'Basis for naturalization', 'select', {
+        required: true,
+        options: ['5-year permanent resident', '3-year marriage to U.S. citizen', 'Military service', 'Other or not sure']
+      }),
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' })
+    ]),
+    step('n400_other_basis', 'Other eligibility basis', 'Complete only when the selected basis is other or not sure.', [
+      field('n400_other_basis_explanation', 'Explain the other eligibility basis', 'textarea', {
+        showWhen: [{ id: 'basis_for_naturalization', equals: 'Other or not sure' }]
+      })
+    ]),
+
+    // N-400 Part 2, pages 1-2: names, birth, numbers, and disability accommodation.
+    step('n400_legal_name', 'Current legal name', 'Enter the applicant name exactly as shown on current legal documents.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('n400_middle_name', 'Middle name', 'If there is no middle name, leave this blank.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('n400_green_card_name', 'Name exactly as shown on green card', 'Use the permanent resident card name if it differs from the current legal name.', [
+      field('green_card_family_name', 'Green card family name', 'text', { autocomplete: 'family-name' }),
+      field('green_card_given_name', 'Green card given name', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('n400_other_names', 'Other names used', 'Prior legal names, maiden names, aliases, or nicknames used.', [
+      field('other_names_used', 'Other names used', 'textarea', {
+        placeholder: 'If no other names were used, enter N/A only where the office requires it.'
+      })
+    ]),
+    step('n400_name_change', 'Name change request', 'USCIS asks whether the applicant wants to legally change their name.', [
+      field('wants_name_change', 'Do you want to legally change your name?', 'radio', { options: ['Yes', 'No'] }),
+      field('requested_new_name', 'Requested new legal name', 'text', {
+        autocomplete: 'name',
+        showWhen: [{ id: 'wants_name_change', equals: 'Yes' }]
+      })
+    ]),
+    step('n400_birth_gender_lpr', 'Birth, gender, and permanent resident date', 'These fields appear together in Part 2.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('green_card_date', 'Date you became a permanent resident', 'date', { required: true })
+    ]),
+    step('n400_gender_account', 'Gender and USCIS online account', 'Use the form selection and account number if one exists.', [
+      field('sex', 'Gender', 'radio', { options: ['Female', 'Male', 'Another gender identity'] }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('n400_birth_citizenship', 'Birthplace and nationality', 'City/state/country of birth and current citizenship or nationality.', [
+      field('city_of_birth', 'City or town of birth', 'text', { autocomplete: 'off' }),
+      field('state_or_province_of_birth', 'State or province of birth', 'text', { autocomplete: 'off' })
+    ]),
+    step('n400_birth_country', 'Country of birth and citizenship', 'Select country values from the official country list.', [
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('n400_disability_accommodation', 'Disability accommodation', 'Complete this if accommodation is requested for the naturalization process.', [
+      field('disability_accommodation_needed', 'Do you need a disability accommodation?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('citizenship_exemptions_needed', 'Accommodation or exemption details', 'textarea', {
+        showWhenAny: [
+          { id: 'disability_accommodation_needed', equals: 'Yes' },
+          { id: 'disability_accommodation_needed', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('n400_ssn_card', 'Social Security information', 'Capture the SSN and SSA card questions if applicable.', [
+      field('has_ssn', 'Has the Social Security Administration ever issued you an SSN?', 'radio', { options: ['Yes', 'No'] }),
+      field('ssn', 'Social Security number', 'text', {
+        inputmode: 'numeric',
+        autocomplete: 'off',
+        placeholder: '9 digits',
+        showWhen: [{ id: 'has_ssn', equals: 'Yes' }]
+      })
+    ]),
+
+    // N-400 Part 7-8, page 3: biographic information and residence.
+    step('n400_biographic_ethnicity_race', 'Ethnicity and race', 'Use the Part 7 options from the official form.', [
+      field('ethnicity', 'Ethnicity', 'radio', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('race', 'Race', 'checkboxes', { options: ['White', 'Asian', 'Black or African American', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander'] })
+    ]),
+    step('n400_biographic_body', 'Height and weight', 'Use feet, inches, and pounds.', [
+      field('height_feet', 'Height feet', 'select', { options: ['3', '4', '5', '6', '7', '8'] }),
+      field('height_inches', 'Height inches', 'select', { options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] })
+    ]),
+    step('n400_biographic_colors', 'Eye color and hair color', 'Select the closest USCIS option.', [
+      field('eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
+      field('hair_color', 'Hair color', 'select', { options: ['Bald', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown'] })
+    ]),
+    step('n400_current_address', 'Current physical address', 'Enter the complete current physical address.', [
+      addressBlockField('n400_current_physical_address', 'Current physical address', 'n400_current_physical', { required: true })
+    ]),
+    step('n400_current_address_dates', 'Current address dates', 'Dates at the current address and mailing-address difference.', [
+      field('n400_current_address_from', 'Date you started living at this address', 'date', { required: true }),
+      field('physical_same_as_mailing', 'Is your mailing address the same as your physical address?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('n400_mailing_address', 'Mailing address', 'Complete only if the mailing address is different from the physical address.', [
+      addressBlockField('n400_mailing_address', 'Mailing address', 'n400_mailing', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('n400_address_history', 'Address history', 'List addresses for the required naturalization residence period.', [
+      addressHistoryField('addresses_last_five_years', 'Addresses for the last five years', { required: true })
+    ]),
+
+    // N-400 family and work/travel history.
+    step('n400_marital_status', 'Marital status', 'Use the current marital status from the N-400 family section.', [
+      field('marital_status', 'Marital status', 'select', { options: ['Single, never married', 'Married', 'Divorced', 'Widowed', 'Separated', 'Marriage annulled'] }),
+      field('times_married', 'How many times have you been married?', 'number', { inputmode: 'numeric' })
+    ]),
+    step('n400_spouse_name', 'Current spouse name', 'Complete only if currently married.', [
+      field('spouse_family_name', 'Spouse family name', 'text', {
+        autocomplete: 'family-name',
+        showWhen: [{ id: 'marital_status', equals: 'Married' }]
+      }),
+      field('spouse_given_name', 'Spouse given name', 'text', {
+        autocomplete: 'given-name',
+        showWhen: [{ id: 'marital_status', equals: 'Married' }]
+      })
+    ]),
+    step('n400_spouse_citizenship', 'Current spouse citizenship', 'Spouse citizenship and immigration details when applicable.', [
+      field('spouse_citizenship_status', 'Spouse citizenship or immigration status', 'select', {
+        options: ['U.S. citizen', 'Lawful permanent resident', 'Other', 'Not sure'],
+        showWhen: [{ id: 'marital_status', equals: 'Married' }]
+      }),
+      field('spouse_citizenship_details', 'Spouse citizenship details', 'textarea', {
+        showWhen: [{ id: 'marital_status', equals: 'Married' }]
+      })
+    ]),
+    step('n400_children', 'Children', 'Total children and children who should be listed on N-400.', [
+      field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
+      field('children_details', 'Children details', 'textarea', {
+        placeholder: 'For each child: full name, A-number if any, DOB, country of birth, relationship, address.'
+      })
+    ]),
+    step('n400_military_service', 'Military service', 'Military service questions appear before employment/trips in the current workflow.', [
+      field('military_service', 'Have you ever served in the U.S. Armed Forces?', 'radio', { options: ['Yes', 'No'] }),
+      field('military_service_details', 'Military service details', 'textarea', {
+        showWhen: [{ id: 'military_service', equals: 'Yes' }]
+      })
+    ]),
+    step('n400_employment_history', 'Employment and school history', 'List employment, school, unemployment, and self-employment for the required period.', [
+      employmentHistoryField('employment_school_last_five_years', 'Employment or school for the last five years', { required: true })
+    ]),
+    step('n400_trips_outside_us', 'Trips outside the United States', 'List trips outside the United States during the eligibility period.', [
+      field('trips_outside_us', 'Trips outside the U.S. during eligibility period', 'textarea', {
+        placeholder: 'For each trip: departure date, return date, countries visited, total days.'
+      })
+    ]),
+    step('n400_long_absence', 'Long absences', 'USCIS asks about long trips and continuous residence.', [
+      field('n400_trip_over_six_months', 'Any trip outside the U.S. for 6 months or more?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('n400_trip_over_one_year', 'Any trip outside the U.S. for 1 year or more?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+
+    // N-400 Part 9: eligibility and moral character. These are split in form order.
+    step('n400_citizenship_voting', 'Citizenship and voting questions', 'Answer the first Part 9 citizenship and voting questions in order.', [
+      field('n400_claimed_us_citizen', 'Have you ever claimed to be a U.S. citizen?', 'radio', { options: ['Yes', 'No'] }),
+      field('n400_registered_or_voted', 'Have you ever registered to vote or voted in a U.S. election?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('n400_taxes_support', 'Taxes and support obligations', 'Tax filing and dependent-support questions.', [
+      field('n400_failed_to_file_taxes', 'Have you ever failed to file required taxes?', 'radio', { options: ['Yes', 'No'] }),
+      field('n400_failed_to_support_dependents', 'Have you ever failed to support dependents or pay alimony?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('n400_groups_organizations', 'Groups and organizations', 'Membership, association, and organization questions. Additional details are needed for any Yes answer.', [
+      field('n400_organization_member', 'Have you ever been a member of or associated with any group, club, party, society, or organization?', 'radio', { options: ['Yes', 'No'] }),
+      field('n400_organization_details', 'Organization details if yes', 'textarea', {
+        showWhen: [{ id: 'n400_organization_member', equals: 'Yes' }]
+      })
+    ]),
+    step('n400_criminal_history_1', 'Criminal history questions', 'Arrest, citation, charge, conviction, and sentence questions.', [
+      field('n400_ever_arrested_cited_charged', 'Have you ever been arrested, cited, charged, or detained?', 'radio', { options: ['Yes', 'No'] }),
+      field('n400_ever_convicted_or_pled', 'Have you ever pled guilty to or been convicted of a crime or offense?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('n400_criminal_history_2', 'Criminal history details', 'Capture explanations only when any criminal-history answer is Yes.', [
+      field('n400_criminal_history_other_yes', 'Any other criminal, probation, controlled substance, prostitution, trafficking, or gambling answer is Yes?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('n400_criminal_history_details', 'Criminal-history explanation and documents needed', 'textarea', {
+        showWhenAny: [
+          { id: 'n400_ever_arrested_cited_charged', equals: 'Yes' },
+          { id: 'n400_ever_convicted_or_pled', equals: 'Yes' },
+          { id: 'n400_criminal_history_other_yes', equals: 'Yes' },
+          { id: 'n400_criminal_history_other_yes', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('n400_immigration_issues', 'Prior immigration issues', 'Admission, visa, unauthorized work, status violation, and removal questions.', [
+      field('n400_denied_admission_or_visa', 'Have you ever been denied admission, a visa, or immigration benefit?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('n400_removal_or_status_problem', 'Have you ever had removal proceedings, a final order, unauthorized work, or status violation?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('n400_security_questions', 'Security and related questions', 'Security, military, Communist Party, persecution, and weapons questions.', [
+      field('n400_security_any_yes', 'Is any security, military, weapons, Communist Party, torture, genocide, or persecution answer Yes?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('n400_security_details', 'Security-related explanation if needed', 'textarea', {
+        showWhenAny: [
+          { id: 'n400_security_any_yes', equals: 'Yes' },
+          { id: 'n400_security_any_yes', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('n400_oath_questions', 'Oath and allegiance questions', 'Answer the oath, Constitution, service, and allegiance questions in Part 9.', [
+      field('n400_support_constitution', 'Do you support the Constitution and form of government of the United States?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('n400_willing_oath_service', 'Are you willing to take the oath and perform required service if required by law?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+
+    // N-400 statement, contact, interpreter/preparer, and review.
+    step('n400_household_contact', 'Household and contact permission', 'Current household and contact-permission questions before signature.', [
+      field('n400_household_size', 'Household size', 'number', { inputmode: 'numeric' }),
+      field('n400_contact_permission', 'May USCIS contact you by phone or email about this application?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('n400_applicant_contact', 'Applicant contact information', 'USCIS phone fields should be captured cleanly for Part 10.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('mobile_phone', 'Mobile phone, if any', 'phone', { autocomplete: 'tel' })
+    ]),
+    step('n400_applicant_email', 'Applicant email', 'Use a valid email address if the applicant has one.', [
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('n400_statement_interpreter_preparer', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 const FORM_OVERRIDES = {
   'G-325A': [
     step('biographic_history', 'Biographic residence and employment history', 'Biographic information forms commonly require structured residence and employment history.', [
@@ -2375,16 +2595,7 @@ const FORM_OVERRIDES = {
       field('hardship_explanation', 'Financial hardship explanation', 'textarea')
     ])
   ],
-  'N-400': [
-    step('naturalization', 'Naturalization preparation', 'Basic eligibility and history questions for N-400 preparation.', [
-      field('green_card_date', 'Date you became a permanent resident', 'date', { required: true }),
-      field('basis_for_naturalization', 'Basis for naturalization', 'select', { options: ['5-year permanent resident', '3-year marriage to U.S. citizen', 'Military', 'Other or not sure'] }),
-      field('trips_outside_us', 'Trips outside the U.S. during eligibility period', 'textarea'),
-      addressHistoryField('addresses_last_five_years', 'Addresses for the last five years', { required: true }),
-      employmentHistoryField('employment_school_last_five_years', 'Employment or school for the last five years', { required: true }),
-      field('citizenship_exemptions_needed', 'Any disability/accommodation or language exemption documents?', 'textarea')
-    ])
-  ],
+  'N-400': n400SpecificSteps(),
   'N-565': [
     step('certificate_replacement', 'Certificate replacement', 'Replacement or correction of citizenship/naturalization certificate.', [
       field('certificate_type', 'Certificate type', 'select', { options: ['Naturalization certificate', 'Citizenship certificate', 'Declaration of intention', 'Repatriation certificate', 'Not sure'] }),
@@ -2725,6 +2936,12 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
               ...i131SpecificSteps(),
               ...evidenceSteps()
             ]
+            : code === 'N-400'
+              ? [
+                ...purposeSteps(code, title),
+                ...n400SpecificSteps(),
+                ...evidenceSteps()
+              ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),

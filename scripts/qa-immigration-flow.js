@@ -84,10 +84,18 @@ async function main() {
   assert(i765Evidence?.fields.some((field) => field.id === 'has_preparer'), 'I-765: missing preparer question');
 
   const n400 = await callFlow('N-400', 'ru');
-  const n400Naturalization = n400.body.steps.find((step) => step.id === 'naturalization');
-  assert(n400Naturalization, 'N-400: missing naturalization step');
-  assert(n400Naturalization.fields.find((field) => field.id === 'addresses_last_five_years')?.type === 'addressHistory', 'N-400: address history should be structured');
-  assert(n400Naturalization.fields.find((field) => field.id === 'employment_school_last_five_years')?.type === 'employmentHistory', 'N-400: employment history should be structured');
+  const n400Order = n400.body.steps.map((step) => step.id);
+  assert(n400Order.indexOf('n400_eligibility_basis') < n400Order.indexOf('n400_legal_name'), 'N-400: eligibility must come before applicant name');
+  assert(n400Order.indexOf('n400_legal_name') < n400Order.indexOf('n400_biographic_ethnicity_race'), 'N-400: applicant identity must come before biographic fields');
+  assert(n400Order.indexOf('n400_biographic_colors') < n400Order.indexOf('n400_current_address'), 'N-400: biographic fields must come before residence fields');
+  assert(n400Order.indexOf('n400_address_history') < n400Order.indexOf('n400_employment_history'), 'N-400: address history must come before employment history');
+  assert(n400Order.indexOf('n400_employment_history') < n400Order.indexOf('n400_trips_outside_us'), 'N-400: employment history must come before travel history');
+  assert(n400Order.indexOf('n400_trips_outside_us') < n400Order.indexOf('n400_citizenship_voting'), 'N-400: travel history must come before Part 9 eligibility questions');
+  assert(n400Order.indexOf('n400_oath_questions') < n400Order.indexOf('n400_applicant_contact'), 'N-400: oath questions must come before applicant contact');
+  const n400Fields = n400.body.steps.flatMap((step) => step.fields || []);
+  assert(n400Fields.find((field) => field.id === 'addresses_last_five_years')?.type === 'addressHistory', 'N-400: address history should be structured');
+  assert(n400Fields.find((field) => field.id === 'employment_school_last_five_years')?.type === 'employmentHistory', 'N-400: employment history should be structured');
+  assert(n400Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'N-400: daytime phone should be split phone field');
 
   const i130a = await callFlow('I-130A', 'en');
   const i130 = await callFlow('I-130', 'en');
