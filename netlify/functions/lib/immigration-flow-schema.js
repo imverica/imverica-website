@@ -1994,6 +1994,225 @@ function i130aSpecificSteps() {
   ];
 }
 
+function i131SpecificSteps() {
+  return [
+    // I-131 Part 1, pages 1-4: application type and requested document.
+    step('i131_application_type', 'I-131 application type', 'Start with the exact travel document or parole document requested on the form.', [
+      field('i131_application_type', 'What are you applying for?', 'select', {
+        required: true,
+        options: [
+          'Reentry permit',
+          'Refugee travel document',
+          'Advance parole document while inside the United States',
+          'Advance parole document for person outside the United States',
+          'TPS travel authorization',
+          'Initial parole document',
+          'Replacement or correction of a travel/parole document',
+          'Arrival/departure record or parole record',
+          'Not sure'
+        ]
+      })
+    ]),
+    step('i131_document_action', 'Requested action', 'Confirm whether this is a new document, renewal, replacement, correction, or record request.', [
+      field('i131_document_action', 'Requested action', 'select', {
+        required: true,
+        options: ['Initial document', 'Renewal', 'Replacement', 'Correction', 'Record request', 'Not sure']
+      }),
+      field('i131_prior_document_number', 'Prior travel/parole document or receipt number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i131_replacement_reason', 'Replacement or correction details', 'Complete this only if a prior document needs replacement or correction.', [
+      field('i131_replacement_reason', 'Reason for replacement or correction', 'select', {
+        options: ['Lost', 'Stolen', 'Damaged', 'Never received', 'USCIS error', 'Biographic correction', 'Other'],
+        showWhenAny: [
+          { id: 'i131_document_action', equals: 'Replacement' },
+          { id: 'i131_document_action', equals: 'Correction' }
+        ]
+      }),
+      field('i131_replacement_explanation', 'Explain what happened or what must be corrected', 'textarea', {
+        showWhenAny: [
+          { id: 'i131_document_action', equals: 'Replacement' },
+          { id: 'i131_document_action', equals: 'Correction' }
+        ]
+      })
+    ]),
+
+    // I-131 Part 2, pages 4-6: applicant information.
+    step('i131_applicant_name', 'Applicant legal name', 'Use the name exactly as it should appear on the USCIS form.', [
+      field('i131_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('i131_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i131_applicant_middle_other_names', 'Middle name and other names', 'Leave middle name blank if there is no middle name. Add prior names only if used.', [
+      field('i131_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('i131_other_names_used', 'Other names used, if any', 'textarea')
+    ]),
+    step('i131_mailing_address', 'Applicant mailing address', 'Enter the complete mailing address as one structured address block.', [
+      addressBlockField('i131_mailing_address', 'Mailing address', 'i131_mailing', { required: true })
+    ]),
+    step('i131_physical_address_match', 'Applicant physical address', 'USCIS asks whether the physical address is the same as the mailing address.', [
+      field('i131_physical_same_as_mailing', 'Is the physical address the same as the mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i131_physical_address', 'Applicant current physical address', 'Complete this only if the physical address is different from the mailing address.', [
+      addressBlockField('i131_physical_address', 'Physical address', 'i131_physical', {
+        showWhen: [{ id: 'i131_physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i131_applicant_numbers', 'Applicant USCIS numbers', 'A-number, SSN, USCIS online account number, class of admission, and I-94 fields appear in Part 2.', [
+      field('i131_alien_number', 'Alien registration number / A-number, if any', 'text', { autocomplete: 'off' }),
+      field('i131_uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i131_ssn_i94', 'SSN and I-94', 'Use only digits for SSN and I-94 when available.', [
+      field('i131_ssn', 'Social Security number, if any', 'text', { autocomplete: 'off' }),
+      field('i131_i94_number', 'I-94 record number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i131_birth_citizenship', 'Birth and citizenship', 'These fields map to the Part 2 country and birth questions.', [
+      field('i131_country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS, autocomplete: 'country-name' }),
+      field('i131_country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS, autocomplete: 'country-name' })
+    ]),
+    step('i131_birth_date_gender', 'Date of birth and gender', 'Use the applicant date of birth and the form gender selection.', [
+      field('i131_date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('i131_gender', 'Gender', 'radio', { options: ['Male', 'Female', 'Another gender identity'] })
+    ]),
+    step('i131_admission_status', 'Class of admission and status', 'Capture current or most recent class of admission and I-94 expiration when applicable.', [
+      field('i131_class_of_admission', 'Class of admission', 'text', { placeholder: 'Example: ASYLEE, PAROLEE, TPS, F-1, B-2.' }),
+      field('i131_i94_expiration_date', 'I-94 expiration date, if any', 'date')
+    ]),
+
+    // I-131 pages 6-7: beneficiary information for requests made for another person.
+    step('i131_for_someone_else', 'Beneficiary information', 'Some I-131 filings are for a beneficiary other than the person preparing the request.', [
+      field('i131_for_beneficiary', 'Is this application for someone other than the applicant above?', 'radio', {
+        required: true,
+        options: ['No, this is for the applicant', 'Yes, this is for another person']
+      })
+    ]),
+    step('i131_beneficiary_name', 'Beneficiary legal name', 'Complete this if the request is for another person.', [
+      field('i131_beneficiary_family_name', 'Beneficiary family name / last name', 'text', {
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      }),
+      field('i131_beneficiary_given_name', 'Beneficiary given name / first name', 'text', {
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      })
+    ]),
+    step('i131_beneficiary_birth_contact', 'Beneficiary birth and contact', 'Date of birth, citizenship, phone, and email for the beneficiary.', [
+      field('i131_beneficiary_date_of_birth', 'Beneficiary date of birth', 'date', {
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      }),
+      field('i131_beneficiary_email', 'Beneficiary email, if any', 'email', {
+        autocomplete: 'email',
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      })
+    ]),
+    step('i131_beneficiary_address', 'Beneficiary current physical address', 'Enter the beneficiary address as one complete address block.', [
+      addressBlockField('i131_beneficiary_address', 'Beneficiary address', 'i131_beneficiary', {
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      })
+    ]),
+    step('i131_beneficiary_status', 'Beneficiary immigration status', 'Complete class of admission and I-94 fields when the beneficiary has them.', [
+      field('i131_beneficiary_class_of_admission', 'Beneficiary class of admission', 'text', {
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      }),
+      field('i131_beneficiary_i94_number', 'Beneficiary I-94 number, if any', 'text', {
+        autocomplete: 'off',
+        showWhen: [{ id: 'i131_for_beneficiary', equals: 'Yes, this is for another person' }]
+      })
+    ]),
+
+    // I-131 Part 3, page 7: biographic information.
+    step('i131_biographic_ethnicity_race', 'Biographic information', 'Ethnicity and race questions follow the official Part 3 layout.', [
+      field('i131_ethnicity', 'Ethnicity', 'radio', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('i131_race', 'Race', 'checkboxes', { options: ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White'] })
+    ]),
+    step('i131_biographic_body', 'Height and weight', 'Use the same units as the USCIS form.', [
+      field('i131_height_feet', 'Height feet', 'select', { options: ['3', '4', '5', '6', '7', '8'] }),
+      field('i131_height_inches', 'Height inches', 'select', { options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] })
+    ]),
+    step('i131_biographic_colors', 'Eye color and hair color', 'Select the closest USCIS option.', [
+      field('i131_eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
+      field('i131_hair_color', 'Hair color', 'select', { options: ['Bald', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown'] })
+    ]),
+
+    // I-131 Part 4, pages 7-9: prior travel document and delivery.
+    step('i131_prior_document_history', 'Prior travel or parole documents', 'USCIS asks whether a prior travel/parole document was issued and what happened to it.', [
+      field('i131_prior_document_issued', 'Has USCIS ever issued you a travel document, parole document, or arrival/departure record?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('i131_prior_document_disposition', 'What happened to the prior document?', 'select', {
+        options: ['Still valid', 'Expired', 'Lost', 'Stolen', 'Damaged', 'Returned to USCIS', 'Other', 'Not applicable'],
+        showWhen: [{ id: 'i131_prior_document_issued', equals: 'Yes' }]
+      })
+    ]),
+    step('i131_prior_document_details', 'Prior document details', 'Use receipt or document numbers only if known.', [
+      field('i131_prior_document_receipt', 'Prior receipt or document number', 'text', {
+        autocomplete: 'off',
+        showWhen: [{ id: 'i131_prior_document_issued', equals: 'Yes' }]
+      }),
+      field('i131_prior_document_explanation', 'Explanation for prior document or correction', 'textarea', {
+        showWhen: [{ id: 'i131_prior_document_issued', equals: 'Yes' }]
+      })
+    ]),
+    step('i131_document_delivery', 'Where should the document be sent?', 'For some I-131 categories, USCIS asks where to send the approved document.', [
+      field('i131_delivery_option', 'Delivery option', 'select', {
+        options: ['Mail to applicant U.S. address', 'U.S. Embassy or Consulate', 'DHS office outside the United States', 'Attorney or accredited representative', 'Not sure']
+      }),
+      field('i131_delivery_contact_email', 'Delivery contact email, if any', 'email', { autocomplete: 'email' })
+    ]),
+    step('i131_delivery_address', 'Document delivery address', 'Complete only if the document should be sent somewhere other than the applicant mailing address.', [
+      addressBlockField('i131_delivery_address', 'Delivery address', 'i131_delivery')
+    ]),
+
+    // I-131 Parts 5-8, pages 9-11: travel and category questions.
+    step('i131_time_outside_us', 'Time outside the United States', 'For reentry permits and some travel documents, USCIS asks about expected time outside the United States.', [
+      field('i131_expected_time_outside_us', 'Expected time outside the United States', 'select', {
+        options: ['Less than 6 months', '6 months to 1 year', '1 to 2 years', '2 to 3 years', '3 to 4 years', 'More than 4 years', 'Not sure']
+      }),
+      field('i131_country_of_refugee_status', 'Country of refugee/asylee status, if applicable', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i131_prior_removal_or_status_issues', 'Prior removal or status issues', 'These are Yes/No questions from the travel document eligibility sections.', [
+      field('i131_exclusion_deportation_or_removal', 'Have you ever been in exclusion, deportation, removal, or rescission proceedings?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('i131_traveled_to_country_of_persecution', 'For refugee/asylee travel, have you returned or plan to return to the country of claimed persecution?', 'radio', {
+        options: ['Yes', 'No', 'Not applicable', 'Not sure']
+      })
+    ]),
+    step('i131_advance_parole_trip', 'Advance parole trip details', 'Travel date, destination countries, and purpose of travel.', [
+      field('i131_planned_departure_date', 'Planned departure date', 'date'),
+      field('i131_countries_to_visit', 'Countries to visit', 'textarea')
+    ]),
+    step('i131_trip_purpose_length', 'Purpose and expected trip length', 'Keep the purpose factual and short.', [
+      field('i131_purpose_of_travel', 'Purpose of travel', 'textarea', { required: true }),
+      field('i131_expected_trip_length', 'Expected length of trip', 'text')
+    ]),
+    step('i131_prior_advance_parole', 'Prior advance parole travel', 'USCIS asks whether you left the United States before with advance parole.', [
+      field('i131_left_us_with_advance_parole_before', 'Have you left the United States before with advance parole?', 'radio', {
+        options: ['Yes', 'No', 'Not sure']
+      }),
+      field('i131_prior_advance_parole_location', 'If yes, city/town and country of prior arrival', 'textarea', {
+        showWhen: [{ id: 'i131_left_us_with_advance_parole_before', equals: 'Yes' }]
+      })
+    ]),
+    step('i131_person_outside_us', 'Person outside the United States', 'Use this only for parole requests involving a person outside the United States.', [
+      field('i131_person_outside_us_explanation', 'Why should parole be issued for a person outside the United States?', 'textarea'),
+      field('i131_intended_arrival_date_us', 'Intended U.S. arrival date', 'date')
+    ]),
+    step('i131_intended_us_arrival_place', 'Intended place of arrival in the United States', 'City/town and country for the intended U.S. arrival.', [
+      field('i131_intended_arrival_city', 'City or town of intended arrival', 'text'),
+      field('i131_intended_arrival_country', 'Country', 'select', { options: COUNTRY_OPTIONS, countryDefault: 'United States' })
+    ]),
+
+    // I-131 Part 10 and optional interpreter/preparer sections.
+    step('i131_applicant_contact', 'Applicant contact information', 'USCIS phone fields should be captured cleanly for the signature/contact section.', [
+      field('i131_daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('i131_mobile_phone', 'Mobile phone, if any', 'phone', { autocomplete: 'tel' })
+    ]),
+    step('i131_applicant_email', 'Applicant email', 'Use a valid email address if the applicant has one.', [
+      field('i131_email', 'Email address', 'email', { autocomplete: 'email' })
+    ])
+  ];
+}
+
 const FORM_OVERRIDES = {
   'G-325A': [
     step('biographic_history', 'Biographic residence and employment history', 'Biographic information forms commonly require structured residence and employment history.', [
@@ -2016,19 +2235,7 @@ const FORM_OVERRIDES = {
   ],
   'I-130': i130SpecificSteps(),
   'I-130A': i130aSpecificSteps(),
-  'I-131': [
-    step('travel_document', 'Travel document request', 'Tell us which travel document is needed and why.', [
-      field('travel_document_type', 'Type of travel document', 'select', {
-        required: true,
-        options: ['Advance parole', 'Re-entry permit', 'Refugee travel document', 'TPS travel authorization', 'Not sure']
-      }),
-      field('planned_departure_date', 'Planned departure date', 'date'),
-      field('planned_return_date', 'Planned return date', 'date'),
-      field('countries_to_visit', 'Countries to visit', 'textarea'),
-      field('purpose_of_travel', 'Purpose of travel', 'textarea', { required: true }),
-      field('pending_case_receipt', 'Pending USCIS case receipt number, if any', 'text', { autocomplete: 'off' })
-    ])
-  ],
+  'I-131': i131SpecificSteps(),
   'I-485': [
     step('adjustment_basis', 'Adjustment of status basis', 'Start with the exact basis shown by the official I-485 category.', [
       field('adjustment_basis', 'Basis for adjustment', 'select', {
@@ -2512,6 +2719,12 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
             ...i130aSpecificSteps(),
             ...evidenceSteps()
           ]
+          : code === 'I-131'
+            ? [
+              ...purposeSteps(code, title),
+              ...i131SpecificSteps(),
+              ...evidenceSteps()
+            ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),

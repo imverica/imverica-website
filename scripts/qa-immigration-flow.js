@@ -107,6 +107,18 @@ async function main() {
   assert(i130aFields.find((field) => field.id === 'spouse_residence_history')?.type === 'addressHistory', 'I-130A: spouse residence history should be structured');
   assert(i130aFields.find((field) => field.id === 'spouse_employment_history')?.type === 'employmentHistory', 'I-130A: spouse employment history should be structured');
 
+  const i131 = await callFlow('I-131', 'en');
+  const i131Order = i131.body.steps.map((step) => step.id);
+  assert(i131Order.indexOf('i131_application_type') < i131Order.indexOf('i131_applicant_name'), 'I-131: application type must come before applicant information');
+  assert(i131Order.indexOf('i131_applicant_name') < i131Order.indexOf('i131_beneficiary_status'), 'I-131: applicant information must come before beneficiary information');
+  assert(i131Order.indexOf('i131_beneficiary_status') < i131Order.indexOf('i131_biographic_ethnicity_race'), 'I-131: beneficiary information must come before biographic information');
+  assert(i131Order.indexOf('i131_biographic_colors') < i131Order.indexOf('i131_prior_document_history'), 'I-131: biographic information must come before prior document history');
+  assert(i131Order.indexOf('i131_advance_parole_trip') < i131Order.indexOf('i131_applicant_contact'), 'I-131: travel details must come before applicant contact');
+  const i131Fields = i131.body.steps.flatMap((step) => step.fields || []);
+  assert(i131Fields.find((field) => field.id === 'i131_mailing_address')?.type === 'addressBlock', 'I-131: mailing address should be structured');
+  assert(i131Fields.find((field) => field.id === 'i131_beneficiary_address')?.type === 'addressBlock', 'I-131: beneficiary address should be structured');
+  assert(i131Fields.find((field) => field.id === 'i131_daytime_phone')?.type === 'phone', 'I-131: daytime phone should be split phone field');
+
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
   assert(biographicHistory?.fields.find((field) => field.id === 'g325a_residence_history')?.type === 'addressHistory', 'G-325A: residence history should be structured');
