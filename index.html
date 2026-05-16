@@ -83,13 +83,13 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 
 /* HERO */
 .hero-wrap{position:relative;overflow:hidden;background:#fff;border-bottom:1px solid var(--border);}
-.hero-wrap::before{content:"";position:absolute;inset:0;background-image:url('assets/hero-justice-bg.svg');background-repeat:no-repeat;background-size:cover;background-position:center top;opacity:0.88;pointer-events:none;}
-.hero-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0.52) 0%,rgba(255,255,255,0.86) 38%,rgba(255,255,255,0.82) 68%,rgba(255,255,255,0.58) 100%);pointer-events:none;}
+.hero-wrap::before{content:"";position:absolute;inset:0;background-image:url('assets/hero-justice-bg.svg');background-repeat:no-repeat;background-size:cover;background-position:center top;opacity:0.96;pointer-events:none;}
+.hero-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0.38) 0%,rgba(255,255,255,0.78) 38%,rgba(255,255,255,0.74) 68%,rgba(255,255,255,0.42) 100%);pointer-events:none;}
 .hero{position:relative;z-index:1;padding:70px 2.5rem 58px;max-width:1040px;margin:0 auto;text-align:center;}
 @media(max-width:768px){
   .hero{padding:62px 1rem 36px;width:100%;max-width:100%;overflow:hidden;}
-  .hero-wrap::before{background-size:auto 100%;background-position:48% top;opacity:0.72;}
-  .hero-wrap::after{background:linear-gradient(180deg,rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.92) 46%,rgba(255,255,255,0.84) 100%);}
+  .hero-wrap::before{background-size:980px auto;background-position:55% 18px;opacity:0.94;}
+  .hero-wrap::after{background:linear-gradient(180deg,rgba(255,255,255,0.52) 0%,rgba(255,255,255,0.82) 46%,rgba(255,255,255,0.62) 100%);}
 }
 .hero-main{max-width:900px;margin:0 auto;}
 .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:0.9rem;opacity:0.62;}
@@ -1475,46 +1475,46 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       trust: ['Licensed LDA in California', 'Multilingual Staff', 'Serving Clients Worldwide', 'Flat-fee pricing', '(916) 399-3992']
     },
     ru: {
-      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'О нас', 'Кабинет'],
-      mobile: ['USCIS | EOIR иммиграция', 'Family Law', 'Small Claims & Civil', 'Business', 'О нас', 'Кабинет', 'Записаться'],
+      nav: ['USCIS | EOIR иммиграция', 'Семейное право', 'Малые иски и гражданские дела', 'Бизнес', 'О нас', 'Кабинет'],
+      mobile: ['USCIS | EOIR иммиграция', 'Семейное право', 'Малые иски и гражданские дела', 'Бизнес', 'О нас', 'Кабинет', 'Записаться'],
       cta: 'Получить цену',
-      eyebrow: 'Сакраменто, Калифорния · Licensed LDA',
+      eyebrow: 'Сакраменто, Калифорния · Лицензированные LDA-специалисты',
       h1: 'Какие документы вам нужно подготовить?',
-      sub: 'Опишите ситуацию или введите номер формы. Мы определим возможные варианты подготовки документов для USCIS, EOIR, судов Калифорнии, family law, small claims, restraining order, probate и fee waiver.',
+      sub: 'Опишите ситуацию или введите номер формы. Мы определим возможные варианты подготовки документов для USCIS, EOIR, судов Калифорнии, семейного права, малых исков, защитных ордеров, наследственных дел и освобождения от пошлин.',
       placeholder: 'Введите номер формы или опишите, какие документы нужны...',
-      examples: ['Продлить green card', 'Документы на развод', 'Small claims', 'Restraining order'],
+      examples: ['Продлить грин-карту', 'Документы на развод', 'Малый иск', 'Защитный ордер'],
       meta: ['Только подготовка документов', 'Не юридическая консультация', 'Английский · Русский · Украинский · Испанский'],
       phone: '(916) 399-3992',
       services: 'Услуги',
-      trust: ['Licensed LDA в Калифорнии', 'Многоязычная команда', 'Работаем с клиентами по всему миру', 'Фиксированные цены', '(916) 399-3992']
+      trust: ['Лицензированные LDA-специалисты в Калифорнии', 'Многоязычная команда', 'Работаем с клиентами по всему миру', 'Фиксированные цены', '(916) 399-3992']
     },
     uk: {
-      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'Про нас', 'Кабінет'],
-      mobile: ['USCIS | EOIR імміграція', 'Family Law', 'Small Claims & Civil', 'Business', 'Про нас', 'Кабінет', 'Записатися'],
+      nav: ['USCIS | EOIR імміграція', 'Сімейне право', 'Малі позови та цивільні справи', 'Бізнес', 'Про нас', 'Кабінет'],
+      mobile: ['USCIS | EOIR імміграція', 'Сімейне право', 'Малі позови та цивільні справи', 'Бізнес', 'Про нас', 'Кабінет', 'Записатися'],
       cta: 'Дізнатися ціну',
-      eyebrow: 'Сакраменто, Каліфорнія · Licensed LDA',
+      eyebrow: 'Сакраменто, Каліфорнія · Ліцензовані LDA-фахівці',
       h1: 'Які документи вам потрібно підготувати?',
-      sub: 'Опишіть ситуацію або введіть номер форми. Ми визначимо можливі варіанти підготовки документів для USCIS, EOIR, судів Каліфорнії, family law, small claims, restraining order, probate та fee waiver.',
+      sub: 'Опишіть ситуацію або введіть номер форми. Ми визначимо можливі варіанти підготовки документів для USCIS, EOIR, судів Каліфорнії, сімейного права, малих позовів, захисних ордерів, спадкових справ та звільнення від судових зборів.',
       placeholder: 'Введіть номер форми або опишіть, які документи потрібні...',
-      examples: ['Поновити green card', 'Документи на розлучення', 'Small claims', 'Restraining order'],
+      examples: ['Поновити грин-карту', 'Документи на розлучення', 'Малий позов', 'Захисний ордер'],
       meta: ['Тільки підготовка документів', 'Не юридична консультація', 'Англійська · Російська · Українська · Іспанська'],
       phone: '(916) 399-3992',
       services: 'Послуги',
-      trust: ['Licensed LDA у Каліфорнії', 'Багатомовна команда', 'Працюємо з клієнтами по всьому світу', 'Фіксовані ціни', '(916) 399-3992']
+      trust: ['Ліцензовані LDA-фахівці у Каліфорнії', 'Багатомовна команда', 'Працюємо з клієнтами по всьому світу', 'Фіксовані ціни', '(916) 399-3992']
     },
     es: {
-      nav: ['USCIS | EOIR', 'Family Law', 'Small Claims & Civil', 'Business', 'Sobre Nosotros', 'Portal'],
-      mobile: ['USCIS | EOIR inmigración', 'Family Law', 'Small Claims & Civil', 'Business', 'Sobre Nosotros', 'Portal', 'Agendar cita'],
+      nav: ['Inmigración USCIS | EOIR', 'Derecho familiar', 'Reclamos menores y civil', 'Negocios', 'Sobre Nosotros', 'Portal'],
+      mobile: ['Inmigración USCIS | EOIR', 'Derecho familiar', 'Reclamos menores y civil', 'Negocios', 'Sobre Nosotros', 'Portal', 'Agendar cita'],
       cta: 'Cotización',
-      eyebrow: 'Sacramento, California · Licensed LDA',
+      eyebrow: 'Sacramento, California · LDA con licencia',
       h1: '¿Qué documento necesita preparar?',
-      sub: 'Describa su situación o ingrese un número de formulario. Identificamos posibles opciones de preparación de documentos para USCIS, EOIR, tribunales de California, family law, small claims, restraining order, probate y fee waiver.',
+      sub: 'Describa su situación o ingrese un número de formulario. Identificamos posibles opciones de preparación de documentos para USCIS, EOIR, tribunales de California, derecho familiar, reclamos menores, órdenes de protección, sucesiones y exenciones de cuotas.',
       placeholder: 'Ingrese un número de formulario o describa qué documentos necesita...',
-      examples: ['Renovar green card', 'Documentos de divorcio', 'Small claims', 'Restraining order'],
+      examples: ['Renovar green card', 'Documentos de divorcio', 'Reclamo menor', 'Orden de protección'],
       meta: ['Solo preparación de documentos', 'No es asesoría legal', 'Inglés · Ruso · Ucraniano · Español'],
       phone: '(916) 399-3992',
       services: 'Servicios',
-      trust: ['Licensed LDA en California', 'Equipo multilingüe', 'Atendemos clientes en todo el mundo', 'Precios fijos', '(916) 399-3992']
+      trust: ['LDA con licencia en California', 'Equipo multilingüe', 'Atendemos clientes en todo el mundo', 'Precios fijos', '(916) 399-3992']
     }
   };
 
@@ -1522,6 +1522,7 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 
   function setSiteLanguage(lang) {
     const copy = siteCopy[lang] || siteCopy.en;
+    window.imvericaSiteLang = lang;
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-site-lang]').forEach(function(btn){
       btn.classList.toggle('active', btn.getAttribute('data-site-lang') === lang);
@@ -1555,6 +1556,7 @@ mobileMenu.querySelectorAll('a').forEach(a => {
       item.appendChild(document.createTextNode(copy.trust[index] || ''));
     });
     try { localStorage.setItem('imvericaSiteLang', lang); } catch (err) {}
+    window.dispatchEvent(new CustomEvent('imverica:site-language', { detail: { lang: lang } }));
   }
 
   document.querySelectorAll('[data-site-lang]').forEach(function(btn){
@@ -3422,40 +3424,134 @@ function closeDetail(id) {
   });
 
   var examplesWrap = document.getElementById('aiExamples');
-  var exampleLanes = [
-    [
-      {label:'Renew green card', prompt:'I need to renew my green card'},
-      {label:'Citizenship', prompt:'I want to apply for U.S. citizenship'},
-      {label:'Work permit', prompt:'I need a work permit application prepared'},
-      {label:'Family petition', prompt:'I want to petition for my spouse or relative'},
-      {label:'TPS', prompt:'I need Temporary Protected Status paperwork'}
+  var exampleLanesByLang = {
+    en: [
+      [
+        {label:'Renew green card', prompt:'I need to renew my green card'},
+        {label:'Citizenship', prompt:'I want to apply for U.S. citizenship'},
+        {label:'Work permit', prompt:'I need a work permit application prepared'},
+        {label:'Family petition', prompt:'I want to petition for my spouse or relative'},
+        {label:'TPS', prompt:'I need Temporary Protected Status paperwork'}
+      ],
+      [
+        {label:'Divorce forms', prompt:'I need divorce forms prepared in California'},
+        {label:'Child custody', prompt:'I need child custody forms prepared'},
+        {label:'Child support', prompt:'I need child support paperwork'},
+        {label:'Legal separation', prompt:'I need legal separation forms prepared'},
+        {label:'Response to divorce', prompt:'I was served with divorce papers and need a response prepared'}
+      ],
+      [
+        {label:'Small claims', prompt:'I need to file a small claims case in California'},
+        {label:'Civil complaint', prompt:'I need civil complaint forms prepared'},
+        {label:'Eviction response', prompt:'I received unlawful detainer papers and need a response prepared'},
+        {label:'Fee waiver', prompt:'I cannot afford court filing fees and need a fee waiver'},
+        {label:'Proof of service', prompt:'I need proof of service forms prepared'}
+      ],
+      [
+        {label:'Restraining order', prompt:'My neighbor is stalking me and threatening me'},
+        {label:'Elder protection', prompt:'I need elder abuse restraining order paperwork'},
+        {label:'Probate estate', prompt:'I need probate documents for a deceased family member'},
+        {label:'Conservatorship', prompt:'I need conservatorship forms for an adult'},
+        {label:'Business filing', prompt:'I need LLC or business filing documents prepared'}
+      ]
     ],
-    [
-      {label:'Divorce forms', prompt:'I need divorce forms prepared in California'},
-      {label:'Child custody', prompt:'I need child custody forms prepared'},
-      {label:'Child support', prompt:'I need child support paperwork'},
-      {label:'Legal separation', prompt:'I need legal separation forms prepared'},
-      {label:'Response to divorce', prompt:'I was served with divorce papers and need a response prepared'}
+    ru: [
+      [
+        {label:'Продлить грин-карту', prompt:'Нужно продлить грин-карту'},
+        {label:'Гражданство', prompt:'Хочу подать на гражданство США'},
+        {label:'Разрешение на работу', prompt:'Нужно подготовить заявление на разрешение на работу'},
+        {label:'Петиция для семьи', prompt:'Хочу подать петицию на супруга или родственника'},
+        {label:'TPS', prompt:'Нужно подготовить документы на TPS'}
+      ],
+      [
+        {label:'Документы на развод', prompt:'Нужно подготовить документы на развод в Калифорнии'},
+        {label:'Опека над ребенком', prompt:'Нужны документы по опеке над ребенком'},
+        {label:'Алименты', prompt:'Нужно подготовить документы по алиментам'},
+        {label:'Раздельное проживание', prompt:'Нужны документы на legal separation'},
+        {label:'Ответ на развод', prompt:'Мне вручили документы на развод, нужен response'}
+      ],
+      [
+        {label:'Малый иск', prompt:'Нужно подать small claims в Калифорнии'},
+        {label:'Гражданская жалоба', prompt:'Нужно подготовить civil complaint'},
+        {label:'Ответ на выселение', prompt:'Получил unlawful detainer, нужен response'},
+        {label:'Освобождение от пошлины', prompt:'Не могу оплатить судебную пошлину, нужен fee waiver'},
+        {label:'Proof of service', prompt:'Нужно подготовить proof of service'}
+      ],
+      [
+        {label:'Защитный ордер', prompt:'Сосед преследует и угрожает, нужен restraining order'},
+        {label:'Защита пожилого', prompt:'Нужны документы по elder abuse restraining order'},
+        {label:'Наследственное дело', prompt:'Нужны probate документы по умершему родственнику'},
+        {label:'Консерваторство', prompt:'Нужны conservatorship формы для взрослого'},
+        {label:'Бизнес-регистрация', prompt:'Нужны документы для LLC или бизнеса'}
+      ]
     ],
-    [
-      {label:'Small claims', prompt:'I need to file a small claims case in California'},
-      {label:'Civil complaint', prompt:'I need civil complaint forms prepared'},
-      {label:'Eviction response', prompt:'I received unlawful detainer papers and need a response prepared'},
-      {label:'Fee waiver', prompt:'I cannot afford court filing fees and need a fee waiver'},
-      {label:'Proof of service', prompt:'I need proof of service forms prepared'}
+    uk: [
+      [
+        {label:'Поновити грин-карту', prompt:'Потрібно поновити грин-карту'},
+        {label:'Громадянство', prompt:'Хочу подати на громадянство США'},
+        {label:'Дозвіл на роботу', prompt:'Потрібно підготувати заяву на дозвіл на роботу'},
+        {label:'Петиція для сімʼї', prompt:'Хочу подати петицію на чоловіка, дружину або родича'},
+        {label:'TPS', prompt:'Потрібно підготувати документи на TPS'}
+      ],
+      [
+        {label:'Документи на розлучення', prompt:'Потрібно підготувати документи на розлучення в Каліфорнії'},
+        {label:'Опіка над дитиною', prompt:'Потрібні документи щодо опіки над дитиною'},
+        {label:'Аліменти', prompt:'Потрібно підготувати документи щодо аліментів'},
+        {label:'Окреме проживання', prompt:'Потрібні документи на legal separation'},
+        {label:'Відповідь на розлучення', prompt:'Мені вручили документи на розлучення, потрібна відповідь'}
+      ],
+      [
+        {label:'Малий позов', prompt:'Потрібно подати small claims у Каліфорнії'},
+        {label:'Цивільна скарга', prompt:'Потрібно підготувати civil complaint'},
+        {label:'Відповідь на виселення', prompt:'Отримав unlawful detainer, потрібна відповідь'},
+        {label:'Звільнення від збору', prompt:'Не можу оплатити судовий збір, потрібен fee waiver'},
+        {label:'Proof of service', prompt:'Потрібно підготувати proof of service'}
+      ],
+      [
+        {label:'Захисний ордер', prompt:'Сусід переслідує і погрожує, потрібен restraining order'},
+        {label:'Захист літньої людини', prompt:'Потрібні документи щодо elder abuse restraining order'},
+        {label:'Спадкова справа', prompt:'Потрібні probate документи щодо померлого родича'},
+        {label:'Консерваторство', prompt:'Потрібні conservatorship форми для дорослого'},
+        {label:'Бізнес-реєстрація', prompt:'Потрібні документи для LLC або бізнесу'}
+      ]
     ],
-    [
-      {label:'Restraining order', prompt:'My neighbor is stalking me and threatening me'},
-      {label:'Elder protection', prompt:'I need elder abuse restraining order paperwork'},
-      {label:'Probate estate', prompt:'I need probate documents for a deceased family member'},
-      {label:'Conservatorship', prompt:'I need conservatorship forms for an adult'},
-      {label:'Business filing', prompt:'I need LLC or business filing documents prepared'}
+    es: [
+      [
+        {label:'Renovar green card', prompt:'Necesito renovar mi green card'},
+        {label:'Ciudadanía', prompt:'Quiero solicitar la ciudadanía de Estados Unidos'},
+        {label:'Permiso de trabajo', prompt:'Necesito preparar una solicitud de permiso de trabajo'},
+        {label:'Petición familiar', prompt:'Quiero pedir a mi cónyuge o familiar'},
+        {label:'TPS', prompt:'Necesito preparar documentos de TPS'}
+      ],
+      [
+        {label:'Divorcio', prompt:'Necesito preparar documentos de divorcio en California'},
+        {label:'Custodia', prompt:'Necesito documentos de custodia de menores'},
+        {label:'Manutención', prompt:'Necesito documentos de child support'},
+        {label:'Separación legal', prompt:'Necesito preparar documentos de legal separation'},
+        {label:'Respuesta a divorcio', prompt:'Me entregaron documentos de divorcio y necesito responder'}
+      ],
+      [
+        {label:'Reclamo menor', prompt:'Necesito presentar un small claims en California'},
+        {label:'Demanda civil', prompt:'Necesito preparar una demanda civil'},
+        {label:'Respuesta a desalojo', prompt:'Recibí unlawful detainer y necesito responder'},
+        {label:'Exención de cuota', prompt:'No puedo pagar la cuota de la corte y necesito fee waiver'},
+        {label:'Proof of service', prompt:'Necesito preparar proof of service'}
+      ],
+      [
+        {label:'Orden de protección', prompt:'Mi vecino me acosa y amenaza, necesito restraining order'},
+        {label:'Protección de adulto mayor', prompt:'Necesito documentos de elder abuse restraining order'},
+        {label:'Sucesión', prompt:'Necesito documentos de probate por un familiar fallecido'},
+        {label:'Conservatorship', prompt:'Necesito formularios de conservatorship para un adulto'},
+        {label:'Registro de negocio', prompt:'Necesito documentos para LLC o negocio'}
+      ]
     ]
-  ];
+  };
   var exampleStep = 0;
 
   function renderExamples() {
     if (!examplesWrap) return;
+    var lang = window.imvericaSiteLang || document.documentElement.lang || 'en';
+    var exampleLanes = exampleLanesByLang[lang] || exampleLanesByLang.en;
     examplesWrap.innerHTML = exampleLanes.map(function(lane, laneIndex) {
       var item = lane[(exampleStep + laneIndex) % lane.length];
       return '<button class="ai-example" type="button" data-ai-example="' + escapeHtml(item.prompt) + '">' + escapeHtml(item.label) + '</button>';
@@ -3465,6 +3561,7 @@ function closeDetail(id) {
 
   if (examplesWrap) {
     renderExamples();
+    window.addEventListener('imverica:site-language', renderExamples);
     setInterval(renderExamples, 5500);
     examplesWrap.addEventListener('click', function(event) {
       var btn = event.target.closest('[data-ai-example]');

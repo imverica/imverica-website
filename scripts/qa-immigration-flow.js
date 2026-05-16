@@ -90,9 +90,22 @@ async function main() {
   assert(n400Naturalization.fields.find((field) => field.id === 'employment_school_last_five_years')?.type === 'employmentHistory', 'N-400: employment history should be structured');
 
   const i130a = await callFlow('I-130A', 'en');
-  const spouseBio = i130a.body.steps.find((step) => step.id === 'spouse_biographic');
-  assert(spouseBio?.fields.find((field) => field.id === 'spouse_residence_history')?.type === 'addressHistory', 'I-130A: spouse residence history should be structured');
-  assert(spouseBio?.fields.find((field) => field.id === 'spouse_employment_history')?.type === 'employmentHistory', 'I-130A: spouse employment history should be structured');
+  const i130 = await callFlow('I-130', 'en');
+  const i130Order = i130.body.steps.map((step) => step.id);
+  assert(i130Order.indexOf('i130_relationship') < i130Order.indexOf('i130_petitioner_numbers'), 'I-130: relationship must come before petitioner details');
+  assert(i130Order.indexOf('i130_petitioner_numbers') < i130Order.indexOf('i130_beneficiary_numbers'), 'I-130: petitioner details must come before beneficiary details');
+  assert(i130Order.indexOf('i130_beneficiary_numbers') < i130Order.indexOf('i130_petitioner_statement'), 'I-130: beneficiary details must come before petitioner statement');
+  const i130Fields = i130.body.steps.flatMap((step) => step.fields || []);
+  assert(i130Fields.find((field) => field.id === 'petitioner_mailing_address')?.type === 'addressBlock', 'I-130: petitioner mailing address should be structured');
+  assert(i130Fields.find((field) => field.id === 'beneficiary_current_address')?.type === 'addressBlock', 'I-130: beneficiary current address should be structured');
+
+  const i130aOrder = i130a.body.steps.map((step) => step.id);
+  assert(i130aOrder.indexOf('i130a_spouse_numbers') < i130aOrder.indexOf('i130a_spouse_current_address'), 'I-130A: spouse identity must come before address history');
+  assert(i130aOrder.indexOf('i130a_spouse_prior_address_1') < i130aOrder.indexOf('i130a_spouse_birth_sex'), 'I-130A: residence history must follow form order before biographic details');
+  assert(i130aOrder.indexOf('i130a_spouse_current_employment') < i130aOrder.indexOf('i130a_spouse_statement'), 'I-130A: employment history must come before statement');
+  const i130aFields = i130a.body.steps.flatMap((step) => step.fields || []);
+  assert(i130aFields.find((field) => field.id === 'spouse_residence_history')?.type === 'addressHistory', 'I-130A: spouse residence history should be structured');
+  assert(i130aFields.find((field) => field.id === 'spouse_employment_history')?.type === 'employmentHistory', 'I-130A: spouse employment history should be structured');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');

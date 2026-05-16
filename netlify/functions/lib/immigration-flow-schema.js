@@ -1681,6 +1681,319 @@ function i485CoreSteps() {
   ];
 }
 
+function addressBlockField(id, label, prefix, options = {}) {
+  return field(id, label, 'addressBlock', {
+    required: Boolean(options.required),
+    help: options.help || '',
+    requiredParts: options.requiredParts || ['line1', 'city', 'country'],
+    parts: {
+      line1: `${prefix}_address_line1`,
+      line2: `${prefix}_address_line2`,
+      city: `${prefix}_city`,
+      state: `${prefix}_state`,
+      zip: `${prefix}_zip`,
+      country: `${prefix}_country`
+    },
+    countryDefault: options.countryDefault || 'United States',
+    stateOptions: US_STATE_OPTIONS,
+    countryOptions: COUNTRY_OPTIONS,
+    showWhen: options.showWhen,
+    showWhenAny: options.showWhenAny
+  });
+}
+
+function i130SpecificSteps() {
+  return [
+    // I-130 Part 1, page 1: relationship.
+    step('i130_relationship', 'I-130 relationship to beneficiary', 'Start with the exact relationship selected in Part 1.', [
+      field('relationship_to_beneficiary', 'Relationship to beneficiary', 'select', {
+        required: true,
+        options: ['Spouse', 'Parent', 'Brother or sister', 'Child']
+      }),
+      field('child_relationship_basis', 'If filing for a child, what type of child relationship applies?', 'select', {
+        options: ['Born to parents who were married', 'Stepchild', 'Adopted child', 'Born out of wedlock', 'Not applicable'],
+        showWhen: [{ id: 'relationship_to_beneficiary', equals: 'Child' }]
+      })
+    ]),
+    step('i130_prior_petitions', 'I-130 prior filings for relatives', 'These are the two Yes/No questions at the end of Part 1.', [
+      field('filed_for_same_beneficiary_before', 'Have you ever filed a petition for this same beneficiary before?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('filed_for_other_relatives_before', 'Have you ever filed a petition for any other alien before?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+
+    // I-130 Part 2, pages 1-4: petitioner.
+    step('i130_petitioner_numbers', 'Petitioner USCIS numbers', 'Use the petitioner numbers exactly as shown on USCIS records, if any.', [
+      field('petitioner_alien_number', 'Petitioner A-number, if any', 'text', { autocomplete: 'off' }),
+      field('petitioner_uscis_online_account_number', 'Petitioner USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i130_petitioner_ssn', 'Petitioner Social Security number', 'USCIS expects a 9-digit SSN if one exists.', [
+      field('petitioner_ssn', 'Petitioner Social Security number', 'text', { inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits' })
+    ]),
+    step('i130_petitioner_name', 'Petitioner legal name', 'Enter the petitioner name as it appears on legal documents.', [
+      field('petitioner_family_name', 'Petitioner family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('petitioner_given_name', 'Petitioner given name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i130_petitioner_middle_other_names', 'Petitioner middle and other names', 'If there is no middle name, leave it blank. Add prior names only if used.', [
+      field('petitioner_middle_name', 'Petitioner middle name', 'text', { autocomplete: 'additional-name' }),
+      field('petitioner_other_names_used', 'Other names petitioner has used', 'textarea', { placeholder: 'Maiden name, prior legal names, aliases, or N/A if required.' })
+    ]),
+    step('i130_petitioner_birth_place', 'Petitioner place of birth', 'City/town/village and country of birth.', [
+      field('petitioner_city_of_birth', 'Petitioner city/town/village of birth', 'text'),
+      field('petitioner_country_of_birth', 'Petitioner country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i130_petitioner_birth_sex', 'Petitioner date of birth and sex', 'These map to Part 2, Items 8 and 9.', [
+      field('petitioner_date_of_birth', 'Petitioner date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('petitioner_sex', 'Petitioner sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i130_petitioner_mailing_address', 'Petitioner mailing address', 'Enter the full mailing address as a structured address.', [
+      field('petitioner_in_care_of_name', 'In care of name, if any', 'text'),
+      addressBlockField('petitioner_mailing_address', 'Petitioner mailing address', 'petitioner_mailing', { required: true })
+    ]),
+    step('i130_petitioner_physical_same', 'Petitioner physical address', 'Confirm whether the physical address is the same as the mailing address.', [
+      field('petitioner_physical_same_as_mailing', 'Is the petitioner physical address the same as mailing address?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('i130_petitioner_physical_address', 'Petitioner current physical address', 'If different from mailing, enter the complete physical address.', [
+      addressBlockField('petitioner_physical_address', 'Petitioner current physical address', 'petitioner_physical', {
+        showWhen: [{ id: 'petitioner_physical_same_as_mailing', equals: 'No' }]
+      }),
+      field('petitioner_current_address_from', 'Date petitioner started living at this address', 'date')
+    ]),
+    step('i130_petitioner_prior_address', 'Petitioner prior physical address', 'If needed, capture the petitioner prior physical address with dates.', [
+      addressHistoryField('petitioner_prior_address', 'Petitioner prior physical address', { entries: 1 })
+    ]),
+    step('i130_petitioner_marital_status', 'Petitioner marital history', 'Number of marriages and current marital status.', [
+      field('petitioner_number_of_marriages', 'How many times has the petitioner been married?', 'number', { inputmode: 'numeric' }),
+      field('petitioner_marital_status', 'Petitioner marital status', 'select', { options: ['Single', 'Married', 'Divorced', 'Widowed', 'Separated', 'Annulled'] })
+    ]),
+    step('i130_petitioner_current_marriage', 'Petitioner current marriage', 'If currently married, enter date and place of current marriage.', [
+      field('petitioner_current_marriage_date', 'Petitioner current marriage date', 'date'),
+      field('petitioner_current_marriage_place', 'Petitioner current marriage place', 'text', { placeholder: 'City/state/province/country' })
+    ]),
+    step('i130_petitioner_prior_spouse', 'Petitioner prior spouse', 'Fill only if the petitioner had a prior spouse.', [
+      field('petitioner_prior_spouse_name', 'Prior spouse full name', 'text', { autocomplete: 'name' }),
+      field('petitioner_prior_marriage_end_date', 'Date prior marriage ended', 'date')
+    ]),
+    step('i130_petitioner_parent1', 'Petitioner parent 1', 'Parent 1 name, date of birth, country of birth, and residence.', [
+      field('petitioner_parent1_full_name', 'Petitioner parent 1 full name', 'text'),
+      field('petitioner_parent1_details', 'Parent 1 date/place/residence details', 'textarea')
+    ]),
+    step('i130_petitioner_parent2', 'Petitioner parent 2', 'Parent 2 name, date of birth, country of birth, and residence.', [
+      field('petitioner_parent2_full_name', 'Petitioner parent 2 full name', 'text'),
+      field('petitioner_parent2_details', 'Parent 2 date/place/residence details', 'textarea')
+    ]),
+    step('i130_petitioner_status', 'Petitioner citizenship or LPR status', 'This controls the citizenship/LPR fields in Part 2.', [
+      field('petitioner_status', 'Petitioner status', 'select', {
+        required: true,
+        options: ['U.S. citizen', 'Lawful permanent resident', 'U.S. national', 'Not sure']
+      }),
+      field('petitioner_status_acquired_by', 'If U.S. citizen, how was citizenship acquired?', 'select', {
+        options: ['Birth in the United States', 'Naturalization', 'Parents', 'Not applicable', 'Not sure']
+      })
+    ]),
+    step('i130_petitioner_certificate', 'Petitioner citizenship certificate', 'If citizenship was acquired by naturalization or parents, capture certificate details.', [
+      field('petitioner_certificate_number', 'Certificate number, if any', 'text', { autocomplete: 'off' }),
+      field('petitioner_certificate_issuance', 'Place and date of issuance', 'text')
+    ]),
+    step('i130_petitioner_lpr_admission', 'Petitioner LPR admission details', 'Fill only for lawful permanent resident petitioners.', [
+      field('petitioner_lpr_class_of_admission', 'Class of admission', 'text'),
+      field('petitioner_lpr_date_place_of_admission', 'Date and place of admission', 'text')
+    ]),
+    step('i130_petitioner_employment_current', 'Petitioner current employment', 'Current employer, occupation, address, and dates.', [
+      employmentHistoryField('petitioner_current_employment', 'Petitioner current employment', { entries: 1 })
+    ]),
+    step('i130_petitioner_employment_prior', 'Petitioner prior employment', 'Prior employer, occupation, address, and dates if the form needs it.', [
+      employmentHistoryField('petitioner_prior_employment', 'Petitioner prior employment', { entries: 1 })
+    ]),
+    step('i130_petitioner_biographic_identity', 'Petitioner ethnicity and race', 'These are Part 3 biographic fields.', [
+      field('petitioner_ethnicity', 'Petitioner ethnicity', 'select', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('petitioner_race', 'Petitioner race', 'checkboxes', { options: ['White', 'Asian', 'Black or African American', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander'] })
+    ]),
+    step('i130_petitioner_biographic_body', 'Petitioner height and weight', 'Height and weight in U.S. format.', [
+      field('petitioner_height_feet', 'Height feet', 'number', { inputmode: 'numeric' }),
+      field('petitioner_weight_lbs', 'Weight in pounds', 'number', { inputmode: 'numeric' })
+    ]),
+    step('i130_petitioner_biographic_colors', 'Petitioner eyes and hair', 'Eye color and hair color.', [
+      field('petitioner_eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
+      field('petitioner_hair_color', 'Hair color', 'select', { options: ['Bald', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown'] })
+    ]),
+
+    // I-130 Part 4, pages 5-8: beneficiary.
+    step('i130_beneficiary_numbers', 'Beneficiary USCIS numbers', 'Use beneficiary numbers exactly as shown, if any.', [
+      field('beneficiary_alien_number', 'Beneficiary A-number, if any', 'text', { autocomplete: 'off' }),
+      field('beneficiary_ssn', 'Beneficiary SSN, if any', 'text', { inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits' })
+    ]),
+    step('i130_beneficiary_name', 'Beneficiary legal name', 'Enter the beneficiary name exactly as shown on documents.', [
+      field('beneficiary_family_name', 'Beneficiary family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('beneficiary_given_name', 'Beneficiary given name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i130_beneficiary_middle_other_names', 'Beneficiary middle and other names', 'If no middle name, leave it blank. Add prior names only if used.', [
+      field('beneficiary_middle_name', 'Beneficiary middle name', 'text'),
+      field('beneficiary_other_names_used', 'Other names beneficiary has used', 'textarea')
+    ]),
+    step('i130_beneficiary_birth_place', 'Beneficiary birth information', 'Birth city, country, date, and sex.', [
+      field('beneficiary_city_of_birth', 'Beneficiary city/town/village of birth', 'text'),
+      field('beneficiary_country_of_birth', 'Beneficiary country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i130_beneficiary_birth_sex', 'Beneficiary date of birth and sex', 'These map to Part 4 birth and sex fields.', [
+      field('beneficiary_date_of_birth', 'Beneficiary date of birth', 'date', { required: true }),
+      field('beneficiary_sex', 'Beneficiary sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i130_beneficiary_current_address', 'Beneficiary current physical address', 'Enter the beneficiary current address as a structured address.', [
+      addressBlockField('beneficiary_current_address', 'Beneficiary current physical address', 'beneficiary_current', { required: true })
+    ]),
+    step('i130_beneficiary_other_address', 'Beneficiary other address', 'Use this for an address outside the United States or another current address shown on the form.', [
+      addressBlockField('beneficiary_other_address', 'Beneficiary other address', 'beneficiary_other')
+    ]),
+    step('i130_beneficiary_contact', 'Beneficiary contact', 'Beneficiary phone and email.', [
+      field('beneficiary_daytime_phone', 'Beneficiary daytime phone', 'phone', { countryCodeDefault: '+1' }),
+      field('beneficiary_email_address', 'Beneficiary email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i130_beneficiary_marital_status', 'Beneficiary marital history', 'Number of marriages and current marital status.', [
+      field('beneficiary_number_of_marriages', 'How many times has the beneficiary been married?', 'number', { inputmode: 'numeric' }),
+      field('beneficiary_marital_status', 'Beneficiary marital status', 'select', { options: ['Single', 'Married', 'Divorced', 'Widowed', 'Separated', 'Annulled'] })
+    ]),
+    step('i130_beneficiary_current_marriage', 'Beneficiary current marriage', 'Current marriage date and place, if applicable.', [
+      field('beneficiary_current_marriage_date', 'Beneficiary current marriage date', 'date'),
+      field('beneficiary_current_marriage_place', 'Beneficiary current marriage place', 'text')
+    ]),
+    step('i130_beneficiary_spouse_prior', 'Beneficiary current or prior spouse', 'Current/prior spouse names and marriage end date if applicable.', [
+      field('beneficiary_spouse_name', 'Beneficiary spouse or prior spouse full name', 'text'),
+      field('beneficiary_prior_marriage_end_date', 'Date prior marriage ended, if any', 'date')
+    ]),
+    step('i130_beneficiary_children', 'Beneficiary children', 'Enter beneficiary children exactly as needed for Part 4.', [
+      field('beneficiary_children_count', 'How many children does the beneficiary have?', 'number', { inputmode: 'numeric' }),
+      field('beneficiary_children_details', 'Children names, dates of birth, countries of birth, and relationship', 'textarea')
+    ]),
+    step('i130_beneficiary_entry_status', 'Beneficiary entry and immigration status', 'If the beneficiary is in the United States, capture entry/status details.', [
+      field('beneficiary_in_us_now', 'Is the beneficiary currently in the United States?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('beneficiary_class_i94_status', 'Class of admission / I-94 status, if in the United States', 'text')
+    ]),
+    step('i130_beneficiary_i94_passport', 'Beneficiary I-94 and passport', 'I-94, passport, travel document, and expiration details.', [
+      field('beneficiary_i94_number', 'Beneficiary I-94 number, if any', 'text', { autocomplete: 'off' }),
+      field('beneficiary_passport_or_travel_document', 'Passport or travel document number', 'text', { autocomplete: 'off' })
+    ]),
+    step('i130_beneficiary_passport_country', 'Beneficiary passport country and expiration', 'Country of issuance and expiration date.', [
+      field('beneficiary_passport_country', 'Country of issuance', 'select', { options: COUNTRY_OPTIONS }),
+      field('beneficiary_passport_expiration', 'Passport/travel document expiration date', 'date')
+    ]),
+    step('i130_beneficiary_employment', 'Beneficiary employment', 'Current employer, address, occupation, and start date.', [
+      employmentHistoryField('beneficiary_current_employment', 'Beneficiary current employment', { entries: 1 })
+    ]),
+    step('i130_beneficiary_removal', 'Beneficiary immigration proceedings', 'Removal, exclusion, rescission, or judicial proceedings questions.', [
+      field('beneficiary_in_removal_proceedings', 'Is the beneficiary in removal/exclusion/rescission/judicial proceedings?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('beneficiary_proceedings_details', 'If yes, city/state/date and details', 'textarea')
+    ]),
+    step('i130_beneficiary_other_relatives', 'Beneficiary relatives in the United States', 'List spouse, children, parents, or siblings in the United States if applicable.', [
+      field('beneficiary_us_relative_1', 'Relative 1 name and relationship', 'text'),
+      field('beneficiary_us_relative_2', 'Relative 2 name and relationship', 'text')
+    ]),
+    step('i130_prior_beneficiary_petition', 'Prior petition for beneficiary', 'Answer the Part 5 prior petition question.', [
+      field('prior_petition_filed_for_beneficiary', 'Has anyone else ever filed a petition for this beneficiary?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('prior_petition_details', 'Prior petition filer, place filed, date filed, and result', 'textarea')
+    ]),
+
+    // I-130 Part 6-9: statement, interpreter, preparer, additional information.
+    step('i130_petitioner_statement', 'Petitioner statement', 'Choose the petitioner statement that applies before signature.', [
+      field('petitioner_statement', 'Petitioner statement', 'radio', {
+        options: ['I can read and understand English', 'Interpreter read the petition to me']
+      }),
+      field('petitioner_statement_language', 'Language used by interpreter, if any', 'text')
+    ]),
+    step('i130_petitioner_contact', 'Petitioner contact information', 'Petitioner phone and email for Part 6.', [
+      field('petitioner_daytime_phone', 'Petitioner daytime phone', 'phone', { countryCodeDefault: '+1' }),
+      field('petitioner_email_address', 'Petitioner email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i130_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer details are collected.', [
+      field('has_interpreter', 'Will an interpreter be used for this petition?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this petition for the petitioner?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('i130_additional_information', 'Additional information', 'Use only for extra explanations that do not fit in earlier fields.', [
+      field('i130_additional_information', 'Additional information for Part 9, if any', 'textarea')
+    ])
+  ];
+}
+
+function i130aSpecificSteps() {
+  return [
+    // I-130A Part 1, pages 1-2: spouse beneficiary.
+    step('i130a_spouse_numbers', 'Spouse beneficiary USCIS numbers', 'Use spouse beneficiary numbers exactly as shown, if any.', [
+      field('spouse_alien_number', 'Spouse beneficiary A-number, if any', 'text', { autocomplete: 'off' }),
+      field('spouse_uscis_online_account_number', 'Spouse beneficiary USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i130a_spouse_name', 'Spouse beneficiary legal name', 'Enter the spouse beneficiary name as shown on documents.', [
+      field('spouse_family_name', 'Spouse family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('spouse_given_name', 'Spouse given name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i130a_spouse_middle', 'Spouse beneficiary middle name', 'If there is no middle name, leave this blank.', [
+      field('spouse_middle_name', 'Spouse middle name', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('i130a_spouse_current_address', 'Spouse current physical address', 'Complete address with dates at this residence.', [
+      addressBlockField('spouse_current_address', 'Spouse current physical address', 'spouse_current', { required: true }),
+      field('spouse_current_address_from', 'Date from', 'date')
+    ]),
+    step('i130a_spouse_prior_address_1', 'Spouse prior physical address', 'Prior address with dates, if needed for the five-year history.', [
+      addressHistoryField('spouse_residence_history', 'Spouse residence history for the last five years', { entries: 2, required: true })
+    ]),
+    step('i130a_spouse_last_foreign_address', 'Spouse last address outside the United States', 'Use this only if the spouse lived outside the United States.', [
+      addressBlockField('spouse_last_foreign_address', 'Spouse last address outside the United States', 'spouse_last_foreign', {
+        countryDefault: ''
+      })
+    ]),
+    step('i130a_spouse_other_names', 'Spouse other names used', 'Prior legal names, maiden names, aliases, or N/A if required.', [
+      field('spouse_other_names_used', 'Other names spouse has used', 'textarea')
+    ]),
+    step('i130a_spouse_birth_sex', 'Spouse date of birth and sex', 'These map to Part 1 birth and sex fields.', [
+      field('spouse_date_of_birth', 'Spouse date of birth', 'date', { required: true }),
+      field('spouse_sex', 'Spouse sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i130a_spouse_birth_place', 'Spouse place of birth', 'City/town/village, country of birth, citizenship, and country of residence.', [
+      field('spouse_city_of_birth', 'Spouse city/town/village of birth', 'text'),
+      field('spouse_country_of_birth', 'Spouse country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i130a_spouse_citizenship_residence', 'Spouse citizenship and residence country', 'Country of citizenship and country of residence.', [
+      field('spouse_country_of_citizenship', 'Spouse country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS }),
+      field('spouse_country_of_residence', 'Spouse country of residence', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i130a_spouse_parent1', 'Spouse parent 1', 'Parent 1 name, date of birth, place of birth, and residence.', [
+      field('spouse_parent1_full_name', 'Spouse parent 1 full name', 'text'),
+      field('spouse_parent1_details', 'Parent 1 birth/residence details', 'textarea')
+    ]),
+    step('i130a_spouse_parent2', 'Spouse parent 2', 'Parent 2 name, date of birth, place of birth, and residence.', [
+      field('spouse_parent2_full_name', 'Spouse parent 2 full name', 'text'),
+      field('spouse_parent2_details', 'Parent 2 birth/residence details', 'textarea')
+    ]),
+
+    // I-130A Parts 2-3, pages 2-3: employment.
+    step('i130a_spouse_current_employment', 'Spouse current employment', 'Current employer, address, occupation, and dates.', [
+      employmentHistoryField('spouse_current_employment', 'Spouse current employment', { entries: 1 })
+    ]),
+    step('i130a_spouse_prior_employment', 'Spouse prior employment', 'Prior employment record if needed for the history period.', [
+      employmentHistoryField('spouse_employment_history', 'Spouse employment history for the last five years', { entries: 2 })
+    ]),
+    step('i130a_spouse_last_foreign_employment', 'Spouse last foreign employment', 'Last employment outside the United States, if applicable.', [
+      employmentHistoryField('spouse_last_foreign_employment', 'Spouse last foreign employment', { entries: 1 })
+    ]),
+
+    // I-130A Parts 4-7: statement, interpreter, preparer, additional information.
+    step('i130a_spouse_statement', 'Spouse beneficiary statement', 'Choose the statement that applies before signature.', [
+      field('spouse_statement', 'Spouse beneficiary statement', 'radio', {
+        options: ['I can read and understand English', 'Interpreter read the supplement to me']
+      }),
+      field('spouse_statement_language', 'Language used by interpreter, if any', 'text')
+    ]),
+    step('i130a_spouse_contact', 'Spouse beneficiary contact', 'Spouse phone and email.', [
+      field('spouse_daytime_phone', 'Spouse daytime phone', 'phone', { countryCodeDefault: '+1' }),
+      field('spouse_email_address', 'Spouse email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i130a_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer details are collected.', [
+      field('has_interpreter', 'Will an interpreter be used for this supplement?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this supplement for the spouse beneficiary?', 'radio', { options: ['Yes', 'No'] })
+    ]),
+    step('i130a_additional_information', 'Additional information', 'Use only for extra explanations that do not fit in earlier fields.', [
+      field('i130a_additional_information', 'Additional information for Part 7, if any', 'textarea')
+    ])
+  ];
+}
+
 const FORM_OVERRIDES = {
   'G-325A': [
     step('biographic_history', 'Biographic residence and employment history', 'Biographic information forms commonly require structured residence and employment history.', [
@@ -1701,36 +2014,8 @@ const FORM_OVERRIDES = {
       field('biographic_change_details', 'If name or biographic information changed, describe the change', 'textarea')
     ])
   ],
-  'I-130': [
-    step('family_petition', 'Family petition details', 'Information about the petitioner, beneficiary, and relationship.', [
-      field('petitioner_status', 'Petitioner status', 'select', {
-        required: true,
-        options: ['U.S. citizen', 'Lawful permanent resident', 'Not sure']
-      }),
-      field('relationship_to_beneficiary', 'Relationship to beneficiary', 'select', {
-        required: true,
-        options: ['Spouse', 'Parent', 'Child', 'Sibling', 'Other']
-      }),
-      field('beneficiary_full_name', 'Beneficiary full legal name', 'text', {
-        required: true,
-        autocomplete: 'name'
-      }),
-      field('beneficiary_location', 'Is the beneficiary inside the United States?', 'radio', {
-        required: true,
-        options: ['Yes', 'No', 'Not sure']
-      }),
-      field('marriage_date', 'If spouse case, date of marriage', 'date'),
-      field('prior_marriages', 'Any prior marriages for either person?', 'textarea')
-    ])
-  ],
-  'I-130A': [
-    step('spouse_biographic', 'Spouse beneficiary biographic details', 'Form I-130A usually supports a spouse petition.', [
-      addressHistoryField('spouse_residence_history', 'Beneficiary residence history for the last five years', { required: true }),
-      employmentHistoryField('spouse_employment_history', 'Beneficiary employment history for the last five years'),
-      field('spouse_parents_names', 'Beneficiary parents names and places of birth', 'textarea'),
-      field('last_address_together', 'Last address where spouses lived together', 'textarea')
-    ])
-  ],
+  'I-130': i130SpecificSteps(),
+  'I-130A': i130aSpecificSteps(),
   'I-131': [
     step('travel_document', 'Travel document request', 'Tell us which travel document is needed and why.', [
       field('travel_document_type', 'Type of travel document', 'select', {
@@ -2215,6 +2500,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
         ...purposeSteps(code, title),
         ...i765OrderedSteps()
       ]
+      : code === 'I-130'
+        ? [
+          ...purposeSteps(code, title),
+          ...i130SpecificSteps(),
+          ...evidenceSteps()
+        ]
+        : code === 'I-130A'
+          ? [
+            ...purposeSteps(code, title),
+            ...i130aSpecificSteps(),
+            ...evidenceSteps()
+          ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),
