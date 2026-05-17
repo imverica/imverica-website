@@ -60,34 +60,6 @@
       "page": 2,
       "fields": [
         {
-          "key": "FamilyNameLastName",
-          "label": "Family Name Last Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "GivenNameFirstName",
-          "label": "Given Name First Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "MiddleName",
-          "label": "Middle Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "OtherNamesUsed",
-          "label": "Other Names Used",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "USCISAccountNumber",
           "label": "USCISAccount Number",
           "mode": "text",
@@ -97,20 +69,6 @@
         {
           "key": "SocialSecurityNumber",
           "label": "Social Security Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "DateofBirth",
-          "label": "Dateof Birth",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "PlaceofBirth",
-          "label": "Placeof Birth",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -274,6 +232,48 @@
               "label": "Option 1"
             }
           ]
+        },
+        {
+          "key": "Petitioner_FamilyName",
+          "label": "Petitioner Family Name (Last Name)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Petitioner_GivenName",
+          "label": "Petitioner Given Name (First Name)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Petitioner_MiddleName",
+          "label": "Petitioner Middle Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Petitioner_OtherNames",
+          "label": "Petitioner Other Names Used (incl. maiden)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Petitioner_DateOfBirth",
+          "label": "Petitioner Date of Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Petitioner_PlaceOfBirth",
+          "label": "Petitioner Place of Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -349,6 +349,41 @@
         {
           "key": "P3_TelephoneNumber",
           "label": "Telephone Number",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_FamilyName",
+          "label": "Spouse Family Name (Last Name)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_GivenName",
+          "label": "Spouse Given Name (First Name)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_MiddleName",
+          "label": "Spouse Middle Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_DateOfBirth",
+          "label": "Spouse Date of Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_PlaceOfBirth",
+          "label": "Spouse Place of Birth",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -584,6 +619,83 @@
           "label": "Line 8 a Country",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Current_FamilyName",
+          "label": "Child's Current Family Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Current_GivenName",
+          "label": "Child's Current Given Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Current_MiddleName",
+          "label": "Child's Current Middle Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Birth_FamilyName",
+          "label": "Child's Family Name at Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Birth_GivenName",
+          "label": "Child's Given Name at Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Birth_MiddleName",
+          "label": "Child's Middle Name at Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Other_FamilyName",
+          "label": "Other Family Name Child is/was Known By",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Other_GivenName",
+          "label": "Other Given Name Child is/was Known By",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Other_MiddleName",
+          "label": "Other Middle Name Child is/was Known By",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_DateOfBirth",
+          "label": "Child's Date of Birth",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_PlaceOfBirth",
+          "label": "Child's Place of Birth",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
