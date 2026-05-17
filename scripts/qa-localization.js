@@ -110,7 +110,7 @@ async function main() {
   assert(Array.isArray(mailingAddress.countryOptions) && mailingAddress.countryOptions.length > 100, 'mailing address country dropdown should be available');
 
   const n400 = await callFlow('N-400', 'ru');
-  const naturalization = step(n400, 'naturalization');
+  const naturalization = step(n400, 'n400_address_history');
   const history = field(naturalization, 'addresses_last_five_years');
   assert(Array.isArray(history.countryOptions) && history.countryOptions.length > 100, 'history country dropdown should be available');
   assert(optionLabel(optionByValue(history.countryOptions, 'Ukraine')).includes('Украина'), 'history country dropdown should localize common countries');

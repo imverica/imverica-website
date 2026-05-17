@@ -2537,6 +2537,10 @@ function closeDetail(id) {
     var value = state.formAnswers[condition.id];
     if (condition.equals !== undefined) return String(value || '') === String(condition.equals);
     if (condition.notEquals !== undefined) return String(value || '') !== String(condition.notEquals);
+    if (condition.includes !== undefined) {
+      if (Array.isArray(value)) return value.map(String).includes(String(condition.includes));
+      return String(value || '').split(',').map(function (item) { return item.trim(); }).includes(String(condition.includes));
+    }
     if (condition.hasValue) return !isEmptyFlowValue({ type: 'text' }, value);
     return true;
   }
