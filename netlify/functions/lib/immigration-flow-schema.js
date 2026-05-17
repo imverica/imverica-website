@@ -2213,6 +2213,154 @@ function i131SpecificSteps() {
   ];
 }
 
+function i90SpecificSteps() {
+  return [
+    // I-90 Part 1, page 1: applicant numbers and name.
+    step('i90_numbers', 'I-90 USCIS numbers', 'Start with the A-number and USCIS online account number if available.', [
+      field('alien_number', 'A-number', 'text', { required: true, autocomplete: 'off', placeholder: '9 digits' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i90_legal_name', 'Current legal name', 'Enter the name exactly as it should appear on Form I-90.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i90_middle_name', 'Middle name', 'If there is no middle name, leave this blank.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('i90_other_names', 'Other names used', 'Prior legal names, maiden names, aliases, or nicknames.', [
+      field('other_names_used', 'Other names used', 'textarea')
+    ]),
+
+    // I-90 Part 1, pages 1-2: mailing and physical address.
+    step('i90_mailing_address', 'Mailing address', 'Complete the mailing address as a structured address block.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    ]),
+    step('i90_physical_address_match', 'Physical address', 'USCIS asks whether the physical address is the same as the mailing address.', [
+      field('physical_same_as_mailing', 'Is your physical address the same as your mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i90_physical_address', 'Current physical address', 'Complete this only if the physical address is different from the mailing address.', [
+      addressBlockField('physical_address', 'Physical address', 'physical', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+
+    // I-90 Part 1, page 2: birth, identity, and admission.
+    step('i90_birth_sex', 'Birth date and sex', 'These fields appear together on page 2.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('sex', 'Sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i90_birth_place', 'Place of birth', 'City/town and country of birth.', [
+      field('city_of_birth', 'City or town of birth', 'text', { autocomplete: 'off' }),
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i90_parent_names', 'Parent given names', 'I-90 asks for mother and father given names.', [
+      field('mother_given_name', 'Mother given name', 'text', { autocomplete: 'given-name' }),
+      field('father_given_name', 'Father given name', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i90_ssn_admission', 'SSN and admission details', 'USCIS expects a 9-digit SSN if one exists and the admission date/class from the green card record.', [
+      field('ssn', 'Social Security number, if any', 'text', { inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits' }),
+      field('class_of_admission', 'Class of admission', 'text', { autocomplete: 'off' })
+    ]),
+    step('i90_admission_date', 'Admission date', 'Date admitted as a permanent resident or adjusted to permanent resident.', [
+      field('date_of_admission', 'Date of admission or adjustment', 'date')
+    ]),
+
+    // I-90 Part 2, pages 2-3: application type and reason.
+    step('i90_application_type', 'I-90 application type', 'Choose the closest official I-90 Part 2 application type.', [
+      field('i90_application_type', 'Application type', 'select', {
+        required: true,
+        options: [
+          'Lawful permanent resident',
+          'Permanent resident in commuter status',
+          'Conditional permanent resident',
+          'Other or not sure'
+        ]
+      })
+    ]),
+    step('i90_reason', 'Reason for I-90', 'This is the main Part 2 reason for replacement, renewal, or correction.', [
+      field('i90_reason', 'Reason for I-90', 'select', {
+        required: true,
+        options: [
+          'Renew expiring or expired card',
+          'Replace lost, stolen, or damaged card',
+          'Correct card error',
+          'Name or biographic change',
+          'Never received card',
+          'Card issued but contains DHS error',
+          'Other or not sure'
+        ]
+      })
+    ]),
+    step('i90_card_details', 'Green card details', 'Use the current or prior green card information when available.', [
+      field('green_card_expiration', 'Current green card expiration date', 'date'),
+      field('green_card_lost_or_stolen_details', 'If lost, stolen, damaged, or never received, explain what happened', 'textarea', {
+        showWhenAny: [
+          { id: 'i90_reason', equals: 'Replace lost, stolen, or damaged card' },
+          { id: 'i90_reason', equals: 'Never received card' }
+        ]
+      })
+    ]),
+    step('i90_correction_details', 'Correction or biographic change', 'Complete only if the card needs a correction or biographic update.', [
+      field('biographic_change_details', 'Name, biographic, or DHS error correction details', 'textarea', {
+        showWhenAny: [
+          { id: 'i90_reason', equals: 'Correct card error' },
+          { id: 'i90_reason', equals: 'Name or biographic change' },
+          { id: 'i90_reason', equals: 'Card issued but contains DHS error' }
+        ]
+      })
+    ]),
+    step('i90_processing_info', 'Prior card processing information', 'Complete if known from the original immigrant visa or adjustment record.', [
+      field('i90_visa_or_adjustment_location', 'Location where immigrant visa or adjustment was applied for', 'text'),
+      field('i90_card_issued_location', 'Location where immigrant visa or green card was issued', 'text')
+    ]),
+
+    // I-90 Part 3-4, page 3: biographic information and accommodations.
+    step('i90_biographic_ethnicity_race', 'Ethnicity and race', 'Use the official USCIS biographic options.', [
+      field('ethnicity', 'Ethnicity', 'radio', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('race', 'Race', 'checkboxes', { options: ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White'] })
+    ]),
+    step('i90_biographic_body', 'Height and weight', 'Use feet, inches, and pounds.', [
+      field('height_feet', 'Height feet', 'select', { options: ['3', '4', '5', '6', '7', '8'] }),
+      field('height_inches', 'Height inches', 'select', { options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] })
+    ]),
+    step('i90_biographic_colors', 'Eye color and hair color', 'Select the closest USCIS option.', [
+      field('eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
+      field('hair_color', 'Hair color', 'select', { options: ['Bald', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown'] })
+    ]),
+    step('i90_accommodations', 'Disability accommodation', 'Complete only if an accommodation is requested.', [
+      field('disability_accommodation_needed', 'Do you need a disability accommodation?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('disability_accommodation_details', 'Accommodation details', 'textarea', {
+        showWhenAny: [
+          { id: 'disability_accommodation_needed', equals: 'Yes' },
+          { id: 'disability_accommodation_needed', equals: 'Not sure' }
+        ]
+      })
+    ]),
+
+    // I-90 Part 5 and optional interpreter/preparer sections.
+    step('i90_applicant_statement', 'Applicant statement', 'Choose whether the applicant reads English or used an interpreter.', [
+      field('applicant_statement', 'Applicant statement', 'radio', {
+        options: ['I can read and understand English', 'Interpreter read the application to me']
+      }),
+      field('applicant_statement_language', 'Language used by interpreter, if any', 'text')
+    ]),
+    step('i90_applicant_contact', 'Applicant contact information', 'USCIS phone fields should be captured cleanly for the signature/contact section.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('mobile_phone', 'Mobile phone, if any', 'phone', { autocomplete: 'tel' })
+    ]),
+    step('i90_applicant_email', 'Applicant email', 'Use a valid email address if the applicant has one.', [
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i90_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function n400SpecificSteps() {
   return [
     // N-400 Part 1, page 1: eligibility.
@@ -2442,17 +2590,7 @@ const FORM_OVERRIDES = {
       field('g325a_additional_history_notes', 'Additional biographic history notes', 'textarea')
     ])
   ],
-  'I-90': [
-    step('green_card_replacement', 'Green card replacement or renewal', 'Tell us why Form I-90 is being prepared.', [
-      field('i90_reason', 'Reason for I-90', 'select', {
-        required: true,
-        options: ['Renew expiring or expired card', 'Replace lost, stolen, or damaged card', 'Correct card error', 'Name or biographic change', 'Never received card', 'Other']
-      }),
-      field('green_card_expiration', 'Current green card expiration date', 'date'),
-      field('green_card_lost_or_stolen_details', 'If lost/stolen/damaged, explain what happened', 'textarea'),
-      field('biographic_change_details', 'If name or biographic information changed, describe the change', 'textarea')
-    ])
-  ],
+  'I-90': i90SpecificSteps(),
   'I-130': i130SpecificSteps(),
   'I-130A': i130aSpecificSteps(),
   'I-131': i131SpecificSteps(),
@@ -2936,12 +3074,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
               ...i131SpecificSteps(),
               ...evidenceSteps()
             ]
-            : code === 'N-400'
+            : code === 'I-90'
               ? [
                 ...purposeSteps(code, title),
-                ...n400SpecificSteps(),
+                ...i90SpecificSteps(),
                 ...evidenceSteps()
               ]
+              : code === 'N-400'
+                ? [
+                  ...purposeSteps(code, title),
+                  ...n400SpecificSteps(),
+                  ...evidenceSteps()
+                ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),

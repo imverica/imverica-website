@@ -43,7 +43,7 @@ function syntaxCheckInlineScripts() {
 }
 
 async function main() {
-  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-589', 'I-864', 'I-912', 'N-400', 'AR-11'];
+  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-589', 'I-864', 'I-912', 'N-400', 'AR-11'];
 
   for (const code of codes) {
     const { response, body } = await callFlow(code);
@@ -126,6 +126,19 @@ async function main() {
   assert(i131Fields.find((field) => field.id === 'i131_mailing_address')?.type === 'addressBlock', 'I-131: mailing address should be structured');
   assert(i131Fields.find((field) => field.id === 'i131_beneficiary_address')?.type === 'addressBlock', 'I-131: beneficiary address should be structured');
   assert(i131Fields.find((field) => field.id === 'i131_daytime_phone')?.type === 'phone', 'I-131: daytime phone should be split phone field');
+
+  const i90 = await callFlow('I-90', 'en');
+  const i90Order = i90.body.steps.map((step) => step.id);
+  assert(i90Order.indexOf('i90_numbers') < i90Order.indexOf('i90_legal_name'), 'I-90: numbers must come before applicant name');
+  assert(i90Order.indexOf('i90_legal_name') < i90Order.indexOf('i90_mailing_address'), 'I-90: applicant name must come before mailing address');
+  assert(i90Order.indexOf('i90_mailing_address') < i90Order.indexOf('i90_birth_sex'), 'I-90: address must come before birth and sex');
+  assert(i90Order.indexOf('i90_birth_place') < i90Order.indexOf('i90_application_type'), 'I-90: biographic fields must come before Part 2 application type');
+  assert(i90Order.indexOf('i90_reason') < i90Order.indexOf('i90_biographic_ethnicity_race'), 'I-90: reason must come before biographic Part 3 fields');
+  assert(i90Order.indexOf('i90_biographic_colors') < i90Order.indexOf('i90_applicant_statement'), 'I-90: biographic fields must come before applicant statement');
+  const i90Fields = i90.body.steps.flatMap((step) => step.fields || []);
+  assert(i90Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-90: mailing address should be structured');
+  assert(i90Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-90: physical address should be structured');
+  assert(i90Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-90: daytime phone should be split phone field');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
