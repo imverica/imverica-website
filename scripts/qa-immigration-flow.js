@@ -169,6 +169,18 @@ async function main() {
   assert(i864Fields.find((field) => field.id === 'sponsor_physical_address')?.type === 'addressBlock', 'I-864: sponsor physical address should be structured');
   assert(i864Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-864: daytime phone should be split phone field');
 
+  const i912 = await callFlow('I-912', 'en');
+  const i912Order = i912.body.steps.map((step) => step.id);
+  assert(i912Order.indexOf('i912_request_type') < i912Order.indexOf('i912_primary_applicant_name'), 'I-912: request type must come before applicant name');
+  assert(i912Order.indexOf('i912_mailing_address') < i912Order.indexOf('i912_basis'), 'I-912: address/contact must come before fee waiver basis');
+  assert(i912Order.indexOf('i912_basis') < i912Order.indexOf('i912_household_size'), 'I-912: basis must come before household details');
+  assert(i912Order.indexOf('i912_household_income') < i912Order.indexOf('i912_assets'), 'I-912: income must come before assets');
+  assert(i912Order.indexOf('i912_financial_hardship') < i912Order.indexOf('i912_applicant_statement'), 'I-912: hardship must come before applicant statement');
+  const i912Fields = i912.body.steps.flatMap((step) => step.fields || []);
+  assert(i912Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-912: mailing address should be structured');
+  assert(i912Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-912: daytime phone should be split phone field');
+  assert(i912Fields.find((field) => field.id === 'fee_waiver_basis')?.type === 'checkboxes', 'I-912: fee waiver basis should be checkboxes');
+
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
   assert(biographicHistory?.fields.find((field) => field.id === 'g325a_residence_history')?.type === 'addressHistory', 'G-325A: residence history should be structured');

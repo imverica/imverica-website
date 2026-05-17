@@ -2544,6 +2544,99 @@ function i864SpecificSteps() {
   ];
 }
 
+function i912SpecificSteps() {
+  return [
+    // I-912 Part 1: request type and forms.
+    step('i912_request_type', 'Fee waiver request type', 'Start with the forms and applicants covered by this fee waiver request.', [
+      field('fee_waiver_forms', 'Forms requesting fee waiver', 'textarea', {
+        required: true,
+        placeholder: 'Example: I-485, I-765, I-131, N-400.'
+      }),
+      field('fee_waiver_applicant_count', 'Number of applicants included', 'number', { inputmode: 'numeric' })
+    ]),
+    step('i912_primary_applicant_name', 'Primary applicant name', 'Enter the primary applicant name exactly as shown on the USCIS form.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i912_primary_applicant_middle', 'Middle name and numbers', 'Middle name may be blank if none. Add USCIS numbers if available.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' })
+    ]),
+    step('i912_applicant_birth_status', 'Applicant birth and status', 'Date of birth, marital status, and immigration status.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('current_immigration_status', 'Current immigration status', 'text')
+    ]),
+    step('i912_mailing_address', 'Mailing address', 'Complete applicant mailing address as a structured block.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    ]),
+    step('i912_contact', 'Applicant contact information', 'Phone and email for contact and signature sections.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+
+    // I-912 Part 2-4: basis for fee waiver.
+    step('i912_basis', 'Fee waiver basis', 'Select each basis that applies. This is factual intake, not eligibility advice.', [
+      field('fee_waiver_basis', 'Fee waiver basis', 'checkboxes', {
+        required: true,
+        options: ['Means-tested benefit', 'Household income at or below guideline', 'Financial hardship', 'Not sure']
+      })
+    ]),
+    step('i912_means_tested_benefits', 'Means-tested benefits', 'Complete only if a means-tested benefit is being used.', [
+      field('benefits_received', 'Public benefits received', 'textarea', {
+        placeholder: 'Benefit name, recipient, agency, approval date, and proof available.',
+        showWhenAny: [
+          { id: 'fee_waiver_basis', includes: 'Means-tested benefit' },
+          { id: 'fee_waiver_basis', includes: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i912_household_size', 'Household size', 'Household size must match income evidence.', [
+      field('household_size_fee_waiver', 'Household size', 'number', { required: true, inputmode: 'numeric' }),
+      field('i912_household_members_details', 'Household members and relationships', 'textarea')
+    ]),
+    step('i912_household_income', 'Household income', 'Income, employment, unemployment, and support information.', [
+      field('household_income', 'Household monthly or annual income', 'text', { required: true, inputmode: 'decimal' }),
+      field('i912_income_evidence_available', 'Income evidence available', 'checkboxes', {
+        options: ['Pay stubs', 'Tax return', 'W-2/1099', 'Benefit letter', 'Bank statements', 'Employer letter', 'Other']
+      })
+    ]),
+    step('i912_assets', 'Assets and resources', 'List assets only if relevant to the hardship analysis.', [
+      field('i912_assets_total', 'Approximate total assets/resources', 'text', { inputmode: 'decimal' }),
+      field('i912_assets_details', 'Asset/resource details', 'textarea')
+    ]),
+    step('i912_monthly_expenses', 'Monthly expenses', 'Capture rent, utilities, food, medical, debt, and other expenses.', [
+      field('i912_monthly_expenses_total', 'Approximate total monthly expenses', 'text', { inputmode: 'decimal' }),
+      field('i912_expenses_details', 'Expense details', 'textarea')
+    ]),
+    step('i912_financial_hardship', 'Financial hardship', 'Complete only if hardship is part of the request or the basis is not clear.', [
+      field('hardship_explanation', 'Financial hardship explanation', 'textarea', {
+        showWhenAny: [
+          { id: 'fee_waiver_basis', includes: 'Financial hardship' },
+          { id: 'fee_waiver_basis', includes: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i912_hardship_documents', 'Hardship documents', 'List documents available to support the hardship request.', [
+      field('i912_hardship_documents_available', 'Hardship documents available', 'checkboxes', {
+        options: ['Medical bills', 'Eviction notice', 'Utility shutoff notice', 'Unemployment proof', 'Debt/collection notices', 'Other']
+      }),
+      field('i912_additional_hardship_notes', 'Additional hardship notes', 'textarea')
+    ]),
+
+    // I-912 statement/interpreter/preparer.
+    step('i912_applicant_statement', 'Applicant statement', 'Choose whether applicant reads English or used an interpreter.', [
+      field('applicant_statement', 'Applicant statement', 'radio', {
+        options: ['I can read and understand English', 'Interpreter read the request to me']
+      }),
+      field('applicant_statement_language', 'Language used by interpreter, if any', 'text')
+    ]),
+    step('i912_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this request?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this request for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -3033,18 +3126,7 @@ const FORM_OVERRIDES = {
       field('proof_of_residence_available', 'Proof of same residence or household relationship available?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
     ])
   ],
-  'I-912': [
-    step('fee_waiver', 'Fee waiver basis', 'Fee waiver facts and documents.', [
-      field('fee_waiver_basis', 'Fee waiver basis', 'checkboxes', {
-        required: true,
-        options: ['Means-tested benefit', 'Household income at or below guideline', 'Financial hardship', 'Not sure']
-      }),
-      field('benefits_received', 'Public benefits received, if any', 'textarea'),
-      field('household_income', 'Household income', 'text', { inputmode: 'decimal' }),
-      field('household_size_fee_waiver', 'Household size', 'number', { inputmode: 'numeric' }),
-      field('hardship_explanation', 'Financial hardship explanation', 'textarea')
-    ])
-  ],
+  'I-912': i912SpecificSteps(),
   'N-400': n400SpecificSteps(),
   'N-565': [
     step('certificate_replacement', 'Certificate replacement', 'Replacement or correction of citizenship/naturalization certificate.', [
@@ -3404,12 +3486,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                     ...i864SpecificSteps(),
                     ...evidenceSteps()
                   ]
-                  : code === 'N-400'
+                  : code === 'I-912'
                     ? [
                       ...purposeSteps(code, title),
-                      ...n400SpecificSteps(),
+                      ...i912SpecificSteps(),
                       ...evidenceSteps()
                     ]
+                    : code === 'N-400'
+                      ? [
+                        ...purposeSteps(code, title),
+                        ...n400SpecificSteps(),
+                        ...evidenceSteps()
+                      ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),
