@@ -137,6 +137,13 @@ def main():
             "page": 4,
         })
 
+    # Identify fields by originalKey (PDF-level), so re-runs against already-
+    # renamed maps still work.
+    def base_key(original):
+        # Extract leaf name from 'form1[0].#subform[4].TextField13[0]' -> 'TextField13'
+        leaf = original.split(".")[-1]
+        return leaf.split("[")[0]
+
     # Process each table
     for f in p4:
         tu = tus.get(f["originalKey"], "")
@@ -147,24 +154,25 @@ def main():
         # Skip already-named fields (Deceased checkboxes m/f/s1..s4 are clean)
         if t == "T5" and kind == "checkbox":
             continue
+        # Use the PDF-level leaf name, not the (possibly already-renamed) key
+        pdf_key = base_key(f["originalKey"])
 
         if t == "T1":
             row = row_index(f["y"], T1_ROWS_Y)
             if row is None: continue
-            row_label = ["Address Before US (most recent before coming)", "Last Address in Country of Fear"][row]
-            if "TextField13" == f["key"]:
+            if pdf_key == "TextField13":
                 col = col_from_x(f["x"], COLS_ADDR)
                 if not col: continue
                 col_key, col_label = col
                 new_key = f"PtAIII_Item1_Row{row+1}_{col_key}"
-                label = f"{HEADER_T1} — Row {row+1} ({row_label}) — {col_label}"
+                label = f"{HEADER_T1} — Row {row+1} — {col_label}"
                 emit(f, new_key, label)
-            elif "DateTime" in f["key"]:
+            elif pdf_key.startswith("DateTime"):
                 from_to = "From" if abs(f["x"] - DATE_FROM_X) < X_TOL else ("To" if abs(f["x"] - DATE_TO_X) < X_TOL else None)
                 if not from_to: continue
                 col_label = "From (Mo/Yr)" if from_to == "From" else "To (Mo/Yr)"
                 new_key = f"PtAIII_Item1_Row{row+1}_Date{from_to}"
-                label = f"{HEADER_T1} — Row {row+1} ({row_label}) — {col_label}"
+                label = f"{HEADER_T1} — Row {row+1} — {col_label}"
                 emit(f, new_key, label)
 
         elif t in ("T2", "T3", "T4"):
@@ -175,35 +183,34 @@ def main():
             }[t]
             row = row_index(f["y"], rows_y)
             if row is None: continue
-            row_note = " (present)" if row == 0 else ""
 
-            if "TextField13" == f["key"]:
+            if pdf_key == "TextField13":
                 col = col_from_x(f["x"], cols)
                 if not col: continue
                 col_key, col_label = col
                 new_key = f"PtAIII_Item{item_num}_Row{row+1}_{col_key}"
-                label = f"{header} — Row {row+1}{row_note} — {col_label}"
+                label = f"{header} — Row {row+1} — {col_label}"
                 emit(f, new_key, label)
-            elif "DateTime" in f["key"]:
+            elif pdf_key.startswith("DateTime"):
                 from_to = "From" if abs(f["x"] - DATE_FROM_X) < X_TOL else ("To" if abs(f["x"] - DATE_TO_X) < X_TOL else None)
                 if not from_to: continue
                 col_label = "From (Mo/Yr)" if from_to == "From" else "To (Mo/Yr)"
                 new_key = f"PtAIII_Item{item_num}_Row{row+1}_Date{from_to}"
-                label = f"{header} — Row {row+1}{row_note} — {col_label}"
+                label = f"{header} — Row {row+1} — {col_label}"
                 emit(f, new_key, label)
 
         elif t == "T5":
             row = row_index(f["y"], T5_ROWS_Y)
             if row is None: continue
             row_label = T5_ROWS[row]
-            if "TextField13" == f["key"]:
+            if pdf_key == "TextField13":
                 col = col_from_x(f["x"], COLS_PARENTS)
                 if not col: continue
                 col_key, col_label = col
                 new_key = f"PtAIII_Item5_{row_label}_{col_key}"
                 label = f"{HEADER_T5} — {row_label} — {col_label}"
                 emit(f, new_key, label)
-            elif f["key"] == "TextField35":
+            elif pdf_key == "TextField35":
                 col_key, col_label = T5_CURRENT_LOC_COL
                 new_key = f"PtAIII_Item5_{row_label}_{col_key}"
                 label = f"{HEADER_T5} — {row_label} — {col_label}"
@@ -236,10 +243,6 @@ def main():
     # Update questionnaire
     with open(q_path) as fh:
         q = json.load(fh)
-    existing = set()
-    for p in q.get("pages", []):
-        for fld in p.get("fields", []) or []:
-            existing.add(fld.get("key"))
     p4_page = next((p for p in q["pages"] if p.get("page") == 4), None)
     q_removed = 0
     q_added = 0
@@ -250,6 +253,11 @@ def main():
             if fld.get("key") not in old_keys_to_remove
         ]
         q_removed = before - len(p4_page["fields"])
+        # Recompute existing keys AFTER removal so we can add fresh entries.
+        existing = set()
+        for p in q.get("pages", []):
+            for fld in p.get("fields", []) or []:
+                existing.add(fld.get("key"))
         for r_ in renames:
             if r_["newKey"] in existing:
                 continue
