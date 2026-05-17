@@ -43,7 +43,7 @@ function syntaxCheckInlineScripts() {
 }
 
 async function main() {
-  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-589', 'I-751', 'I-864', 'I-912', 'N-400', 'AR-11'];
+  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-539', 'I-589', 'I-751', 'I-864', 'I-912', 'N-400', 'AR-11'];
 
   for (const code of codes) {
     const { response, body } = await callFlow(code);
@@ -193,6 +193,18 @@ async function main() {
   assert(i751Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-751: physical address should be structured');
   assert(i751Fields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-751: residence history should be structured');
   assert(i751Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-751: daytime phone should be split phone field');
+
+  const i539 = await callFlow('I-539', 'en');
+  const i539Order = i539.body.steps.map((step) => step.id);
+  assert(i539Order.indexOf('i539_request_type') < i539Order.indexOf('i539_applicant_name'), 'I-539: request type must come before applicant name');
+  assert(i539Order.indexOf('i539_mailing_address') < i539Order.indexOf('i539_current_status'), 'I-539: address must come before current status');
+  assert(i539Order.indexOf('i539_current_status') < i539Order.indexOf('i539_passport'), 'I-539: status must come before passport details');
+  assert(i539Order.indexOf('i539_dependents') < i539Order.indexOf('i539_reason'), 'I-539: dependents must come before reason');
+  assert(i539Order.indexOf('i539_reason') < i539Order.indexOf('i539_contact'), 'I-539: reason/status docs must come before contact');
+  const i539Fields = i539.body.steps.flatMap((step) => step.fields || []);
+  assert(i539Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-539: mailing address should be structured');
+  assert(i539Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-539: physical address should be structured');
+  assert(i539Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-539: daytime phone should be split phone field');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');

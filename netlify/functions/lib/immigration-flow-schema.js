@@ -2755,6 +2755,99 @@ function i751SpecificSteps() {
   ];
 }
 
+function i539SpecificSteps() {
+  return [
+    // I-539 applicant and request.
+    step('i539_request_type', 'I-539 request type', 'Start with whether the request is extension, change of status, or reinstatement.', [
+      field('i539_request_type', 'Request type', 'select', {
+        required: true,
+        options: ['Extend stay in current status', 'Change to another status', 'Reinstatement', 'Other or not sure']
+      }),
+      field('requested_status', 'Requested status', 'text', { required: true, placeholder: 'Example: B-2, F-1, H-4, L-2.' })
+    ]),
+    step('i539_applicant_name', 'Applicant legal name', 'Enter the applicant name exactly as it should appear on the form.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i539_middle_other_names', 'Middle and other names', 'Leave middle name blank if none. List other names only if used.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('other_names_used', 'Other names used, if any', 'textarea')
+    ]),
+    step('i539_numbers', 'Applicant USCIS numbers', 'Use A-number, USCIS account number, and SSN if available.', [
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i539_birth_citizenship', 'Birth and citizenship', 'Date of birth, country of birth, and citizenship/nationality.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i539_citizenship', 'Citizenship or nationality', 'Country of citizenship or nationality.', [
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS }),
+      field('sex', 'Sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+
+    // I-539 address, status, and travel document.
+    step('i539_mailing_address', 'Mailing address', 'Complete applicant mailing address as a structured block.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    ]),
+    step('i539_physical_address_match', 'Physical address', 'USCIS asks whether physical address is the same as mailing.', [
+      field('physical_same_as_mailing', 'Is your physical address the same as mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i539_physical_address', 'Physical address details', 'Complete only if physical address differs from mailing.', [
+      addressBlockField('physical_address', 'Physical address', 'physical', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i539_current_status', 'Current status and I-94', 'Current nonimmigrant status and I-94 details.', [
+      field('current_nonimmigrant_status', 'Current nonimmigrant status', 'text', { required: true }),
+      field('i94_number', 'I-94 number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i539_i94_dates', 'Entry and expiration dates', 'Use dates from the I-94 and passport records.', [
+      field('last_arrival_date', 'Most recent U.S. arrival date', 'date'),
+      field('current_i94_expiration', 'Current I-94 expiration date', 'date')
+    ]),
+    step('i539_passport', 'Passport or travel document', 'Passport number, issuing country, and expiration.', [
+      field('passport_number', 'Passport number', 'text', { autocomplete: 'off' }),
+      field('passport_country_of_issuance', 'Country that issued passport', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i539_passport_expiration', 'Passport expiration', 'Expiration date from the passport or travel document.', [
+      field('passport_expiration', 'Passport expiration date', 'date')
+    ]),
+
+    // I-539 dependents and explanations.
+    step('i539_dependents', 'Dependents', 'I-539 may include dependents on I-539A.', [
+      field('dependents_included', 'Are dependents included?', 'radio', { options: ['Yes', 'No'] }),
+      field('i539_dependents_details', 'Dependent names, DOBs, status, and relationship', 'textarea', {
+        showWhen: [{ id: 'dependents_included', equals: 'Yes' }]
+      })
+    ]),
+    step('i539_reason', 'Reason for extension or change', 'Explain the requested extension/change in factual terms.', [
+      field('reason_for_extension_or_change', 'Reason for extension or change', 'textarea', { required: true })
+    ]),
+    step('i539_maintenance_of_status', 'Maintenance of status', 'Facts and documents showing the applicant has maintained status.', [
+      field('i539_status_maintenance_details', 'How have you maintained current status?', 'textarea'),
+      field('i539_status_documents_available', 'Status documents available', 'checkboxes', {
+        options: ['I-94', 'Passport', 'Visa', 'Approval notice', 'Pay stubs', 'School records', 'Other']
+      })
+    ]),
+    step('i539_public_benefits_criminal', 'Public benefits and criminal history', 'Any Yes or unsure answer needs document review.', [
+      field('i539_public_benefits_received', 'Have you received public benefits that must be disclosed?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i539_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i539_contact', 'Applicant contact information', 'Phone and email for the signature/contact section.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i539_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -3157,15 +3250,7 @@ const FORM_OVERRIDES = {
     ...i485CoreSteps(),
     ...buildI485Part9Steps(field, step)
   ],
-  'I-539': [
-    step('nonimmigrant_extension', 'Change or extend status', 'Information about the status being requested.', [
-      field('current_nonimmigrant_status', 'Current nonimmigrant status', 'text', { required: true }),
-      field('requested_status', 'Requested status', 'text', { required: true }),
-      field('current_i94_expiration', 'Current I-94 expiration date', 'date'),
-      field('dependents_included', 'Are dependents included?', 'radio', { options: ['Yes', 'No'] }),
-      field('reason_for_extension_or_change', 'Reason for extension or change', 'textarea', { required: true })
-    ])
-  ],
+  'I-539': i539SpecificSteps(),
   'I-589': i589SpecificSteps(),
   'I-751': i751SpecificSteps(),
   'I-765': [
@@ -3606,12 +3691,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                         ...i751SpecificSteps(),
                         ...evidenceSteps()
                       ]
-                      : code === 'N-400'
+                      : code === 'I-539'
                         ? [
                           ...purposeSteps(code, title),
-                          ...n400SpecificSteps(),
+                          ...i539SpecificSteps(),
                           ...evidenceSteps()
                         ]
+                        : code === 'N-400'
+                          ? [
+                            ...purposeSteps(code, title),
+                            ...n400SpecificSteps(),
+                            ...evidenceSteps()
+                          ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),
