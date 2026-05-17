@@ -5,76 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "TextField1",
-          "label": "Text Field1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Status",
-          "label": "Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
-          "key": "Beneficiary",
-          "label": "Beneficiary",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Child",
-          "label": "Child",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line1_FamilyName",
           "label": "Part 1 Line1 Family Name",
           "mode": "text",
@@ -131,27 +61,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line2_Unit",
-          "label": "P1 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line2_Number",
           "label": "P1 Line2 Number",
           "mode": "text",
@@ -180,13 +89,6 @@
           "defaultValue": ""
         },
         {
-          "key": "CheckBox1",
-          "label": "Check Box1",
-          "mode": "checkbox_single",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "key": "VolagNumber",
           "label": "Volag Number",
           "mode": "text",
@@ -196,6 +98,111 @@
         {
           "key": "USCISOnlineAcctNumber",
           "label": "USCISOnline Acct Number",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse",
+          "label": "The beneficiary is my: Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Unmarried_child",
+          "label": "The beneficiary is my: Select Unmarried child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Biological_Child",
+          "label": "The beneficiary is my Unmarried child who is a (n): Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Stepchild",
+          "label": "The beneficiary is my Unmarried child who is a (n): Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Adopted_Child",
+          "label": "The beneficiary is my Unmarried child who is a (n): Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You, the Petitioner.  2.  Address of Residence (Where you physically reside)    Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You, the Petitioner.  2.  Address of Residence (Where you physically reside)    Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You, the Petitioner.  2.  Address of Residence (Where you physically reside)   Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Refugee",
+          "label": "My Status. Select Refugee.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Asylee",
+          "label": "My Status. Select Asylee.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Lawful_Permanent_Resident_ba",
+          "label": "My Status. Select Lawful Permanent Resident based on previous Refugee status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Lawful_Permanent_Resident_ba_2",
+          "label": "My Status. Select Lawful Permanent Resident based on previous Asylee status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Total_Number_of_forms_you_in",
+          "label": "Number of relatives for whom I am filing separate Form I-7 30s. Enter Total Number of forms you intend to file.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "the_Number_in_sequence_that",
+          "label": "Number of relatives for whom I am filing separate Form I-7 30s. Enter the Number in sequence that this form represents (e. g. 1 of 5)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Total_Number_of_Relatives",
+          "label": "Number of relatives for whom I am filing separate Form I-7 30s. Enter Total Number of Relatives.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -239,27 +246,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line3__Unit",
-          "label": "P1 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line3__UnitAptSteFlrNumber",
@@ -316,23 +302,6 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
-        },
-        {
-          "key": "sex",
-          "label": "sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "CountryofCitizenshipNationality",
@@ -463,6 +432,41 @@
         {
           "key": "Part1_Line15_MiddleName1",
           "label": "Part 1 Line15 Middle Name1",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1.  Information About You, the Petitioner.  Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1.  Information About You, the Petitioner.  Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 1.  Information About You, the Petitioner.  Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Male",
+          "label": "Part 1.  Information About You, the Petitioner. Sex. 5. Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Female",
+          "label": "Part 1.  Information About You, the Petitioner. 5. Sex. Select Female.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -681,27 +685,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line2_Unit",
-          "label": "P2 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P2_Line2_Number",
           "label": "P2 Line2 Number",
           "mode": "text",
@@ -770,27 +753,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line3_Unit",
-          "label": "P2 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line3_AptSteFlrNumber",
@@ -917,6 +879,62 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 2.  Address of Residence (Where the beneficiary physically resides). Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 2.  Address of Residence (Where the beneficiary physically resides).  Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 2.  Address of Residence (Where the beneficiary physically resides). Select Apartm...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 3.  Mailing Address (If different from residence) Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 3.  Mailing Address (If different from residence) Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 3.  Mailing Address (If different from residence) Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Male_2",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 5. Sex. Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Female_2",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary. 5. Sex. Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1022,23 +1040,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Beneficiary",
-          "label": "Part 2 Beneficiary",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt2_CityCountry",
           "label": "Part 2 City Country",
           "mode": "text",
@@ -1072,27 +1073,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line22_Unit",
-          "label": "P2 Line22 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line22_Unit_AptSteFlrNumber",
@@ -1156,37 +1136,47 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item22_Suite",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary.  Name and mailing address of the beneficiary written in the language of the countr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item22_Apartment",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary.  Name and mailing address of the beneficiary written in the language of the countr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item22_Floor",
+          "label": "Part 2.  Information About Your Alien Relative, the Beneficiary.  Name and mailing address of the beneficiary written in the language of the countr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item21_Beneficiary_is_outside_the_U",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. 21. Select Beneficiary is outside the United States and will apply for travel autho...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item21_Beneficiary_is_currently_in",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. 21. Select Beneficiary is currently in the United States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 6,
       "fields": [
-        {
-          "key": "Part2_Bene_Info",
-          "label": "Part 2 Bene Info",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
         {
           "key": "Pt2_PastCourtProceedings",
           "label": "Part 2 Past Court Proceedings",
@@ -1207,23 +1197,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part2_bene_english",
-          "label": "Part 2 bene english",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt2_Line26_FluentLanguage",
@@ -1371,29 +1344,54 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item23_The_beneficiary_has_never_be",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. 23.  Check the box, A. through D, that applies. Select. A. The beneficiary has neve...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "The_beneficiary_is_now_in_im",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. Check the box, A. through D, that applies. Select B. The beneficiary is now in immi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "The_beneficiary_has_never_be",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. Check the box, A. through D, that applies. Select C. The beneficiary has never been...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "The_beneficiary_is_not_now_i",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. Check the box, A through D, that applies. Select D. The beneficiary is not now in i...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item25_Yes",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. 25. Is the beneficiary fluent in English? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item25_No",
+          "label": "Part 2. Information About Your Alien Relative, the Beneficiary. 25.  Is the beneficiary fluent in English? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 7,
       "fields": [
-        {
-          "key": "Part3_2year",
-          "label": "Part 3 2year",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Explanation",
           "label": "Explanation",
@@ -1428,6 +1426,20 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_No",
+          "label": "Part 3. Two-Year Filing Deadline. 1. Are you filing this application more than two years after the date you were admitted to the United States as a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes",
+          "label": "Part 3. Two-Year Filing Deadline. 1. Are you filing this application more than two years after the date you were admitted to the United States as a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1454,23 +1466,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P5_Line1_Checkbox",
-          "label": "P5 Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P5_Line5_PetitionerEmailAddress",
@@ -1506,6 +1501,20 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 5. Petitioner's Statement, Contact Information, Declaration, Certification, and Signature. Petitioner's Statement. 1. B. Select The interprete...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 5. Petitioner's Statement, Contact Information, Declaration, Certification, and Signature. NOTE:  Read the Penalties section of the Form I-7 3...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1532,23 +1541,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line1_Checkbox",
-          "label": "P6 Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P6_Line5_BenEmailAddress",
@@ -1581,6 +1573,20 @@
         {
           "key": "P6_L6b_BenSignature",
           "label": "P6 L6b Ben Signature",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an_2",
+          "label": "Part 6. Beneficiary's Statement, Contact Information, Declaration, Certification, and Signature if in the United States.  Beneficiary's Statement. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En_2",
+          "label": "Part 6. Beneficiary's Statement, Contact Information, Declaration, Certification, and Signature if in the United States. NOTE:  Read the informatio...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1647,27 +1653,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P7_Line3_Unit",
-          "label": "P7 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P7_Line3_Number",
           "label": "P7 Line3 Number",
           "mode": "text",
@@ -1726,6 +1711,27 @@
         {
           "key": "P7_L7a_InterSignature",
           "label": "P7 L7a Inter Signature",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite",
+          "label": "Part 7. Contact Information, Certification and Signature of the Person Interpreting this Petition, if Other Than the Petitioner or Beneficiary. Int...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor",
+          "label": "Part 7. Contact Information, Certification and Signature of the Person Interpreting this Petition, if Other Than the Petitioner or Beneficiary. Int...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment",
+          "label": "Part 7. Contact Information, Certification and Signature of the Person Interpreting this Petition, if Other Than the Petitioner or Beneficiary. Int...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1792,27 +1798,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P8_Line3_Unit",
-          "label": "P8 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P8_Line3_Number",
           "label": "P8 Line3 Number",
           "mode": "text",
@@ -1855,23 +1840,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8_Line7_chkbx",
-          "label": "Part 8 Line7 chkbx",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt8_Line7b_DoesNotExtend",
           "label": "Part 8 Line7b Does Not Extend",
           "mode": "checkbox_single",
@@ -1898,6 +1866,41 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite_2",
+          "label": "Part 8. Contact Information, Certification and Signature of the Person Preparing this Petition, if Other Than the Petitioner or Beneficiary. Prepar...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor_2",
+          "label": "Part 8. Contact Information, Certification and Signature of the Person Preparing this Petition, if Other Than the Petitioner or Beneficiary. Prepar...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment_2",
+          "label": "Part 8. Contact Information, Certification and Signature of the Person Preparing this Petition, if Other Than the Petitioner or Beneficiary. Prepar...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 8. Contact Information, Certification and Signature of the Person Preparing this Petition, if Other Than the Petitioner or Beneficiary. Prepar...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit",
+          "label": "Part 8. Contact Information, Certification and Signature of the Person Preparing this Petition, if Other Than the Petitioner or Beneficiary. Prepar...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1909,6 +1912,83 @@
           "label": "Date Time Field1",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "all_true_to_the_best_of_my_k",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Beneficiaries in the United States will be interview...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "not_all_true_to_the_best_of",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). I swear (affirm) that I know the contents of this pe...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Beneficiary_Approved_for_Tra",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Select Beneficiary Approved for Travel.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Petition_Returned_to_Service",
+          "label": "Part 8. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Select Petition Returned to Service Center via Natio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "First_Number_of_Corrections",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Enter Corrections that were made by me or at my requ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Last_Total_Number_of_Correct",
+          "label": "Part 8. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Enter Corrections that were made by me or at my requ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "The_name_of_the_beneficiary",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Signature of Beneficiary. This form can not be signe...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Write_Your_Name_in_Your_Nati",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Write Your Name in Your Native Alphabet.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "The_name_of_the_officer_can",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Signature of U S C I S Officer of Department of Stat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Admission_Code",
+          "label": "Part 8. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Beneficiary Approved for Travel. Enter Admission Code.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "US_Customs_and_Border_Protec",
+          "label": "Part 9. To Be Completed at Interview of Beneficiary, If Applicable (14 years of age or older). Enter U. S. Customs and Border Protection (C B P) Ac...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

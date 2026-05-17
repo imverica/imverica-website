@@ -53,17 +53,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P1_Line2_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
-      },
-      {
         "key": "P1_Line2_AptSteFlrNumber",
         "mode": "text",
         "kind": "text",
@@ -80,22 +69,6 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P1_Line4_DateOfBirth",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line6_Sex",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
       },
       {
         "key": "P1_Line9_AlienNumber",
@@ -182,17 +155,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P1_Line3_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
-      },
-      {
         "key": "P1_Line3_AptSteFlrNumber",
         "mode": "text",
         "kind": "text",
@@ -211,13 +173,67 @@
         "defaultValue": ""
       },
       {
-        "key": "P1_Line5_CountryOfCitizenship",
+        "key": "P1_Line11_CityCountyOfBirth",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
       },
       {
-        "key": "P1_Line11_CityCountyOfBirth",
+        "key": "for_Suite",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Apartment",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Floor",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Suite_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Apartment_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Floor_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item10_the_Country_of_Citizenship_o",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item11_the_Country_of_Citizenship_o",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item5_for_Male",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item5_for_Female",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
@@ -226,12 +242,6 @@
     "2": [
       {
         "key": "TextField1",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line26_StreetandNumber_2",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
@@ -393,48 +403,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P1_Line4_DateOfBirth",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line5_CountryOfCitizenship",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line13_GivenName",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line13_FamilyName",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line14_DateOfBirth",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line15_CityCountryOfBirth",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P1_Line16_CityCountryOfResidence",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
         "key": "P1_Line21_GivenName",
         "mode": "text",
         "kind": "text",
@@ -451,17 +419,143 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      }
-    ],
-    "3": [
+      },
       {
-        "key": "TextField1",
+        "key": "Item15_the_Family_Name_Last_Name",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
       },
       {
-        "key": "P1_Line23_CityCountryOfBirth",
+        "key": "Item2_the_Family_Name_Last_Name",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item15_the_Given_Name_First_Name",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item21_the_Given_Name_First_Name",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item16_the_Date_of_Birth",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item22_the_Date_of_Birth",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item17_the_City_or_Town_of_Birth_if",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item23_the_City_and_Town_of_Birth_i",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item18_Country_of_Birth_if_known",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item19_Current_City_or_town_of_Resi",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item20_Current_Country_of_Residence",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item24_the_Country_of_Birth_if_Know",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item25_Current_City_and_Town_of_Res",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item26_Current_Country_of_Residence",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_the_Street_Name_and_Number",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_the_Street_Name_and_Number_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "the_Date_You_entered_the_Uni",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "the_Date_Status_Expires_Expi",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item94_Expiration_Date_of_Authorize",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Entry_Immigration_Status_at_the_Ti",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Location_at_Which_You_Last_E",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Form_I_94_Arrival_Departure",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      }
+    ],
+    "3": [
+      {
+        "key": "TextField1",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
@@ -473,42 +567,10 @@
         "defaultValue": ""
       },
       {
-        "key": "P1_Line25_PlaceOfMarriage",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "P2_2_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ]
-      },
-      {
         "key": "Line1a_Purpose",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P2_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
       },
       {
         "key": "Line2_No1",
@@ -521,6 +583,96 @@
         "mode": "checkbox_single",
         "kind": "checkbox",
         "defaultValue": false
+      },
+      {
+        "key": "Spouse_the_City_or_Town_of_Birth",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Spouse_the_Country",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Spouse_the_City_or_Town",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Spouse_State_or_Province",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Spouse_the_Country_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Special_Immigrant_Juveni",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Labor_Investigation_Base",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Spouse_for_Spouse_Widow_er_Parent_S",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Spouse_for_Spouse_Widow_er_Parent_S_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Statelessness",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Medical_or_Humanitarian",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Government_Referral_Othe",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "for_Other_Please_review_the",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Initial_Request",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Subsequent_Request",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       }
     ],
     "4": [
@@ -553,16 +705,6 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P4_CB1",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
       },
       {
         "key": "P4_Line2_SSN",
@@ -608,6 +750,18 @@
       },
       {
         "key": "Pt12Line8_Signature",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Do_you_want_the_Social_Secur",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "3",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
@@ -663,18 +817,6 @@
         "defaultValue": ""
       },
       {
-        "key": "Pt12Line6_DateofSignature",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
-        "key": "Pt12Line6_Signature",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
         "key": "Pt13Line1_PreparerGivenName",
         "mode": "text",
         "kind": "text",
@@ -706,6 +848,30 @@
       },
       {
         "key": "Pt13Line6_Email",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "the_Date_of_the_Interpreter",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "the_Date_of_Preparer_s_Signa",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item6_the_Intpreter_s_Signature",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item6_the_Preparer_s_Signature",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""

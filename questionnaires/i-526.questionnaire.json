@@ -47,27 +47,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line5_FamilyName",
-          "label": "P1 Line5 Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P1_Line5_GivenName",
-          "label": "P1 Line5 Given Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P1_Line5_MiddleName",
-          "label": "P1 Line5 Middle Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "CheckBox1",
           "label": "Check Box1",
           "mode": "checkbox_single",
@@ -82,27 +61,66 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line7_Gender",
-          "label": "P1 Line7 Gender",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P1_Line6_DateOfBirth",
           "label": "P1 Line6 Date Of Birth",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Family_Name_Last_Name_Row_1",
+          "label": "Part 1. Information About You. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Family_Name_Last_Name_Row_2",
+          "label": "Part 1. Information About You. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Given_Name_First_Name_Row_1",
+          "label": "Part 1. Information About You. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Given_Name_First_Name_Row_2",
+          "label": "Part 1. Information About You. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Middle_Name_Row_1",
+          "label": "Part 1. Information About You. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Middle_Name_Row_2",
+          "label": "Part 1. Information About You. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_Male",
+          "label": "Part 1. Information About You. 7. Sex. Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_Female",
+          "label": "Part 1. Information About You. 7. Sex. Select Female.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -174,44 +192,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line12_Unit",
-          "label": "P1 Line12 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "pt1Line8_YesNo",
-          "label": "pt1Line8 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "p1Line14StreetNumberName",
           "label": "p1Line14Street Number Name",
           "mode": "text",
@@ -224,27 +204,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "p1Line14Unit",
-          "label": "p1Line14Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "p1Line14CityOrTown",
@@ -336,6 +295,62 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment",
+          "label": "Part 1. Information About You. Mailing Address. 12. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite",
+          "label": "Part 1. Information About You. Mailing Address. 12. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor",
+          "label": "Part 1. Information About You. Mailing Address. 12. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_Apartment",
+          "label": "Part 1. Information About You. Physical Address. 14. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_Suite",
+          "label": "Part 1. Information About You. Physical Address. 14. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_Floor",
+          "label": "Part 1. Information About You. Physical Address. 14. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item13_Yes",
+          "label": "Part 1. Information About You. Mailing Address. 13. Is your current mailing address the same as your physical address? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item13_through_16",
+          "label": "Part 1. Information About You. Mailing Address. 13. Is your current mailing address the same as your physical address? Select No. If you answered \"...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -355,27 +370,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "p1Line16Unit",
-          "label": "p1Line16Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "p1Line16CityOrTown",
@@ -455,27 +449,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_checkbox_18_Unit",
-          "label": "P1 checkbox 18 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line18_CityOrTown",
           "label": "P1 Line18 City Or Town",
           "mode": "text",
@@ -539,23 +512,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line17_CB",
-          "label": "P1 Line17 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "p1Line15StreetNumberName",
           "label": "p1Line15Street Number Name",
           "mode": "text",
@@ -568,27 +524,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "p1Line15Unit",
-          "label": "p1Line15Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "p1Line15CityOrTown",
@@ -645,6 +580,83 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "No",
+          "label": "Part 1. Information About You. Employment History. Provide the last 20 years of your employment history.  Also provide any government or military p...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "provide_the_following_inform",
+          "label": "Part 1. Information About You. Employment History. Provide the last 20 years of your employment history. Also provide any government or military po...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item18_Apartment",
+          "label": "Part 1. Information About You. Employment History. 18. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item18_Suite",
+          "label": "Part 1. Information About You. Employment History. 18. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item18_Floor",
+          "label": "Part 1. Information About You. Employment History. 18. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item15_Apartment",
+          "label": "Part 1. Information About You. Physical Address. 15. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item15_Suite",
+          "label": "Part 1. Information About You. Physical Address. 15. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item15_Floor",
+          "label": "Part 1. Information About You. Physical Address. 15. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item16_Apartment",
+          "label": "Part 1. Information About You. Physical Address. 16. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item16_Suite",
+          "label": "Part 1. Information About You. Physical Address. 16. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item16_Floor",
+          "label": "Part 1. Information About You. Physical Address. 16. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -671,27 +683,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_checkbox19_Unit",
-          "label": "P1 checkbox19 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line19_CityOrTown",
@@ -762,27 +753,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_checkbox20_Unit",
-          "label": "P1 checkbox20 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line20_CityOrTown",
@@ -881,6 +851,48 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "Item19_Apartment",
+          "label": "Part 1. Information About You. Employment History. 19. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item19_Suite",
+          "label": "Part 1. Information About You. Employment History. 19. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item19_Floor",
+          "label": "Part 1. Information About You. Employment History. 19. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Apartment",
+          "label": "Part 1. Information About You. Employment History. 20. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Suite",
+          "label": "Part 1. Information About You. Employment History. 20. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Floor",
+          "label": "Part 1. Information About You. Employment History. 20. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -965,40 +977,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line7",
-          "label": "P1 Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line8",
-          "label": "P2 Line8",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line3_CountryofBirth1",
           "label": "P2 Line3 Countryof Birth1",
           "mode": "text",
@@ -1025,23 +1003,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line6",
-          "label": "P1 Line6",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line9_FamilyName2",
@@ -1079,95 +1040,94 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line13",
-          "label": "P2 Line13",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Spouse_Child",
+          "label": "Part 2. Information About your Spouse and Children. Family Member One. 6. Relation to You. Select Child",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P2_Line14",
-          "label": "P2 Line14",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Spouse_Spouse",
+          "label": "Part 2. Information About your Spouse and Children. Family Member One. 6. Relation to You. Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P2_Line12",
-          "label": "P2 Line12",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Spouse_No",
+          "label": "Part 2. Information About Your Spouse and Children. Family Member One. 7. Applying for Adjustment of Status? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes",
+          "label": "Part 2. Information About your Spouse and Children. Family Member One. 7. Applying for Adjustment of Status? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_2",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Two. 12. Relationship to You.  Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Child_2",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Two. 12. Relationship to You.  Select Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_2",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Two. 13. Applying for Adjustment of Status? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_2",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Two. 13. Applying for Adjustment of Status? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_3",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Two. 14. Applying for Visa Abroad? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_3",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Two. 14. Applying for Visa Abroad? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_4",
+          "label": "Part 2. Information About your Spouse and Children. Family Member One. 8. Applying for Visa Abroad? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_4",
+          "label": "Part 2. Information About your Spouse and Children. Family Member One. 8. Applying for Visa Abroad? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 6,
       "fields": [
-        {
-          "key": "P2_Line20",
-          "label": "P2 Line20",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line19",
-          "label": "P2 Line19",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P2_Line17_CountryOfBirth",
           "label": "P2 Line17 Country Of Birth",
@@ -1239,91 +1199,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line18",
-          "label": "P2 Line18",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line25",
-          "label": "P2 Line25",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line26",
-          "label": "P2 Line26",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line32",
-          "label": "P2 Line32",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line31",
-          "label": "P2 Line31",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line29_CountryOfBirth5",
           "label": "P2 Line29 Country Of Birth5",
           "mode": "text",
@@ -1357,74 +1232,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line24",
-          "label": "P2 Line24",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line30",
-          "label": "P2 Line30",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line38",
-          "label": "P2 Line38",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line37",
-          "label": "P2 Line37",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line35_CountryOfBirth",
@@ -1462,52 +1269,178 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line36",
-          "label": "P2 Line36",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Spouse_Child_3",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Three. 18. Relationship to You. Select Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_3",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Three. 18. Relationship to You.  Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_5",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Three. 18. Applying for Adjustment of Status? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_5",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Three. 18. Applying for Adjustment of Status? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_6",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Three. 19. Applying for Visa Abroad? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_6",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Three. 19. Applying for Visa Abroad? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Child_4",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Four. 24. Relationship to You.  Select Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_4",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Four. 24. Relation to You.  Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_7",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Four. 25. Applying for Adjustment of Status? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_7",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Four. 25. Applying for Adjustment of Status? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_8",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Four. 26. Applying for Visa Abroad? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_8",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Four. 26. Applying for Visa Abroad? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Child_5",
+          "label": "Part 2. Information on Petitioner's Spouse and Children. Family Member Five. 30. Relationship to You.  Select Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_5",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Five. 30. Relationship to You.  Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_9",
+          "label": "Part 2. Information on Petitioner's Spouse and Children. Family Member Five. 31. Applying for Adjustment of Status? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_9",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Five. 31. Applying for Adjustment of Status? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_10",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Five. 32. Applying for Visa Abroad? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_10",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Five. 32. Applying for Visa Abroad? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Child_6",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Six. 36. Relationship to You.  Select Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_6",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Six. 36. Relationship to You.   Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_11",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Six. 37. Applying for Adjustment of Status? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_11",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Six. 37. Applying for Adjustment of Status? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_12",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Six. 38. Applying for Visa Abroad? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_12",
+          "label": "Part 2. Information About your Spouse and Children. Family Member Six. 38. Applying for Visa Abroad? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 7,
       "fields": [
-        {
-          "key": "P3_Checkbox2A_OganizationStructure",
-          "label": "P3 Checkbox2A Oganization Structure",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
         {
           "key": "Pt3Line1a_LegalNameofNCE",
           "label": "Part 3 Line1a Legal Nameof NCE",
@@ -1534,30 +1467,6 @@
           "label": "Part 3 Line4a State Territory",
           "mode": "text",
           "type": "state",
-          "defaultValue": ""
-        },
-        {
-          "key": "P3_Line2_B_CB",
-          "label": "P3 Line2 B CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt3Line2b_table",
-          "label": "Part 3 Line2b table",
-          "mode": "text",
-          "type": "text",
           "defaultValue": ""
         },
         {
@@ -1603,27 +1512,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_checkbox6_Unit",
-          "label": "P3 checkbox6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P3_line6_CityOrTown",
           "label": "P3 line6 City Or Town",
           "mode": "text",
@@ -1642,6 +1530,132 @@
           "label": "P3 line6 State",
           "mode": "dropdown",
           "type": "state",
+          "defaultValue": ""
+        },
+        {
+          "key": "Corporation",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Information About the N C E. 2.A. Select the organizational structure.  If the org...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Partnership_including_Limite",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Information About the N C E. 2.A. Select the organizational structure.  If the org...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Limited_Liability_Company",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Information About the N C E. 2.A. Select the organizational structure.  If the org...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other_describe_below",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Information About the N C E. 2.A. Select the organizational structure.  If the org...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_2",
+          "label": "Part 3. Information About the New Commercial Enterprise ( N C E). 2.B. Is the N C E comprised of a holding company and its wholly owned subsidiarie...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 3. Information About the New Commercial Enterprise ( N C E). 2.B. Is the N C E comprised of a holding company and its wholly owned subsidiarie...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_Apartment",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). N C E. Mailing Address 6. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_Suite",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). N C E. Mailing Address 6. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_Floor",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). N C E. Mailing Address 6. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Subsidiary_Name_Row_1",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Enter Subsidiary Name Row 1.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Jurisdiction_of_Formation_Ro",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Enter Jurisdiction of Formation  Row 1.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Subsidiary_Name_Row_2",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Enter Subsidiary Name Row 2.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Jurisdiction_of_Formation_Ro_2",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Enter Jurisdiction of Formation  Row 2.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Subsidiary_Name_Row_3",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Enter Subsidiary Name Row 3.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Jurisdiction_of_Formation_Ro_3",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Enter Jurisdiction of Formation  Row 3.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Date_NCE_Formed",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). 3. Enter Date NCE Formed. Enter as 2 digit month, 2 digit day and 4 digit year Row 1.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Date_NCE_Formed_2",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). 3. Enter Date NCE Formed. Enter as 2 digit month, 2 digit day and 4 digit year  Ro...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Date_NCE_Formed_3",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). 3. Enter Date NCE Formed. Enter as 2 digit month, 2 digit day and 4 digit year  Ro...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1683,27 +1697,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "p2Line10AptSteFlr",
-          "label": "p2Line10Apt Ste Flr",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt3_line10_CityOrTown",
@@ -1748,42 +1741,60 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line13_CB",
-          "label": "P3 Line13 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
+          "key": "N_C_E_formed_after_November",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Type of N C E (Select only one). 13. A. Select N C E formed after November 29, 1990.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P3_line14",
-          "label": "P3 line14",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "N_C_E_resulting_from_the_pur",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Type of N C E (Select only one). 13. B. Select N C E resulting from the purchase o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "N_C_E_resulting_from_a_capit",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Type of N C E (Select only one). 13. C. Select N C E resulting from a capital inve...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_3",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). 14. Have you invested or are you actively in the process of investing in a trouble...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_of_ho",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). 14. Have you invested or are you actively in the process of investing in a trouble...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Apartment",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Address and Census Tract(s) where the N C E Is Principally Doing Business (See Ins...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Suite",
+          "label": "Part 3. Information About the New Commercial Enterprise (N C E). Address and Census Tract(s) where the N C E Is Principally Doing Business (See Ins...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Floor",
+          "label": "Part 4. Information About the Job-Creating Entity (J C E) (if different from the N C E). 10. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1875,55 +1886,46 @@
           "defaultValue": false
         },
         {
-          "key": "P4_Line1_CB",
-          "label": "P4 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "I_have_submitted_the_require",
+          "label": "Part 4. Information About Your Investment. Select this box.  I have submitted the required initial evidence with my Form I-526 filing.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line2_CB",
-          "label": "P4 Line2 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "this_box_I_will_submit_the_r",
+          "label": "Part 4. Information About Your Investment.  Select this box, I will submit the required initial evidence through my  USCIS account.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Checkbox_Evidence",
-          "label": "P4 Checkbox Evidence",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_4",
+          "label": "Part 4. Information About Your Investment. Investment Type and Required Capital Investment.  Select the appropriate box to indicate the type of inv...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes",
+          "label": "Part 4. Information About Your Investment. Investment Type and Required Capital Investment.  Select the appropriate box to indicate the type of inv...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_5",
+          "label": "Part 4. Information About Your Investment. Investment Type and Required Capital Investment. Select the appropriate box to indicate the type of inve...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_2",
+          "label": "Part 4. Information About Your Investment. Investment Type and Required Capital Investment. Select the appropriate box to indicate the type of inve...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1943,13 +1945,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "P4_Line5_Table",
-          "label": "P4 Line5 Table",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
         },
         {
           "key": "Pt4_line6",
@@ -2024,6 +2019,69 @@
         {
           "key": "P4_line2d",
           "label": "P4 line2d",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_the_amount_and_date_of_your",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_the_amount_and_date_of_your_2",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_the_amount_and_date_of_your_3",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_the_amount_and_date_of_your_4",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_the_amount_and_date_of_your_5",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Date_of_Investment",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Date_of_Investment_2",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Date_of_Investment_3",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Date_of_Investment_4",
+          "label": "Part 4. Information About Your Investment. Composition of Your Investment, Administrative Costs and Fees, and Your Net Worth. 5. Enter the amount a...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2118,8 +2176,64 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line12_Table",
-          "label": "P4 Line12 Table",
+          "key": "Item12_the_date_and_amount_of_all_a",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees. 12. Enter the date and amount of all administrative costs and fees associ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_the_date_and_amount_of_all_a_2",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees. 12. Enter the date and amount of all administrative costs and fees associ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_the_date_and_amount_of_all_a_3",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees. 12. Enter the date and amount of all administrative costs and fees associ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_the_date_and_amount_of_all_a_4",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees. 12. Enter the date and amount of all administrative costs and fees associ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Amount_of_Administrative_Cos",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees.  12. Enter the date and amount of all administrative costs and fees assoc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Amount_of_Administrative_Cos_2",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees.  12. Enter the date and amount of all administrative costs and fees assoc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_the_date_and_amount_of_all_a_5",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees.  12. Enter the date and amount of all administrative costs and fees assoc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_the_date_and_amount_of_all_a_6",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees.  12. Enter the date and amount of all administrative costs and fees assoc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_the_date_and_amount_of_all_a_7",
+          "label": "Part 4. Information About Your Investment. Administrative Costs and Fees.  12. Enter the date and amount of all administrative costs and fees assoc...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2129,23 +2243,6 @@
     {
       "page": 12,
       "fields": [
-        {
-          "key": "P5_Line1_CB",
-          "label": "P5 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P5_line1a_TitleWithNCE",
           "label": "P5 line1a Title With NCE",
@@ -2210,23 +2307,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt6_Line1_CB",
-          "label": "Part 6 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P6_Line3_Country",
           "label": "P6 Line3 Country",
           "mode": "text",
@@ -2262,27 +2342,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line3_Unit",
-          "label": "P6 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P6_Line3_StreetNumberName",
           "label": "P6 Line3 Street Number Name",
           "mode": "text",
@@ -2302,27 +2361,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line5_Unit",
-          "label": "P6 Line5 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line5_AptSteFlrNumber",
@@ -2365,29 +2403,82 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_No",
+          "label": "Part 5. Employment Creation Information. 1. Are you employed by the N C E? 1. Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes",
+          "label": "Part 5. Employment Creation Information. 1. Are you employed by the N C E? 1. Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Address in Country of Last Permanent Residence Abroad. 3. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Address in Country of Last Permanent Residence Abroad. 3. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Address in Country of Last Permanent Residence Abroad. 3. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Apartment",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Address in Country of Last Permanent Residence Abroad. If your native alphabet is other than R...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Suite",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Address in Country of Last Permanent Residence Abroad. If your native alphabet is other than R...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Floor",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Address in Country of Last Permanent Residence Abroad. If your native alphabet is other than R...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Immigrant_Visa_Processing",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Select the appropriate box to indicate how you will seek lawful permanent resident status. 1. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Application_for_Adjustment_o",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Select the appropriate box to indicate how you will seek lawful permanent resident status. 2. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 13,
       "fields": [
-        {
-          "key": "P6_Line6_CB",
-          "label": "P6 Line6 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt6_Checkbox6b_FormI485",
           "label": "Part 6 Checkbox6b Form I485",
@@ -2417,66 +2508,11 @@
           "defaultValue": false
         },
         {
-          "key": "P6_Line8",
-          "label": "P6 Line8",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "P6_Line7",
-          "label": "P6 Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P6_Line9",
           "label": "P6 Line9",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line10",
-          "label": "P6 Line10",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P6_Line9b_State",
@@ -2486,25 +2522,85 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line11",
-          "label": "P6 Line11",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P6_Line12_AdditionalInfo",
           "label": "P6 Line12 Additional Info",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_No",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. 10. Are you currently or ever been subject to a final order of exclus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Yes",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. 10. Are you currently or ever been subject to a final order of exclus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_6",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Employment in the United States. 11. Have you ever worked in the United States without permiss...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_3",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Employment in the United States. 11. Have you ever worked in the United States without permiss...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_7",
+          "label": "Part 6. Visa Processing and Immigration proceedings. 6.A. Are you filing any other petitions or applications with this Form I- 5 26?  Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_4",
+          "label": "Part 6. Visa Processing and Immigration proceedings. 6.A. Are you filing any other petitions or applications with this Form I- 5 26? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_No",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. Please indicate whether you are in exclusion, deportation, or removal...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_If_you_have_selected_Yes_ple",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. Please indicate whether you are in exclusion, deportation, or removal...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Exclusion",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. Type of Proceedings (Select only one). 8. A. Select Exclusion.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Deportation",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. Type of Proceedings (Select only one).  8. B. Select Deportation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Removal",
+          "label": "Part 6. Visa Processing and Immigration Proceedings. Immigration Proceedings. Type of Proceedings (Select only one). 8. C. Select Removal.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2514,23 +2610,6 @@
     {
       "page": 14,
       "fields": [
-        {
-          "key": "P7_Checkbox1",
-          "label": "P7 Checkbox1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P7_line1b",
           "label": "P7 line1b",
@@ -2571,6 +2650,20 @@
           "label": "P7 line5 Petitioner Email",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 7. Petitioner's Statement, Contact Information, Declaration, and Signature.  NOTE: Read the Penalties section of the Form I - 5 26 Instruction...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_understood_all_of_this_inf",
+          "label": "Part 7. Petitioner's Statement, Contact Information, Declaration, and Signature.  NOTE: Read the Penalties section of the Form I - 5 26 Instruction...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -2656,27 +2749,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P8_checkbox3_Unit",
-          "label": "P8 checkbox3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P9_Line6_EmailAddress",
           "label": "P9 Line6 Email Address",
           "mode": "text",
@@ -2714,6 +2786,27 @@
         {
           "key": "P7_line6_Signature",
           "label": "P7 line6 Signature",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment_2",
+          "label": "Part 8. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite_2",
+          "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor_2",
+          "label": "Part 8. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Floor.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2801,27 +2894,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P9_checkbox3_Unit",
-          "label": "P9 checkbox3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P10_Line6_PreparersEmailAddress",
           "label": "P10 Line6 Preparers Email Address",
           "mode": "text",
@@ -2843,40 +2915,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P9_checkbox7",
-          "label": "P9 checkbox7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt9Line7b_Checkbox",
-          "label": "Part 9 Line7b Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P8_Line7_DateofSignature",
           "label": "P8 Line7 Dateof Signature",
           "mode": "text",
@@ -2886,6 +2924,55 @@
         {
           "key": "P8_Line7_Signature",
           "label": "P8 Line7 Signature",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment_3",
+          "label": "Part 9. Contact Information, Certification, and Signature of the Person Preparing this Petition, if Other Than the Petitioner. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite_3",
+          "label": "Part 9. Contact Information, Certification and Signature of the Person Preparing this Petition, if Other Than the Petitioner.  Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor_3",
+          "label": "Part 9. Contact Information, Certification, and Signature of the Person Preparing this Petition, if Other Than the Petitioner. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 9. Contact Information, Certification, and Signature of the Person Preparing this Petition, if Other Than the Petitioner.  Preparer's Statemen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "Part 9. Contact Information, Certification, and Signature of the Person Preparing this Petition, if Other Than the Petitioner.  Preparer's Statemen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit",
+          "label": "Part 9. Contact Information, Certification, and Signature of the Person Preparing this Petition, if Other Than the Petitioner.  Preparer's Statemen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit_2",
+          "label": "Part 9. Contact Information, Certification, and Signature of the Person Preparing this Petition, if Other Than the Petitioner.  Preparer's Statemen...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

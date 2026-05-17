@@ -43,7 +43,7 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt1Line2_StreetNumberName",
+      "key": "Street_Number_and_Name",
       "originalKey": "form1[0].#subform[0].Pt1Line2_StreetNumberName[0]",
       "kind": "text",
       "mode": "text",
@@ -69,40 +69,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt1Line2_Unit",
-      "originalKeys": [
-        "form1[0].#subform[0].Pt1Line2_Unit[0]",
-        "form1[0].#subform[0].Pt1Line2_Unit[1]",
-        "form1[0].#subform[0].Pt1Line2_Unit[2]"
-      ],
+      "key": "Floor",
+      "originalKey": "form1[0].#subform[0].Pt1Line2_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 1,
+      "x": 454,
+      "y": 498,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 454,
-          "y": 498,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 436,
-          "y": 498,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 418,
-          "y": 498,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Suite",
+      "originalKey": "form1[0].#subform[0].Pt1Line2_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 1,
+      "x": 436,
+      "y": 498,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Apartment",
+      "originalKey": "form1[0].#subform[0].Pt1Line2_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 1,
+      "x": 418,
+      "y": 498,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P1Line2_CityOrTown",
@@ -144,32 +147,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt1Line3_Gender",
-      "originalKeys": [
-        "form1[0].#subform[0].Pt1Line3_Gender[0]",
-        "form1[0].#subform[0].Pt1Line3_Gender[1]"
-      ],
+      "key": "Item3_Male",
+      "originalKey": "form1[0].#subform[0].Pt1Line3_Gender[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 1,
+      "x": 72,
+      "y": 371.9,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 72,
-          "y": 371.9,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 120,
-          "y": 371.9,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item3_Female",
+      "originalKey": "form1[0].#subform[0].Pt1Line3_Gender[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 1,
+      "x": 120,
+      "y": 371.9,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt1Line3_CountryofBirth",
@@ -233,6 +234,19 @@
       "y": 295.9,
       "width": 222.6,
       "height": 18.1,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "In_Care_of_Name",
+      "originalKey": "form1[0].#subform[0].Pt1Line2_StreetNumberName[1]",
+      "kind": "text",
+      "mode": "text",
+      "page": 1,
+      "x": 54,
+      "y": 530,
+      "width": 522,
+      "height": 18,
       "size": 10,
       "font": "CourierBold"
     },
@@ -874,40 +888,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt6Line1_OverallFinding",
-      "originalKeys": [
-        "form1[0].#subform[3].Pt6Line1_OverallFinding[0]",
-        "form1[0].#subform[3].Pt6Line1_OverallFinding[1]",
-        "form1[0].#subform[3].Pt6Line1_OverallFinding[2]"
-      ],
+      "key": "Civil_Surgeon_Worksheet",
+      "originalKey": "form1[0].#subform[3].Pt6Line1_OverallFinding[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 4,
+      "x": 74.6,
+      "y": 645,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 74.6,
-          "y": 645,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 74.6,
-          "y": 663,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 74.6,
-          "y": 627,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "or_Class_B_Condition",
+      "originalKey": "form1[0].#subform[3].Pt6Line1_OverallFinding[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 4,
+      "x": 74.6,
+      "y": 663,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Civil_Surgeon_Worksheet_2",
+      "originalKey": "form1[0].#subform[3].Pt6Line1_OverallFinding[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 4,
+      "x": 74.6,
+      "y": 627,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt7Line3_StreetNumberName",
@@ -936,40 +953,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt7Line3_Unit",
-      "originalKeys": [
-        "form1[0].#subform[3].Pt7Line3_Unit[0]",
-        "form1[0].#subform[3].Pt7Line3_Unit[1]",
-        "form1[0].#subform[3].Pt7Line3_Unit[2]"
-      ],
+      "key": "Item3_Floor",
+      "originalKey": "form1[0].#subform[3].Pt7Line3_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 4,
+      "x": 454.1,
+      "y": 288,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 454.1,
-          "y": 288,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 436.1,
-          "y": 288,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 418.1,
-          "y": 288,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item3_Suite",
+      "originalKey": "form1[0].#subform[3].Pt7Line3_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 4,
+      "x": 436.1,
+      "y": 288,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item3_Apartment",
+      "originalKey": "form1[0].#subform[3].Pt7Line3_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 4,
+      "x": 418.1,
+      "y": 288,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt7Line3_CityOrTown",
@@ -1037,40 +1057,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt7Line4_Unit",
-      "originalKeys": [
-        "form1[0].#subform[3].Pt7Line4_Unit[0]",
-        "form1[0].#subform[3].Pt7Line4_Unit[1]",
-        "form1[0].#subform[3].Pt7Line4_Unit[2]"
-      ],
+      "key": "Item4_Floor",
+      "originalKey": "form1[0].#subform[3].Pt7Line4_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 4,
+      "x": 454,
+      "y": 186,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 454,
-          "y": 186,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 436,
-          "y": 186,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 418,
-          "y": 186,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item4_Suite",
+      "originalKey": "form1[0].#subform[3].Pt7Line4_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 4,
+      "x": 436,
+      "y": 186,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item4_Apartment",
+      "originalKey": "form1[0].#subform[3].Pt7Line4_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 4,
+      "x": 418,
+      "y": 186,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt7Line4_CityOrTown",
@@ -1268,148 +1291,134 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1A_GammarRelease",
-      "originalKeys": [
-        "form1[0].#subform[5].Pt8Line1A_GammarRelease[0]",
-        "form1[0].#subform[5].Pt8Line1A_GammarRelease[1]",
-        "form1[0].#subform[5].Pt8Line1A_GammarRelease[2]"
-      ],
+      "key": "T_Spot",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A_GammarRelease[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 6,
+      "x": 330.9,
+      "y": 525.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 330.9,
-          "y": 525.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 108.9,
-          "y": 525.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 91.5,
-          "y": 561.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "Pt8Line1A1_Result",
-      "originalKeys": [
-        "form1[0].#subform[5].Pt8Line1A1_Result[0]",
-        "form1[0].#subform[5].Pt8Line1A1_Result[1]",
-        "form1[0].#subform[5].Pt8Line1A1_Result[2]"
-      ],
+      "key": "QuantiFERON",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A_GammarRelease[1]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 6,
+      "x": 108.9,
+      "y": 525.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 162.9,
-          "y": 471.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 162.9,
-          "y": 453.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 162.9,
-          "y": 435.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "Pt8Line1A2_InitialScreening",
-      "originalKeys": [
-        "form1[0].#subform[5].Pt8Line1A2_InitialScreening[0]",
-        "form1[0].#subform[5].Pt8Line1A2_InitialScreening[1]",
-        "form1[0].#subform[5].Pt8Line1A2_InitialScreening[2]",
-        "form1[0].#subform[5].Pt8Line1A2_InitialScreening[3]"
-      ],
+      "key": "Negative_no_chest_X_ray_requ",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A1_Result[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 6,
+      "x": 162.9,
+      "y": 471.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 90.9,
-          "y": 399.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 90.9,
-          "y": 345.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 90.9,
-          "y": 363.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 3,
-          "x": 90.9,
-          "y": 381.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "Pt8Line1A3_Results",
-      "originalKeys": [
-        "form1[0].#subform[5].Pt8Line1A3_Results[0]",
-        "form1[0].#subform[5].Pt8Line1A3_Results[1]"
-      ],
+      "key": "Positive_chest_X_ray_require",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A1_Result[1]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 6,
+      "x": 162.9,
+      "y": 453.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 132.9,
-          "y": 243.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 132.9,
-          "y": 225.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Chest_X_ray_not_required_med",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A2_InitialScreening[0]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 90.9,
+      "y": 399.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "P6_Pt8Line1A2_InitialScreening_1",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A2_InitialScreening[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 90.9,
+      "y": 345.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Chest_X_ray_required_due_to",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A2_InitialScreening[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 90.9,
+      "y": 363.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Chest_X_ray_required_due_to_2",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A2_InitialScreening[3]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 90.9,
+      "y": 381.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Normal",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A3_Results[0]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 132.9,
+      "y": 243.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Abnormal_describe_results_in",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A3_Results[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 132.9,
+      "y": 225.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1A3_XrayTakenDate",
@@ -1436,6 +1445,19 @@
       "height": 18,
       "size": 10,
       "font": "CourierBold"
+    },
+    {
+      "key": "exception_please_explain_in",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A_GammarRelease[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 91.5,
+      "y": 561.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1A1_TSDate",
@@ -1568,6 +1590,19 @@
       "font": "CourierBold"
     },
     {
+      "key": "Indeterminate_including_bord",
+      "originalKey": "form1[0].#subform[5].Pt8Line1A1_Result[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 162.9,
+      "y": 435.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
       "key": "Pt8Line1A3_DiscretelinearOpac",
       "originalKey": "form1[0].#subform[5].Pt8Line1A3_DiscretelinearOpac[0]",
       "kind": "checkbox",
@@ -1698,72 +1733,95 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1A6_TBClassification",
-      "originalKeys": [
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[0]",
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[1]",
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[2]",
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[3]",
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[4]",
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[5]",
-        "form1[0].#subform[6].Pt8Line1A6_TBClassification[6]"
-      ],
+      "key": "or_Class_B_T_B_findings",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 7,
+      "x": 90.9,
+      "y": 357.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 90.9,
-          "y": 357.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 90.9,
-          "y": 339.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 90.9,
-          "y": 303.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 3,
-          "x": 90.9,
-          "y": 321.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 4,
-          "x": 252.9,
-          "y": 357.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 5,
-          "x": 252.9,
-          "y": 339.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 6,
-          "x": 252.9,
-          "y": 321.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Pulmonary_T_B_Disease",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 90.9,
+      "y": 339.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Class_B_1_Pulmonary_T_B",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 90.9,
+      "y": 303.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Class_B_0_Pulmonary_T_B",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[3]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 90.9,
+      "y": 321.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Class_B_1_Extrapulmonary_T_B",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[4]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 252.9,
+      "y": 357.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Class_B_2_T_B_Latent_T_B_Inf",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[5]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 252.9,
+      "y": 339.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Class_B_Other_Chest_Conditio",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A6_TBClassification[6]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 252.9,
+      "y": 321.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1B1b_DateNontrepoemaltest",
@@ -1792,32 +1850,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1B1c_SyphilisScreen",
-      "originalKeys": [
-        "form1[0].#subform[6].Pt8Line1B1c_SyphilisScreen[0]",
-        "form1[0].#subform[6].Pt8Line1B1c_SyphilisScreen[1]"
-      ],
+      "key": "Screening_Reactive_Titer_1",
+      "originalKey": "form1[0].#subform[6].Pt8Line1B1c_SyphilisScreen[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 7,
+      "x": 109,
+      "y": 48,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 109,
-          "y": 48,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 109,
-          "y": 72,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Nontreponemal_Test_Nonreacti",
+      "originalKey": "form1[0].#subform[6].Pt8Line1B1c_SyphilisScreen[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 109,
+      "y": 72,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1B1c_DateNontreponemalTest",
@@ -1872,56 +1928,69 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1A4_SputumSmearsCultures",
-      "originalKeys": [
-        "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[0]",
-        "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[1]",
-        "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[2]",
-        "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[3]",
-        "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[4]"
-      ],
+      "key": "No_not_indicated",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 7,
+      "x": 90.9,
+      "y": 663.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 90.9,
-          "y": 663.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 90.9,
-          "y": 645.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 90.9,
-          "y": 627.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 3,
-          "x": 324.9,
-          "y": 627.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 4,
-          "x": 324.9,
-          "y": 663.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Yes_indicated_due_to_signs_o",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 90.9,
+      "y": 645.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Yes_indicated_due_to_chest_X",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 90.9,
+      "y": 627.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Yes_indicated_for_end_of_tre",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[3]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 324.9,
+      "y": 627.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Yes_indicated_due_to_known_H",
+      "originalKey": "form1[0].#subform[6].Pt8Line1A4_SputumSmearsCultures[4]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 324.9,
+      "y": 663.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt1Line1b_GivenName",
@@ -1963,40 +2032,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1B2_Findings",
-      "originalKeys": [
-        "form1[0].#subform[7].Pt8Line1B2_Findings[0]",
-        "form1[0].#subform[7].Pt8Line1B2_Findings[1]",
-        "form1[0].#subform[7].Pt8Line1B2_Findings[2]"
-      ],
+      "key": "No_Class_A_or_Class_B_Syphil",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B2_Findings[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 8,
+      "x": 90.4,
+      "y": 513.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 90.4,
-          "y": 513.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 396.4,
-          "y": 513.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 246.4,
-          "y": 513.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Syphilis_Class_B_treated_in",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B2_Findings[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 396.4,
+      "y": 513.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "untreated",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B2_Findings[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 246.4,
+      "y": 513.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1B3_Remarks",
@@ -2103,68 +2175,69 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1C1c",
-      "originalKeys": [
-        "form1[0].#subform[7].Pt8Line1C1c[0]",
-        "form1[0].#subform[7].Pt8Line1C1c[1]"
-      ],
+      "key": "Positive",
+      "originalKey": "form1[0].#subform[7].Pt8Line1C1c[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 8,
+      "x": 109,
+      "y": 231,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 109,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 175,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "Pt8Line1c2_Findings",
-      "originalKeys": [
-        "form1[0].#subform[7].Pt8Line1c2_Findings[0]",
-        "form1[0].#subform[7].Pt8Line1c2_Findings[1]",
-        "form1[0].#subform[7].Pt8Line1c2_Findings[2]"
-      ],
+      "key": "Negative",
+      "originalKey": "form1[0].#subform[7].Pt8Line1C1c[1]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 8,
+      "x": 175,
+      "y": 231,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 90.4,
-          "y": 177.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 252.4,
-          "y": 195.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 90.4,
-          "y": 195.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Gonorrhea_Class_B_treated_in",
+      "originalKey": "form1[0].#subform[7].Pt8Line1c2_Findings[0]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 90.4,
+      "y": 177.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "untreated_2",
+      "originalKey": "form1[0].#subform[7].Pt8Line1c2_Findings[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 252.4,
+      "y": 195.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "or_Class_B_Gonorrhea",
+      "originalKey": "form1[0].#subform[7].Pt8Line1c2_Findings[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 90.4,
+      "y": 195.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1B1e_DateScreeningRun",
@@ -2193,32 +2266,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1B1d_TreponemalReactiveNon",
-      "originalKeys": [
-        "form1[0].#subform[7].Pt8Line1B1d_TreponemalReactiveNon[0]",
-        "form1[0].#subform[7].Pt8Line1B1d_TreponemalReactiveNon[1]"
-      ],
+      "key": "Treponemal_Test_Reactive",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B1d_TreponemalReactiveNon[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 8,
+      "x": 247,
+      "y": 630,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 247,
-          "y": 630,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 109,
-          "y": 630,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Terponemal_Test_Nonreactive",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B1d_TreponemalReactiveNon[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 109,
+      "y": 630,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1B1g_nameOfrepeat",
@@ -2247,32 +2318,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1B1i_RepeatReativeNon",
-      "originalKeys": [
-        "form1[0].#subform[7].Pt8Line1B1i_RepeatReativeNon[0]",
-        "form1[0].#subform[7].Pt8Line1B1i_RepeatReativeNon[1]"
-      ],
+      "key": "Repeat_Treponemal_Test_Nonre",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B1i_RepeatReativeNon[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 8,
+      "x": 109,
+      "y": 549,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 109,
-          "y": 549,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 289,
-          "y": 549,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Repeat_Treponemal_Test_React",
+      "originalKey": "form1[0].#subform[7].Pt8Line1B1i_RepeatReativeNon[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 8,
+      "x": 289,
+      "y": 549,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line1B1d_name",
@@ -2405,56 +2474,69 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line2A_Disorders",
-      "originalKeys": [
-        "form1[0].#subform[8].Pt8Line2A_Disorders[0]",
-        "form1[0].#subform[8].Pt8Line2A_Disorders[1]",
-        "form1[0].#subform[8].Pt8Line2A_Disorders[2]",
-        "form1[0].#subform[8].Pt8Line2A_Disorders[3]",
-        "form1[0].#subform[8].Pt8Line2A_Disorders[4]"
-      ],
+      "key": "Item1_No_Class_A_or_B_Physical_or",
+      "originalKey": "form1[0].#subform[8].Pt8Line2A_Disorders[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 9,
+      "x": 91.5,
+      "y": 261.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 91.5,
-          "y": 261.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 91.5,
-          "y": 189.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 91.5,
-          "y": 207.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 3,
-          "x": 91.5,
-          "y": 225.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 4,
-          "x": 91.5,
-          "y": 243.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item5_Physical_Mental_Disorder_wit",
+      "originalKey": "form1[0].#subform[8].Pt8Line2A_Disorders[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 91.5,
+      "y": 189.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item4_Current_Physical_Mental_Diso",
+      "originalKey": "form1[0].#subform[8].Pt8Line2A_Disorders[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 91.5,
+      "y": 207.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item3_History_of_Physical_Mental_D",
+      "originalKey": "form1[0].#subform[8].Pt8Line2A_Disorders[3]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 91.5,
+      "y": 225.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item2_Physical_Mental_Disorder_wit",
+      "originalKey": "form1[0].#subform[8].Pt8Line2A_Disorders[4]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 91.5,
+      "y": 243.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt1Line3e_AlienNumber",
@@ -2470,96 +2552,95 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line1D1_Findings",
-      "originalKeys": [
-        "form1[0].#subform[8].Pt8Line1D1_Findings[0]",
-        "form1[0].#subform[8].Pt8Line1D1_Findings[1]",
-        "form1[0].#subform[8].Pt8Line1D1_Findings[2]"
-      ],
+      "key": "B_Condition",
+      "originalKey": "form1[0].#subform[8].Pt8Line1D1_Findings[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 9,
+      "x": 108.5,
+      "y": 615.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 108.5,
-          "y": 615.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 108.5,
-          "y": 597.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 108.5,
-          "y": 543.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "Pt8Line1D1b_Checkboxf",
-      "originalKeys": [
-        "form1[0].#subform[8].Pt8Line1D1b_Checkboxf[0]",
-        "form1[0].#subform[8].Pt8Line1D1b_Checkboxf[1]"
-      ],
+      "key": "Hansen_s_Disease_leprosy_any",
+      "originalKey": "form1[0].#subform[8].Pt8Line1D1_Findings[1]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 9,
+      "x": 108.5,
+      "y": 597.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 126.5,
-          "y": 579.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 126.5,
-          "y": 561.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "Pt8Line1C1c_Checkboxg",
-      "originalKeys": [
-        "form1[0].#subform[8].Pt8Line1C1c_Checkboxg[0]",
-        "form1[0].#subform[8].Pt8Line1C1c_Checkboxg[1]"
-      ],
+      "key": "Indeterminate_tuberculoid_bo_2",
+      "originalKey": "form1[0].#subform[8].Pt8Line1D1b_Checkboxf[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 9,
+      "x": 126.5,
+      "y": 579.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 126.5,
-          "y": 525.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 126.5,
-          "y": 507.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Mid_borderline_borderline_le_2",
+      "originalKey": "form1[0].#subform[8].Pt8Line1D1b_Checkboxf[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 126.5,
+      "y": 561.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Hansen_s_Disease_leprosy_any_2",
+      "originalKey": "form1[0].#subform[8].Pt8Line1D1_Findings[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 108.5,
+      "y": 543.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Indeterminate_tuberculoid_bo",
+      "originalKey": "form1[0].#subform[8].Pt8Line1C1c_Checkboxg[0]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 126.5,
+      "y": 525.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Mid_borderline_borderline_le",
+      "originalKey": "form1[0].#subform[8].Pt8Line1C1c_Checkboxg[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 9,
+      "x": 126.5,
+      "y": 507.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line2B_Remarks",
@@ -2653,48 +2734,56 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line3A_Findings",
-      "originalKeys": [
-        "form1[0].#subform[9].Pt8Line3A_Findings[0]",
-        "form1[0].#subform[9].Pt8Line3A_Findings[1]",
-        "form1[0].#subform[9].Pt8Line3A_Findings[2]",
-        "form1[0].#subform[9].Pt8Line3A_Findings[3]"
-      ],
+      "key": "Item4_Substance_Drug_Addiction_in",
+      "originalKey": "form1[0].#subform[9].Pt8Line3A_Findings[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 10,
+      "x": 90.5,
+      "y": 447.5,
+      "width": 10.5,
+      "height": 10.5,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 90.5,
-          "y": 447.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 1,
-          "x": 90.5,
-          "y": 465.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 2,
-          "x": 90.5,
-          "y": 501.5,
-          "width": 10.5,
-          "height": 10.5
-        },
-        {
-          "value": 3,
-          "x": 90.5,
-          "y": 483.5,
-          "width": 10.5,
-          "height": 10.5
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item3_Substance_Drug_Abuse_in_Full",
+      "originalKey": "form1[0].#subform[9].Pt8Line3A_Findings[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 10,
+      "x": 90.5,
+      "y": 465.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item1_or_B_Substance_Drug_Abuse_Ad",
+      "originalKey": "form1[0].#subform[9].Pt8Line3A_Findings[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 10,
+      "x": 90.5,
+      "y": 501.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item2_Substance_Drug_Abuse_or_Addi",
+      "originalKey": "form1[0].#subform[9].Pt8Line3A_Findings[3]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 10,
+      "x": 90.5,
+      "y": 483.5,
+      "width": 10.5,
+      "height": 10.5,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt1Line1a_FamilyName",
@@ -2814,40 +2903,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt9Line2_Unit",
-      "originalKeys": [
-        "form1[0].#subform[10].Pt9Line2_Unit[0]",
-        "form1[0].#subform[10].Pt9Line2_Unit[1]",
-        "form1[0].#subform[10].Pt9Line2_Unit[2]"
-      ],
+      "key": "Floor_3",
+      "originalKey": "form1[0].#subform[10].Pt9Line2_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 11,
+      "x": 453.8,
+      "y": 192,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 453.8,
-          "y": 192,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 435.8,
-          "y": 192,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 417.8,
-          "y": 192,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Suite_3",
+      "originalKey": "form1[0].#subform[10].Pt9Line2_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 11,
+      "x": 435.8,
+      "y": 192,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Apartment_3",
+      "originalKey": "form1[0].#subform[10].Pt9Line2_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 11,
+      "x": 417.8,
+      "y": 192,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt9Line2_CityOrTown",
@@ -3006,40 +3098,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt8Line5B_Unit",
-      "originalKeys": [
-        "form1[0].#subform[10].Pt8Line5B_Unit[0]",
-        "form1[0].#subform[10].Pt8Line5B_Unit[1]",
-        "form1[0].#subform[10].Pt8Line5B_Unit[2]"
-      ],
+      "key": "Floor_2",
+      "originalKey": "form1[0].#subform[10].Pt8Line5B_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 11,
+      "x": 453.8,
+      "y": 600,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 453.8,
-          "y": 600,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 435.8,
-          "y": 600,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 417.8,
-          "y": 600,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Suite_2",
+      "originalKey": "form1[0].#subform[10].Pt8Line5B_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 11,
+      "x": 435.8,
+      "y": 600,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Apartment_2",
+      "originalKey": "form1[0].#subform[10].Pt8Line5B_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 11,
+      "x": 417.8,
+      "y": 600,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt8Line5B_CityOrTown",
@@ -3263,32 +3358,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt10_PVVaccineCheckBox",
-      "originalKeys": [
-        "form1[0].P13[0].sfTable[0].Pt10_PVVaccineCheckBox[0]",
-        "form1[0].P13[0].sfTable[0].Pt10_PVVaccineCheckBox[1]"
-      ],
+      "key": "Oral_Polio_Vaccine_O_P_V",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10_PVVaccineCheckBox[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 12,
+      "x": 39,
+      "y": 397,
+      "width": 8,
+      "height": 8,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 39,
-          "y": 397,
-          "width": 8,
-          "height": 8
-        },
-        {
-          "value": 1,
-          "x": 73.6,
-          "y": 397,
-          "width": 8,
-          "height": 8
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Inactive_Poliovirus_Vaccine",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10_PVVaccineCheckBox[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 12,
+      "x": 73.6,
+      "y": 397,
+      "width": 8,
+      "height": 8,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P10_TDVaccineCheckBox",
@@ -3304,40 +3397,43 @@
       "font": "HelveticaBold"
     },
     {
-      "key": "P10_VaccineCheckBox",
-      "originalKeys": [
-        "form1[0].P13[0].sfTable[0].P10_VaccineCheckBox[0]",
-        "form1[0].P13[0].sfTable[0].P10_VaccineCheckBox[1]",
-        "form1[0].P13[0].sfTable[0].P10_VaccineCheckBox[2]"
-      ],
+      "key": "Diptheria_Tetanus_D_T",
+      "originalKey": "form1[0].P13[0].sfTable[0].P10_VaccineCheckBox[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 12,
+      "x": 39,
+      "y": 481,
+      "width": 8,
+      "height": 8,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 39,
-          "y": 481,
-          "width": 8,
-          "height": 8
-        },
-        {
-          "value": 1,
-          "x": 39,
-          "y": 467,
-          "width": 8,
-          "height": 8
-        },
-        {
-          "value": 2,
-          "x": 73.6,
-          "y": 481,
-          "width": 8,
-          "height": 8
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Diptheria_Tetanus_and_Pertus",
+      "originalKey": "form1[0].P13[0].sfTable[0].P10_VaccineCheckBox[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 12,
+      "x": 39,
+      "y": 467,
+      "width": 8,
+      "height": 8,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "P",
+      "originalKey": "form1[0].P13[0].sfTable[0].P10_VaccineCheckBox[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 12,
+      "x": 73.6,
+      "y": 481,
+      "width": 8,
+      "height": 8,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "Pt10Line1_DTDateReceived1",
@@ -4614,7 +4710,7 @@
       "font": "CourierBold"
     },
     {
-      "key": "Pt10Line1_CompleteSeries",
+      "key": "Mark_an_X_if_complete_write",
       "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[0]",
       "kind": "text",
       "mode": "text",
@@ -4623,6 +4719,32 @@
       "y": 398,
       "width": 63,
       "height": 24,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Mark_an_X_if_complete_write_2",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[1]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.7,
+      "y": 314,
+      "width": 63,
+      "height": 72,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Mark_an_X_if_complete_write_3",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[2]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.7,
+      "y": 285,
+      "width": 63,
+      "height": 22,
       "size": 10,
       "font": "CourierBold"
     },
@@ -4640,6 +4762,45 @@
       "font": "CourierBold"
     },
     {
+      "key": "Mark_an_X_if_complete_write_4",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[3]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.5,
+      "y": 237,
+      "width": 63,
+      "height": 22,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Mark_an_X_if_complete_write_5",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[4]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.5,
+      "y": 213,
+      "width": 63,
+      "height": 22,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Mark_an_X_if_complete_write_6",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[5]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.7,
+      "y": 189,
+      "width": 63,
+      "height": 22,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
       "key": "Pt7Line1_CompleteSeries",
       "originalKey": "form1[0].P13[0].sfTable[0].Pt7Line1_CompleteSeries[0]",
       "kind": "text",
@@ -4647,6 +4808,32 @@
       "page": 12,
       "x": 379.7,
       "y": 165,
+      "width": 63,
+      "height": 22,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Mark_an_X_if_complete_write_7",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[6]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.7,
+      "y": 141,
+      "width": 63,
+      "height": 22,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Mark_an_X_if_complete_write_8",
+      "originalKey": "form1[0].P13[0].sfTable[0].Pt10Line1_CompleteSeries[7]",
+      "kind": "text",
+      "mode": "text",
+      "page": 12,
+      "x": 379.5,
+      "y": 117,
       "width": 63,
       "height": 22,
       "size": 10,
@@ -4744,40 +4931,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "P10_Results",
-      "originalKeys": [
-        "form1[0].#subform[12].P10_Results[0]",
-        "form1[0].#subform[12].P10_Results[1]",
-        "form1[0].#subform[12].P10_Results[2]"
-      ],
+      "key": "Applicant_completed_vaccinat",
+      "originalKey": "form1[0].#subform[12].P10_Results[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 13,
+      "x": 55,
+      "y": 604,
+      "width": 8,
+      "height": 8,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 55,
-          "y": 604,
-          "width": 8,
-          "height": 8
-        },
-        {
-          "value": 1,
-          "x": 55,
-          "y": 556,
-          "width": 8,
-          "height": 8
-        },
-        {
-          "value": 2,
-          "x": 55,
-          "y": 574,
-          "width": 8,
-          "height": 8
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Applicant_does_not_meet_immu",
+      "originalKey": "form1[0].#subform[12].P10_Results[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 13,
+      "x": 55,
+      "y": 556,
+      "width": 8,
+      "height": 8,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Applicant_will_request_an_in",
+      "originalKey": "form1[0].#subform[12].P10_Results[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 13,
+      "x": 55,
+      "y": 574,
+      "width": 8,
+      "height": 8,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P10_Remarks",

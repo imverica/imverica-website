@@ -5,59 +5,10 @@
       "page": 1,
       "fields": [
         {
-          "key": "LastName",
-          "label": "Last Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "FirstName",
-          "label": "First Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "MiddleName",
-          "label": "Middle Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "StreetNumberandName",
-          "label": "Street Numberand Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "ApartmentNumber",
-          "label": "Apartment Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "City",
-          "label": "City",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Zip",
           "label": "Zip",
           "mode": "text",
           "type": "zip",
-          "defaultValue": ""
-        },
-        {
-          "key": "State",
-          "label": "State",
-          "mode": "dropdown",
-          "type": "state",
           "defaultValue": ""
         },
         {
@@ -96,75 +47,206 @@
           "defaultValue": ""
         },
         {
-          "key": "Date_of_Birth",
-          "label": "Date of Birth",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "ANumber",
-          "label": "ANumber",
+          "key": "Alien_Registration_Number",
+          "label": "Part 1. Information About You. Enter Alien Registration Number. (A. Number).",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Filing",
-          "label": "Filing",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
+          "key": "Alien_Registration_Number_A",
+          "label": "Part 2. Information About Your Alien Relative. Enter Alien Registration Number (A. Number).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_Number",
+          "label": "Part 1. Information About You. Current Address. Enter Apartment Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_Number_2",
+          "label": "Part 2. Information About Your Alien Relative. Current Address. Enter Apartment Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_Number_3",
+          "label": "Part 1. Information About You. Safe Mailing Address If Other Than Above. Enter Apartment Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_2",
+          "label": "Part 1. Information About You. Current Address. Enter City.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_3",
+          "label": "Part 2. Information About Your Alien Relative. Current Address. Enter City.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_4",
+          "label": "Part 1. Information About You. Safe Mailing Address If Other Than Above. Enter City.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Birth_2",
+          "label": "Part 1. Information About You. Enter Date of Birth. Enter as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Birth_3",
+          "label": "Part 2. Information About Your Alien Relative. Enter Date of Birth. Enter as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse",
+          "label": "I am filing for my: (Select one). Select Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Biological_Child",
+          "label": "I am filing for my: (Select one). Child: Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Stepchild",
+          "label": "I am filing for my: (Select one). Child: Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Adopted_Child",
+          "label": "I am filing for my: (Select one). Child: Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Biological_Parent",
+          "label": "I am filing for my: (Select one). Parent: Select Biological Parent.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Stepparent",
+          "label": "I am filing for my: (Select one). Parent: Select Stepparent.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Parent_Parent_who_adopted_me",
+          "label": "I am filing for my: (Select one). Parent: Parent who adopted me.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "First_Name_Given_Name",
+          "label": "Part 1. Information About You. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "First_Name_Given_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Last_Name_Family_Name",
+          "label": "Part 1. Information About You. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Last_Name_Family_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Middle_Name",
+          "label": "Part 1. Information About You. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Middle_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State_from_List_of_States",
+          "label": "Part 1. Information About You. Current Address. Select State from List of States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State_from_List_of_States_2",
+          "label": "Part 1. Information About You. Safe Mailing Address If Other Than Above. Select State from List of States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Street_Number_and_Name",
+          "label": "Part 1. Information About You. Current Address. Enter Street Number and Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Street_Number_and_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. Current Address. Enter Street Number and Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Street_Number_and_Name_3",
+          "label": "Part 1. Information About You. Safe Mailing Address If Other Than Above. Enter Street Number and Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 2,
       "fields": [
-        {
-          "key": "CountryofBirth",
-          "label": "Countryof Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "SocialSecurityNumber",
-          "label": "Social Security Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
         {
           "key": "CountryofCitizenshipNationality",
           "label": "Countryof Citizenship Nationality",
@@ -236,88 +318,242 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Sex",
-          "label": "Part 2 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Country_of_Birth",
+          "label": "Part 1. Information About You. Enter Country of Birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part1_MaritalStatus",
-          "label": "Part 1 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Country_of_Birth_2",
+          "label": "Part 2. Information About Your Alien Relative. Enter Country of Birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part2_MaritalStatus",
-          "label": "Part 2 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Item1_First_Name_Given_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 1. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part1_Sex",
-          "label": "Part 1 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item3_First_Name_Given_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 3. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_First_Name_Given_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 2. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_First_Name_Given_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 1. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_First_Name_Given_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 3. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_First_Name_Given_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 2. Enter First Name (Given Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Last_Name_Family_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 1. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Last_Name_Family_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 3. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Last_Name_Family_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 2. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Last_Name_Family_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 1. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Last_Name_Family_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 3. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Last_Name_Family_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 2. Enter Last Name (Family Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Middle_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 1. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Middle_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 3. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Middle_Name",
+          "label": "Part 1. Information About You. If you ever used other names, provide them below: Name 2. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Middle_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 1. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Middle_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 3. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Middle_Name_2",
+          "label": "Part 2. Information About Your Alien Relative. If alien relative ever used other names, provide them below: Name 2. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Single_Never_Married",
+          "label": "Part 1. Information About You. Marital Status. (Select one). Select Single (Never Married).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Divorced",
+          "label": "Part 1. Information About You. Marital Status. (Select one). Select Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Married",
+          "label": "Part 1. Information About You. Marital Status. (Select one). Select Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Widowed",
+          "label": "Part 1. Information About You. Marital Status. (Select one). Select Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Male",
+          "label": "Part 1. Information About You. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Female",
+          "label": "Part 1. Information About You. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Single_Never_Married_2",
+          "label": "Part 2. Information About Your Alien Relative. Marital Status: (Select One). Select Single (Never Married).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Married_2",
+          "label": "Part 2. Information About Your Alien Relative. Marital Status: (Select One). Select Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Divorced_2",
+          "label": "Part 2. Information About Your Alien Relative. Marital Status: (Select One). Select Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Widowed_2",
+          "label": "Part 2. Information About Your Alien Relative. Marital Status: (Select One). Select Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Male_2",
+          "label": "Part 2. Information About Your Alien Relative. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Female_2",
+          "label": "Part 2. Information About Your Alien Relative. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Social_Security_Number",
+          "label": "Part 1. Information About You. Enter Social Security Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Social_Security_Number_2",
+          "label": "Part 2. Information About Your Alien Relative. Enter Social Security Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -535,111 +771,144 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Reason1",
-          "label": "Part 1 Reason1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
-          "key": "Other",
-          "label": "Other",
+          "key": "Spouse1_Reason_for_Termination_If_Ot",
+          "label": "Part 1. Information About You. Spouse 1. Reason for Termination: If Other is Checked, Enter Explanation.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Part2_Reason1",
-          "label": "Part 2 Reason1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Spouse1_Reason_for_Termination_If_Ot_2",
+          "label": "Part 1. Information About You. Spouse 1. Reason for Termination: If Other is Checked, Enter Explanation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part1_Reason2",
-          "label": "Part 1 Reason2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Spouse2_Reason_for_Termination_If_Ot",
+          "label": "Part 1. Information About You. Spouse 2. Reason for Termination: If Other is Checked, Enter Explanation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part2_Reason2",
-          "label": "Part 2 Reason2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Spouse2_Reason_for_Termination_If_Ot_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 2. Reason for Termination: If Other is Checked, Enter Explanation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Divorce",
+          "label": "Part 1. Information About You. Spouse 1. Reason for Termination: Select Divorce.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Death",
+          "label": "Part 1. Information About You. Spouse 1. Reason for Termination: Select Death.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Annulment",
+          "label": "Part 1. Information About You. Spouse 1. Reason for Termination: Select Annulment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Other",
+          "label": "Part 1. Information About You. Spouse 1. Reason for Termination: Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Divorce",
+          "label": "Part 1. Information About You. Spouse 2. Reason for Termination: Select Divorce.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Death",
+          "label": "Part 1. Information About You. Spouse 2. Reason for Termination: Select Death.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Annulment",
+          "label": "Part 1. Information About You. Spouse 2. Reason for Termination: Select Annulment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Other",
+          "label": "Part 1. Information About You. Spouse 2. Reason for Termination: Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Divorce_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 1. Reason for Termination: Select Divorce.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Death_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 1. Reason for Termination: Select Death.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Other_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 1. Reason for Termination: Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse1_Annulment_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 1. Reason for Termination: Select Annulment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Divorce_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 2. Reason for Termination: Select Divorce.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Death_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 2. Reason for Termination: Select Death.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Other_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 2. Reason for Termination: Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse2_Annulment_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 2. Reason for Termination: Select Annulment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -778,61 +1047,6 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
-        },
-        {
-          "key": "Part3_Child",
-          "label": "Part 3 Child",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Part3_Sex",
-          "label": "Part 3 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part1_CheckOne",
-          "label": "Part 1 Check One",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "FirstName9",
@@ -975,54 +1189,123 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Reason3",
-          "label": "Part 1 Reason3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Spouse3_Reason_for_Termination_If_Ot",
+          "label": "Part 1. Information About You. Spouse 3. Reason for Termination: If Other is Checked, Enter Explanation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part2_Reason3",
-          "label": "Part 2 Reason3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Spouse3_Reason_for_Termination_If_Ot_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 3. Reason for Termination: If Other is Checked, Enter Explanation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "One_Select_I_am_a_Lawful_Per",
+          "label": "Part 1. Information About You. Select One: Select I am a Lawful Permanent Resident.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "My_Form_I_4_85_is_currently",
+          "label": "Part 1. Information About You. Select My Form I-4 85 is currently pending.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Divorce",
+          "label": "Part 1. Information About You. Spouse 3. Reason for Termination: Select Divorce.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Death",
+          "label": "Part 1. Information About You. Spouse 3. Reason for Termination: Select Death.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Annulment",
+          "label": "Part 1. Information About You. Spouse 3. Reason for Termination: Select Annulment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Other",
+          "label": "Part 1. Information About You. Spouse 3. Reason for Termination: Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Divorce_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 3. Reason for Termination: Select Divorce.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Death_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 3. Reason for Termination: Select Death.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Other_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 3. Reason for Termination: Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse3_Annulment_2",
+          "label": "Part 2. Information About Your Alien Relative. Spouse 3. Reason for Termination: Select Annulment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Biological_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 1. Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Stepchild",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 1. Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Adopted_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 1. Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Male",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 1. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Female",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 1. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1119,44 +1402,6 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
-        },
-        {
-          "key": "Part3_Child2",
-          "label": "Part 3 Child2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Part3_Sex2",
-          "label": "Part 3 Sex2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "FirstName11",
@@ -1299,44 +1544,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part3_Child3",
-          "label": "Part 3 Child3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Part3_Sex3",
-          "label": "Part 3 Sex3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "FirstName14",
           "label": "First Name14",
           "mode": "text",
@@ -1407,42 +1614,109 @@
           "defaultValue": ""
         },
         {
-          "key": "Part3_Child4",
-          "label": "Part 3 Child4",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
+          "key": "Item2_Child_Biological_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 2. Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part3_Sex4",
-          "label": "Part 3 Sex4",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_Child_Stepchild",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 2. Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Adopted_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 2. Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Biological_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 3. Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Stepchild",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 3. Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Adopted_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 3. Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Child_Biological_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 4. Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Child_Stepchild",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 4. Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Child_Adopted_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 4. Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Male",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 2. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Female",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 2. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Male",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 3. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Female",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 3. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Child_Male",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 4. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Child_Female",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 4. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1702,44 +1976,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part3_Child5",
-          "label": "Part 3 Child5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Part3_Sex5",
-          "label": "Part 3 Sex5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "FirstName20",
           "label": "First Name20",
           "mode": "text",
@@ -1780,6 +2016,41 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item5_Child_Biological_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 5. Select Biological Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Child_Stepchild",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 5. Select Stepchild.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Child_Adopted_Child",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 5. Select Adopted Child.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Child_Male",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 5. Sex: (Select one). Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Child_Female",
+          "label": "Part 3. Information About Your Alien Relative's Children. Child 5. Sex: (Select one). Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1796,13 +2067,6 @@
         {
           "key": "WhenWhere",
           "label": "When Where",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "PrintFullName",
-          "label": "Print Full Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1871,38 +2135,46 @@
           "defaultValue": ""
         },
         {
-          "key": "Part4_Line1",
-          "label": "Part 4 Line1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item1_The_person_named_in_Part_2_i",
+          "label": "Part 4. Processing Information. 1. Select one: A. Select The person named in Part 2 is now in the United States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part4_Line2",
-          "label": "Part 4 Line2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item1",
+          "label": "Part 4. Processing Information. 1. Select one: B. Select The person named in Part 2 is now outside the United States.  (Indicate below at which U. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No",
+          "label": "Part 4. Processing Information. 2. Is the person named in Part 2 or has this person ever been in deportation or removal proceedings in the United S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Yes_Indicate_when_and_where",
+          "label": "Part 4. Processing Information. 2. Is the person named in Part 2 or has this person ever been in deportation or removal proceedings in the United S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Print_Your_Full_Name",
+          "label": "Part 5. Signature.  I certify, or if outside the United States, I swear or affirm, under penalty of perjury under the laws of the United States of ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Print_Your_Full_Name_2",
+          "label": "Part 6. Preparer's Information, If Other Than Person Signing Above. I declare that I prepared this petition at the request of the above person, and...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     }

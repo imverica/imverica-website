@@ -26,39 +26,11 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line2_StreetNumberName",
-          "label": "Part 1 Line2 Street Number Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt1Line2_AptSteFlrNumber",
           "label": "Part 1 Line2 Apt Ste Flr Number",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line2_Unit",
-          "label": "Part 1 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1Line2_CityOrTown",
@@ -80,23 +52,6 @@
           "mode": "text",
           "type": "zip",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line3_Gender",
-          "label": "Part 1 Line3 Gender",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt1Line3_CountryofBirth",
@@ -160,6 +115,55 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Street_Number_and_Name",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon). 2. Current Physical Address....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "In_Care_of_Name",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon). 2. Current Physical Address....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon).  2. Physical Address. Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon).  2. Current Physical Address...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon). 2. Current Physical Address....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Male",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon). 3. Other Information. A. Sex...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Female",
+          "label": "Part 1. Information About You (To be completed by the person requesting a medical examination, NOT the civil surgeon).  3. Other Information. A. Se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -408,27 +412,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt6Line1_OverallFinding",
-          "label": "Part 6 Line1 Overall Finding",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt7Line3_StreetNumberName",
           "label": "Part 7 Line3 Street Number Name",
           "mode": "text",
@@ -441,27 +424,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt7Line3_Unit",
-          "label": "Part 7 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt7Line3_CityOrTown",
@@ -497,27 +459,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt7Line4_Unit",
-          "label": "Part 7 Line4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt7Line4_CityOrTown",
@@ -560,6 +501,69 @@
           "mode": "text",
           "type": "email",
           "defaultValue": ""
+        },
+        {
+          "key": "Civil_Surgeon_Worksheet",
+          "label": "Part 6. Summary of Medical Examination (To be completed by the civil surgeon). 1. Summary of Overall Findings. B. Select Class B Conditions (See It...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "or_Class_B_Condition",
+          "label": "Part 6. Summary of Medical Examination (To be completed by the civil surgeon). 1. Summary of Overall Findings. A. Select No Class A. or Class B Con...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Civil_Surgeon_Worksheet_2",
+          "label": "Part 6. Summary of Medical Examination (To be completed by the civil surgeon). 1. Summary of Overall Findings. C. Select Class A. Conditions (See I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor",
+          "label": "Part 7. Civil Surgeon's Contact Information, Certification, and Signature. Physical Address. 3. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite",
+          "label": "Part 7. Civil Surgeon's Contact Information, Certification, and Signature. Physical Address. 3. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment",
+          "label": "Part 7. Civil Surgeon's Contact Information, Certification, and Signature. Physical Address. 3. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Floor",
+          "label": "Part 7. Civil Surgeon's Contact Information, Certification, and Signature. Mailing Address. 4. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Suite",
+          "label": "Part 7. Civil Surgeon's Contact Information, Certification, and Signature. Mailing Address. 4. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Apartment",
+          "label": "Part 7. Civil Surgeon's Contact Information, Certification, and Signature. Mailing Address. 4. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -585,90 +589,6 @@
     {
       "page": 6,
       "fields": [
-        {
-          "key": "Pt8Line1A_GammarRelease",
-          "label": "Part 8 Line1A Gammar Release",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1A1_Result",
-          "label": "Part 8 Line1A1 Result",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1A2_InitialScreening",
-          "label": "Part 8 Line1A2 Initial Screening",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1A3_Results",
-          "label": "Part 8 Line1A3 Results",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt8Line1A3_XrayTakenDate",
           "label": "Part 8 Line1A3 Xray Taken Date",
@@ -780,6 +700,90 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Negative_no_chest_X_ray_requ",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 1. Interferon Gama Release Assay. Re...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Positive_chest_X_ray_require",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 1. Interferon Gama Release Assay. Re...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Indeterminate_including_bord",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 1. Interferon Gama Release Assay. Re...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Chest_X_ray_not_required_med",
+          "label": "Part 8. Civil Surgeon Worksheet . 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 2. Initial Screening Test Result an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P6_Pt8Line1A2_InitialScreening_1",
+          "label": "Part 8. Civil Surgeon Worksheet . 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 2. Initial Screening Test Result an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Chest_X_ray_required_due_to",
+          "label": "Part 8. Civil Surgeon Worksheet . 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 2. Initial Screening Test Result an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Chest_X_ray_required_due_to_2",
+          "label": "Part 8. Civil Surgeon Worksheet . 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 2. Initial Screening Test Result an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Normal",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B).   Sputum Smears and Cultures Results...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Abnormal_describe_results_in",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B).  Sputum Smears and Cultures Results....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "T_Spot",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 1. Interferon Gama Release Assay. Se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "QuantiFERON",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 1. Interferon Gama Release Assay.  S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "exception_please_explain_in",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 1. Interferon Gama Release Assay (fo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -794,43 +798,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line1A6_TBClassification",
-          "label": "Part 8 Line1A6 TBClassification",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
-        },
-        {
           "key": "Pt8Line1B1b_DateNontrepoemaltest",
           "label": "Part 8 Line1B1b Date Nontrepoemaltest",
           "mode": "text",
@@ -843,23 +810,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt8Line1B1c_SyphilisScreen",
-          "label": "Part 8 Line1B1c Syphilis Screen",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt8Line1B1c_DateNontreponemalTest",
@@ -890,60 +840,108 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line1A4_SputumSmearsCultures",
-          "label": "Part 8 Line1A4 Sputum Smears Cultures",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
+          "key": "No_not_indicated",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. communicable Disease of Public Health Significance. A. Tuberculosis (T B).   4.  Sputum Smears and Cultures Dec...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_indicated_due_to_signs_o",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B).   4.  Sputum Smears and Cultures Dec...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_indicated_due_to_chest_X",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B).   4.  Sputum Smears and Cultures Dec...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_indicated_for_end_of_tre",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. T B Classification /...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_indicated_due_to_known_H",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. T B Classification /...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "or_Class_B_T_B_findings",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Pulmonary_T_B_Disease",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Class_B_1_Pulmonary_T_B",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Class_B_0_Pulmonary_T_B",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Class_B_1_Extrapulmonary_T_B",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Class_B_2_T_B_Latent_T_B_Inf",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Class_B_Other_Chest_Conditio",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. A. Tuberculosis (T B). 3. Chest X-Ray. 6. T B Classificatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Screening_Reactive_Titer_1",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 1. Serologic Test for Syphilis (Required for a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Nontreponemal_Test_Nonreacti",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis.  1. Serologic Test for Syphilis (Required for ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 8,
       "fields": [
-        {
-          "key": "Pt8Line1B2_Findings",
-          "label": "Part 8 Line1B2 Findings",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
         {
           "key": "Pt8Line1B3_Remarks",
           "label": "Part 8 Line1B3 Remarks",
@@ -994,44 +992,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line1C1c",
-          "label": "Part 8 Line1C1c",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1c2_Findings",
-          "label": "Part 8 Line1c2 Findings",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt8Line1B1e_DateScreeningRun",
           "label": "Part 8 Line1B1e Date Screening Run",
           "mode": "text",
@@ -1046,23 +1006,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line1B1d_TreponemalReactiveNon",
-          "label": "Part 8 Line1B1d Treponemal Reactive Non",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt8Line1B1g_nameOfrepeat",
           "label": "Part 8 Line1B1g name Ofrepeat",
           "mode": "text",
@@ -1075,23 +1018,6 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt8Line1B1i_RepeatReativeNon",
-          "label": "Part 8 Line1B1i Repeat Reative Non",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt8Line1B1d_name",
@@ -1134,6 +1060,90 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "Treponemal_Test_Reactive",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 1. Serologic Test for Syphilis (Required for a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Terponemal_Test_Nonreactive",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 1. Serologic Test for Syphilis (Required for a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Repeat_Treponemal_Test_Nonre",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 1. Serologic Test for Syphilis (Required for a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Repeat_Treponemal_Test_React",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 1. Serologic Test for Syphilis (Required for a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_Class_A_or_Class_B_Syphil",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 2. Findings. Select No Class A or Class B Syph...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Syphilis_Class_B_treated_in",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 2. Findings. Select Syphilis, Class B (treated...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "untreated",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. B. Syphilis. 2. Findings. Select Syphilis, Class A. (untrea...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Positive",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. C. Gonorrhea. 1. Laboratory Test for Gonorrhea (Required fo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Negative",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. C. Gonorrhea. 1. Laboratory Test for Gonorrhea (Required fo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gonorrhea_Class_B_treated_in",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. C. Gonorrhea. 2. Findings. Select Gonorrhea, Class B (treat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "untreated_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. C. Gonorrhea. 2. Findings. Select Gonorrhea, Class A. (untr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "or_Class_B_Gonorrhea",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. C. Gonorrhea. 2. Findings. Select No Class A. or Class B Go...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1148,92 +1158,92 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line2A_Disorders",
-          "label": "Part 8 Line2A Disorders",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1D1_Findings",
-          "label": "Part 8 Line1D1 Findings",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1D1b_Checkboxf",
-          "label": "Part 8 Line1D1b Checkboxf",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt8Line1C1c_Checkboxg",
-          "label": "Part 8 Line1C1c Checkboxg",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt8Line2B_Remarks",
           "label": "Part 8 Line2B Remarks",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Indeterminate_tuberculoid_bo",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mid_borderline_borderline_le",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "B_Condition",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hansen_s_Disease_leprosy_any",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hansen_s_Disease_leprosy_any_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Indeterminate_tuberculoid_bo_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mid_borderline_borderline_le_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 1. Communicable Disease of Public Health Significance. D. Other Class A. / Class B Conditions for Communicable Dis...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_No_Class_A_or_B_Physical_or",
+          "label": "Part 8. Civil Surgeon Worksheet. 2. Physical or Mental Disorders With Associated Harmful Behavior. Include here any physical or mental disorders wi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Physical_Mental_Disorder_wit",
+          "label": "Part 8. Civil Surgeon Worksheet. 2. Physical or Mental Disorders With Associated Harmful Behavior. Include here any physical or mental disorders wi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Current_Physical_Mental_Diso",
+          "label": "Part 8. Civil Surgeon Worksheet. 2. Physical or Mental Disorders With Associated Harmful Behavior. Include here any physical or mental disorders wi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_History_of_Physical_Mental_D",
+          "label": "Part 8. Civil Surgeon Worksheet. 2. Physical or Mental Disorders With Associated Harmful Behavior. Include here any physical or mental disorders wi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Physical_Mental_Disorder_wit",
+          "label": "Part 8. Civil Surgeon Worksheet. 2. Physical or Mental Disorders With Associated Harmful Behavior. Include here any physical or mental disorders wi...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1258,29 +1268,32 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line3A_Findings",
-          "label": "Part 8 Line3A Findings",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Item4_Substance_Drug_Addiction_in",
+          "label": "Part 8. Civil Surgeon Worksheet. 3. Drug Abuse / Drug Addiction. The U.S. Department of Health and Human Services (DHHS) sets the medical guideline...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Substance_Drug_Abuse_in_Full",
+          "label": "Part 8. Civil Surgeon Worksheet. 3. Drug Abuse / Drug Addiction. The U.S. Department of Health and Human Services (DHHS) sets the medical guideline...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_or_B_Substance_Drug_Abuse_Ad",
+          "label": "Part 8. Civil Surgeon Worksheet. 3. Drug Abuse / Drug Addiction. The U.S. Department of Health and Human Services (DHHS) sets the medical guideline...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Substance_Drug_Abuse_or_Addi",
+          "label": "Part 8. Civil Surgeon Worksheet. 3. Drug Abuse / Drug Addiction. The U.S. Department of Health and Human Services (DHHS) sets the medical guideline...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1321,27 +1334,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt9Line2_Unit",
-          "label": "Part 9 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt9Line2_CityOrTown",
@@ -1428,27 +1420,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line5B_Unit",
-          "label": "Part 8 Line5B Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt8Line5B_CityOrTown",
           "label": "Part 8 Line5B City Or Town",
           "mode": "text",
@@ -1474,6 +1445,48 @@
           "label": "Part 8 Line5C Date Of Referral",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 5. Required Referral to Health Department or Other Doctor (To be completed by civil surgeon, if referral was medic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 5. Required Referral to Health Department or Other Doctor (To be completed by civil surgeon, if referral was medic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 8. Civil Surgeon Worksheet. 5. Required Referral to Health Department or Other Doctor (To be completed by civil surgeon, if referral was medic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 9. Referral Evaluation (To be completed by the health department or other doctor performing the referral evaluation). 2. Address. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 9. Referral Evaluation (To be completed by the health department or other doctor performing the referral evaluation). 2. Address. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 9. Referral Evaluation (To be completed by the health department or other doctor performing the referral evaluation). 2. Address. Select Apart...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1552,49 +1565,11 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt10_PVVaccineCheckBox",
-          "label": "Part 10 PVVaccine Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P10_TDVaccineCheckBox",
           "label": "P10 TDVaccine Check Box",
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "P10_VaccineCheckBox",
-          "label": "P10 Vaccine Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt10Line1_DTDateReceived1",
@@ -2283,13 +2258,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt10Line1_CompleteSeries",
-          "label": "Part 10 Line1 Complete Series",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt10Line1_HBCompleteSeries",
           "label": "Part 10 Line1 HBComplete Series",
           "mode": "text",
@@ -2316,6 +2284,97 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Diptheria_Tetanus_D_T",
+          "label": "Part 10. Vaccination Record. Vaccine History Transferred From A Written Record. Vaccine. Specify Vaccine. Select Diptheria Tetanus (D T).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Diptheria_Tetanus_and_Pertus",
+          "label": "Part 10. Vaccination Record. Vaccine History Transferred From A Written Record. Vaccine. Specify Vaccine. Select Diptheria, Tetanus, and Pertussis ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P",
+          "label": "Part 10. Vaccination Record. Vaccine History Transferred From A Written Record. Vaccine. Specify Vaccine. Select Diptheria, Tetanus, and acelluar P...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write",
+          "label": "Part 10. Vaccination Record. Complete Series. Line Three. Oral Polio Vaccine (O P V) or Inactive Poliovirus Vaccine (I P V). Mark an X if complete;...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_2",
+          "label": "Part 10. Vaccination Record. Complete Series. Line Four. MMR (measles, mumps-rubella) or if monovalent or other combination of the vaccines. Mark a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_3",
+          "label": "Part 10. Vaccination Record.  Complete Series. Line Five. Haemophilus Influenzae Type b (H I B). Mark an X if complete; write date of lab test if i...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_4",
+          "label": "Part 10. Vaccination Record.  Complete Series. Line Seven. Varicella. Mark an X if complete; write date of lab test if immune or \"V H\" if varicella...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_5",
+          "label": "Part 10. Vaccination Record. Complete Series. Line Eight. Pneumococcal. Mark an X if complete; write date of lab test if immune or \"V H\" if varicel...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_6",
+          "label": "Part 10. Vaccination Record.  Complete Series. Line Nine. Influenza. Mark an X if complete; write date of lab test if immune or \"V H\" if varicella ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_7",
+          "label": "Part 10. Vaccination Record. Complete Series. Line Eleven. Hepatitis A. Mark an X if complete; write date of lab test if immune or \"V H\" if varicel...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Mark_an_X_if_complete_write_8",
+          "label": "Part 10. Vaccination Record. Complete Series. Line Twelve. Meningococcal. Mark an X if complete; write date of lab test if immune or \"V H\" if varic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Oral_Polio_Vaccine_O_P_V",
+          "label": "Part 10. Vaccination Record. Vaccine History Transferred From A Written Record. Vaccine. Specify Vaccine. Select Oral Polio Vaccine (O P V).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Inactive_Poliovirus_Vaccine",
+          "label": "Part 10. Vaccination Record. Vaccine History Transferred From A Written Record. Vaccine. Specify Vaccine. Select Inactive Poliovirus Vaccine (I P  V).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2330,29 +2389,29 @@
           "defaultValue": ""
         },
         {
-          "key": "P10_Results",
-          "label": "P10 Results",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P10_Remarks",
           "label": "P10 Remarks",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Applicant_completed_vaccinat",
+          "label": "Part 10. Vaccination Record. Results. Select Applicant completed vaccination requirements or may be eligible for blanket waivers as indicated above.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Applicant_does_not_meet_immu",
+          "label": "Part 10. Vaccination Record. Results. Select Applicant does not meet immunization requirements.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Applicant_will_request_an_in",
+          "label": "Part 10. Vaccination Record. Results. Select Applicant will request an individual waiver based on religious or moral convictions.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

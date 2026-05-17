@@ -5,23 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "CheckBox1",
-          "label": "Check Box1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "EACNumber",
           "label": "EACNumber",
           "mode": "text",
@@ -55,13 +38,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "TextField1",
-          "label": "Text Field1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
         },
         {
           "key": "OtherNameMiddle1",
@@ -113,27 +89,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line6_Unit",
-          "label": "P1 Line6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line6__AptSteFlrNumber",
           "label": "P1 Line6 Apt Ste Flr Number",
           "mode": "text",
@@ -176,27 +131,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line8_Unit",
-          "label": "P1 Line8 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line8_AptSteFlrNumber",
           "label": "P1 Line8 Apt Ste Flr Number",
           "mode": "text",
@@ -218,10 +152,73 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line8_State",
-          "label": "P1 Line8 State",
-          "mode": "dropdown",
-          "type": "state",
+          "key": "I_am_filing_for_T_1_nonimmig",
+          "label": "PART 1. Purpose for Filing This Application. Select all applicable boxes.  1.A.  Select I am filing for T-1 nonimmigrant status and have not previo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P1_CheckBox1_1",
+          "label": "PART 1. Purpose for Filing This Application. Select all applicable boxes.  1B.  Select I am filing for T-1 nonimmigrant status and have previously ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Apartment",
+          "label": "Part 2. General Information About You (Person filing this application as a victim). 3. Physical Address. Check this box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Suite",
+          "label": "Part 2. General Information About You (Person filing this application as a victim). 3. Physical Address.  Check this box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Floor",
+          "label": "Part 2. General Information About You (Person filing this application as a victim). 3. Physical Address.  Check this box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Apartment_2",
+          "label": "Part 2. General Information About You (Person filing this application as a victim)  4.  Safe Mailing Address.  If you do not want U.S. Citizenship ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Suite_2",
+          "label": "Part 2. General Information About You (Person filing this application as a victim)  4.  Safe Mailing Address.  If you do not want U.S. Citizenship ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Floor_2",
+          "label": "Part 2. General Information About You (Person filing this application as a victim)  4.  Safe Mailing Address.  If you do not want U.S. Citizenship ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Attorney_State_License_Bar_N",
+          "label": "To be fully completed by an attorney or accredited representative, if any. Enter Attorney State License Bar Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Attorney_or_Accredited_Repre",
+          "label": "To Be Completed by Attorney or Accredited Representative. Enter Attorney or Accredited Representative USCIS Online Account Number.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -321,13 +318,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line11_CountryOfCitizenshipOrNationality",
-          "label": "P3 Line11 Country Of Citizenship Or Nationality",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "P3_Line12c_PassportorTravDoc",
           "label": "P3 Line12c Passportor Trav Doc",
           "mode": "text",
@@ -417,6 +407,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Item12_Country_of_Citizenship_or_Na",
+          "label": "PART 2. General Information About You (Person filing this application as a victim).  12. Enter Country of Citizenship or Nationality.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_Country_That_Issued_Your_Pas",
+          "label": "PART 2. General Information About You (Person filing this application as a victim). 14. Enter Country That Issued Your Passport or Travel Document ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_or_Town",
+          "label": "PART 2. General Information About You (Person filing this application as a victim). 17. Place of Your Last Entry into the United States.  Enter Cit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -499,27 +510,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P3_Line5_Unit",
-          "label": "P3 Line5 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P3_Line5_AptSteFlrNumber",
@@ -653,6 +643,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "this_box_for_Apartment_3",
+          "label": "Part 3. Additional Information About Your Application. 5.  Law Enforcement Agency and Office. Check this box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Suite_3",
+          "label": "Part 3. Additional Information About Your Application. 5.  Law Enforcement Agency and Office.  Check this box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Floor_3",
+          "label": "Part 3. Additional Information About Your Application. 5.  Law Enforcement Agency and Office. Check this box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -786,34 +797,6 @@
           "defaultValue": false
         },
         {
-          "key": "Whywereyouarrestedciteddetainedorcharged",
-          "label": "Whywereyouarrestedciteddetainedorcharged",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Dateofarrestcitationdetentioncharge",
-          "label": "Dateofarrestcitationdetentioncharge",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Wherewereyouarrestedciteddetainedorcharged",
-          "label": "Wherewereyouarrestedciteddetainedorcharged",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Outcomeordisposition",
-          "label": "Outcomeordisposition",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Dq3a_yes",
           "label": "Dq3a yes",
           "mode": "checkbox_single",
@@ -868,6 +851,62 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Date_of_Arrest_Citation_Dete",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Arrest_Citation_Dete_2",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Outcome_or_disposition_for_e",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Outcome_or_disposition_e",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Where_were_you_arrested_cite",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Where_were_you_arrested_cite_2",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Why_were_you_arrested_cited",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Why_were_you_arrested_cited_2",
+          "label": "PART 4. Processing Information. If you answered \u201cYes\u201d to any of the above questions, complete the following table.  If you need extra space, use th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1515,41 +1554,6 @@
           "defaultValue": false
         },
         {
-          "key": "FamilyName",
-          "label": "Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "GivenName",
-          "label": "Given Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "MiddleName",
-          "label": "Middle Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "CountryofBirth",
-          "label": "Countryof Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "DateofBirth",
-          "label": "Dateof Birth",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "CountryofBirth1",
           "label": "Countryof Birth1",
           "mode": "text",
@@ -1562,29 +1566,159 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Spouse_City_or_Town_of_Residence",
+          "label": "PART 5. Information About Your Family Members. 1. Information About your Spouse. D. Current Location.  Enter City or Town of Residence.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Country_of_Residence",
+          "label": "PART E. Information About Your Family Members. 1. Information About your Spouse. D. Current Location. Enter Country of Residence.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_City_or_Town",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   5. A. Child 1. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_Country_of_Birth",
+          "label": "PART 5. Information About Your Family Members. 1. Information About your Spouse. C. Enter Spouse Country of Birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Country",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   5. A. Information About Your Child 1. Enter Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_City_or_Town",
+          "label": "PART 5. Information About Your Family Members.  Information About Your Children   5. B.  Current Location. Child 2. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Country",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.  5. B. Child 2. Enter Country",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Date_of_Birth",
+          "label": "PART 5. Information About Your Family Members.2. Information About Your Children.  5. A. Child 1. Enter Date of Birth. Enter as 2 digit Month, 2 di...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Spouse_Date_of_Birth",
+          "label": "PART 5. Information About Your Family Members. 1. Information About your Spouse. B. Enter Spouse Date of Birth, Enter as 2 digit Month, 2 digit Day...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Date_of_Birth",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   5. B. Child 2. Enter Date of Birth. Enter as 2 digit Month, 2 ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Family_Name_Last_Name",
+          "label": "PART 5.  Information About Your Family Members.  Provide the following information about your spouse and all of your children, if applicable.  If y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Family_Name_Last_Name",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   A. Child 1. Enter Family Name (Last Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Family_Name_Last_Name",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   5. B. Child 2. Enter Family Name (Last Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Given_Name_First_Name",
+          "label": "PART 5.  Information About Your Family Members.   Provide the following information about your spouse and all of your children, if applicable.  If ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Given_Name_First_Name",
+          "label": "PART 5. Information About Your Family Members.   Information About Your Children 5. A. Child 1. Enter Given Name (First Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Given_Name_First_Name",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.  5. B. Child 2. Enter Given Name (First Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Middle_Name",
+          "label": "PART 5.  Information About Your Family Members.   Provide the following information about your spouse and all of your children, if applicable.  If ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Middle_Name",
+          "label": "PART 5. Information About Your Family Members.  Information About Your Children  5. A. Child 1. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Middle_Name",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   5. B.  Child 2. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_State_from_the_list_of_State",
+          "label": "Part 5. Information About Your Family Members. 2. Information About Your Children.  5 A  Child 1. Select State from the list of States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_State_from_the_list_of_State",
+          "label": "Part 5. Information About Your Family Members.  Information About Your Children  5 B. Current Location. Child 2.   Select State from the list of St...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 8,
       "fields": [
-        {
-          "key": "Pt12Line1_Checkbox",
-          "label": "Part 12 Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt12Line1b_Language",
           "label": "Part 12 Line1b Language",
@@ -1632,6 +1766,34 @@
           "label": "Countryof Birth3",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Child_3_Enter_City_or_Town",
+          "label": "PART 5. Information About Your Family Members. 2. Information About Your Children.   5. C. Current Location.   Child 3, Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Child_3_Enter_Country",
+          "label": "PART 5.  Information About Your Family Members. 2. Information About Your Children. 5. C. Current Location.  Child 3,  Enter Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "PART 6. Applicant's Statement, Contact Information, Declaration, Certification, and Signature. NOTE: Read the Penalties section of the Form I-9 14 ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "PART 6. Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Statement. 1. Applicant's Statement Rega...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1750,27 +1912,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt13Line3_Unit",
-          "label": "Part 13 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt13Line3_AptSteFlrNumber",
           "label": "Part 13 Line3 Apt Ste Flr Number",
           "mode": "text",
@@ -1818,6 +1959,27 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite",
+          "label": "PART 7. Interpreter's Contact Information, Certification, and Signature (if any). Interpreter's Mailing Address. 3. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment",
+          "label": "PART 7. Interpreter's Contact Information, Certification, and Signature (if any). Interpreter's Mailing Address. 3. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor",
+          "label": "PART 7. Interpreter's Contact Information, Certification, and Signature (if any). Interpreter's Mailing Address. 3. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1846,40 +2008,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt13Line7_Checkbox",
-          "label": "Part 13 Line7 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt13Line7b_extends",
-          "label": "Part 13 Line7b extends",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt13Line8_DateofSignature",
           "label": "Part 13 Line8 Dateof Signature",
           "mode": "text",
@@ -1892,27 +2020,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt14Line3_Unit",
-          "label": "Part 14 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt14Line3_AptSteFlrNumber",
@@ -1961,6 +2068,55 @@
           "label": "Part 14 Line3 Country",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant.  Preparer's Statemen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney_2",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite_2",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment_2",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor_2",
+          "label": "PART 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

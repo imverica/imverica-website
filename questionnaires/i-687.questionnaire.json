@@ -5,23 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "Part1_TemporaryStatus",
-          "label": "Part 1 Temporary Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "FamilyNameLastName",
           "label": "Family Name Last Name",
           "mode": "text",
@@ -50,57 +33,8 @@
           "defaultValue": ""
         },
         {
-          "key": "OtherAsandNamesUsedorKnownBy",
-          "label": "Other Asand Names Usedor Known By",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "",
-          "label": "",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "InCareOf",
           "label": "In Care Of",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "NumberandStreet",
-          "label": "Numberand Street",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "City",
-          "label": "City",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "State",
-          "label": "State",
-          "mode": "text",
-          "type": "state",
-          "defaultValue": ""
-        },
-        {
-          "key": "ZipCode",
-          "label": "Zip Code",
-          "mode": "text",
-          "type": "zip",
-          "defaultValue": ""
-        },
-        {
-          "key": "ApartmentNumber",
-          "label": "Apartment Number",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -148,83 +82,204 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_MaritalStatus",
-          "label": "Part 1 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
-        },
-        {
-          "key": "Part1_Sex",
-          "label": "Part 1 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part1_Race",
-          "label": "Part 1 Race",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
-        },
-        {
           "key": "Specify",
           "label": "Specify",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Home_Telephone_Number",
+          "label": "5. Telephone Numbers (including area codes). Enter Home Telephone Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Work_Telephone_Number",
+          "label": "5. Telephone Numbers (including area codes). Enter Work Telephone Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Home_Address_in_the_US_Enter",
+          "label": "6. Home Address in the U.S. Enter Apartment Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_Number",
+          "label": "7. Mailing Address in the U.S. (if different from address in Number 6). Enter Apartment Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Home_Address_in_the_US_Enter_2",
+          "label": "6. Home Address in the U.S. Enter City.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_2",
+          "label": "7. Mailing Address in the U.S. (if different from address in Number 6). Enter City.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Home_Address_in_the_US_Enter_3",
+          "label": "6. Home Address in the U.S. Enter Number and Street Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Number_and_Street_Name",
+          "label": "7. Mailing Address in the U.S. (if different from address in Number 6). Enter Number and Street Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other_A",
+          "label": "4. Line Two. Enter Other A. Numbers and Names Used or Known By (including maiden name, if married).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other_A_2",
+          "label": "4. Line One. Enter Other A. Numbers and Names Used or Known By (including maiden name, if married).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10",
+          "label": "10. Marital Status. Check this box for \"Now Married.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_2",
+          "label": "10. Marital Status. Check this box for \"Never Married.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_3",
+          "label": "10. Marital Status. Check this box for \"Separated.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_4",
+          "label": "10. Marital Status. Check this box for \"Divorced.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_5",
+          "label": "10. Marital Status. Check this box for \"Widowed.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12",
+          "label": "12. Race. Check this box for \"Asian or Pacific Islander.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_2",
+          "label": "12. Race. Check this box for \"Hispanic.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_3",
+          "label": "12. Race. Check this box for \"Black, not of Hispanic origin.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_4",
+          "label": "12. Race. Check this box for \"White, not of Hispanic origin.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_5",
+          "label": "12. Race. Check this box for \"Other.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11",
+          "label": "11. Sex. Check this box for \"Male.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_2",
+          "label": "11. Sex. Check this box for \"Female.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P1_Part1_TemporaryStatus_0",
+          "label": "START HERE. Type or print in capital letters in black ink. If you need more space, use a separate sheet of paper. 1. I hereby apply for status as i...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P1_Part1_TemporaryStatus_1",
+          "label": "1. I hereby apply for status as indicated by the block checked below. B. Check this box for \"Temporary Resident Status as an alien who entered the ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Home_Address_in_the_US_Enter_4",
+          "label": "6. Home Address in the U.S. Enter State.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State_2",
+          "label": "7. Mailing Address in the U.S. (if different from address in Number 6). Enter State.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Home_Address_in_the_US_Enter_5",
+          "label": "6. Home Address in the U.S. Enter Zip Code.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Zip_Code",
+          "label": "7. Mailing Address in the U.S. (if different from address in Number 6). Enter Zip Code.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -235,51 +290,10 @@
       "page": 2,
       "fields": [
         {
-          "key": "Line13_TemporaryResidence",
-          "label": "Line 13 Temporary Residence",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "dateplaceoffilingandfinaldisposition",
           "label": "dateplaceoffilingandfinaldisposition",
           "mode": "text",
           "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line14_OtherRecords",
-          "label": "Line 14 Other Records",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "ANumber",
-          "label": "ANumber",
-          "mode": "text",
-          "type": "text",
           "defaultValue": ""
         },
         {
@@ -288,23 +302,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line16_Visa",
-          "label": "Line 16 Visa",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "SpecifyTypeofVisa",
@@ -335,49 +332,8 @@
           "defaultValue": ""
         },
         {
-          "key": "Line17_PlaceofEntry",
-          "label": "Line 17 Placeof Entry",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line18_Mother",
-          "label": "Line 18 Mother",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "MothersName",
           "label": "Mothers Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "ImmigrationStatus",
-          "label": "Immigration Status",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -397,53 +353,8 @@
           "defaultValue": ""
         },
         {
-          "key": "Line19_Father",
-          "label": "Line 19 Father",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "FathersName",
           "label": "Fathers Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "FamilyName",
-          "label": "Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "GivenName",
-          "label": "Given Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "CountryofBirth",
-          "label": "Countryof Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "Relationship",
-          "label": "Relationship",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -453,6 +364,321 @@
           "label": "CItyand State",
           "mode": "text",
           "type": "state",
+          "defaultValue": ""
+        },
+        {
+          "key": "A",
+          "label": "14. Do you have other records with U S C I S (or the former I N S)? If Yes, give file numbers. Enter A. Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_A",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line One. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_A_2",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Five. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_A_3",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Six. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_A_4",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Four. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_A_5",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Three....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_A_6",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Two. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Country_of_Birth",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line One. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Country_of_Birth_2",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Five. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Country_of_Birth_3",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Six. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Country_of_Birth_4",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Four. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Country_of_Birth_5",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Three....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Country_of_Birth_6",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Two. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Family_Name",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line One. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Family_Name_2",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Five. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Family_Name_3",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Six. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Family_Name_4",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Four. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Family_Name_5",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Three....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Family_Name_6",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Two. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Given_Name",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line One. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Given_Name_2",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Five. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Given_Name_3",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Six. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Given_Name_4",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Four. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Given_Name_5",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Three....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Given_Name_6",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Two. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item18_Mother_s_Immigration_Status",
+          "label": "18. Enter Mother's Immigration Status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item19_Father_s_Immigration_Status",
+          "label": "19. Enter Father's Immigration Status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Line13_TemporaryResidence_0",
+          "label": "13. Have you previously applied for temporary residence as a Legalization applicant? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Line13_TemporaryResidence_1",
+          "label": "13. Have you previously applied for temporary residence as a Legalization applicant? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Line14_OtherRecords_0",
+          "label": "14. Do you have other records with U S C I S (or the former I N S)? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Line14_OtherRecords_1",
+          "label": "14. Do you have other records with U S C I S (or the former I N S)? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry",
+          "label": "16. Manner of Entry. Check this box for \"Without a visa.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_2",
+          "label": "16. Manner of Entry. Check this box for \"With a visa (visitor, student, etc.).\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_3",
+          "label": "17. Place of first entry into U.S. to reside. Check this box for \"Port of Entry.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_4",
+          "label": "17. Place of first entry into U.S. to reside. Check this box for \"Border - Not through a Port of Entry.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item18_this_box_if_Mother_is_living",
+          "label": "18. Check this box if Mother is living.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item18_this_box_if_Mother_is_deceas",
+          "label": "18. Check this box if Mother is deceased.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item19_this_box_if_Father_is_living",
+          "label": "19. Check this box if Father is living.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item19_this_box_if_Father_is_deceas",
+          "label": "19. Check this box if Father is deceased.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Relationship",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line One. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Relationship_2",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Five. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Relationship_3",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Six. E...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Relationship_4",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Four. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Relationship_5",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Three....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Relationship_6",
+          "label": "20. List your present and past husbands / wives and all of your sons and daughters (if additional space is needed, use separate paper). Line Two. E...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -510,56 +736,372 @@
           "defaultValue": ""
         },
         {
-          "key": "Line28_Violate",
-          "label": "Line 28 Violate",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line29_Violate",
-          "label": "Line 29 Violate",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "NumberandStreetName",
-          "label": "Numberand Street Name",
+          "key": "Entry_Apartment_Number",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "From",
-          "label": "From",
+          "key": "Entry_Apartment_Number_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "To",
-          "label": "To",
+          "key": "Entry_Apartment_Number_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Apartment_Number_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Apartment_Number_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Apartment_Number_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Apartment_Number_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P3_Line28_Violate_0",
+          "label": "28. Did you violate your legal status prior to January 1, 1982? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P3_Line28_Violate_1",
+          "label": "28. Did you violate your legal status prior to January 1, 1982? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P3_Line29_Violate_0",
+          "label": "29. Was your status violation known to the Government prior to January 1, 1982? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P3_Line29_Violate_1",
+          "label": "29. Was your status violation known to the Government prior to January 1, 1982? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_2",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_3",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_4",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_5",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_6",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_7",
+          "label": "30. RESIDENCES IN THE UNITED STATES. List all of your residences in the United States since your first entry, beginning with your present address. ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -603,36 +1145,386 @@
       "page": 5,
       "fields": [
         {
-          "key": "FullNameofEmployer",
-          "label": "Full Nameof Employer",
+          "key": "Entry_Annual_Wage",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Occupation",
-          "label": "Occupation",
+          "key": "Entry_Annual_Wage_2",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "SuiteNumber",
-          "label": "Suite Number",
+          "key": "Entry_Annual_Wage_3",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "AnnualWage",
-          "label": "Annual Wage",
+          "key": "Entry_Annual_Wage_4",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "HourlyWage",
-          "label": "Hourly Wage",
+          "key": "Entry_Annual_Wage_5",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_11",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_12",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_11",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_12",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_2",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_3",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_4",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_5",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_2",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_3",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_4",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_5",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_11",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_12",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_2",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_3",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_4",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_5",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_11",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_12",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_2",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_3",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_4",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_5",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P5_To_7",
+          "label": "Enter as 2-digit month, 2-digit day and 4-digit year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_11",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_11",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_12",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -650,29 +1542,417 @@
           "defaultValue": ""
         },
         {
-          "key": "Military",
-          "label": "Military",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Entry_Annual_Wage_6",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Annual_Wage_7",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Annual_Wage_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Annual_Wage_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Annual_Wage_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_13",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_14",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_15",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_16",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_17",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_13",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_14",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_15",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_16",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_From_17",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_6",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_7",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Full_Name_of_Employer_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_6",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_7",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Hourly_Wage_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item34",
+          "label": "34. Check this box for \"I have registered under the Military Selective Service Act.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item34_2",
+          "label": "34. Check this box for \"I am a male over the age of 17 and under the age of 26 required to register under the Military Selective Service Act and ha...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item34_3",
+          "label": "34. Check this box for \"I am a male born after 1959 and over the age of 26 and cannot now register.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item34_4",
+          "label": "34. Check this box for \"I am exempt from Selective Service Registration either because I am a female or I was born before 1960.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_13",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_14",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_15",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_16",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Number_and_Street_Name_17",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_6",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_7",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Occupation_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_13",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_14",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_15",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_16",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_17",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_6",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_7",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_8",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_9",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Suite_Number_10",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_12",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_13",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_14",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_15",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Date_To_16",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_13",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_14",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_15",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_16",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Zip_Code_17",
+          "label": "33. EMPLOYMENT IN THE UNITED STATES SINCE FIRST ENTRY. Show most recent employment first and then all previous employment dating back to your first...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -680,378 +1960,318 @@
       "page": 7,
       "fields": [
         {
-          "key": "Line35_CheckBox",
-          "label": "Line 35 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line36_CheckBox",
-          "label": "Line 36 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37_CheckBox",
-          "label": "Line 37 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37a_CheckBox",
-          "label": "Line 37 a Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37b_CheckBox",
-          "label": "Line 37 b Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37c_CheckBox",
-          "label": "Line 37 c Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37d_CheckBox",
-          "label": "Line 37 d Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37e_CheckBox",
-          "label": "Line 37 e Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line37f_CheckBox",
-          "label": "Line 37 f Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line39a_CheckBox",
-          "label": "Line 39 a Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line39b_CheckBox",
-          "label": "Line 39 b Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line39c_CheckBox",
-          "label": "Line 39 c Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Whywereyouarrestedciteddetainedorcharged",
-          "label": "Whywereyouarrestedciteddetainedorcharged",
+          "key": "Date_arrested_cited_detained",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Datearrestedciteddetainedorcharged",
-          "label": "Datearrestedciteddetainedorcharged",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Wherewereyouarrestedciteddetainedorcharged",
-          "label": "Wherewereyouarrestedciteddetainedorcharged",
+          "key": "Date_arrested_cited_detained_2",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Outcomeordispositionofthearrestcitationdetentionorcharge",
-          "label": "Outcomeordispositionofthearrestcitationdetentionorcharge",
+          "key": "Date_arrested_cited_detained_3",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line38_CheckBox",
-          "label": "Line 38 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "P7_Line35_CheckBox_0",
+          "label": "35. Have you ever assisted in the persecution of any person or persons on account of race, religion, political opinion, nationality, or membership ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Line39e_CheckBox",
-          "label": "Line 39 e Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "P7_Line35_CheckBox_1",
+          "label": "35. Have you ever assisted in the persecution of any person or persons on account of race, religion, political opinion, nationality, or membership ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Line39d_CheckBox",
-          "label": "Line 39 d Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "P7_Line36_CheckBox_0",
+          "label": "36. Have you ever been treated for a mental disorder, drug addiction, or alcoholism? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Line39f_CheckBox",
-          "label": "Line 39 f Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "P7_Line36_CheckBox_1",
+          "label": "36. Have you ever been treated for a mental disorder, drug addiction, or alcoholism? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37_CheckBox_0",
+          "label": "37. Have you ever committed a crime or offense for which you were not arrested? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37_CheckBox_1",
+          "label": "37. Have you ever committed a crime or offense for which you were not arrested? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37a_CheckBox_0",
+          "label": "37. Have you ever been arrested, cited, or detained by any law enforcement officer (including U S C I S or former I N S and military officers) for ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37a_CheckBox_1",
+          "label": "37. Have you ever been arrested, cited, or detained by any law enforcement officer (including U S C I S or former I N S and military officers) for ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37b_CheckBox_0",
+          "label": "37. Have you ever been charged with committing any crime or offense? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37b_CheckBox_1",
+          "label": "37. Have you ever been charged with committing any crime or offense? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37c_CheckBox_0",
+          "label": "37. Have you ever been convicted of a crime or offense? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37c_CheckBox_1",
+          "label": "37. Have you ever been convicted of a crime or offense? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37d_CheckBox_0",
+          "label": "37. Have you ever been in jail or prison? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37d_CheckBox_1",
+          "label": "37. Have you ever been in jail or prison? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37e_CheckBox_0",
+          "label": "37. Have you ever been placed in an alternative sentencing or a rehabilitative program (for example: diversion, deferred prosecution, withheld adju...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37e_CheckBox_1",
+          "label": "37. Have you ever been placed in an alternative sentencing or a rehabilitative program (for example: diversion, deferred prosecution, withheld adju...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37f_CheckBox_0",
+          "label": "37. Have you ever received a suspended sentence, been placed on probation, or been paroled? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line37f_CheckBox_1",
+          "label": "37. Have you ever received a suspended sentence, been placed on probation, or been paroled? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line38_CheckBox_0",
+          "label": "38. Have you, or a dependent member of your immediate family, ever received public assistance from any source, including, but not limited to, the U...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line38_CheckBox_1",
+          "label": "38. Have you, or a dependent member of your immediate family, ever received public assistance from any source, including, but not limited to, the U...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39a_CheckBox_0",
+          "label": "39. Have you ever within the past 10 years been a prostitute or procured anyone for prostitution, or intend to engage in such activities in the fut...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39a_CheckBox_1",
+          "label": "39. Have you ever within the past 10 years been a prostitute or procured anyone for prostitution, or intend to engage in such activities in the fut...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39b_CheckBox_0",
+          "label": "39. Have you ever engaged in any unlawful commercialized vice, including, but not limited to, illegal gambling? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39b_CheckBox_1",
+          "label": "39. Have you ever engaged in any unlawful commercialized vice, including, but not limited to, illegal gambling? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39c_CheckBox_0",
+          "label": "39. Have you ever knowingly encouraged, induced, assisted, abetted, or aided any alien to try to enter the United States illegally? Check this box ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39c_CheckBox_1",
+          "label": "39. Have you ever knowingly encouraged, induced, assisted, abetted, or aided any alien to try to enter the United States illegally? Check this box ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39d_CheckBox_0",
+          "label": "39. Have you ever illicitly trafficked in any controlled substance, or knowingly assisted, abetted, or colluded in the illicit trafficking of any c...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39d_CheckBox_1",
+          "label": "39. Have you ever illicitly trafficked in any controlled substance, or knowingly assisted, abetted, or colluded in the illicit trafficking of any c...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39e_CheckBox_0",
+          "label": "39. Have you ever engaged in, conspired to engage in, or do you intend to engage in, or have you ever solicited membership or funds for, or have yo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39e_CheckBox_1",
+          "label": "39. Have you ever engaged in, conspired to engage in, or do you intend to engage in, or have you ever solicited membership or funds for, or have yo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39f_CheckBox_0",
+          "label": "39. Have you ever been a member of, or in any way affiliated with, the Communist Party or any other totalitarian party? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line39f_CheckBox_1",
+          "label": "39. Have you ever been a member of, or in any way affiliated with, the Communist Party or any other totalitarian party? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "outcome_or_disposition_of_th",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "outcome_or_disposition_of_th_2",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "outcome_or_disposition_of_th_3",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "where_you_were_arrested_cite",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "where_you_were_arrested_cite_2",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "where_you_were_arrested_cite_3",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Explain_why_were_you_arreste",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Explain_why_were_you_arreste_2",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Explain_why_were_you_arreste_3",
+          "label": "If you answered \"Yes\" to any of Number 37, complete the following table. If you need more space to complete, use a separate sheet of paper. Write y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 8,
       "fields": [
-        {
-          "key": "Line39g_CheckBox",
-          "label": "Line 39 g Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line39h_CheckBox",
-          "label": "Line 39 h Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line39i_CheckBox",
-          "label": "Line 39 i Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line39j_CheckBox",
-          "label": "Line 39 j Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "yournameinyournativealphabet",
           "label": "yournameinyournativealphabet",
@@ -1067,127 +2287,162 @@
           "defaultValue": ""
         },
         {
-          "key": "Line40a_CheckBox",
-          "label": "Line 40 a Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line40b_CheckBox",
-          "label": "Line 40 b Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line40c_CheckBox",
-          "label": "Line 40 c Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line41_CheckBox",
-          "label": "Line 41 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line42_CheckBox",
-          "label": "Line 42 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line43_CheckBox",
-          "label": "Line 43 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line44_CheckBox",
-          "label": "Line 44 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "FFRectangle7",
           "label": "FFRectangle7",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39g_CheckBox_0",
+          "label": "39. Have you ever engaged in genocide, or otherwise ordered, incited, assisted, or otherwise participated in the killing of any person because of r...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39g_CheckBox_1",
+          "label": "39. Have you ever engaged in genocide, or otherwise ordered, incited, assisted, or otherwise participated in the killing of any person because of r...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39h_CheckBox_0",
+          "label": "39. Have you ever been deported, excluded, or removed from the United States at government expense, or have you ever been or are you now in exclusi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39h_CheckBox_1",
+          "label": "39. Have you ever been deported, excluded, or removed from the United States at government expense, or have you ever been or are you now in exclusi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39i_CheckBox_0",
+          "label": "39. Have you ever left the United States to avoid being drafted into the United States Armed Forces? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39i_CheckBox_1",
+          "label": "39. Have you ever left the United States to avoid being drafted into the United States Armed Forces? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39j_CheckBox_0",
+          "label": "39. Have you ever been a J nonimmigrant exchange visitor who was subject to the two-year foreign residence requirement and have not yet complied wi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line39j_CheckBox_1",
+          "label": "39. Have you ever been a J nonimmigrant exchange visitor who was subject to the two-year foreign residence requirement and have not yet complied wi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line40a_CheckBox_0",
+          "label": "40. A. Do you intend to engage in the United States in Espionage? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line40a_CheckBox_1",
+          "label": "40. A. Do you intend to engage in the United States in Espionage? Check this box for \"No.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line40b_CheckBox_0",
+          "label": "40. B. Do you intend to engage in the United States in any activity a purpose of which is opposition to, or the control or overthrow of, the govern...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line40b_CheckBox_1",
+          "label": "40. B. Do you intend to engage in the United States in any activity a purpose of which is opposition to, or the control or overthrow of, the govern...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line40c_CheckBox_0",
+          "label": "40. C. Do you intend to engage in the United States in any activity to violate or evade any law prohibiting the export from the United States of go...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line40c_CheckBox_1",
+          "label": "40. C. Do you intend to engage in the United States in any activity to violate or evade any law prohibiting the export from the United States of go...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line41_CheckBox_0",
+          "label": "41. Did you, during the period from March 23, 1933 to May 8, 1945, in association with either the Nazi Government of Germany or any organization or...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line41_CheckBox_1",
+          "label": "41. Did you, during the period from March 23, 1933 to May 8, 1945, in association with either the Nazi Government of Germany or any organization or...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item42_Entry",
+          "label": "42. Are you under a final order of civil penalty for violating section 2 7 4 C of the Immigration and Nationality Act for use of fraudulent documen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item42_Entry_2",
+          "label": "42. Are you under a final order of civil penalty for violating section 2 7 4 C of the Immigration and Nationality Act for use of fraudulent documen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item43_Child",
+          "label": "43. Are you now withholding custody of a United States citizen child outside the United States from a person granted custody of the child? Check th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item43_Child_2",
+          "label": "43. Are you now withholding custody of a United States citizen child outside the United States from a person granted custody of the child? Check th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line44_CheckBox_0",
+          "label": "44. Do you plan to practice polygamy in the United States? Check this box for \"Yes.\"",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P8_Line44_CheckBox_1",
+          "label": "44. Do you plan to practice polygamy in the United States? Check this box for \"No.\"",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1210,23 +2465,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line48_CheckBox",
-          "label": "Line 48 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "PrintPreparersMiddleName",
@@ -1275,6 +2513,20 @@
           "label": "Daytime Phone Number",
           "mode": "text",
           "type": "phone",
+          "defaultValue": ""
+        },
+        {
+          "key": "P9_Line48_CheckBox_0",
+          "label": "48. Signature of Person Preparing Form if Other Than Above (Sign below). I declare that I prepared this application at the request of the above per...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P9_Line48_CheckBox_1",
+          "label": "48. Signature of Person Preparing Form if Other Than Above (Sign below). I declare that I prepared this application at the request of the above per...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
