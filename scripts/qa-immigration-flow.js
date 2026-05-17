@@ -140,6 +140,21 @@ async function main() {
   assert(i90Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-90: physical address should be structured');
   assert(i90Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-90: daytime phone should be split phone field');
 
+  const i589 = await callFlow('I-589', 'en');
+  const i589Order = i589.body.steps.map((step) => step.id);
+  assert(i589Order.indexOf('i589_applicant_numbers') < i589Order.indexOf('i589_legal_name'), 'I-589: numbers must come before applicant name');
+  assert(i589Order.indexOf('i589_legal_name') < i589Order.indexOf('i589_residential_address'), 'I-589: applicant identity must come before address');
+  assert(i589Order.indexOf('i589_contact') < i589Order.indexOf('i589_birth_sex_marital'), 'I-589: contact must come before birth/status fields');
+  assert(i589Order.indexOf('i589_last_entry') < i589Order.indexOf('i589_spouse_included'), 'I-589: entry/status must come before spouse/children');
+  assert(i589Order.indexOf('i589_children_summary') < i589Order.indexOf('i589_asylum_basis'), 'I-589: family information must come before asylum basis');
+  assert(i589Order.indexOf('i589_asylum_basis') < i589Order.indexOf('i589_harm_summary'), 'I-589: basis must come before harm narrative');
+  assert(i589Order.indexOf('i589_prior_applications') < i589Order.indexOf('i589_statement_contact'), 'I-589: prior applications/security must come before statement');
+  const i589Fields = i589.body.steps.flatMap((step) => step.fields || []);
+  assert(i589Fields.find((field) => field.id === 'i589_residential_address')?.type === 'addressBlock', 'I-589: residential address should be structured');
+  assert(i589Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-589: mailing address should be structured');
+  assert(i589Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-589: daytime phone should be split phone field');
+  assert(i589Fields.find((field) => field.id === 'asylum_basis')?.type === 'checkboxes', 'I-589: asylum basis should be checkboxes');
+
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
   assert(biographicHistory?.fields.find((field) => field.id === 'g325a_residence_history')?.type === 'addressHistory', 'G-325A: residence history should be structured');

@@ -2213,6 +2213,210 @@ function i131SpecificSteps() {
   ];
 }
 
+function i589SpecificSteps() {
+  return [
+    // I-589 Part A.I, page 1: applicant identity.
+    step('i589_applicant_numbers', 'I-589 applicant numbers', 'Start with USCIS numbers exactly as shown, if any.', [
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i589_legal_name', 'Applicant legal name', 'Enter the applicant name exactly as it should appear on the asylum application.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i589_middle_other_names', 'Middle and other names', 'Leave middle name blank if none. List other names only if used.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('other_names_used', 'Other names used, if any', 'textarea')
+    ]),
+    step('i589_residential_address', 'Current U.S. address', 'Complete the current U.S. residential address.', [
+      addressBlockField('i589_residential_address', 'Current U.S. residential address', 'i589_residential', { required: true })
+    ]),
+    step('i589_mailing_address_match', 'Mailing address', 'USCIS asks for a separate mailing address if different.', [
+      field('physical_same_as_mailing', 'Is your mailing address the same as your current residential address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i589_mailing_address', 'Separate mailing address', 'Complete only if mailing address is different.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i589_contact', 'Applicant contact information', 'Phone and email for contact and signature sections.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i589_birth_sex_marital', 'Birth, sex, and marital status', 'These appear in the applicant information section.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('sex', 'Sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i589_marital_status', 'Marital status', 'Choose the current marital status.', [
+      field('marital_status', 'Marital status', 'select', { options: ['Single', 'Married', 'Divorced', 'Widowed', 'Separated'] })
+    ]),
+    step('i589_birth_place', 'Place of birth', 'City/town and country of birth.', [
+      field('city_of_birth', 'City/town/village of birth', 'text', { autocomplete: 'off' }),
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i589_citizenship_identity', 'Citizenship, nationality, and identity', 'Nationality, citizenship, ethnicity, tribe, and religion questions.', [
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS }),
+      field('i589_nationality_at_birth', 'Nationality at birth, if different', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i589_ethnicity_religion', 'Ethnicity, tribe, and religion', 'Use factual identity descriptions from the applicant.', [
+      field('i589_ethnic_or_tribal_group', 'Ethnic or tribal group', 'text'),
+      field('i589_religion', 'Religion', 'text')
+    ]),
+
+    // I-589 Part A.I, pages 1-2: travel, passport, and status.
+    step('i589_last_country_residence', 'Last country and address before the U.S.', 'Capture the last foreign residence before coming to the United States.', [
+      field('i589_last_country_lived', 'Country where you last lived before the United States', 'select', { options: COUNTRY_OPTIONS }),
+      addressBlockField('i589_last_foreign_address', 'Last foreign address', 'i589_last_foreign', { countryDefault: '' })
+    ]),
+    step('i589_passport_travel_document', 'Passport or travel document', 'Passport/travel document details if available.', [
+      field('passport_number', 'Passport or travel document number', 'text', { autocomplete: 'off' }),
+      field('passport_country_of_issuance', 'Country that issued passport or travel document', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i589_passport_expiration', 'Passport expiration', 'Expiration date if known.', [
+      field('passport_expiration', 'Passport expiration date', 'date')
+    ]),
+    step('i589_last_entry', 'Last entry into the United States', 'Place, date, and manner of last entry.', [
+      field('place_entry', 'Place of last entry into the United States', 'text', { required: true }),
+      field('date_last_entered_us', 'Date last entered the United States', 'date', { required: true })
+    ]),
+    step('i589_i94_status', 'I-94 and status', 'Use I-94 and status information exactly as shown.', [
+      field('i94_number', 'I-94 number, if any', 'text', { autocomplete: 'off' }),
+      field('current_immigration_status', 'Current immigration status', 'text')
+    ]),
+    step('i589_status_expiration', 'Authorized stay expiration', 'Use the I-94 expiration date or D/S if applicable.', [
+      field('authorized_stay_expires', 'Authorized stay expiration date or D/S', 'text'),
+      field('one_year_deadline_issue', 'Is the filing close to or after one year from entry?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+
+    // I-589 Part A.II, pages 2-4: spouse and children.
+    step('i589_spouse_included', 'Spouse information', 'Answer whether a spouse exists and whether they are included.', [
+      field('i589_has_spouse', 'Do you have a spouse?', 'radio', { options: ['Yes', 'No'] }),
+      field('i589_spouse_included', 'Is the spouse included in this application?', 'radio', {
+        options: ['Yes', 'No'],
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      })
+    ]),
+    step('i589_spouse_name', 'Spouse name', 'Complete only if there is a spouse.', [
+      field('spouse_family_name', 'Spouse family name', 'text', {
+        autocomplete: 'family-name',
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      }),
+      field('spouse_given_name', 'Spouse given name', 'text', {
+        autocomplete: 'given-name',
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      })
+    ]),
+    step('i589_spouse_birth_status', 'Spouse birth and status', 'Spouse date of birth, nationality, and current status.', [
+      field('spouse_date_of_birth', 'Spouse date of birth', 'date', {
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      }),
+      field('spouse_country_of_citizenship', 'Spouse country of citizenship or nationality', 'select', {
+        options: COUNTRY_OPTIONS,
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      })
+    ]),
+    step('i589_spouse_entry', 'Spouse entry and I-94', 'Complete if the spouse is in the United States or included.', [
+      field('spouse_place_entry', 'Spouse place of last U.S. entry', 'text', {
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      }),
+      field('spouse_i94_number', 'Spouse I-94 number, if any', 'text', {
+        autocomplete: 'off',
+        showWhen: [{ id: 'i589_has_spouse', equals: 'Yes' }]
+      })
+    ]),
+    step('i589_children_summary', 'Children', 'USCIS asks how many children you have and whether they are included.', [
+      field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
+      field('family_members_included', 'Family members included in this I-589', 'textarea')
+    ]),
+    step('i589_child1', 'Child 1 information', 'Collect child details in the same form order.', [
+      field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name' }),
+      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name' })
+    ]),
+    step('i589_child1_details', 'Child 1 birth and status', 'Birth, citizenship, A-number, and included/not included status.', [
+      field('child1_dob', 'Child 1 date of birth', 'date'),
+      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+
+    // I-589 Part B-C, pages 5-8: claim facts and prior filings.
+    step('i589_asylum_basis', 'Asylum basis', 'Select the bases described by the applicant. This is not legal advice.', [
+      field('asylum_basis', 'Primary basis described by applicant', 'checkboxes', {
+        required: true,
+        options: ['Race', 'Religion', 'Nationality', 'Political opinion', 'Particular social group', 'CAT / torture concern', 'Not sure']
+      })
+    ]),
+    step('i589_harm_summary', 'What happened or what do you fear?', 'Capture the factual harm/fear summary in the applicant’s own words.', [
+      field('harm_or_fear_summary', 'Short summary of harm or fear', 'textarea', { required: true })
+    ]),
+    step('i589_harm_details', 'Harm and fear details', 'Dates, locations, people involved, reports, injuries, threats, and evidence.', [
+      field('i589_harm_timeline', 'Timeline of harm, threats, or fear', 'textarea'),
+      field('i589_evidence_available', 'Evidence available', 'textarea')
+    ]),
+    step('i589_family_harm', 'Family harm or fear', 'USCIS asks whether family members were harmed, threatened, or fear harm.', [
+      field('i589_family_harmed_or_threatened', 'Have family members been harmed, threatened, arrested, or targeted?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i589_family_harm_details', 'Family harm details', 'textarea', {
+        showWhenAny: [
+          { id: 'i589_family_harmed_or_threatened', equals: 'Yes' },
+          { id: 'i589_family_harmed_or_threatened', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i589_return_fear', 'Fear of return', 'Explain what the applicant believes may happen if returned.', [
+      field('i589_return_fear_details', 'What do you fear will happen if you return?', 'textarea', { required: true })
+    ]),
+    step('i589_safe_relocation', 'Relocation and protection', 'Questions about relocation, police/government protection, and safe alternatives.', [
+      field('i589_sought_government_protection', 'Did you seek protection from police or government authorities?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i589_relocation_possible', 'Could you safely relocate within your country?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i589_prior_applications', 'Prior asylum applications', 'USCIS asks about prior applications by the applicant or family members.', [
+      field('i589_prior_asylum_application', 'Have you or a family member ever applied for asylum, withholding, or CAT protection?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i589_prior_asylum_details', 'Prior application details', 'textarea', {
+        showWhenAny: [
+          { id: 'i589_prior_asylum_application', equals: 'Yes' },
+          { id: 'i589_prior_asylum_application', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i589_third_country', 'Travel through or status in other countries', 'USCIS asks about lawful status, applications, and travel in other countries.', [
+      field('i589_third_country_status', 'Did you receive lawful status, apply for protection, or live in another country before the U.S.?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i589_third_country_details', 'Third-country details', 'textarea', {
+        showWhenAny: [
+          { id: 'i589_third_country_status', equals: 'Yes' },
+          { id: 'i589_third_country_status', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i589_criminal_or_security', 'Criminal, military, and security questions', 'Any Yes or unsure answer needs careful document review.', [
+      field('i589_arrest_or_conviction', 'Have you ever been arrested, charged, convicted, detained, or imprisoned?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i589_military_or_security_service', 'Have you ever served in military, police, security, intelligence, or armed groups?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i589_criminal_security_details', 'Criminal or security details', 'Details only if any criminal, detention, military, or security answer is Yes or unsure.', [
+      field('i589_criminal_security_details', 'Details and documents', 'textarea', {
+        showWhenAny: [
+          { id: 'i589_arrest_or_conviction', equals: 'Yes' },
+          { id: 'i589_arrest_or_conviction', equals: 'Not sure' },
+          { id: 'i589_military_or_security_service', equals: 'Yes' },
+          { id: 'i589_military_or_security_service', equals: 'Not sure' }
+        ]
+      })
+    ]),
+
+    // I-589 Parts D-E and optional interpreter/preparer sections.
+    step('i589_statement_contact', 'Applicant statement and signature contact', 'Applicant statement, phone, and email before signature.', [
+      field('applicant_statement', 'Applicant statement', 'radio', {
+        options: ['I can read and understand English', 'Interpreter read the application to me']
+      }),
+      field('applicant_statement_language', 'Language used by interpreter, if any', 'text')
+    ]),
+    step('i589_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -2624,17 +2828,7 @@ const FORM_OVERRIDES = {
       field('reason_for_extension_or_change', 'Reason for extension or change', 'textarea', { required: true })
     ])
   ],
-  'I-589': [
-    step('asylum_claim', 'Asylum or withholding request', 'Collects the first layer of facts for document preparation, not legal advice.', [
-      field('asylum_basis', 'Primary basis described by applicant', 'checkboxes', {
-        options: ['Race', 'Religion', 'Nationality', 'Political opinion', 'Particular social group', 'CAT / torture concern', 'Not sure']
-      }),
-      field('date_last_entered_us', 'Date last entered the United States', 'date'),
-      field('one_year_deadline_issue', 'Is the filing close to or after one year from entry?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('harm_or_fear_summary', 'Short summary of harm or fear', 'textarea', { required: true }),
-      field('family_members_included', 'Family members to include', 'textarea')
-    ])
-  ],
+  'I-589': i589SpecificSteps(),
   'I-751': [
     step('remove_conditions', 'Remove conditions on residence', 'Marriage-based conditional resident details.', [
       field('i751_filing_type', 'Filing type', 'select', {
@@ -3080,12 +3274,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                 ...i90SpecificSteps(),
                 ...evidenceSteps()
               ]
-              : code === 'N-400'
+              : code === 'I-589'
                 ? [
                   ...purposeSteps(code, title),
-                  ...n400SpecificSteps(),
+                  ...i589SpecificSteps(),
                   ...evidenceSteps()
                 ]
+                : code === 'N-400'
+                  ? [
+                    ...purposeSteps(code, title),
+                    ...n400SpecificSteps(),
+                    ...evidenceSteps()
+                  ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),
