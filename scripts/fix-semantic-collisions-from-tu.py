@@ -28,8 +28,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # or generic for these (Pt7Line1B* on i-693 medical history etc.).
 DEFER_TABLES = {
     # form: {(page, key)}
-    "i-589": {(4, "TextField13"), (11, "TextField12"), (10, "TextField27"), (4, "TextField35")},
-    "i-687": set(),  # to be evaluated separately
+    # i-589 page 4 tables handled by scripts/fix-i589-page4-tables.py
+    # i-589 page 10/11 small groups handled by /TU directly (no defer needed)
+    "i-589": set(),
+    "i-687": set(),
 }
 
 TABLE_COUNT_THRESHOLD = 10  # >= this many of the same key on one page = treat as table
@@ -140,10 +142,14 @@ def load_pdf_tus(pdf_path: str) -> dict:
     return {name: (f.get("/TU") or "") for name, f in fields.items()}
 
 
-def find_collisions(raw_map: dict, defer: set) -> dict:
+def find_collisions(raw_map, defer, tus):
     """
     Returns {(page, key): [field, ...]} for fields with collisions to fix.
-    Deferred tables and table-sized groups are excluded.
+
+    Skip rules (true table, needs coord-based handling):
+      - in DEFER_TABLES set, OR
+      - count >= TABLE_COUNT_THRESHOLD AND all /TU strings are identical
+        (i.e. PDF provides only a group-level tooltip, no per-cell distinction)
     """
     groups = defaultdict(list)
     for f in raw_map.get("fields", []):
@@ -155,8 +161,10 @@ def find_collisions(raw_map: dict, defer: set) -> dict:
         if (page, key) in defer:
             continue
         if len(items) >= TABLE_COUNT_THRESHOLD:
-            # Likely a table — skip
-            continue
+            unique_tus = {tus.get(f.get("originalKey", ""), "") for f in items}
+            if len(unique_tus) <= 1:
+                # All cells share the same tooltip — a uniform table, defer.
+                continue
         collisions[(page, key)] = items
     return collisions
 
@@ -274,7 +282,7 @@ def main():
         raw = json.load(fh)
 
     defer = DEFER_TABLES.get(form, set())
-    collisions = find_collisions(raw, defer)
+    collisions = find_collisions(raw, defer, tus)
     print(f"Found {len(collisions)} collision groups to fix (deferred {len(defer)} tables)")
 
     # Build (page, key, oidx) → newKey
