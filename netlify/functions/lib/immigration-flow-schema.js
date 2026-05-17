@@ -2417,6 +2417,133 @@ function i589SpecificSteps() {
   ];
 }
 
+function i864SpecificSteps() {
+  return [
+    // I-864 Part 1-2: basis and immigrant.
+    step('i864_sponsor_basis', 'Sponsor basis', 'Start with why this sponsor is submitting Form I-864.', [
+      field('i864_sponsor_basis', 'Sponsor basis', 'select', {
+        required: true,
+        options: [
+          'Petitioner filing for the intending immigrant',
+          'Joint sponsor',
+          'Substitute sponsor',
+          'First joint sponsor',
+          'Second joint sponsor',
+          'Not sure'
+        ]
+      }),
+      field('joint_sponsor_needed', 'Is a joint sponsor needed?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i864_principal_immigrant', 'Principal immigrant', 'The intending immigrant listed first on the affidavit.', [
+      field('principal_immigrant_family_name', 'Principal immigrant family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('principal_immigrant_given_name', 'Principal immigrant given name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i864_principal_numbers', 'Principal immigrant numbers', 'Use A-number, USCIS account number, and receipt number if available.', [
+      field('principal_immigrant_alien_number', 'Principal immigrant A-number, if any', 'text', { autocomplete: 'off' }),
+      field('principal_immigrant_receipt_number', 'Related USCIS receipt number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i864_principal_address', 'Principal immigrant mailing address', 'Complete the intending immigrant mailing address.', [
+      addressBlockField('principal_immigrant_mailing_address', 'Principal immigrant mailing address', 'principal_immigrant_mailing', { required: true })
+    ]),
+    step('i864_other_immigrants', 'Other immigrants sponsored', 'List other family members immigrating with the principal immigrant.', [
+      field('i864_other_immigrants_count', 'Number of other immigrants included', 'number', { inputmode: 'numeric' }),
+      field('i864_other_immigrants_details', 'Other immigrants names and relationships', 'textarea')
+    ]),
+
+    // I-864 Part 4: sponsor.
+    step('i864_sponsor_name', 'Sponsor legal name', 'Enter sponsor name exactly as shown on tax and identity records.', [
+      field('sponsor_family_name', 'Sponsor family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('sponsor_given_name', 'Sponsor given name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i864_sponsor_full_name', 'Sponsor full name and organization', 'Use this when a full-name line or organization name is needed.', [
+      field('sponsor_full_name', 'Sponsor full legal name', 'text', { required: true, autocomplete: 'name' }),
+      field('sponsor_organization_name', 'Sponsor organization name, if any', 'text', { autocomplete: 'organization' })
+    ]),
+    step('i864_sponsor_mailing_address', 'Sponsor mailing address', 'Complete sponsor mailing address as a structured block.', [
+      addressBlockField('sponsor_mailing_address', 'Sponsor mailing address', 'sponsor_mailing', { required: true })
+    ]),
+    step('i864_sponsor_physical_address_match', 'Sponsor physical address', 'USCIS asks whether physical address is the same as mailing.', [
+      field('sponsor_physical_same_as_mailing', 'Is sponsor physical address the same as mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i864_sponsor_physical_address', 'Sponsor physical address details', 'Complete only if physical address differs from mailing.', [
+      addressBlockField('sponsor_physical_address', 'Sponsor physical address', 'sponsor_physical', {
+        showWhen: [{ id: 'sponsor_physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i864_sponsor_birth', 'Sponsor birth and citizenship', 'Sponsor date of birth, country of birth, and citizenship/residency status.', [
+      field('sponsor_date_of_birth', 'Sponsor date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('sponsor_country_of_birth', 'Sponsor country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i864_sponsor_status', 'Sponsor immigration status', 'Status must match the I-864 sponsor eligibility section.', [
+      field('sponsor_status', 'Sponsor status', 'select', {
+        required: true,
+        options: ['U.S. citizen', 'Lawful permanent resident', 'U.S. national', 'Not sure']
+      }),
+      field('sponsor_alien_number', 'Sponsor A-number, if LPR', 'text', {
+        autocomplete: 'off',
+        showWhen: [{ id: 'sponsor_status', equals: 'Lawful permanent resident' }]
+      })
+    ]),
+    step('i864_sponsor_identifiers', 'Sponsor SSN and USCIS account', 'I-864 requires the sponsor SSN.', [
+      field('sponsor_ssn', 'Sponsor Social Security number', 'text', { required: true, inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits' }),
+      field('sponsor_uscis_online_account_number', 'Sponsor USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+
+    // I-864 Part 5-6: household and income.
+    step('i864_household_size', 'Household size', 'Calculate household size in the same order as the form.', [
+      field('household_size', 'Household size', 'number', { required: true, inputmode: 'numeric' }),
+      field('i864_household_size_notes', 'Household size notes', 'textarea')
+    ]),
+    step('i864_employment_status', 'Sponsor employment status', 'Current employment or self-employment.', [
+      field('sponsor_employment_status', 'Sponsor employment status', 'select', {
+        options: ['Employed', 'Self-employed', 'Retired', 'Unemployed', 'Student', 'Other']
+      }),
+      field('sponsor_employer_name', 'Current employer or business name', 'text', { autocomplete: 'organization' })
+    ]),
+    step('i864_current_income', 'Sponsor current annual income', 'Use current annual income before optional assets.', [
+      field('current_annual_income', 'Current annual income', 'text', { required: true, inputmode: 'decimal' }),
+      field('sponsor_income_source_details', 'Income source details', 'textarea')
+    ]),
+    step('i864_household_member_income', 'Household member income', 'Use only when household member income will be included.', [
+      field('include_household_member_income', 'Will household member income be included?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('household_member_income_details', 'Household member names, relationship, and income', 'textarea', {
+        showWhenAny: [
+          { id: 'include_household_member_income', equals: 'Yes' },
+          { id: 'include_household_member_income', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i864_tax_returns', 'Federal tax returns', 'List tax return years and available proof.', [
+      field('tax_returns_available', 'Federal tax returns available', 'checkboxes', {
+        options: ['Most recent year', 'Last 2 years', 'Last 3 years', 'W-2/1099', 'Pay stubs', 'Employment letter']
+      }),
+      field('i864_most_recent_tax_year_income', 'Most recent tax year total income', 'text', { inputmode: 'decimal' })
+    ]),
+    step('i864_assets', 'Assets', 'Use assets only if income may not meet the guideline.', [
+      field('i864_assets_used', 'Will assets be used?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i864_asset_details', 'Asset details and approximate values', 'textarea', {
+        showWhenAny: [
+          { id: 'i864_assets_used', equals: 'Yes' },
+          { id: 'i864_assets_used', equals: 'Not sure' }
+        ]
+      })
+    ]),
+
+    // I-864 Part 8-10: contact, interpreter, preparer.
+    step('i864_sponsor_contact', 'Sponsor contact information', 'Phone and email for the sponsor signature/contact section.', [
+      field('daytime_phone', 'Sponsor daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Sponsor email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i864_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this affidavit?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this affidavit for the sponsor?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -2897,16 +3024,7 @@ const FORM_OVERRIDES = {
       field('prior_daca_dates', 'Prior DACA approval dates and receipt numbers', 'textarea')
     ])
   ],
-  'I-864': [
-    step('support_affidavit', 'Affidavit of support', 'Sponsor household and income details.', [
-      field('sponsor_full_name', 'Sponsor full legal name', 'text', { required: true, autocomplete: 'name' }),
-      field('sponsor_status', 'Sponsor status', 'select', { options: ['U.S. citizen', 'Lawful permanent resident', 'U.S. national', 'Not sure'] }),
-      field('household_size', 'Household size', 'number', { inputmode: 'numeric' }),
-      field('current_annual_income', 'Current annual income', 'text', { inputmode: 'decimal' }),
-      field('tax_returns_available', 'Federal tax returns available', 'checkboxes', { options: ['Most recent year', 'Last 2 years', 'Last 3 years', 'W-2/1099', 'Pay stubs', 'Employment letter'] }),
-      field('joint_sponsor_needed', 'Is a joint sponsor needed?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
-    ])
-  ],
+  'I-864': i864SpecificSteps(),
   'I-864A': [
     step('household_member_contract', 'Household member income', 'Details for a household member contributing income.', [
       field('household_member_name', 'Household member full name', 'text', { autocomplete: 'name' }),
@@ -3280,12 +3398,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                   ...i589SpecificSteps(),
                   ...evidenceSteps()
                 ]
-                : code === 'N-400'
+                : code === 'I-864'
                   ? [
                     ...purposeSteps(code, title),
-                    ...n400SpecificSteps(),
+                    ...i864SpecificSteps(),
                     ...evidenceSteps()
                   ]
+                  : code === 'N-400'
+                    ? [
+                      ...purposeSteps(code, title),
+                      ...n400SpecificSteps(),
+                      ...evidenceSteps()
+                    ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),

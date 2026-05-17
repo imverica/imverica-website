@@ -155,6 +155,20 @@ async function main() {
   assert(i589Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-589: daytime phone should be split phone field');
   assert(i589Fields.find((field) => field.id === 'asylum_basis')?.type === 'checkboxes', 'I-589: asylum basis should be checkboxes');
 
+  const i864 = await callFlow('I-864', 'en');
+  const i864Order = i864.body.steps.map((step) => step.id);
+  assert(i864Order.indexOf('i864_sponsor_basis') < i864Order.indexOf('i864_principal_immigrant'), 'I-864: sponsor basis must come before principal immigrant');
+  assert(i864Order.indexOf('i864_principal_address') < i864Order.indexOf('i864_sponsor_name'), 'I-864: principal immigrant details must come before sponsor details');
+  assert(i864Order.indexOf('i864_sponsor_mailing_address') < i864Order.indexOf('i864_sponsor_birth'), 'I-864: sponsor address must come before sponsor birth/status');
+  assert(i864Order.indexOf('i864_household_size') < i864Order.indexOf('i864_current_income'), 'I-864: household size must come before current income');
+  assert(i864Order.indexOf('i864_tax_returns') < i864Order.indexOf('i864_assets'), 'I-864: tax returns must come before assets');
+  assert(i864Order.indexOf('i864_assets') < i864Order.indexOf('i864_sponsor_contact'), 'I-864: assets must come before sponsor contact');
+  const i864Fields = i864.body.steps.flatMap((step) => step.fields || []);
+  assert(i864Fields.find((field) => field.id === 'principal_immigrant_mailing_address')?.type === 'addressBlock', 'I-864: principal immigrant mailing address should be structured');
+  assert(i864Fields.find((field) => field.id === 'sponsor_mailing_address')?.type === 'addressBlock', 'I-864: sponsor mailing address should be structured');
+  assert(i864Fields.find((field) => field.id === 'sponsor_physical_address')?.type === 'addressBlock', 'I-864: sponsor physical address should be structured');
+  assert(i864Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-864: daytime phone should be split phone field');
+
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
   assert(biographicHistory?.fields.find((field) => field.id === 'g325a_residence_history')?.type === 'addressHistory', 'G-325A: residence history should be structured');
