@@ -124,27 +124,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line7c_Unit",
-          "label": "Part 1 Line7c Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line7c_AptSteFlrNumber",
           "label": "Part 1 Line7c Apt Ste Flr Number",
           "mode": "text",
@@ -208,65 +187,80 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line9b_Unit",
-          "label": "Part 1 Line9b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Line10_Sex",
-          "label": "Part 1 Line10 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Line8_Checkbox",
-          "label": "Part 1 Line8 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line11_DateOfBirth",
           "label": "Part 1 Line11 Date Of Birth",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Male",
+          "label": "Part 1. Information About You. Other Information. 10. Sex. Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Female",
+          "label": "Part 1. Information About You. Other Information. 10. Sex. Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You. Your U.S. Mailing Address. 7. C. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You. Your U.S. Mailing Address. 7. C. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You. Your U.S. Mailing Address. 7. C. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Yes",
+          "label": "Part 1. Information About You. Your U.S. Mailing Address. 8. Is your current physical address the same as your mailing address? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_E",
+          "label": "Part 1. Information About You. Your U.S. Mailing Address. 8. Is your current physical address the same as your mailing address? Select No. If you a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 1. Information About You. Your U.S. Physical Address. 9. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1. Information About You. Your U.S. Physical Address. 9. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1. Information About You. Your U.S. Physical Address. 9. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -408,23 +402,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox25_Checkbox",
-          "label": "Part 1 Checkbox25 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line23b_State",
           "label": "Part 1 Line23b State",
           "mode": "dropdown",
@@ -439,51 +416,45 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox27",
-          "label": "Part 1 Checkbox27",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt1Checkbox28",
           "label": "Part 1 Checkbox28",
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Item26_Entry_Additional_Information",
+          "label": "Part 1. Information About You. Your Previous Entries Into the United States. 26. Are there other previous entries? Select Yes. If you answered \"Yes...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item26_No",
+          "label": "Part 1. Information About You. Your Previous Entries Into the United States. 26. Are there other previous entries? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item27_that_most_accurately_describ",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 27. Are you currently in removal, exclusion, or deportation proceedings in whi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item27_A",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 27. Are you currently in removal, exclusion, or deportation proceedings in whi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 3,
       "fields": [
-        {
-          "key": "Pt1Checkbox29a_Checkbox",
-          "label": "Part 1 Checkbox29a Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt1Line29b_ReceiptNumber",
           "label": "Part 1 Line29b Receipt Number",
@@ -492,384 +463,136 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox31_Checkbox",
-          "label": "Part 1 Checkbox31 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "B",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 29. A. Are you currently subject to a final order of removal, exclusion or dep...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox32_Checkbox",
-          "label": "Part 1 Checkbox32 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "go_to_Item_Number_31",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 29. A. Are you currently subject to a final order of removal, exclusion or dep...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox33_Checkbox",
-          "label": "Part 1 Checkbox33 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item31_If_you_filed_a_motion_to_wit",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 31. Are you currently subject to a grant of voluntary departure that has not e...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox34_Checkbox",
-          "label": "Part 1 Checkbox34 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item31_No",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 31. Are you currently subject to a grant of voluntary departure that has not e...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox35_Checkbox",
-          "label": "Part 1 Checkbox35 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 30. A. Has D H S served you with a D H S Form I - 8 71, giving you notice that...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox30a_Checkbox",
-          "label": "Part 1 Checkbox30a Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 30. A. Has D H S served you with a D H S Form I - 8 71, giving you notice that...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox30b_Checkbox",
-          "label": "Part 1 Checkbox30b Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_2",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 30. B. If you answered \"Yes\" to Item Number 30. A., has D H S served you with ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox30_Checkbox",
-          "label": "Part 1 Checkbox30 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_2",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 30. B. If you answered \"Yes\" to Item Number 30. A., has D H S served you with ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Yes",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Answer Item Numbers 32. through 38.  If you answer \"Yes\" to any question in It...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_No",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 32. Have you EVER knowingly and willfully given false or misleading informatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_3",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 33. Have you EVER been engaged in alien smuggling? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_3",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 33. Have you EVER been engaged in alien smuggling? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_4",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 34. Have you EVER been arrested, cited, or detained by a law enforcement offic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_4",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 34. Have you EVER been arrested, cited, or detained by a law enforcement offic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_5",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 35. Have you EVER been charged, indicted, convicted, imprisoned, or jailed in ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_5",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 35. Have you EVER been charged, indicted, convicted, imprisoned, or jailed in ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_6",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 36. Have you EVER trafficked in or are you NOW trafficking in any controlled s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_6",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 36. Have you EVER trafficked in or are you NOW trafficking in any controlled s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 4,
       "fields": [
-        {
-          "key": "Pt1Checkbox36_Checkbox",
-          "label": "Part 1 Checkbox36 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox37_Checkbox",
-          "label": "Part 1 Checkbox37 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox38a_Checkbox",
-          "label": "Part 1 Checkbox38a Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox38b_Checkbox",
-          "label": "Part 1 Checkbox38b Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox38c_Checkbox",
-          "label": "Part 1 Checkbox38c Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox38e_Checkbox",
-          "label": "Part 1 Checkbox38e Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox38d_Checkbox",
-          "label": "Part 1 Checkbox38d Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox39a_Checkbox",
-          "label": "Part 1 Checkbox39a Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox39b_Checkbox",
-          "label": "Part 1 Checkbox39b Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox40_Checkbox",
-          "label": "Part 1 Checkbox40 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox44_Checkbox",
-          "label": "Part 1 Checkbox44 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox43_Checkbox",
-          "label": "Part 1 Checkbox43 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Checkbox42_Checkbox",
-          "label": "Part 1 Checkbox42 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt2Checkbox1",
-          "label": "Part 2 Checkbox1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt2Line3_HeightFeet",
           "label": "Part 2 Line3 Height Feet",
@@ -941,111 +664,340 @@
           "defaultValue": false
         },
         {
-          "key": "Pt2Checkbox5",
-          "label": "Part 2 Checkbox5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
+          "key": "Item37_Yes",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 37. Are you NOW or have you EVER knowingly assisted, abetted, conspired, or co...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt2Checkbox6",
-          "label": "Part 2 Checkbox6",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
+          "key": "Item37_No",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 37. Are you NOW or have you EVER knowingly assisted, abetted, conspired, or co...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Pt1Checkbox41_Checkbox",
-          "label": "Part 1 Checkbox41 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item38_Yes",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 38. Are you NOW or have you EVER been engaged in prostitution? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item38_No",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 38. Are you NOW or have you EVER been engaged in prostitution? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_7",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Answer Item Numbers 39. A. through 45.  If you answer \"Yes\" to any question in...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_7",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_8",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_8",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_9",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_9",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_10",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_10",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_11",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_11",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER ordered, incited, called for, committed, assisted, helped with, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_12",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER. 40. A. Served in, been a member of, assisted in, or participate...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_12",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER. 40. A. Served in, been a member of, assisted in, or participate...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_13",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER. 40. B. Served in any prison, jail, prison camp, detention facil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_13",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. Have you EVER. 40. B. Served in any prison, jail, prison camp, detention facil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_14",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 41. Have you EVER been a member of, assisted in, or participated in any group,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_14",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 41. Have you EVER been a member of, assisted in, or participated in any group,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_15",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 42. Have you EVER assisted or participated in selling or providing weapons to ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_15",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 42. Have you EVER assisted or participated in selling or providing weapons to ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_16",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 43. Have you EVER received any type of military, paramilitary, or weapons trai...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_16",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 43. Have you EVER received any type of military, paramilitary, or weapons trai...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_17",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 44. Have you EVER recruited, enlisted, conscripted, or used any person under 1...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_17",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 44. Have you EVER recruited, enlisted, conscripted, or used any person under 1...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_18",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 45. Have you EVER used any person under 15 years of age to take part in hostil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_18",
+          "label": "Part 1. Information About You. Your Immigration or Criminal History. 45. Have you EVER used any person under 15 years of age to take part in hostil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Not_Hispanic_or_Latino",
+          "label": "Part 2. Biographic Information. 1. Ethnicity (Select only one box). Select Not Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hispanic_or_Latino",
+          "label": "Part 2. Biographic Information. 1. Ethnicity (Select only one box). Select Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blue",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Blue.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hazel",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Hazel.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Pink",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Pink.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Maroon",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Maroon.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Green",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Green.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other",
+          "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Unknown / Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Bald_No_hair",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Bald (No hair).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blond",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Blond.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray_2",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Sandy",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Sandy.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other_2",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Unknown / Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "White",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select White.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Red",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Red.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown_2",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black_2",
+          "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1090,27 +1042,6 @@
         {
           "key": "Pt3Line6a_DV_KCCCaseNumber",
           "label": "Part 3 Line6a DV KCCCase Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt3Line2a_FamilyName",
-          "label": "Part 3 Line2a Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt3Line2b_GivenName",
-          "label": "Part 3 Line2b Given Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt3Line2c_MiddleName",
-          "label": "Part 3 Line2c Middle Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1186,23 +1117,6 @@
           "defaultValue": false
         },
         {
-          "key": "Pt4Line3_Checkbox",
-          "label": "Part 4 Line3 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt4Line4a_FamilyName",
           "label": "Part 4 Line4a Family Name",
           "mode": "text",
@@ -1250,6 +1164,62 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Spouse_Family_Name_Last_Name",
+          "label": "Part 3. Information About Your Immigrant  Visa Case. If you selected Item Number 1. A. because you are a Diversity Visa (D V) Program selectee or d...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Family_Name_Last_Name_2",
+          "label": "Part 3. Information About Your Immigrant  Visa Case. If you selected Item Numbers 1. B., 1. C., 1. D., or 1. E. provide the following information a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Given_Name_First_Name",
+          "label": "Part 3. Information About Your Immigrant  Visa Case. If you selected Item Number 1. A. because you are a Diversity Visa (D V) Program selectee or d...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Given_Name_First_Name_2",
+          "label": "Part 3. Information About Your Immigrant  Visa Case. If you selected Item Numbers 1. B., 1. C., 1. D., or 1. E. provide the following information a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Middle_Name",
+          "label": "Part 3. Information About Your Immigrant  Visa Case. If you selected Item Number 1. A. because you are a Diversity Visa (D V) Program selectee or d...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Middle_Name_2",
+          "label": "Part 3. Information About Your Immigrant  Visa Case. If you selected Item Numbers 1. B., 1. C., 1. D., or 1. E. provide the following information a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_section_of_the_Instructions",
+          "label": "Part 4. Information About Your Qualifying Relative. Your Other Qualifying Relative. 3. Do you have more than one qualifying relative (U.S. citizen ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No",
+          "label": "Part 4. Information About Your Qualifying Relative. Your Other Qualifying Relative. 3. Do you have more than one qualifying relative (U.S. citizen ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1262,23 +1232,6 @@
           "mode": "text",
           "type": "state",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt6Checkbox1",
-          "label": "Part 6 Checkbox1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt6Line1b_NameofLanguage",
@@ -1321,6 +1274,20 @@
           "mode": "text",
           "type": "phone",
           "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 6. Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Statement. NOTE:  Select the box for eit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 6. Applicant's Statement, Contact Information, Declaration, Certification, and Signature. NOTE: Read the Penalties section of the Form I-601 A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1361,27 +1328,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt7Line3b_Unit",
-          "label": "Part 7 Line3b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt7Line3b_AptSteFlrNumber",
@@ -1480,29 +1426,33 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 8,
       "fields": [
-        {
-          "key": "Pt8Line7_Checkbox",
-          "label": "Part 8 Line7 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt8Line8a_SignatureofPreparer",
           "label": "Part 8 Line8a Signatureof Preparer",
@@ -1551,27 +1501,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt8Line3b_Unit",
-          "label": "Part 8 Line3b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt8Line3b_AptSteFlrNumber",
@@ -1634,6 +1563,41 @@
           "label": "Part 8 Line6 Email Address",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant.  Preparer's Mailing ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant.  Preparer's Mailing ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant.  Preparer's Mailing ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

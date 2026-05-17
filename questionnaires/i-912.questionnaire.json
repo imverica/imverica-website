@@ -5,23 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "P1_Line1_Checkbox",
-          "label": "P1 Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P1_Line2_Checkbox",
           "label": "P1 Line2 Checkbox",
           "mode": "checkbox_single",
@@ -34,39 +17,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "Line7a_Check_box",
-          "label": "Line 7 a Check box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            }
-          ]
         },
         {
           "key": "P2_L2_MiddleName",
@@ -151,49 +101,68 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Fee_Waiver_Approved",
+          "label": "For U S C I S Use Only. Application Receipted At (Select only one box). U S C I S Field Office. Select Fee Waiver Approved.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Fee_Waiver_Denied",
+          "label": "For U S C I S Use Only. Application Receipted At (Select only one box). U S C I S Field Office. Select Fee Waiver Denied.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Fee_Waiver_Denied_2",
+          "label": "For U S C I S Use Only. Application Receipted At (Select only one box).  U S C I S Service Center. Select Fee Waiver Denied.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Fee_Waiver_Approved_2",
+          "label": "For U S C I S Use Only. Application Receipted At (Select only one box). U S C I S Service Center. Select Fee Waiver Approved.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "USCIS_Field_Office",
+          "label": "For U S C I S Use Only. Application Receipted At (Select only one box). Select U S C I S Field Office.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "USCIS_Service_Center",
+          "label": "For U S C I S Use Only. Application Receipted At (Select only one box). Select U S C I S Service Center.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse",
+          "label": "Part 1.  Basis for Your Request (Each basis is further explained in the Specific Instructions section of the Form I - 912 Instructions). Select at ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_here_if_you_are_a_parent_or",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 2,
       "fields": [
-        {
-          "key": "P2_7_MaritalStatus",
-          "label": "P2 7 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
-        },
         {
           "key": "Part3_Line1_Name1",
           "label": "Part 3 Line1 Name1",
@@ -342,174 +311,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part4_Line1_TypeofBene1",
-          "label": "Part 4 Line1 Typeof Bene1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_TypeofBene2",
-          "label": "Part 4 Line1 Typeof Bene2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_TypeofBene3",
-          "label": "Part 4 Line1 Typeof Bene3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_TypeofBene4",
-          "label": "Part 4 Line1 Typeof Bene4",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_FullName1",
-          "label": "Part 4 Line1 Full Name1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_FullName2",
-          "label": "Part 4 Line1 Full Name2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_FullName3",
-          "label": "Part 4 Line1 Full Name3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_FullName4",
-          "label": "Part 4 Line1 Full Name4",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Relationship1",
-          "label": "Part 4 Line1 Relationship1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Relationship2",
-          "label": "Part 4 Line1 Relationship2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Relationship3",
-          "label": "Part 4 Line1 Relationship3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Relationship4",
-          "label": "Part 4 Line1 Relationship4",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Agency1",
-          "label": "Part 4 Line1 Agency1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Agency2",
-          "label": "Part 4 Line1 Agency2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Agency3",
-          "label": "Part 4 Line1 Agency3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_Agency4",
-          "label": "Part 4 Line1 Agency4",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_ExpDate1",
-          "label": "Part 4 Line1 Exp Date1",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_ExpDate2",
-          "label": "Part 4 Line1 Exp Date2",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_ExpDate3",
-          "label": "Part 4 Line1 Exp Date3",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_ExpDate4",
-          "label": "Part 4 Line1 Exp Date4",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_DateAward1",
-          "label": "Part 4 Line1 Date Award1",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_DateAward2",
-          "label": "Part 4 Line1 Date Award2",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_DateAward3",
-          "label": "Part 4 Line1 Date Award3",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part4_Line1_DateAward4",
-          "label": "Part 4 Line1 Date Award4",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "Part2_Line7_OtherText",
           "label": "Part 2 Line7 Other Text",
           "mode": "text",
@@ -529,6 +330,391 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Divorced",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Married",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Widowed",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Single_Never_Married",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Marriage_Annulled",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Separated",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Child_Other",
+          "label": "Part 2.  Information About You (Requestor). Provide information about yourself if you are the person requesting a fee waiver for a petition or appl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1., complete this section. 1. If you, your spouse, or the head of househo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_2",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_3",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_4",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_5",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_6",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_7",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Name_of_Agency_Awarding_Bene_8",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1., complete this section. 1. If you, your spouse, or the head of househo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_2",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_3",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_4",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_5",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_6",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_7",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_was_Awarded_8",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_2",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_3",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_4",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_5",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_6",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_7",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Date_Benefit_Expires_or_must_8",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1., complete this section. 1. If you, your spouse, or the head of househo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_2",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_3",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_4",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_5",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_6",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_7",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Full_Name_of_Person_Receivin_8",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1., complete this section. 1. If you, your spouse, or the head of househo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_2",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_3",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_4",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_5",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_6",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_7",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Relationship_to_You_8",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1., complete this section. 1. If you, your spouse, or the head of househo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_2",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_3",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_4",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_5",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_6",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_7",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Type_of_Benefit_8",
+          "label": "Part 4.  Means-Tested Benefits. If you selected Item Number 1. A. in Part 1.,complete this section. 1. If you, your spouse, or the head of househol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -536,53 +722,11 @@
       "page": 3,
       "fields": [
         {
-          "key": "P5_1_EmploymentStatus",
-          "label": "P5 1 Employment Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
           "key": "Part3_Line3_Other",
           "label": "Part 3 Line3 Other",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part5_Line2_chbxyesno",
-          "label": "Part 5 Line2 chbxyesno",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P5_2a_DateOfUnemployment",
@@ -634,25 +778,64 @@
           "defaultValue": ""
         },
         {
-          "key": "Part5_Line9_checkbox",
-          "label": "Part 5 Line9 checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part5_Line9_Explanation",
           "label": "Part 5 Line9 Explanation",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unemployed_or_Not_Employed",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines.If you selected Item Number 1.B. in Part 1., complete this section. Your ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Employed_full_time_part_time",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines. If you selected Item Number 1.B. in Part 1., complete this section. Your...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other_Explain",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines.If you selected Item Number 1.B. in Part 1., complete this section. Your ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Retired",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines.If you selected Item Number 1.B. in Part 1., complete this section. Your ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines. If you selected Item Number 1.B. in Part 1.,complete this section. Your ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines. If you selected Item Number 1.B. in Part 1.,complete this section. Your ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_2",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines. If you selected Item Number 1.B. in Part 1.,complete this section. Your ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_2",
+          "label": "Part 5.  Income at or Below 150 Percent of the Federal Poverty Guidelines. If you selected Item Number 1.B. in Part 1.,complete this section. Your ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -719,59 +902,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line3_Checkbox",
-          "label": "P6 Line3 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            },
-            {
-              "value": 9,
-              "label": "Option 9"
-            },
-            {
-              "value": 10,
-              "label": "Option 10"
-            }
-          ]
-        },
-        {
           "key": "P6_Line3_Other",
           "label": "P6 Line3 Other",
           "mode": "text",
@@ -789,6 +919,83 @@
           "key": "Button1",
           "label": "Button1",
           "mode": "unknown",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Rent_and_or_Mortgage",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Food",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Utilities",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Car_Payment",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Loans_and_or_Credit_Cards",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Child_and_or_Elder_Care",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Insurance",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Commuting_Costs",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Medical_Expenses",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "School_Expenses",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other",
+          "label": "Part 6.  Financial Hardship. 3. Total Monthly Expenses and Liabilities. Provide the total monthly amount of your expenses and liabilities.  You mus...",
+          "mode": "text",
           "type": "text",
           "defaultValue": ""
         }
@@ -810,23 +1017,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "P7_L1_chbx",
-          "label": "P7 L1 chbx",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P7_L1B_Name",
@@ -869,19 +1059,26 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 7.  Requestor's Statement, Contact Information, Certification, and Signature. NOTE:  Read the Penalties section of the Form I - 912 Instructio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_L1_chbx_2",
+          "label": "P7_L1_chbx",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 6,
       "fields": [
-        {
-          "key": "P9_L4_DaytimeTelePhoneNumber1",
-          "label": "P9 L4 Daytime Tele Phone Number1",
-          "mode": "text",
-          "type": "phone",
-          "defaultValue": ""
-        },
         {
           "key": "P9_L5_EmailAddress",
           "label": "P9 L5 Email Address",
@@ -946,27 +1143,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P9_LB_Unit",
-          "label": "P9 LB Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P9_L3f_PostalCode",
           "label": "P9 L3f Postal Code",
           "mode": "text",
@@ -1007,46 +1183,47 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item4_Interpreter_s_Daytime_Teleph",
+          "label": "Part 8.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 4. Enter Interpreter's Daytime Telepho...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Interpreter_s_Mobile_Telepho",
+          "label": "Part 8.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 5. Enter Interpreter's Mobile Telephon...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor",
+          "label": "Part 8.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite",
+          "label": "Part 8.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment",
+          "label": "Part 8.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 7,
       "fields": [
-        {
-          "key": "P10_L7_chbx",
-          "label": "P10 L7 chbx",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P10_L7B_chbx",
-          "label": "P10 L7B chbx",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P10_L3h_Country",
           "label": "P10 L3h Country",
@@ -1088,27 +1265,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P10_L3b_Unit",
-          "label": "P10 L3b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P10_L3f_PostalCode",
@@ -1178,6 +1334,55 @@
           "label": "P10 L8B Date",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor_2",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Mailing Addr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite_2",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Mailing Addr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment_2",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Mailing Addr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. 7...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit_2",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. 7...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. 7...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. 7...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

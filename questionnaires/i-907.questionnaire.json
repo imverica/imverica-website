@@ -47,27 +47,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Line5_MailingAddress_Unit",
-          "label": "Part 1 Line5 Mailing Address Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part1_Line5_MailingAddress_AptSteFlrNumber",
           "label": "Part 1 Line5 Mailing Address Apt Ste Flr Number",
           "mode": "text",
@@ -124,23 +103,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1Line6_Checkbox",
-          "label": "Part 1 Line6 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line2_USCISOnlineActNumber",
           "label": "Part 1 Line2 USCISOnline Act Number",
           "mode": "text",
@@ -167,37 +129,47 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Item6_Yes",
+          "label": "Part 1. Information About The Person Filing This Request. 6. Is your current mailing address the same as your physical address? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_provide_your_physical_addres",
+          "label": "Part 1. Information About The Person Filing This Request. 6. Is your current mailing address the same as your physical address? Select No.  If you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About The Person Filing This Request.  5. Mailing Address.  Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Selct_Floor",
+          "label": "Part 1. Information About The Person Filing This Request.  5. Mailing Address.  Selct Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About The Person Filing This Request.  5. Mailing Address.  Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 2,
       "fields": [
-        {
-          "key": "Part1_Line8_CheckBox",
-          "label": "Part 1 Line8 Check Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
         {
           "key": "P2_Line2_ReceiptNumberof",
           "label": "P2 Line2 Receipt Numberof",
@@ -311,27 +283,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Line7_PhysicalAddress_Unit",
-          "label": "Part 1 Line7 Physical Address Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part1_Line7_PhysicalAddress_AptSteFlrNumber",
           "label": "Part 1 Line7 Physical Address Apt Ste Flr Number",
           "mode": "text",
@@ -372,29 +323,61 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1. Information About The Person Filing This Request.  7. Physical Address. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About The Person Filing This Request.  7. Physical Address. Select  Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1. Information About The Person Filing This Request.  7. Physical Address. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_the_applicant_who_is_fi",
+          "label": "Part 1.  Information About The Person Filing This Request.  8. Request for Premium Processing Service (select only one box). Select I am the applic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Part1_Line8_CheckBox_1",
+          "label": "Part 1.  Information About The Person Filing This Request.  8. Request for Premium Processing Service (select only one box). Select I am the attorn...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_the_petitioner_who_is_f",
+          "label": "Part 1.  Information About The Person Filing This Request.  8. Request for Premium Processing Service (select only one box).  Select I am the petit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry",
+          "label": "Part 1.  Information About The Person Filing This Request.  8. Request for Premium Processing Service (select only one box). I am the attorney or a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 3,
       "fields": [
-        {
-          "key": "P3_Line1_Checkbox",
-          "label": "P3 Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P3_Line1_B_Language",
           "label": "P3 Line1 B Language",
@@ -429,27 +412,6 @@
           "mode": "text",
           "type": "zip",
           "defaultValue": ""
-        },
-        {
-          "key": "Part1_Line7_OtherInformationAboutCompanyOrg_Unit",
-          "label": "Part 1 Line7 Other Information About Company Org Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part1_Line7_OtherInformationAboutCompanyOrg_AptSteFlrNumber",
@@ -501,17 +463,59 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line5_MobileTelePhoneNumber",
-          "label": "P3 Line5 Mobile Tele Phone Number",
-          "mode": "text",
-          "type": "phone",
-          "defaultValue": ""
-        },
-        {
           "key": "P3_Line6_Email",
           "label": "P3 Line6 Email",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 3.  Requestor's Statement, Contact Information, Declaration, Certification and Signature. Requestor's Statement.  1. Requestor's Statement Reg...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 3.  Requestor's Statement, Contact Information, Declaration, Certification, and Signature. NOTE:  Read the Penalties section of the Form I - 9...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Requestor_s_Mobile_Telephone",
+          "label": "Part 3.  Requestor's Statement, Contact Information, Declaration, Certification, and Signature. Requestor's Contact Information.  4. Enter Requesto...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Requestor_s_Mobile_Telephone_2",
+          "label": "Part 3.  Requestor's Statement, Contact Information, Declaration, Certification, and Signature. Requestor's Contact Information.  4. Enter Requesto...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 2. Information About the Request. 8.  Address of Petitioner, Applicant, Company or Organization Named in Related Case. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 2. Information About the Request. 8.  Address of Petitioner, Applicant, Company or Organization Named in Related Case. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 2. Information About the Request. 8.  Address of Petitioner, Applicant, Company or Organization Named in Related Case. Select Suite.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -562,27 +566,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line3_Unit",
-          "label": "P4 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P4_Line3_AptSteFlrNumber",
           "label": "P4 Line3 Apt Ste Flr Number",
           "mode": "text",
@@ -601,13 +584,6 @@
           "label": "P4 Line5 Email",
           "mode": "text",
           "type": "email",
-          "defaultValue": ""
-        },
-        {
-          "key": "P4_Line4_DaytimeTelePhoneNumber",
-          "label": "P4 Line4 Daytime Tele Phone Number",
-          "mode": "text",
-          "type": "phone",
           "defaultValue": ""
         },
         {
@@ -648,6 +624,41 @@
         {
           "key": "P4_Line6_Language",
           "label": "P4 Line6 Language",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Suite",
+          "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor",
+          "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment",
+          "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Interpreter_s_Daytime_Teleph",
+          "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 4. Enter Interpreter's Daytime Telepho...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Interpreter_s_Mobile_Telepho",
+          "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 5. Enter Interpreter's Mobile Telephon...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -719,27 +730,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P5_Line3_Unit",
-          "label": "P5 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt10Line3b_AptSteFlrNumber",
@@ -817,6 +807,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Item3_Suite_2",
+          "label": "Part 5.  Name, Contact Information, Declaration, and Signature of the Person Preparing this Request, \rIf Other Than the Requestor. Provide the foll...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Floor_2",
+          "label": "Part 5.  Name, Contact Information, Declaration, and Signature of the Person Preparing this Request, \rIf Other Than the Requestor. Provide the foll...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Apartment_2",
+          "label": "Part 5.  Name, Contact Information, Declaration, and Signature of the Person Preparing this Request, \rIf Other Than the Requestor. Provide the foll...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -871,29 +882,57 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt9Line4d_AdditionalInfo",
-          "label": "Part 9 Line4d Additional Info",
+          "key": "Page_Number",
+          "label": "Part 6. Additional Information. 4. A. Enter Page Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Pt9Line4a_PageNumber",
-          "label": "Part 9 Line4a Page Number",
+          "key": "Page_Number_2",
+          "label": "Part 6. Additional Information. 4. A. Enter Page Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Pt9Line4b_PartNumber",
-          "label": "Part 9 Line4b Part Number",
+          "key": "Part_Number",
+          "label": "Part 6. Additional Information. 4. B. Enter Part Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Pt9Line4c_ItemNumber",
-          "label": "Part 9 Line4c Item Number",
+          "key": "Part_Number_2",
+          "label": "Part 6. Additional Information. 4. B. Enter Part Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number",
+          "label": "Part 6. Additional Information. 4. C. Enter Item Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number_2",
+          "label": "Part 6. Additional Information. 4. C. Enter Item Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 6. Additional Information. 4. D. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 6. Additional Information. 4. D. Enter Additional Information.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

@@ -40,27 +40,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line4c_Unit",
-          "label": "P1 Line4c Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line4c_AptSteFlrNumber",
           "label": "P1 Line4c Apt Ste Flr Number",
           "mode": "text",
@@ -117,13 +96,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt7Line3d_AdditionalInfo",
-          "label": "Part 7 Line3d Additional Info",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "P3_Line2b_ReceiptNumber",
           "label": "P3 Line2b Receipt Number",
           "mode": "text",
@@ -154,6 +126,27 @@
         {
           "key": "Pt1Line2_USCISELISAcctNumber",
           "label": "Part 1 Line2 USCISELISAcct Number",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You. Mailing Address. 2.C. Check Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You. Mailing Address. 2.C. Check Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You. Mailing Address. 2.C. Check Apartment.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -234,43 +227,8 @@
           "defaultValue": ""
         },
         {
-          "key": "Line2_DateOfBirth",
-          "label": "Line 2 Date Of Birth",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt11Line3_Country",
-          "label": "Part 11 Line3 Country",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "Line19g_AlienNumber",
           "label": "Line 19 g Alien Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P1_Line3a_FamilyName",
-          "label": "P1 Line3a Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P1_Line3b_GivenName",
-          "label": "P1 Line3b Given Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P1_Line3c_MiddleName",
-          "label": "P1 Line3c Middle Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -297,21 +255,109 @@
           "defaultValue": ""
         },
         {
-          "key": "P3Line22",
-          "label": "P3Line22",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item6_Entry_Date_of_Entry",
+          "label": "Part 2. Data for Identification of Personal Record. Entry Into the United States. 6. Enter Date of Entry. Enter as 2 digit month, 2 digit day and 4...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item15_Certificate_of_Citizenship_D",
+          "label": "Part 2. Data for Identification of Personal Record. 15. Enter Certificate of Citizenship Date. Enter as 2 digit month, 2 digit day and 4 digit year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Family_Name_Last_Name",
+          "label": "Part 2. Data for Identification of Personal Record. U.S. Citizenship Information. Name on Certificate of Naturalization. 10.A. Enter Family Name (L...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Family_Name_Last_Name_2",
+          "label": "Part 2. Data for Identification of Personal Record. Name on Certificate of Citizenship. 13.A. Enter Family Name (Last Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Given_Name_First_Name",
+          "label": "Part 2. Data for Identification of Personal Record. U.S. Citizenship Information. Name on Certificate of Naturalization. 10.B. Enter Given Name (Fi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Given_Name_First_Name_2",
+          "label": "Part 2. Data for Identification of Personal Record. Name on Certificate of Citizenship. 13.B. Enter Given Name (First Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Middle_Name",
+          "label": "Part 2. Data for Identification of Personal Record. U.S. Citizenship Information. Name on Certificate of Naturalization. 10.C. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Middle_Name_2",
+          "label": "Part 2. Data for Identification of Personal Record. Name on Certificate of Citizenship. 13.C. Enter Middle Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "In_Person_With_Identificatio",
+          "label": "Part 2. Data for Identification of Personal Record. 17. Verification of Requester's Identity. Select In Person With Identification.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Legal_Photocopies",
+          "label": "Part 2. Data for Identification of Personal Record. 17. Verification of Requester's Identity. Select Legal Photocopies.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_Entry_Port_of_Entry",
+          "label": "Part 2. Data for Identification of Personal Record. Entry Into the United States. 7. Enter Port-of-Entry.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Entry",
+          "label": "Part 2. Data for Identification of Personal Record. Entry Into the United States. 8. Enter Type of Entry (for example, visitor, student, etc.).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Certificate_of_Naturalizatio",
+          "label": "Part 2. Data for Identification of Personal Record. U.S. Citizenship Information. 11. Enter Certificate of Naturalization Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_Certificate_of_Citizenship_N",
+          "label": "Part 2. Data for Identification of Personal Record. 14. Enter Certificate of Citizenship Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Naturalization_Court_USCIS_O",
+          "label": "Part 2. Data for Identification of Personal Record. Naturalization Court/USCIS Office and Location. 16.A. Enter Naturalization Court / U S C I S Of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -352,27 +398,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt5Line3b_Unit",
-          "label": "Part 5 Line3b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt5Line3b_AptSteFlrNumber",
@@ -487,27 +512,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt6Line3b_Unit",
-          "label": "Part 6 Line3b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt6Line3b_AptSteFlrNumber",
           "label": "Part 6 Line3b Apt Ste Flr Number",
           "mode": "text",
@@ -564,10 +568,59 @@
           "defaultValue": ""
         },
         {
-          "key": "Part8_Line4_InterpretersDaytimeTelephoneNumber3",
-          "label": "Part 8 Line4 Interpreters Daytime Telephone Number3",
+          "key": "Item5_Preparer_s_Mobile_Telephone",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Contact Info...",
           "mode": "text",
-          "type": "phone",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Preparer_s_Daytime_Telephone",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Contact Info...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 3.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 3.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 3.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Mailing Addr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Mailing Addr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Mailing Addr...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -575,57 +628,6 @@
     {
       "page": 4,
       "fields": [
-        {
-          "key": "Part7_Line7",
-          "label": "Part 7 Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Line7b_Checkboxes",
-          "label": "Part 7 Line7b Checkboxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part5",
-          "label": "Part 5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P5_Line1b_NameofInterpreter",
           "label": "P5 Line1b Nameof Interpreter",
@@ -667,6 +669,48 @@
           "mode": "text",
           "type": "phone",
           "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 5.  Requestor's Declaration, Certification, Signature, and Affidavit of Identity. NOTE: Select the box for either Item Number 1.A. or 1.B. If ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 5.  Requestor's Declaration, Certification, Signature, and Affidavit of Identity. NOTE: Select the box for either Item Number 1.A. or 1.B. If ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit_2",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "Part 4.  Contact Information, Declaration, and Signature of the Person Preparing this Request, if Other Than the Requestor. Preparer's Statement. S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -699,13 +743,6 @@
           "label": "Line 7 a Signature",
           "mode": "text",
           "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line3_Date",
-          "label": "Line 3 Date",
-          "mode": "text",
-          "type": "date",
           "defaultValue": ""
         },
         {
@@ -774,6 +811,27 @@
         {
           "key": "Pt3Line11_FamilyName",
           "label": "Part 3 Line11 Family Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Date_of_Signature_as_2_digit",
+          "label": "Part 5. Signature of Attorney or Accredited Representative. 3. Enter Date of Signature as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Signature_as_2_digit",
+          "label": "Part 5.  Requestor's Declaration, Certification, Signature, and Affidavit of Identity. 10.B. Enter Date of Signature as 2-digit Month, 2-digit Day,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Signature_as_2_digit_2",
+          "label": "Part 5.  Requestor's Declaration, Certification, Signature, and Affidavit of Identity. Certifying Official. 12.B. Enter Date of Signature as 2-digi...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -891,6 +949,34 @@
         {
           "key": "Pt7Line4d_AdditionalInfo",
           "label": "Part 7 Line4d Additional Info",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 7.  Additional Information. 3. D. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 7.  Additional Information. 3. D. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_3",
+          "label": "Part 7.  Additional Information. 3. D. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_4",
+          "label": "Part 7.  Additional Information. 3. D. Enter Additional Information.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

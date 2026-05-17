@@ -19,13 +19,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Line1_FamilyName",
-          "label": "Line 1 Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Line3_CompanyorOrgName",
           "label": "Line 3 Companyor Org Name",
           "mode": "text",
@@ -66,27 +59,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line3_Unit",
-          "label": "Line 3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Line3_AptSteFlrNumber",
@@ -157,6 +129,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Petitioner Information. 3. Mailing Address of Individual, Company or Organization. Check Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Petitioner Information. 3. Mailing Address of Individual, Company or Organization. Check Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Petitioner Information. 3. Mailing Address of Individual, Company or Organization. Check Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -213,46 +206,6 @@
           "defaultValue": false
         },
         {
-          "key": "P2Checkbox4",
-          "label": "P2Checkbox4",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            }
-          ]
-        },
-        {
-          "key": "TtlNumbersofWorker",
-          "label": "Ttl Numbersof Worker",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Part7LineD_Emp1Name",
           "label": "Part 7 Line D Emp1Name",
           "mode": "text",
@@ -288,23 +241,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P3Line1_Checkbox",
-          "label": "P3Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Line4_SSN",
           "label": "Line 4 SSN",
           "mode": "text",
@@ -317,19 +253,68 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "NOTE_A_petition_is_not_requi",
+          "label": "Part 2. Information About This Petition. 4. Requested Action (select only one box). Check A. Notify the office in Part 4 so each beneficiary can ob...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "above",
+          "label": "Part 2. Information About This Petition. 4. Requested Action (select only one box). Check B. Change the status and extend the stay of each benefici...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Extend_the_stay_of_each_bene",
+          "label": "Part 2. Information About This Petition. 4. Requested Action (select only one box). Check C. Extend the stay of each beneficiary because the benefi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Amend_the_stay_of_each_benef",
+          "label": "Part 2. Information About This Petition. 4. Requested Action (select only one box). Check D. Amend the stay of each beneficiary because the benefic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "See_Trade_Agreement_Suppleme",
+          "label": "Part 2. Information About This Petition. 4. Requested Action (select only one box). Check E. Extend the status of a nonimmigrant classification bas...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "See_Trade_Agreement_Suppleme_2",
+          "label": "Part 2. Information About This Petition. 4. Requested Action (select only one box). Check F. Change status to a nonimmigrant classification based o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unnamed_for_H_2_A_or_H_2_B_p",
+          "label": "Part 3.  Beneficiary Information  (Information about the beneficiary/beneficiaries you are filing for.  Complete the blocks below.  Use the Attachm...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Named",
+          "label": "Part 3.  Beneficiary Information  (Information about the beneficiary/beneficiaries you are filing for.  Complete the blocks below.  Use the Attachm...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 3,
       "fields": [
-        {
-          "key": "Line11e_ExpDate",
-          "label": "Line 11 e Exp Date",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
         {
           "key": "Line5_SEVIS",
           "label": "Line 5 SEVIS",
@@ -364,27 +349,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line6_Unit",
-          "label": "Line 6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Line6_AptSteFlrNumber",
@@ -457,27 +421,6 @@
           "defaultValue": ""
         },
         {
-          "key": "TypeofOffice",
-          "label": "Typeof Office",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part3Line4_CountryOfBirth",
           "label": "Part 3 Line4 Country Of Birth",
           "mode": "text",
@@ -511,23 +454,6 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "Line1_Gender_P3",
-          "label": "Line 1 Gender P3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Line5_SSN",
@@ -579,22 +505,71 @@
           "defaultValue": ""
         },
         {
-          "key": "Line3_MiddleName1",
-          "label": "Line 3 Middle Name1",
+          "key": "Date_as_2_digit_Month_2_digi",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line3_GivenName1",
-          "label": "Line 3 Given Name1",
+          "key": "Date_as_2_digit_Month_2_digi_2",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line3_FamilyName1",
-          "label": "Line 3 Family Name1",
+          "key": "Item5_Male",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Female",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 3. Beneficiary Information. Information about the beneficiary/beneficiaries you are filing for. Complete the blocks below. Use the Attachment-...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Consulate",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Pre_flight_inspection",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Port_of_Entry",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -640,30 +615,6 @@
           "defaultValue": false
         },
         {
-          "key": "P4Line5_HowMany",
-          "label": "P4Line5 How Many",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P4Line8",
-          "label": "P4Line8",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P4Line4_Yes",
           "label": "P4Line4 Yes",
           "mode": "checkbox_single",
@@ -683,23 +634,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "P4Line7",
-          "label": "P4Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P4Line9_Yes",
@@ -793,23 +727,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4Line2_Checkbox",
-          "label": "P4Line2 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Line2c_CityTown",
           "label": "Line 2 c City Town",
           "mode": "text",
@@ -824,36 +741,8 @@
           "defaultValue": ""
         },
         {
-          "key": "Line2b2_Unit",
-          "label": "Line 2 b2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Line2b2_AptSteFlrNumber",
           "label": "Line 2 b2 Apt Ste Flr Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line2g2_Province",
-          "label": "Line 2 g2 Province",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -866,10 +755,94 @@
           "defaultValue": ""
         },
         {
-          "key": "Line_Country",
-          "label": "Line Country",
+          "key": "Suite_3",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
           "mode": "text",
-          "type": "country",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Province",
+          "label": "Part 4. Processing Information. 1. If a beneficiary or beneficiaries named in Part 3. is/are outside the United States, or a requested extension of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_No_go_to_Part_9_and_type",
+          "label": "Part 4. Processing Information. 2. Does each person in this petition have a valid passport? Check No. If No, go to Part 9 and type or print your ex...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Does_each_person_in_this_pet",
+          "label": "Part 4. Processing Information. 2. Does each person in this petition have a valid passport? Check Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_you_filing_any_applications",
+          "label": "Part 4. Processing Information. 5. Are you filing any applications for dependents with this petition? If Yes is Checked, Enter Number of Dependent ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Have_you_ever_filed_an_immig",
+          "label": "Part 4. Processing Information. 7. Have you ever filed an immigrant petition for any beneficiary in this petition? If Yes is Checked, Enter Number ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Have_you_ever_filed_an_immig_2",
+          "label": "Part 4. Processing Information. 7. Have you ever filed an immigrant petition for any beneficiary in this petition? Check No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_yes_how_many_Enter_Number",
+          "label": "Part 4. Processing Information. 7. Have you ever filed an immigrant petition for any beneficiary in this petition? Check Yes. If yes, how many? Ent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_yes_answer_the_questions",
+          "label": "Part 4. Processing Information. 8. Did you indicate you were filing a new petition in Part 2.? Check Yes. If yes, answer the questions below.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_no_proceed_to_Item_Number",
+          "label": "Part 4. Processing Information. 8. Did you indicate you were filing a new petition in Part 2.? Check No. If no, proceed to Item Number 9.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -990,27 +963,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P5Line3a_Unit",
-          "label": "P5Line3a Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P5Line3a_AptSteFlrNumber",
           "label": "P5Line3a Apt Ste Flr Number",
           "mode": "text",
@@ -1046,23 +998,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P5Line3",
-          "label": "P5Line3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P5Line3a_ThirdpartyOrganization",
           "label": "P5Line3a Thirdparty Organization",
           "mode": "text",
@@ -1082,27 +1017,6 @@
           "mode": "text",
           "type": "zip",
           "defaultValue": ""
-        },
-        {
-          "key": "P5Line3b_Unit2",
-          "label": "P5Line3b Unit2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P5Line3b_AptSteFlrNumber2",
@@ -1126,25 +1040,78 @@
           "defaultValue": ""
         },
         {
-          "key": "P5Line3Add",
-          "label": "P5Line3Add",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P5Line3b_ThirdpartyOrganization2",
           "label": "P5Line3b Thirdparty Organization2",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_No",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Yes",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_No_2",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Yes_2",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Apartment",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Floor",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Suite",
+          "label": "Part 5.  Basic Information About the Proposed Employment and Employer. 3. Address(es) where the beneficiary(ies) will work if different from addres...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1218,15 +1185,22 @@
           "defaultValue": false
         },
         {
-          "key": "Line1a_PetitionerLastName",
-          "label": "Line 1 a Petitioner Last Name",
+          "key": "Line1b_PetitionerFirstName",
+          "label": "Line 1 b Petitioner First Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line1b_PetitionerFirstName",
-          "label": "Line 1 b Petitioner First Name",
+          "key": "Family_Name_Last_Name",
+          "label": "Part 7.  Declaration, Signature, and Contact Information of Petitioner or Authorized Signatory (Read the information on penalties in the instructio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Title",
+          "label": "Part 7.  Declaration, Signature, and Contact Information of Petitioner or Authorized Signatory (Read the information on penalties in the instructio...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1286,13 +1260,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt8Line4_DaytimePhoneNumber1",
-          "label": "Part 8 Line4 Daytime Phone Number1",
-          "mode": "text",
-          "type": "phone",
-          "defaultValue": ""
-        },
-        {
           "key": "Line_PreparerFamilyName",
           "label": "Line Preparer Family Name",
           "mode": "text",
@@ -1328,27 +1295,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part8Line3_Unit",
-          "label": "Part 8 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part8Line3_AptSteFlrNumber",
           "label": "Part 8 Line3 Apt Ste Flr Number",
           "mode": "text",
@@ -1374,6 +1320,41 @@
           "label": "P8 Line3 Country",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 8. Declaration, Signature, and Contact Information of Person Preparing Form, If Other Than Above. Provide the following information concerning...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 8. Declaration, Signature, and Contact Information of Person Preparing Form, If Other Than Above. Provide the following information concerning...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 8. Declaration, Signature, and Contact Information of Person Preparing Form, If Other Than Above. Provide the following information concerning...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Daytime_Telephone_Number",
+          "label": "Part 8. Declaration, Signature, and Contact Information of Person Preparing Form, If Other Than Above. Provide the following information concerning...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Fax_Number",
+          "label": "Part 8. Declaration, Signature, and Contact Information of Person Preparing Form, If Other Than Above. Provide the following information concerning...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1424,29 +1405,50 @@
           "defaultValue": ""
         },
         {
-          "key": "Line4c_ItemNumber",
-          "label": "Line 4 c Item Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line4b_PartNumber",
-          "label": "Line 4 b Part Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line4a_PageNumber",
-          "label": "Line 4 a Page Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Line2_AdditionalInfo",
           "label": "Line 2 Additional Info",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Page_Number",
+          "label": "Part 9. Additional Information About Your Petition For Nonimmigrant Worker. If you require more space to provide any additional information within ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Page_Number_2",
+          "label": "Part 9. Additional Information About Your Petition For Nonimmigrant Worker. If you require more space to provide any additional information within ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Part_Number",
+          "label": "Part 9. Additional Information About Your Petition For Nonimmigrant Worker. If you require more space to provide any additional information within ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Part_Number_2",
+          "label": "Part 9. Additional Information About Your Petition For Nonimmigrant Worker. If you require more space to provide any additional information within ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number",
+          "label": "Part 9. Additional Information About Your Petition For Nonimmigrant Worker. If you require more space to provide any additional information within ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number_2",
+          "label": "Part 9. Additional Information About Your Petition For Nonimmigrant Worker. If you require more space to provide any additional information within ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1506,27 +1508,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Sec1Line3_Unit",
-          "label": "Sec1Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Sec1Line3_AptSteFlrNumber",
           "label": "Sec1Line3 Apt Ste Flr Number",
           "mode": "text",
@@ -1578,6 +1559,27 @@
         {
           "key": "Line5_EmployeePositionDescription",
           "label": "Line 5 Employee Position Description",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_5",
+          "label": "E-1/E-2 Classification Supplement to Form I-1 29. Section 1. Information About the Employer Outside the United States, if any. 3. Employer's Addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_5",
+          "label": "E-1/E-2 Classification Supplement to Form I-1 29. Section 1. Information About the Employer Outside the United States, if any. 3. Employer's Addres...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_5",
+          "label": "E-1/E-2 Classification Supplement to Form I-1 29. Section 1. Information About the Employer Outside the United States, if any. 3. Employer's Addres...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1882,13 +1884,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Line3_JobDescription",
-          "label": "Line 3 Job Description",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "ESec3Line1_TtlAnnualGross",
           "label": "ESec3Line1 Ttl Annual Gross",
           "mode": "text",
@@ -1956,23 +1951,6 @@
     {
       "page": 11,
       "fields": [
-        {
-          "key": "employer",
-          "label": "employer",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "a_Canada",
           "label": "a Canada",
@@ -2077,6 +2055,20 @@
           "mode": "text",
           "type": "phone",
           "defaultValue": ""
+        },
+        {
+          "key": "Employer_is_a_select_only_on",
+          "label": "Trade Agreement Supplement to Form I-1 29. 3. Employer is a (select only one box): Check Foreign Employer.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Employer_is_a_select_only_on_2",
+          "label": "Trade Agreement Supplement to Form I-1 29. 3. Employer is a (select only one box): Check U. S. Employer.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2096,27 +2088,6 @@
           "mode": "dropdown",
           "type": "state",
           "defaultValue": ""
-        },
-        {
-          "key": "Sec3Line3_Unit",
-          "label": "Sec3Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Sec3Line3_AptSteFlrNumber",
@@ -2144,6 +2115,27 @@
           "label": "S3 Line3 Country",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_6",
+          "label": "Trade Agreement Supplement to Form I-1 29. Section 3. Declaration, Signature and Contact Information of Person Preparing Form, If Other Than Above....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_6",
+          "label": "Trade Agreement Supplement to Form I-1 29. Section 3. Declaration, Signature and Contact Information of Person Preparing Form, If Other Than Above....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_6",
+          "label": "Trade Agreement Supplement to Form I-1 29. Section 3. Declaration, Signature and Contact Information of Person Preparing Form, If Other Than Above....",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -2299,49 +2291,64 @@
           "defaultValue": ""
         },
         {
-          "key": "SubHLine4_class",
-          "label": "Sub HLine4 class",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            }
-          ]
-        },
-        {
           "key": "SubHLine5_ConfirmationNum",
           "label": "Sub HLine5 Confirmation Num",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_1_B_Specialty_Occupation",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check A. H-1 B Specialty Occupation.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_1_B_1_Chile_and_Singapore",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check B. H-1 B 1 Chile and Singapore.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_1_B_2_Exceptional_services",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check C. H-1 B 2 Exceptional services relating to a coo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_1_B_3_Fashion_model_of_dis",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check D. H-1 B 3 Fashion model of distinguished merit a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_2_A_Agricultural_worker",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check E. H-2 A Agricultural worker.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_3_Trainee",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check G. H-3 Trainee.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_3_Special_education_exchan",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check H. H-3 Special education exchange visitor program.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "H_2_B_Non_agricultural_worke",
+          "label": "H Classification Supplement to Form I-1 29. 4. Classification sought (select only one box). Check F. H-2 B  Non-agricultural worker.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2373,23 +2380,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Line8a_Check",
-          "label": "Line 8 a Check",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Line2_SummaryofWorkExperience",
           "label": "Line 2 Summaryof Work Experience",
           "mode": "text",
@@ -2411,40 +2401,6 @@
           "defaultValue": ""
         },
         {
-          "key": "SupHLine5_No",
-          "label": "Sup HLine5 No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine5_Yes",
-          "label": "Sup HLine5 Yes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Sect1_DateSignedByPetitioner",
           "label": "Sect1 Date Signed By Petitioner",
           "mode": "text",
@@ -2454,6 +2410,48 @@
         {
           "key": "Sect1_PetitionerPrintedName",
           "label": "Sect1 Petitioner Printed Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Does_any_beneficiary_in_this",
+          "label": "H Classification Supplement to Form I-1 29. 8. A. Does any beneficiary in this petition have a controlling interest in the petitioning organization...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "B",
+          "label": "H Classification Supplement to Form I-1 29. 8. A. Does any beneficiary in this petition have a controlling interest in the petitioning organization...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_you_requesting_a_change_of_e",
+          "label": "H Classification Supplement to Form I-1 29. 7. Are you requesting a change of employer and was the beneficiary previously subject to the Guam-Commo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_you_filing_this_petition_on",
+          "label": "H Classification Supplement to Form I-1 29. 6. Are you filing this petition on behalf of a beneficiary subject to the Guam-Commonwealth of the Nort...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_you_requesting_a_change_of_e_2",
+          "label": "H Classification Supplement to Form I-1 29. 7. Are you requesting a change of employer and was the beneficiary previously subject to the Guam-Commo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_you_filing_this_petition_on_2",
+          "label": "H Classification Supplement to Form I-1 29. 6. Are you filing this petition on behalf of a beneficiary subject to the Guam-Commonwealth of the Nort...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2541,40 +2539,6 @@
           "defaultValue": ""
         },
         {
-          "key": "SupHLine5",
-          "label": "Sup HLine5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine6a",
-          "label": "Sup HLine6a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "SupHLine6",
           "label": "Sup HLine6",
           "mode": "checkbox_single",
@@ -2608,46 +2572,40 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item2_Entry_You_must_also_submit_evidenc",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 5. Are you requesting a r...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 5. Are you requesting a r...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_If_you_are_requesting_any_na",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 4.  If you are requesting...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_of_Form_I_1_29_and_write_you",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 4.  If you are requesting...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 16,
       "fields": [
-        {
-          "key": "SupHLine11",
-          "label": "Sup HLine11",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine8c",
-          "label": "Sup HLine8c",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "SupHLine8a1_Types",
           "label": "Sup HLine8a1 Types",
@@ -2684,83 +2642,11 @@
           "defaultValue": ""
         },
         {
-          "key": "Sec2Line7c_Unit",
-          "label": "Sec2Line7c Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Sec2Line7c_AptSteFlrNumber",
           "label": "Sec2Line7c Apt Ste Flr Number",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "SupHLine8a",
-          "label": "Sup HLine8a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine12",
-          "label": "Sup HLine12",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine13",
-          "label": "Sup HLine13",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Line7_RecruitOrganization",
@@ -2789,6 +2675,97 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item2_Suite_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 7. If you answered \u201cYes,\u201d...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Apartment_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 7. If you answered \u201cYes,\u201d...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Floor_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. 7. If you answered \u201cYes,\u201d...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_submit_evidence_supporting_y",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_submit_a_copy_of_the_USCIS_n",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_3",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_submit_evidence_of_full_reim",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_4",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Yes",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_5",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_6",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_submit_evidence_of_full_reim_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Prohibited H-2A and H-2B ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2796,123 +2773,102 @@
       "page": 17,
       "fields": [
         {
-          "key": "SupHLine14",
-          "label": "Sup HLine14",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_you_must_submit_a_complete_c",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 14. Are...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "SupHLine15",
-          "label": "Sup HLine15",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_No_7",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 14. Are...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "SupHLine16",
-          "label": "Sup HLine16",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_you_must_submit_a_complete_c_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 15. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "SupHLine17",
-          "label": "Sup HLine17",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_No_8",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 15. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "SupHLine18",
-          "label": "Sup HLine18",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_you_must_submit_a_complete_c_3",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 16. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "SupHLine19",
-          "label": "Sup HLine19",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_No_9",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 16. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "SupHLine20",
-          "label": "Sup HLine20",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_you_must_submit_a_complete_c_4",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 17. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_10",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 17. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_you_must_submit_a_complete_c_5",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 18. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_11",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 18. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_you_must_submit_a_complete_c_6",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 19. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_12",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Other Violations. 19. Wit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Yes_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_13",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2955,57 +2911,6 @@
           "defaultValue": ""
         },
         {
-          "key": "SupHLine21",
-          "label": "Sup HLine21",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine22",
-          "label": "Sup HLine22",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "SupHLine23",
-          "label": "Sup HLine23",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Line24_FamilyName",
           "label": "Line 24 Family Name",
           "mode": "text",
@@ -3029,6 +2934,48 @@
         {
           "key": "Line24_PetitionerName",
           "label": "Line 24 Petitioner Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Yes_3",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_14",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Yes_4",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_15",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Yes_5",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No_16",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. H-2A and H-2B Petitioner ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -3079,27 +3026,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line24_Unit",
-          "label": "Line 24 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Line24_AptSteFlrNumber",
@@ -3233,6 +3159,27 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item2_Suite_3",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Part C.  Joint Employers....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Apartment_3",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Part C.  Joint Employers....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Floor_3",
+          "label": "H Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing for H-2 A or H-2 B Classification. Part C.  Joint Employers....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -3275,23 +3222,6 @@
           "defaultValue": false
         },
         {
-          "key": "HSec3Line7_Check",
-          "label": "HSec3Line7 Check",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "HSec3Line1e_No",
           "label": "HSec3Line1e No",
           "mode": "checkbox_single",
@@ -3329,6 +3259,20 @@
         {
           "key": "Line2_Explanation",
           "label": "Line 2 Explanation",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Do_you_intend_to_employ_the",
+          "label": "H Classification Supplement to Form I-1 29. Section 3. Complete This Section If Filing for H-3 Classification. If you answer yes to any of the foll...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Do_you_intend_to_employ_the_2",
+          "label": "H Classification Supplement to Form I-1 29. Section 3. Complete This Section If Filing for H-3 Classification. If you answer yes to any of the foll...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -3568,6 +3512,20 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_of_the_Beneficiary",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. 2. Enter Name of the Beneficiary.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Name_of_the_Petitioner",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. 1. Enter Name of the Petitioner.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -3701,54 +3659,60 @@
           "defaultValue": false
         },
         {
-          "key": "Cap",
-          "label": "Cap",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Cap_H_1B_Bachelor_s_Degree",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 1. Specify the type of H-1B petiti...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "WageLevelBox",
-          "label": "Wage Level Box",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Cap_H_1_B_US_Master_s_Degree",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 1. Specify the type of H-1 B petit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Cap_H_1B1_Chile_Singapore",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 1. Specify the type of H-1 B petit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Cap_Exempt",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 1. Specify the type of H-1B petiti...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_Wage_Level_IV",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 2. If you selected Item Number 1.a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_Wage_Level_III",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 2. If you selected Item Number 1.a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_Wage_Level_II",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 2. If you selected Item Number 1.a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_Wage_Level_I",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 2. If you selected Item Number 1.a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -3910,25 +3874,25 @@
           "defaultValue": ""
         },
         {
-          "key": "Lineb_Unit",
-          "label": "Lineb Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
+          "key": "Floor_7",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 3. If you answered Item Number 1. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_7",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 3. If you answered Item Number 1. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_7",
+          "label": "H-1B and H-1B1 Data Collection and Filing Fee Exemption Supplement. Section 3. Numerical Limitation Information. 3. If you answered Item Number 1. ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -3955,23 +3919,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "LSuppLine4a",
-          "label": "LSupp Line4a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "LSuppLine4b_Yes",
@@ -4030,27 +3977,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Sect1_Name_Line3",
-          "label": "Sect1 Name Line3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "DateFrom_line3",
-          "label": "Date From line3",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "DateTo_line3",
-          "label": "Date To line3",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "a_L1A",
           "label": "a L1A",
           "mode": "checkbox_single",
@@ -4100,27 +4026,6 @@
           "defaultValue": ""
         },
         {
-          "key": "LClassLine4_Unit",
-          "label": "LClass Line4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "LSuppLine3_NameofEmployerAbroad",
           "label": "LSupp Line3 Nameof Employer Abroad",
           "mode": "text",
@@ -4144,6 +4049,146 @@
         {
           "key": "Part3Line2_PostalCode",
           "label": "Part 3 Line2 Postal Code",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_as_2_digit_Month_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_as_2_digit_Month_2_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_as_2_digit_Month_2_3",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_as_2_digit_Month_2_4",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_as_2_digit_Month_2_5",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_To_Date_as_2_digit_Month_2_d",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_To_Date_as_2_digit_Month_2_d_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_To_Date_as_2_digit_Month_2_d_3",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_To_Date_as_2_digit_Month_2_d_4",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_To_Date_as_2_digit_Month_2_d_5",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 4 Address of employer abroad. Ch...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 4 Address of employer abroad. Ch...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 4 Address of employer abroad. Ch...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Does_the_petitioner_employ_5",
+          "label": "L Classification Supplement to Form I-1 29. 4. A. Does the petitioner employ 50 or more individuals in the U. S.? Check No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Does_the_petitioner_employ_5_2",
+          "label": "L Classification Supplement to Form I-1 29. 4. A. Does the petitioner employ 50 or more individuals in the U. S.? Check Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Subject_s_Name",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Subject_s_Name_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Subject_s_Name_3",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Subject_s_Name_4",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Subject_s_Name_5",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 2. List the beneficiary's and an...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -4313,6 +4358,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Item1_Description",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 7. Describe the beneficiary's pr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Summary",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 8. Summarize the beneficiary's e...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Enter_Description",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. 6. Describe the beneficiary's du...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -4404,23 +4470,6 @@
           "defaultValue": false
         },
         {
-          "key": "LSec1Line12",
-          "label": "LSec1Line12",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "LSec1Line12_No",
           "label": "LSec1Line12 No",
           "mode": "checkbox_single",
@@ -4433,6 +4482,34 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Item1_Will_the_beneficiary_be_stat",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. If you are seeking L-1B speciali...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Will_the_beneficiary_be_stat_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. If you are seeking L-1B speciali...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Description_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. If you are seeking L-1B speciali...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Description_3",
+          "label": "L Classification Supplement to Form I-1 29. Section 1. Complete This Section If Filing For An Individual Petition. If you are seeking L-1B speciali...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -4440,15 +4517,113 @@
       "page": 27,
       "fields": [
         {
-          "key": "Cell1",
-          "label": "Cell1",
+          "key": "Item2_Name_and_Address",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Cell2",
-          "label": "Cell2",
+          "key": "Item2_Name_and_Address_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_and_Address_3",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_and_Address_4",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_and_Address_5",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_and_Address_6",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_and_Address_7",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Name_and_Address_8",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_2",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_3",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_4",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_5",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_6",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_7",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship_8",
+          "label": "L Classification Supplement to Form I-1 29. Section 2. Complete This Section If Filing A Blanket Petition. List all U. S. and foreign parent, branc...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -4529,21 +4704,39 @@
           "defaultValue": false
         },
         {
-          "key": "OandPSuppLine7",
-          "label": "Oand PSupp Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item1_List",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 6. If filing for an O-2 or...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Description_4",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 5. Describe the duties to ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Explanation",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 4. Explain the nature of t...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_B",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 7. A. Does any beneficiary...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Does_any_beneficiary_in_this",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 7. A. Does any beneficiary...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -4591,27 +4784,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line10b_Unit",
-          "label": "Line 10 b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "LSuppLine10a_NameofPeer",
@@ -4663,27 +4835,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Line11b_Unit",
-          "label": "Line 11 b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "LSuppLine11a_NameofPeer",
           "label": "LSupp Line11a Nameof Peer",
           "mode": "text",
@@ -4733,27 +4884,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Line12b_Unit",
-          "label": "Line 12 b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "LSuppLine12a_NameofPeer",
           "label": "LSupp Line12a Nameof Peer",
           "mode": "text",
@@ -4766,27 +4896,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "OandPSuppLine8",
-          "label": "Oand PSupp Line8",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "OandPSuppLine7_No",
@@ -4814,6 +4923,90 @@
           "label": "Preparer Daytime Phone Number1 12d",
           "mode": "text",
           "type": "phone",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor_3",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary Ability....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite_3",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary Ability....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment_3",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary Ability....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor_4",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary achievem...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite_4",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary achievem...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment_4",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary achievem...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor_5",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary achievem...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite_5",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary achievem...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment_5",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-1 Extraordinary achievem...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_If_no_provide_the_following",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 9. Is the required consult...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Is_the_required_consultation",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 9. Is the required consult...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Is_the_required_consultation_2",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. 9. Is the required consult...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -4864,27 +5057,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Line13b_Unit",
-          "label": "Line 13 b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "LSuppLine13a_NameofPeer",
           "label": "LSupp Line13a Nameof Peer",
           "mode": "text",
@@ -4897,33 +5069,52 @@
           "mode": "text",
           "type": "phone",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor_6",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-2 or P alien. 13. B. Com...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite_6",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-2 or P alien. 13. B. Com...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment_6",
+          "label": "O and P Classifications Supplement to Form I-1 29. Section 1. Complete This Section if Filing for O or P Classification. O-2 or P alien. 13. B. Com...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 31,
-      "fields": []
+      "fields": [
+        {
+          "key": "Item1_Name_of_the_Petitioner_2",
+          "label": "Q-1 Classification Supplement to Form I-1 29. 1. Enter Name of the Petitioner.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Family_Name_Last_Name",
+          "label": "Q-1 Classification Supplement to Form I-1 29. Section 1. Complete if you are filing for a Q-1 International Cultural Exchange Alien. I hereby certi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        }
+      ]
     },
     {
       "page": 32,
       "fields": [
-        {
-          "key": "R1Sec1Line2",
-          "label": "R1Sec1Line2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "FamilyMemberName_Line1",
           "label": "Family Member Name Line1",
@@ -5070,6 +5261,48 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_Has_the_beneficiary_or_any_o",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Please_be_sure_to_list_only",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Number_of_members_of_the_pet",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Number_of_employees_working",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Number_of_aliens_holding_spe",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Number_of_special_immigrant",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -5159,6 +5392,41 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_Description_5",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_a_Detailed_description_of_th",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_a_Description_of_the_benefic",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Title_of_Position_Offered",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_a_Description_of_the_propose",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Employer Attestation....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -5173,62 +5441,11 @@
           "defaultValue": ""
         },
         {
-          "key": "R1Sec1Line7a",
-          "label": "R1Sec1Line7a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "R1Sec1Line7a1_Explanation",
           "label": "R1Sec1Line7a1 Explanation",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "R1Sec1Line6a",
-          "label": "R1Sec1Line6a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "R1Sec1Line8a",
-          "label": "R1Sec1Line8a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "R1Sec1Line8a1_Explanation",
@@ -5245,21 +5462,60 @@
           "defaultValue": ""
         },
         {
-          "key": "R1Sec1Line9a",
-          "label": "R1Sec1Line9a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item1_of_Form_I_1_29",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes_2",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_of_Form_I_1_29_2",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes_3",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_of_Form_I_1_29_3",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes_4",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_of_Form_I_1_29_4",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -5288,23 +5544,6 @@
           "defaultValue": ""
         },
         {
-          "key": "R1Sec1Line10a",
-          "label": "R1Sec1Line10a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "R1Sec1Line11a_Yes",
           "label": "R1Sec1Line11a Yes",
           "mode": "checkbox_single",
@@ -5317,23 +5556,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "R1Sec1Line12a",
-          "label": "R1Sec1Line12a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Part14_DateofSignature",
@@ -5362,6 +5584,34 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes_5",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_of_Form_I_1_29_5",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Yes_6",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_of_Form_I_1_29_6",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -5369,66 +5619,10 @@
       "page": 36,
       "fields": [
         {
-          "key": "Part14_City",
-          "label": "Part 14 City",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line2_State",
-          "label": "Line 2 State",
-          "mode": "dropdown",
-          "type": "state",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part14_ZipCode",
-          "label": "Part 14 Zip Code",
-          "mode": "text",
-          "type": "zip",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part14_StreetName",
-          "label": "Part 14 Street Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Sec1_AptSteFlrNumber",
           "label": "Sec1 Apt Ste Flr Number",
           "mode": "text",
           "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Sec1_Unit",
-          "label": "Sec1 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Part14_EmailAddress",
-          "label": "Part 14 Email Address",
-          "mode": "text",
-          "type": "email",
           "defaultValue": ""
         },
         {
@@ -5460,38 +5654,143 @@
           "defaultValue": ""
         },
         {
-          "key": "Attest_Unit",
-          "label": "Attest Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Preparer_DaytimePhoneNumber1",
-          "label": "Preparer Daytime Phone Number1",
+          "key": "Floor_8",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
           "mode": "text",
-          "type": "phone",
+          "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Preparers_FaxPhoneNumber1",
-          "label": "Preparers Fax Phone Number1",
+          "key": "Suite_8",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
           "mode": "text",
-          "type": "phone",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_8",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_State_from_a_List_of_States",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State_from_a_List_of_States",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_City_or_Town",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_or_Town",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_E_Mail_Address",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "EMail_Address",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Street_Number_and_Name",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Street_Number_and_Name",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_ZIP_Code",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "ZIP_Code",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Daytime_Telephone_Number",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Daytime_Telephone_Number_2",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Fax_Number",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Fax_Number_2",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 2. This Section Is Required For Petitioners Affiliated With The Religious Denomination. Relig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Floor_7",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Suite_7",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Apartment_7",
+          "label": "R-1 Classification Supplement to Form I-1 29. Section 1. Complete This Section If You Are Filing For An R-1 Religious Worker. Petitioner Attestatio...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -5499,23 +5798,6 @@
     {
       "page": 37,
       "fields": [
-        {
-          "key": "Line1_Gender",
-          "label": "Line 1 Gender",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Part7LineA_EmpCity",
           "label": "Part 7 Line A Emp City",
@@ -5552,27 +5834,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Att1_Unit",
-          "label": "Att1 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "A1_ZipCode",
           "label": "A1 Zip Code",
           "mode": "text",
@@ -5585,27 +5846,6 @@
           "mode": "dropdown",
           "type": "state",
           "defaultValue": ""
-        },
-        {
-          "key": "For_Unit",
-          "label": "For Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "For_AptSteFlrNumber",
@@ -5633,13 +5873,6 @@
           "label": "A1 Country",
           "mode": "text",
           "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line14e_ExpDate",
-          "label": "Line 14 e Exp Date",
-          "mode": "text",
-          "type": "date",
           "defaultValue": ""
         },
         {
@@ -5671,8 +5904,155 @@
           "defaultValue": ""
         },
         {
-          "key": "Line14b_Passport",
-          "label": "Line 14 b Passport",
+          "key": "Floor_9",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_9",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_9",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_10",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_10",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_10",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_3",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_4",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_5",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Male",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Female",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Family_Name_Last_Name",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Family_Name_Last_Name_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Given_Name_First_Name",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Given_Name_First_Name",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Middle_Name",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Middle_Name",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Birth",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Citizenship_or_Na",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_6",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -5683,49 +6063,11 @@
       "page": 38,
       "fields": [
         {
-          "key": "Line2_Gender",
-          "label": "Line 2 Gender",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Att2_AptSteFlrNumber",
           "label": "Att2 Apt Ste Flr Number",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Att2_Unit",
-          "label": "Att2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "FR_ZipCode",
@@ -5740,27 +6082,6 @@
           "mode": "dropdown",
           "type": "state",
           "defaultValue": ""
-        },
-        {
-          "key": "For2_Unit",
-          "label": "For2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "For2_AptSteFlrNumber",
@@ -5800,6 +6121,139 @@
         {
           "key": "Line14b_EAD",
           "label": "Line 14 b EAD",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_11",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_11",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_11",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_12",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_12",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_12",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_7",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_8",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Male_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Female_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Family_Name_Last_Name_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Family_Name_Last_Name_3",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Given_Name_First_Name_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Given_Name_First_Name_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Middle_Name_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Middle_Name_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Birth_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Citizenship_or_Na_2",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_in_the_United_States_Ente_9",
+          "label": "Attachment-1. Attach to Form I-1 29 when more than one person is included in the petition. (List each person separately. Do not include the person ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

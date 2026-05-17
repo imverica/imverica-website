@@ -29,14 +29,16 @@
         "defaultValue": ""
       },
       {
-        "key": "P1_Line1_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
+        "key": "and_then_skip_to_Item_Number",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Status_as_a_victim_of_traffi",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       }
     ],
     "2": [
@@ -119,26 +121,10 @@
         "defaultValue": ""
       },
       {
-        "key": "P2_Line6_CountryOfBirth",
-        "mode": "text",
-        "kind": "text",
-        "defaultValue": ""
-      },
-      {
         "key": "P2_Line7_CountryOfCitizenship",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P2_Line8_Sex",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
       },
       {
         "key": "P2_Line9_InCareofName",
@@ -151,17 +137,6 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P2_Line9_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
       },
       {
         "key": "P2_Line9_AptSteFlrNumber",
@@ -204,6 +179,48 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
+      },
+      {
+        "key": "State_or_Province",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Country",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item8_for_Male",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item8_for_Female",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item9_Apartment",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item9_Suite",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item9_Floor",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       }
     ],
     "3": [
@@ -212,17 +229,6 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P2_Line10_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
       },
       {
         "key": "P2_Line10_AptSteFlrNumber",
@@ -285,17 +291,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P2_Line11_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
-      },
-      {
         "key": "P2_Line11_AptSteFlrNumber",
         "mode": "text",
         "kind": "text",
@@ -350,21 +345,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P2_Line12_MaritalStatus",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ]
-      },
-      {
         "key": "P2_Line12_Other",
         "mode": "text",
         "kind": "text",
@@ -396,6 +376,84 @@
       },
       {
         "key": "P2_Line15_AlienNumber",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Apartment",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Suite",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Floor",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item11_Apartment",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item11_Suite",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item11_Floor",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Divorced",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Single_Never_Married",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Widowed",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Married",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Legally_Separated",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Marriage_Annulled",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item12_Other",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
@@ -567,26 +625,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P2_Line30_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
-      },
-      {
-        "key": "P2_Line31_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
-      },
-      {
         "key": "P2_Line32_ApplicationorPetitionFiled",
         "mode": "text",
         "kind": "text",
@@ -605,34 +643,64 @@
         "defaultValue": ""
       },
       {
-        "key": "P2_Line35_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
+        "key": "Additional_Information",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       },
       {
-        "key": "P2_Line36_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
+        "key": "Item27_No",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       },
       {
-        "key": "P2_Line27_CB",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1
-        ]
+        "key": "Entry_Additional_Information",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item30_No",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "34",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item31_No",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Additional_Information_2",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item35_No",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Additional_Information_3",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item36_No",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       }
     ],
     "6": [
@@ -659,17 +727,6 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
-      },
-      {
-        "key": "P2_Line44_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
       },
       {
         "key": "P2_Line44_AptSteFlrNumber",
@@ -760,6 +817,24 @@
         "mode": "text",
         "kind": "text",
         "defaultValue": ""
+      },
+      {
+        "key": "Item44_Apartment",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item44_Suite",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item44_Floor",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
       }
     ],
     "7": [
@@ -824,17 +899,6 @@
         "defaultValue": ""
       },
       {
-        "key": "P2_Line45_Unit",
-        "mode": "checkbox_group",
-        "kind": "checkbox",
-        "defaultValue": null,
-        "options": [
-          0,
-          1,
-          2
-        ]
-      },
-      {
         "key": "P2_Line45_AptSteFlrNumber",
         "mode": "text",
         "kind": "text",
@@ -872,6 +936,24 @@
       },
       {
         "key": "P2_Line45_Country",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item45_Apartment",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item45_Suite",
+        "mode": "text",
+        "kind": "text",
+        "defaultValue": ""
+      },
+      {
+        "key": "Item45_Floor",
         "mode": "text",
         "kind": "text",
         "defaultValue": ""

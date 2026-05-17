@@ -435,27 +435,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt2Line8_Unit",
-          "label": "Part 2 Line8 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt2Line8_AptSteFlrNumber",
           "label": "Part 2 Line8 Apt Ste Flr Number",
           "mode": "text",
@@ -517,6 +496,27 @@
           "mode": "text",
           "type": "email",
           "defaultValue": ""
+        },
+        {
+          "key": "Item8_Apartment",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. Subject of Record's Mailing Address and Contact Information. 8. List the subject's ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Suite",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. Subject of Record's Mailing Address and Contact Information. 8. List the subject's ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_Floor",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. Subject of Record's Mailing Address and Contact Information. 8. List the subject's ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -550,13 +550,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "Pt2Line10_FamilyName",
-          "label": "Part 2 Line10 Family Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
         },
         {
           "key": "Pt2Line10_GivenName",
@@ -601,13 +594,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt2Line11_Relationship",
-          "label": "Part 2 Line11 Relationship",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt2Line11B_FamilyName",
           "label": "Part 2 Line11B Family Name",
           "mode": "text",
@@ -645,6 +631,41 @@
         {
           "key": "Pt2Line11C_MiddleName",
           "label": "Part 2 Line11C Middle Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Family_Name_Last_Name",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. 9. Subject of Record's Father. 10. Subject of Record's Mother. Enter Family Name (L...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Maiden_Name_or_previous_last",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. 10. Subject of Record's Mother. 10. Subject of Record's Mother. Enter Maiden Name, ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Spouse_Relationship",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. 11. Additional Family Members that May Appear on Requested Records. Provide the fam...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Relationship",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. 11. Additional Family Members that May Appear on Requested Records. B. Name 2. Ente...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Relationship",
+          "label": "Part 2.  Provide Information to Identify the Subject of Record. 11. Additional Family Members that May Appear on Requested Records. C. Name 3. Ente...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -711,27 +732,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt4Line2_Unit",
-          "label": "Part 4 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt4Line2_AptSteFlrNumber",
           "label": "Part 4 Line2 Apt Ste Flr Number",
           "mode": "text",
@@ -792,6 +792,27 @@
           "label": "Part 4 Line2 Email Address",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 4.  Third-Party Requestor. 2. Third-Party Requestor Mailing Address and Contact Information. Check Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 4.  Third-Party Requestor. 2. Third-Party Requestor Mailing Address and Contact Information. Check Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 4.  Third-Party Requestor. 2. Third-Party Requestor Mailing Address and Contact Information. Check Floor.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1090,8 +1111,15 @@
           "defaultValue": ""
         },
         {
-          "key": "P5_Line7d_AdditionalInfo",
-          "label": "P5 Line7d Additional Info",
+          "key": "Additional_Information",
+          "label": "Part 5. Additional Information. If you need extra space to provide any additional information within this request, use the space below.  You may al...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 5. Additional Information. If you need extra space to provide any additional information within this request, use the space below.  You may al...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

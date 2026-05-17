@@ -40,27 +40,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line6_Unit",
-          "label": "Part 1 Line6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line6_AptSteFlrNumber",
           "label": "Part 1 Line6 Apt Ste Flr Number",
           "mode": "text",
@@ -157,6 +136,27 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About the Applicant or Petitioner. Mailing Address (Safe or Alternate Address, if applicable). 6. C. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About the Applicant or Petitioner. Mailing Address (Safe or Alternate Address, if applicable).  6. C. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About the Applicant or Petitioner. Mailing Address (Safe or Alternate Address, if applicable).  6. C. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -169,27 +169,6 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line2_checkbox",
-          "label": "P2 Line2 checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line2_Formnumberappeal",
@@ -220,29 +199,50 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line1_checkbox",
-          "label": "P2 Line1 checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt3_FillableField",
           "label": "Part 3 Fillable Field",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_have_attached_a_brief_and",
+          "label": "Part 2. Information About the Appeal or Motion.  Please indicate whether you are filing an appeal to the Administrative Appeals Office (A A O) or a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_will_not_be_submitting_any",
+          "label": "Part 2., I am filing an appeal to the A A O. Select this box for:  1.  C. I will not be submitting any brief or additional evidence in support of t...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_will_submit_a_brief_and_or",
+          "label": "Part 2., I am filing an appeal to the A A O. Select this box for:  1. B. I will submit a brief and / or additional evidence directly to the A A O w...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_have_attached_a_brief_and_2",
+          "label": "Part 2., I am filing a motion.  Select this box for:  2. A. I am filing a motion to reopen.  I have attached a brief and / or additional evidence.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_have_attached_a_brief",
+          "label": "Part 2., I am filing a motion.  Select this box for:  2. B. I am filing a motion to reconsider.  I have attached a brief.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_have_attached_a_brief_and_3",
+          "label": "Part 2., I am filing a motion.  Select this box for:  2. C. I am filing a motion to reopen and a motion to reconsider. I have attached a brief and ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -304,13 +304,6 @@
         {
           "key": "P5_Line2_InterpreterBusiness",
           "label": "P5 Line2 Interpreter Business",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P5_Line4_InterDayTel",
-          "label": "P5 Line4 Inter Day Tel",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -383,6 +376,20 @@
           "label": "Part 6 Line6 Prep Email Address",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Interpreter_s_Daytime_Teleph",
+          "label": "Part 5.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 3. Enter Interpreter's Daytime Telepho...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Interpreter_s_Mobile_Telepho",
+          "label": "Part 5.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 4. Enter Interpreter's Mobile Telephon...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

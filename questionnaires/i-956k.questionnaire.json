@@ -75,25 +75,25 @@
           "defaultValue": false
         },
         {
-          "key": "CheckBox1",
-          "label": "Check Box1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
+          "key": "This_is_being_filed_to_amend",
+          "label": "Part 1.  Type of Registration.  one box. Select 2.  This is being filed to amend a previously filed registration.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "all_that_apply",
+          "label": "Part 1.  Type of Registration.  Select one  box.  1.  If you are amending to edit information in Part 3. below, select the appropriate box to indic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "all_that_apply_2",
+          "label": "Part 1.  Type of Registration.  Select one  box.  1.  This is an initial registration for a Direct Promoter, Third Party Promoter or Migration Agen...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -143,42 +143,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line5_CountryNationality",
-          "label": "P2 Line5 Country Nationality",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "P2_Line6_PassportCountries",
-          "label": "P2 Line6 Passport Countries",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "P2_Line8_ANumber",
           "label": "P2 Line8 ANumber",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line7_CB",
-          "label": "P2 Line7 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line9A_NameofBusiness",
@@ -193,31 +162,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line10_CB",
-          "label": "P2 Line10 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
         },
         {
           "key": "P2_Line10_OtherDescription",
@@ -253,6 +197,104 @@
           "mode": "text",
           "type": "state",
           "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_box_for_Corporation",
+          "label": "Part 2. Registrant Information.  For Organizations. 10.    Select the organizational structure.  If the organizational structure is different from ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_box_for_Partnership_inc",
+          "label": "Part 2. Registrant Information.  For Organizations. 10.    Select the organizational structure.  If the organizational structure is different from ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_box_for_Limited_Liabili",
+          "label": "Part 2. Registrant Information.  For Organizations. 10.    Select the organizational structure.  If the organizational structure is different from ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_box_for_Other",
+          "label": "Part 2. Registrant Information.  For Organizations. 10.    Select the organizational structure.  If the organizational structure is different from ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_the_Countries_of_Citizenship",
+          "label": "Part 2. Registrant Information. For Individuals. 5. Row 1. Enter the Countries of Citizenship or Nationality current and relinquished.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_the_Countries_of_Citizenship",
+          "label": "Part 2. Registrant Information. For Individuals. 5. Row 3. Enter the Countries of Citizenship or Nationality current and relinquished.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_the_Countries_of_Citizenship",
+          "label": "Part 2. Registrant Information. For Individuals. 5. Row 2. Enter the Countries of Citizenship or Nationality current and relinquished.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_the_Countries_of_Citizenship",
+          "label": "Part 2. Registrant Information. For Individuals. 5. Row 4. Enter the Countries of Citizenship or Nationality current and relinquished.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_the_Passport_Number_and_Coun",
+          "label": "Part 2. Registrant Information.  For Individuals. 6. Row 1. Enter the Passport Number and Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_the_Passport_Number_and_Coun",
+          "label": "Part 2. Registrant Information.  For Individuals. 6. Row 2. Enter the Passport Number and Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_the_Passport_Number_and_Coun",
+          "label": "Part 2. Registrant Information.  For Individuals. 6. Row 4. Enter the Passport Number and Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_the_Passport_Number_and_Coun",
+          "label": "Part 2. Registrant Information.  For Individuals. 6. Row 3. Enter the Passport Number and Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "S_citizen_are_you_a_US_natio",
+          "label": "Part 2. Registrant Information.  For Individuals. 7. If not U.S citizen, are you a U.S. national or lawful permanent resident (L P R)? Check this b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_this_box_for_No",
+          "label": "Part 2. Registrant Information. For Individuals. 7. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -279,27 +321,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line16_CB_Unit",
-          "label": "P2 Line16 CB Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line16_AptSteFlrNumber",
@@ -372,23 +393,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line20_A_CB",
-          "label": "P2 Line20 A CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line20b_PromotorName",
           "label": "P2 Line20b Promotor Name",
           "mode": "text",
@@ -459,21 +463,53 @@
           "defaultValue": false
         },
         {
-          "key": "P3_Line1_CB",
-          "label": "P3 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "this_box_for_Apartment",
+          "label": "Part 2. Registrant Information. Registrant Contact Information. 16. Registrant's Mailing Address. Check this box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Suite",
+          "label": "Part 2. Registrant Information. Registrant Contact Information. 16. Registrant's Mailing Address. Check this box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Floor",
+          "label": "Part 2. Registrant Information. Registrant Contact Information. 16. Registrant's Mailing Address. Check this box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "you_employed_to_work_as_a_pr",
+          "label": "Part 2. Registrant Information  Registrant Employment or Association.  20 A.   Are you employed to work as a promoter or otherwise engaged as a pro...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "you_employed_to_work_as_a_pr_2",
+          "label": "Part 2. Registrant Information  Registrant Employment or Association.  20 A.   Are you employed to work as a promoter or otherwise engaged as a pro...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Have_you_entered_into_a_writ",
+          "label": "Part 3. Written Agreements     1.  Have you entered into a written agreement for each regional center, new commercial enterprise, and affiliated jo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Have_you_entered_into_a_writ_2",
+          "label": "Part 3. Written Agreements     1.  Have you entered into a written agreement for each regional center, new commercial enterprise, and affiliated jo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -586,74 +622,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line1_CB",
-          "label": "P4 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line2_CB",
-          "label": "P4 Line2 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line3_CB",
-          "label": "P4 Line3 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line4_CB",
-          "label": "P4 Line4 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P4_Line4_A_PenaltyDuration",
           "label": "P4 Line4 A Penalty Duration",
           "mode": "text",
@@ -661,248 +629,164 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line4_B_CB",
-          "label": "P4 Line4 B CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Have_you_committed_a_crimina",
+          "label": "Part 4. Bona Fides of the Promoter. For Item Numbers 1 to 13, you should answer \u201cYes\u201d to any question that applies, even if the records were sealed...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line4_C_CB",
-          "label": "P4 Line4 C CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Have_you_committed_a_crimina_2",
+          "label": "Part 4. Bona Fides of the Promoter. For Item Numbers 1 to 13, you should answer \u201cYes\u201d to any question that applies, even if the records were sealed...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line4_D_CB",
-          "label": "P4 Line4 D CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Have_you_ever_committed_a_cr",
+          "label": "Part 4. Bona Fides of the Promoter. 2. Have you ever committed a criminal or civil offense involving fraud or deceit that resulted in a liability i...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line4_E_CB",
-          "label": "P4 Line4 E CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item2_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 2. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line4_F_CB",
-          "label": "P4 Line4 F CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item3_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 3. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line5_CB",
-          "label": "P4 Line5 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Have_you_ever_committed_a_cr_2",
+          "label": "Part 4. Bona Fides of the Promoter. 3. Have you ever committed a criminal or civil offense for which you were convicted and sentenced to a term of ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P4_Line6_CB",
-          "label": "P4 Line6 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Is_the_final_order_based_on",
+          "label": "Part 4. Bona Fides of the Promoter. 4. B. Is the final order based on a violation of any law or regulation that prohibits fraudulent, manipulative,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 4. B. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_you_subject_to_a_final_order",
+          "label": "Part 4. Bona Fides of the Promoter. 4. Are you subject to a final order of a State securities commission (or an agency or officer of a State perfor...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_If_you_answered_yes_to_the_a",
+          "label": "Part 4. Bona Fides of the Promoter. 4. Are you subject to a final order of a State securities commission (or an agency or officer of a State perfor...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Is_the_final_order_based_on_2",
+          "label": "Part 4. Bona Fides of the Promoter.. 4. C. Is the final order based on a violation of any law or regulation that bars you from associating with any...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_No_2",
+          "label": "Part 4. Bona Fides of the Promoter.    4. C. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Is_the_final_order_based_on_3",
+          "label": "Part 4. Bona Fides of the Promoter.   4. D. Is the final order based on a violation of any law or regulation that bars you from appearing before su...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_No_3",
+          "label": "Part 4. Bona Fides of the Promoter.  4. D. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Is_the_final_order_based_on_4",
+          "label": "Part 4. Bona Fides of the Promoter.  4. E. Is the final order based on a violation of any law or regulation that bars you from engaging in the busi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_No_4",
+          "label": "Part 4. Bona Fides of the Promoter.   4. E. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Is_the_final_order_based_on_5",
+          "label": "Part 4. Bona Fides of the Promoter.   4. F. Is the final order based on a violation of any law or regulation that bars you from engaging in savings...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_No_5",
+          "label": "Part 4. Bona Fides of the Promoter.  4. F. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 5. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_you_engaged_in_or_have_you_e",
+          "label": "Part 4. Bona Fides of the Promoter.   5. Are you engaged in, or have you ever been engaged in, or do you seek to engage in any illicit trafficking ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 6. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_you_engaged_in_or_have_you_e",
+          "label": "Part 4. Bona Fides of the Promoter. 6. Are you engaged in, or have you ever been engaged in, or do you seek to engage in any activity relating to e...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 5,
       "fields": [
-        {
-          "key": "P4_Line7_CB6",
-          "label": "P4 Line7 CB6",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line8_CB",
-          "label": "P4 Line8 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line9_CB",
-          "label": "P4 Line9 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line10_CB",
-          "label": "P4 Line10 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line11_CB",
-          "label": "P4 Line11 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line13_CB",
-          "label": "P4 Line13 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line12_CB",
-          "label": "P4 Line12 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P5_Line1_CertifierFamilyName",
           "label": "P5 Line1 Certifier Family Name",
@@ -958,29 +842,110 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 10. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_you_engaged_in_or_have_you_e",
+          "label": "Part 4. Bona Fides of the Promoter. 10. Are you engaged in, or have you ever been engaged in, or do you seek to engage in any activity described in...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 11. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_you_engaged_in_or_have_you_e",
+          "label": "Part 4. Bona Fides of the Promoter.  11. Are you engaged in, or have you ever been engaged in, or do you seek to engage in a violation of any statu...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter. 12. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_you_or_during_the_preceding",
+          "label": "Part 4. Bona Fides of the Promoter. 12. Are you, or during the preceding 10 years have you been, included on the Department of Justice\u2019s List of Cu...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item13_this_box_for_No",
+          "label": "Part 4. Bona Fides of the Promoter.  13. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "During_the_preceding_10_year",
+          "label": "Part 4. Bona Fides of the Promoter.  13. During the preceding 10 years, have you received a reprimand or otherwise been publicly disciplined for co...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_this_box_for_No_2",
+          "label": "Part 4. Bona Fides of the Promoter. 7. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_you_engaged_in_or_have_you_e",
+          "label": "Part 4. Bona Fides of the Promoter. 7. Are you engaged in, or have you ever been engaged in, or do you seek to engage in any activity related to mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_box_for_No",
+          "label": "Part 3. Bona Fides of Person Involved with Regional Center Program. 8. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_you_engaged_in_or_have_you_e",
+          "label": "Part 4. Bona Fides of the Promoter. 8. Are you engaged in, or have you ever been engaged in, or do you seek to engage in any terrorist activity (as...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_this_box_for_No",
+          "label": "Part 3. Bona Fides of Person Involved with Regional Center Program. 9. Check this box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_you_engaged_in_or_have_you_e",
+          "label": "Part 3. Bona Fides of Person Involved with Regional Center Program. 9. Are you engaged in, or have you ever been engaged in, or do you seek to enga...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 6,
       "fields": [
-        {
-          "key": "P5_Line1_CB",
-          "label": "P5 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P5_Line1_B_Language",
           "label": "P5 Line1 B Language",
@@ -1043,6 +1008,20 @@
           "mode": "text",
           "type": "email",
           "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_I_can_read_and",
+          "label": "Part 6. Statement, Contact Information, Declaration, Attestation, and Signature of the Promoter or Authorized Individual. Statement by Promoter or ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "has_read_to_me_every_questio",
+          "label": "Part 6. Statement, Contact Information, Declaration, Attestation, and Signature of the Promoter or Authorized Individual. Statement by Promoter or ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1090,27 +1069,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part7_Line3_Unit",
-          "label": "Part 7 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part7_Line3_Number",
@@ -1181,6 +1139,27 @@
           "mode": "text",
           "type": "email",
           "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_box_for_Apartment",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpreter\u2019s Mailing Address. 3. Check this box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_box_for_Suite",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpreter\u2019s Mailing Address. 3. Check this box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_box_for_Floor",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpreter\u2019s Mailing Address. 3. Check this box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1235,27 +1214,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part8_Line3_Unit",
-          "label": "Part 8 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part8_Line3_Number",
@@ -1326,29 +1284,33 @@
           "mode": "text",
           "type": "email",
           "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_box_for_Apartment_2",
+          "label": "Part 8.  Contact Information, Declaration, Certification, and Signature of the Person Preparing this Form, if Other Than the Authorized Individual....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_box_for_Suite_2",
+          "label": "Part 8.  Contact Information, Declaration, Certification, and Signature of the Person Preparing this Form, if Other Than the Person Authorized Indi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_box_for_Floor_2",
+          "label": "Part 8.  Contact Information, Declaration, Certification, and Signature of the Person Preparing this Form, if Other Than the Person Authorized Indi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 9,
       "fields": [
-        {
-          "key": "P8_Line7_CB",
-          "label": "P8 Line7 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P8_Line7_B_extends",
           "label": "P8 Line7 B extends",
@@ -1375,6 +1337,20 @@
           "label": "P8 Line8 Dateof Signature",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_I_am_not_an_att",
+          "label": "Part 8.  Contact Information, Declaration, Certification, and Signature of the Person Preparing this Form, if Other Than the Person Authorized Indi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_I_am_an_attorne",
+          "label": "Part 8.  Contact Information, Declaration, Certification, and Signature of the Person Preparing this Form, if Other Than the Person r Authorized In...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

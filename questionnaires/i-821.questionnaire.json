@@ -26,23 +26,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Item1_ApplicationType",
-          "label": "Part 1 Item1 Application Type",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part1_Item2_GrantedTPSU",
           "label": "Part 1 Item2 Granted TPSU",
           "mode": "checkbox_single",
@@ -55,23 +38,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "Part1_Item3_EADApp",
-          "label": "Part 1 Item3 EADApp",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Part2_Item1_FamilyName",
@@ -99,6 +65,34 @@
           "label": "Part 1 TPScountry",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_do_not_currently_have_T_P",
+          "label": "Part 1. Type of Application (Select one). NOTE:  Select the box for Item Number 1. A., 1. B., or 2.  If applicable, select the box for Item Number ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_you_do_not_recall_or_have",
+          "label": "Part 1. Type of Application (Select one).  1. B. Select This is my re-registration application for T P S. I currently have TPS, and am applying to ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "D_and_I_am_filing_Form_I_7_6",
+          "label": "Part 1. Type of Application (Select one). Are you also filing a request for employment authorization? 3. A. Select Yes, I am requesting an Employme...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "D",
+          "label": "Part 1. Type of Application (Select one).  Are you also filing a request for employment authorization? 3. B. Select No, I am not currently requesti...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -163,27 +157,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Item4_Unit",
-          "label": "Part 2 Item4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part2_Item4_AptSteFlrNumber",
           "label": "Part 2 Item4 Apt Ste Flr Number",
           "mode": "text",
@@ -212,49 +185,11 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Item5_YN",
-          "label": "Part 2 Item5 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part2_Item6_StreetNumberName",
           "label": "Part 2 Item6 Street Number Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part2_Item6_Unit",
-          "label": "Part 2 Item6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part2_Item6_AptSteFlrNumber",
@@ -299,30 +234,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Item11_DateOfBirth",
-          "label": "Part 2 Item11 Date Of Birth",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part2_Item12_Sex",
-          "label": "Part 2 Item12 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part2_Item13_CityOrTown",
           "label": "Part 2 Item13 City Or Town",
           "mode": "text",
@@ -335,43 +246,6 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
-        },
-        {
-          "key": "Part2_Item17_MaritalStatus",
-          "label": "Part 2 Item17 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
         },
         {
           "key": "Part2_Item17_MaritalStatusOther",
@@ -449,6 +323,139 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Other_Date_of_Birth",
+          "label": "Part 2. Information About You. Other Dates of Birth Used (if any). 11. B. Enter Other Date of Birth. Enter as 2-digit Month, 2-digit Day, and 4-dig...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other_Date_of_Birth_2",
+          "label": "Part 2. Information About You. Other Dates of Birth Used (if any).  Provide all other dates of birth you have ever used.  If you need extra space t...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Male",
+          "label": "Part 2. Information About You. Other Dates of Birth Used (if any). 12. Sex. Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Female",
+          "label": "Part 2. Information About You. Other Dates of Birth Used (if any). 12. Sex. Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Single_never_married",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Single, never married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Married",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Divorced",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Widowed",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Separated",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Separated.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Marriage_Annulled",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Marriage Annulled.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other",
+          "label": "Part 2. Information About You. Your Marital Information. 17. Current Marital Status (Select only one box). Select Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 2. Information About You. U. S. Mailing Address. 4. C. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 2. Information About You. U. S. Mailing Address. 4. C. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 2. Information About You. U. S. Mailing Address. 4. C. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Yes",
+          "label": "Part 2. Information About You. U. S. Mailing  Address. 5. Is your current mailing address the same as your physical address (where you live)? Selec...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_please_provide_your_physical",
+          "label": "Part 2. Information About You. U. S. Mailing  Address. 5. Is your current mailing address the same as your physical address (where you live)? Selec...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 2. Information About You. U. S. Physical Address. 6. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 2. Information About You. U. S. Physical Address. 6. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 2. Information About You. U. S. Physical Address. 6. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -498,13 +505,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Item22_Passport",
-          "label": "Part 2 Item22 Passport",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Part2_Item23a_AddlPassport",
           "label": "Part 2 Item23a Addl Passport",
           "mode": "text",
@@ -540,44 +540,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part2_Item25_ImmigrationProceedings",
-          "label": "Part 2 Item25 Immigration Proceedings",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part2_Item27_ProceedingType",
-          "label": "Part 2 Item27 Proceeding Type",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part2_Item28_LocDOJProceedings",
           "label": "Part 2 Item28 Loc DOJProceedings",
           "mode": "text",
@@ -604,23 +566,6 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "Part3_Item1_Ethnicity",
-          "label": "Part 3 Item1 Ethnicity",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Part3_Item2_RaceW",
@@ -670,102 +615,75 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item25_Entry",
+          "label": "Part 2. Information About You. U.S. Entry Information. Place of Last Entry into the United States. 25. Enter Passport Number (most recent passport)...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item26_Entry_Travel_Document_Number",
+          "label": "Part 2. Information About You. U.S. Entry Information. Place of Last Entry into the United States. 26. Enter Travel Document Number (if any).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item32_Yes",
+          "label": "Part 2. Information About You. Your Current Immigration Status. 32. Are you now or were you EVER in immigration proceedings?  Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item32_No",
+          "label": "Part 2. Information About You. Your Current Immigration Status. 32. Are you now or were you EVER in immigration proceedings?  Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Immigration_Court_before_an",
+          "label": "Part 2. Information About You. Your Current Immigration Status. If you answered \"Yes\" to Item Number 32., provide the following information. Type o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P3_Part2_Item27_ProceedingType_1",
+          "label": "Part 2. Information About You. Your Current Immigration Status. If you answered \"Yes\" to Item Number 32., provide the following information. Type o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_no_longer_in_Department",
+          "label": "Part 2. Information About You. Your Current Immigration Status. If you answered \"Yes\" to Item Number 32., provide the following information. Type o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hispanic_or_Latino",
+          "label": "Part 3.  Biographic Information. 1. Ethnicity (Select only one box). Select Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Not_Hispanic_or_Latino",
+          "label": "Part 3.  Biographic Information. 1. Ethnicity (Select only one box). Select Not Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 4,
       "fields": [
-        {
-          "key": "Part3_Item5_Eyecolor",
-          "label": "Part 3 Item5 Eyecolor",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
-        },
-        {
-          "key": "Part3_Item6_Haircolor",
-          "label": "Part 3 Item6 Haircolor",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
-        },
         {
           "key": "Pt2Line3_HeightFeet",
           "label": "Part 2 Line3 Height Feet",
@@ -835,27 +753,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part4_Item4_Unit",
-          "label": "Part 4 Item4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part4_Item4_AptSteFlrNumber",
@@ -991,27 +888,6 @@
           "defaultValue": false
         },
         {
-          "key": "_YesNoDontKnow",
-          "label": "Yes No Dont Know",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part4_Item2_AlienNumber",
           "label": "Part 4 Item2 Alien Number",
           "mode": "text",
@@ -1023,6 +899,174 @@
           "label": "Part 4 Item8 State",
           "mode": "dropdown",
           "type": "state",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blue",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Blue.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Green",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Green.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hazel",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Hazel.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Maroon",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Maroon.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Pink",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Pink.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other",
+          "label": "Part 2.  Biographic Information. 5. Eye Color (Select only one box). Select Unknown/Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Bald_No_hair",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Bald (No hair).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black_2",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blond",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Blond.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown_2",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray_2",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Red",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Red.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Sandy",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Sandy.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "White",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select White.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other_2",
+          "label": "Part 2.  Biographic Information. 6. Hair Color (Select only one box). Select Unknown/Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Apartment",
+          "label": "Part 4.  Information About Your Current Spouse (if any). Mailing Address of Spouse. 4. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Suite",
+          "label": "Part 4.  Information About Your Current Spouse (if any). Mailing Address of Spouse. 4. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Floor",
+          "label": "Part 4.  Information About Your Current Spouse (if any). Mailing Address of Spouse. 4. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Spouse_Yes",
+          "label": "Part 4.  Information About Your Current Spouse (if any). Other Information About Your Current Spouse. 11. Is your spouse's T P S still valid? (if k...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Spouse_No",
+          "label": "Part 4.  Information About Your Current Spouse (if any). Other Information About Your Current Spouse. 11. Is your spouse's T P S still valid? (if k...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Spouse_IDo_Not_Know",
+          "label": "Part 4.  Information About Your Current Spouse (if any). Other Information About Your Current Spouse. 11. Is your spouse's T P S still valid? (if k...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1094,27 +1138,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part5_Item8_YDI",
-          "label": "Part 5 Item8 YDI",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part5_Item9a_DateFrom",
           "label": "Part 5 Item9a Date From",
           "mode": "text",
@@ -1141,27 +1164,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "Part5_Item10_YNI",
-          "label": "Part 5 Item10 YNI",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part5_Item11_FamilyName",
@@ -1227,27 +1229,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part5_Item18_YNI",
-          "label": "Part 5 Item18 YNI",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part5_Item19a_DateFrom",
           "label": "Part 5 Item19a Date From",
           "mode": "text",
@@ -1276,27 +1257,6 @@
           "defaultValue": false
         },
         {
-          "key": "Part5_Item20_YNI",
-          "label": "Part 5 Item20 YNI",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part5_Item3_AlienNumber",
           "label": "Part 5 Item3 Alien Number",
           "mode": "text",
@@ -1306,6 +1266,90 @@
         {
           "key": "Part5_Item13_AlienNumber",
           "label": "Part 5 Item13 Alien Number",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Spouse_Yes",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). First Marriage. 10. Is this former spouse curr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Spouse_No",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). First Marriage. 10. Is this former spouse curr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Spouse_IDo_Not_Know",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). First Marriage. 10. Is this former spouse curr...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). Second Marriage. 18. Did or does this former s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). Second Marriage. 18. Did or does this former s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_IDon_t_Know",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). Second Marriage. 18. Did or does this former s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Spouse_Yes",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). Second Marriage. 20. Is this former spouse cur...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Spouse_No",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). Second Marriage. 20. Is this former spouse cur...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Spouse_IDo_Not_Know",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). Second Marriage. 20. Is this former spouse cur...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_2",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). First Marriage.  8. Did or does this former sp...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_2",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). First Marriage. 8. Did or does this former spo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_IDon_t_Know_2",
+          "label": "Part 5.  Information About Your Former \rSpouses (if any). Names of All Your Former Spouses (if any). First Marriage.  8. Did or does this former sp...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1356,27 +1400,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part6_Item5_Unit",
-          "label": "Part 6 Item5 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part6_Item5_AptSteFlrNumber",
@@ -1442,23 +1465,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part5_Item7_ChildAppTPS",
-          "label": "Part 5 Item7 Child App TPS",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part6_Item8_FamilyName",
           "label": "Part 6 Item8 Family Name",
           "mode": "text",
@@ -1492,27 +1498,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part6_Item12_Unit",
-          "label": "Part 6 Item12 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part6_Item12_AptSteFlrNumber",
@@ -1578,23 +1563,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part6_Item14_ChildAppTPS",
-          "label": "Part 6 Item14 Child App TPS",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part7_Item1_CountryResidence",
           "label": "Part 7 Item1 Country Residence",
           "mode": "text",
@@ -1614,6 +1582,76 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Child_Yes",
+          "label": "Part 6.  Information About Your Children (if any). Child 1. Mailing Address. If this child has or had TPS, please provide the dates of his or her T...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_No",
+          "label": "Part 6.  Information About Your Children (if any). Child 1. Mailing Address. If this child has or had TPS, please provide the dates of his or her T...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Apartment",
+          "label": "Part 6.  Information About Your Children (if any). Child 2. Mailing Address. 12. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Suite",
+          "label": "Part 6.  Information About Your Children (if any). Child 2. Mailing Address. 12. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Floor",
+          "label": "Part 6.  Information About Your Children (if any). Child 2. Mailing Address. 12. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Yes_2",
+          "label": "Part 6.  Information About Your Children (if any). Child 2. Mailing Address. If this child has or had TPS, please provide the dates of his or her T...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_No_2",
+          "label": "Part 6.  Information About Your Children (if any). Child 2. Mailing Address. If this child has or had TPS, please provide the dates of his or her T...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Apartment_2",
+          "label": "Part 6.  Information About Your Children (if any). Child 1. Mailing Address. 5. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Suite_2",
+          "label": "Part 6.  Information About Your Children (if any). Child 1. Mailing Address. 5. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Floor_2",
+          "label": "Part 6.  Information About Your Children (if any). Child 1. Mailing Address. 5. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1626,23 +1664,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part7_Item1_Travel",
-          "label": "Part 7 Item1 Travel",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Part7_Item2_CountriesTraveled",
@@ -1673,23 +1694,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part7_Item2_ImmigrationOffer",
-          "label": "Part 7 Item2 Immigration Offer",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part7_Item2_DescribeCountries",
           "label": "Part 7 Item2 Describe Countries",
           "mode": "text",
@@ -1704,38 +1708,60 @@
           "defaultValue": ""
         },
         {
-          "key": "Part7_Item4a_YN",
-          "label": "Part 7 Item4a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes",
+          "label": "Part 7.  Eligibility Standards. Basis for Eligibility. Provide the following information. 1. C. Have you EVER traveled to and entered another count...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item4b_YN",
-          "label": "Part 7 Item4b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No",
+          "label": "Part 7.  Eligibility Standards. Basis for Eligibility. Provide the following information. 1. C. Have you EVER traveled to and entered another count...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_2",
+          "label": "Part 7.  Eligibility Standards. Basis for Eligibility. Provide the following information. 5. Have you EVER been offered any immigration status by a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_2",
+          "label": "Part 7.  Eligibility Standards. Basis for Eligibility. Provide the following information. 5. Have you EVER been offered any immigration status by a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_3",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. If you have ever engaged in, ordered, incited, assisted, or otherwise participated in any h...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_3",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 8. A. Any felony committed in the United States? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_4",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 8. B. Any misdemeanor committed in the United States? Sele...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_4",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 8. B. Any misdemeanor committed in the United States? Sele...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1743,412 +1769,340 @@
       "page": 8,
       "fields": [
         {
-          "key": "Part7_Item4c_YN",
-          "label": "Part 7 Item4c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_5",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item5a_YN",
-          "label": "Part 7 Item5a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_5",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item5b_YN",
-          "label": "Part 7 Item5b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_6",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item5c_YN",
-          "label": "Part 7 Item5c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_6",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item7a_YN",
-          "label": "Part 7 Item7a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_7",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item7b_YN",
-          "label": "Part 7 Item7b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_7",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item7c_YN",
-          "label": "Part 7 Item7c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_8",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item8_YN",
-          "label": "Part 7 Item8 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_8",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item9a_YN",
-          "label": "Part 7 Item9a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_9",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item9b_YN",
-          "label": "Part 7 Item9b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_9",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item9c_YN",
-          "label": "Part 7 Item9c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_10",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item9d_YN",
-          "label": "Part 7 Item9d YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_10",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item9e_YN",
-          "label": "Part 7 Item9e YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_11",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item11a_YN",
-          "label": "Part 7 Item11a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_11",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item11b_YN",
-          "label": "Part 7 Item11b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_12",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item11c_YN",
-          "label": "Part 7 Item11c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_12",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER engaged, or do you plan to engage, solely, principally, or incidentally, in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item11d_YN",
-          "label": "Part 7 Item11d YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_13",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 15. A. Arrested, for...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item12a_YN",
-          "label": "Part 7 Item12a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_13",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 15. A. Arrested, for...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item12b_YN",
-          "label": "Part 7 Item12b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_14",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been.  15. B. Cited, charg...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item12c_YN",
-          "label": "Part 7 Item12c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_14",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 15. B. Cited, charge...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item12d_YN",
-          "label": "Part 7 Item12d YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_15",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 15. C. Been convicte...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item13a_YN",
-          "label": "Part 7 Item13a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_15",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 15. C. Been convicte...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item13b_YN",
-          "label": "Part 7 Item13b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_16",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 8. C. Any particularly serious crime committed in the Unit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item13c_YN",
-          "label": "Part 7 Item13c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_16",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 8. C. Any particularly serious crime committed in the Unit...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_17",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 9. A. Have you EVER ordered, incited, assisted, or otherwi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_17",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 9. A. Have you EVER ordered, incited, assisted, or otherwi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_18",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 9. B. Have you EVER committed serious nonpolitical crimes ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_18",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 9. B. Have you EVER committed serious nonpolitical crimes ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_19",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 9. C.  Have you EVER or are you NOW engaged in activities ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_19",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of. 9. C.  Have you EVER or are you NOW engaged in activities ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_20",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_20",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_21",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_21",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_22",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_22",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_23",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_23",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_24",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. If you have ever engaged in, ordered, incited, assisted, or otherwise participated in any h...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_24",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. If you have ever engaged in, ordered, incited, assisted, or otherwise participated in any h...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_25",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_25",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_3",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_3",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_4",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_4",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_5",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_5",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER been convicted of or have you EVER committed acts which constitute the essent...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2156,745 +2110,395 @@
       "page": 9,
       "fields": [
         {
-          "key": "Part7_Item17_YN",
-          "label": "Part 7 Item17 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_26",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 16. Have you EVER be...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item18a_YN",
-          "label": "Part 7 Item18a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_26",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 16. Have you EVER be...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item18b_YN",
-          "label": "Part 7 Item18b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_27",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 17. Have you EVER co...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item18c_YN",
-          "label": "Part 7 Item18c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_27",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 17. Have you EVER co...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item18d_YND",
-          "label": "Part 7 Item18d YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
+          "key": "Yes_28",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 18. A. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item18e_YND",
-          "label": "Part 7 Item18e YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_28",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 18. A. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item19_YND",
-          "label": "Part 7 Item19 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_29",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 18. B. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item20_YND",
-          "label": "Part 7 Item20 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_29",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been.18. B. Have you EVER,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item21a_YND",
-          "label": "Part 7 Item21a YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_30",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 18. C. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item21b_YND",
-          "label": "Part 7 Item21b YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_30",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 18. C. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item21c_YND",
-          "label": "Part 7 Item21c YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_31",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 19. Have you EVER be...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item22_YND",
-          "label": "Part 7 Item22 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_31",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 19. Have you EVER be...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item23_YND",
-          "label": "Part 7 Item23 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_32",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. A. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item24_YND",
-          "label": "Part 7 Item24 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_32",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. A. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item25_YND",
-          "label": "Part 7 Item25 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_33",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. B. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item26_YND",
-          "label": "Part 7 Item26 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_33",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. B. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item16c_YN",
-          "label": "Part 7 Item16c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_34",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. C. If you answer...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item16b_YN",
-          "label": "Part 7 Item16b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_34",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. C. If you answer...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item27_YND",
-          "label": "Part 7 Item27 YND",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_35",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. D. If you answer...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item29a_YN",
-          "label": "Part 7 Item29a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_35",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. D. If you answer...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item29b_YN",
-          "label": "Part 7 Item29b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "IDo_Not_Know",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. D. If you answer...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item29c_YN",
-          "label": "Part 7 Item29c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_36",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. E. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item29d_YN",
-          "label": "Part 7 Item29d YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_36",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 20. E. Have you EVER...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item29e_YN",
-          "label": "Part 7 Item29e YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_37",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 21. Have you EVER, b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item14_YN",
-          "label": "Part 7 Item14 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_37",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 21. Have you EVER, b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item15_YN",
-          "label": "Part 7 Item15 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_38",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. Part 7. Eligibility ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item16a_YN",
-          "label": "Part 7 Item16a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_38",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 22. Have you EVER as...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_39",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 23. A. Do you NOW ha...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_39",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 23. A. Do you NOW ha...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_40",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 23. B. Do you NOW ha...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_40",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 23. B. Do you NOW ha...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_41",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 23. C. Are you NOW o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_41",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 23. C. Are you NOW o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_42",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 24. Have you EVER en...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_42",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 24. Have you EVER en...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_43",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 25. Did the former I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_43",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 25. Did the former I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item26_Yes",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 26. Are you NOW subj...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item26_No",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 26. Are you NOW subj...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_44",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 27. Do you NOW pract...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_44",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 27. Do you NOW pract...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item28_Yes",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 28. Are you NOW the ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item28_No",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 28. Are you NOW the ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Yes_3",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 29. Have you EVER de...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_No_3",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER, whether in the United States or any other country been. 29. Have you EVER de...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_45",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_45",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_46",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_46",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_47",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_47",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_48",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_48",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_49",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_49",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 10,
       "fields": [
-        {
-          "key": "Part7_Item33_YN",
-          "label": "Part 7 Item33 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item34_YN",
-          "label": "Part 7 Item34 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item35_YN",
-          "label": "Part 7 Item35 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item36_YN",
-          "label": "Part 7 Item36 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item37a_YN",
-          "label": "Part 7 Item37a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item37b_YN",
-          "label": "Part 7 Item37b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item38a_YN",
-          "label": "Part 7 Item38a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item38b_YN",
-          "label": "Part 7 Item38b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item38c_YN",
-          "label": "Part 7 Item38c YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item38d_YN",
-          "label": "Part 7 Item38d YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item38e_YN",
-          "label": "Part 7 Item38e YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item39a_YN",
-          "label": "Part 7 Item39a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item39b_YN",
-          "label": "Part 7 Item39b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item40a_YN",
-          "label": "Part 7 Item40a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part7_Item41_YN",
-          "label": "Part 7 Item41 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part8_Item1_AppStmt",
-          "label": "Part 8 Item1 App Stmt",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Part8_Item2_Preparer",
           "label": "Part 8 Item2 Preparer",
@@ -2917,55 +2521,270 @@
           "defaultValue": ""
         },
         {
-          "key": "Part7_Item31a_YN",
-          "label": "Part 7 Item31a YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_50",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 31. A. Served in, been a member of, assisted in, or participated in any mili...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item31b_YN",
-          "label": "Part 7 Item31b YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_50",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 31. A. Served in, been a member of, assisted in, or participated in any mili...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "Part7_Item32_YN",
-          "label": "Part 7 Item32 YN",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_51",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 31. B. Served or worked in any prison, jail, prison camp, detention facility...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_51",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 31. B. Served or worked in any prison, jail, prison camp, detention facility...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_52",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 32. Have you EVER been a member of, assisted in, or participated in any group, unit, or org...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_52",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 32. Have you EVER been a member of, assisted in, or participated in any group, unit, or org...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_53",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 33. Have you EVER assisted with or participated in selling or providing weapons to any pers...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_53",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 33. Have you EVER assisted with or participated in selling or providing weapons to any pers...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_54",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 34. Have you EVER received any type of military, paramilitary, or weapons training? Select ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_54",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 34. Have you EVER received any type of military, paramilitary, or weapons training? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_55",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 35. Have you EVER unlawfully voted in a United States Federal, state, or local election? Se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_55",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 35. Have you EVER unlawfully voted in a United States Federal, state, or local election? Se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_56",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 36. Have you EVER claimed to be a U. S. citizen (in writing or in any other way)? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_56",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 36. Have you EVER claimed to be a U. S. citizen (in writing or in any other way)? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_57",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 37. A. Have you EVER recruited, enlisted, conscripted, or used any person under 15 years of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_57",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 37. A. Have you EVER recruited, enlisted, conscripted, or used any person under 15 years of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_58",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 37. B. Have you EVER used any person under 15 years of age to take part in hostilities or t...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_58",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 37. B. Have you EVER used any person under 15 years of age to take part in hostilities or t...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_59",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 38. A. Have you EVER committed or conspired to commit human trafficking offenses, as define...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_59",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 38. A. Have you EVER committed or conspired to commit human trafficking offenses, as define...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_60",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 38. B. Have you EVER knowingly aided, abetted, assisted, conspired, or colluded with a huma...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_60",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 38. B. Have you EVER knowingly aided, abetted, assisted, conspired, or colluded with a huma...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_6",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 38. C. Are you NOW the spouse or child of an alien who committed or conspire...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_6",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. 38. C. Are you NOW the spouse or child of an alien who committed or conspired to commit hum...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_7",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 38. D. Are you NOW the spouse or child of, or are you yourself, an alien who...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_7",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 38. D. Are you NOW the spouse or child of, or are you yourself, an alien who...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_8",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 38. E. Within the previous five years, have you EVER obtained any financial ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No_8",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 38. E. Within the previous five years, have you EVER obtained any financial ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_61",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 39. A. Are you NOW or have you EVER engaged in money laundering as described...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_61",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 39. A. Are you NOW or have you EVER engaged in money laundering as described...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_62",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 39. B. Are you NOW or have you EVER been a knowing aider, abettor, assister,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_62",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 39. B. Are you NOW or have you EVER been a knowing aider, abettor, assister,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_63",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations.  40. Have you EVER been responsible for or directly carried out particularly severe violati...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_63",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations.  40. Have you EVER been responsible for or directly carried out particularly severe violati...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_64",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER.  41. Has an immigration judge or the Board of Immigration Appeals EVER deter...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_64",
+          "label": "Part 7. Eligibility Standards. Human Rights Violations. Have you EVER. 41. Has an immigration judge or the Board of Immigration Appeals EVER determ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 8.  Applicant's Statement, Contact Information, Certification, and Signature. NOTE:  Read the Penalties section of the Form I-8 21 Instruction...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 8.  Applicant's Statement, Contact Information, Certification, and Signature. Applicant's Statement. 1. B. Select The interpreter named in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2999,27 +2818,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part9_Item3_Unit",
-          "label": "Part 9 Item3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part9_Item3_AptSteFlrNumber",
@@ -3125,6 +2923,27 @@
           "mode": "text",
           "type": "email",
           "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 9.  Interpreter's Contact Information, Certification, and Signature. Provide the following information about the interpreter. Interpreter's Ma...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 9.  Interpreter's Contact Information, Certification, and Signature. Provide the following information about the interpreter. Interpreter's Ma...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 9.  Interpreter's Contact Information, Certification, and Signature. Provide the following information about the interpreter. Interpreter's Ma...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -3172,27 +2991,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part10_Item3_Unit",
-          "label": "Part 10 Item3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part10_Item3_AptSteFlrNumber",
@@ -3244,23 +3042,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part10_Item7_PreparerStmt",
-          "label": "Part 10 Item7 Preparer Stmt",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part10_Item7b_Extend",
           "label": "Part 10 Item7b Extend",
           "mode": "checkbox_single",
@@ -3300,6 +3081,41 @@
           "label": "Part 10 Item6 Email",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 10.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Provide the follow...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 10.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Provide the follow...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 10.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Provide the follow...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 10.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Provide the follow...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "Part 10.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Provide the follow...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

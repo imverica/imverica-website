@@ -56,32 +56,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "P1_Line1_CB",
-      "originalKeys": [
-        "FormI-192[0].#subform[0].P1_Line1_CB[0]",
-        "FormI-192[0].#subform[0].P1_Line1_CB[1]"
-      ],
+      "key": "and_then_skip_to_Item_Number",
+      "originalKey": "FormI-192[0].#subform[0].P1_Line1_CB[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 1,
+      "x": 61,
+      "y": 135,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 61,
-          "y": 135,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 61,
-          "y": 165,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Status_as_a_victim_of_traffi",
+      "originalKey": "FormI-192[0].#subform[0].P1_Line1_CB[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 1,
+      "x": 61,
+      "y": 165,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line1_FamilyName",
@@ -253,7 +251,7 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line6_CountryOfBirth",
+      "key": "State_or_Province",
       "originalKey": "FormI-192[0].#subform[1].P2_Line6_CountryOfBirth[0]",
       "kind": "text",
       "mode": "text",
@@ -261,6 +259,19 @@
       "x": 330,
       "y": 410,
       "width": 246,
+      "height": 18,
+      "size": 10,
+      "font": "CourierBold"
+    },
+    {
+      "key": "Country",
+      "originalKey": "FormI-192[0].#subform[1].P2_Line6_CountryOfBirth[1]",
+      "kind": "text",
+      "mode": "text",
+      "page": 2,
+      "x": 60,
+      "y": 374,
+      "width": 258,
       "height": 18,
       "size": 10,
       "font": "CourierBold"
@@ -279,32 +290,30 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line8_Sex",
-      "originalKeys": [
-        "FormI-192[0].#subform[1].P2_Line8_Sex[0]",
-        "FormI-192[0].#subform[1].P2_Line8_Sex[1]"
-      ],
+      "key": "Item8_for_Male",
+      "originalKey": "FormI-192[0].#subform[1].P2_Line8_Sex[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 2,
+      "x": 60,
+      "y": 303,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 60,
-          "y": 303,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 108,
-          "y": 303,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item8_for_Female",
+      "originalKey": "FormI-192[0].#subform[1].P2_Line8_Sex[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 2,
+      "x": 108,
+      "y": 303,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line9_InCareofName",
@@ -333,40 +342,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line9_Unit",
-      "originalKeys": [
-        "FormI-192[0].#subform[1].P2_Line9_Unit[0]",
-        "FormI-192[0].#subform[1].P2_Line9_Unit[1]",
-        "FormI-192[0].#subform[1].P2_Line9_Unit[2]"
-      ],
+      "key": "Item9_Apartment",
+      "originalKey": "FormI-192[0].#subform[1].P2_Line9_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 2,
+      "x": 450,
+      "y": 198,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 450,
-          "y": 198,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 468,
-          "y": 198,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 486,
-          "y": 198,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item9_Suite",
+      "originalKey": "FormI-192[0].#subform[1].P2_Line9_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 2,
+      "x": 468,
+      "y": 198,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item9_Floor",
+      "originalKey": "FormI-192[0].#subform[1].P2_Line9_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 2,
+      "x": 486,
+      "y": 198,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line9_AptSteFlrNumber",
@@ -473,40 +485,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line10_Unit",
-      "originalKeys": [
-        "FormI-192[0].#subform[2].P2_Line10_Unit[0]",
-        "FormI-192[0].#subform[2].P2_Line10_Unit[1]",
-        "FormI-192[0].#subform[2].P2_Line10_Unit[2]"
-      ],
+      "key": "Apartment",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line10_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 3,
+      "x": 450,
+      "y": 606,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 450,
-          "y": 606,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 468,
-          "y": 606,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 486,
-          "y": 606,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Suite",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line10_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 468,
+      "y": 606,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Floor",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line10_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 486,
+      "y": 606,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line10_AptSteFlrNumber",
@@ -639,40 +654,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line11_Unit",
-      "originalKeys": [
-        "FormI-192[0].#subform[2].P2_Line11_Unit[0]",
-        "FormI-192[0].#subform[2].P2_Line11_Unit[1]",
-        "FormI-192[0].#subform[2].P2_Line11_Unit[2]"
-      ],
+      "key": "Item11_Apartment",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line11_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 3,
+      "x": 450,
+      "y": 426,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 450,
-          "y": 426,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 468,
-          "y": 426,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 486,
-          "y": 426,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item11_Suite",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line11_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 468,
+      "y": 426,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item11_Floor",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line11_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 486,
+      "y": 426,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line11_AptSteFlrNumber",
@@ -792,72 +810,95 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line12_MaritalStatus",
-      "originalKeys": [
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[0]",
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[1]",
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[2]",
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[3]",
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[4]",
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[5]",
-        "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[6]"
-      ],
+      "key": "Item12_Divorced",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 3,
+      "x": 228,
+      "y": 231,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 228,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 60,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 288,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 3,
-          "x": 174,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 4,
-          "x": 348,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 5,
-          "x": 444,
-          "y": 231,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 6,
-          "x": 60,
-          "y": 210,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item12_Single_Never_Married",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 60,
+      "y": 231,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item12_Widowed",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 288,
+      "y": 231,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item12_Married",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[3]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 174,
+      "y": 231,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item12_Legally_Separated",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[4]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 348,
+      "y": 231,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item12_Marriage_Annulled",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[5]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 444,
+      "y": 231,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item12_Other",
+      "originalKey": "FormI-192[0].#subform[2].P2_Line12_MaritalStatus[6]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 3,
+      "x": 60,
+      "y": 210,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line12_Other",
@@ -1289,60 +1330,56 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line30_CB",
-      "originalKeys": [
-        "FormI-192[0].#subform[4].P2_Line30_CB[0]",
-        "FormI-192[0].#subform[4].P2_Line30_CB[1]"
-      ],
+      "key": "Entry_Additional_Information",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line30_CB[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 5,
+      "x": 504,
+      "y": 507,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 504,
-          "y": 507,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 546,
-          "y": 507,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "P2_Line31_CB",
-      "originalKeys": [
-        "FormI-192[0].#subform[4].P2_Line31_CB[0]",
-        "FormI-192[0].#subform[4].P2_Line31_CB[1]"
-      ],
+      "key": "Item30_No",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line30_CB[1]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 5,
+      "x": 546,
+      "y": 507,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 504,
-          "y": 447,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 546,
-          "y": 447,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "34",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line31_CB[0]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 5,
+      "x": 504,
+      "y": 447,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item31_No",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line31_CB[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 5,
+      "x": 546,
+      "y": 447,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line32_ApplicationorPetitionFiled",
@@ -1384,88 +1421,82 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line35_CB",
-      "originalKeys": [
-        "FormI-192[0].#subform[4].P2_Line35_CB[0]",
-        "FormI-192[0].#subform[4].P2_Line35_CB[1]"
-      ],
+      "key": "Additional_Information_2",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line35_CB[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 5,
+      "x": 504,
+      "y": 249,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 504,
-          "y": 249,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 546,
-          "y": 249,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "P2_Line36_CB",
-      "originalKeys": [
-        "FormI-192[0].#subform[4].P2_Line36_CB[0]",
-        "FormI-192[0].#subform[4].P2_Line36_CB[1]"
-      ],
+      "key": "Item35_No",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line35_CB[1]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 5,
+      "x": 546,
+      "y": 249,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 504,
-          "y": 189,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 546,
-          "y": 189,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
     },
     {
-      "key": "P2_Line27_CB",
-      "originalKeys": [
-        "FormI-192[0].#subform[4].P2_Line27_CB[0]",
-        "FormI-192[0].#subform[4].P2_Line27_CB[1]"
-      ],
+      "key": "Additional_Information_3",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line36_CB[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 5,
+      "x": 504,
+      "y": 189,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 504,
-          "y": 702,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 546,
-          "y": 702,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item36_No",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line36_CB[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 5,
+      "x": 546,
+      "y": 189,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Additional_Information",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line27_CB[0]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 5,
+      "x": 504,
+      "y": 702,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item27_No",
+      "originalKey": "FormI-192[0].#subform[4].P2_Line27_CB[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 5,
+      "x": 546,
+      "y": 702,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line42_CountryOfBirth",
@@ -1520,40 +1551,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line44_Unit",
-      "originalKeys": [
-        "FormI-192[0].#subform[5].P2_Line44_Unit[0]",
-        "FormI-192[0].#subform[5].P2_Line44_Unit[1]",
-        "FormI-192[0].#subform[5].P2_Line44_Unit[2]"
-      ],
+      "key": "Item44_Apartment",
+      "originalKey": "FormI-192[0].#subform[5].P2_Line44_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 6,
+      "x": 450,
+      "y": 264,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 450,
-          "y": 264,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 468,
-          "y": 264,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 486,
-          "y": 264,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item44_Suite",
+      "originalKey": "FormI-192[0].#subform[5].P2_Line44_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 468,
+      "y": 264,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item44_Floor",
+      "originalKey": "FormI-192[0].#subform[5].P2_Line44_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 6,
+      "x": 486,
+      "y": 264,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line44_AptSteFlrNumber",
@@ -1881,40 +1915,43 @@
       "font": "CourierBold"
     },
     {
-      "key": "P2_Line45_Unit",
-      "originalKeys": [
-        "FormI-192[0].#subform[6].P2_Line45_Unit[0]",
-        "FormI-192[0].#subform[6].P2_Line45_Unit[1]",
-        "FormI-192[0].#subform[6].P2_Line45_Unit[2]"
-      ],
+      "key": "Item45_Apartment",
+      "originalKey": "FormI-192[0].#subform[6].P2_Line45_Unit[0]",
       "kind": "checkbox",
-      "mode": "checkbox_group",
+      "mode": "checkbox_single",
       "page": 7,
+      "x": 450,
+      "y": 618,
+      "width": 10,
+      "height": 10,
       "size": 10,
-      "font": "HelveticaBold",
-      "options": [
-        {
-          "value": 0,
-          "x": 450,
-          "y": 618,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 1,
-          "x": 468,
-          "y": 618,
-          "width": 10,
-          "height": 10
-        },
-        {
-          "value": 2,
-          "x": 486,
-          "y": 618,
-          "width": 10,
-          "height": 10
-        }
-      ]
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item45_Suite",
+      "originalKey": "FormI-192[0].#subform[6].P2_Line45_Unit[1]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 468,
+      "y": 618,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
+    },
+    {
+      "key": "Item45_Floor",
+      "originalKey": "FormI-192[0].#subform[6].P2_Line45_Unit[2]",
+      "kind": "checkbox",
+      "mode": "checkbox_single",
+      "page": 7,
+      "x": 486,
+      "y": 618,
+      "width": 10,
+      "height": 10,
+      "size": 10,
+      "font": "HelveticaBold"
     },
     {
       "key": "P2_Line45_AptSteFlrNumber",

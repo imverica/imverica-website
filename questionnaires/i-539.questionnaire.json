@@ -75,27 +75,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Item4_Unit",
-          "label": "Part 1 Item4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part1_Item4_Number",
           "label": "Part 1 Item4 Number",
           "mode": "text",
@@ -131,27 +110,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part1_Item6_Unit",
-          "label": "Part 1 Item6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Part1_Item6_Number",
           "label": "Part 1 Item6 Number",
           "mode": "text",
@@ -180,21 +138,60 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_checkbox5",
-          "label": "P1 checkbox5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item5_provide_information_on_your",
+          "label": "Part 1.  Information About You. 5. Is your mailing address the same as your physical address? Check this box for No. If you answered \u201cNo\u201d to Item N...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_skip_to_Item_Number_7",
+          "label": "Part 1.  Information About You. 5. Is your mailing address the same as your physical address? Check this box for Yes. If you answered \u201cYes\u201d to Item...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1.  Information About You. 4. Your U.S. Mailing Address, Safe Address, if applicable. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1.  Information About You. 4. Your U.S. Mailing Address, Safe Address, if applicable. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1.  Information About You. 4. Your U.S. Mailing Address, Safe Address, if applicable. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1.  Information About You. 6. Your Current Physical Address.  Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1.  Information About You. 6. Your Current Physical Address. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 1.  Information About You. 6. Your Current Physical Address. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -244,13 +241,6 @@
           "defaultValue": ""
         },
         {
-          "key": "SupA_Line1k_Passport",
-          "label": "Sup A Line1k Passport",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "SupA_Line1l_TravelDoc",
           "label": "Sup A Line1l Travel Doc",
           "mode": "text",
@@ -293,44 +283,6 @@
           "defaultValue": false
         },
         {
-          "key": "P2_checkbox4",
-          "label": "P2 checkbox4",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_checkbox",
-          "label": "P2 checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P2_Line5b_TotalNumber",
           "label": "P2 Line5b Total Number",
           "mode": "text",
@@ -352,27 +304,80 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_checkbox2a",
-          "label": "P3 checkbox2a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P3_Line1a_DateExtended",
           "label": "P3 Line1a Date Extended",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_an_extension_of",
+          "label": "Part 2. Application Type. 1. I am applying for, select only one box. Check this box for an extension of stay in my current status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_a_change_of_sta",
+          "label": "Part 2. Application Type. 1. I am applying for, select only one box. Check this box for a change of status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_reinstatement_o",
+          "label": "Part 2. Application Type. 1. I am applying for, select only one box. Check this box for reinstatement of student status.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_the_only_applicant",
+          "label": "Part 2. Application Type. 3. Number of people included in this application, select only one box. Select I am the only applicant.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_filing_this_application",
+          "label": "Part 2. Application Type. 3. Number of people included in this application, select only one box. Select I am filing this application for myself and...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Spouse_Is_this_application_based_on",
+          "label": "Part 3. Processing Information. 2.  Is this application based on an extension or change of status already granted to your spouse, child, or parent?...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Spouse_Is_this_application_based_on_2",
+          "label": "Part 3. Processing Information. 2. Is this application based on an extension or change of status already granted to your spouse, child, or parent? ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Passport_Number",
+          "label": "Part 1. Information About You. Other Information About You. 11. Provide Information About Your Most Recent Entry Into the United States. Enter Pass...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "the_name_of_the_school",
+          "label": "Part 2. Application Type. 5. The name of the school you will attend, if applicable, as an Academic Student, Vocational Student, or Exchange Visitor...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "number",
+          "label": "Part 2. Application Type. 6. Your Student and Exchange Visitor Information System S E V I S, I D Number, if applicable. Enter number.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -388,56 +393,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line4_NameofPetitioner",
-          "label": "P3 Line4 Nameof Petitioner",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P3_checkbox1",
-          "label": "P3 checkbox1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P3_Line5_DateFiled",
           "label": "P3 Line5 Date Filed",
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "P3_checkbox4",
-          "label": "P3 checkbox4",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P4_Line1b_ExpirationDate",
@@ -447,39 +407,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line1a_CountryOfIssuance",
-          "label": "P4 Line1a Country Of Issuance",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "P2_Line10_StreetName",
           "label": "P2 Line10 Street Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line10_Unit",
-          "label": "P2 Line10 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line10_Number",
@@ -557,6 +489,90 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "this_box_for_Apartment",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 2. Physical Address Abroad. Check this box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Suite",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 2. Physical Address Abroad. Check this box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Floor",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 2. Physical Address Abroad. Check this box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "First_Name_of_Beneficiary_or",
+          "label": "Part 3. Processing Information. If the petition or application is pending with U  S  C  I  S, also provide the following information. 6. First and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "End_Last_Name_of_Beneficiary",
+          "label": "Part 3. Processing Information. If the petition or application is pending with U  S  C  I  S, also provide the following information. 6.  First and...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Spouse_Is_this_application_based_on",
+          "label": "Part 3. Processing Information. 3.  Is this application based on a separate petition or application to provide your spouse, child, or parent an ext...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Spouse_Is_this_application_based_on_2",
+          "label": "Part 3. Processing Information. 3.  Is this application based on a separate petition or application to provide your spouse, child, or parent an ext...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Spouse_Is_this_application_based_on_3",
+          "label": "Part 3. Processing Information. 3. Is this application based on a separate petition or application to provide your spouse, child, or parent an exte...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Form_I_5_39_App",
+          "label": "Part 3. Processing Information. 4. If you answered \"Yes\" to Item Number 2. or Item Number 3., select the Form type below. Check this box for Form I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_box_for_Check_this_box",
+          "label": "Part 3. Processing Information. 4. If you answered \"Yes\" to Item Number 2. or Item Number 3., select the Form type below. Check this box for  Check...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Country_of_Passport_Issuance",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 1. Current Passport Information. If your current passport information is different f...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Passport_Number",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 1. Current Passport Information. If your current passport information is different f...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -800,20 +816,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line7_SignatureApplicant",
-          "label": "P6 Line7 Signature Applicant",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P6_Line7_DateofSignature",
-          "label": "P6 Line7 Dateof Signature",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "P7_Line1_PreparerFamilyName",
           "label": "P7 Line1 Preparer Family Name",
           "mode": "text",
@@ -842,15 +844,50 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line4_DaytimePhoneNumber",
-          "label": "P6 Line4 Daytime Phone Number",
+          "key": "P7_Line6_Language",
+          "label": "P7 Line6 Language",
           "mode": "text",
-          "type": "phone",
+          "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "P7_Line6_Language",
-          "label": "P7 Line6 Language",
+          "key": "Item3_the_Interpreter_s_Daytime_Te",
+          "label": "Part 6.  Interpreter's Contact Information, Certification, and Signature.  Interpreter's Contact Information. 3. Enter the Interpreter's Daytime Te...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_the_Interpreter_s_Mobile_Tel",
+          "label": "Part 6.  Interpreter's Contact Information, Certification, and Signature.  Interpreter's Contact Information. 4. Enter the Interpreter's Mobile Tel...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_the_Date_of_Applicant_s_Sign",
+          "label": "Part 5.  Applicant's Contact Information, Certification, and Signature. Applicant's Certification and Signature. 4. Enter the Date of Applicant's S...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_the_Date_of_Intepreter_s_Sig",
+          "label": "Part 6. Interpreter's Contact Information, Certification, and Signature. Interpreter's Certification and Signature. 6. Enter the Date of Intepreter...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_the_Applicant_s_Signature",
+          "label": "Part 5.  Applicant's Contact Information, Certification, and Signature. Applicant's Certification and Signature. 4. Enter the Applicant's Signature...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_the_Interpreter_s_Signature",
+          "label": "Part 6. Interpreter's Contact Information, Certification, and Signature. Interpreter's Certification and Signature. 6. Enter the Interpreter's Sign...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

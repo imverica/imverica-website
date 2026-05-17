@@ -5,27 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "CheckBox1",
-          "label": "Check Box1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "AttorneyStateBarNumber",
           "label": "Attorney State Bar Number",
           "mode": "text",
@@ -103,27 +82,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line12c_Unit",
-          "label": "P1 Line12c Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line5_SSN",
           "label": "P1 Line5 SSN",
           "mode": "text",
@@ -145,13 +103,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line4_CountryofBirth",
-          "label": "P2 Line4 Countryof Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "P2_Line7_RelationshipSponsor",
           "label": "P2 Line7 Relationship Sponsor",
           "mode": "text",
@@ -159,24 +110,108 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line3c_CityOrTown",
-          "label": "P3 Line3c City Or Town",
+          "key": "this_box_if_Form_G_28_is_att",
+          "label": "To be completed by an Attorney or Accredited Representative, if any. Select this box if Form G-28 is attached.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "P3_Line1_NameOfEmployer",
-          "label": "P3 Line1 Name Of Employer",
+          "key": "in_person",
+          "label": "For U S C I S Use Only. This applicant was interviewed by me. Select in person.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "P3_Line3d_State",
-          "label": "P3 Line3d State",
-          "mode": "dropdown",
-          "type": "state",
+          "key": "by_phone",
+          "label": "For U S C I S Use Only. This applicant was interviewed by me. Select by phone.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You (Beneficiary). Mailing Address. 12. C. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You (Beneficiary). Mailing Address. 12. C. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You (Beneficiary). Mailing Address. 12. C. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Province_or_State_of_Birth",
+          "label": "Part 1. Information About You (Beneficiary). Place of Birth. 3. B. Enter Province or State of Birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Birth",
+          "label": "Part 1. Information About You (Beneficiary). Place of Birth. 3. C. Enter Country of Birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_or_Town_of_Birth",
+          "label": "Part 1. Information About You (Beneficiary). Place of Birth. 3. A. Enter City or Town of Birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Country_of_Citizenship_or_Na",
+          "label": "Part 1. Information About You (Beneficiary). 4. Enter Country of Citizenship or Nationality.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Destination_in_US_at_Time_of",
+          "label": "Part 1. Information About You (Beneficiary). Initially Admitted to the United States. 9. Enter Destination in U.S. at Time of Initial Admission.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_City_or_Town",
+          "label": "Part 1. Information About You (Beneficiary). Initially Admitted to the United States. Port-of-Entry. 8. A. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_or_Town",
+          "label": "Part 1. Information About You (Beneficiary). Beneficiary's file is at the U S C I S office in. 11. A. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_State_from_List_of_States",
+          "label": "Part 1. Information About You (Beneficiary). Initially Admitted to the United States. Port-of-Entry. 8. B. Select State from List of States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State_from_List_of_States",
+          "label": "Part 1. Information About You (Beneficiary). Beneficiary's file is at the U S C I S office in. 11. B. Select State from List of States.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -184,13 +219,6 @@
     {
       "page": 2,
       "fields": [
-        {
-          "key": "P3_Line3a_StreetNumberName",
-          "label": "P3 Line3a Street Number Name",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
         {
           "key": "P1_Line15b_AptSteFlrNumber",
           "label": "P1 Line15b Apt Ste Flr Number",
@@ -204,27 +232,6 @@
           "mode": "text",
           "type": "zip",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line15b_Unit",
-          "label": "P1 Line15b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line1a_FamilyName",
@@ -255,42 +262,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line2_TypeOfBusiness",
-          "label": "P3 Line2 Type Of Business",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Line4_Email",
           "label": "Line 4 Email",
           "mode": "text",
           "type": "email",
           "defaultValue": ""
-        },
-        {
-          "key": "Line3_DaytimePhoneNumber1",
-          "label": "Line 3 Daytime Phone Number1",
-          "mode": "text",
-          "type": "phone",
-          "defaultValue": ""
-        },
-        {
-          "key": "P1_Line10_ChkBoxes",
-          "label": "P1 Line10 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P1_Line7a_StreetNumberName",
@@ -328,70 +304,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line6b_Unit",
-          "label": "P2 Line6b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line7_ChkBoxes",
-          "label": "P2 Line7 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line8b_AptSteFlrNumber",
           "label": "P2 Line8b Apt Ste Flr Number",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line8b_Unit",
-          "label": "P2 Line8b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line8e_ZipCode",
@@ -450,65 +367,192 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line14b_Unit",
-          "label": "P2 Line14b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
+          "key": "Item9_Sponsor_s_Daytime_Telephone",
+          "label": "Part 2. Information About Sponsor. Sponsor's Contact Information. 9. Enter Sponsor's Daytime Telephone Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_Sponsor_s_Mobile_Telephone_N",
+          "label": "Part 2. Information About Sponsor. Sponsor's Contact Information. 10. Enter Sponsor's Mobile Telephone Number, if any.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "US_Citizen",
+          "label": "Part 2. Information About Sponsor. 2. The Sponsor Is A. Select U.S. Citizen.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Lawful_Permanent_Resident",
+          "label": "Part 2. Information About Sponsor. 2. The Sponsor Is A. Select Lawful Permanent Resident.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1. Information About You (Beneficiary). Employer or School Address. 15. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 1. Information About You (Beneficiary). Employer or School Address. 15. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1. Information About You (Beneficiary). Employer or School Address. 15. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 2. Information About Sponsor. Employer Address. 14. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 2. Information About Sponsor. Employer Address. 14. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 2. Information About Sponsor. Employer Address. 14. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 2. Information About Sponsor. Mailing Address. 6. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 2. Information About Sponsor. Mailing Address. 6. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 2. Information About Sponsor. Mailing Address. 6. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_E",
+          "label": "Part 2. Information About Sponsor. Mailing Address. 7. Are your mailing address and physical address the same? Select No. If you answered \"No\" to I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_Yes",
+          "label": "Part 2. Information About Sponsor. Mailing Address. 7. Are your mailing address and physical address the same? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_5",
+          "label": "Part 2. Information About Sponsor. Physical Address. 8. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_5",
+          "label": "Part 2. Information About Sponsor. Physical Address. 8. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_5",
+          "label": "Part 2. Information About Sponsor. Physical Address. 8. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Name_of_Employer",
+          "label": "Part 2. Information About Sponsor. Employment Information. 12. Enter Name of Employer.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item13_Name_of_Employer_or_School",
+          "label": "Part 1. Information About You (Beneficiary). Employment or School Information. 13. Enter Name of Employer or School.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item13_Type_of_Business",
+          "label": "Part 2. Information About Sponsor. Employment Information. 13. Enter Type of Business.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_Type_of_Business",
+          "label": "Part 1. Information About You (Beneficiary). Employment or School Information. 14. Enter Type of Business.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Street_Number_and_Name",
+          "label": "Part 1. Information About You (Beneficiary). Employer or School Address. 15. A. Enter Street Number and Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Street_Number_and_Name_2",
+          "label": "Part 2. Information About Sponsor. Employer Address. 14. A. Enter Street Number and Name.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_or_Town_2",
+          "label": "Part 1. Information About You (Beneficiary). Employer or School Address. 15. C. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_or_Town_3",
+          "label": "Part 2. Information About Sponsor. Employer Address. 14. C. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 3,
       "fields": [
-        {
-          "key": "P3_Line1_ChkBoxes",
-          "label": "P3 Line1 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P3_Line3_ChkBoxes",
-          "label": "P3 Line3 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P3_Line2a_FamilyName",
           "label": "P3 Line2a Family Name",
@@ -538,40 +582,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line5_ChkBoxes",
-          "label": "P3 Line5 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P3_Line6_ChkBoxes",
-          "label": "P3 Line6 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P1_Line2_DateofBirth",
           "label": "P1 Line2 Dateof Birth",
           "mode": "text",
@@ -586,45 +596,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line8_ChkBoxes",
-          "label": "P3 Line8 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "LineP3_AdditionalInfo",
           "label": "Line P3 Additional Info",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part4_Checkbox",
-          "label": "Part 4 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Part4_language",
@@ -648,29 +624,130 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line9_ChkBoxes",
-          "label": "P3 Line9 Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
+          "key": "Item3_Applicant_s_Daytime_Telephon",
+          "label": "Part 4. Applicant's Statement, Contact Information, Certification, and Signature. Applicant's Contact Information. 3. Enter Applicant's Daytime Tel...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Applicant_s_Mobile_Telephone",
+          "label": "Part 4. Applicant's Statement, Contact Information, Certification, and Signature. Applicant's Contact Information. 4. Enter Applicant's Mobile Tele...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_C",
+          "label": "Part 3. Other Information. 1. Does the beneficiary live with the sponsor? Select No. If you answered \"No\" to Item Number 1., provide the name of th...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Yes",
+          "label": "Part 3. Other Information. 1. Does the beneficiary live with the sponsor? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Other_Sources",
+          "label": "Part 3. Other Information. 3. How is the beneficiary supported? Select Other Sources.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Sponsor",
+          "label": "Part 3. Other Information. 3. How is the beneficiary supported? Select Sponsor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_No",
+          "label": "Part 3. Other Information. 5. Is the beneficiary in the legal custody of the sponsor? (Explain). Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Yes_2",
+          "label": "Part 3. Other Information. 5. Is the beneficiary in the legal custody of the sponsor? (Explain). Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_No_2",
+          "label": "Part 3. Other Information. 6. Has the sponsor stopped all support? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_provide_the_date_when_the_su",
+          "label": "Part 3. Other Information. 6. Has the sponsor stopped all support? Select Yes. If you answered \"Yes\" to Item Number 6., provide the date when the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_No_3",
+          "label": "Part 3. Other Information. 8. Has the sponsor given any reason for withdrawal of support? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Yes_3",
+          "label": "Part 3. Other Information. 8. Has the sponsor given any reason for withdrawal of support? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Representative_of_the_Agency",
+          "label": "Part 3. Other Information. 9. Relationship of Applicant. Select Representative of the Agency Having Legal Custody of the Beneficiary.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Self",
+          "label": "Part 3. Other Information. 9. Relationship of Applicant. Select Self.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Individual_Having_Legal_Cust",
+          "label": "Part 3. Other Information. 9. Relationship of Applicant. Select Individual Having Legal Custody of the Beneficiary.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Guardian_Ad_Litem",
+          "label": "Part 3. Other Information. 9. Relationship of Applicant. Select Guardian Ad Litem.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 4. Applicant's Statement, Contact Information, Certification, and Signature. Applicant's Signature. 1. B. Select The interpreter named in Part...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 4. Applicant's Statement, Contact Information, Certification, and Signature. NOTE: Read the Penalties section of the Form I-3 63 Instructions ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -697,27 +774,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Line6c_Unit",
-          "label": "Line 6 c Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Line3b_AptSteFlrNumber",
@@ -769,15 +825,57 @@
           "defaultValue": ""
         },
         {
-          "key": "Line1b_PreparerGivenName",
-          "label": "Line 1 b Preparer Given Name",
+          "key": "Line1a_PreparerFamilyName",
+          "label": "Line 1 a Preparer Family Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line1a_PreparerFamilyName",
-          "label": "Line 1 a Preparer Family Name",
+          "key": "Item2_Interpreter_s_Business_or_Or",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. 2. Enter Interpreter's Business or Organization Name, if any.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Interpreter_s_Given_Name_Fir",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Full Name. 1. B. Enter Interpreter's Given Name (First Name).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Interpreter_s_Daytime_Teleph",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 4. Enter Interpreter's Daytime Telephon...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Interpreter_s_Mobile_Telepho",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 5. Enter Interpreter's Mobile Telephone...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_6",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_6",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_6",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Apartment.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -788,80 +886,11 @@
       "page": 5,
       "fields": [
         {
-          "key": "Part4Line7_Checkbox",
-          "label": "Part 4 Line7 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Part4Line7b_Checkbox",
-          "label": "Part 4 Line7b Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line5a_Signature",
-          "label": "Line 5 a Signature",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Line5b_DateofSignature",
-          "label": "Line 5 b Dateof Signature",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "Line2_BusinessName",
           "label": "Line 2 Business Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part4Line3b_Unit",
-          "label": "Part 4 Line3b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Part4Line3b_AptSteFlrNumber",
@@ -873,6 +902,97 @@
         {
           "key": "Line24a_Degree",
           "label": "Line 24 a Degree",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Preparer_s_Daytime_Telephone",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Contact I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Preparer_s_Mobile_Telephone",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Contact I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Print_and_sign_in_ink",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Signature...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Print_and_sign_in_ink_2",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 7. A. Interpreter's Signature. This signature fie...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Signature",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Signature...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Signature_2",
+          "label": "Part 5. Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 7. B. Enter Date of Signature. Enter as 2 digit m...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_7",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_7",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_7",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Mailing A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_not_an_attorney_or_accr",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_NOTE_If_you_are_an_attorney",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_an_attorney_or_accredit_2",
+          "label": "Part 6. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Statement...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -960,29 +1080,57 @@
           "defaultValue": ""
         },
         {
-          "key": "Line5a_PageNumber",
-          "label": "Line 5 a Page Number",
+          "key": "Page_Number",
+          "label": "Part 7. Additional Information. 6. A. Enter Page Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line5b_PartNumber",
-          "label": "Line 5 b Part Number",
+          "key": "Page_Number_2",
+          "label": "Part 7. Additional Information. 7. A. Enter Page Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line5c_ItemNumber",
-          "label": "Line 5 c Item Number",
+          "key": "Part_Number",
+          "label": "Part 7. Additional Information. 6. B. Enter Part Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "Line5d_AdditionalInfo",
-          "label": "Line 5 d Additional Info",
+          "key": "Part_Number_2",
+          "label": "Part 7. Additional Information. 7. B. Enter Part Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number",
+          "label": "Part 7. Additional Information. 6. C. Enter Item Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number_2",
+          "label": "Part 7. Additional Information. 7. C. Enter Item Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 7. Additional Information. 6. D. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 7. Additional Information. 7. D. Enter Additional Information.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -993,33 +1141,67 @@
       "page": 7,
       "fields": [
         {
-          "key": "P1_Line12a_ChkBoxes",
-          "label": "P1 Line12a Chk Boxes",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
+          "key": "Print_and_sign_in_ink_3",
+          "label": "For U S C I S Use Only. 2. Signature of U S C I S Officer. This signature field can not be signed with a digital signature and the signee's name ca...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Name_of_Regional_Counsel",
+          "label": "For U S C I S Use Only. 4. Enter Name of Regional Counsel.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P7_Line5b_DateofSignature_2",
+          "label": "For U S C I S Use Only. If an investigation was conducted, provide the date it was completed. Enter as 2 digit month, 2 digit day and 4 digit year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_Date",
+          "label": "For U S C I S Use Only. 6. Enter Date. Enter as 2 digit month, 2 digit day and 4 digit year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Investigation_Not_Necessary",
+          "label": "For U S C I S Use Only. 1. B. Select Investigation Not Necessary.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enforcement_Recommended",
+          "label": "For U S C I S Use Only. 1. C. Select Enforcement Recommended.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_Action_Recommended",
+          "label": "For U S C I S Use Only. 1. D. Select No Action Recommended.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Recommendation_Forwarded_to",
+          "label": "For U S C I S Use Only. 5. Select Recommendation Forwarded to U.S. Attorney.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Investigation_Necessary",
+          "label": "For U S C I S Use Only. 1. A. Select Investigation Necessary.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     }

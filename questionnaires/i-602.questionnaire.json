@@ -47,39 +47,11 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line2_CountryOfBirth",
-          "label": "Part 1 Line2 Country Of Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt1Line3_StreetNumberName",
           "label": "Part 1 Line3 Street Number Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line3_Unit",
-          "label": "Part 1 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt1Line3_AptSteFlrNumber",
@@ -138,21 +110,60 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line3_Checkbox",
-          "label": "P1 Line3 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item3_provide_your_physical_addres",
+          "label": "Part 1. Information About You. Mailing Address. 3. Is your current mailing address the same as your physical address? Select No. If you answered \"N...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Yes",
+          "label": "Part 1. Information About You. Mailing Address. 4. Is your current mailing address the same as your physical address? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "City_or_Town",
+          "label": "Part 1. Information About You. Place of Birth. 2. A. Enter City or Town.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "State_or_Province_of_birth",
+          "label": "Part 1. Information About You. Place of Birth. 2. B. Enter State or Province of birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_birth",
+          "label": "Part 1. Information About You. Place of Birth.  2.C. Enter Country of birth.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You (Petitioner). Mailing Address. 3. C. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You (Petitioner). Mailing Address. 3. C. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 2. Information About You (Petitioner). Mailing Address. 3. C. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -216,27 +227,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line5_Unit",
-          "label": "Part 1 Line5 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line6_AlienNumber",
           "label": "Part 1 Line6 Alien Number",
           "mode": "text",
@@ -263,35 +253,6 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line10_Checkbox",
-          "label": "Part 1 Line10 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
         },
         {
           "key": "Pt2Line1_Checkbox",
@@ -348,6 +309,62 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "box_for_I_am_a_derivative_re",
+          "label": "Part 1. Information About You. Other Information. 10. Current Status. Check box for I am a derivative refugee applicant inside the United States se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_I_am_an_asylee_curre",
+          "label": "Part 1. Information About You. Other Information. 10. Current Status. Check box for I am an asylee currently present in the United States seeking a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_I_am_a_refugee_curre",
+          "label": "Part 1. Information About You. Other Information. 10. Current Status. Check box for I am a refugee currently present in the United States seeking a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_I_am_a_derivative_re_2",
+          "label": "Part 1. Information About You. Other Information. 10. Current Status. Check box for I am a derivative refugee applicant outside the United States s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "box_for_I_am_a_principal_ref",
+          "label": "Part 1. Information About You. Other Information. 10. Current Status. Check box for I am a principal refugee applicant currently outside the United...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1. Information About You. Physical Address. 5. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1. Information About You. Physical Address. 5. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 1. Information About You. Physical Address. 5. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -556,13 +573,6 @@
       "page": 4,
       "fields": [
         {
-          "key": "Pt9Line4_Summary",
-          "label": "Part 9 Line4 Summary",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt2Line37_Humanitarian",
           "label": "Part 2 Line37 Humanitarian",
           "mode": "checkbox_single",
@@ -624,6 +634,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "Fillable_Field",
+          "label": "Part 2. Reason for Inadmissibility. Your Inadmissibility Statement. In the space provided in Item Number 36., provide a statement and full explanat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Fillable_Field_2",
+          "label": "Part 2. Reasons for Inadmissibility. Your Inadmissibility Statement. In the space provided in Item Number 38., provide an explanation for why you a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item14_What_is_the_purpose_of_your",
+          "label": "Part 2. Information About You. Travel Information. 14. What is the purpose of your stay in the United States? Explain fully below.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -643,27 +674,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt3Line4_Unit",
-          "label": "Part 3 Line4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt3Line4_AptSteFlrNumber",
@@ -783,6 +793,27 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "key": "designated_Floor",
+          "label": "Part 3. Applicants Who Have or Had a Physical or Mental Disorder and Behavior Associated with the Disorder (continued). Physician's or Health Facil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 3. Applicants Who Have or Had a Physical or Mental Disorder and Behavior Associated with the Disorder (continued). Physician's or Health Facil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 3. Applicants Who Have or Had a Physical or Mental Disorder and Behavior Associated with the Disorder (continued). Physician's or Health Facil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -809,27 +840,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt4Line4_Unit",
-          "label": "Part 4 Line4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt4Line4_ZipCode",
@@ -916,27 +926,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt4Line9_Unit",
-          "label": "Part 4 Line9 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt4Line9_ZipCode",
           "label": "Part 4 Line9 Zip Code",
           "mode": "text",
@@ -977,6 +966,48 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition (As Defined by HHS Regulations). Local City or County Health Department's Name and Physic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition (As Defined by HHS Regulations). Local City or County Health Department's Name and Physic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition (As Defined by HHS Regulations). Local City or County Health Department's Name and Physic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_5",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition (As Defined by HHS Regulations). Arrangement for Medical Care by the Applicant or His or ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition (As Defined by HHS Regulations). Arrangement for Medical Care by the Applicant or His or ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_5",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition (As Defined by HHS Regulations). Arrangement for Medical Care by the Applicant or His or ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1003,27 +1034,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt4Line13b_Unit",
-          "label": "Part 4 Line13b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt4Line13e_ZipCode",
@@ -1135,6 +1145,27 @@
           "label": "Part 6 Line4 Interpreters Daytime Telephone Number3",
           "mode": "text",
           "type": "phone",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_6",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition. State Health Department Official's Name and Physical Address.  13. B. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_5",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition. State Health Department Official's Name and Physical Address.  13. B. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_6",
+          "label": "Part 4.  Applicants with a Class A Tuberculosis Condition. State Health Department Official's Name and Physical Address.  13. B. Select Apartment.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

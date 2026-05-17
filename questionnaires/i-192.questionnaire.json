@@ -33,21 +33,18 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line1_CB",
-          "label": "P1 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "and_then_skip_to_Item_Number",
+          "label": "Part 1. Application Type. Select Admission as a nonimmigrant (other than as a T or U nonimmigrant). NOTE: If filing this form concurrently with a U...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Status_as_a_victim_of_traffi",
+          "label": "Part 1.  Application Type. I am applying to the Secretary of Homeland Security for permission to enter the United States temporarily under the prov...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -146,35 +143,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line6_CountryOfBirth",
-          "label": "P2 Line6 Country Of Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "P2_Line7_CountryOfCitizenship",
           "label": "P2 Line7 Country Of Citizenship",
           "mode": "text",
           "type": "country",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line8_Sex",
-          "label": "P2 Line8 Sex",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line9_InCareofName",
@@ -189,27 +162,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line9_Unit",
-          "label": "P2 Line9 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line9_AptSteFlrNumber",
@@ -259,6 +211,55 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "State_or_Province",
+          "label": "Part 2. Information About You. Other Information. 6. Place of Birth. Enter State or Province.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country",
+          "label": "Part 2. Information About You. Other Information. 6. Place of Birth. Enter Country.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_for_Male",
+          "label": "Part 2. Information About You. Other Information. 8. Sex. Select for Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_for_Female",
+          "label": "Part 2. Information About You. Other Information. 8. Sex. Select for Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Apartment",
+          "label": "Part 2. Information About You. Other Information. 9. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Suite",
+          "label": "Part 2. Information About You. Other Information. 9. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Floor",
+          "label": "Part 2. Information About You. Other Information. 9. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -271,27 +272,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line10_Unit",
-          "label": "P2 Line10 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line10_AptSteFlrNumber",
@@ -364,27 +344,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line11_Unit",
-          "label": "P2 Line11 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P2_Line11_AptSteFlrNumber",
           "label": "P2 Line11 Apt Ste Flr Number",
           "mode": "text",
@@ -448,43 +407,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line12_MaritalStatus",
-          "label": "P2 Line12 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
-        },
-        {
           "key": "P2_Line12_Other",
           "label": "P2 Line12 Other",
           "mode": "text",
@@ -522,6 +444,97 @@
         {
           "key": "P2_Line15_AlienNumber",
           "label": "P2 Line15 Alien Number",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 2. Information About You. Address History. 10. Physical Address One, current address. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 2. Information About You. Address History. 10. Physical Address One, current address. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 2. Information About You. Address History. 10. Physical Address One, current address. Select Floor",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Apartment",
+          "label": "Part 2. Information About You. Address History. 11. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Suite",
+          "label": "Part 2. Information About You. Address History. 11. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Floor",
+          "label": "Part 2. Information About You. Address History. 11. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Divorced",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. Select Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Single_Never_Married",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. What is your current marital status? Select Single, Never Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Widowed",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. Select Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Married",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. Select Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Legally_Separated",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. Select Legally Separated.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Marriage_Annulled",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. Select Marriage Annulled.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Other",
+          "label": "Part 2. Information About You. Information About Your Marital History. 12. Select Other.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -726,40 +739,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line30_CB",
-          "label": "P2 Line30 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line31_CB",
-          "label": "P2 Line31 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line32_ApplicationorPetitionFiled",
           "label": "P2 Line32 Applicationor Petition Filed",
           "mode": "text",
@@ -781,55 +760,74 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line35_CB",
-          "label": "P2 Line35 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Additional_Information",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 27. Have you previously filed an application for advance permission to enter the U...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P2_Line36_CB",
-          "label": "P2 Line36 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item27_No",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 27. Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P2_Line27_CB",
-          "label": "P2 Line27 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Entry_Additional_Information",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 30. Have you EVER been in the United States for a period of six months or more? Se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item30_No",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 30. Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "34",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 31. Have you EVER filed an application or petition for immigration benefits with t...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item31_No",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 31. Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 35. Have you ever been denied or refused an immigration benefit by the U.S. Govern...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item35_No",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 35. Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_3",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 36. Have you ever, in or outside the United States, been arrested, cited, charged,...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item36_No",
+          "label": "Part 2. Information About You. Immigration and Criminal History. 36. Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -863,27 +861,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line44_Unit",
-          "label": "P2 Line44 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line44_AptSteFlrNumber",
@@ -989,6 +966,27 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "Item44_Apartment",
+          "label": "Part 2. Information About You. Employment History. Address of Employer or Company. 44. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item44_Suite",
+          "label": "Part 2. Information About You. Employment History. Address of Employer or Company. 44. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item44_Floor",
+          "label": "Part 2. Information About You. Employment History. Address of Employer or Company. 44. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1066,27 +1064,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line45_Unit",
-          "label": "P2 Line45 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P2_Line45_AptSteFlrNumber",
           "label": "P2 Line45 Apt Ste Flr Number",
           "mode": "text",
@@ -1133,6 +1110,27 @@
           "label": "P2 Line45 Country",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item45_Apartment",
+          "label": "Part 2. Information About You. Employment History. Address of Employer or Company. 45. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item45_Suite",
+          "label": "Part 2. Information About You. Employment History. Address of Employer or Company. 45. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item45_Floor",
+          "label": "Part 2. Information About You. Employment History. Address of Employer or Company. 45. Select Floor.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]

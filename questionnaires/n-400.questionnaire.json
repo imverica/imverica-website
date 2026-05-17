@@ -5,43 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "Part1_Eligibility",
-          "label": "Part 1 Eligibility",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
-        },
-        {
           "key": "Line1_AlienNumber",
           "label": "Line 1 Alien Number",
           "mode": "text",
@@ -124,6 +87,55 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Spouse_See_Instructions_Eligibility",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. C. Select VAWA.  See Instructi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_See_Instructions_Eligibility_2",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. B. Select Spouse of U.S. Citiz...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "See_Instructions_List_of_Gen",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. A. Select General Provision.  ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "See_Instructions_Eligibility",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. E. Select Military Service dur...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "See_Instructions_Eligibility_2",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. F. Select At Least One Year of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Other_Reason_for_Filing_Not",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. G. Select Other Reason for Fil...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_See_Instructions_Eligibility_3",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-400 may be delayed or rejected.). 1. D. Select Spouse of U.S. Citiz...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -136,23 +148,6 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line7_Gender",
-          "label": "P2 Line7 Gender",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line6_USCISELISAcctNumber",
@@ -176,79 +171,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line10_claimdisability",
-          "label": "P2 Line10 claimdisability",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Line12a_Checkbox",
-          "label": "Line 12 a Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Line12b_SSN",
           "label": "Line 12 b SSN",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "c_Checkbox",
-          "label": "c Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line11_claimdisability",
-          "label": "P2 Line11 claimdisability",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line10_CountryOfBirth",
@@ -272,25 +199,92 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line34_NameChange",
-          "label": "P2 Line34 Name Change",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Part2Line3_FamilyName",
           "label": "Part 2 Line3 Family Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Line12a_Checkbox_0",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Social Security Update. 12. A. Do you want the Social Security Administration ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P2_Line12a_Checkbox_1",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Social Security Update. 12. A. Do you want the Social Security Administration ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change (Optional). Read the Instructions for this Item Number before you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change (Optional). Read the Instructions for this Item Number before you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_2",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change (Optional). Read the Instructions for this Item Number before you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_you_answered_Yes_submit_a",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change (Optional). Read the Instructions for this Item Number before you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_3",
+          "label": "Part 2.  Information About You (Person applying for naturalization). 3. Name Change (optional). Read the Form N - 400 Instructions before you decid...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_you_answered_Yes_type_or",
+          "label": "Part 2.  Information About You (Person applying for naturalization). 3. Name Change (optional). Read the Form N - 400 Instructions before you decid...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Male",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change (Optional). Read the Instructions for this Item Number before you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Female",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change (Optional). Read the Instructions for this Item Number before you ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_4",
+          "label": "Part 2.  Information About You (Person applying for naturalization). 12. C. Consent for Disclosure:  I authorize disclosure of information from thi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Consent_for_Disclosure_to_re",
+          "label": "Part 2.  Information About You (Person applying for naturalization). 12. C. Consent for Disclosure:  I authorize disclosure of information from thi...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -300,52 +294,6 @@
     {
       "page": 3,
       "fields": [
-        {
-          "key": "P7_Line2_Race",
-          "label": "P7 Line2 Race",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
-        },
-        {
-          "key": "P7_Line1_Ethnicity",
-          "label": "P7 Line1 Ethnicity",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P7_Line4_Pounds2",
           "label": "P7 Line4 Pounds2",
@@ -380,96 +328,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P7_Line5_Eye",
-          "label": "P7 Line5 Eye",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
-        },
-        {
-          "key": "P7_Line6_Hair",
-          "label": "P7 Line6 Hair",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
         },
         {
           "key": "P4_Line3_PhysicalAddress1",
@@ -514,13 +372,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line3_From1",
-          "label": "P4 Line3 From1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "P4_Line3_From2",
           "label": "P4 Line3 From2",
           "mode": "text",
@@ -547,23 +398,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt3_Line2a_Checkbox",
-          "label": "Part 3 Line2a Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P4_Line3_ZipCode1",
@@ -685,38 +519,248 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line1_Unit",
-          "label": "P4 Line1 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line1_DatesofResidence",
-          "label": "P4 Line1 Datesof Residence",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "P4_Line1_Country",
           "label": "P4 Line1 Country",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "P4_Line1_DatesofResidence_2",
+          "label": "P4_Line1_DatesofResidence",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P4_Line1_DatesofResidence_3",
+          "label": "P4_Line1_DatesofResidence",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mailing Address, if applicable). Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mailing Address, if applicable). Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mailing Address, if applicable). Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date",
+          "label": "Part 3.  Information About Your Residence. List every location where you have lived during the last 5 years.  List your current physical address in...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_2",
+          "label": "Part 3.  Information About Your Residence. List every location where you have lived during the last 5 years.  List your current physical address in...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Not_Hispanic_or_Latino",
+          "label": "Part 4. Biographic Information. 1. Ethnicity (Select only one box). Select Not Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hispanic_or_Latino",
+          "label": "Part 4. Biographic Information. NOTE:  U S C I S requires you to complete the categories below to conduct background checks. (See the Form N - 400 ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_American_Indian_or_Alaska_Na",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select American Indian or Alaska Native.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Asian",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Asian.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Black_or_African_American",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Black or \rAfrican American.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Native_Hawaiian_or_Other_Pac",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Native Hawaiian or Other Pacific Islander.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_White",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select White.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blue",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Blue.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Green",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Green.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hazel",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Hazel.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Pink",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Pink.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Maroon",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Maroon.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Unknown / Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Bald_No_hair",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Bald (No hair).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Sandy",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Sandy.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Red",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Red.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "White",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select White.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray_2",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blond",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Blond.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown_2",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black_2",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other_2",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Unknown / Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_No",
+          "label": "Part 3.  Information About Your Residence. 2. Is your current physical address also your current mailing address? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_If_you_answered_Yes_skip_to",
+          "label": "Part 3.  Information About Your Residence. 2. Is your current physical address also your current mailing address? Select Yes. If you answered \u201cYes,...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -774,27 +818,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P5_Line1b_Unit",
-          "label": "P5 Line1b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P5_Line1b_Country",
           "label": "P5 Line1b Country",
           "mode": "text",
@@ -807,56 +830,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P10_Line1_MaritalStatus",
-          "label": "P10 Line1 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            }
-          ]
-        },
-        {
-          "key": "P7_Line2_Forces",
-          "label": "P7 Line2 Forces",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P10_Line4a_MiddleName",
@@ -894,23 +867,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P10_Line5_Citizen",
-          "label": "P10 Line5 Citizen",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P10_Line5b_DateBecame",
           "label": "P10 Line5b Date Became",
           "mode": "text",
@@ -918,21 +874,109 @@
           "defaultValue": ""
         },
         {
-          "key": "P10_Line5a_When",
-          "label": "P10 Line5a When",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Item1_Divorced",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital status? Select Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Additional_Information",
+          "label": "Part 7. Information About Your Marital History. 1. What is your current marital status? Select Single, Never Married. If you are single and have ne...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Widowed",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital status? Select Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Married",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital status? Select Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Marriage_Annulled",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital status? Select Marriage Annulled.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Separated",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital status? Select Separated.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. 4. D. Is your current spouse's present physical address the same as your ph...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage.  4.D. Is your current spouse's present physical address the same as your ph...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_By_Birth_in_the_United_State",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. If your current spouse is a U. S. citizen, complete the following informati...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_B",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. If your current spouse is a U. S. citizen, complete the following informati...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mailing Address, if applicable). Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mailing Address, if applicable). Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mailing Address, if applicable). Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_No",
+          "label": "Part 7.  Information About Your Marital History. 2. If you are currently married, is your spouse a current member of the U. S. armed forces? Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_2",
+          "label": "Part 7.  Information About Your Marital History. 2. If you are currently married, is your spouse a current member of the U. S. armed forces? Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -987,99 +1031,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P7_From1",
-          "label": "P7 From1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P7_From2",
-          "label": "P7 From2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P7_From3",
-          "label": "P7 From3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P7_OccupationFieldStudy1",
-          "label": "P7 Occupation Field Study1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P7_OccupationFieldStudy2",
-          "label": "P7 Occupation Field Study2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P7_OccupationFieldStudy3",
-          "label": "P7 Occupation Field Study3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P9_Line5a",
-          "label": "P9 Line5a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P6_ChildTwo",
-          "label": "P6 Child Two",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P6_ChildThree",
-          "label": "P6 Child Three",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P5_EmployerName1",
@@ -1198,6 +1149,153 @@
           "label": "P7 Country1",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_No",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Yes",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_No_2",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Yes",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Date_of_Birth",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the residence and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_From_Date_3",
+          "label": "Part 5.  Information About Your Employment and Schools You Attended. Employment Dates. Line 1. Enter From Date. Enter as 2-digit Month, 2-digit Day...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_Date_of_Birth",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the residence and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_From_Date",
+          "label": "Part 5.  Information About Your Employment and Schools You Attended. Employment Dates. Line 2. Enter From Date. Enter as 2-digit Month, 2-digit Day...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Child_Date_of_Birth",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the residence and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_From_Date",
+          "label": "Part 5.  Information About Your Employment and Schools You Attended. Employment Dates. Line 3. Enter From Date. Enter as 2-digit Month, 2-digit Day...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_one_of_the_following_options",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the residence and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_one_of_the_following_options_2",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Occupation_or_Field_of_Study",
+          "label": "Part 5.  Information About Your Employment and Schools You Attended. Line 1. Enter Occupation or Field of Study.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_one_of_the_following_options_3",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the residence and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_one_of_the_following_options_4",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Occupation_or_Field_of_Study",
+          "label": "Part 5.  Information About Your Employment and Schools You Attended. Line 2. Enter Occupation or Field of Study.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_one_of_the_following_options_5",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the residence and ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_one_of_the_following_options_6",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Occupation_or_Field_of_Study",
+          "label": "Part 5.  Information About Your Employment and Schools You Attended. Line 3. Enter  Occupation or Field of Study.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_Yes",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_Child_No",
+          "label": "Part 6.  Information About Your Children. 2. Provide the following information about your children listed in Item Number 1.  For the Relationship a...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -1332,106 +1430,88 @@
           "defaultValue": ""
         },
         {
-          "key": "P9_Line2",
-          "label": "P9 Line2",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_2",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. A. Been a member of, involved in, or in any way associated with any Communist or total...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line1",
-          "label": "P9 Line1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_5",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. A. Been a member of, involved in, or in any way associated with any Communist or total...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line3",
-          "label": "P9 Line3",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_3",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. B. Been a member of, involved in, or in any way associated with any group anywhere in ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line4",
-          "label": "P9 Line4",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_6",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. B. Been a member of, involved in, or in any way associated with any group anywhere in ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_5a",
-          "label": "P9 5a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_7",
+          "label": "Part 9.  Additional Information About You. 1. Have you EVER claimed to be a U.S. citizen (in writing or any other way)? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_5b",
-          "label": "P9 5b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_4",
+          "label": "Part 9.  Additional Information About You. 1. Have you EVER claimed to be a U.S. citizen (in writing or any other way)? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_8",
+          "label": "Part 9.  Additional Information About You. 2. Have you EVER registered to vote or voted in any Federal, state, or local election in the United Stat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_5",
+          "label": "Part 9.  Additional Information About You. 2. Have you EVER registered to vote or voted in any Federal, state, or local election in the United Stat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_6",
+          "label": "Part 9.  Additional Information About You. 3. Do you currently owe any overdue Federal, state, or local taxes in the United States? Select Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_9",
+          "label": "Part 9.  Additional Information About You. 3. Do you currently owe any overdue Federal, state, or local taxes in the United States? Select No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_7",
+          "label": "Part 9.  Additional Information About You. 4. Since you became a lawful permanent resident, have you called yourself a \u201cnon-U.S. resident\u201d on a Fed...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_10",
+          "label": "Part 9.  Additional Information About You. 4. Since you became a lawful permanent resident, have you called yourself a \u201cnon-U.S. resident\u201d on a Fed...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1439,384 +1519,290 @@
       "page": 7,
       "fields": [
         {
-          "key": "P12_6a",
-          "label": "P12 6a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_11",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_6b",
-          "label": "P12 6b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_8",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_6c",
-          "label": "P12 6c",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_12",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line7a",
-          "label": "P9 Line7a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_9",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "",
-          "label": "",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_13",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, involved in, or in any way associated with, or have you EVER provided mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "c",
-          "label": "c",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_10",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, involved in, or in any way associated with, or have you EVER provided mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "e",
-          "label": "e",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_11",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, involved in, or in any way associated with, or have you EVER provided mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "f",
-          "label": "f",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_14",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, involved in, or in any way associated with, or have you EVER provided mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "g",
-          "label": "g",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_15",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, involved in, or in any way associated with, or have you EVER provided mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P11_7d",
-          "label": "P11 7d",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_12",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, involved in, or in any way associated with, or have you EVER provided mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line8a",
-          "label": "P9 Line8a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_16",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line9",
-          "label": "P9 Line9",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_13",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line10b",
-          "label": "P9 Line10b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_17",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line10c",
-          "label": "P9 Line10c",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_14",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line10a",
-          "label": "P9 Line10a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_15",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line8b",
-          "label": "P9 Line8b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_18",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line11",
-          "label": "P9 Line11",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_19",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line12",
-          "label": "P9 Line12",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_16",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line13",
-          "label": "P9 Line13",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_20",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P9_Line14",
-          "label": "P9 Line14",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_17",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_21",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_18",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_22",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_19",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_23",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_20",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_24",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_25",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_26",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_21",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_27",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_22",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_28",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_23",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_29",
+          "label": "Part 9.  Additional Information About. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_24",
+          "label": "Part 9.  Additional Information About. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated in a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_30",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_25",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 8,
       "fields": [
-        {
-          "key": "P9_Line15a",
-          "label": "P9 Line15a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P9_Line15b",
-          "label": "P9 Line15b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P12_Line29_why1",
           "label": "P12 Line29 why1",
@@ -1888,41 +1874,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P12_Line29_Outcome5",
-          "label": "P12 Line29 Outcome5",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P12_Line29_Outcome4",
-          "label": "P12 Line29 Outcome4",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P12_Line29_Outcome3",
-          "label": "P12 Line29 Outcome3",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P12_Line29_Outcome2",
-          "label": "P12 Line29 Outcome2",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P12_Line29_Outcome1",
-          "label": "P12 Line29 Outcome1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "P12_Line29_DateOfConv5",
           "label": "P12 Line29 Date Of Conv5",
           "mode": "text",
@@ -1958,214 +1909,157 @@
           "defaultValue": ""
         },
         {
-          "key": "P12_Line16",
-          "label": "P12 Line16",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_31",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_26",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_No_Charges_Filed_Convicted_C",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item1_City_or_Town_State_Country_w",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_For_Example_90_Days_In_Jail",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_No_Charges_Filed_Convicted_C_2",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_City_or_Town_State_Country_w",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_For_Example_90_Days_In_Jail_2",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_No_Charges_Filed_Convicted_C_3",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_City_or_Town_State_Country_w",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_For_Example_90_Days_In_Jail_3",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_No_Charges_Filed_Convicted_C_4",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_City_or_Town_State_Country_w",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_For_Example_90_Days_In_Jail_4",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_No_Charges_Filed_Convicted_C_5",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_City_or_Town_State_Country_w",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item400_For_Example_90_Days_In_Jail_5",
+          "label": "Part 9.  Additional Information About You.  If you answer \u201cYes\u201d to any part of Item Number 15. below, complete the table below with each crime or o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_32",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_27",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_33",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_28",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise participated ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 9,
       "fields": [
-        {
-          "key": "P11_Line17A",
-          "label": "P11 Line17A",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P11_Line17B",
-          "label": "P11 Line17B",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P11_Line17C",
-          "label": "P11 Line17C",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line17d",
-          "label": "P12 Line17d",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line17e",
-          "label": "P12 Line17e",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line17h",
-          "label": "P12 Line17h",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line17g",
-          "label": "P12 Line17g",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line17f",
-          "label": "P12 Line17f",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line21",
-          "label": "P12 Line21",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line20",
-          "label": "P12 Line20",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P9_Line22a",
-          "label": "P9 Line22a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P9_Line22c_Date",
           "label": "P9 Line22c Date",
@@ -2181,106 +2075,242 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt9_Line22b",
-          "label": "Part 9 Line22b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_34",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_Line19",
-          "label": "P12 Line19",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_29",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_Line18",
-          "label": "P12 Line18",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_35",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_Line23",
-          "label": "P12 Line23",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_30",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_Line24",
-          "label": "P12 Line24",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "No_36",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         },
         {
-          "key": "P12_Line25",
-          "label": "P12 Line25",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Yes_31",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_37",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_32",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_33",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_34",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_35",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_36",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_No",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Yes",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_38",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_37",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_38",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_39",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_Yes",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_No",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_39",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_40",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_40",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_41",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the questions in Item Numbers 17.a. - 19., provide an explanation in the s...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_41",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_42",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_42",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_43",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "a",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_44",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_43",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_45",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_44",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_46",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2288,280 +2318,232 @@
       "page": 10,
       "fields": [
         {
-          "key": "P12_Line26a",
-          "label": "P12 Line26a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line26b",
-          "label": "P12 Line26b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line26c",
-          "label": "P12 Line26c",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P11_Line26d",
-          "label": "P11 Line26d",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line27",
-          "label": "P12 Line27",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line28",
-          "label": "P12 Line28",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P9_Line29",
-          "label": "P9 Line29",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line30a",
-          "label": "P12 Line30a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line30b",
-          "label": "P12 Line30b",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line31",
-          "label": "P12 Line31",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line32",
-          "label": "P12 Line32",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line35",
-          "label": "P12 Line35",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line36",
-          "label": "P12 Line36",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line34",
-          "label": "P12 Line34",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line37",
-          "label": "P12 Line37",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P12_Line33",
-          "label": "P12 Line33",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P9_NobilityTitles",
           "label": "P9 Nobility Titles",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_45",
+          "label": "Part 12. Additional Information About You (Person Applying for Naturalization). Answer Item Numbers 30. through 46.  If you answer \"Yes\" to any of ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_47",
+          "label": "Part 12. Additional Information About You (Person Applying for Naturalization). Answer Item Numbers 30. through 46.  If you answer \"Yes\" to any of ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_46",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_48",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_47",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_49",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_48",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_50",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_51",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Have_you_EVER_been_court_mar",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_52",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_49",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_53",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_50",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_54",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_51",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_52",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_53",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_55",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_54",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item33_Yes",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item33_No",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item47_No",
+          "label": "Part 12. Additional Information About You (Person Applying for Naturalization). Answer Item Numbers 45. through 50.  If you answer ''No'' to any of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item34_Yes",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_56",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_55",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_56",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_57",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_58",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_57",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_58",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_59",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2571,13 +2553,6 @@
     {
       "page": 11,
       "fields": [
-        {
-          "key": "P12_SignatureApplicant",
-          "label": "P12 Signature Applicant",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
         {
           "key": "P13_DateofSignature",
           "label": "P13 Dateof Signature",
@@ -2621,23 +2596,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P10_Line1_Citizen",
-          "label": "P10 Line1 Citizen",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P10_Line2_TotalHouseholdIn",
           "label": "P10 Line2 Total Household In",
           "mode": "text",
@@ -2645,21 +2603,32 @@
           "defaultValue": ""
         },
         {
-          "key": "P10_Line5a",
-          "label": "P10 Line5a",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "Spouse_2",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. 4. D. Is your current spouse's present physical address the same as your ph...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Yes_3",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage.  4.D. Is your current spouse's present physical address the same as your ph...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_59",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_60",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 20. - 21. below, provide an explanation in the space provided in Par...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2769,6 +2738,20 @@
           "label": "P15 Dateof Signature",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_Child_Interpreter_s_Signature",
+          "label": "Part 14. Additional Information.. Interpreter's Contact Information, Certification, and Signature. Interpreter's Certification and Signature. 6. En...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_This_form_will_be_rejected_w",
+          "label": "Part 12. Applicant's Statement, Certification, and Signature. Applicant's Signature. 6. Applicant's Signature. This form can not be signed electron...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -2908,13 +2891,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Part15DateofSignature",
-          "label": "Part 15 Dateof Signature",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
           "key": "Part15USCISName",
           "label": "Part 15 USCISName",
           "mode": "text",
@@ -2924,6 +2900,20 @@
         {
           "key": "ApplicantsSignature",
           "label": "Applicants Signature",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Signature",
+          "label": "Part 15. Signature at Interview. Enter Date of Signature. Enter as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Date_of_Signature_2",
+          "label": "Part 16. Oath of Allegiance. Enter Date of Signature. Enter as 2-digit Month, 2-digit Day, and 4-digit Year.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

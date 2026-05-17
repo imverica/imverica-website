@@ -117,20 +117,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt4Line2_ReceiptNumber",
-          "label": "Part 4 Line2 Receipt Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt5Line29_AlienNumber",
-          "label": "Part 5 Line29 Alien Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt5Line31_USCISOnlineActNumber",
           "label": "Part 5 Line31 USCISOnline Act Number",
           "mode": "text",
@@ -149,23 +135,6 @@
     {
       "page": 2,
       "fields": [
-        {
-          "key": "Pt1Line17_YesNoCB",
-          "label": "Part 1 Line17 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt1Line13_DateOfEntry",
           "label": "Part 1 Line13 Date Of Entry",
@@ -209,66 +178,11 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt1Line18_USAddress",
-          "label": "Part 1 Line18 USAddress",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line18b_NameofUSEmbassyOrConsulate",
           "label": "Part 1 Line18b Nameof USEmbassy Or Consulate",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line16_YesNoCB",
-          "label": "Part 1 Line16 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt1Line15_YesNoCB",
-          "label": "Part 1 Line15 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P1_Line20_InCareofName",
@@ -283,27 +197,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line20_Unit",
-          "label": "P1 Line20 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line20_AptSteFlrNumber",
@@ -334,25 +227,106 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line9_Sex_MF",
-          "label": "P1 Line9 Sex MF",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt1Line17_NameofPerson",
           "label": "Part 1 Line17 Nameof Person",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 19. Entrepreneur's Current U.S. Mailing Address (if applicable). Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 19. Entrepreneur's Current U.S. Mailing Address (if applicable). Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 19. Entrepreneur's Current U.S. Mailing Address (if applicable). Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Male",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 9. Sex. Select Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_Female",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 9. Sex. Select Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 15. Have you EVER been arrested, cited, charged, indicted, convicted, f...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 15. Have you EVER been arrested, cited, charged, indicted, convicted, f...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_2",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 16. Have you EVER committed any crime for which you were not arrested? ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 16. Have you EVER committed any crime for which you were not arrested? ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_3",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 17. Have you, or any person included in this application, ever been in ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_2",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 17. Have you, or any person included in this application, ever been in ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_To_a_Department_of_Homeland",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 18. Where do you want USCIS to send all travel documents for you, and y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_Item_Number_19",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 18. Where do you want USCIS to send all travel documents for you, and y...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_To_a_US_Embassy_or_US_Consul",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 18. Where do you want USCIS to send all travel documents for you, and y...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -375,27 +349,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line21_Unit",
-          "label": "P1 Line21 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line21_AptSteFlrNumber",
@@ -452,23 +405,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt2Line1_Ethnicity_HispanicorLatino",
-          "label": "Part 2 Line1 Ethnicity Hispanicor Latino",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt2Line2_RaceBlack",
@@ -534,96 +470,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line5",
-          "label": "P2 Line5",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line6",
-          "label": "P2 Line6",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            },
-            {
-              "value": 7,
-              "label": "Option 7"
-            },
-            {
-              "value": 8,
-              "label": "Option 8"
-            }
-          ]
-        },
-        {
           "key": "Pt2Line2_RaceWhite",
           "label": "Part 2 Line2 Race White",
           "mode": "checkbox_single",
@@ -670,6 +516,167 @@
           "label": "Part 3 Line6 Country Of Citizenship",
           "mode": "text",
           "type": "country",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_2",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 20. Entrepreneur's Current Physical Address. Mailing Address (if applic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_2",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 20. Entrepreneur's Current Physical Address. Mailing Address (if applic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Select",
+          "label": "Part 1.  Information About the Entrepreneur (Applicant). Other Information. 20. Entrepreneur's Current Physical Address. Mailing Address (if applic...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blue",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Blue.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hazel",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Hazel.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Pink",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Pink.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Maroon",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Maroon.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Green",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Green.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other",
+          "label": "Part 2.  Biographic Information. 5.  Eye Color (Select only one box).  Select Unknown / Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Bald_No_hair",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select  Bald (No hair).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Blond",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select   Blond.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Gray_2",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select   Gray.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Sandy",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select Sandy.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Unknown_Other_2",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select Unknown / Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "White",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select White.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Red",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select Red.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Brown_2",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select Brown.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Black_2",
+          "label": "Part 2.  Biographic Information. 6.  Hair Color (Select only one box).  Select Black.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Not_Hispanic_or_Latino",
+          "label": "Part 2.  Biographic Information. 1. Ethnicity (Select only one box). Select Not Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Hispanic_or_Latino",
+          "label": "Part 2.  Biographic Information. 1. Ethnicity (Select only one box). Select Hispanic or Latino.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -741,27 +748,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_Line6_DateOfBirth",
-          "label": "P3 Line6 Date Of Birth",
-          "mode": "text",
-          "type": "date",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line4_CountryOfBirth",
-          "label": "Part 1 Line4 Country Of Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt1Line5_CountryOfCitizenship",
-          "label": "Part 1 Line5 Country Of Citizenship",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "P3_Line5_1_FamilyName",
           "label": "P3 Line5 1 Family Name",
           "mode": "text",
@@ -830,6 +816,83 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Child_Date_of_Birth_as_2_digit_Mon",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Date_of_Birth_as_2_digit_Mon_2",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Country_of_Birth",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Country_of_Birth_2",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Country_of_Citizenship_or_Na",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Country_of_Citizenship_or_Na_2",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Receipt_Number",
+          "label": "Part 4.  Information About Additional Entrepreneurs Requesting or Have Been Granted Parole or Re-Parole with the Same Start-up Entity. 2. Entrepren...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_USCIS_Online_Account_Number",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur.  Entreprenuer's Dependent Children. Provide the followi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_USCIS_Online_Account_Number_2",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Alien_Registration_Number_A",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_Alien_Registration_Number_A_2",
+          "label": "Part 3.  Information About Family Members Requesting Parole or Re-Parole with Entrepreneur. Entreprenuer's Dependent Children. Provide the followin...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -886,27 +949,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P5_Line2_Unit",
-          "label": "P5 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P5_Line2_AptSteFlrNumber",
           "label": "P5 Line2 Apt Ste Flr Number",
           "mode": "text",
@@ -942,23 +984,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt5Line10_YesNoCB",
-          "label": "Part 5 Line10 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt5Line10b_Date",
           "label": "Part 5 Line10b Date",
           "mode": "text",
@@ -978,29 +1003,47 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item2_Apartment",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Information About the Qualifying Start-Up Entity. 2. Enter Start-Up Entity A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Suite",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Information About the Qualifying Start-Up Entity. 2. Enter Start-Up Entity A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Floor",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Information About the Qualifying Start-Up Entity. 2. Enter Start-Up Entity A...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_4",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Applying for Initial Parole. 10. Did your start-up entity receive a qualifie...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "b",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Applying for Initial Parole. 10. Did your start-up entity receive a qualifie...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 6,
       "fields": [
-        {
-          "key": "Pt5Line12_YesNoCB",
-          "label": "Part 5 Line12 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt5Line13b_Date",
           "label": "Part 5 Line13b Date",
@@ -1014,27 +1057,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt5Line14_YesNoNA",
-          "label": "Part 5 Line14 Yes No NA",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "Pt5Line15a_AmountofInvestment",
@@ -1065,80 +1087,106 @@
           "defaultValue": false
         },
         {
-          "key": "Pt5Line18_YesNoCB",
-          "label": "Part 5 Line18 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt5Line21_YesNoCB",
-          "label": "Part 5 Line21 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt5Line20_YesNoCB",
-          "label": "Part 5 Line20 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt5Line19_YesNoCB",
-          "label": "Part 5 Line19 Yes No CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt5Line21_AmountofInvestment",
           "label": "Part 5 Line21 Amountof Investment",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_5",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued).  Applying for Initial Parole. 12. Did your start-up entity recei...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "b_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued).  Applying for Initial Parole. 12. Did your start-up entity recei...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_6",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Alternative Criteria. 14. Does your start-up entity partially me...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "N_A",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Alternative Criteria. 14. Does your start-up entity partially me...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "b_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Alternative Criteria. 14. Does your start-up entity partially me...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_7",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. Provide evidence that you continue to meet the definitio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. Provide evidence that you continue to meet the definitio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_4",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 19. Do you continue to perform an active and central rol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_8",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 19. Do you continue to perform an active and central rol...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_No",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 20. Is the start-up entity continuing to lawfully operat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item20_Yes",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 20. Is the start-up entity continuing to lawfully operat...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "N_A_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Re-Parole Criteria. 21. Did your start-up entity receive at leas...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_5",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Re-Parole Criteria. 21. Did your start-up entity receive at leas...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_9",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Re-Parole Criteria. 21. Did your start-up entity receive at leas...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1148,69 +1196,6 @@
     {
       "page": 7,
       "fields": [
-        {
-          "key": "Pt5Line22_YesNoNA",
-          "label": "Part 5 Line22 Yes No NA",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt5Line23_YesNoNA",
-          "label": "Part 5 Line23 Yes No NA",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "Pt5Line24_YesNoNA",
-          "label": "Part 5 Line24 Yes No NA",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
         {
           "key": "Pt5Line21b_Percentage",
           "label": "Part 5 Line21b Percentage",
@@ -1233,27 +1218,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt5Line25_YesNoNA",
-          "label": "Part 5 Line25 Yes No NA",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "Pt5Line22a_AmountofRevenue",
           "label": "Part 5 Line22a Amountof Revenue",
           "mode": "text",
@@ -1266,23 +1230,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt5Line28_YesNo",
-          "label": "Part 5 Line28 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt5Line24_TtlNumbersofWorker",
@@ -1304,6 +1251,104 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Not_Applicable",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 22. Did your start-up entity create at least 5 qualified...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_6",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 22. Did your start-up entity create at least 5 qualified...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_10",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 22. Did your start-up entity create at least 5 qualified...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "N_A_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Re-Parole Criteria. 23. Did your start-up reach at least $622,14...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_7",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Re-Parole Criteria. 23. Did your start-up reach at least $622,14...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_11",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners (continued). Re-Parole Criteria. 23. Did your start-up reach at least $622,14...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Not_Applicable_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 24. Did the annual revenue generated by your start-up en...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_8",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 24. Did the annual revenue generated by your start-up en...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_12",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Re-Parole Criteria. 24. Did the annual revenue generated by your start-up en...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Not_Applicable_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Alternative Criteria. 25. Does your start-up entity partially meet one or mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "c",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Alternative Criteria. 25. Does your start-up entity partially meet one or mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_13",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Alternative Criteria. 25. Does your start-up entity partially meet one or mo...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item28_No",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Alternative Criteria. 28. Are you maintaining a household income that is gre...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item28_b",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Alternative Criteria. 28. Are you maintaining a household income that is gre...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1316,23 +1361,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Pt5Line31_YesNo",
-          "label": "Part 5 Line31 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt5Line26b_TtlNumbersofWorker",
@@ -1370,13 +1398,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt2Line17a_NameofEmployer",
-          "label": "Part 2 Line17a Nameof Employer",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "P5_Line33a1_FamilyName",
           "label": "P5 Line33a1 Family Name",
           "mode": "text",
@@ -1405,13 +1426,6 @@
           "defaultValue": ""
         },
         {
-          "key": "Pt4Line22_CountryOfBirth",
-          "label": "Part 4 Line22 Country Of Birth",
-          "mode": "text",
-          "type": "country",
-          "defaultValue": ""
-        },
-        {
           "key": "Pt4Line23a_Percentage",
           "label": "Part 4 Line23a Percentage",
           "mode": "text",
@@ -1421,6 +1435,48 @@
         {
           "key": "Pt4Line23b_PositionHeld",
           "label": "Part 4 Line23b Position Held",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Legal_Entity_Name",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Trade_Name_D_B_A_Doing_Busin",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Citizenship_or_Na",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Birth",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item31_No",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. 31. Are you maint...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item31_b",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. 31. Are you maint...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1436,27 +1492,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line8_Unit",
-          "label": "P1 Line8 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line8_AptSteFlrNumber",
@@ -1505,13 +1540,6 @@
           "label": "P1 Line8 Country",
           "mode": "text",
           "type": "country",
-          "defaultValue": ""
-        },
-        {
-          "key": "Part5_Line5_EmailAddress",
-          "label": "Part 5 Line5 Email Address",
-          "mode": "text",
-          "type": "email",
           "defaultValue": ""
         },
         {
@@ -1569,33 +1597,75 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Apartment_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Email_Address",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Website_Address",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Legal_Entity_Name_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Information About the Owners of the Start-Up Entity. Owner 1. 27. D. Enter L...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Trade_Name_D_B_A_Doing_Busin_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Citizenship_or_Na_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Country_of_Birth_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 10,
       "fields": [
-        {
-          "key": "P5_Line33b_Unit",
-          "label": "P5 Line33b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
         {
           "key": "P6_Line1_FamilyName",
           "label": "P6 Line1 Family Name",
@@ -1651,27 +1721,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line6_Unit",
-          "label": "P6 Line6 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line6_AptSteFlrNumber",
@@ -1756,46 +1805,68 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Apartment_4",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_4",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_3",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_5",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. 6. Mailing Address and Contact Information. Select Apar...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_5",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. 6. Mailing Address and Contact Information. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_4",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. 6. Mailing Address and Contact Information. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Email_Address_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Website_Address_2",
+          "label": "Part 5.  Basis of Eligibility - Qualifying Start-Up Entity and Owners. Filing an Amended Application to Report a Material Change. Information About...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 11,
       "fields": [
-        {
-          "key": "Pt6Line11_YesNo",
-          "label": "Part 6 Line11 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt6Line12_YesNo",
-          "label": "Part 6 Line12 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt6Line16_Year",
           "label": "Part 6 Line16 Year",
@@ -1837,27 +1908,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line19_Unit",
-          "label": "P6 Line19 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line19_AptSteFlrNumber",
@@ -1930,27 +1980,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line20a_Unit",
-          "label": "P6 Line20a Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P6_Line20a_AptSteFlrNumber",
           "label": "P6 Line20a Apt Ste Flr Number",
           "mode": "text",
@@ -1998,6 +2027,76 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment_2",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite_2",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor_2",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_No",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 11. Is the investor a ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item11_Yes",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 11. Is the investor a ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_9",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 12. Has the investor b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_14",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 12. Has the investor b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2024,27 +2123,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line20b_Unit",
-          "label": "P6 Line20b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line20b_AptSteFlrNumber",
@@ -2145,27 +2223,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line22_Unit",
-          "label": "P6 Line22 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P6_Line22_AptSteFlrNumber",
           "label": "P6 Line22 Apt Ste Flr Number",
           "mode": "text",
@@ -2241,46 +2298,54 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment_3",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite_3",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor_3",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_6",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 21. Address and Contac...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_6",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 21. Address and Contac...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_5",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 21. Address and Contac...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 13,
       "fields": [
-        {
-          "key": "Pt6Line26_YesNo",
-          "label": "Part 6 Line26 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "Pt6Line27_YesNo",
-          "label": "Part 6 Line27 Yes No",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt6Line30_NameofCompany",
           "label": "Part 6 Line30 Nameof Company",
@@ -2322,27 +2387,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line35_Unit",
-          "label": "P6 Line35 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line35_AptSteFlrNumber",
@@ -2415,27 +2459,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P6_Line36a_Unit",
-          "label": "P6 Line36a Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P6_Line36a_AptSteFlrNumber",
           "label": "P6 Line36a Apt Ste Flr Number",
           "mode": "text",
@@ -2483,6 +2506,76 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment_4",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite_4",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor_4",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment_5",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite_5",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor_5",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item26_No",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 26. Is the investor a ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item26_Yes",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 26. Is the investor a ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Yes_10",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 27. Has the investor b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No_15",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. 27. Has the investor b...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2509,27 +2602,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line36b_Unit",
-          "label": "P6 Line36b Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line36b_AptSteFlrNumber",
@@ -2586,27 +2658,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P6_Line38_Unit",
-          "label": "P6 Line38 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P6_Line38_AptSteFlrNumber",
@@ -2695,6 +2746,48 @@
         {
           "key": "Pt6Line43a_AmountofGrantAward",
           "label": "Part 6 Line43a Amountof Grant Award",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Apartment_6",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Suite_6",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item12_Floor_6",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Qualified Investor Verification. If you answered Yes to...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment_7",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Name of Government Entity Providing Grant/Award. 36. Ad...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite_7",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Name of Government Entity Providing Grant/Award. 36. Ad...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor_6",
+          "label": "Part 6.  Information on Qualified Investors or Government Entities Providing a Grant/Award. Name of Government Entity Providing Grant/Award. 36. Ad...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2850,8 +2943,15 @@
           "defaultValue": ""
         },
         {
-          "key": "P9_L8_PrepSignature",
-          "label": "P9 L8 Prep Signature",
+          "key": "Item6_Date_of_Signature",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Certific...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_Preparer_s_Signature",
+          "label": "Part 9.  Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant. Preparer's Certific...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

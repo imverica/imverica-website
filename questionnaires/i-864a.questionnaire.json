@@ -61,27 +61,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line2_Unit",
-          "label": "P1 Line2 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line2_AptSteFlrNumber",
           "label": "P1 Line2 Apt Ste Flr Number",
           "mode": "text",
@@ -131,49 +110,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line3_CB",
-          "label": "P1 Line3 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P1_Line4_StreetNumberName",
           "label": "P1 Line4 Street Number Name",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P1_Line4_Unit",
-          "label": "P1 Line4 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P1_Line4_AptSteFlrNumber",
@@ -223,6 +164,62 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You (the Household Member). Mailing Address.   2. Physical Address. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You (the Household Member). Mailing Address.   2. Current Physical Address. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You (the Household Member). Mailing Address.  2. Current Physical Address. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_provide_your_physical_addres",
+          "label": "Part 1. Information About You (the Household Member). Mailing Address. 3. Is your current mailing address the same as your physical address? Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Yes",
+          "label": "Part 1. Information About You (the Household Member). Mailing Address. 3. Is your current mailing address the same as your physical address? Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Apartment",
+          "label": "Part 1. Information About You (the Household Member). Physical Address.  4. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Suite",
+          "label": "Part 1. Information About You (the Household Member). Physical Address.  4. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Floor",
+          "label": "Part 1. Information About You (the Household Member). Physical Address.  4. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -263,56 +260,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line1-3_Checkbox",
-          "label": "P2 Line1-3 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line3_A_Relationship",
-          "label": "P2 Line3 A Relationship",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
         },
         {
           "key": "P2_Line3_A_Other",
@@ -397,29 +344,68 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item1_Spouse_I_am_the_intending_immigrant",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. Select Item Number 1., 2., or 3.  1. Select I am the intending immigrant and als...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_I_am_the_intending_immigrant",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. Select Item Number 1., 2., or 3.  2. Select I am the intending immigrant and als...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_I_am_the_sponsor_s_household",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. Select Item Number 1., 2., or 3.  3. Select I am not the intending immigrant.  I...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_I_am_related_to_the_sponsor",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. 3. A. Select I am related to the sponsor as his / her Spouse.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_related_to_the_sponsor",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. 3. B. Select I am related to the sponsor as his / her Son or daughter (at least ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_related_to_the_sponsor_2",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. 3. C. Select I am related to the sponsor as his / her Parent.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_related_to_the_sponsor_3",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. 3. D. Select I am related to the sponsor as his / her Brother or sister.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_am_related_to_the_sponsor_4",
+          "label": "Part 2. Your (the Household Member's) Relationship to the Sponsor. 3. E. Select I am related to the sponsor as his / her Other dependent (specify).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 3,
       "fields": [
-        {
-          "key": "P4_Line1_CB",
-          "label": "P4 Line1 CB",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P4_Line2a_TaxYear",
           "label": "P4 Line2a Tax Year",
@@ -629,33 +615,26 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "NOTE_You_MUST_attach_a_photo",
+          "label": "Part 4.  Your (the Household Member's) Federal Income Tax Information and Assets. 1. A. Have you filed a Federal income tax return for each of the ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No",
+          "label": "Part 4.  Your (the Household Member's) Federal Income Tax Information and Assets. 1. A. Have you filed a Federal income tax return for each of the ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 4,
       "fields": [
-        {
-          "key": "P5Line5_Checkbox",
-          "label": "P5Line5 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
         {
           "key": "P5Line5b_language",
           "label": "P5Line5b language",
@@ -689,20 +668,6 @@
           "label": "Part 2 Line3 Daytime Phone",
           "mode": "text",
           "type": "phone",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt2Line6_ApplicantSignature",
-          "label": "Part 2 Line6 Applicant Signature",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt2Line6_DateofSignature",
-          "label": "Part 2 Line6 Dateof Signature",
-          "mode": "text",
-          "type": "date",
           "defaultValue": ""
         },
         {
@@ -746,19 +711,33 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 5.  Sponsor's Promise, Statement, Contact Information, Declaration, Certification, and Signature. Sponsor's Statement. 5. b. Select: The inter...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Select_I_can_read_and_unders",
+          "label": "Part 5.  Sponsor's Promise, Statement, Contact Information, Declaration, Certification, and Signature. Sponsor's Statement. NOTE:  Select the box f...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "prepared_this_contract_for_m",
+          "label": "Part 5.  Sponsor's Promise, Statement, Contact Information, Declaration, Certification, and Signature. Sponsor's Statement. 5. c. Select: At my req...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 5,
       "fields": [
-        {
-          "key": "Part9_Iamfluent",
-          "label": "Part 9 Iamfluent",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
         {
           "key": "Part6_Line2_Checkbox",
           "label": "Part 6 Line2 Checkbox",
@@ -772,23 +751,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "Part6_Line1_Checkbox",
-          "label": "Part 6 Line1 Checkbox",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P6Line1b_language",
@@ -816,6 +778,34 @@
           "label": "P7Line7 Email Address",
           "mode": "text",
           "type": "email",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an_2",
+          "label": "Part 6.  Your (the Household Member's) Promise, Statement, Contact Information, Declaration, Certification, and Signature. Your (the Household Memb...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Select_I_can_read_and_unders_2",
+          "label": "Part 6.  Your (the Household Member's) Promise, Statement, Contact Information, Declaration, Certification, and Signature. Your (the Household Memb...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "the_Full_Name_of_the_Househo",
+          "label": "Part 6.  Your (the Household Member's) Promise, Statement, Contact Information, Declaration, Certification, and Signature. NOTE:  Read the Penaltie...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "the_number_of_intending_immi",
+          "label": "Part 6.  Your (the Household Member's) Promise, Statement, Contact Information, Declaration, Certification, and Signature. Enter the number of inte...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -859,10 +849,17 @@
           "defaultValue": ""
         },
         {
-          "key": "P8Line4_InterpretersDaytimePhoneNumber",
-          "label": "P8Line4 Interpreters Daytime Phone Number",
+          "key": "Interpreter_s_Daytime_Teleph",
+          "label": "Part 7.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 3. Interpreter's Daytime Telephone Num...",
           "mode": "text",
-          "type": "phone",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Interpreter_s_Mobile_Telepho",
+          "label": "Part 7.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 4. Interpreter's Mobile Telephone Numb...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -918,19 +915,40 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item6_the_Interpreter_s_Signature",
+          "label": "Part 7.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 6. Enter the Interpreter's Signature. This field...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_the_Preparer_s_Signature",
+          "label": "Part 8.  Contact Information, Declaration, and Signature of the Person Preparing this Contract, if Other Than the Sponsor or Household Member. Prep...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_the_Date_of_the_Interpreter",
+          "label": "Part 7.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 6. Enter the Date of the Interpreter's Signature...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item6_the_Date_of_the_Preparer_s_S",
+          "label": "Part 8.  Contact Information, Declaration, and Signature of the Person Preparing this Contract, if Other Than the Sponsor or Household Member. Prep...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 8,
       "fields": [
-        {
-          "key": "Pt11Line5d_AdditionalInfo",
-          "label": "Part 11 Line5d Additional Info",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
         {
           "key": "Pt1Line3e_AlienNumber",
           "label": "Part 1 Line3e Alien Number",
@@ -1046,6 +1064,27 @@
         {
           "key": "Pt1Line1c_MiddleName",
           "label": "Part 1 Line1c Middle Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item5_Additional_Information",
+          "label": "Part 9. Additional Information. 5. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item4_Additional_Information",
+          "label": "Part 9. Additional Information. 4. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_Additional_Information",
+          "label": "Part 9. Additional Information. 3. Enter Additional Information.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

@@ -54,27 +54,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P1_Line2c_unit",
-          "label": "P1 Line2c unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P1_Line2c_AptSteFlrNumber",
           "label": "P1 Line2c Apt Ste Flr Number",
           "mode": "text",
@@ -152,23 +131,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_chbx1ayesno",
-          "label": "P2 chbx1ayesno",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P1_Line6b_RequesterSignDate",
           "label": "P1 Line6b Requester Sign Date",
           "mode": "text",
@@ -206,6 +168,41 @@
         {
           "key": "P5_Line6a_SignatureofApplicant",
           "label": "P5 Line6a Signatureof Applicant",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Suite",
+          "label": "Part 1. Information About You (Requestor).  Requestor's Mailing Address. 2. C. Select Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Floor",
+          "label": "Part 1. Information About You (Requestor).  Requestor's Mailing Address. 2. C. Select Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Apartment",
+          "label": "Part 1. Information About You (Requestor).  Requestor's Mailing Address. 2. C. Select Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "If_you_answered_Yes_provide",
+          "label": "Part 2. Information Needed to Release a Historical Record. 1. A. Is the file information provided below the result of a previous Genealogy Index Se...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "No",
+          "label": "Part 2. Information Needed to Release a Historical Record. 1. A. Is the file information provided below the result of a previous Genealogy Index Se...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -391,21 +388,18 @@
           "defaultValue": ""
         },
         {
-          "key": "P3_line1f_chbx",
-          "label": "P3 line1f chbx",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "80_dollars_Microfilm",
+          "label": "Part 3. Identification of Requested Record.  Naturalization Certificate File (1906 through 1956). 1. F. Fee (Select all appropriate boxes). Select ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "80_dollars_Hard_Copy",
+          "label": "Part 3. Identification of Requested Record.  Naturalization Certificate File (1906 through 1956). 1. F. Fee (Select all appropriate boxes). Select ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -497,29 +491,57 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line5d_AdditionalInfo",
-          "label": "P4 Line5d Additional Info",
+          "key": "Page_Number",
+          "label": "Part 4. Additional Information. 5. A. Enter Page Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "P4_Line5c_ItemNumber",
-          "label": "P4 Line5c Item Number",
+          "key": "Page_Number_2",
+          "label": "Part 4. Additional Information. 6. A. Enter Page Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "P4_Line5a_PageNumber",
-          "label": "P4 Line5a Page Number",
+          "key": "Part_Number",
+          "label": "Part 4. Additional Information. 4. B. Enter Part Number.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
         },
         {
-          "key": "P4_Line5b_PartNumber",
-          "label": "P4 Line5b Part Number",
+          "key": "Part_Number_2",
+          "label": "Part 4. Additional Information. 6. B. Enter Part Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number",
+          "label": "Part 4. Additional Information. 5. C. Enter Item Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item_Number_2",
+          "label": "Part 4. Additional Information. 6. C. Enter Item Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information",
+          "label": "Part 4. Additional Information. 5. D. Enter Additional Information.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Additional_Information_2",
+          "label": "Part 4. Additional Information. 6. D. Enter Additional Information.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""

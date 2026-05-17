@@ -5,13 +5,6 @@
       "page": 1,
       "fields": [
         {
-          "key": "Line1_AlienNumber",
-          "label": "Line 1 Alien Number",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "G28CheckBox",
           "label": "G28Check Box",
           "mode": "checkbox_single",
@@ -47,35 +40,6 @@
           "defaultValue": false
         },
         {
-          "key": "Part1_Eligibility",
-          "label": "Part 1 Eligibility",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            }
-          ]
-        },
-        {
           "key": "P1_Line1_other_explain",
           "label": "P1 Line1 other explain",
           "mode": "text",
@@ -99,6 +63,41 @@
         {
           "key": "Pt1Line1_MiddleName",
           "label": "Part 1 Line1 Middle Name",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_this_box_for_Other",
+          "label": "Part 1.,  2. What is your relationship to your U.S. citizen parent? (Read the N-600 Instructions for more information.) Select this box for:  Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_this_box_for_The_adopted_chi",
+          "label": "Part 1.,  2. What is your relationship to your U.S. citizen parent? (Read the N-600 Instructions for more information.) Select this box for:  The a...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child",
+          "label": "Part 1., 2. What is your relationship to your U.S. citizen parent? (Read the N-600 Instructions for more information.) Select this box for:  The bi...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_this_box_for_The_child_of_a",
+          "label": "Part 1.,  2. What is your relationship to your U.S. citizen parent? (Read the N-600 Instructions for more information.) Select this box for:  The c...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item2_Child_this_box_for_The_child_of_a_2",
+          "label": "Part 1.,  2. What is your relationship to your U.S. citizen parent? (Read the N-600 Instructions for more information.) Select this box for:  The c...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -207,23 +206,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line9_Gender",
-          "label": "P2 Line9 Gender",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "Pt2Line11_City",
           "label": "Part 2 Line11 City",
           "mode": "text",
@@ -250,27 +232,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line11_Unit",
-          "label": "P2 Line11 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line11_PhysicalStreetName",
@@ -313,27 +274,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line10_Unit",
-          "label": "P2 Line10 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P2_Line10_Number",
@@ -399,43 +339,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line12_MaritalStatus",
-          "label": "P2 Line12 Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
-        },
-        {
           "key": "P2_Line12_MaritalStatusOther",
           "label": "P2 Line12 Marital Status Other",
           "mode": "text",
@@ -443,21 +346,123 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line13_ArmedForces",
-          "label": "P2 Line13 Armed Forces",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "this_Box_for_Floor",
+          "label": "Part 2. (continued)., 11. Current Mailing Address. Select this Box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Suite",
+          "label": "Part 2. (continued)., 11. Current Mailing Address. Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Apartment",
+          "label": "Part 2. (continued)., 11. Current Mailing Address. Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_for_Floor",
+          "label": "Part 2. (continued)., 12. Current Physical Address (if different from the address above). Select this for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Suite_2",
+          "label": "Part 2. (continued)., 12. Current Physical Address (if different from the address above). Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Apartment_2",
+          "label": "Part 2. (continued)., 12. Current Physical Address (if different from the address above).  Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Divorced",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Single_Never_Ma",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Single, Never Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Widowed",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Married",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Separated",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Separated.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Other",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Marriage_Annull",
+          "label": "Part 2. (continued)., 13. Current Marital Status. Select this Box for:  Marriage Annulled.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No",
+          "label": "Part 2. (continued)., 14. U.S. Armed Forces. Are you a member or veteran of any branch of the U.S. Armed Forces?   Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes",
+          "label": "Part 2. (continued)., 14. U.S. Armed Forces. Are you a member or veteran of any branch of the U.S. Armed Forces? Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_this_Box_for_Male",
+          "label": "Part 2. (continued)., 9. Sex. Select this Box for:  Male.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item9_this_Box_for_Female",
+          "label": "Part 2. (continued)., 9. Sex. Select this Box for:  Female.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -542,23 +547,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line15C_LPR",
-          "label": "P2 Line15C LPR",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line14D_DateLPR",
           "label": "P2 Line14D Date LPR",
           "mode": "text",
@@ -573,45 +561,11 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line16_LostLPR",
-          "label": "P2 Line16 Lost LPR",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line16_Explain",
           "label": "P2 Line16 Explain",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P2_Line15_AppliedFor",
-          "label": "P2 Line15 Applied For",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "P2_Line17_Explain",
@@ -621,23 +575,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line15_PrevAppliedFor",
-          "label": "P2 Line15 Prev Applied For",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line15_Explain",
           "label": "P2 Line15 Explain",
           "mode": "text",
@@ -645,44 +582,80 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line19",
-          "label": "P2 Line19",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
+          "key": "P3_P2_Line15C_LPR_0",
+          "label": "Part 2. (continued).,15. Information About Your Admission into the United States and Immigration Status. C. Have you ever been a lawful permanent r...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P3_P2_Line15C_LPR_1",
+          "label": "Part 2. (continued)., 15. Information About Your Admission into the United States and Immigration Status. C. Have you ever been a lawful permanent ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_2",
+          "label": "Part 2. (continued)., 17. Have you previously applied for a Certificate of Citizenship? Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_2",
+          "label": "Part 2. (continued)., 17. Have you previously applied for a Certificate of Citizenship? Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_3",
+          "label": "Part 2. (continued)., 18. Have you previously applied for a U.S. Passport? Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_3",
+          "label": "Part 2. (continued)., 18. Have you previously applied for a U.S. Passport? Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_4",
+          "label": "Part 2. (continued)., 16. Have you ever abandoned or lost your L P R status? Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_4",
+          "label": "Part 2. (continued)., 16. Have you ever abandoned or lost your L P R status? Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_5",
+          "label": "Part 2. (continued)., 19. Do you regularly reside in the legal and physical custody of your U.S. citizen parent or parents, or, if over 18 years of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_5",
+          "label": "Part 2. (continued)., 19. Do you regularly reside in the legal and physical custody of your U.S. citizen parent or parents, or, if over 18 years of...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 4,
       "fields": [
-        {
-          "key": "P2_Line17_Adopted",
-          "label": "P2 Line17 Adopted",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt2Line17A_Country",
           "label": "Part 2 Line17A Country",
@@ -731,23 +704,6 @@
           "mode": "checkbox_single",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "key": "P2_Line18_ReAdopted",
-          "label": "P2 Line18 Re Adopted",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
         },
         {
           "key": "Pt2Line21_Yes",
@@ -799,57 +755,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P2_Line20",
-          "label": "P2 Line20",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line23",
-          "label": "P2 Line23",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P2_Line22",
-          "label": "P2 Line22",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P2_Line22A",
           "label": "P2 Line22A",
           "mode": "text",
@@ -859,6 +764,76 @@
         {
           "key": "P2_Line22B",
           "label": "P2 Line22B",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_6",
+          "label": "Part 2. (continued)., 20. Were you adopted?  Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_this_Box_for_Yes",
+          "label": "Part 2.  Information About You (Child of a U.S. Citizen) (continued). 20. Were you adopted? Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_7",
+          "label": "Part 2. (continued)., 20. Were you adopted?  E. Was this adoption considered a full, final, and complete adoption?  Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_6",
+          "label": "Part 2. (continued)., 20. Were you adopted?  E. Was this adoption considered a full, final, and complete adoption?  Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_8",
+          "label": "Part 2. (continued)., 24. Did your parents marry after you were born? Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_7",
+          "label": "Part 2. (continued)., 24. Did your parents marry after you were born? Select this Box for Yes.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P4_P2_Line22_0",
+          "label": "Part 2. (continued)., 25. Have you been absent from the United States since you first arrived?  Select this Box for No (Skip to Part 3.)",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "P4_P2_Line22_1",
+          "label": "Part 2. (continued)., Answer Item Number 25. only if you are claiming U.S. citizenship at the time of birth and you were born before October 10, 19...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_9",
+          "label": "Part 2. (continued)., 23. Were your parents married to each other when you were born? Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_8",
+          "label": "Part 2. (continued)., If you are not adopted, answer Item Numbers 23. and 24.  23. Were your parents married to each other when you were born? Sele...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -988,27 +963,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line5_Unit",
-          "label": "P4 Line5 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P4_Line5_physicalAddress",
           "label": "P4 Line5 physical Address",
           "mode": "text",
@@ -1058,31 +1012,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line6_fcitizen",
-          "label": "P4 Line6 fcitizen",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
           "key": "Pt4Line6_CitizenNo1",
           "label": "Part 4 Line6 Citizen No1",
           "mode": "text",
@@ -1092,6 +1021,55 @@
         {
           "key": "Pt4Line6_Place",
           "label": "Part 4 Line6 Place",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Floor_2",
+          "label": "Part 3., 5. Current Physical Address. Select this Box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Suite_3",
+          "label": "Part 3., 5. Current Physical Address. Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Apartment_3",
+          "label": "Part 3., 5. Current Physical Address. Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Birth_in_the_Un",
+          "label": "Part 3., 6. My mother or father is a U.S. citizen by. Select this Box for:  Birth in the United States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Acquisition_aft",
+          "label": "Part 3., 6. My mother or father is a U.S. citizen by. Select this Box for:  Acquisition after birth through naturalization of parent or parents.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Birth_abroad_to",
+          "label": "Part 3., 6. My mother or father is a U. S. Citizen by. Select this Box for:  Birth abroad to U. S. citizen parents.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Naturalization",
+          "label": "Part 3., 6. My mother or father is a U. S. Citizen by. Select this Box for:  Naturalization.",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1128,60 +1106,6 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
-        },
-        {
-          "key": "P4_Line7",
-          "label": "P4 Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
-          "key": "P4_Line8B_MaritalStatus",
-          "label": "P4 Line8B Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
         },
         {
           "key": "P4_Line8A_TimesMarried",
@@ -1268,27 +1192,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line9E_Unit",
-          "label": "P4 Line9E Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P4_Line9E_ZipCode",
           "label": "P4 Line9E Zip Code",
           "mode": "text",
@@ -1357,33 +1260,96 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_10",
+          "label": "Part 3. (continued)., 7. Has your mother or father ever lost U.S. citizenship or taken any action that would cause loss of U.S. citizenship? Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_9",
+          "label": "Part 3. (continued)., 7. Has your mother or father ever lost U.S. citizenship or taken any action that would cause loss of U.S. citizenship? Select...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Divorced",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Single_Never_Ma",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Single, N...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Widowed",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Married",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Marriage_Annull",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Marriage ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Separated",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Separated.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item8_this_Box_for_Other",
+          "label": "Part 3. (continued)., 8. Marital History. B. What is your U.S. citizen mother's or father's current marital status? Select this Box for:  Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Floor",
+          "label": "Part 3. (continued)., 10. Information About U.S. Citizen Mother's or Father's Current Spouse. E. Spouse's Current Physical Address. Select this Box...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Suite",
+          "label": "Part 3. (continued)., 10. Information About U.S. Citizen Mother's or Father's Current Spouse. E. Spouse's Current Physical Address. Select this Box...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Apartment",
+          "label": "Part 3. (continued)., 10. Information About U.S. Citizen Mother's or Father's Current Spouse. E. Spouse's Current Physical Address. Select this Box...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 7,
       "fields": [
-        {
-          "key": "P4_Line9H_Immigration",
-          "label": "P4 Line9H Immigration",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
         {
           "key": "P4_Line9H_ImmigrationOther",
           "label": "P4 Line9H Immigration Other",
@@ -1476,27 +1442,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P5_Line5_Unit",
-          "label": "P5 Line5 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P5_Line5_PhysicalAddressStreetName",
           "label": "P5 Line5 Physical Address Street Name",
           "mode": "text",
@@ -1539,31 +1484,6 @@
           "defaultValue": false
         },
         {
-          "key": "P5_Line6_fcitizen",
-          "label": "P5 Line6 fcitizen",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
           "key": "Pt5Line6_AlienNumber1",
           "label": "Part 5 Line6 Alien Number1",
           "mode": "text",
@@ -1573,13 +1493,6 @@
         {
           "key": "Pt5Line6_CitizenNo1",
           "label": "Part 5 Line6 Citizen No1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "Pt5Line6_AlienNumber2",
-          "label": "Part 5 Line6 Alien Number2",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -1625,6 +1538,90 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Lawful_Permanen",
+          "label": "Part 3. Information About Your U.S. Citizen Mother or Father (continued) 10. Information About U.S. Citizen Mother's or Father's Current Spouse. H....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_US_Citizen",
+          "label": "Part 3. Information About Your U.S. Citizen Mother or Father (continued) 10. Information About U.S. Citizen Mother's or Father's Current Spouse. H....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Other",
+          "label": "Part 3. Information About Your U.S. Citizen Mother or Father (continued) 10. Information About U.S. Citizen Mother's or Father's Current Spouse. H....",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Floor_3",
+          "label": "Part 4., 6. Current Physical Address. Select this Box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Suite_4",
+          "label": "Part 4., 6. Current Physical Address. Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Apartment_4",
+          "label": "Part 4., 6. Current Physical Address. Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Birth_in_the_Un_2",
+          "label": "Part 4., 8. My other mother or father is a U. S. Citizen by. Select this Box for:  Birth in the United States.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Acquisition_aft_2",
+          "label": "Part 4., 8. My other mother or father is a U. S. Citizen by. Select this Box for:  Acquisition after birth through naturalization of parents.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Birth_abroad_to_2",
+          "label": "Part 4., 8. My other mother or father is a U. S. Citizen by. Select this Box for:  Birth abroad to U. S. citizen parent(s).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Naturalization_2",
+          "label": "Part 4., 8. My other mother or father is a U. S. Citizen by. Select this Box for: Naturalization.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Alien_Registration_A_Number",
+          "label": "Part 4., 8. My other mother or father is a U. S. Citizen by Birth abroad to U.S. citizen parent(s). Enter Alien Registration (A Number) (if any).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "A_Number",
+          "label": "Part 4., 8. My other mother or father is a U. S. Citizen by Naturalization. Enter A Number (if any).",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -1632,65 +1629,11 @@
       "page": 8,
       "fields": [
         {
-          "key": "P5_Line7",
-          "label": "P5 Line7",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P5_Line8A",
           "label": "P5 Line8A",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P5_Line8B_MaritalStatus",
-          "label": "P5 Line8B Marital Status",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            },
-            {
-              "value": 4,
-              "label": "Option 4"
-            },
-            {
-              "value": 5,
-              "label": "Option 5"
-            },
-            {
-              "value": 6,
-              "label": "Option 6"
-            }
-          ]
         },
         {
           "key": "P5_Line8B_MaritalStatusOther",
@@ -1742,23 +1685,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P4_Line11",
-          "label": "P4 Line11",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P5_Line9E_StreetName",
           "label": "P5 Line9E Street Name",
           "mode": "text",
@@ -1771,27 +1697,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P5_Line9E_Unit",
-          "label": "P5 Line9E Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P5_Line9E_ZipCode",
@@ -1836,38 +1741,10 @@
           "defaultValue": ""
         },
         {
-          "key": "P5_Line9H_Immigration",
-          "label": "P5 Line9H Immigration",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P5_Line9H_ImmigrationOther",
           "label": "P5 Line9H Immigration Other",
           "mode": "text",
           "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P5_Line9F_DateofBirth",
-          "label": "P5 Line9F Dateof Birth",
-          "mode": "text",
-          "type": "date",
           "defaultValue": ""
         },
         {
@@ -1883,29 +1760,131 @@
           "mode": "text",
           "type": "country",
           "defaultValue": ""
+        },
+        {
+          "key": "Spouse",
+          "label": "Part 4. (continued)., 11. If your mother or father identified in Part 4. is married, is his or her current spouse your mother or father identified ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_2",
+          "label": "Part 4. (continued)., 11. If your mother or father identified in Part 4. is married, is his or her current spouse your mother or father identified ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_11",
+          "label": "Part 4. (continued)., 9. Has your other mother or father ever lost U.S. citizenship or taken any action that would cause loss of U.S. citizenship? ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_10",
+          "label": "Part 4. Information About Your Other Mother or Father (continued). 9. Has your other mother or father ever lost U.S. citizenship or taken any actio...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Divorced",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for: Divorced.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Single_Never_Ma",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for: Single, Never Ma...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Widowed",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for Widowed.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Married",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for: Married.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Marriage_Annull",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for: Marriage Annulled.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Separated",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for: Separated.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item10_this_Box_for_Other",
+          "label": "Part 4. (continued)., 10. Marital History. B. What is your other mother's or father's current marital status? Select this Box for: Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Floor_2",
+          "label": "Part 4. (continued)., 12. Information About Other Mother's or Father's Current Spouse. E. Spouse's Current Physical Address. Select this Box for Fl...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Suite_2",
+          "label": "Part 4. (continued)., 12. Information About Other Mother's or Father's Current Spouse. E. Spouse's Current Physical Address. Select this Box for Su...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Apartment_2",
+          "label": "Part 4. (continued)., 12. Information About Other Mother's or Father's Current Spouse. E. Spouse's Current Physical Address. Select this Box for Ap...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Lawful_Permanen_2",
+          "label": "Part 4. (continued)., 12. Information About Other Mother's or Father's Current Spouse. H. Spouse's Immigration Status. Select this Box for:  Lawful...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_US_Citizen_2",
+          "label": "Part 4. (continued)., 12. Information About Other Mother's or Father's Current Spouse. H. Spouse's Immigration Status. Select this Box for:  U.S. C...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Spouse_this_Box_for_Other_2",
+          "label": "Part 4. (continued)., 12. Information About Other Mother's or Father's Current Spouse. H. Spouse's Immigration Status. Select this Box for:  Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 9,
       "fields": [
-        {
-          "key": "P6_UScitizen",
-          "label": "P6 UScitizen",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P5_Line3_City",
           "label": "P5 Line3 City",
@@ -1933,27 +1912,6 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
-        },
-        {
-          "key": "P5_Line3_Unit",
-          "label": "P5 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
         },
         {
           "key": "P5_Line3_PhysicalAddressStreetName",
@@ -1984,25 +1942,169 @@
           "defaultValue": ""
         },
         {
-          "key": "P7_Line1",
-          "label": "P7 Line1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
-        {
           "key": "P7_Line2_IfYesProvide",
           "label": "P7 Line2 If Yes Provide",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Floor_4",
+          "label": "Part 5., 3. Current Physical Address. Select this Box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Suite_5",
+          "label": "Part 5., 3. Current Physical Address. Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Apartment_5",
+          "label": "Part 5., 3. Current Physical Address. Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi",
+          "label": "Part 6., 2. Physical Presence in the United States. A. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_2",
+          "label": "Part 6., 2. Physical Presence in the United States. A. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_3",
+          "label": "Part 6., 2. Physical Presence in the United States. B. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_4",
+          "label": "Part 6., 2. Physical Presence in the United States. B. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_5",
+          "label": "Part 6., 2. Physical Presence in the United States. C. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_6",
+          "label": "Part 6., 2. Physical Presence in the United States. C. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_7",
+          "label": "Part 6., 2. Physical Presence in the United States. D. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_8",
+          "label": "Part 6., 2. Physical Presence in the United States. D. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_9",
+          "label": "Part 6., 2. Physical Presence in the United States. E. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_10",
+          "label": "Part 6., 2. Physical Presence in the United States. E. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_11",
+          "label": "Part 6., 2. Physical Presence in the United States. F. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_12",
+          "label": "Part 6., 2. Physical Presence in the United States. F. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_13",
+          "label": "Part 6., 2. Physical Presence in the United States. G. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_14",
+          "label": "Part 6., 2. Physical Presence in the United States. G. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_15",
+          "label": "Part 6., 2. Physical Presence in the United States. H. From Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_16",
+          "label": "Part 6., 2. Physical Presence in the United States. H. To Date (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Child_this_Box_for_US_Citizen_Moth",
+          "label": "Part 6. Physical Presence in the United States From U.S. Citizen Mother's or Father's Birth Until Child's Birth. NOTE: Only applicants born outside...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_US_Citizen_Fath",
+          "label": "Part 6.,1. Indicate to which U.S. citizen parent this information relates. Select this Box for:  U.S. Citizen Father.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_No_12",
+          "label": "Part 7., 1. Has your U.S. citizen parent served in the U.S. Armed Forces?  Select this Box for No.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Yes_11",
+          "label": "Part 7. Information About Military Service of U. S. Citizen Parents. NOTE:  Complete this only if you are an applicant claiming U.S. citizenship at...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2012,48 +2114,6 @@
     {
       "page": 10,
       "fields": [
-        {
-          "key": "P7_Line4_Discharge",
-          "label": "P7 Line4 Discharge",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            },
-            {
-              "value": 3,
-              "label": "Option 3"
-            }
-          ]
-        },
-        {
-          "key": "P8_Line1",
-          "label": "P8 Line1",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P8_Line1B_Language",
           "label": "P8 Line1B Language",
@@ -2099,6 +2159,76 @@
         {
           "key": "P7_Line4_OtherExplain",
           "label": "P7 Line4 Other Explain",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_To_Date_as_2_digit_Month_2_d",
+          "label": "Part 7. (continued)., 3. Dates of Service (m m / d d / y y y y)  (If time of service fulfills any of the required physical presence, submit evidenc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_date_as_2_digit_Month_2_digi",
+          "label": "Part 7. Information About Military Service of U. S. Citizen Parents (continued). 3. Dates of Service (m m / d d / y y y y)  (If time of service ful...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_To_Date_as_2_digit_Month_2_d_2",
+          "label": "Part 7. (continued)., 3. Dates of Service (m m / d d / y y y y)  (If time of service fulfills any of the required physical presence, submit evidenc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_From_Date_as_2_digit_Month_2",
+          "label": "Part 7. (continued)., 3. Dates of Service (m m / d d / y y y y)  (If time of service fulfills any of the required physical presence, submit evidenc...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Other_than_Hono",
+          "label": "Part 7. (continued)., 4. Type of Military Service. Select this Box for Other than Honorable.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Honorable",
+          "label": "Part 7. (continued)., 4. Type of Military Service. Select this Box for Honorable.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Dishonorable",
+          "label": "Part 7. (continued)., 4. Type Military Service. Select this Box for Dishonorable.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Other_2",
+          "label": "Part 7. (continued)., 4. Type of Military Service. Select this Box for Other.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "I_can_read_and_understand_En",
+          "label": "Part 8. Applicant's, Parent's, or Legal Guardian's Statement, Contact Information, Certification, and Signature. NOTE: Read the Penalties section o...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "read_to_me_every_question_an",
+          "label": "Part 8., Applicant's, Parent's, or Legal Guardian's Statement.  1. Applicant's, Parent's, or Legal Guardian's Statement Regarding the Interpreter. ...",
           "mode": "text",
           "type": "text",
           "defaultValue": ""
@@ -2179,27 +2309,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P9_Line3_Unit",
-          "label": "P9 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P9_Line3_Number",
           "label": "P9 Line3 Number",
           "mode": "text",
@@ -2239,6 +2348,27 @@
           "label": "P8 Line5 Telephone",
           "mode": "text",
           "type": "phone",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_Box_for_Suite",
+          "label": "Part 9., Interpreter's Mailing Address. 3. Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_Box_for_Floor",
+          "label": "Part 9., Interpreter's Mailing Address. 3. Select this Box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_Box_for_Apartment",
+          "label": "Part 9., Interpreter's Mailing Address. 3. Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -2324,27 +2454,6 @@
           "defaultValue": ""
         },
         {
-          "key": "P10_Line3_Unit",
-          "label": "P10 Line3 Unit",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            },
-            {
-              "value": 2,
-              "label": "Option 2"
-            }
-          ]
-        },
-        {
           "key": "P10_Line3_Number",
           "label": "P10 Line3 Number",
           "mode": "text",
@@ -2385,29 +2494,33 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_Box_for_Suite_2",
+          "label": "Part 10., Preparer's Mailing Address. 3. Select this Box for Suite.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_Box_for_Floor_2",
+          "label": "Part 10., Preparer's Mailing Address. 3. Select this Box for Floor.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item3_this_Box_for_Apartment_2",
+          "label": "Part 10., Preparer's Mailing Address. 3. Select this Box for Apartment.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 13,
       "fields": [
-        {
-          "key": "Pt10Line7_chkbx",
-          "label": "Part 10 Line7 chkbx",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "Pt10Line7b_DoesNotExtend",
           "label": "Part 10 Line7b Does Not Extend",
@@ -2434,6 +2547,20 @@
           "label": "P10 Line8 Date",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_I_am_not_an_attorney_or_accr",
+          "label": "Part 10. Contact Information, Declaration, and Signature of the Person Preparing this Application, if Other Than the Applicant, Parent, or Legal Gu...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Item7_I_am_an_attorney_or_accredit",
+          "label": "Part 10. (continued)., Preparer's Statement.  Preparer's Statement. 7. Select this box for:  B. I am an attorney or accredited representative and m...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
@@ -2552,6 +2679,20 @@
           "mode": "text",
           "type": "text",
           "defaultValue": ""
+        },
+        {
+          "key": "This_field_is_pre_populated",
+          "label": "Alien Registration Number (A. Number). This is a read only field. This field is pre-populated from Page 1.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Entry_This_field_pre_populated_fro",
+          "label": "Part 11., No Entry. 2. A Number, (if any).  This is a read only field. This field pre-populated from page 1.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
@@ -2566,24 +2707,10 @@
           "defaultValue": ""
         },
         {
-          "key": "Part15blank1",
-          "label": "Part 15 blank1",
-          "mode": "text",
-          "type": "text",
-          "defaultValue": ""
-        },
-        {
           "key": "P12_Signature",
           "label": "P12 Signature",
           "mode": "text",
           "type": "text",
-          "defaultValue": ""
-        },
-        {
-          "key": "P12_DateofSignature",
-          "label": "P12 Dateof Signature",
-          "mode": "text",
-          "type": "date",
           "defaultValue": ""
         },
         {
@@ -2697,29 +2824,54 @@
           "mode": "text",
           "type": "date",
           "defaultValue": ""
+        },
+        {
+          "key": "date_as_2_digit_Month_2_digi_17",
+          "label": "Part 12., Date of Signature (m m / d d / y y y y). Enter date as 2-digit Month, 2-digit Day and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_USCIS_Officer_s_Date_o",
+          "label": "Part 12., Enter U S C I S Officer's Date of Signature (m m / d d / y y y y) as 2-digit Month, 2-digit Day, and 4-digit Year.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_First_Page_Number_of_S",
+          "label": "Part 12., Enter First Page Number of Supplementary Pages.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_Last_Page_Number_of_Su",
+          "label": "Part 12., Enter Last Page Number of Supplementary Pages.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_the_First_Correction_N",
+          "label": "Part 12., Enter the First Correction Number.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "Enter_the_Second_Number_of_C",
+          "label": "Part 12., Enter the Second Number of Corrections.",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
         }
       ]
     },
     {
       "page": 16,
       "fields": [
-        {
-          "key": "P13_Approved",
-          "label": "P13 Approved",
-          "mode": "checkbox_group",
-          "type": "choice",
-          "defaultValue": null,
-          "options": [
-            {
-              "value": 0,
-              "label": "Option 0"
-            },
-            {
-              "value": 1,
-              "label": "Option 1"
-            }
-          ]
-        },
         {
           "key": "P13_FamilyName",
           "label": "P13 Family Name",
@@ -2767,6 +2919,20 @@
           "label": "P13 Dateof Signature",
           "mode": "text",
           "type": "date",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Denied",
+          "label": "Part 13. Officer Report on Application for Certificate of Citizenship \r(for USCIS use ONLY) (continued). This Form N-600 is: Select this Box for:  ...",
+          "mode": "text",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "key": "this_Box_for_Approved",
+          "label": "Part 13. Officer Report on Application for Certificate of Citizenship \r(for USCIS use ONLY) (continued). This Form N-600 is: Select this Box for:  ...",
+          "mode": "text",
+          "type": "text",
           "defaultValue": ""
         }
       ]
