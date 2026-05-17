@@ -379,28 +379,27 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 /* Guided intake */
 .intake-modal{display:none;position:fixed;inset:0;background:rgba(17,30,48,0.78);z-index:10000;align-items:flex-start;justify-content:center;overflow-y:auto;padding:34px 18px;}
 .intake-modal.open{display:flex;}
-.intake-shell{position:relative;width:min(1120px,100%);background:#fbfaf7;border:1px solid rgba(255,255,255,0.34);border-radius:8px;box-shadow:0 28px 80px rgba(0,0,0,0.34);overflow:hidden;color:var(--navy-dark);}
-.intake-top{display:grid;grid-template-columns:260px 1fr;min-height:680px;}
-.intake-rail{background:#111e30;color:#fff;padding:28px 24px;display:flex;flex-direction:column;gap:22px;}
-.intake-brand{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;line-height:1.1;}
-.intake-brand span{display:block;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#86a4c3;margin-top:8px;}
-.intake-steps{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
-.intake-step-dot{display:flex;align-items:center;gap:10px;font-size:13px;color:#9eb2c6;}
-.intake-step-dot span{width:24px;height:24px;border-radius:50%;border:1px solid rgba(255,255,255,0.28);display:flex;align-items:center;justify-content:center;font-size:11px;color:#9eb2c6;flex:none;}
-.intake-step-dot.active{color:#fff;}
-.intake-step-dot.active span{background:#fff;color:#111e30;border-color:#fff;}
-.intake-rail-note{margin-top:auto;border-top:1px solid rgba(255,255,255,0.12);padding-top:18px;font-size:12px;line-height:1.6;color:#9eb2c6;}
-.intake-main{padding:28px 32px 32px;display:flex;flex-direction:column;gap:24px;}
+.intake-shell{position:relative;width:min(820px,100%);background:#fbfaf7;border:1px solid rgba(255,255,255,0.34);border-radius:14px;box-shadow:0 28px 80px rgba(0,0,0,0.34);overflow:hidden;color:var(--navy-dark);}
+.intake-top{display:block;min-height:auto;}
+.intake-rail{display:none;}
+.intake-main{padding:34px 40px 36px;display:flex;flex-direction:column;gap:22px;}
 .intake-close{position:absolute;right:18px;top:14px;border:none;background:rgba(17,30,48,0.08);color:var(--navy);width:38px;height:38px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer;z-index:2;}
-.intake-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;border-bottom:1px solid var(--border);padding-bottom:18px;}
-.intake-kicker{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;color:#68788a;margin-bottom:8px;}
-.intake-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--navy-dark);line-height:1.1;}
-.intake-sub{font-size:14px;line-height:1.65;color:#667;margin-top:10px;max-width:690px;}
+.intake-head{display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.intake-kicker{display:none;}
+.intake-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--navy-dark);line-height:1.2;}
+.intake-sub{display:none;}
 .intake-lang{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
-.intake-lang button{border:1px solid var(--border);background:#fff;color:#445;padding:8px 10px;border-radius:4px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.intake-lang button{border:1px solid var(--border);background:#fff;color:#445;padding:6px 10px;border-radius:999px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
 .intake-lang button.active{background:var(--navy);border-color:var(--navy);color:#fff;}
-.intake-progress{height:8px;background:#e5e3dc;border-radius:999px;overflow:hidden;}
-.intake-progress span{display:block;height:100%;width:0;background:#4a7aaa;border-radius:999px;transition:width 0.25s ease;}
+.intake-progress-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:#68788a;}
+.intake-progress-label{font-weight:500;}
+.intake-progress-percent{font-weight:600;color:var(--navy-dark);}
+.intake-progress-processing{display:none;align-items:center;gap:8px;color:#4a7aaa;font-size:12px;font-weight:500;}
+.intake-progress-processing.active{display:inline-flex;}
+.intake-progress-processing::before{content:"";width:8px;height:8px;border-radius:50%;background:#4a7aaa;animation:intake-pulse 1.1s ease-in-out infinite;}
+@keyframes intake-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.45;transform:scale(0.78);}}
+.intake-progress{height:6px;background:#e8e6df;border-radius:999px;overflow:hidden;}
+.intake-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#4a7aaa,#2b4f7d);border-radius:999px;transition:width 0.35s ease;}
 .intake-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:24px;box-shadow:0 14px 28px rgba(17,30,48,0.06);}
 .intake-form-page{display:inline-flex;align-items:center;width:max-content;max-width:100%;margin-bottom:10px;border:1px solid #d9e3ec;background:#f4f8fb;color:#4b6680;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;}
 .intake-question{font-size:24px;line-height:1.25;color:var(--navy-dark);margin-bottom:10px;font-weight:500;}
@@ -463,26 +462,27 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-draft-status{width:100%;font-size:13px;line-height:1.5;color:#667;}
 .intake-draft-status.ok{color:#247a52;}
 .intake-draft-status.error{color:#a33b31;}
-.intake-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;}
-.intake-btn{border:1px solid var(--navy);border-radius:4px;padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:var(--navy);}
-.intake-btn.primary{background:var(--navy);color:#fff;}
-.intake-btn:disabled{opacity:0.45;cursor:not-allowed;}
+.intake-actions{display:flex;align-items:center;justify-content:center;gap:14px;margin:0;}
+.intake-btn{border:1px solid var(--navy);border-radius:999px;padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:var(--navy);transition:all 0.18s ease;}
+.intake-btn:hover:not(:disabled){background:#f3f7fb;}
+.intake-btn.primary{background:var(--navy);color:#fff;padding:11px 32px;}
+.intake-btn.primary:hover:not(:disabled){background:#22364f;}
+.intake-btn:disabled{opacity:0.55;cursor:not-allowed;background:#c8d2dc;border-color:#c8d2dc;color:#fff;}
+.intake-btn.primary:disabled{background:#a8b4c1;border-color:#a8b4c1;}
 .intake-disclaimer{font-size:12px;line-height:1.55;color:#777;background:#f5f3ee;border-left:3px solid #b94c3f;padding:12px 14px;}
-@media(max-width:860px){.intake-top{grid-template-columns:1fr;}.intake-rail{display:none;}.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row,.intake-phone-grid,.intake-history-entry,.intake-address-grid{grid-template-columns:1fr;}.intake-title{font-size:30px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}}
+@media(max-width:860px){.intake-main{padding:24px 18px;}.intake-head{flex-direction:column;align-items:stretch;}.intake-lang{justify-content:flex-start;}.intake-options,.intake-grid,.intake-choice-row,.intake-phone-grid,.intake-history-entry,.intake-address-grid{grid-template-columns:1fr;}.intake-title{font-size:20px;}.intake-review-row{grid-template-columns:1fr;gap:4px;}.intake-actions{flex-wrap:wrap;}}
 @media(max-width:430px){
   .intake-modal{padding:12px 10px;}
-  .intake-shell{border-radius:7px;}
-  .intake-main{padding:20px 14px 16px;gap:18px;}
+  .intake-shell{border-radius:10px;}
+  .intake-main{padding:20px 14px 22px;gap:16px;}
   .intake-close{right:12px;top:10px;width:34px;height:34px;font-size:22px;}
-  .intake-head{gap:14px;padding:0 42px 14px 0;}
-  .intake-title{font-size:27px;line-height:1.08;}
-  .intake-sub{font-size:13px;line-height:1.55;}
+  .intake-head{gap:12px;padding:0 42px 0 0;}
+  .intake-title{font-size:18px;line-height:1.15;}
   .intake-card{padding:18px;}
   .intake-question{font-size:21px;line-height:1.2;}
   .intake-help{font-size:13px;}
-  .intake-actions{position:sticky;bottom:0;background:#fbfaf7;padding-top:12px;box-shadow:0 -12px 20px rgba(251,250,247,0.92);}
-  .intake-btn{padding:12px 14px;}
-  .intake-btn.primary{flex:1;}
+  .intake-actions{gap:10px;}
+  .intake-btn{padding:11px 20px;flex:1;text-align:center;}
 }
 
 </style>
@@ -1671,27 +1671,27 @@ function closeDetail(id) {
   <div class="intake-shell" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
     <button class="intake-close" type="button" onclick="closeIntakeModal()" aria-label="Close intake">×</button>
     <div class="intake-top">
-      <aside class="intake-rail">
-        <div class="intake-brand">Imverica Intake<span>Document preparation</span></div>
-        <div class="intake-steps" id="intakeSteps"></div>
-        <div class="intake-rail-note" id="intakeRailNote"></div>
-      </aside>
       <main class="intake-main">
         <div class="intake-head">
-          <div>
-            <div class="intake-kicker" id="intakeKicker"></div>
-            <div class="intake-title" id="intakeTitle"></div>
-            <div class="intake-sub" id="intakeSub"></div>
-          </div>
+          <div class="intake-title" id="intakeTitle"></div>
           <div class="intake-lang" id="intakeLang"></div>
         </div>
+        <div class="intake-kicker" id="intakeKicker"></div>
+        <div class="intake-sub" id="intakeSub"></div>
+        <div class="intake-progress-row">
+          <span class="intake-progress-label">Progress</span>
+          <span class="intake-progress-processing" id="intakeProcessing"></span>
+          <span class="intake-progress-percent" id="intakeProgressPercent">0%</span>
+        </div>
         <div class="intake-progress" aria-hidden="true"><span id="intakeProgress"></span></div>
+        <div class="intake-actions">
+          <button class="intake-btn" type="button" id="intakeBack">Previous</button>
+          <button class="intake-btn primary" type="button" id="intakeNext">Next Question</button>
+        </div>
         <div class="intake-card" id="intakeCard"></div>
         <div class="intake-disclaimer" id="intakeDisclaimer"></div>
-        <div class="intake-actions">
-          <button class="intake-btn" type="button" id="intakeBack">Back</button>
-          <button class="intake-btn primary" type="button" id="intakeNext">Next</button>
-        </div>
+        <div class="intake-rail-note" id="intakeRailNote" style="display:none"></div>
+        <div class="intake-steps" id="intakeSteps" style="display:none"></div>
       </main>
     </div>
   </div>
@@ -1728,6 +1728,8 @@ function closeDetail(id) {
   var railNote = document.getElementById('intakeRailNote');
   var disclaimer = document.getElementById('intakeDisclaimer');
   var progress = document.getElementById('intakeProgress');
+  var progressPercent = document.getElementById('intakeProgressPercent');
+  var processingEl = document.getElementById('intakeProcessing');
   var backBtn = document.getElementById('intakeBack');
   var nextBtn = document.getElementById('intakeNext');
   var langEl = document.getElementById('intakeLang');
@@ -1760,6 +1762,8 @@ function closeDetail(id) {
 
   var i18n = {
     en: {
+      processing: 'Processing your answers...',
+      loadingNext: 'Loading Next Question...',
       kicker: 'Step-by-step application',
       title: 'Start document preparation',
       sub: 'Answer a few questions. We will identify possible forms, prepare documents at your direction, and confirm fees before filing anything.',
@@ -1857,6 +1861,8 @@ function closeDetail(id) {
       ]
     },
     ru: {
+      processing: 'Обрабатываем ваши ответы...',
+      loadingNext: 'Загружаем следующий вопрос...',
       kicker: 'Пошаговое оформление',
       title: 'Начать подготовку документов',
       sub: 'Ответьте на несколько вопросов. Мы определим возможные формы, подготовим документы по вашему поручению и подтвердим стоимость до подачи.',
@@ -1954,6 +1960,8 @@ function closeDetail(id) {
       ]
     },
     uk: {
+      processing: 'Обробляємо ваші відповіді...',
+      loadingNext: 'Завантажуємо наступне питання...',
       kicker: 'Покрокове оформлення',
       title: 'Почати підготовку документів',
       sub: 'Дайте відповіді на кілька питань. Ми визначимо можливі форми, підготуємо документи за вашим дорученням і підтвердимо оплату до подання.',
@@ -2051,6 +2059,8 @@ function closeDetail(id) {
       ]
     },
     es: {
+      processing: 'Procesando tus respuestas...',
+      loadingNext: 'Cargando la siguiente pregunta...',
       kicker: 'Solicitud paso a paso',
       title: 'Iniciar preparación de documentos',
       sub: 'Responda algunas preguntas. Identificaremos posibles formularios, prepararemos documentos bajo su dirección y confirmaremos costos antes de presentar nada.',
@@ -2636,11 +2646,25 @@ function closeDetail(id) {
     railNote.textContent = copy.rail;
     disclaimer.textContent = copy.disclaimer;
     backBtn.textContent = copy.back;
-    nextBtn.textContent = state.step === finalStep() ? copy.finish : copy.next;
+    var loading = state.flowLoading || state.routeLoading;
+    nextBtn.textContent = loading
+      ? (copy.loadingNext || 'Loading Next Question...')
+      : (state.step === finalStep() ? copy.finish : copy.next);
     backBtn.style.display = '';
     nextBtn.style.display = '';
-    backBtn.disabled = state.step === 0;
-    progress.style.width = ((state.step + 1) / activeSteps().length * 100) + '%';
+    backBtn.disabled = state.step === 0 || loading;
+    nextBtn.disabled = loading;
+    var pct = Math.round((state.step + 1) / activeSteps().length * 100);
+    progress.style.width = pct + '%';
+    if (progressPercent) progressPercent.textContent = pct + '%';
+    if (processingEl) {
+      if (loading) {
+        processingEl.textContent = (copy.processing || 'Processing your answers...');
+        processingEl.classList.add('active');
+      } else {
+        processingEl.classList.remove('active');
+      }
+    }
     renderLangButtons();
     renderSteps();
     if (state.completed) {
