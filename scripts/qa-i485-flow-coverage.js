@@ -157,7 +157,18 @@ before('i485_foreign_address', 'adjustment_basis');
 before('i485_social_security', 'adjustment_basis');
 before('adjustment_basis', 'i485_related_petition');
 before('i485_related_petition', 'i485_parent1_name');
-before('i485_part9_entries_01', 'contact_info');
+before('i485_parent1_name', 'i485_part9_entries_01');
 before('contact_info', 'documents_interpreter_choice');
+before('documents_notes', 'purpose');
+
+assert.strictEqual(orderedStepIds[0], 'applicant', 'I-485 flow must start with Part 1 applicant fields');
+
+const contactIndex = orderedStepIds.indexOf('contact_info');
+assert(contactIndex >= 0, 'Missing contact_info step');
+orderedStepIds
+  .filter((stepId) => stepId.startsWith('i485_part9_'))
+  .forEach((stepId) => {
+    assert(orderedStepIds.indexOf(stepId) < contactIndex, `Expected ${stepId} before contact_info`);
+  });
 
 console.log('I-485 frontend flow coverage QA passed');

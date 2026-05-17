@@ -1061,8 +1061,8 @@ function field(id, label, type = 'text', options = {}) {
   return { id, label, type, ...options };
 }
 
-function step(id, title, help, fields) {
-  return { id, title, help, fields };
+function step(id, title, help, fields, options = {}) {
+  return { id, title, help, fields, ...options };
 }
 
 const US_STATE_OPTIONS = stateSelectOptions();
@@ -3568,6 +3568,93 @@ function orderedSteps(map, ids) {
   return ids.map((id) => map.get(id)).filter(Boolean);
 }
 
+const I485_STEP_META = {
+  applicant: ['Part 1', 'Page 1'],
+  applicant_name_parts: ['Part 1', 'Page 1'],
+  applicant_other_names: ['Part 1', 'Page 1'],
+  applicant_birth_date: ['Part 1', 'Page 1'],
+  applicant_birth_place: ['Part 1', 'Page 1'],
+  applicant_birth_country: ['Part 1', 'Page 2'],
+  applicant_citizenship: ['Part 1', 'Page 2'],
+  applicant_sex_marital: ['Part 1', 'Page 2'],
+  applicant_uscis_numbers: ['Part 1', 'Page 2'],
+  immigration_passport: ['Part 1', 'Page 2'],
+  immigration_passport_expiration: ['Part 1', 'Page 2'],
+  immigration_entry_record: ['Part 1', 'Page 2'],
+  i485_last_entry_type: ['Part 1', 'Page 2'],
+  i485_parole_details: ['Part 1', 'Page 2'],
+  i485_i94_status: ['Part 1', 'Page 3'],
+  i485_status_expiration: ['Part 1', 'Page 3'],
+  i485_visa_number: ['Part 1', 'Page 3'],
+  address_contact: ['Part 1', 'Page 3'],
+  physical_address_match: ['Part 1', 'Page 3'],
+  i485_residence_period: ['Part 1', 'Page 3'],
+  i485_prior_us_address: ['Part 1', 'Page 4'],
+  i485_foreign_address: ['Part 1', 'Page 4'],
+  i485_social_security: ['Part 1', 'Page 4'],
+  i485_social_security_card: ['Part 1', 'Page 4'],
+  adjustment_basis: ['Part 2', 'Page 5'],
+  i485_location_status: ['Part 2', 'Page 5'],
+  i485_medical_exam: ['Part 2', 'Page 5'],
+  i485_petition_filing: ['Part 2', 'Page 5'],
+  i485_related_petition: ['Part 2', 'Page 5'],
+  i485_petition_person: ['Part 2', 'Page 5'],
+  i485_petition_date: ['Part 2', 'Page 6'],
+  i485_petition_category: ['Part 2', 'Page 6'],
+  i485_eligibility_basis: ['Part 2', 'Page 7'],
+  i485_work_status: ['Part 3', 'Page 8'],
+  i485_current_work_history: ['Part 3', 'Page 8'],
+  i485_foreign_work_history: ['Part 4', 'Page 8'],
+  i485_parent1_name: ['Part 5', 'Page 9'],
+  i485_parent1_middle_name: ['Part 5', 'Page 9'],
+  i485_parent1_birth: ['Part 5', 'Page 9'],
+  i485_parent2_current_name: ['Part 5', 'Page 10'],
+  i485_parent2_middle_name: ['Part 5', 'Page 10'],
+  i485_parent2_birth_name: ['Part 5', 'Page 10'],
+  i485_parent2_birth_middle_name: ['Part 5', 'Page 10'],
+  i485_parent2_birth: ['Part 5', 'Page 10'],
+  i485_marriage_count: ['Part 6', 'Page 10'],
+  i485_current_spouse_name: ['Part 6', 'Page 10'],
+  i485_current_spouse_number: ['Part 6', 'Page 10'],
+  i485_current_spouse_birth: ['Part 6', 'Page 10'],
+  i485_current_marriage: ['Part 6', 'Page 10'],
+  i485_current_marriage_place: ['Part 6', 'Page 11'],
+  i485_prior_spouse_name: ['Part 6', 'Page 11'],
+  i485_prior_spouse_birth: ['Part 6', 'Page 11'],
+  i485_prior_spouse_citizenship: ['Part 6', 'Page 11'],
+  i485_prior_spouse_marriage: ['Part 6', 'Page 11'],
+  i485_prior_spouse_marriage_place: ['Part 6', 'Page 11'],
+  i485_prior_spouse_end_place: ['Part 6', 'Page 11'],
+  i485_prior_spouse_end_country: ['Part 6', 'Page 11'],
+  i485_prior_spouse_end_result: ['Part 6', 'Page 11'],
+  i485_children_count: ['Part 7', 'Page 12'],
+  i485_child1_identity: ['Part 7', 'Page 12'],
+  i485_child1_number: ['Part 7', 'Page 12'],
+  i485_child1_details: ['Part 7', 'Page 12'],
+  i485_child1_relationship: ['Part 7', 'Page 12'],
+  i485_biographic_identity: ['Part 8', 'Page 13'],
+  i485_biographic_body: ['Part 8', 'Page 13'],
+  i485_biographic_weight: ['Part 8', 'Page 13'],
+  i485_biographic_colors: ['Part 8', 'Page 13'],
+  contact_info: ['Part 10', 'Page 22'],
+  documents_interpreter_choice: ['Parts 11-12', 'Pages 22-23'],
+  documents_interpreter_preparer_need: ['Parts 11-12', 'Pages 22-23'],
+  documents_interpreter: ['Part 11', 'Page 22'],
+  documents_interpreter_business: ['Part 11', 'Page 22'],
+  documents_preparer: ['Part 12', 'Page 23'],
+  documents_preparer_business: ['Part 12', 'Page 23']
+};
+
+function annotateI485Steps(steps) {
+  return steps.map((item) => {
+    if (!item || item.formPart || item.formPage) return item;
+    let meta = I485_STEP_META[item.id];
+    if (!meta && /^i485_part9_/.test(item.id)) meta = ['Part 9', 'Pages 14-21'];
+    if (!meta) return item;
+    return { ...item, formPart: meta[0], formPage: meta[1] };
+  });
+}
+
 function i485OrderedSteps() {
   const commonApplicant = applicantSteps();
   const commonAddress = addressContactSteps();
@@ -3575,8 +3662,9 @@ function i485OrderedSteps() {
   const commonEvidence = evidenceSteps();
   const i485Specific = FORM_OVERRIDES['I-485'] || [];
   const map = stepsById(commonApplicant, commonAddress, commonImmigration, commonEvidence, i485Specific);
+  const part9Steps = i485Specific.filter((item) => item?.id && /^i485_part9_/.test(item.id));
 
-  const ordered = orderedSteps(map, [
+  const beforePart9 = orderedSteps(map, [
     // Form I-485 Part 1, pages 1-4: information about the applicant.
     'applicant',
     'applicant_name_parts',
@@ -3648,18 +3736,10 @@ function i485OrderedSteps() {
     'i485_biographic_identity',
     'i485_biographic_body',
     'i485_biographic_weight',
-    'i485_biographic_colors',
+    'i485_biographic_colors'
+  ]);
 
-    // Form I-485 Part 9, pages 14-21: eligibility and inadmissibility grounds.
-    'i485_part9_entries_01',
-    'i485_part9_criminal_01',
-    'i485_part9_criminal_02',
-    'i485_part9_security_01',
-    'i485_part9_security_02',
-    'i485_part9_other_01',
-    'i485_part9_other_02',
-    'i485_part9_other_03',
-
+  const afterPart9 = orderedSteps(map, [
     // Form I-485 Parts 10-13, pages 22-23: contact, interpreter, preparer.
     'contact_info',
     'documents_interpreter_choice',
@@ -3677,6 +3757,7 @@ function i485OrderedSteps() {
     'documents_translation',
     'documents_notes'
   ]);
+  const ordered = [...beforePart9, ...part9Steps, ...afterPart9];
 
   const orderedIds = new Set(ordered.map((item) => item.id));
   const leftovers = [
@@ -3687,7 +3768,7 @@ function i485OrderedSteps() {
     ...commonEvidence
   ].filter((item) => item?.id && !orderedIds.has(item.id));
 
-  return uniqueSteps([...ordered, ...leftovers]);
+  return annotateI485Steps(uniqueSteps([...ordered, ...leftovers]));
 }
 
 function i765OrderedSteps() {
@@ -3771,8 +3852,8 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
 
   const steps = code === 'I-485'
     ? [
-      ...purposeSteps(code, title),
-      ...i485OrderedSteps()
+      ...i485OrderedSteps(),
+      ...purposeSteps(code, title)
     ]
     : code === 'I-765'
       ? [

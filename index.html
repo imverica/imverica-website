@@ -404,6 +404,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-progress{height:8px;background:#e5e3dc;border-radius:999px;overflow:hidden;}
 .intake-progress span{display:block;height:100%;width:0;background:#4a7aaa;border-radius:999px;transition:width 0.25s ease;}
 .intake-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:24px;box-shadow:0 14px 28px rgba(17,30,48,0.06);}
+.intake-form-page{display:inline-flex;align-items:center;width:max-content;max-width:100%;margin-bottom:10px;border:1px solid #d9e3ec;background:#f4f8fb;color:#4b6680;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;}
 .intake-question{font-size:24px;line-height:1.25;color:var(--navy-dark);margin-bottom:10px;font-weight:500;}
 .intake-help{font-size:14px;line-height:1.6;color:#667;margin-bottom:18px;}
 .intake-options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
@@ -419,11 +420,14 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-error{display:none;margin-top:16px;color:#9c3329;background:#fff8f6;border-left:3px solid #b94c3f;padding:12px 14px;font-size:13px;line-height:1.5;}
 .intake-field textarea{min-height:150px;resize:vertical;}
 .intake-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:760px;}
+.intake-grid-single{max-width:680px;}
 .intake-field-full{grid-column:1/-1;}
 .intake-phone-grid{display:grid;grid-template-columns:120px 130px 1fr;gap:10px;}
-.intake-radio-options{display:flex;flex-wrap:wrap;gap:8px;}
-.intake-radio-options .intake-option{min-height:0;padding:11px 14px;display:inline-flex;align-items:center;justify-content:center;text-align:center;min-width:96px;background:#fff;}
+.intake-radio-options{display:flex;flex-wrap:wrap;gap:10px;}
+.intake-radio-options .intake-option{min-height:0;padding:10px 14px;display:inline-flex;align-items:center;justify-content:center;text-align:center;min-width:86px;background:#fff;border-radius:5px;box-shadow:none;}
 .intake-radio-options .intake-option strong{font-size:13px;margin:0;line-height:1.2;}
+.intake-radio-options .intake-option.active{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:none;}
+.intake-radio-options .intake-option.active strong{color:#fff;}
 .intake-checkbox-options{grid-template-columns:1fr;}
 .intake-checkbox-options .intake-option{min-height:0;padding:12px 14px;background:#fff;}
 .intake-address-block{border:1px solid var(--border);border-radius:8px;background:#fbfaf7;padding:14px;display:grid;gap:12px;}
@@ -2157,6 +2161,29 @@ function closeDetail(id) {
   function flowSteps() { return state.flowSchema && Array.isArray(state.flowSchema.steps) ? state.flowSchema.steps : []; }
   function reviewStepIndex() { return flowStepStart() + flowSteps().length; }
   function accountStepIndex() { return reviewStepIndex() + 1; }
+  function isFlowStepIndex(index) {
+    return state.service === 'immigration' && flowSteps().length && index >= flowStepStart() && index < reviewStepIndex();
+  }
+  function visibleFieldsForStepIndex(index) {
+    var schemaStep = flowSteps()[index - flowStepStart()];
+    return schemaStep ? visibleFlowFields(schemaStep) : [];
+  }
+  function skipEmptyFlowSteps(direction) {
+    if (!(state.service === 'immigration' && flowSteps().length)) return;
+    var guard = 0;
+    while (isFlowStepIndex(state.step) && visibleFieldsForStepIndex(state.step).length === 0 && guard < flowSteps().length) {
+      state.step += direction < 0 ? -1 : 1;
+      if (state.step < flowStepStart()) {
+        state.step = flowStepStart();
+        break;
+      }
+      if (state.step > reviewStepIndex()) {
+        state.step = reviewStepIndex();
+        break;
+      }
+      guard += 1;
+    }
+  }
   function activeSteps() {
     var copy = t();
     if (state.service === 'immigration' && flowSteps().length) {
@@ -2561,14 +2588,18 @@ function closeDetail(id) {
   function renderFlowStep(schemaStep) {
     var copy = t();
     var official = state.officialForm || {};
+    var fields = visibleFlowFields(schemaStep);
+    var pageLabel = [schemaStep.formPart, schemaStep.formPage].filter(Boolean).join(' · ');
+    var pageBadge = pageLabel ? '<div class="intake-form-page">' + esc(pageLabel) + '</div>' : '';
+    var gridClass = fields.length <= 1 ? 'intake-grid intake-grid-single' : 'intake-grid';
     var officialNote = '';
     if (schemaStep.id === 'purpose' && official.pdfUrl) {
       officialNote = '<div class="intake-help"><strong>' + esc(copy.officialForm) + ':</strong> ' + esc(official.title || state.formCode) +
         (official.editionDate ? ' · ' + esc(official.editionDate) : '') +
         (official.cachedPdfUrl ? ' · ' + esc(copy.cachedFallback) : '') + '</div>';
     }
-    card.innerHTML = '<div class="intake-question">' + esc(schemaStep.title) + '</div><div class="intake-help">' + esc(schemaStep.help || '') + '</div>' + officialNote +
-      '<div class="intake-grid">' + visibleFlowFields(schemaStep).map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
+    card.innerHTML = pageBadge + '<div class="intake-question">' + esc(schemaStep.title) + '</div><div class="intake-help">' + esc(schemaStep.help || '') + '</div>' + officialNote +
+      '<div class="' + gridClass + '">' + fields.map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
   }
 
   function filledAnswerCount() {
@@ -2600,6 +2631,7 @@ function closeDetail(id) {
 
   function render() {
     var copy = t();
+    skipEmptyFlowSteps(1);
     kicker.textContent = copy.kicker;
     title.textContent = copy.title;
     sub.textContent = copy.sub;
@@ -3177,6 +3209,7 @@ function closeDetail(id) {
   backBtn.addEventListener('click', function () {
     captureStep();
     if (state.step > 0) state.step -= 1;
+    skipEmptyFlowSteps(-1);
     render();
   });
 
@@ -3195,6 +3228,7 @@ function closeDetail(id) {
       var loaded = await loadImmigrationFlow();
       if (loaded && flowSteps().length) {
         state.step = flowStepStart();
+        skipEmptyFlowSteps(1);
         render();
       } else {
         render();
@@ -3203,6 +3237,7 @@ function closeDetail(id) {
     }
     if (state.step < finalStep()) {
       state.step += 1;
+      skipEmptyFlowSteps(1);
       render();
       return;
     }
