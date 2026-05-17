@@ -2637,6 +2637,124 @@ function i912SpecificSteps() {
   ];
 }
 
+function i751SpecificSteps() {
+  return [
+    // I-751 Part 1-2: conditional resident and filing basis.
+    step('i751_filing_type', 'I-751 filing basis', 'Start with the exact filing basis selected on the form.', [
+      field('i751_filing_type', 'Filing type', 'select', {
+        required: true,
+        options: ['Joint filing with spouse', 'Divorce waiver', 'Abuse or extreme cruelty waiver', 'Hardship waiver', 'Death of spouse waiver', 'Not sure']
+      }),
+      field('conditional_green_card_expiration', 'Conditional green card expiration date', 'date', { required: true })
+    ]),
+    step('i751_conditional_resident_numbers', 'Conditional resident numbers', 'Use A-number and USCIS account number if available.', [
+      field('alien_number', 'Conditional resident A-number', 'text', { required: true, autocomplete: 'off', placeholder: '9 digits' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i751_conditional_resident_name', 'Conditional resident legal name', 'Enter the conditional resident name exactly as shown on documents.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i751_middle_other_names', 'Middle and other names', 'Leave middle name blank if none. Add prior names only if used.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('other_names_used', 'Other names used, if any', 'textarea')
+    ]),
+    step('i751_birth_sex', 'Birth and sex', 'Date of birth, country of birth, and sex.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('sex', 'Sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i751_birth_country', 'Country of birth and citizenship', 'Country fields from the conditional resident section.', [
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i751_mailing_address', 'Conditional resident mailing address', 'Complete the mailing address as a structured address block.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    ]),
+    step('i751_physical_address_match', 'Conditional resident physical address', 'USCIS asks whether physical address differs from mailing address.', [
+      field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i751_physical_address', 'Physical address details', 'Complete only if physical address differs from mailing address.', [
+      addressBlockField('physical_address', 'Physical address', 'physical', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+
+    // I-751 relationship and spouse.
+    step('i751_marriage_status', 'Current marriage status', 'Marriage status drives joint filing or waiver facts.', [
+      field('marriage_status_now', 'Current marriage status', 'select', {
+        required: true,
+        options: ['Married living together', 'Married but separated', 'Divorced', 'Widowed', 'Annulled', 'Other']
+      }),
+      field('conditional_residence_basis', 'How did you receive conditional residence?', 'select', {
+        options: ['Marriage to U.S. citizen', 'Marriage to lawful permanent resident', 'Entrepreneur/investor', 'Dependent child', 'Not sure']
+      })
+    ]),
+    step('i751_spouse_name', 'Spouse or former spouse name', 'Use the spouse connected to the conditional residence.', [
+      field('spouse_family_name', 'Spouse/former spouse family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('spouse_given_name', 'Spouse/former spouse given name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i751_spouse_status', 'Spouse status and birth', 'Spouse citizenship/status and basic identity.', [
+      field('spouse_status', 'Spouse/former spouse status', 'select', { options: ['U.S. citizen', 'Lawful permanent resident', 'Other', 'Not sure'] }),
+      field('spouse_date_of_birth', 'Spouse/former spouse date of birth', 'date')
+    ]),
+    step('i751_marriage_details', 'Marriage details', 'Marriage date and place from the I-751 relationship section.', [
+      field('current_marriage_date', 'Date of marriage', 'date', { required: true }),
+      field('current_marriage_city', 'City or town of marriage', 'text')
+    ]),
+    step('i751_marriage_place', 'Marriage state and country', 'State/province and country where the marriage occurred.', [
+      field('current_marriage_state', 'State or province of marriage', 'text'),
+      field('current_marriage_country', 'Country of marriage', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i751_divorce_or_waiver', 'Waiver or divorce details', 'Complete when this is not a joint living-together filing.', [
+      field('i751_waiver_details', 'Divorce, abuse, hardship, death, or separation facts', 'textarea', {
+        showWhenAny: [
+          { id: 'i751_filing_type', equals: 'Divorce waiver' },
+          { id: 'i751_filing_type', equals: 'Abuse or extreme cruelty waiver' },
+          { id: 'i751_filing_type', equals: 'Hardship waiver' },
+          { id: 'i751_filing_type', equals: 'Death of spouse waiver' },
+          { id: 'i751_filing_type', equals: 'Not sure' }
+        ]
+      })
+    ]),
+
+    // I-751 children, addresses, criminal history, evidence, contact.
+    step('i751_children', 'Children included', 'List children included as dependents, if any.', [
+      field('total_children', 'Number of children included', 'number', { inputmode: 'numeric' }),
+      field('children_details', 'Children details', 'textarea', {
+        placeholder: 'For each child: full name, A-number if any, DOB, relationship.'
+      })
+    ]),
+    step('i751_residence_history', 'Residence history', 'Use this when the case needs a relationship/residence timeline.', [
+      addressHistoryField('residence_history', 'Residence history during conditional residence', { entries: 3 })
+    ]),
+    step('i751_criminal_history', 'Criminal history', 'Any arrest, charge, citation, conviction, or immigration problem needs review.', [
+      field('i751_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i751_criminal_history_details', 'Criminal or immigration issue details', 'textarea', {
+        showWhenAny: [
+          { id: 'i751_arrested_or_convicted', equals: 'Yes' },
+          { id: 'i751_arrested_or_convicted', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i751_relationship_evidence', 'Relationship evidence', 'Evidence for bona fide marriage or waiver basis.', [
+      field('joint_evidence_available', 'Joint evidence available', 'textarea', {
+        placeholder: 'Lease, mortgage, taxes, bank accounts, insurance, children, photos, affidavits.'
+      })
+    ]),
+    step('i751_applicant_contact', 'Applicant contact information', 'Phone and email for the signature/contact section.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i751_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this petition?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this petition for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -3049,17 +3167,7 @@ const FORM_OVERRIDES = {
     ])
   ],
   'I-589': i589SpecificSteps(),
-  'I-751': [
-    step('remove_conditions', 'Remove conditions on residence', 'Marriage-based conditional resident details.', [
-      field('i751_filing_type', 'Filing type', 'select', {
-        required: true,
-        options: ['Joint filing with spouse', 'Divorce waiver', 'Abuse or extreme cruelty waiver', 'Hardship waiver', 'Not sure']
-      }),
-      field('conditional_green_card_expiration', 'Conditional green card expiration date', 'date'),
-      field('marriage_status_now', 'Current marriage status', 'select', { options: ['Married living together', 'Separated', 'Divorced', 'Widowed', 'Other'] }),
-      field('joint_evidence_available', 'Joint evidence available', 'textarea', { placeholder: 'Lease, mortgage, taxes, bank accounts, insurance, children, photos, affidavits.' })
-    ])
-  ],
+  'I-751': i751SpecificSteps(),
   'I-765': [
     step('i765_application_reason', 'I-765 reason for applying', 'Part 1 of Form I-765: select only one reason for applying.', [
       field('i765_application_reason', 'Reason for applying on I-765', 'select', {
@@ -3492,12 +3600,18 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                       ...i912SpecificSteps(),
                       ...evidenceSteps()
                     ]
-                    : code === 'N-400'
+                    : code === 'I-751'
                       ? [
                         ...purposeSteps(code, title),
-                        ...n400SpecificSteps(),
+                        ...i751SpecificSteps(),
                         ...evidenceSteps()
                       ]
+                      : code === 'N-400'
+                        ? [
+                          ...purposeSteps(code, title),
+                          ...n400SpecificSteps(),
+                          ...evidenceSteps()
+                        ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),

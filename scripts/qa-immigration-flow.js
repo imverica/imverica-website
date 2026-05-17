@@ -43,7 +43,7 @@ function syntaxCheckInlineScripts() {
 }
 
 async function main() {
-  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-589', 'I-864', 'I-912', 'N-400', 'AR-11'];
+  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-589', 'I-751', 'I-864', 'I-912', 'N-400', 'AR-11'];
 
   for (const code of codes) {
     const { response, body } = await callFlow(code);
@@ -180,6 +180,19 @@ async function main() {
   assert(i912Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-912: mailing address should be structured');
   assert(i912Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-912: daytime phone should be split phone field');
   assert(i912Fields.find((field) => field.id === 'fee_waiver_basis')?.type === 'checkboxes', 'I-912: fee waiver basis should be checkboxes');
+
+  const i751 = await callFlow('I-751', 'en');
+  const i751Order = i751.body.steps.map((step) => step.id);
+  assert(i751Order.indexOf('i751_filing_type') < i751Order.indexOf('i751_conditional_resident_name'), 'I-751: filing type must come before resident name');
+  assert(i751Order.indexOf('i751_mailing_address') < i751Order.indexOf('i751_marriage_status'), 'I-751: resident address must come before relationship details');
+  assert(i751Order.indexOf('i751_marriage_status') < i751Order.indexOf('i751_spouse_name'), 'I-751: marriage status must come before spouse details');
+  assert(i751Order.indexOf('i751_marriage_details') < i751Order.indexOf('i751_children'), 'I-751: marriage details must come before children');
+  assert(i751Order.indexOf('i751_criminal_history') < i751Order.indexOf('i751_relationship_evidence'), 'I-751: criminal history must come before evidence');
+  const i751Fields = i751.body.steps.flatMap((step) => step.fields || []);
+  assert(i751Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-751: mailing address should be structured');
+  assert(i751Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-751: physical address should be structured');
+  assert(i751Fields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-751: residence history should be structured');
+  assert(i751Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-751: daytime phone should be split phone field');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
