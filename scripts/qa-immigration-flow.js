@@ -43,7 +43,7 @@ function syntaxCheckInlineScripts() {
 }
 
 async function main() {
-  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-539', 'I-589', 'I-751', 'I-864', 'I-912', 'N-400', 'AR-11'];
+  const codes = ['I-765', 'I-485', 'I-130', 'I-131', 'I-90', 'I-539', 'I-589', 'I-751', 'I-821', 'I-821D', 'I-864', 'I-912', 'N-400', 'AR-11'];
 
   for (const code of codes) {
     const { response, body } = await callFlow(code);
@@ -205,6 +205,28 @@ async function main() {
   assert(i539Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-539: mailing address should be structured');
   assert(i539Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-539: physical address should be structured');
   assert(i539Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-539: daytime phone should be split phone field');
+
+  const i821 = await callFlow('I-821', 'en');
+  const i821Order = i821.body.steps.map((step) => step.id);
+  assert(i821Order.indexOf('i821_tps_request_type') < i821Order.indexOf('i821_applicant_name'), 'I-821: TPS request type must come before applicant name');
+  assert(i821Order.indexOf('i821_mailing_address') < i821Order.indexOf('i821_entry_status'), 'I-821: address/contact must come before entry status');
+  assert(i821Order.indexOf('i821_tps_dates') < i821Order.indexOf('i821_criminal_security'), 'I-821: TPS dates must come before criminal/security questions');
+  const i821Fields = i821.body.steps.flatMap((step) => step.fields || []);
+  assert(i821Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-821: mailing address should be structured');
+  assert(i821Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-821: physical address should be structured');
+  assert(i821Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821: daytime phone should be split phone field');
+
+  const i821d = await callFlow('I-821D', 'en');
+  const i821dOrder = i821d.body.steps.map((step) => step.id);
+  assert(i821dOrder.indexOf('i821d_request_type') < i821dOrder.indexOf('i821d_applicant_name'), 'I-821D: request type must come before applicant name');
+  assert(i821dOrder.indexOf('i821d_mailing_address') < i821dOrder.indexOf('i821d_arrival_before_16'), 'I-821D: address/contact must come before arrival questions');
+  assert(i821dOrder.indexOf('i821d_arrival_before_16') < i821dOrder.indexOf('i821d_residence_history'), 'I-821D: arrival must come before residence history');
+  assert(i821dOrder.indexOf('i821d_education_military') < i821dOrder.indexOf('i821d_criminal_history'), 'I-821D: education/military must come before criminal history');
+  const i821dFields = i821d.body.steps.flatMap((step) => step.fields || []);
+  assert(i821dFields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-821D: mailing address should be structured');
+  assert(i821dFields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-821D: physical address should be structured');
+  assert(i821dFields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-821D: residence history should be structured');
+  assert(i821dFields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821D: daytime phone should be split phone field');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');

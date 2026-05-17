@@ -2848,6 +2848,156 @@ function i539SpecificSteps() {
   ];
 }
 
+function i821SpecificSteps() {
+  return [
+    step('i821_tps_request_type', 'TPS request type', 'Start with TPS country and initial/re-registration selection.', [
+      field('tps_country', 'TPS country designation', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('initial_or_reregistration', 'Initial TPS or re-registration?', 'select', {
+        required: true,
+        options: ['Initial TPS', 'Re-registration', 'Late initial filing', 'Not sure']
+      })
+    ]),
+    step('i821_applicant_name', 'Applicant legal name', 'Enter the applicant name exactly as it should appear on Form I-821.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i821_middle_other_names', 'Middle and other names', 'Leave middle name blank if none. List prior names only if used.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('other_names_used', 'Other names used, if any', 'textarea')
+    ]),
+    step('i821_numbers', 'Applicant USCIS numbers', 'A-number, USCIS account number, and SSN if available.', [
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i821_birth_citizenship', 'Birth and citizenship', 'Date of birth, country of birth, and citizenship/nationality.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i821_citizenship_identity', 'Citizenship and identity', 'Country of citizenship and identity details.', [
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS }),
+      field('sex', 'Sex', 'radio', { options: ['Male', 'Female'] })
+    ]),
+    step('i821_mailing_address', 'Mailing address', 'Complete mailing address as a structured block.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    ]),
+    step('i821_physical_address_match', 'Physical address', 'USCIS asks whether physical address is the same as mailing.', [
+      field('physical_same_as_mailing', 'Is your physical address the same as mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i821_physical_address', 'Physical address details', 'Complete only if physical address differs from mailing.', [
+      addressBlockField('physical_address', 'Physical address', 'physical', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i821_contact', 'Applicant contact information', 'Phone and email for contact and signature sections.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i821_entry_status', 'Entry and current status', 'Most recent entry, I-94, and current immigration status.', [
+      field('last_arrival_date', 'Most recent U.S. arrival date', 'date'),
+      field('current_immigration_status', 'Current immigration status', 'text')
+    ]),
+    step('i821_i94_passport', 'I-94 and passport', 'I-94 and passport/travel document details.', [
+      field('i94_number', 'I-94 number, if any', 'text', { autocomplete: 'off' }),
+      field('passport_number', 'Passport number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i821_tps_dates', 'TPS residence and physical presence dates', 'Dates required for TPS continuous residence and physical presence.', [
+      field('continuous_residence_date', 'Date of continuous residence in the U.S.', 'date'),
+      field('continuous_physical_presence_date', 'Date of continuous physical presence in the U.S.', 'date')
+    ]),
+    step('i821_prior_tps', 'Prior TPS filings', 'Prior TPS approval, denial, withdrawal, or receipt information.', [
+      field('tps_prior_approval', 'Prior TPS approval or receipt numbers', 'textarea'),
+      field('tps_prior_denial_or_withdrawal', 'Prior TPS denial, withdrawal, or termination details', 'textarea')
+    ]),
+    step('i821_criminal_security', 'Criminal and security questions', 'Any Yes or unsure answer needs document review.', [
+      field('i821_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i821_security_or_persecution_issue', 'Any security, persecution, terrorism, or human-rights issue?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+    ]),
+    step('i821_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this application for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
+function i821dSpecificSteps() {
+  return [
+    step('i821d_request_type', 'DACA request type', 'Start with initial or renewal DACA request type.', [
+      field('daca_request_type', 'Request type', 'select', {
+        required: true,
+        options: ['Renewal', 'Initial', 'Not sure']
+      }),
+      field('prior_daca_dates', 'Prior DACA approval dates and receipt numbers', 'textarea')
+    ]),
+    step('i821d_applicant_name', 'Applicant legal name', 'Enter the applicant name exactly as it should appear on Form I-821D.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+    ]),
+    step('i821d_middle_other_names', 'Middle and other names', 'Leave middle name blank if none. List prior names only if used.', [
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
+      field('other_names_used', 'Other names used, if any', 'textarea')
+    ]),
+    step('i821d_numbers', 'Applicant USCIS numbers', 'A-number, USCIS account number, and SSN if available.', [
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i821d_birth_citizenship', 'Birth and citizenship', 'Date of birth, country of birth, and citizenship/nationality.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i821d_mailing_address', 'Mailing address', 'Complete mailing address as a structured block.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    ]),
+    step('i821d_physical_address_match', 'Physical address', 'USCIS asks whether physical address is the same as mailing.', [
+      field('physical_same_as_mailing', 'Is your physical address the same as mailing address?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      })
+    ]),
+    step('i821d_physical_address', 'Physical address details', 'Complete only if physical address differs from mailing.', [
+      addressBlockField('physical_address', 'Physical address', 'physical', {
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i821d_contact', 'Applicant contact information', 'Phone and email for contact and signature sections.', [
+      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    ]),
+    step('i821d_arrival_before_16', 'Arrival before age 16', 'Core DACA factual timeline question.', [
+      field('arrival_before_age_16', 'Did you arrive before age 16?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('date_last_entered_us', 'Date last entered the United States', 'date')
+    ]),
+    step('i821d_entry_status', 'Entry and status', 'Entry place, I-94, and current status if any.', [
+      field('place_entry', 'Place of last entry into the United States', 'text'),
+      field('current_immigration_status', 'Current immigration status, if any', 'text')
+    ]),
+    step('i821d_residence_history', 'Residence history', 'Residence history for the relevant DACA period.', [
+      addressHistoryField('residence_history', 'Residence history', { entries: 4, required: true })
+    ]),
+    step('i821d_education_military', 'Education or military status', 'School, graduation, GED, or military service evidence.', [
+      field('education_or_military_status', 'School, GED, graduation, or military status', 'textarea'),
+      field('i821d_education_documents_available', 'Education or military documents available', 'checkboxes', {
+        options: ['School records', 'Diploma', 'GED certificate', 'Transcript', 'Military records', 'Other']
+      })
+    ]),
+    step('i821d_criminal_history', 'Criminal history', 'Any Yes or unsure answer needs document review.', [
+      field('i821d_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i821d_criminal_history_details', 'Criminal-history details and documents', 'textarea', {
+        showWhenAny: [
+          { id: 'i821d_arrested_or_convicted', equals: 'Yes' },
+          { id: 'i821d_arrested_or_convicted', equals: 'Not sure' }
+        ]
+      })
+    ]),
+    step('i821d_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
+      field('has_interpreter', 'Will an interpreter be used for this request?', 'radio', { options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this request for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -3294,22 +3444,8 @@ const FORM_OVERRIDES = {
       })
     ])
   ],
-  'I-821': [
-    step('tps_details', 'TPS request details', 'Temporary Protected Status preparation details.', [
-      field('tps_country', 'TPS country designation', 'select', { required: true, options: COUNTRY_OPTIONS }),
-      field('initial_or_reregistration', 'Initial TPS or re-registration?', 'select', { required: true, options: ['Initial TPS', 'Re-registration', 'Late initial filing', 'Not sure'] }),
-      field('continuous_residence_date', 'Date of continuous residence in the U.S.', 'date'),
-      field('tps_prior_approval', 'Prior TPS approval or receipt numbers', 'textarea')
-    ])
-  ],
-  'I-821D': [
-    step('daca_details', 'DACA request details', 'Deferred Action for Childhood Arrivals preparation details.', [
-      field('daca_request_type', 'Request type', 'select', { required: true, options: ['Renewal', 'Initial', 'Not sure'] }),
-      field('arrival_before_age_16', 'Did you arrive before age 16?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('education_or_military_status', 'School, GED, graduation, or military status', 'textarea'),
-      field('prior_daca_dates', 'Prior DACA approval dates and receipt numbers', 'textarea')
-    ])
-  ],
+  'I-821': i821SpecificSteps(),
+  'I-821D': i821dSpecificSteps(),
   'I-864': i864SpecificSteps(),
   'I-864A': [
     step('household_member_contract', 'Household member income', 'Details for a household member contributing income.', [
@@ -3697,12 +3833,24 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                           ...i539SpecificSteps(),
                           ...evidenceSteps()
                         ]
-                        : code === 'N-400'
+                        : code === 'I-821'
                           ? [
                             ...purposeSteps(code, title),
-                            ...n400SpecificSteps(),
+                            ...i821SpecificSteps(),
                             ...evidenceSteps()
                           ]
+                          : code === 'I-821D'
+                            ? [
+                              ...purposeSteps(code, title),
+                              ...i821dSpecificSteps(),
+                              ...evidenceSteps()
+                            ]
+                            : code === 'N-400'
+                              ? [
+                                ...purposeSteps(code, title),
+                                ...n400SpecificSteps(),
+                                ...evidenceSteps()
+                              ]
       : [
       ...purposeSteps(code, title),
       ...groupSpecificSteps(code, entry),
