@@ -555,8 +555,8 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
   <div class="site-lang" aria-label="Website language">
     <button type="button" class="active" data-site-lang="en"><span class="flag">🇺🇸</span><span>EN</span></button>
     <button type="button" data-site-lang="ru"><span class="flag">🇷🇺</span><span>RU</span></button>
-    <button type="button" data-site-lang="uk"><span class="flag">🇺🇦</span><span>UK</span></button>
-    <button type="button" data-site-lang="es"><span class="flag">🇪🇸</span><span>ES</span></button>
+    <button type="button" data-site-lang="uk"><span class="flag">🇺🇦</span><span>UA</span></button>
+    <button type="button" data-site-lang="es"><span class="flag">🇲🇽</span><span>ES</span></button>
   </div>
   <a class="nav-cta" href="#" onclick="openQuoteModal();return false;">Get a Quote</a>
   <button class="burger" id="burger" aria-label="Menu">
@@ -577,7 +577,7 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
     <button type="button" class="active" data-site-lang="en">🇺🇸 English</button>
     <button type="button" data-site-lang="ru">🇷🇺 Русский</button>
     <button type="button" data-site-lang="uk">🇺🇦 Українська</button>
-    <button type="button" data-site-lang="es">🇪🇸 Español</button>
+    <button type="button" data-site-lang="es">🇲🇽 Español</button>
   </div>
   <a href="#contact" class="mobile-cta">Book Appointment</a>
 </div>
@@ -2237,8 +2237,10 @@ function closeDetail(id) {
   }
 
   function renderLangButtons() {
+    var FLAGS = { en: '🇺🇸', ru: '🇷🇺', uk: '🇺🇦', es: '🇲🇽' };
+    var LABELS = { en: 'EN', ru: 'RU', uk: 'UA', es: 'ES' };
     langEl.innerHTML = ['en','ru','uk','es'].map(function (lang) {
-      return '<button type="button" class="' + (state.lang === lang ? 'active' : '') + '" data-intake-lang="' + lang + '">' + lang.toUpperCase() + '</button>';
+      return '<button type="button" class="' + (state.lang === lang ? 'active' : '') + '" data-intake-lang="' + lang + '"><span class="flag">' + FLAGS[lang] + '</span> ' + LABELS[lang] + '</button>';
     }).join('');
   }
 
