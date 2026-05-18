@@ -127,6 +127,10 @@ async function main() {
   assert(i131Fields.find((field) => field.id === 'i131_mailing_address')?.type === 'addressBlock', 'I-131: mailing address should be structured');
   assert(i131Fields.find((field) => field.id === 'i131_beneficiary_address')?.type === 'addressBlock', 'I-131: beneficiary address should be structured');
   assert(i131Fields.find((field) => field.id === 'i131_daytime_phone')?.type === 'phone', 'I-131: daytime phone should be US 10-digit phone field');
+  assert(i131Fields.find((field) => field.id === 'i131_delivery_address')?.showWhen?.[0]?.id === 'i131_delivery_option', 'I-131: delivery address should only show when document is not mailed to applicant');
+  assert(i131Fields.find((field) => field.id === 'i131_person_outside_us_explanation')?.showWhen?.[0]?.id === 'i131_application_type', 'I-131: person-outside questions should be conditional by application type');
+  assert(i131Fields.find((field) => field.id === 'i131_purpose_of_travel')?.showWhen?.[0]?.id === 'i131_application_type', 'I-131: travel purpose should only show for travel/parole application types');
+  assert(i131Fields.find((field) => field.id === 'i131_prior_document_number')?.showWhen?.[0]?.id === 'i131_document_action', 'I-131: prior document number should only show for prior-document actions');
 
   const i90 = await callFlow('I-90', 'en');
   const i90Order = i90.body.steps.map((step) => step.id);

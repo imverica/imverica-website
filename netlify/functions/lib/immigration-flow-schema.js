@@ -2039,6 +2039,16 @@ function i130aSpecificSteps() {
 }
 
 function i131SpecificSteps() {
+  const correctionActions = ['Renewal', 'Replacement', 'Correction', 'Record request'];
+  const deliveryAwayFromApplicant = ['U.S. Embassy or Consulate', 'DHS office outside the United States', 'Attorney or accredited representative'];
+  const forPersonOutsideTypes = ['Advance parole document for person outside the United States', 'Initial parole document'];
+  const travelTripTypes = [
+    'Advance parole document while inside the United States',
+    'Advance parole document for person outside the United States',
+    'TPS travel authorization',
+    'Initial parole document'
+  ];
+  const longTripTypes = ['Reentry permit', 'Refugee travel document'];
   return [
     // I-131 Part 1, pages 1-4: application type and requested document.
     step('i131_application_type', 'I-131 application type', 'Start with the exact travel document or parole document requested on the form.', [
@@ -2062,7 +2072,10 @@ function i131SpecificSteps() {
         required: true,
         options: ['Initial document', 'Renewal', 'Replacement', 'Correction', 'Record request', 'Not sure']
       }),
-      field('i131_prior_document_number', 'Prior travel/parole document or receipt number, if any', 'text', { autocomplete: 'off' })
+      field('i131_prior_document_number', 'Prior travel/parole document or receipt number, if any', 'text', {
+        autocomplete: 'off',
+        showWhen: [{ id: 'i131_document_action', in: correctionActions }]
+      })
     ]),
     step('i131_replacement_reason', 'Replacement or correction details', 'Complete this only if a prior document needs replacement or correction.', [
       field('i131_replacement_reason', 'Reason for replacement or correction', 'select', {
@@ -2128,7 +2141,8 @@ function i131SpecificSteps() {
     step('i131_for_someone_else', 'Beneficiary information', 'Some I-131 filings are for a beneficiary other than the person preparing the request.', [
       field('i131_for_beneficiary', 'Is this application for someone other than the applicant above?', 'radio', {
         required: true,
-        options: ['No, this is for the applicant', 'Yes, this is for another person']
+        options: ['No, this is for the applicant', 'Yes, this is for another person'],
+        showWhen: [{ id: 'i131_application_type', in: forPersonOutsideTypes }]
       })
     ]),
     step('i131_beneficiary_name', 'Beneficiary legal name', 'Complete this if the request is for another person.', [
@@ -2200,50 +2214,83 @@ function i131SpecificSteps() {
       field('i131_delivery_option', 'Delivery option', 'select', {
         options: ['Mail to applicant U.S. address', 'U.S. Embassy or Consulate', 'DHS office outside the United States', 'Attorney or accredited representative', 'Not sure']
       }),
-      field('i131_delivery_contact_email', 'Delivery contact email, if any', 'email', { autocomplete: 'email' })
+      field('i131_delivery_contact_email', 'Delivery contact email, if any', 'email', {
+        autocomplete: 'email',
+        showWhen: [{ id: 'i131_delivery_option', in: deliveryAwayFromApplicant }]
+      })
     ]),
     step('i131_delivery_address', 'Document delivery address', 'Complete only if the document should be sent somewhere other than the applicant mailing address.', [
-      addressBlockField('i131_delivery_address', 'Delivery address', 'i131_delivery')
+      addressBlockField('i131_delivery_address', 'Delivery address', 'i131_delivery', {
+        showWhen: [{ id: 'i131_delivery_option', in: deliveryAwayFromApplicant }]
+      })
     ]),
 
     // I-131 Parts 5-8, pages 9-11: travel and category questions.
     step('i131_time_outside_us', 'Time outside the United States', 'For reentry permits and some travel documents, USCIS asks about expected time outside the United States.', [
       field('i131_expected_time_outside_us', 'Expected time outside the United States', 'select', {
-        options: ['Less than 6 months', '6 months to 1 year', '1 to 2 years', '2 to 3 years', '3 to 4 years', 'More than 4 years', 'Not sure']
+        options: ['Less than 6 months', '6 months to 1 year', '1 to 2 years', '2 to 3 years', '3 to 4 years', 'More than 4 years', 'Not sure'],
+        showWhen: [{ id: 'i131_application_type', in: longTripTypes }]
       }),
-      field('i131_country_of_refugee_status', 'Country of refugee/asylee status, if applicable', 'select', { options: COUNTRY_OPTIONS })
+      field('i131_country_of_refugee_status', 'Country of refugee/asylee status, if applicable', 'select', {
+        options: COUNTRY_OPTIONS,
+        showWhen: [{ id: 'i131_application_type', equals: 'Refugee travel document' }]
+      })
     ]),
     step('i131_prior_removal_or_status_issues', 'Prior removal or status issues', 'These are Yes/No questions from the travel document eligibility sections.', [
       field('i131_exclusion_deportation_or_removal', 'Have you ever been in exclusion, deportation, removal, or rescission proceedings?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
       }),
       field('i131_traveled_to_country_of_persecution', 'For refugee/asylee travel, have you returned or plan to return to the country of claimed persecution?', 'radio', {
-        options: ['Yes', 'No', 'Not applicable', 'Not sure']
+        options: ['Yes', 'No', 'Not applicable', 'Not sure'],
+        showWhen: [{ id: 'i131_application_type', equals: 'Refugee travel document' }]
       })
     ]),
     step('i131_advance_parole_trip', 'Advance parole trip details', 'Travel date, destination countries, and purpose of travel.', [
-      field('i131_planned_departure_date', 'Planned departure date', 'date'),
-      field('i131_countries_to_visit', 'Countries to visit', 'textarea')
+      field('i131_planned_departure_date', 'Planned departure date', 'date', {
+        showWhen: [{ id: 'i131_application_type', in: travelTripTypes }]
+      }),
+      field('i131_countries_to_visit', 'Countries to visit', 'textarea', {
+        showWhen: [{ id: 'i131_application_type', in: travelTripTypes }]
+      })
     ]),
     step('i131_trip_purpose_length', 'Purpose and expected trip length', 'Keep the purpose factual and short.', [
-      field('i131_purpose_of_travel', 'Purpose of travel', 'textarea', { required: true }),
-      field('i131_expected_trip_length', 'Expected length of trip', 'text')
+      field('i131_purpose_of_travel', 'Purpose of travel', 'textarea', {
+        required: true,
+        showWhen: [{ id: 'i131_application_type', in: travelTripTypes }]
+      }),
+      field('i131_expected_trip_length', 'Expected length of trip', 'text', {
+        showWhen: [{ id: 'i131_application_type', in: travelTripTypes }]
+      })
     ]),
     step('i131_prior_advance_parole', 'Prior advance parole travel', 'USCIS asks whether you left the United States before with advance parole.', [
       field('i131_left_us_with_advance_parole_before', 'Have you left the United States before with advance parole?', 'radio', {
-        options: ['Yes', 'No', 'Not sure']
+        options: ['Yes', 'No', 'Not sure'],
+        showWhen: [{ id: 'i131_application_type', in: travelTripTypes }]
       }),
       field('i131_prior_advance_parole_location', 'If yes, city/town and country of prior arrival', 'textarea', {
-        showWhen: [{ id: 'i131_left_us_with_advance_parole_before', equals: 'Yes' }]
+        showWhen: [
+          { id: 'i131_application_type', in: travelTripTypes },
+          { id: 'i131_left_us_with_advance_parole_before', equals: 'Yes' }
+        ]
       })
     ]),
     step('i131_person_outside_us', 'Person outside the United States', 'Use this only for parole requests involving a person outside the United States.', [
-      field('i131_person_outside_us_explanation', 'Why should parole be issued for a person outside the United States?', 'textarea'),
-      field('i131_intended_arrival_date_us', 'Intended U.S. arrival date', 'date')
+      field('i131_person_outside_us_explanation', 'Why should parole be issued for a person outside the United States?', 'textarea', {
+        showWhen: [{ id: 'i131_application_type', in: forPersonOutsideTypes }]
+      }),
+      field('i131_intended_arrival_date_us', 'Intended U.S. arrival date', 'date', {
+        showWhen: [{ id: 'i131_application_type', in: forPersonOutsideTypes }]
+      })
     ]),
     step('i131_intended_us_arrival_place', 'Intended place of arrival in the United States', 'City/town and country for the intended U.S. arrival.', [
-      field('i131_intended_arrival_city', 'City or town of intended arrival', 'text'),
-      field('i131_intended_arrival_country', 'Country', 'select', { options: COUNTRY_OPTIONS, countryDefault: 'United States' })
+      field('i131_intended_arrival_city', 'City or town of intended arrival', 'text', {
+        showWhen: [{ id: 'i131_application_type', in: forPersonOutsideTypes }]
+      }),
+      field('i131_intended_arrival_country', 'Country', 'select', {
+        options: COUNTRY_OPTIONS,
+        countryDefault: 'United States',
+        showWhen: [{ id: 'i131_application_type', in: forPersonOutsideTypes }]
+      })
     ]),
 
     // I-131 Part 10 and optional interpreter/preparer sections.
