@@ -75,8 +75,9 @@ async function main() {
   const i765Category = localized.body.steps.find((step) => step.id === 'i765_eligibility_category');
   assert(i765Category?.fields.some((field) => field.id === 'c8_arrested_or_convicted'), 'I-765: missing c8 arrest/conviction question');
   const i765Order = localized.body.steps.map((step) => step.id);
-  assert(i765Order.indexOf('i765_application_reason') < i765Order.indexOf('applicant'), 'I-765: reason for applying should come before applicant fields');
-  assert(i765Order.indexOf('applicant') < i765Order.indexOf('i765_work_permit_basis'), 'I-765: applicant fields should come before eligibility-category questions');
+  const i765ApplicantStart = i765Order.includes('applicant') ? 'applicant' : 'applicant_name_parts';
+  assert(i765Order.indexOf('i765_application_reason') < i765Order.indexOf(i765ApplicantStart), 'I-765: reason for applying should come before applicant fields');
+  assert(i765Order.indexOf(i765ApplicantStart) < i765Order.indexOf('i765_work_permit_basis'), 'I-765: applicant fields should come before eligibility-category questions');
   assert(i765Order.indexOf('i765_eligibility_category') < i765Order.indexOf('i765_applicant_statement'), 'I-765: eligibility category should come before applicant statement');
   assert(i765Order.indexOf('i765_applicant_statement') < i765Order.indexOf('contact_info'), 'I-765: applicant statement should come before contact info');
   const i765Evidence = localized.body.steps.find((step) => step.id === 'documents_interpreter_choice');
