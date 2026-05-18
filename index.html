@@ -1796,7 +1796,7 @@ function closeDetail(id) {
       qAccount: 'How do you want to continue?',
       hAccount: 'Create a client portal account or continue as a guest before payment.',
       name: 'Full name', phone: 'Phone', email: 'Email',
-      back: 'Back', next: 'Next', finish: 'Save and request payment link', saving: 'Saving securely...',
+      back: 'Previous', next: 'Next Question', finish: 'Save and request payment link', saving: 'Saving securely...',
       guest: 'Continue as guest', guestSub: 'Use phone/email for this order without creating a password.',
       portal: 'Create client portal', portalSub: 'Save drafts, upload documents, and track this order later.',
       sent: 'Application saved. Next step: connect to portal, Stripe checkout, and PDF filling.',
@@ -1895,7 +1895,7 @@ function closeDetail(id) {
       qAccount: 'Как хотите продолжить?',
       hAccount: 'Создайте личный кабинет или продолжите как гость перед оплатой.',
       name: 'Полное имя', phone: 'Телефон', email: 'Email',
-      back: 'Назад', next: 'Дальше', finish: 'Сохранить и запросить ссылку на оплату', saving: 'Безопасно сохраняем...',
+      back: 'Назад', next: 'Следующий вопрос', finish: 'Сохранить и запросить ссылку на оплату', saving: 'Безопасно сохраняем...',
       guest: 'Продолжить как гость', guestSub: 'Без пароля, только через телефон/email для этого заказа.',
       portal: 'Создать личный кабинет', portalSub: 'Сохранять черновики, загружать документы и отслеживать заказ.',
       sent: 'Заявка сохранена. Следующий шаг: подключить портал, оплату и заполнение PDF.',
@@ -1994,7 +1994,7 @@ function closeDetail(id) {
       qAccount: 'Як хочете продовжити?',
       hAccount: 'Створіть особистий кабінет або продовжіть як гість перед оплатою.',
       name: 'Повне ім’я', phone: 'Телефон', email: 'Email',
-      back: 'Назад', next: 'Далі', finish: 'Зберегти і запросити посилання на оплату', saving: 'Безпечно зберігаємо...',
+      back: 'Назад', next: 'Наступне питання', finish: 'Зберегти і запросити посилання на оплату', saving: 'Безпечно зберігаємо...',
       guest: 'Продовжити як гість', guestSub: 'Без пароля, через телефон/email для цього замовлення.',
       portal: 'Створити кабінет', portalSub: 'Зберігати чернетки, завантажувати документи і відстежувати замовлення.',
       sent: 'Заявку збережено. Наступний крок: портал, оплата і заповнення PDF.',
@@ -2093,7 +2093,7 @@ function closeDetail(id) {
       qAccount: '¿Cómo desea continuar?',
       hAccount: 'Cree un portal de cliente o continúe como invitado antes del pago.',
       name: 'Nombre completo', phone: 'Teléfono', email: 'Email',
-      back: 'Atrás', next: 'Siguiente', finish: 'Guardar y solicitar enlace de pago', saving: 'Guardando de forma segura...',
+      back: 'Anterior', next: 'Siguiente pregunta', finish: 'Guardar y solicitar enlace de pago', saving: 'Guardando de forma segura...',
       guest: 'Continuar como invitado', guestSub: 'Use teléfono/email para este pedido sin crear contraseña.',
       portal: 'Crear portal de cliente', portalSub: 'Guardar borradores, subir documentos y seguir el pedido.',
       sent: 'Solicitud guardada. Próximo paso: portal, pago y llenado de PDF.',
@@ -3485,6 +3485,16 @@ function closeDetail(id) {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
     askFinder(input.value);
+  });
+
+  // Enter submits the form; Shift+Enter inserts a newline as usual.
+  input.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+      event.preventDefault();
+      if (input.value.trim()) {
+        askFinder(input.value);
+      }
+    }
   });
 
   var examplesWrap = document.getElementById('aiExamples');

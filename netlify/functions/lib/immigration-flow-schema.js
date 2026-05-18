@@ -1196,23 +1196,20 @@ function mailingAddressBlockField(options = {}) {
 
 function applicantSteps() {
   return [
-    step('applicant', 'Applicant legal name', 'Enter the applicant name exactly as it appears on official documents.', [
-      field('applicant_full_name', 'Applicant full legal name', 'text', {
+    step('applicant_name_parts', 'Applicant legal name', 'Enter the applicant name exactly as it appears on official documents. These map to Family Name (Last), Given Name (First), and Middle Name on USCIS forms.', [
+      field('applicant_family_name', 'Family name (last name)', 'text', {
         required: true,
-        autocomplete: 'name'
-      })
-    ]),
-    step('applicant_name_parts', 'Applicant first and last name', 'Split the legal name into the exact fields used on USCIS forms.', [
-      field('applicant_given_name', 'Given name', 'text', {
+        autocomplete: 'family-name'
+      }),
+      field('applicant_given_name', 'Given name (first name)', 'text', {
         required: true,
         autocomplete: 'given-name'
       }),
-      field('applicant_family_name', 'Family name', 'text', {
-        required: true,
-        autocomplete: 'family-name'
+      field('applicant_middle_name', 'Middle name', 'text', {
+        autocomplete: 'additional-name'
       })
     ]),
-    step('applicant_other_names', 'Other names used', 'If the applicant never used another legal name, leave this blank or enter N/A when the form requires it.', [
+    step('applicant_other_names', 'Other names used', 'List any maiden name, prior legal names, or aliases. Leave blank or enter N/A if none.', [
       field('other_names_used', 'Other names used', 'textarea', {
         placeholder: 'Maiden name, prior legal names, aliases.'
       })
@@ -3666,7 +3663,6 @@ function i485OrderedSteps() {
 
   const beforePart9 = orderedSteps(map, [
     // Form I-485 Part 1, pages 1-4: information about the applicant.
-    'applicant',
     'applicant_name_parts',
     'applicant_other_names',
     'applicant_birth_date',
@@ -3784,7 +3780,6 @@ function i765OrderedSteps() {
     'i765_application_reason',
 
     // Form I-765 Part 2, pages 1-3: information about the applicant.
-    'applicant',
     'applicant_name_parts',
     'applicant_other_names',
     'address_contact',

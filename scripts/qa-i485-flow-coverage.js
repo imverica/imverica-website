@@ -55,7 +55,7 @@ const before = (first, second) => {
   'i485_part9_criminal',
   'i485_part9_security',
   'i485_part9_other',
-  'applicant',
+  'applicant_name_parts',
   'applicant_birth_date',
   'applicant_birth_place',
   'applicant_citizenship',
@@ -83,9 +83,9 @@ const before = (first, second) => {
   'inside_us_now',
   'inspection_or_parole',
   'medical_exam_status',
-  'applicant_full_name',
   'applicant_given_name',
   'applicant_family_name',
+  'applicant_middle_name',
   'date_of_birth',
   'city_of_birth',
   'state_or_province_of_birth',
@@ -147,7 +147,7 @@ for (const item of part9Logic.items || []) {
   'part9_explanation_military_50_51'
 ].forEach((fieldId) => assert(fields.has(fieldId), `Missing Part 14 explanation frontend field: ${fieldId}`));
 
-before('applicant', 'adjustment_basis');
+before('applicant_name_parts', 'adjustment_basis');
 before('applicant_birth_date', 'adjustment_basis');
 before('applicant_birth_place', 'adjustment_basis');
 before('applicant_citizenship', 'adjustment_basis');
@@ -161,7 +161,7 @@ before('i485_parent1_name', 'i485_part9_entries_01');
 before('contact_info', 'documents_interpreter_choice');
 before('documents_notes', 'purpose');
 
-assert.strictEqual(orderedStepIds[0], 'applicant', 'I-485 flow must start with Part 1 applicant fields');
+assert.strictEqual(orderedStepIds[0], 'applicant_name_parts', 'I-485 flow must start with Part 1 applicant fields');
 
 const contactIndex = orderedStepIds.indexOf('contact_info');
 assert(contactIndex >= 0, 'Missing contact_info step');

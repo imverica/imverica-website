@@ -28,7 +28,6 @@ const before = (first, second) => {
 
 [
   'i765_application_reason',
-  'applicant',
   'applicant_name_parts',
   'applicant_other_names',
   'address_contact',
@@ -56,9 +55,9 @@ const before = (first, second) => {
 
 [
   'i765_application_reason',
-  'applicant_full_name',
   'applicant_given_name',
   'applicant_family_name',
+  'applicant_middle_name',
   'other_names_used',
   'mailing_address',
   'physical_same_as_mailing',
@@ -92,8 +91,8 @@ const before = (first, second) => {
   'has_preparer'
 ].forEach((fieldId) => assert(fields.has(fieldId), `Missing I-765 frontend field: ${fieldId}`));
 
-before('i765_application_reason', 'applicant');
-before('applicant', 'address_contact');
+before('i765_application_reason', 'applicant_name_parts');
+before('applicant_name_parts', 'address_contact');
 before('address_contact', 'applicant_uscis_numbers');
 before('applicant_uscis_numbers', 'i765_social_security');
 before('i765_social_security', 'applicant_citizenship');
