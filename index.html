@@ -3049,20 +3049,39 @@ function closeDetail(id) {
     if (!(state.service === 'immigration' && flowSteps().length && state.step >= flowStepStart() && state.step < reviewStepIndex())) return true;
     var schemaStep = flowSteps()[state.step - flowStepStart()];
     var invalid = [];
+    var missingLabels = [];
     visibleFlowFields(schemaStep).forEach(function (field) {
       var value = state.formAnswers[field.id];
       var empty = isEmptyFlowValue(field, value);
       if (!field.required || !empty) return;
-      var input = document.getElementById(fieldDomId(field.id));
+      var input = document.getElementById(fieldDomId(field.id))
+        || card.querySelector('[data-flow-phone-us="' + field.id + '"]');
       var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-block="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
       invalid.push(input || group);
+      if (field.label) missingLabels.push(String(field.label).replace(/\s*\*\s*$/, ''));
     });
     card.querySelectorAll('.intake-invalid').forEach(function (item) { item.classList.remove('intake-invalid'); });
     invalid.forEach(function (item) { if (item) item.classList.add('intake-invalid'); });
     var error = document.getElementById('intakeFlowError');
     if (error) {
-      error.textContent = invalid.length ? t().requiredError : '';
-      error.style.display = invalid.length ? 'block' : 'none';
+      if (invalid.length) {
+        var detail = missingLabels.length ? ' — ' + missingLabels.slice(0, 3).join(', ') + (missingLabels.length > 3 ? ', …' : '') : '';
+        error.textContent = t().requiredError + detail;
+        error.style.display = 'block';
+      } else {
+        error.textContent = '';
+        error.style.display = 'none';
+      }
+    }
+    // Focus + scroll the first invalid field into view so the user sees what is missing.
+    if (invalid.length && invalid[0]) {
+      try { invalid[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+      try {
+        var focusTarget = invalid[0].tagName === 'INPUT' || invalid[0].tagName === 'SELECT' || invalid[0].tagName === 'TEXTAREA'
+          ? invalid[0]
+          : invalid[0].querySelector('input, select, textarea');
+        if (focusTarget) focusTarget.focus({ preventScroll: true });
+      } catch (e) {}
     }
     return invalid.length === 0;
   }

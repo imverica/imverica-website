@@ -1449,6 +1449,32 @@ function evidenceFields() {
   ];
 }
 
+// Generate the four steps for child N (1..8) on I-485 Part 6.
+// Each child gets the same field set as the original child1; all fields hidden
+// until total_children >= N so the wizard auto-skips child blocks the user does
+// not need.
+function i485ChildBlock(n) {
+  const cond = [{ id: 'total_children', gte: n }];
+  const skipNote = `Skipped automatically when the applicant reports fewer than ${n} child${n === 1 ? '' : 'ren'}.`;
+  return [
+    step(`i485_child${n}_identity`, `I-485 child ${n} identity`, skipNote, [
+      field(`child${n}_family_name`, `Child ${n} family name`, 'text', { autocomplete: 'family-name', showWhen: cond }),
+      field(`child${n}_given_name`, `Child ${n} given name`, 'text', { autocomplete: 'given-name', showWhen: cond })
+    ]),
+    step(`i485_child${n}_number`, `I-485 child ${n} A-number`, skipNote, [
+      field(`child${n}_alien_number`, `Child ${n} A-number, if any`, 'text', { autocomplete: 'off', showWhen: cond })
+    ]),
+    step(`i485_child${n}_details`, `I-485 child ${n} details`, skipNote, [
+      field(`child${n}_dob`, `Child ${n} date of birth`, 'date', { showWhen: cond }),
+      field(`child${n}_country_of_birth`, `Child ${n} country of birth`, 'select', { options: COUNTRY_OPTIONS, showWhen: cond })
+    ]),
+    step(`i485_child${n}_relationship`, `I-485 child ${n} relationship`, skipNote, [
+      field(`child${n}_relationship`, `Child ${n} relationship`, 'text', { placeholder: 'Example: biological child, stepchild', showWhen: cond }),
+      field(`child${n}_applying_with_you`, `Is child ${n} applying with you?`, 'radio', { options: ['Yes', 'No'], showWhen: cond })
+    ])
+  ];
+}
+
 function i485CoreSteps() {
   return [
     step('i485_last_entry_type', 'I-485 last entry type', 'Answer only for the most recent entry into the United States.', [
@@ -1654,22 +1680,17 @@ function i485CoreSteps() {
     step('i485_children_count', 'I-485 children count', 'Start with the total number of children.', [
       field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
     ]),
-    // Child 1 fields: show only when total_children >= 1.
-    step('i485_child1_identity', 'I-485 child 1 identity', 'Skipped automatically when the applicant reports zero children.', [
-      field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name', showWhen: [{ id: 'total_children', gte: 1 }] }),
-      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name', showWhen: [{ id: 'total_children', gte: 1 }] })
-    ]),
-    step('i485_child1_number', 'I-485 child 1 A-number', 'Skipped automatically when the applicant reports zero children.', [
-      field('child1_alien_number', 'Child 1 A-number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'total_children', gte: 1 }] }),
-    ]),
-    step('i485_child1_details', 'I-485 child 1 details', 'Skipped automatically when the applicant reports zero children.', [
-      field('child1_dob', 'Child 1 date of birth', 'date', { showWhen: [{ id: 'total_children', gte: 1 }] }),
-      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS, showWhen: [{ id: 'total_children', gte: 1 }] })
-    ]),
-    step('i485_child1_relationship', 'I-485 child 1 relationship', 'Skipped automatically when the applicant reports zero children.', [
-      field('child1_relationship', 'Child 1 relationship', 'text', { placeholder: 'Example: biological child, stepchild', showWhen: [{ id: 'total_children', gte: 1 }] }),
-      field('child1_applying_with_you', 'Is child 1 applying with you?', 'radio', { options: ['Yes', 'No'], showWhen: [{ id: 'total_children', gte: 1 }] }),
-    ]),
+    // Child 1-8 fields: show only when total_children >= N. USCIS Form I-485
+    // Part 6 (Items 12-19) has space for up to 8 children. Each child block has
+    // four sub-steps: identity, A-number, details, relationship.
+    ...i485ChildBlock(1),
+    ...i485ChildBlock(2),
+    ...i485ChildBlock(3),
+    ...i485ChildBlock(4),
+    ...i485ChildBlock(5),
+    ...i485ChildBlock(6),
+    ...i485ChildBlock(7),
+    ...i485ChildBlock(8),
     step('i485_biographic_identity', 'I-485 ethnicity and race', 'These values map to the biographic information section.', [
       field('ethnicity', 'Ethnicity', 'select', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
       field('race', 'Race', 'checkboxes', { options: ['White', 'Asian', 'Black or African American', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander'] }),
