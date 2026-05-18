@@ -3161,7 +3161,7 @@ function i90SpecificSteps() {
       field('father_given_name', 'Father given name', 'text', { autocomplete: 'given-name' })
     ]),
     step('i90_ssn_admission', 'SSN and admission details', 'USCIS expects a 9-digit SSN if one exists and the admission date/class from the green card record.', [
-      field('ssn', 'Social Security number, if any', 'text', { inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits' }),
+      field('ssn', 'Social Security number, if any', 'text', { inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits', digits: 9, maxLength: 9 }),
       field('class_of_admission', 'Class of admission', 'text', { autocomplete: 'off' })
     ]),
     step('i90_admission_date', 'Admission date', 'Date admitted as a permanent resident or adjusted to permanent resident.', [
@@ -3245,7 +3245,9 @@ function i90SpecificSteps() {
       field('applicant_statement', 'Applicant statement', 'radio', {
         options: ['I can read and understand English', 'Interpreter read the application to me']
       }),
-      field('applicant_statement_language', 'Language used by interpreter, if any', 'text')
+      field('applicant_statement_language', 'Language used by interpreter, if any', 'text', {
+        showWhen: [{ id: 'applicant_statement', equals: 'Interpreter read the application to me' }]
+      })
     ]),
     step('i90_applicant_contact', 'Applicant contact information', 'USCIS phone fields should be captured cleanly for the signature/contact section.', [
       field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),

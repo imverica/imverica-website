@@ -144,6 +144,8 @@ async function main() {
   assert(i90Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-90: mailing address should be structured');
   assert(i90Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-90: physical address should be structured');
   assert(i90Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-90: daytime phone should be split phone field');
+  assert(i90Fields.find((field) => field.id === 'ssn')?.digits === 9, 'I-90: SSN should be captured as exactly 9 digits');
+  assert(i90Fields.find((field) => field.id === 'applicant_statement_language')?.showWhen?.[0]?.id === 'applicant_statement', 'I-90: interpreter language should only show when interpreter read the application');
 
   const i589 = await callFlow('I-589', 'en');
   const i589Order = i589.body.steps.map((step) => step.id);
