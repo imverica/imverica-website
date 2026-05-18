@@ -1771,13 +1771,13 @@ function i130SpecificSteps() {
       field('petitioner_number_of_marriages', 'How many times has the petitioner been married?', 'number', { inputmode: 'numeric' }),
       field('petitioner_marital_status', 'Petitioner marital status', 'select', { options: ['Single', 'Married', 'Divorced', 'Widowed', 'Separated', 'Annulled'] })
     ]),
-    step('i130_petitioner_current_marriage', 'Petitioner current marriage', 'If currently married, enter date and place of current marriage.', [
-      field('petitioner_current_marriage_date', 'Petitioner current marriage date', 'date'),
-      field('petitioner_current_marriage_place', 'Petitioner current marriage place', 'text', { placeholder: 'City/state/province/country' })
+    step('i130_petitioner_current_marriage', 'Petitioner current marriage', 'Skipped automatically when the petitioner is not currently married.', [
+      field('petitioner_current_marriage_date', 'Petitioner current marriage date', 'date', { showWhen: [{ id: 'petitioner_marital_status', equals: 'Married' }] }),
+      field('petitioner_current_marriage_place', 'Petitioner current marriage place', 'text', { placeholder: 'City/state/province/country', showWhen: [{ id: 'petitioner_marital_status', equals: 'Married' }] })
     ]),
-    step('i130_petitioner_prior_spouse', 'Petitioner prior spouse', 'Fill only if the petitioner had a prior spouse.', [
-      field('petitioner_prior_spouse_name', 'Prior spouse full name', 'text', { autocomplete: 'name' }),
-      field('petitioner_prior_marriage_end_date', 'Date prior marriage ended', 'date')
+    step('i130_petitioner_prior_spouse', 'Petitioner prior spouse', 'Skipped automatically when the petitioner has no prior spouse.', [
+      field('petitioner_prior_spouse_name', 'Prior spouse full name', 'text', { autocomplete: 'name', showWhenAny: [{ id: 'petitioner_marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'petitioner_number_of_marriages', gte: 2 }] }),
+      field('petitioner_prior_marriage_end_date', 'Date prior marriage ended', 'date', { showWhenAny: [{ id: 'petitioner_marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'petitioner_number_of_marriages', gte: 2 }] })
     ]),
     step('i130_petitioner_parent1', 'Petitioner parent 1', 'Parent 1 name, date of birth, country of birth, and residence.', [
       field('petitioner_parent1_full_name', 'Petitioner parent 1 full name', 'text'),
@@ -1796,13 +1796,13 @@ function i130SpecificSteps() {
         options: ['Birth in the United States', 'Naturalization', 'Parents', 'Not applicable', 'Not sure']
       })
     ]),
-    step('i130_petitioner_certificate', 'Petitioner citizenship certificate', 'If citizenship was acquired by naturalization or parents, capture certificate details.', [
-      field('petitioner_certificate_number', 'Certificate number, if any', 'text', { autocomplete: 'off' }),
-      field('petitioner_certificate_issuance', 'Place and date of issuance', 'text')
+    step('i130_petitioner_certificate', 'Petitioner citizenship certificate', 'Skipped automatically when the petitioner is not a naturalized or derived U.S. citizen.', [
+      field('petitioner_certificate_number', 'Certificate number, if any', 'text', { autocomplete: 'off', showWhenAny: [{ id: 'petitioner_status_acquired_by', equals: 'Naturalization' }, { id: 'petitioner_status_acquired_by', equals: 'Parents' }] }),
+      field('petitioner_certificate_issuance', 'Place and date of issuance', 'text', { showWhenAny: [{ id: 'petitioner_status_acquired_by', equals: 'Naturalization' }, { id: 'petitioner_status_acquired_by', equals: 'Parents' }] })
     ]),
-    step('i130_petitioner_lpr_admission', 'Petitioner LPR admission details', 'Fill only for lawful permanent resident petitioners.', [
-      field('petitioner_lpr_class_of_admission', 'Class of admission', 'text'),
-      field('petitioner_lpr_date_place_of_admission', 'Date and place of admission', 'text')
+    step('i130_petitioner_lpr_admission', 'Petitioner LPR admission details', 'Skipped automatically when the petitioner is not a lawful permanent resident.', [
+      field('petitioner_lpr_class_of_admission', 'Class of admission', 'text', { showWhen: [{ id: 'petitioner_status', equals: 'Lawful permanent resident' }] }),
+      field('petitioner_lpr_date_place_of_admission', 'Date and place of admission', 'text', { showWhen: [{ id: 'petitioner_status', equals: 'Lawful permanent resident' }] })
     ]),
     step('i130_petitioner_employment_current', 'Petitioner current employment', 'Current employer, occupation, address, and dates.', [
       employmentHistoryField('petitioner_current_employment', 'Petitioner current employment', { entries: 1 })
@@ -1858,24 +1858,24 @@ function i130SpecificSteps() {
       field('beneficiary_number_of_marriages', 'How many times has the beneficiary been married?', 'number', { inputmode: 'numeric' }),
       field('beneficiary_marital_status', 'Beneficiary marital status', 'select', { options: ['Single', 'Married', 'Divorced', 'Widowed', 'Separated', 'Annulled'] })
     ]),
-    step('i130_beneficiary_current_marriage', 'Beneficiary current marriage', 'Current marriage date and place, if applicable.', [
-      field('beneficiary_current_marriage_date', 'Beneficiary current marriage date', 'date'),
-      field('beneficiary_current_marriage_place', 'Beneficiary current marriage place', 'text')
+    step('i130_beneficiary_current_marriage', 'Beneficiary current marriage', 'Skipped automatically when the beneficiary is not currently married.', [
+      field('beneficiary_current_marriage_date', 'Beneficiary current marriage date', 'date', { showWhen: [{ id: 'beneficiary_marital_status', equals: 'Married' }] }),
+      field('beneficiary_current_marriage_place', 'Beneficiary current marriage place', 'text', { showWhen: [{ id: 'beneficiary_marital_status', equals: 'Married' }] })
     ]),
-    step('i130_beneficiary_spouse_prior', 'Beneficiary current or prior spouse', 'Current/prior spouse names and marriage end date if applicable.', [
-      field('beneficiary_spouse_name', 'Beneficiary spouse or prior spouse full name', 'text'),
-      field('beneficiary_prior_marriage_end_date', 'Date prior marriage ended, if any', 'date')
+    step('i130_beneficiary_spouse_prior', 'Beneficiary current or prior spouse', 'Skipped automatically when the beneficiary has no current or prior spouse to report.', [
+      field('beneficiary_spouse_name', 'Beneficiary spouse or prior spouse full name', 'text', { showWhenAny: [{ id: 'beneficiary_marital_status', in: ['Married','Divorced','Widowed','Separated','Annulled'] }, { id: 'beneficiary_number_of_marriages', gte: 1 }] }),
+      field('beneficiary_prior_marriage_end_date', 'Date prior marriage ended, if any', 'date', { showWhenAny: [{ id: 'beneficiary_marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'beneficiary_number_of_marriages', gte: 2 }] })
     ]),
     step('i130_beneficiary_children', 'Beneficiary children', 'Enter beneficiary children exactly as needed for Part 4.', [
       field('beneficiary_children_count', 'How many children does the beneficiary have?', 'number', { inputmode: 'numeric' }),
-      field('beneficiary_children_details', 'Children names, dates of birth, countries of birth, and relationship', 'textarea')
+      field('beneficiary_children_details', 'Children names, dates of birth, countries of birth, and relationship', 'textarea', { showWhen: [{ id: 'beneficiary_children_count', gte: 1 }] })
     ]),
     step('i130_beneficiary_entry_status', 'Beneficiary entry and immigration status', 'If the beneficiary is in the United States, capture entry/status details.', [
       field('beneficiary_in_us_now', 'Is the beneficiary currently in the United States?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('beneficiary_class_i94_status', 'Class of admission / I-94 status, if in the United States', 'text')
+      field('beneficiary_class_i94_status', 'Class of admission / I-94 status, if in the United States', 'text', { showWhen: [{ id: 'beneficiary_in_us_now', equals: 'Yes' }] })
     ]),
-    step('i130_beneficiary_i94_passport', 'Beneficiary I-94 and passport', 'I-94, passport, travel document, and expiration details.', [
-      field('beneficiary_i94_number', 'Beneficiary I-94 number, if any', 'text', { autocomplete: 'off' }),
+    step('i130_beneficiary_i94_passport', 'Beneficiary I-94 and passport', 'Skipped automatically when the beneficiary is not in the United States.', [
+      field('beneficiary_i94_number', 'Beneficiary I-94 number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'beneficiary_in_us_now', equals: 'Yes' }] }),
       field('beneficiary_passport_or_travel_document', 'Passport or travel document number', 'text', { autocomplete: 'off' })
     ]),
     step('i130_beneficiary_passport_country', 'Beneficiary passport country and expiration', 'Country of issuance and expiration date.', [
@@ -3293,7 +3293,8 @@ function n400SpecificSteps() {
     step('n400_children', 'Children', 'Total children and children who should be listed on N-400.', [
       field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
       field('children_details', 'Children details', 'textarea', {
-        placeholder: 'For each child: full name, A-number if any, DOB, country of birth, relationship, address.'
+        placeholder: 'For each child: full name, A-number if any, DOB, country of birth, relationship, address.',
+        showWhen: [{ id: 'total_children', gte: 1 }]
       })
     ]),
     step('n400_military_service', 'Military service', 'Military service questions appear before employment/trips in the current workflow.', [
@@ -3312,7 +3313,13 @@ function n400SpecificSteps() {
     ]),
     step('n400_long_absence', 'Long absences', 'USCIS asks about long trips and continuous residence.', [
       field('n400_trip_over_six_months', 'Any trip outside the U.S. for 6 months or more?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('n400_trip_over_one_year', 'Any trip outside the U.S. for 1 year or more?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+      field('n400_trip_over_one_year', 'Any trip outside the U.S. for 1 year or more?', 'radio', {
+        options: ['Yes', 'No', 'Not sure'],
+        showWhenAny: [
+          { id: 'n400_trip_over_six_months', equals: 'Yes' },
+          { id: 'n400_trip_over_six_months', equals: 'Not sure' }
+        ]
+      })
     ]),
 
     // N-400 Part 9: eligibility and moral character. These are split in form order.
@@ -3334,8 +3341,16 @@ function n400SpecificSteps() {
       field('n400_ever_arrested_cited_charged', 'Have you ever been arrested, cited, charged, or detained?', 'radio', { options: ['Yes', 'No'] }),
       field('n400_ever_convicted_or_pled', 'Have you ever pled guilty to or been convicted of a crime or offense?', 'radio', { options: ['Yes', 'No'] })
     ]),
-    step('n400_criminal_history_2', 'Criminal history details', 'Capture explanations only when any criminal-history answer is Yes.', [
-      field('n400_criminal_history_other_yes', 'Any other criminal, probation, controlled substance, prostitution, trafficking, or gambling answer is Yes?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+    // Criminal history follow-up: only ask the catch-all "any other crime" question and the
+    // details textarea when at least one arrest/conviction answer was Yes (or Not sure).
+    step('n400_criminal_history_2', 'Criminal history details', 'Skipped automatically when no arrest or conviction was reported.', [
+      field('n400_criminal_history_other_yes', 'Any other criminal, probation, controlled substance, prostitution, trafficking, or gambling answer is Yes?', 'radio', {
+        options: ['Yes', 'No', 'Not sure'],
+        showWhenAny: [
+          { id: 'n400_ever_arrested_cited_charged', equals: 'Yes' },
+          { id: 'n400_ever_convicted_or_pled', equals: 'Yes' }
+        ]
+      }),
       field('n400_criminal_history_details', 'Criminal-history explanation and documents needed', 'textarea', {
         showWhenAny: [
           { id: 'n400_ever_arrested_cited_charged', equals: 'Yes' },
