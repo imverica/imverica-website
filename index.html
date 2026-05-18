@@ -419,7 +419,10 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:760px;}
 .intake-grid-single{max-width:680px;}
 .intake-field-full{grid-column:1/-1;}
-.intake-phone-grid{display:grid;grid-template-columns:120px 130px 1fr;gap:10px;}
+.intake-phone-grid{display:grid;grid-template-columns:160px 130px 1fr;gap:10px;}
+.intake-phone-grid select{font-family:inherit;padding:14px 28px 14px 12px;border-radius:6px;border:1px solid var(--border);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='%23556677'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center/10px;font-size:15px;color:var(--navy-dark);appearance:none;cursor:pointer;}
+.intake-field-error{font-size:12px;color:#b94c3f;margin-top:6px;display:none;}
+.intake-field-error.active{display:block;}
 .intake-radio-options{display:flex;flex-wrap:wrap;gap:10px;}
 .intake-radio-options .intake-option{min-height:0;padding:10px 14px;display:inline-flex;align-items:center;justify-content:center;text-align:center;min-width:86px;background:#fff;border-radius:5px;box-shadow:none;}
 .intake-radio-options .intake-option strong{font-size:13px;margin:0;line-height:1.2;}
@@ -1679,7 +1682,7 @@ function closeDetail(id) {
         <div class="intake-kicker" id="intakeKicker"></div>
         <div class="intake-sub" id="intakeSub"></div>
         <div class="intake-progress-row">
-          <span class="intake-progress-label">Progress</span>
+          <span class="intake-progress-label" id="intakeProgressLabel">Progress</span>
           <span class="intake-progress-processing" id="intakeProcessing"></span>
           <span class="intake-progress-percent" id="intakeProgressPercent">0%</span>
         </div>
@@ -1729,6 +1732,7 @@ function closeDetail(id) {
   var disclaimer = document.getElementById('intakeDisclaimer');
   var progress = document.getElementById('intakeProgress');
   var progressPercent = document.getElementById('intakeProgressPercent');
+  var progressLabelEl = document.getElementById('intakeProgressLabel');
   var processingEl = document.getElementById('intakeProcessing');
   var backBtn = document.getElementById('intakeBack');
   var nextBtn = document.getElementById('intakeNext');
@@ -1760,10 +1764,135 @@ function closeDetail(id) {
   };
   var addressSuggestTimer = null;
 
+  // Phone country codes — flag emoji, dial code, max local digits (subscriber part after dial code).
+  // Prioritized: US, CA, MX, RU, UA at top, then SEPARATOR, then alphabetical by English name.
+  var PHONE_COUNTRIES_PRIORITY = [
+    { code: 'US', name: 'United States', flag: '🇺🇸', dial: '+1',   max: 10 },
+    { code: 'CA', name: 'Canada',        flag: '🇨🇦', dial: '+1',   max: 10 },
+    { code: 'MX', name: 'Mexico',        flag: '🇲🇽', dial: '+52',  max: 10 },
+    { code: 'RU', name: 'Russia',        flag: '🇷🇺', dial: '+7',   max: 10 },
+    { code: 'UA', name: 'Ukraine',       flag: '🇺🇦', dial: '+380', max: 9  }
+  ];
+  var PHONE_COUNTRIES_REST = [
+    { code: 'AR', name: 'Argentina',       flag: '🇦🇷', dial: '+54',  max: 11 },
+    { code: 'AM', name: 'Armenia',         flag: '🇦🇲', dial: '+374', max: 8  },
+    { code: 'AU', name: 'Australia',       flag: '🇦🇺', dial: '+61',  max: 9  },
+    { code: 'AT', name: 'Austria',         flag: '🇦🇹', dial: '+43',  max: 13 },
+    { code: 'AZ', name: 'Azerbaijan',      flag: '🇦🇿', dial: '+994', max: 9  },
+    { code: 'BY', name: 'Belarus',         flag: '🇧🇾', dial: '+375', max: 9  },
+    { code: 'BE', name: 'Belgium',         flag: '🇧🇪', dial: '+32',  max: 9  },
+    { code: 'BR', name: 'Brazil',          flag: '🇧🇷', dial: '+55',  max: 11 },
+    { code: 'BG', name: 'Bulgaria',        flag: '🇧🇬', dial: '+359', max: 9  },
+    { code: 'CN', name: 'China',           flag: '🇨🇳', dial: '+86',  max: 11 },
+    { code: 'CO', name: 'Colombia',        flag: '🇨🇴', dial: '+57',  max: 10 },
+    { code: 'CR', name: 'Costa Rica',      flag: '🇨🇷', dial: '+506', max: 8  },
+    { code: 'CU', name: 'Cuba',            flag: '🇨🇺', dial: '+53',  max: 8  },
+    { code: 'CZ', name: 'Czech Republic',  flag: '🇨🇿', dial: '+420', max: 9  },
+    { code: 'DK', name: 'Denmark',         flag: '🇩🇰', dial: '+45',  max: 8  },
+    { code: 'DO', name: 'Dominican Rep.',  flag: '🇩🇴', dial: '+1',   max: 10 },
+    { code: 'EC', name: 'Ecuador',         flag: '🇪🇨', dial: '+593', max: 9  },
+    { code: 'EG', name: 'Egypt',           flag: '🇪🇬', dial: '+20',  max: 10 },
+    { code: 'SV', name: 'El Salvador',     flag: '🇸🇻', dial: '+503', max: 8  },
+    { code: 'EE', name: 'Estonia',         flag: '🇪🇪', dial: '+372', max: 8  },
+    { code: 'ET', name: 'Ethiopia',        flag: '🇪🇹', dial: '+251', max: 9  },
+    { code: 'FI', name: 'Finland',         flag: '🇫🇮', dial: '+358', max: 12 },
+    { code: 'FR', name: 'France',          flag: '🇫🇷', dial: '+33',  max: 9  },
+    { code: 'GE', name: 'Georgia',         flag: '🇬🇪', dial: '+995', max: 9  },
+    { code: 'DE', name: 'Germany',         flag: '🇩🇪', dial: '+49',  max: 13 },
+    { code: 'GR', name: 'Greece',          flag: '🇬🇷', dial: '+30',  max: 10 },
+    { code: 'GT', name: 'Guatemala',       flag: '🇬🇹', dial: '+502', max: 8  },
+    { code: 'HT', name: 'Haiti',           flag: '🇭🇹', dial: '+509', max: 8  },
+    { code: 'HN', name: 'Honduras',        flag: '🇭🇳', dial: '+504', max: 8  },
+    { code: 'HK', name: 'Hong Kong',       flag: '🇭🇰', dial: '+852', max: 8  },
+    { code: 'HU', name: 'Hungary',         flag: '🇭🇺', dial: '+36',  max: 9  },
+    { code: 'IS', name: 'Iceland',         flag: '🇮🇸', dial: '+354', max: 7  },
+    { code: 'IN', name: 'India',           flag: '🇮🇳', dial: '+91',  max: 10 },
+    { code: 'ID', name: 'Indonesia',       flag: '🇮🇩', dial: '+62',  max: 11 },
+    { code: 'IR', name: 'Iran',            flag: '🇮🇷', dial: '+98',  max: 10 },
+    { code: 'IQ', name: 'Iraq',            flag: '🇮🇶', dial: '+964', max: 10 },
+    { code: 'IE', name: 'Ireland',         flag: '🇮🇪', dial: '+353', max: 11 },
+    { code: 'IL', name: 'Israel',          flag: '🇮🇱', dial: '+972', max: 9  },
+    { code: 'IT', name: 'Italy',           flag: '🇮🇹', dial: '+39',  max: 11 },
+    { code: 'JM', name: 'Jamaica',         flag: '🇯🇲', dial: '+1',   max: 10 },
+    { code: 'JP', name: 'Japan',           flag: '🇯🇵', dial: '+81',  max: 10 },
+    { code: 'KZ', name: 'Kazakhstan',      flag: '🇰🇿', dial: '+7',   max: 10 },
+    { code: 'KE', name: 'Kenya',           flag: '🇰🇪', dial: '+254', max: 10 },
+    { code: 'KR', name: 'South Korea',     flag: '🇰🇷', dial: '+82',  max: 10 },
+    { code: 'KG', name: 'Kyrgyzstan',      flag: '🇰🇬', dial: '+996', max: 9  },
+    { code: 'LV', name: 'Latvia',          flag: '🇱🇻', dial: '+371', max: 8  },
+    { code: 'LB', name: 'Lebanon',         flag: '🇱🇧', dial: '+961', max: 8  },
+    { code: 'LT', name: 'Lithuania',       flag: '🇱🇹', dial: '+370', max: 8  },
+    { code: 'MY', name: 'Malaysia',        flag: '🇲🇾', dial: '+60',  max: 10 },
+    { code: 'MD', name: 'Moldova',         flag: '🇲🇩', dial: '+373', max: 8  },
+    { code: 'MN', name: 'Mongolia',        flag: '🇲🇳', dial: '+976', max: 8  },
+    { code: 'MA', name: 'Morocco',         flag: '🇲🇦', dial: '+212', max: 9  },
+    { code: 'NL', name: 'Netherlands',     flag: '🇳🇱', dial: '+31',  max: 9  },
+    { code: 'NZ', name: 'New Zealand',     flag: '🇳🇿', dial: '+64',  max: 10 },
+    { code: 'NI', name: 'Nicaragua',       flag: '🇳🇮', dial: '+505', max: 8  },
+    { code: 'NG', name: 'Nigeria',         flag: '🇳🇬', dial: '+234', max: 10 },
+    { code: 'NO', name: 'Norway',          flag: '🇳🇴', dial: '+47',  max: 8  },
+    { code: 'PK', name: 'Pakistan',        flag: '🇵🇰', dial: '+92',  max: 10 },
+    { code: 'PA', name: 'Panama',          flag: '🇵🇦', dial: '+507', max: 8  },
+    { code: 'PY', name: 'Paraguay',        flag: '🇵🇾', dial: '+595', max: 9  },
+    { code: 'PE', name: 'Peru',            flag: '🇵🇪', dial: '+51',  max: 9  },
+    { code: 'PH', name: 'Philippines',     flag: '🇵🇭', dial: '+63',  max: 10 },
+    { code: 'PL', name: 'Poland',          flag: '🇵🇱', dial: '+48',  max: 9  },
+    { code: 'PT', name: 'Portugal',        flag: '🇵🇹', dial: '+351', max: 9  },
+    { code: 'PR', name: 'Puerto Rico',     flag: '🇵🇷', dial: '+1',   max: 10 },
+    { code: 'RO', name: 'Romania',         flag: '🇷🇴', dial: '+40',  max: 9  },
+    { code: 'SA', name: 'Saudi Arabia',    flag: '🇸🇦', dial: '+966', max: 9  },
+    { code: 'RS', name: 'Serbia',          flag: '🇷🇸', dial: '+381', max: 9  },
+    { code: 'SG', name: 'Singapore',       flag: '🇸🇬', dial: '+65',  max: 8  },
+    { code: 'SK', name: 'Slovakia',        flag: '🇸🇰', dial: '+421', max: 9  },
+    { code: 'SI', name: 'Slovenia',        flag: '🇸🇮', dial: '+386', max: 8  },
+    { code: 'ZA', name: 'South Africa',    flag: '🇿🇦', dial: '+27',  max: 9  },
+    { code: 'ES', name: 'Spain',           flag: '🇪🇸', dial: '+34',  max: 9  },
+    { code: 'SE', name: 'Sweden',          flag: '🇸🇪', dial: '+46',  max: 9  },
+    { code: 'CH', name: 'Switzerland',     flag: '🇨🇭', dial: '+41',  max: 9  },
+    { code: 'SY', name: 'Syria',           flag: '🇸🇾', dial: '+963', max: 9  },
+    { code: 'TW', name: 'Taiwan',          flag: '🇹🇼', dial: '+886', max: 9  },
+    { code: 'TJ', name: 'Tajikistan',      flag: '🇹🇯', dial: '+992', max: 9  },
+    { code: 'TH', name: 'Thailand',        flag: '🇹🇭', dial: '+66',  max: 9  },
+    { code: 'TR', name: 'Turkey',          flag: '🇹🇷', dial: '+90',  max: 10 },
+    { code: 'TM', name: 'Turkmenistan',    flag: '🇹🇲', dial: '+993', max: 8  },
+    { code: 'AE', name: 'UAE',             flag: '🇦🇪', dial: '+971', max: 9  },
+    { code: 'GB', name: 'United Kingdom',  flag: '🇬🇧', dial: '+44',  max: 10 },
+    { code: 'UY', name: 'Uruguay',         flag: '🇺🇾', dial: '+598', max: 8  },
+    { code: 'UZ', name: 'Uzbekistan',      flag: '🇺🇿', dial: '+998', max: 9  },
+    { code: 'VE', name: 'Venezuela',       flag: '🇻🇪', dial: '+58',  max: 10 },
+    { code: 'VN', name: 'Vietnam',         flag: '🇻🇳', dial: '+84',  max: 9  }
+  ];
+
+  function phoneCountryOptions(selectedToken) {
+    // selectedToken is the "dial|code" value or just dial for backwards compat. Default to US.
+    var token = String(selectedToken || '').trim();
+    if (!token || token === '+1') token = '+1|US';
+    if (token.indexOf('|') < 0) token = token + '|';  // matches first country with that dial
+    var html = '';
+    var matched = false;
+    function row(c) {
+      var key = c.dial + '|' + c.code;
+      var sel = '';
+      if (!matched && (key === token || (token.endsWith('|') && c.dial === token.slice(0, -1)))) {
+        sel = ' selected'; matched = true;
+      }
+      return '<option value="' + key + '" data-max="' + c.max + '"' + sel + '>' + c.flag + '  ' + c.dial + '  ' + c.name + '</option>';
+    }
+    PHONE_COUNTRIES_PRIORITY.forEach(function (c) { html += row(c); });
+    html += '<option disabled>──────────</option>';
+    PHONE_COUNTRIES_REST.forEach(function (c) { html += row(c); });
+    return html;
+  }
+
   var i18n = {
     en: {
       processing: 'Processing your answers...',
       loadingNext: 'Loading Next Question...',
+      progressLabel: 'Progress',
+      invalidEmail: 'Please enter a valid email address.',
+      submitLead: 'Submit and continue',
+      areaCode: 'Area code',
+      phoneNumber: 'Number',
       kicker: 'Step-by-step application',
       title: 'Start document preparation',
       sub: 'Answer a few questions. We will identify possible forms, prepare documents at your direction, and confirm fees before filing anything.',
@@ -1796,7 +1925,7 @@ function closeDetail(id) {
       qAccount: 'How do you want to continue?',
       hAccount: 'Create a client portal account or continue as a guest before payment.',
       name: 'Full name', phone: 'Phone', email: 'Email',
-      back: 'Previous', next: 'Next Question', finish: 'Save and request payment link', saving: 'Saving securely...',
+      back: 'Previous', next: 'Next Question', finish: 'Submit and continue', saving: 'Saving securely...',
       guest: 'Continue as guest', guestSub: 'Use phone/email for this order without creating a password.',
       portal: 'Create client portal', portalSub: 'Save drafts, upload documents, and track this order later.',
       sent: 'Application saved. Next step: connect to portal, Stripe checkout, and PDF filling.',
@@ -1863,6 +1992,11 @@ function closeDetail(id) {
     ru: {
       processing: 'Обрабатываем ваши ответы...',
       loadingNext: 'Загружаем следующий вопрос...',
+      progressLabel: 'Прогресс',
+      invalidEmail: 'Введите корректный email.',
+      submitLead: 'Отправить заявку',
+      areaCode: 'Код города',
+      phoneNumber: 'Номер телефона',
       kicker: 'Пошаговое оформление',
       title: 'Начать подготовку документов',
       sub: 'Ответьте на несколько вопросов. Мы определим возможные формы, подготовим документы по вашему поручению и подтвердим стоимость до подачи.',
@@ -1895,7 +2029,7 @@ function closeDetail(id) {
       qAccount: 'Как хотите продолжить?',
       hAccount: 'Создайте личный кабинет или продолжите как гость перед оплатой.',
       name: 'Полное имя', phone: 'Телефон', email: 'Email',
-      back: 'Назад', next: 'Следующий вопрос', finish: 'Сохранить и запросить ссылку на оплату', saving: 'Безопасно сохраняем...',
+      back: 'Назад', next: 'Следующий вопрос', finish: 'Отправить заявку', saving: 'Безопасно сохраняем...',
       guest: 'Продолжить как гость', guestSub: 'Без пароля, только через телефон/email для этого заказа.',
       portal: 'Создать личный кабинет', portalSub: 'Сохранять черновики, загружать документы и отслеживать заказ.',
       sent: 'Заявка сохранена. Следующий шаг: подключить портал, оплату и заполнение PDF.',
@@ -1962,6 +2096,11 @@ function closeDetail(id) {
     uk: {
       processing: 'Обробляємо ваші відповіді...',
       loadingNext: 'Завантажуємо наступне питання...',
+      progressLabel: 'Прогрес',
+      invalidEmail: 'Введіть коректний email.',
+      submitLead: 'Надіслати заявку',
+      areaCode: 'Код міста',
+      phoneNumber: 'Номер телефону',
       kicker: 'Покрокове оформлення',
       title: 'Почати підготовку документів',
       sub: 'Дайте відповіді на кілька питань. Ми визначимо можливі форми, підготуємо документи за вашим дорученням і підтвердимо оплату до подання.',
@@ -1994,7 +2133,7 @@ function closeDetail(id) {
       qAccount: 'Як хочете продовжити?',
       hAccount: 'Створіть особистий кабінет або продовжіть як гість перед оплатою.',
       name: 'Повне ім’я', phone: 'Телефон', email: 'Email',
-      back: 'Назад', next: 'Наступне питання', finish: 'Зберегти і запросити посилання на оплату', saving: 'Безпечно зберігаємо...',
+      back: 'Назад', next: 'Наступне питання', finish: 'Надіслати заявку', saving: 'Безпечно зберігаємо...',
       guest: 'Продовжити як гість', guestSub: 'Без пароля, через телефон/email для цього замовлення.',
       portal: 'Створити кабінет', portalSub: 'Зберігати чернетки, завантажувати документи і відстежувати замовлення.',
       sent: 'Заявку збережено. Наступний крок: портал, оплата і заповнення PDF.',
@@ -2061,6 +2200,11 @@ function closeDetail(id) {
     es: {
       processing: 'Procesando tus respuestas...',
       loadingNext: 'Cargando la siguiente pregunta...',
+      progressLabel: 'Progreso',
+      invalidEmail: 'Introduce un correo electrónico válido.',
+      submitLead: 'Enviar y continuar',
+      areaCode: 'Código de área',
+      phoneNumber: 'Número de teléfono',
       kicker: 'Solicitud paso a paso',
       title: 'Iniciar preparación de documentos',
       sub: 'Responda algunas preguntas. Identificaremos posibles formularios, prepararemos documentos bajo su dirección y confirmaremos costos antes de presentar nada.',
@@ -2093,7 +2237,7 @@ function closeDetail(id) {
       qAccount: '¿Cómo desea continuar?',
       hAccount: 'Cree un portal de cliente o continúe como invitado antes del pago.',
       name: 'Nombre completo', phone: 'Teléfono', email: 'Email',
-      back: 'Anterior', next: 'Siguiente pregunta', finish: 'Guardar y solicitar enlace de pago', saving: 'Guardando de forma segura...',
+      back: 'Anterior', next: 'Siguiente pregunta', finish: 'Enviar y continuar', saving: 'Guardando de forma segura...',
       guest: 'Continuar como invitado', guestSub: 'Use teléfono/email para este pedido sin crear contraseña.',
       portal: 'Crear portal de cliente', portalSub: 'Guardar borradores, subir documentos y seguir el pedido.',
       sent: 'Solicitud guardada. Próximo paso: portal, pago y llenado de PDF.',
@@ -2205,7 +2349,7 @@ function closeDetail(id) {
   function inferIntakeFormCode(value) {
     var text = normalizeIntakeText(value);
     if (/ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead|i-765/.test(text)) return 'I-765';
-    if (/грин\s*карт|green\s*card|adjustment|adjust\s*status|i-485|статус|изменени[ея]\s+статус/.test(text)) return 'I-485';
+    if (/гринк|грінк|грин[\s-]*карт|грін[\s-]*карт|green[\s-]*card|adjustment|adjust\s*status|i-485|изменени[ея]\s+статус|зміна\s*статус/.test(text)) return 'I-485';
     if (/свадьб|брак|женит|замуж|spouse|marriage|family\s*petition|i-130/.test(text)) return 'I-130';
     if (/трев[еэ]л|travel|advance\s*parole|разрешени[ея]\s+на\s+выезд|i-131/.test(text)) return 'I-131';
     if (/замен[аы]\s+грин|renew\s+green|replace\s+green|i-90/.test(text)) return 'I-90';
@@ -2227,7 +2371,7 @@ function closeDetail(id) {
   }
   function inferIntakeService(value) {
     var text = normalizeIntakeText(value);
-    if (/uscis|eoir|immigration|иммиграц|імміграц|грин|green\s*card|ворк\s+п[еэ]рмит|work\s+permit|i-\d+|n-\d+|g-\d+|свадьб|брак|женит|замуж|marriage|spouse|супруг|супруга|чоловік|дружин/.test(text)) return 'immigration';
+    if (/uscis|eoir|immigration|иммиграц|імміграц|гринк|грінк|грин|грін|green\s*card|ворк\s+п[еэ]рмит|work\s+permit|i-\d+|n-\d+|g-\d+|свадьб|брак|женит|замуж|marriage|spouse|супруг|супруга|чоловік|дружин|убежищ|асайл|asylum|гражданств|громадянств|citizenship/.test(text)) return 'immigration';
     if (/fl-\d+|dv-\d+|divorce|family|custody|развод|розлуч|алим[еє]нт|кастоди|опек|сімейн|семейн/.test(text)) return 'family';
     if (/small\s*claims?|смол+\s+кле[ий]м|мал\w*\s+иск|sc-\d+|civil|complaint|компле[ий]нт|суд/.test(text)) return 'civil';
     if (/restraining|рестре[ий]нинг|ристре[ий]нинг|защитн\w*\s+ордер|ch-\d+|ea-\d+|gv-\d+|wv-\d+|угрож|преслед|harass|stalk/.test(text)) return 'restraining';
@@ -2659,6 +2803,7 @@ function closeDetail(id) {
     var pct = Math.round((state.step + 1) / activeSteps().length * 100);
     progress.style.width = pct + '%';
     if (progressPercent) progressPercent.textContent = pct + '%';
+    if (progressLabelEl && copy.progressLabel) progressLabelEl.textContent = copy.progressLabel;
     if (processingEl) {
       if (loading) {
         processingEl.textContent = (copy.processing || 'Processing your answers...');
@@ -2727,11 +2872,11 @@ function closeDetail(id) {
       '<div class="intake-grid" style="margin-top:16px;">' +
         '<div class="intake-field"><label>' + esc(copy.name) + '</label><input id="intakeName" autocomplete="name" value="' + esc(state.contact.name) + '"></div>' +
         '<div class="intake-field"><label>' + esc(copy.phone) + '</label><div id="intakeContactPhoneField" class="intake-phone-grid">' +
-          '<input id="intakePhoneCountry" type="tel" inputmode="tel" autocomplete="tel-country-code" placeholder="' + esc(copy.phoneCountry) + '" value="' + esc(contactPhone.countryCode) + '">' +
-          '<input id="intakePhoneArea" type="tel" inputmode="numeric" autocomplete="tel-area-code" placeholder="' + esc(copy.phoneArea) + '" value="' + esc(contactPhone.areaCode) + '">' +
-          '<input id="intakePhoneNumber" type="tel" inputmode="numeric" autocomplete="tel-local" placeholder="' + esc(copy.phoneNumber) + '" value="' + esc(contactPhone.number) + '">' +
+          '<select id="intakePhoneCountry" autocomplete="tel-country-code">' + phoneCountryOptions(contactPhone.countryCode) + '</select>' +
+          '<input id="intakePhoneArea" type="tel" inputmode="numeric" autocomplete="tel-area-code" maxlength="4" placeholder="' + esc(copy.areaCode || copy.phoneArea) + '" value="' + esc(contactPhone.areaCode) + '">' +
+          '<input id="intakePhoneNumber" type="tel" inputmode="numeric" autocomplete="tel-local" maxlength="11" placeholder="' + esc(copy.phoneNumber) + '" value="' + esc(contactPhone.number) + '">' +
         '</div></div>' +
-        '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" inputmode="email" autocomplete="email" value="' + esc(state.contact.email) + '"></div>' +
+        '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" inputmode="email" autocomplete="email" value="' + esc(state.contact.email) + '"><div class="intake-field-error" id="intakeEmailError">' + esc(copy.invalidEmail || 'Invalid email') + '</div></div>' +
       '</div><div id="intakeContactError" class="intake-error"></div><div id="intakeSaved" class="intake-help" style="display:none;margin-top:16px;color:#2a7a5a;"></div>';
   }
 
@@ -2761,8 +2906,10 @@ function closeDetail(id) {
     if (name) state.contact.name = name.value.trim();
     if (phone) state.contact.phone = phone.value.trim();
     if (phoneCountry || phoneArea || phoneNumber) {
+      // Country select value is "dial|code" like "+1|US"; take dial portion only.
+      var dial = phoneCountry ? String(phoneCountry.value || '').split('|')[0].trim() : '';
       state.contact.phone = [
-        phoneCountry ? phoneCountry.value.trim() : '',
+        dial,
         phoneArea ? phoneArea.value.trim() : '',
         phoneNumber ? phoneNumber.value.trim() : ''
       ].filter(Boolean).join(' ');
@@ -3189,6 +3336,16 @@ function closeDetail(id) {
   });
 
   card.addEventListener('input', function (event) {
+    // Phone area / number — strip non-digits as user types.
+    if (event.target.id === 'intakePhoneArea' || event.target.id === 'intakePhoneNumber') {
+      event.target.value = event.target.value.replace(/\D+/g, '');
+    }
+    // Email — clear inline error once user edits again.
+    if (event.target.id === 'intakeEmail') {
+      var err = document.getElementById('intakeEmailError');
+      if (err) err.classList.remove('active');
+      event.target.classList.remove('intake-invalid');
+    }
     var addressInput = event.target.closest('[data-address-autocomplete]');
     if (!addressInput) return;
     var fieldId = addressInput.getAttribute('data-address-autocomplete');
@@ -3197,6 +3354,36 @@ function closeDetail(id) {
     addressSuggestTimer = setTimeout(function () {
       suggestAddress(fieldId, addressInput.value.trim());
     }, 280);
+  });
+
+  // Email blur validation + phone country-change updates digit caps.
+  card.addEventListener('focusout', function (event) {
+    if (event.target.id === 'intakeEmail') {
+      var val = event.target.value.trim();
+      var err = document.getElementById('intakeEmailError');
+      if (val && !isValidEmail(val)) {
+        event.target.classList.add('intake-invalid');
+        if (err) err.classList.add('active');
+      } else {
+        event.target.classList.remove('intake-invalid');
+        if (err) err.classList.remove('active');
+      }
+    }
+  }, true);
+
+  card.addEventListener('change', function (event) {
+    if (event.target.id === 'intakePhoneCountry') {
+      var selected = event.target.selectedOptions[0];
+      if (selected) {
+        var localMax = parseInt(selected.getAttribute('data-max') || '10', 10);
+        var area = document.getElementById('intakePhoneArea');
+        var num = document.getElementById('intakePhoneNumber');
+        // NANP countries (+1) have 3-digit area + 7-digit subscriber; non-NANP use whole subscriber in Number.
+        var isNanp = selected.value.indexOf('+1|') === 0;
+        if (area) area.setAttribute('maxlength', isNanp ? '3' : '4');
+        if (num) num.setAttribute('maxlength', String(isNanp ? 7 : Math.max(4, localMax)));
+      }
+    }
   });
 
   card.addEventListener('change', function (event) {
@@ -3311,10 +3498,13 @@ function closeDetail(id) {
         if (/^(SC|FW|POS|CIV|CM|SUM|PLD)-/i.test(state.formCode)) state.service = 'civil';
         if (/^(CH|EA|GV|WV)-/i.test(state.formCode)) state.service = 'restraining';
         if (/^UD-/i.test(state.formCode)) state.service = 'ud';
-        state.step = 2;
+        // Have explicit form code from hero — skip Details step, go straight to form flow.
+        state.step = 3;
       } else if (state.formCode) {
-        state.step = 2;
+        // Inferred form code — skip Details, go to form flow.
+        state.step = 3;
       } else if (state.service) {
+        // Have service but no form yet — Details step is useful so user can pick.
         state.step = 2;
       } else if (detectedLang) {
         state.step = 1;

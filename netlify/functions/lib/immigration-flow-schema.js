@@ -1209,9 +1209,14 @@ function applicantSteps() {
         autocomplete: 'additional-name'
       })
     ]),
-    step('applicant_other_names', 'Other names used', 'List any maiden name, prior legal names, or aliases. Leave blank or enter N/A if none.', [
-      field('other_names_used', 'Other names used', 'textarea', {
-        placeholder: 'Maiden name, prior legal names, aliases.'
+    step('applicant_other_names', 'Other names used', 'Have you ever used another legal name (maiden name, prior name, alias)? If yes, list them all on the next field.', [
+      field('has_other_names', 'Have you used any other names?', 'radio', {
+        required: true,
+        options: ['Yes', 'No']
+      }),
+      field('other_names_used', 'List all other names you have used', 'textarea', {
+        placeholder: 'Maiden name, prior legal names, aliases.',
+        showWhen: [{ field: 'has_other_names', equals: 'Yes' }]
       })
     ]),
     step('applicant_birth_date', 'Birth date', 'Enter the applicant date of birth exactly as shown on documents.', [
@@ -1493,9 +1498,10 @@ function i485CoreSteps() {
         options: ['Yes', 'No']
       })
     ]),
-    step('i485_prior_us_address', 'I-485 prior U.S. physical address', 'Add the prior U.S. address only when the current address does not cover the period.', [
-      addressHistoryField('prior_us_addresses', 'Prior U.S. physical address, if current address does not cover the period', {
-        entries: 1
+    step('i485_prior_us_address', 'I-485 prior U.S. addresses (last 5 years)', 'List every U.S. physical address from the last 5 years. Add as many entries as needed to cover the full 5-year period before today.', [
+      addressHistoryField('prior_us_addresses', 'Prior U.S. addresses for the last 5 years', {
+        entries: 5,
+        showWhen: [{ field: 'same_address_five_years', equals: 'No' }]
       })
     ]),
     step('i485_foreign_address', 'I-485 last foreign address', 'Enter the most recent address outside the United States as a complete address.', [
@@ -1549,11 +1555,11 @@ function i485CoreSteps() {
         options: ['Yes', 'No', 'Not sure']
       }),
     ]),
-    step('i485_current_work_history', 'I-485 current work or school', 'Enter current U.S. employment or school as one structured record.', [
-      employmentHistoryField('current_employment_history', 'Current U.S. employment or school', { entries: 1 }),
+    step('i485_current_work_history', 'I-485 employment history (last 5 years)', 'List every employer, school, unemployment period, or self-employment over the past 5 years. List most recent first. Add as many entries as needed.', [
+      employmentHistoryField('current_employment_history', 'U.S. employment / school history for the last 5 years', { entries: 5 }),
     ]),
-    step('i485_foreign_work_history', 'I-485 foreign work history', 'Enter the most recent employment outside the United States.', [
-      employmentHistoryField('foreign_employment_history', 'Most recent employment outside the United States', { entries: 1 })
+    step('i485_foreign_work_history', 'I-485 foreign employment (last 5 years)', 'List employment outside the United States during the past 5 years. Add as many entries as needed.', [
+      employmentHistoryField('foreign_employment_history', 'Employment outside the United States for the last 5 years', { entries: 3 })
     ]),
     step('i485_parent1_name', 'I-485 parent 1 name', 'Enter parent 1 name exactly as known.', [
       field('father_family_name', 'Parent 1 family name', 'text', { autocomplete: 'family-name' }),
