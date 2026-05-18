@@ -2839,7 +2839,8 @@ function i751SpecificSteps() {
     step('i751_children', 'Children included', 'List children included as dependents, if any.', [
       field('total_children', 'Number of children included', 'number', { inputmode: 'numeric' }),
       field('children_details', 'Children details', 'textarea', {
-        placeholder: 'For each child: full name, A-number if any, DOB, relationship.'
+        placeholder: 'For each child: full name, A-number if any, DOB, relationship.',
+        showWhen: [{ id: 'total_children', gte: 1 }]
       })
     ]),
     step('i751_residence_history', 'Residence history', 'Use this when the case needs a relationship/residence timeline.', [

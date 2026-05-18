@@ -203,6 +203,7 @@ async function main() {
   assert(i751Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-751: physical address should be structured');
   assert(i751Fields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-751: residence history should be structured');
   assert(i751Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-751: daytime phone should be US 10-digit phone field');
+  assert(i751Fields.find((field) => field.id === 'children_details')?.showWhen?.[0]?.id === 'total_children', 'I-751: children details should only show when at least one child is included');
 
   const i539 = await callFlow('I-539', 'en');
   const i539Order = i539.body.steps.map((step) => step.id);
