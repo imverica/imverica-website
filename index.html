@@ -2331,6 +2331,14 @@ function closeDetail(id) {
   function finalStep() { return activeSteps().length - 1; }
   function inferIntakeFormCode(value) {
     var text = normalizeIntakeText(value);
+    // Bare numeric / loose form references where the WHOLE input is just the
+    // form code (or a code with a prefix letter). Matches "485", "i485",
+    // "i 485", "n-400", "g 28" but NOT phrases like "у меня 485 долларов".
+    var bare = text.trim().match(/^(?:(i|n|g)[\s._-]*)?(\d{2,4}[a-z]?)$/i);
+    if (bare && bare[2]) {
+      var prefix = (bare[1] || 'i').toUpperCase();
+      return prefix + '-' + bare[2].toUpperCase();
+    }
     if (/ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead|i-765/.test(text)) return 'I-765';
     if (/гринк|грінк|грин[\s-]*карт|грін[\s-]*карт|green[\s-]*card|adjustment|adjust\s*status|i-485|изменени[ея]\s+статус|зміна\s*статус/.test(text)) return 'I-485';
     if (/свадьб|брак|женит|замуж|spouse|marriage|family\s*petition|i-130/.test(text)) return 'I-130';
@@ -3308,7 +3316,9 @@ function closeDetail(id) {
   async function changeIntakeLanguage(lang, advanceFromLanguageStep) {
     state.lang = lang;
     state.langManual = true;
-    if (advanceFromLanguageStep && state.step === 0) state.step = 1;
+    // Skip the redundant service-category step entirely. Service is inferred
+    // from the form code or situation text on the Details step.
+    if (advanceFromLanguageStep && state.step === 0) state.step = 2;
     if (state.service === 'immigration' && state.formCode && state.flowSchema) {
       state.flowSchema = null;
       await loadImmigrationFlow();
@@ -3429,6 +3439,8 @@ function closeDetail(id) {
   backBtn.addEventListener('click', function () {
     captureStep();
     if (state.step > 0) state.step -= 1;
+    // Service-category step (1) is hidden: skip back over it from Details (2) → Language (0).
+    if (state.step === 1) state.step = 0;
     skipEmptyFlowSteps(-1);
     render();
   });
@@ -3457,6 +3469,8 @@ function closeDetail(id) {
     }
     if (state.step < finalStep()) {
       state.step += 1;
+      // Service-category step (1) is hidden: skip it forward from Language (0) → Details (2).
+      if (state.step === 1) state.step = 2;
       skipEmptyFlowSteps(1);
       render();
       return;
