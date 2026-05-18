@@ -2723,6 +2723,17 @@ function closeDetail(id) {
       if (Array.isArray(value)) return value.map(String).includes(String(condition.includes));
       return String(value || '').split(',').map(function (item) { return item.trim(); }).includes(String(condition.includes));
     }
+    if (condition.in !== undefined && Array.isArray(condition.in)) {
+      return condition.in.map(String).indexOf(String(value || '')) !== -1;
+    }
+    if (condition.gte !== undefined) {
+      var n = parseFloat(value);
+      return !isNaN(n) && n >= Number(condition.gte);
+    }
+    if (condition.lte !== undefined) {
+      var n2 = parseFloat(value);
+      return !isNaN(n2) && n2 <= Number(condition.lte);
+    }
     if (condition.hasValue) return !isEmptyFlowValue({ type: 'text' }, value);
     return true;
   }

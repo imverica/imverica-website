@@ -1459,9 +1459,10 @@ function i485CoreSteps() {
         placeholder: 'Example: B-2, F-1, parolee, asylee'
       })
     ]),
-    step('i485_parole_details', 'I-485 parole details', 'If the applicant was paroled, capture the parole text exactly as shown.', [
+    step('i485_parole_details', 'I-485 parole details', 'Skipped automatically when the last entry was not by parole.', [
       field('paroled_as', 'If paroled, class of admission or parole type', 'text', {
-        placeholder: 'Example: PAROLED, DT, UHP'
+        placeholder: 'Example: PAROLED, DT, UHP',
+        showWhen: [{ id: 'admission_basis', equals: 'Paroled' }]
       })
     ]),
     step('i485_i94_status', 'I-485 I-94 and arrival status', 'Use the I-94 or entry document for these two fields.', [
@@ -1476,8 +1477,8 @@ function i485CoreSteps() {
       }),
       field('status_expiration_date', 'Nonimmigrant status expiration date, if any', 'text')
     ]),
-    step('i485_visa_number', 'I-485 visa number', 'Leave blank if there was no visa number or it does not apply.', [
-      field('visa_number', 'Nonimmigrant visa number, if any', 'text', { autocomplete: 'off' }),
+    step('i485_visa_number', 'I-485 visa number', 'Skipped automatically when the last entry was not as a nonimmigrant visa holder.', [
+      field('visa_number', 'Nonimmigrant visa number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'admission_basis', equals: 'Nonimmigrant' }] }),
     ]),
     step('i485_removal_history', 'I-485 removal history', 'These official questions must be answered carefully.', [
       field('in_removal_proceedings', 'Are you in removal, exclusion, rescission, or deportation proceedings?', 'radio', {
@@ -1517,7 +1518,8 @@ function i485CoreSteps() {
       field('ssn', 'Social Security number', 'text', {
         inputmode: 'numeric',
         autocomplete: 'off',
-        placeholder: '9 digits'
+        placeholder: '9 digits',
+        showWhen: [{ id: 'has_ssn', equals: 'Yes' }]
       })
     ]),
     step('i485_social_security_card', 'I-485 Social Security card request', 'Answer whether SSA should issue a card using this application.', [
@@ -1529,19 +1531,20 @@ function i485CoreSteps() {
       field('petition_previously_filed', 'Was an underlying immigrant petition previously filed?', 'radio', {
         options: ['Yes', 'No', 'Not sure']
       }),
-      field('petition_receipt_number', 'Underlying petition receipt number', 'text', { autocomplete: 'off' }),
+      field('petition_receipt_number', 'Underlying petition receipt number', 'text', { autocomplete: 'off', showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }] }),
     ]),
-    step('i485_petition_person', 'I-485 petitioner identity', 'Use this only when the petitioner is a person.', [
-      field('petitioner_family_name', 'Petitioner family name, if person', 'text', { autocomplete: 'family-name' }),
-      field('petitioner_given_name', 'Petitioner given name, if person', 'text', { autocomplete: 'given-name' })
+    step('i485_petition_person', 'I-485 petitioner identity', 'Skipped automatically when no underlying petition was filed.', [
+      field('petitioner_family_name', 'Petitioner family name, if person', 'text', { autocomplete: 'family-name', showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }] }),
+      field('petitioner_given_name', 'Petitioner given name, if person', 'text', { autocomplete: 'given-name', showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }] })
     ]),
-    step('i485_petition_date', 'I-485 petition date', 'Use this only when there is an underlying petition date.', [
-      field('petition_date', 'Underlying petition filing or approval date', 'date'),
+    step('i485_petition_date', 'I-485 petition date', 'Skipped automatically when no underlying petition was filed.', [
+      field('petition_date', 'Underlying petition filing or approval date', 'date', { showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }] }),
     ]),
-    step('i485_petition_category', 'I-485 filing category', 'Confirm the petition ID and the exact adjustment basis.', [
-      field('petitioner_alien_number', 'Petitioner A-number, if any', 'text', { autocomplete: 'off' }),
+    step('i485_petition_category', 'I-485 filing category', 'Skipped automatically when no underlying petition was filed.', [
+      field('petitioner_alien_number', 'Petitioner A-number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }] }),
       field('concurrent_filing', 'Is the underlying petition being filed together with I-485?', 'radio', {
-        options: ['Yes', 'No', 'Not sure']
+        options: ['Yes', 'No', 'Not sure'],
+        showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }]
       })
     ]),
     step('i485_eligibility_basis', 'I-485 exact eligibility basis', 'Use the exact category or basis that should appear in the filing.', [
@@ -1593,78 +1596,79 @@ function i485CoreSteps() {
     step('i485_marriage_count', 'I-485 marriage count', 'This controls current-spouse and prior-spouse sections.', [
       field('times_married', 'How many times have you been married?', 'number', { inputmode: 'numeric' }),
     ]),
-    step('i485_current_spouse_name', 'I-485 current spouse name', 'Fill only if there is a current spouse.', [
-      field('spouse_family_name', 'Current spouse family name, if any', 'text', { autocomplete: 'family-name' }),
-      field('spouse_given_name', 'Current spouse given name, if any', 'text', { autocomplete: 'given-name' })
+    // Current-spouse fields: show only when applicant is currently married.
+    // Uses showWhen on every field; if all are hidden, the step is auto-skipped.
+    step('i485_current_spouse_name', 'I-485 current spouse name', 'Skipped automatically when the applicant is not currently married.', [
+      field('spouse_family_name', 'Current spouse family name', 'text', { autocomplete: 'family-name', showWhen: [{ id: 'marital_status', equals: 'Married' }] }),
+      field('spouse_given_name', 'Current spouse given name', 'text', { autocomplete: 'given-name', showWhen: [{ id: 'marital_status', equals: 'Married' }] })
     ]),
     step('i485_current_spouse_number', 'I-485 current spouse A-number', 'Fill only if the current spouse has an A-number.', [
-      field('spouse_alien_number', 'Current spouse A-number, if any', 'text', { autocomplete: 'off' }),
+      field('spouse_alien_number', 'Current spouse A-number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'marital_status', equals: 'Married' }] }),
     ]),
-    step('i485_current_spouse_birth', 'I-485 current spouse birth country', 'Fill only if there is a current spouse.', [
-      field('spouse_country_of_birth', 'Current spouse country of birth', 'select', { options: COUNTRY_OPTIONS }),
+    step('i485_current_spouse_birth', 'I-485 current spouse birth country', 'Skipped automatically when the applicant is not currently married.', [
+      field('spouse_country_of_birth', 'Current spouse country of birth', 'select', { options: COUNTRY_OPTIONS, showWhen: [{ id: 'marital_status', equals: 'Married' }] }),
     ]),
-    step('i485_current_marriage', 'I-485 current marriage', 'Fill only if there is a current spouse.', [
-      field('current_marriage_date', 'Current marriage date', 'date'),
-      field('current_marriage_city', 'Current marriage city or town', 'text')
+    step('i485_current_marriage', 'I-485 current marriage', 'Skipped automatically when the applicant is not currently married.', [
+      field('current_marriage_date', 'Current marriage date', 'date', { showWhen: [{ id: 'marital_status', equals: 'Married' }] }),
+      field('current_marriage_city', 'Current marriage city or town', 'text', { showWhen: [{ id: 'marital_status', equals: 'Married' }] })
     ]),
     step('i485_current_marriage_place', 'I-485 current marriage place', 'State/province and country where the current marriage occurred.', [
-      field('current_marriage_state', 'Current marriage state or province', 'text'),
-      field('current_marriage_country', 'Current marriage country', 'select', { options: COUNTRY_OPTIONS })
+      field('current_marriage_state', 'Current marriage state or province', 'text', { showWhen: [{ id: 'marital_status', equals: 'Married' }] }),
+      field('current_marriage_country', 'Current marriage country', 'select', { options: COUNTRY_OPTIONS, showWhen: [{ id: 'marital_status', equals: 'Married' }] })
     ]),
-    step('i485_prior_spouse_name', 'I-485 prior spouse name', 'Fill only if there was a prior spouse.', [
-      field('prior_spouse_family_name', 'Prior spouse family name', 'text', { autocomplete: 'family-name' }),
-      field('prior_spouse_given_name', 'Prior spouse given name', 'text', { autocomplete: 'given-name' }),
+    // Prior-spouse fields: show when applicant is currently divorced/widowed/separated/annulled
+    // OR when times_married >= 2 (currently married but had prior).
+    step('i485_prior_spouse_name', 'I-485 prior spouse name', 'Skipped automatically when there is no prior spouse to report.', [
+      field('prior_spouse_family_name', 'Prior spouse family name', 'text', { autocomplete: 'family-name', showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
+      field('prior_spouse_given_name', 'Prior spouse given name', 'text', { autocomplete: 'given-name', showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
     ]),
-    step('i485_prior_spouse_birth', 'I-485 prior spouse birth and citizenship', 'Fill only if there was a prior spouse.', [
-      field('prior_spouse_dob', 'Prior spouse date of birth', 'date'),
-      field('prior_spouse_country_of_birth', 'Prior spouse country of birth', 'select', { options: COUNTRY_OPTIONS })
+    step('i485_prior_spouse_birth', 'I-485 prior spouse birth and citizenship', 'Skipped automatically when there is no prior spouse to report.', [
+      field('prior_spouse_dob', 'Prior spouse date of birth', 'date', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
+      field('prior_spouse_country_of_birth', 'Prior spouse country of birth', 'select', { options: COUNTRY_OPTIONS, showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] })
     ]),
-    step('i485_prior_spouse_citizenship', 'I-485 prior spouse citizenship', 'Fill only if there was a prior spouse.', [
-      field('prior_spouse_country_of_citizenship', 'Prior spouse country of citizenship', 'select', { options: COUNTRY_OPTIONS }),
+    step('i485_prior_spouse_citizenship', 'I-485 prior spouse citizenship', 'Skipped automatically when there is no prior spouse to report.', [
+      field('prior_spouse_country_of_citizenship', 'Prior spouse country of citizenship', 'select', { options: COUNTRY_OPTIONS, showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
     ]),
     step('i485_prior_spouse_marriage', 'I-485 prior spouse marriage', 'Where and when the prior marriage started.', [
-      field('prior_spouse_marriage_date', 'Date of marriage to prior spouse', 'date'),
-      field('prior_spouse_marriage_city', 'Marriage city or town with prior spouse', 'text')
+      field('prior_spouse_marriage_date', 'Date of marriage to prior spouse', 'date', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
+      field('prior_spouse_marriage_city', 'Marriage city or town with prior spouse', 'text', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] })
     ]),
     step('i485_prior_spouse_marriage_place', 'I-485 prior spouse marriage place', 'State/province and country where the prior marriage occurred.', [
-      field('prior_spouse_marriage_state', 'Marriage state/province with prior spouse', 'text'),
-      field('prior_spouse_marriage_country', 'Marriage country with prior spouse', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_marriage_state', 'Marriage state/province with prior spouse', 'text', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
+      field('prior_spouse_marriage_country', 'Marriage country with prior spouse', 'select', { options: COUNTRY_OPTIONS, showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
     ]),
     step('i485_prior_spouse_end_place', 'I-485 prior marriage end place', 'Where the prior marriage ended.', [
-      field('prior_spouse_marriage_end_city', 'City/town where prior marriage ended', 'text'),
-      field('prior_spouse_marriage_end_state', 'State/province where prior marriage ended', 'text')
+      field('prior_spouse_marriage_end_city', 'City/town where prior marriage ended', 'text', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
+      field('prior_spouse_marriage_end_state', 'State/province where prior marriage ended', 'text', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] })
     ]),
     step('i485_prior_spouse_end_country', 'I-485 prior marriage end country', 'Country where the prior marriage ended.', [
-      field('prior_spouse_marriage_end_country', 'Country where prior marriage ended', 'select', { options: COUNTRY_OPTIONS }),
+      field('prior_spouse_marriage_end_country', 'Country where prior marriage ended', 'select', { options: COUNTRY_OPTIONS, showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
     ]),
     step('i485_prior_spouse_end_result', 'I-485 prior marriage end date and type', 'When and how the prior marriage ended.', [
-      field('prior_spouse_marriage_end_date', 'Date prior marriage ended', 'date'),
+      field('prior_spouse_marriage_end_date', 'Date prior marriage ended', 'date', { showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }] }),
       field('prior_spouse_marriage_end_type', 'How prior marriage ended', 'select', {
-        options: [
-          'Divorced',
-          'Annulled',
-          'Widowed',
-          'Other'
-        ]
+        options: ['Divorced', 'Annulled', 'Widowed', 'Other'],
+        showWhenAny: [{ id: 'marital_status', in: ['Divorced','Widowed','Separated','Annulled'] }, { id: 'times_married', gte: 2 }]
       }),
     ]),
     step('i485_children_count', 'I-485 children count', 'Start with the total number of children.', [
       field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
     ]),
-    step('i485_child1_identity', 'I-485 child 1 identity', 'Enter child 1 name and A-number if any.', [
-      field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name' }),
-      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name' })
+    // Child 1 fields: show only when total_children >= 1.
+    step('i485_child1_identity', 'I-485 child 1 identity', 'Skipped automatically when the applicant reports zero children.', [
+      field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name', showWhen: [{ id: 'total_children', gte: 1 }] }),
+      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name', showWhen: [{ id: 'total_children', gte: 1 }] })
     ]),
-    step('i485_child1_number', 'I-485 child 1 A-number', 'Enter only if the child has an A-number.', [
-      field('child1_alien_number', 'Child 1 A-number, if any', 'text', { autocomplete: 'off' }),
+    step('i485_child1_number', 'I-485 child 1 A-number', 'Skipped automatically when the applicant reports zero children.', [
+      field('child1_alien_number', 'Child 1 A-number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'total_children', gte: 1 }] }),
     ]),
-    step('i485_child1_details', 'I-485 child 1 details', 'Birth date, country, relationship, and whether child 1 is applying.', [
-      field('child1_dob', 'Child 1 date of birth', 'date'),
-      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS })
+    step('i485_child1_details', 'I-485 child 1 details', 'Skipped automatically when the applicant reports zero children.', [
+      field('child1_dob', 'Child 1 date of birth', 'date', { showWhen: [{ id: 'total_children', gte: 1 }] }),
+      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS, showWhen: [{ id: 'total_children', gte: 1 }] })
     ]),
-    step('i485_child1_relationship', 'I-485 child 1 relationship', 'Relationship and whether this child is applying with the applicant.', [
-      field('child1_relationship', 'Child 1 relationship', 'text', { placeholder: 'Example: biological child, stepchild' }),
-      field('child1_applying_with_you', 'Is child 1 applying with you?', 'radio', { options: ['Yes', 'No'] }),
+    step('i485_child1_relationship', 'I-485 child 1 relationship', 'Skipped automatically when the applicant reports zero children.', [
+      field('child1_relationship', 'Child 1 relationship', 'text', { placeholder: 'Example: biological child, stepchild', showWhen: [{ id: 'total_children', gte: 1 }] }),
+      field('child1_applying_with_you', 'Is child 1 applying with you?', 'radio', { options: ['Yes', 'No'], showWhen: [{ id: 'total_children', gte: 1 }] }),
     ]),
     step('i485_biographic_identity', 'I-485 ethnicity and race', 'These values map to the biographic information section.', [
       field('ethnicity', 'Ethnicity', 'select', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
