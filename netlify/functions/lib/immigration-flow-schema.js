@@ -2950,7 +2950,19 @@ function i539SpecificSteps() {
     ]),
     step('i539_public_benefits_criminal', 'Public benefits and criminal history', 'Any Yes or unsure answer needs document review.', [
       field('i539_public_benefits_received', 'Have you received public benefits that must be disclosed?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('i539_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+      field('i539_public_benefits_details', 'Public benefits details', 'textarea', {
+        showWhenAny: [
+          { id: 'i539_public_benefits_received', equals: 'Yes' },
+          { id: 'i539_public_benefits_received', equals: 'Not sure' }
+        ]
+      }),
+      field('i539_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i539_criminal_history_details', 'Criminal history details and documents', 'textarea', {
+        showWhenAny: [
+          { id: 'i539_arrested_or_convicted', equals: 'Yes' },
+          { id: 'i539_arrested_or_convicted', equals: 'Not sure' }
+        ]
+      })
     ]),
     step('i539_contact', 'Applicant contact information', 'Phone and email for the signature/contact section.', [
       field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),

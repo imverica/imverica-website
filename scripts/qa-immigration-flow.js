@@ -215,6 +215,9 @@ async function main() {
   assert(i539Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-539: mailing address should be structured');
   assert(i539Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-539: physical address should be structured');
   assert(i539Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-539: daytime phone should be US 10-digit phone field');
+  assert(i539Fields.find((field) => field.id === 'i539_dependents_details')?.showWhen?.[0]?.id === 'dependents_included', 'I-539: dependent details should only show when dependents are included');
+  assert(i539Fields.find((field) => field.id === 'i539_public_benefits_details')?.showWhenAny?.length === 2, 'I-539: public benefits details should only show for Yes or Not sure');
+  assert(i539Fields.find((field) => field.id === 'i539_criminal_history_details')?.showWhenAny?.length === 2, 'I-539: criminal details should only show for Yes or Not sure');
 
   const i821 = await callFlow('I-821', 'en');
   const i821Order = i821.body.steps.map((step) => step.id);
