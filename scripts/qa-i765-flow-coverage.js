@@ -25,6 +25,16 @@ const before = (first, second) => {
   assert(secondIndex >= 0, `Missing I-765 ordered step: ${second}`);
   assert(firstIndex < secondIndex, `Expected ${first} before ${second}`);
 };
+const sameValue = (actual, expected) => {
+  if (Array.isArray(actual) && Array.isArray(expected)) {
+    return JSON.stringify(actual) === JSON.stringify(expected);
+  }
+  return actual === expected;
+};
+const hasCondition = (field, id, key, value) => (field?.showWhen || [])
+  .some((condition) => condition.id === id && sameValue(condition[key], value));
+const hasAnyCondition = (field, id, key, value) => (field?.showWhenAny || [])
+  .some((condition) => condition.id === id && sameValue(condition[key], value));
 
 [
   'i765_application_reason',
@@ -106,7 +116,12 @@ before('i765_applicant_statement', 'contact_info');
 before('contact_info', 'documents_interpreter_choice');
 
 assert(fields.get('mailing_address')?.type === 'addressBlock', 'I-765 mailing address should use structured address block');
-assert(fields.get('daytime_phone')?.type === 'phone', 'I-765 phone should use split phone UI');
+assert(fields.get('daytime_phone')?.type === 'phone', 'I-765 phone should use US 10-digit phone UI');
 assert(fields.get('ssn')?.inputmode === 'numeric', 'I-765 SSN should prefer numeric input');
+assert(fields.get('ssn')?.digits === 9, 'I-765 SSN should require 9 digits');
+assert(hasCondition(fields.get('ssn'), 'has_ssn', 'equals', 'Yes'), 'I-765 SSN field should appear only when SSN was issued');
+assert(hasAnyCondition(fields.get('c8_arrested_or_convicted'), 'ead_basis', 'equals', 'Pending asylum (c)(8)'), 'I-765 c8 crime question should appear for pending asylum basis');
+assert(hasAnyCondition(fields.get('c8_arrested_or_convicted'), 'eligibility_category_code', 'matches', '\\(?\\s*c\\s*\\)?\\s*\\(?\\s*8\\s*\\)?'), 'I-765 c8 crime question should match category code c8');
+assert(hasAnyCondition(fields.get('pending_application_receipt'), 'ead_basis', 'in', ['Pending green card / adjustment of status', 'Pending asylum (c)(8)', 'TPS', 'DACA']), 'I-765 pending receipt should appear for pending-case EAD bases');
 
 console.log('I-765 frontend flow coverage QA passed');

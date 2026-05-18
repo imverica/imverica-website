@@ -2510,6 +2510,8 @@ function closeDetail(id) {
     if (field.required) attrs += ' required';
     if (field.autocomplete) attrs += ' autocomplete="' + esc(field.autocomplete) + '"';
     if (field.inputmode) attrs += ' inputmode="' + esc(field.inputmode) + '"';
+    if (field.maxLength) attrs += ' maxlength="' + esc(field.maxLength) + '"';
+    if (field.digits) attrs += ' data-flow-digits="' + esc(field.digits) + '"';
     if (field.placeholder) attrs += ' placeholder="' + esc(field.placeholder) + '"';
     return attrs;
   }
@@ -2738,6 +2740,13 @@ function closeDetail(id) {
     if (condition.in !== undefined && Array.isArray(condition.in)) {
       return condition.in.map(String).indexOf(String(value || '')) !== -1;
     }
+    if (condition.matches !== undefined) {
+      try {
+        return new RegExp(String(condition.matches), 'i').test(String(value || ''));
+      } catch (e) {
+        return false;
+      }
+    }
     if (condition.gte !== undefined) {
       var n = parseFloat(value);
       return !isNaN(n) && n >= Number(condition.gte);
@@ -2927,7 +2936,13 @@ function closeDetail(id) {
       var key = input.getAttribute('data-flow-field');
       if (!key) return;
       if (input.type === 'checkbox' || input.type === 'radio') return;
-      state.formAnswers[key] = input.value.trim();
+      var digitLimit = input.getAttribute('data-flow-digits');
+      if (digitLimit) {
+        state.formAnswers[key] = input.value.replace(/\D/g, '').slice(0, Number(digitLimit) || 30);
+        input.value = state.formAnswers[key];
+      } else {
+        state.formAnswers[key] = input.value.trim();
+      }
     });
     // Single-input US phone widget: store digits raw + structured parts so
     // existing PDF map readers (countryCode/areaCode/number) keep working.
@@ -3066,7 +3081,9 @@ function closeDetail(id) {
     visibleFlowFields(schemaStep).forEach(function (field) {
       var value = state.formAnswers[field.id];
       var empty = isEmptyFlowValue(field, value);
-      if (!field.required || !empty) return;
+      var digitValue = String(value || '').replace(/\D/g, '');
+      var wrongDigits = field.digits && digitValue && digitValue.length !== Number(field.digits);
+      if ((!field.required || !empty) && !wrongDigits) return;
       var input = document.getElementById(fieldDomId(field.id))
         || card.querySelector('[data-flow-phone-us="' + field.id + '"]');
       var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-block="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
@@ -3379,6 +3396,10 @@ function closeDetail(id) {
       if (newPos > formatted.length) newPos = formatted.length;
       try { event.target.setSelectionRange(newPos, newPos); } catch (e) {}
     }
+    if (event.target.hasAttribute('data-flow-digits')) {
+      var limit = Number(event.target.getAttribute('data-flow-digits')) || 30;
+      event.target.value = event.target.value.replace(/\D/g, '').slice(0, limit);
+    }
     // Email — clear inline error once user edits again.
     if (event.target.id === 'intakeEmail') {
       var err = document.getElementById('intakeEmailError');
@@ -3395,7 +3416,7 @@ function closeDetail(id) {
     }, 280);
   });
 
-  // Email blur validation + phone country-change updates digit caps.
+  // Email blur validation.
   card.addEventListener('focusout', function (event) {
     if (event.target.id === 'intakeEmail') {
       var val = event.target.value.trim();

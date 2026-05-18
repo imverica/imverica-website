@@ -341,6 +341,8 @@ const LOCALIZATION = {
       'VAWA / special immigrant': 'VAWA / special immigrant',
       'Pending green card / adjustment of status': 'Ожидающее заявление на green card / изменение статуса',
       'Asylum or pending asylum': 'Asylum или pending asylum',
+      'Pending asylum (c)(8)': 'Pending asylum (c)(8)',
+      'Granted asylum (a)(5)': 'Полученный asylum (a)(5)',
       'Initial permission to accept employment': 'Первичное разрешение на работу',
       'Replacement of lost, stolen, or damaged EAD': 'Замена потерянного, украденного или поврежденного EAD',
       'Renewal of permission to accept employment': 'Продление разрешения на работу',
@@ -529,6 +531,13 @@ const LOCALIZATION = {
       'Not sure': 'Не знаю',
       Other: 'Інше',
       'Other or not sure': 'Інше або не знаю',
+      'Pending green card / adjustment of status': 'Очікувана green card / adjustment of status',
+      'Pending asylum (c)(8)': 'Pending asylum (c)(8)',
+      'Granted asylum (a)(5)': 'Наданий asylum (a)(5)',
+      TPS: 'TPS',
+      DACA: 'DACA',
+      'Student category': 'Студентська категорія',
+      'Parole or humanitarian category': 'Parole або гуманітарна категорія',
       'Initial permission to accept employment': 'Первинний дозвіл на роботу',
       'Replacement of lost, stolen, or damaged EAD': 'Заміна втраченого, викраденого або пошкодженого EAD',
       'Renewal of permission to accept employment': 'Продовження дозволу на роботу',
@@ -634,6 +643,13 @@ const LOCALIZATION = {
       'Not sure': 'No estoy seguro',
       Other: 'Otro',
       'Other or not sure': 'Otro o no estoy seguro',
+      'Pending green card / adjustment of status': 'Green card / ajuste de estatus pendiente',
+      'Pending asylum (c)(8)': 'Asilo pendiente (c)(8)',
+      'Granted asylum (a)(5)': 'Asilo concedido (a)(5)',
+      TPS: 'TPS',
+      DACA: 'DACA',
+      'Student category': 'Categoría de estudiante',
+      'Parole or humanitarian category': 'Parole o categoría humanitaria',
       'Initial permission to accept employment': 'Permiso inicial para aceptar empleo',
       'Replacement of lost, stolen, or damaged EAD': 'Reemplazo de EAD perdido, robado o dañado',
       'Renewal of permission to accept employment': 'Renovación del permiso para aceptar empleo',
@@ -3465,15 +3481,28 @@ const FORM_OVERRIDES = {
     step('i765_work_permit_basis', 'I-765 work permit basis', 'Select the closest basis. We verify the exact eligibility category before preparing the form.', [
       field('ead_basis', 'What is the work permit based on?', 'select', {
         required: true,
-        options: ['Pending green card / adjustment of status', 'Asylum or pending asylum', 'TPS', 'DACA', 'Student category', 'Parole or humanitarian category', 'Other or not sure']
+        options: ['Pending green card / adjustment of status', 'Pending asylum (c)(8)', 'Granted asylum (a)(5)', 'TPS', 'DACA', 'Student category', 'Parole or humanitarian category', 'Other or not sure']
       })
     ]),
     step('i765_eligibility_category', 'I-765 eligibility category', 'Use the exact category code that belongs in Item 27. Do not guess.', [
       field('eligibility_category_code', 'Eligibility category code, if known', 'text', { placeholder: 'Example: (c)(9), (c)(8), (a)(12)' }),
-      field('c8_arrested_or_convicted', 'For category (c)(8), have you ever been arrested for or convicted of any crime?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+      field('c8_arrested_or_convicted', 'For category (c)(8), have you ever been arrested for or convicted of any crime?', 'radio', {
+        options: ['Yes', 'No', 'Not sure'],
+        showWhenAny: [
+          { id: 'ead_basis', equals: 'Pending asylum (c)(8)' },
+          { id: 'eligibility_category_code', matches: '\\(?\\s*c\\s*\\)?\\s*\\(?\\s*8\\s*\\)?' }
+        ]
+      })
     ]),
     step('i765_pending_receipt', 'I-765 related pending case', 'Receipt numbers are needed only for categories that depend on a pending case.', [
-      field('pending_application_receipt', 'Related pending application receipt number, if any', 'text', { autocomplete: 'off' })
+      field('pending_application_receipt', 'Related pending application receipt number, if any', 'text', {
+        autocomplete: 'off',
+        showWhenAny: [
+          { id: 'ead_basis', in: ['Pending green card / adjustment of status', 'Pending asylum (c)(8)', 'TPS', 'DACA'] },
+          { id: 'eligibility_category_code', matches: '\\(?\\s*c\\s*\\)?\\s*\\(?\\s*(?:8|9|19|33)\\s*\\)?' },
+          { id: 'eligibility_category_code', matches: '\\(?\\s*a\\s*\\)?\\s*\\(?\\s*12\\s*\\)?' }
+        ]
+      })
     ]),
     step('i765_prior_ead', 'I-765 prior EAD', 'Confirm whether the applicant had an EAD before.', [
       field('prior_ead', 'Have you had an EAD before?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
@@ -3486,7 +3515,10 @@ const FORM_OVERRIDES = {
       field('ssn', 'Social Security number', 'text', {
         inputmode: 'numeric',
         autocomplete: 'off',
-        placeholder: '9 digits'
+        placeholder: '9 digits',
+        digits: 9,
+        maxLength: 9,
+        showWhen: [{ id: 'has_ssn', equals: 'Yes' }]
       })
     ]),
     step('i765_applicant_statement', 'I-765 applicant statement', 'Part 3 of Form I-765: applicant statement and interpreter/preparer routing.', [

@@ -71,7 +71,7 @@ async function main() {
   assert(mailingAddress?.parts?.state === 'mailing_state', 'I-765: address block should map mailing state key');
   assert(mailingAddress?.stateOptions?.includes('CA - California'), 'I-765: state select should include California');
   assert(mailingAddress?.stateOptions?.includes('PR - Puerto Rico'), 'I-765: state select should include territories');
-  assert(daytimePhone?.type === 'phone', 'I-765: phone should be split phone field');
+  assert(daytimePhone?.type === 'phone', 'I-765: phone should be US 10-digit phone field');
   const i765Category = localized.body.steps.find((step) => step.id === 'i765_eligibility_category');
   assert(i765Category?.fields.some((field) => field.id === 'c8_arrested_or_convicted'), 'I-765: missing c8 arrest/conviction question');
   const i765Order = localized.body.steps.map((step) => step.id);
@@ -96,7 +96,7 @@ async function main() {
   const n400Fields = n400.body.steps.flatMap((step) => step.fields || []);
   assert(n400Fields.find((field) => field.id === 'addresses_last_five_years')?.type === 'addressHistory', 'N-400: address history should be structured');
   assert(n400Fields.find((field) => field.id === 'employment_school_last_five_years')?.type === 'employmentHistory', 'N-400: employment history should be structured');
-  assert(n400Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'N-400: daytime phone should be split phone field');
+  assert(n400Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'N-400: daytime phone should be US 10-digit phone field');
 
   const i130a = await callFlow('I-130A', 'en');
   const i130 = await callFlow('I-130', 'en');
@@ -126,7 +126,7 @@ async function main() {
   const i131Fields = i131.body.steps.flatMap((step) => step.fields || []);
   assert(i131Fields.find((field) => field.id === 'i131_mailing_address')?.type === 'addressBlock', 'I-131: mailing address should be structured');
   assert(i131Fields.find((field) => field.id === 'i131_beneficiary_address')?.type === 'addressBlock', 'I-131: beneficiary address should be structured');
-  assert(i131Fields.find((field) => field.id === 'i131_daytime_phone')?.type === 'phone', 'I-131: daytime phone should be split phone field');
+  assert(i131Fields.find((field) => field.id === 'i131_daytime_phone')?.type === 'phone', 'I-131: daytime phone should be US 10-digit phone field');
 
   const i90 = await callFlow('I-90', 'en');
   const i90Order = i90.body.steps.map((step) => step.id);
@@ -153,7 +153,7 @@ async function main() {
   const i589Fields = i589.body.steps.flatMap((step) => step.fields || []);
   assert(i589Fields.find((field) => field.id === 'i589_residential_address')?.type === 'addressBlock', 'I-589: residential address should be structured');
   assert(i589Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-589: mailing address should be structured');
-  assert(i589Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-589: daytime phone should be split phone field');
+  assert(i589Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-589: daytime phone should be US 10-digit phone field');
   assert(i589Fields.find((field) => field.id === 'asylum_basis')?.type === 'checkboxes', 'I-589: asylum basis should be checkboxes');
 
   const i864 = await callFlow('I-864', 'en');
@@ -168,7 +168,7 @@ async function main() {
   assert(i864Fields.find((field) => field.id === 'principal_immigrant_mailing_address')?.type === 'addressBlock', 'I-864: principal immigrant mailing address should be structured');
   assert(i864Fields.find((field) => field.id === 'sponsor_mailing_address')?.type === 'addressBlock', 'I-864: sponsor mailing address should be structured');
   assert(i864Fields.find((field) => field.id === 'sponsor_physical_address')?.type === 'addressBlock', 'I-864: sponsor physical address should be structured');
-  assert(i864Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-864: daytime phone should be split phone field');
+  assert(i864Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-864: daytime phone should be US 10-digit phone field');
 
   const i912 = await callFlow('I-912', 'en');
   const i912Order = i912.body.steps.map((step) => step.id);
@@ -179,7 +179,7 @@ async function main() {
   assert(i912Order.indexOf('i912_financial_hardship') < i912Order.indexOf('i912_applicant_statement'), 'I-912: hardship must come before applicant statement');
   const i912Fields = i912.body.steps.flatMap((step) => step.fields || []);
   assert(i912Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-912: mailing address should be structured');
-  assert(i912Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-912: daytime phone should be split phone field');
+  assert(i912Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-912: daytime phone should be US 10-digit phone field');
   assert(i912Fields.find((field) => field.id === 'fee_waiver_basis')?.type === 'checkboxes', 'I-912: fee waiver basis should be checkboxes');
 
   const i751 = await callFlow('I-751', 'en');
@@ -193,7 +193,7 @@ async function main() {
   assert(i751Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-751: mailing address should be structured');
   assert(i751Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-751: physical address should be structured');
   assert(i751Fields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-751: residence history should be structured');
-  assert(i751Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-751: daytime phone should be split phone field');
+  assert(i751Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-751: daytime phone should be US 10-digit phone field');
 
   const i539 = await callFlow('I-539', 'en');
   const i539Order = i539.body.steps.map((step) => step.id);
@@ -205,7 +205,7 @@ async function main() {
   const i539Fields = i539.body.steps.flatMap((step) => step.fields || []);
   assert(i539Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-539: mailing address should be structured');
   assert(i539Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-539: physical address should be structured');
-  assert(i539Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-539: daytime phone should be split phone field');
+  assert(i539Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-539: daytime phone should be US 10-digit phone field');
 
   const i821 = await callFlow('I-821', 'en');
   const i821Order = i821.body.steps.map((step) => step.id);
@@ -215,7 +215,7 @@ async function main() {
   const i821Fields = i821.body.steps.flatMap((step) => step.fields || []);
   assert(i821Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-821: mailing address should be structured');
   assert(i821Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-821: physical address should be structured');
-  assert(i821Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821: daytime phone should be split phone field');
+  assert(i821Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821: daytime phone should be US 10-digit phone field');
 
   const i821d = await callFlow('I-821D', 'en');
   const i821dOrder = i821d.body.steps.map((step) => step.id);
@@ -227,7 +227,7 @@ async function main() {
   assert(i821dFields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-821D: mailing address should be structured');
   assert(i821dFields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-821D: physical address should be structured');
   assert(i821dFields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-821D: residence history should be structured');
-  assert(i821dFields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821D: daytime phone should be split phone field');
+  assert(i821dFields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821D: daytime phone should be US 10-digit phone field');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
