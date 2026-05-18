@@ -34,6 +34,12 @@ function usPhoneDigits(value) {
   return raw;
 }
 
+function usPhonePdf(value) {
+  const phone = usPhoneDigits(value);
+  if (phone.length !== 10) return phone;
+  return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`;
+}
+
 function yesNo(value) {
   const text = clean(value, 40).toLowerCase();
   if (['yes', 'да', 'так', 'si', 'sí', 'true'].includes(text)) return true;
@@ -361,6 +367,12 @@ function exactSelectedValue(key, rawValue) {
   return text;
 }
 
+const EXACT_PHONE_KEYS = new Set([
+  'Pt3Line3_DaytimePhoneNumber1',
+  'Pt3Line4_MobileNumber1',
+  'Pt12Line3_PreparerDaytimePhoneNumber1'
+]);
+
 function exactScenarioFieldValues(answers = {}) {
   if (!hasExactScenarioFields(answers)) return {};
 
@@ -395,7 +407,7 @@ function exactScenarioFieldValues(answers = {}) {
       }
 
       names.forEach((name) => {
-        result[name] = rawValue;
+        result[name] = EXACT_PHONE_KEYS.has(key) ? usPhonePdf(rawValue) : rawValue;
       });
     }
   }
@@ -457,8 +469,8 @@ function i485FieldValues(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
   const exactValues = exactScenarioFieldValues(answers);
   const contact = payload.contact || {};
-  const phone = usPhoneDigits(answers.daytime_phone || contact.phone);
-  const mobile = usPhoneDigits(answers.mobile_phone || answers.daytime_phone || contact.phone);
+  const phone = usPhonePdf(answers.daytime_phone || contact.phone);
+  const mobile = usPhonePdf(answers.mobile_phone || answers.daytime_phone || contact.phone);
   const email = clean(answers.email_address || contact.email, 180);
   const alienNum = digits(answers.alien_number, 9);
   const priorPetition = yesNo(answers.petition_previously_filed);
@@ -636,7 +648,7 @@ function i485FieldValues(payload = {}) {
     'Pt12Line1_PreparerFamilyName[0]': clean(answers.preparer_family_name, 60),
     'Pt12Line1a_PreparerGivenName[0]': clean(answers.preparer_given_name, 60),
     'Pt12Line2_BusinessName[0]': clean(answers.preparer_business_name, 80),
-    'Pt12Line3_PreparerDaytimePhoneNumber1[0]': usPhoneDigits(answers.preparer_phone),
+    'Pt12Line3_PreparerDaytimePhoneNumber1[0]': usPhonePdf(answers.preparer_phone),
     'Pt12Line5_PreparerEmail[0]': clean(answers.preparer_email, 180),
 
     // Repeating A-number header on all pages
@@ -668,4 +680,4 @@ function i485FieldValues(payload = {}) {
   return { ...semanticValues, ...exactValues };
 }
 
-module.exports = { i485FieldValues, i485TextOverlays, dateMdY };
+module.exports = { i485FieldValues, i485TextOverlays, dateMdY, usPhonePdf };

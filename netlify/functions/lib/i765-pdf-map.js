@@ -24,6 +24,12 @@ function usPhoneDigits(value) {
   return raw;
 }
 
+function usPhonePdf(value) {
+  const phone = usPhoneDigits(value);
+  if (phone.length !== 10) return phone;
+  return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`;
+}
+
 function dateMdY(value) {
   const text = clean(value, 40);
   const match = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -248,7 +254,7 @@ function i765FieldValues(payload = {}) {
   const fallbackName = splitNameParts(contact.name);
   const category = categoryParts(answers.eligibility_category_code);
   const priorEad = yesNo(answers.prior_ead);
-  const phone = usPhoneDigits(answers.daytime_phone || contact.phone);
+  const phone = usPhonePdf(answers.daytime_phone || contact.phone);
   const email = clean(answers.email_address || contact.email, 180);
 
   const values = {
@@ -299,5 +305,6 @@ function i765FieldValues(payload = {}) {
 module.exports = {
   i765FieldValues,
   categoryParts,
-  dateMdY
+  dateMdY,
+  usPhonePdf
 };

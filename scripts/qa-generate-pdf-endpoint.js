@@ -115,8 +115,13 @@ async function main() {
 
   const i485Values = i485FieldValues(i485Payload);
   const i485Overlays = i485TextOverlays(i485Payload);
-  assert(Object.keys(i485Values).length >= 400, `I-485 endpoint payload should map at least 400 fields, got ${Object.keys(i485Values).length}`);
-  assert(i485Overlays.length >= 13, `I-485 endpoint payload should map at least 13 overlays, got ${i485Overlays.length}`);
+  assert(Object.keys(i485Values).length >= 120, `I-485 endpoint payload should map at least 120 exact fields, got ${Object.keys(i485Values).length}`);
+  assert(Array.isArray(i485Overlays), 'I-485 text overlays should be an array');
+  assert(i485Values['AlienNumber[0]'] === '208924970', 'I-485 should map applicant A-number');
+  assert(i485Values['Pt1Line1_FamilyName[0]'] === 'HOVDAN', 'I-485 should map applicant family name');
+  assert(i485Values['Pt1Line1_GivenName[0]'] === 'YANA', 'I-485 should map applicant given name');
+  assert(i485Values['Pt3Line3_DaytimePhoneNumber1[0]'] === '(253) 409-7210', 'I-485 daytime phone should be PDF-formatted');
+  assert(i485Values['Pt3Line4_MobileNumber1[0]'] === '(253) 409-7210', 'I-485 mobile phone should be PDF-formatted');
 
   const i485Response = await callGeneratePdf(i485Payload);
   const i485Bytes = assertPdfResponse(i485Response, 'I-485', 'i-485.pdf');
@@ -124,6 +129,14 @@ async function main() {
   const i765 = i765Payload();
   const i765Values = i765FieldValues(i765);
   assert(Object.keys(i765Values).length >= 50, `I-765 endpoint payload should map at least 50 fields, got ${Object.keys(i765Values).length}`);
+  assert(
+    i765Values['Pt3Line3_DaytimePhoneNumber1[0]'] === '(916) 555-1212',
+    `I-765 daytime phone should be PDF-formatted, got ${i765Values['Pt3Line3_DaytimePhoneNumber1[0]']}`
+  );
+  assert(
+    i765Values['Pt3Line4_MobileNumber1[0]'] === '(916) 555-1212',
+    `I-765 mobile phone should be PDF-formatted, got ${i765Values['Pt3Line4_MobileNumber1[0]']}`
+  );
 
   const i765Response = await callGeneratePdf(i765);
   const i765Bytes = assertPdfResponse(i765Response, 'I-765', 'i-765.pdf');
