@@ -2429,15 +2429,28 @@ function i589SpecificSteps() {
     ]),
     step('i589_children_summary', 'Children', 'USCIS asks how many children you have and whether they are included.', [
       field('total_children', 'Total number of children', 'number', { inputmode: 'numeric' }),
-      field('family_members_included', 'Family members included in this I-589', 'textarea')
+      field('family_members_included', 'Family members included in this I-589', 'textarea', {
+        showWhen: [{ id: 'total_children', gte: 1 }]
+      })
     ]),
     step('i589_child1', 'Child 1 information', 'Collect child details in the same form order.', [
-      field('child1_family_name', 'Child 1 family name', 'text', { autocomplete: 'family-name' }),
-      field('child1_given_name', 'Child 1 given name', 'text', { autocomplete: 'given-name' })
+      field('child1_family_name', 'Child 1 family name', 'text', {
+        autocomplete: 'family-name',
+        showWhen: [{ id: 'total_children', gte: 1 }]
+      }),
+      field('child1_given_name', 'Child 1 given name', 'text', {
+        autocomplete: 'given-name',
+        showWhen: [{ id: 'total_children', gte: 1 }]
+      })
     ]),
     step('i589_child1_details', 'Child 1 birth and status', 'Birth, citizenship, A-number, and included/not included status.', [
-      field('child1_dob', 'Child 1 date of birth', 'date'),
-      field('child1_country_of_birth', 'Child 1 country of birth', 'select', { options: COUNTRY_OPTIONS })
+      field('child1_dob', 'Child 1 date of birth', 'date', {
+        showWhen: [{ id: 'total_children', gte: 1 }]
+      }),
+      field('child1_country_of_birth', 'Child 1 country of birth', 'select', {
+        options: COUNTRY_OPTIONS,
+        showWhen: [{ id: 'total_children', gte: 1 }]
+      })
     ]),
 
     // I-589 Part B-C, pages 5-8: claim facts and prior filings.
@@ -2508,7 +2521,9 @@ function i589SpecificSteps() {
       field('applicant_statement', 'Applicant statement', 'radio', {
         options: ['I can read and understand English', 'Interpreter read the application to me']
       }),
-      field('applicant_statement_language', 'Language used by interpreter, if any', 'text')
+      field('applicant_statement_language', 'Language used by interpreter, if any', 'text', {
+        showWhen: [{ id: 'applicant_statement', equals: 'Interpreter read the application to me' }]
+      })
     ]),
     step('i589_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
       field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),

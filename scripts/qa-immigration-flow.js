@@ -159,6 +159,9 @@ async function main() {
   assert(i589Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-589: mailing address should be structured');
   assert(i589Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-589: daytime phone should be US 10-digit phone field');
   assert(i589Fields.find((field) => field.id === 'asylum_basis')?.type === 'checkboxes', 'I-589: asylum basis should be checkboxes');
+  assert(i589Fields.find((field) => field.id === 'child1_family_name')?.showWhen?.[0]?.id === 'total_children', 'I-589: child fields should only show when total children is at least 1');
+  assert(i589Fields.find((field) => field.id === 'family_members_included')?.showWhen?.[0]?.id === 'total_children', 'I-589: included family details should only show when there are children');
+  assert(i589Fields.find((field) => field.id === 'applicant_statement_language')?.showWhen?.[0]?.id === 'applicant_statement', 'I-589: interpreter language should only show when interpreter read the application');
 
   const i864 = await callFlow('I-864', 'en');
   const i864Order = i864.body.steps.map((step) => step.id);
