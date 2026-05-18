@@ -1216,7 +1216,7 @@ function applicantSteps() {
       }),
       field('other_names_used', 'List all other names you have used', 'textarea', {
         placeholder: 'Maiden name, prior legal names, aliases.',
-        showWhen: [{ field: 'has_other_names', equals: 'Yes' }]
+        showWhen: [{ id: 'has_other_names', equals: 'Yes' }]
       })
     ]),
     step('applicant_birth_date', 'Birth date', 'Enter the applicant date of birth exactly as shown on documents.', [
@@ -1501,7 +1501,7 @@ function i485CoreSteps() {
     step('i485_prior_us_address', 'I-485 prior U.S. addresses (last 5 years)', 'List every U.S. physical address from the last 5 years. Add as many entries as needed to cover the full 5-year period before today.', [
       addressHistoryField('prior_us_addresses', 'Prior U.S. addresses for the last 5 years', {
         entries: 5,
-        showWhen: [{ field: 'same_address_five_years', equals: 'No' }]
+        showWhen: [{ id: 'same_address_five_years', equals: 'No' }]
       })
     ]),
     step('i485_foreign_address', 'I-485 last foreign address', 'Enter the most recent address outside the United States as a complete address.', [
@@ -1760,8 +1760,8 @@ function i130SpecificSteps() {
       }),
       field('petitioner_current_address_from', 'Date petitioner started living at this address', 'date')
     ]),
-    step('i130_petitioner_prior_address', 'Petitioner prior physical address', 'If needed, capture the petitioner prior physical address with dates.', [
-      addressHistoryField('petitioner_prior_address', 'Petitioner prior physical address', { entries: 1 })
+    step('i130_petitioner_prior_address', 'Petitioner prior addresses (last 5 years)', 'List the petitioner physical addresses for the last 5 years. Most recent first. This is I-130 Part 2, Item 12.', [
+      addressHistoryField('petitioner_prior_address', 'Petitioner prior physical addresses for the last 5 years', { entries: 5 })
     ]),
     step('i130_petitioner_marital_status', 'Petitioner marital history', 'Number of marriages and current marital status.', [
       field('petitioner_number_of_marriages', 'How many times has the petitioner been married?', 'number', { inputmode: 'numeric' }),
@@ -1803,8 +1803,8 @@ function i130SpecificSteps() {
     step('i130_petitioner_employment_current', 'Petitioner current employment', 'Current employer, occupation, address, and dates.', [
       employmentHistoryField('petitioner_current_employment', 'Petitioner current employment', { entries: 1 })
     ]),
-    step('i130_petitioner_employment_prior', 'Petitioner prior employment', 'Prior employer, occupation, address, and dates if the form needs it.', [
-      employmentHistoryField('petitioner_prior_employment', 'Petitioner prior employment', { entries: 1 })
+    step('i130_petitioner_employment_prior', 'Petitioner prior employment (last 5 years)', 'List petitioner employment for the last 5 years (most recent first), excluding the current employer captured in the previous step.', [
+      employmentHistoryField('petitioner_prior_employment', 'Petitioner prior employment for the last 5 years', { entries: 5 })
     ]),
     step('i130_petitioner_biographic_identity', 'Petitioner ethnicity and race', 'These are Part 3 biographic fields.', [
       field('petitioner_ethnicity', 'Petitioner ethnicity', 'select', { options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
@@ -2273,6 +2273,15 @@ function i589SpecificSteps() {
     step('i589_last_country_residence', 'Last country and address before the U.S.', 'Capture the last foreign residence before coming to the United States.', [
       field('i589_last_country_lived', 'Country where you last lived before the United States', 'select', { options: COUNTRY_OPTIONS }),
       addressBlockField('i589_last_foreign_address', 'Last foreign address', 'i589_last_foreign', { countryDefault: '' })
+    ]),
+    step('i589_residences_5y', 'Residences during the past 5 years', 'List all residences for the past 5 years; list the present address first. This is I-589 Part A.III Item 2.', [
+      addressHistoryField('i589_residences_last_5_years', 'Residences during the past 5 years', { entries: 5 })
+    ]),
+    step('i589_education_history', 'Education history', 'List education beginning with the most recent school attended. This is I-589 Part A.III Item 3.', [
+      employmentHistoryField('i589_education_history', 'Education history (most recent first)', { entries: 4 })
+    ]),
+    step('i589_employment_5y', 'Employment during the past 5 years', 'List employment for the past 5 years; list the present employment first. This is I-589 Part A.III Item 4.', [
+      employmentHistoryField('i589_employment_last_5_years', 'Employment during the past 5 years', { entries: 3 })
     ]),
     step('i589_passport_travel_document', 'Passport or travel document', 'Passport/travel document details if available.', [
       field('passport_number', 'Passport or travel document number', 'text', { autocomplete: 'off' }),
@@ -3249,8 +3258,8 @@ function n400SpecificSteps() {
         showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
       })
     ]),
-    step('n400_address_history', 'Address history', 'List addresses for the required naturalization residence period.', [
-      addressHistoryField('addresses_last_five_years', 'Addresses for the last five years', { required: true })
+    step('n400_address_history', 'Address history (last 5 years)', 'List every address from the last 5 years of physical presence in the United States. List most recent first; add more entries as needed.', [
+      addressHistoryField('addresses_last_five_years', 'Addresses for the last 5 years', { required: true, entries: 5 })
     ]),
 
     // N-400 family and work/travel history.
@@ -3289,8 +3298,8 @@ function n400SpecificSteps() {
         showWhen: [{ id: 'military_service', equals: 'Yes' }]
       })
     ]),
-    step('n400_employment_history', 'Employment and school history', 'List employment, school, unemployment, and self-employment for the required period.', [
-      employmentHistoryField('employment_school_last_five_years', 'Employment or school for the last five years', { required: true })
+    step('n400_employment_history', 'Employment and school history (last 5 years)', 'List every employer, school, unemployment period, or self-employment over the past 5 years. List most recent first; add more entries as needed.', [
+      employmentHistoryField('employment_school_last_five_years', 'Employment or school for the last 5 years', { required: true, entries: 5 })
     ]),
     step('n400_trips_outside_us', 'Trips outside the United States', 'List trips outside the United States during the eligibility period.', [
       field('trips_outside_us', 'Trips outside the U.S. during eligibility period', 'textarea', {
