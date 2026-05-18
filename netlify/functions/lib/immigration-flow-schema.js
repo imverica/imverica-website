@@ -3041,7 +3041,19 @@ function i821SpecificSteps() {
     ]),
     step('i821_criminal_security', 'Criminal and security questions', 'Any Yes or unsure answer needs document review.', [
       field('i821_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('i821_security_or_persecution_issue', 'Any security, persecution, terrorism, or human-rights issue?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+      field('i821_criminal_history_details', 'Criminal-history details and documents', 'textarea', {
+        showWhenAny: [
+          { id: 'i821_arrested_or_convicted', equals: 'Yes' },
+          { id: 'i821_arrested_or_convicted', equals: 'Not sure' }
+        ]
+      }),
+      field('i821_security_or_persecution_issue', 'Any security, persecution, terrorism, or human-rights issue?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
+      field('i821_security_issue_details', 'Security, persecution, terrorism, or human-rights details', 'textarea', {
+        showWhenAny: [
+          { id: 'i821_security_or_persecution_issue', equals: 'Yes' },
+          { id: 'i821_security_or_persecution_issue', equals: 'Not sure' }
+        ]
+      })
     ]),
     step('i821_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
       field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', { options: ['Yes', 'No'] }),
@@ -3057,7 +3069,9 @@ function i821dSpecificSteps() {
         required: true,
         options: ['Renewal', 'Initial', 'Not sure']
       }),
-      field('prior_daca_dates', 'Prior DACA approval dates and receipt numbers', 'textarea')
+      field('prior_daca_dates', 'Prior DACA approval dates and receipt numbers', 'textarea', {
+        showWhen: [{ id: 'daca_request_type', equals: 'Renewal' }]
+      })
     ]),
     step('i821d_applicant_name', 'Applicant legal name', 'Enter the applicant name exactly as it should appear on Form I-821D.', [
       field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),

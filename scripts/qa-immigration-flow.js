@@ -229,6 +229,8 @@ async function main() {
   assert(i821Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-821: mailing address should be structured');
   assert(i821Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-821: physical address should be structured');
   assert(i821Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821: daytime phone should be US 10-digit phone field');
+  assert(i821Fields.find((field) => field.id === 'i821_criminal_history_details')?.showWhenAny?.length === 2, 'I-821: criminal details should only show for Yes or Not sure');
+  assert(i821Fields.find((field) => field.id === 'i821_security_issue_details')?.showWhenAny?.length === 2, 'I-821: security details should only show for Yes or Not sure');
 
   const i821d = await callFlow('I-821D', 'en');
   const i821dOrder = i821d.body.steps.map((step) => step.id);
@@ -241,6 +243,7 @@ async function main() {
   assert(i821dFields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-821D: physical address should be structured');
   assert(i821dFields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-821D: residence history should be structured');
   assert(i821dFields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-821D: daytime phone should be US 10-digit phone field');
+  assert(i821dFields.find((field) => field.id === 'prior_daca_dates')?.showWhen?.[0]?.id === 'daca_request_type', 'I-821D: prior DACA dates should only show for renewals');
 
   const g325a = await callFlow('G-325A', 'en');
   const biographicHistory = g325a.body.steps.find((step) => step.id === 'biographic_history');
