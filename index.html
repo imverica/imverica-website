@@ -1764,8 +1764,9 @@ function closeDetail(id) {
   };
   var addressSuggestTimer = null;
 
-  // Phone country codes — flag emoji, dial code, max local digits (subscriber part after dial code).
-  // Prioritized: US, CA, MX, RU, UA at top, then SEPARATOR, then alphabetical by English name.
+  // (Multi-country phone dropdown removed — Imverica forms only accept US 10-digit phones now.
+  // Kept the data block commented out as reference in case international support comes back.)
+  /*
   var PHONE_COUNTRIES_PRIORITY = [
     { code: 'US', name: 'United States', flag: '🇺🇸', dial: '+1',   max: 10 },
     { code: 'CA', name: 'Canada',        flag: '🇨🇦', dial: '+1',   max: 10 },
@@ -1863,26 +1864,8 @@ function closeDetail(id) {
     { code: 'VN', name: 'Vietnam',         flag: '🇻🇳', dial: '+84',  max: 9  }
   ];
 
-  function phoneCountryOptions(selectedToken) {
-    // selectedToken is the "dial|code" value or just dial for backwards compat. Default to US.
-    var token = String(selectedToken || '').trim();
-    if (!token || token === '+1') token = '+1|US';
-    if (token.indexOf('|') < 0) token = token + '|';  // matches first country with that dial
-    var html = '';
-    var matched = false;
-    function row(c) {
-      var key = c.dial + '|' + c.code;
-      var sel = '';
-      if (!matched && (key === token || (token.endsWith('|') && c.dial === token.slice(0, -1)))) {
-        sel = ' selected'; matched = true;
-      }
-      return '<option value="' + key + '" data-max="' + c.max + '"' + sel + '>' + c.flag + '  ' + c.dial + '  ' + c.name + '</option>';
-    }
-    PHONE_COUNTRIES_PRIORITY.forEach(function (c) { html += row(c); });
-    html += '<option disabled>──────────</option>';
-    PHONE_COUNTRIES_REST.forEach(function (c) { html += row(c); });
-    return html;
-  }
+  */
+  // End of removed phone country list.
 
   var i18n = {
     en: {
@@ -2588,7 +2571,7 @@ function closeDetail(id) {
   function phoneValue(value, field) {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       return {
-        countryCode: value.countryCode || field.countryCodeDefault || '+1',
+        countryCode: value.countryCode || (field && field.countryCodeDefault) || '+1',
         areaCode: value.areaCode || '',
         number: value.number || ''
       };
@@ -2597,10 +2580,24 @@ function closeDetail(id) {
     var digits = text.replace(/\D/g, '');
     if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
     return {
-      countryCode: /^\+/.test(text) ? (text.match(/^\+\d{1,4}/) || ['+1'])[0] : (field.countryCodeDefault || '+1'),
+      countryCode: /^\+/.test(text) ? (text.match(/^\+\d{1,4}/) || ['+1'])[0] : ((field && field.countryCodeDefault) || '+1'),
       areaCode: digits.length >= 10 ? digits.slice(0, 3) : '',
       number: digits.length >= 10 ? digits.slice(3) : digits
     };
+  }
+
+  // Extract US phone digits (always 10) and format as (XXX) XXX-XXXX for display.
+  function phoneDigits(value) {
+    var d = String(value == null ? '' : value).replace(/\D/g, '');
+    if (d.length === 11 && d[0] === '1') d = d.slice(1);
+    return d.slice(0, 10);
+  }
+  function formatUSPhone(value) {
+    var d = phoneDigits(value);
+    if (d.length === 0) return '';
+    if (d.length <= 3) return '(' + d;
+    if (d.length <= 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
+    return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
   }
 
   function historyRows(value, count) {
@@ -2696,12 +2693,14 @@ function closeDetail(id) {
     }
 
     if (field.type === 'phone') {
-      var phone = phoneValue(value, field);
-      return '<div class="intake-field">' + label + '<div class="intake-phone-grid" data-flow-phone-group="' + esc(field.id) + '">' +
-        '<input type="tel" inputmode="tel" autocomplete="tel-country-code" data-flow-phone-part="countryCode" placeholder="' + esc(t().phoneCountry) + '" value="' + esc(phone.countryCode) + '">' +
-        '<input type="tel" inputmode="numeric" autocomplete="tel-area-code" data-flow-phone-part="areaCode" placeholder="' + esc(t().phoneArea) + '" value="' + esc(phone.areaCode) + '">' +
-        '<input type="tel" inputmode="numeric" autocomplete="tel-local" data-flow-phone-part="number" placeholder="' + esc(t().phoneNumber) + '" value="' + esc(phone.number) + '">' +
-      '</div>' + help + '</div>';
+      // Single US phone input. Stores raw digits in state; displays formatted (XXX) XXX-XXXX.
+      var rawPhone = typeof value === 'object' && value !== null
+        ? String(value.areaCode || '') + String(value.number || '')
+        : value;
+      var digits = phoneDigits(rawPhone);
+      return '<div class="intake-field">' + label +
+        '<input type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" data-flow-phone-us="' + esc(field.id) + '" placeholder="(XXX) XXX-XXXX" value="' + esc(formatUSPhone(digits)) + '">' +
+        help + '</div>';
     }
 
     if (field.type === 'addressHistory') return renderAddressHistoryField(field);
@@ -2874,7 +2873,7 @@ function closeDetail(id) {
       return;
     }
 
-    var contactPhone = phoneValue(state.contact.phone, { countryCodeDefault: '+1' });
+    var contactDigits = phoneDigits(state.contact.phone);
     card.innerHTML = '<div class="intake-question">' + esc(copy.qAccount) + '</div><div class="intake-help">' + esc(copy.hAccount) + '</div>' +
       '<div class="intake-choice-row">' +
         '<div class="intake-account-card ' + (state.accountMode === 'portal' ? 'active' : '') + '" data-account-mode="portal"><h4>' + esc(copy.portal) + '</h4><p>' + esc(copy.portalSub) + '</p></div>' +
@@ -2882,11 +2881,7 @@ function closeDetail(id) {
       '</div>' +
       '<div class="intake-grid" style="margin-top:16px;">' +
         '<div class="intake-field"><label>' + esc(copy.name) + '</label><input id="intakeName" autocomplete="name" value="' + esc(state.contact.name) + '"></div>' +
-        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><div id="intakeContactPhoneField" class="intake-phone-grid">' +
-          '<select id="intakePhoneCountry" autocomplete="tel-country-code">' + phoneCountryOptions(contactPhone.countryCode) + '</select>' +
-          '<input id="intakePhoneArea" type="tel" inputmode="numeric" autocomplete="tel-area-code" maxlength="4" placeholder="' + esc(copy.areaCode || copy.phoneArea) + '" value="' + esc(contactPhone.areaCode) + '">' +
-          '<input id="intakePhoneNumber" type="tel" inputmode="numeric" autocomplete="tel-local" maxlength="11" placeholder="' + esc(copy.phoneNumber) + '" value="' + esc(contactPhone.number) + '">' +
-        '</div></div>' +
+        '<div class="intake-field"><label>' + esc(copy.phone) + '</label><input id="intakePhoneUS" type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="(XXX) XXX-XXXX" value="' + esc(formatUSPhone(contactDigits)) + '"></div>' +
         '<div class="intake-field" style="grid-column:1/-1;"><label>' + esc(copy.email) + '</label><input id="intakeEmail" type="email" inputmode="email" autocomplete="email" value="' + esc(state.contact.email) + '"><div class="intake-field-error" id="intakeEmailError">' + esc(copy.invalidEmail || 'Invalid email') + '</div></div>' +
       '</div><div id="intakeContactError" class="intake-error"></div><div id="intakeSaved" class="intake-help" style="display:none;margin-top:16px;color:#2a7a5a;"></div>';
   }
@@ -2895,10 +2890,7 @@ function closeDetail(id) {
     var formCode = document.getElementById('intakeFormCode');
     var situation = document.getElementById('intakeSituation');
     var name = document.getElementById('intakeName');
-    var phone = document.getElementById('intakePhone');
-    var phoneCountry = document.getElementById('intakePhoneCountry');
-    var phoneArea = document.getElementById('intakePhoneArea');
-    var phoneNumber = document.getElementById('intakePhoneNumber');
+    var phoneUS = document.getElementById('intakePhoneUS');
     var email = document.getElementById('intakeEmail');
     var i765LegalName = document.getElementById('i765LegalName');
     var i765Dob = document.getElementById('i765Dob');
@@ -2915,16 +2907,7 @@ function closeDetail(id) {
     if (i765PriorEad) state.i765.priorEad = i765PriorEad.value.trim();
     if (i765Evidence) state.i765.evidence = i765Evidence.value.trim();
     if (name) state.contact.name = name.value.trim();
-    if (phone) state.contact.phone = phone.value.trim();
-    if (phoneCountry || phoneArea || phoneNumber) {
-      // Country select value is "dial|code" like "+1|US"; take dial portion only.
-      var dial = phoneCountry ? String(phoneCountry.value || '').split('|')[0].trim() : '';
-      state.contact.phone = [
-        dial,
-        phoneArea ? phoneArea.value.trim() : '',
-        phoneNumber ? phoneNumber.value.trim() : ''
-      ].filter(Boolean).join(' ');
-    }
+    if (phoneUS) state.contact.phone = phoneDigits(phoneUS.value);
     if (email) state.contact.email = email.value.trim();
 
     card.querySelectorAll('[data-flow-field]').forEach(function (input) {
@@ -2933,13 +2916,16 @@ function closeDetail(id) {
       if (input.type === 'checkbox' || input.type === 'radio') return;
       state.formAnswers[key] = input.value.trim();
     });
-    card.querySelectorAll('[data-flow-phone-group]').forEach(function (group) {
-      var key = group.getAttribute('data-flow-phone-group');
+    // Single-input US phone widget: store digits raw + structured parts so
+    // existing PDF map readers (countryCode/areaCode/number) keep working.
+    card.querySelectorAll('[data-flow-phone-us]').forEach(function (input) {
+      var key = input.getAttribute('data-flow-phone-us');
       if (!key) return;
+      var d = phoneDigits(input.value);
       state.formAnswers[key] = {
-        countryCode: (group.querySelector('[data-flow-phone-part="countryCode"]') || {}).value?.trim() || '',
-        areaCode: (group.querySelector('[data-flow-phone-part="areaCode"]') || {}).value?.trim() || '',
-        number: (group.querySelector('[data-flow-phone-part="number"]') || {}).value?.trim() || ''
+        countryCode: '+1',
+        areaCode: d.slice(0, 3),
+        number: d.slice(3)
       };
     });
     card.querySelectorAll('[data-flow-address-block]').forEach(function (group) {
@@ -2987,9 +2973,8 @@ function closeDetail(id) {
   }
 
   function isValidPhone(value) {
-    var text = String(value || '').trim();
-    var digits = text.replace(/\D/g, '');
-    return digits.length >= 10 && digits.length <= 15 && /^[+\d\s().-]+$/.test(text);
+    // US format: exactly 10 digits.
+    return phoneDigits(value).length === 10;
   }
 
   function isValidEmail(value) {
@@ -2999,7 +2984,7 @@ function closeDetail(id) {
   function validateContact() {
     var fields = {
       name: document.getElementById('intakeName'),
-      phone: document.getElementById('intakePhone') || document.getElementById('intakeContactPhoneField'),
+      phone: document.getElementById('intakePhoneUS'),
       email: document.getElementById('intakeEmail')
     };
     var invalid = [];
@@ -3347,9 +3332,18 @@ function closeDetail(id) {
   });
 
   card.addEventListener('input', function (event) {
-    // Phone area / number — strip non-digits as user types.
-    if (event.target.id === 'intakePhoneArea' || event.target.id === 'intakePhoneNumber') {
-      event.target.value = event.target.value.replace(/\D+/g, '');
+    // US single-input phone (contact step + flow phone widget): auto-format (XXX) XXX-XXXX.
+    if (event.target.id === 'intakePhoneUS' || event.target.hasAttribute('data-flow-phone-us')) {
+      var pos = event.target.selectionStart;
+      var beforeLen = event.target.value.length;
+      var formatted = formatUSPhone(event.target.value);
+      event.target.value = formatted;
+      // Keep caret roughly where the user was, after re-formatting.
+      var diff = formatted.length - beforeLen;
+      var newPos = (pos || formatted.length) + diff;
+      if (newPos < 0) newPos = 0;
+      if (newPos > formatted.length) newPos = formatted.length;
+      try { event.target.setSelectionRange(newPos, newPos); } catch (e) {}
     }
     // Email — clear inline error once user edits again.
     if (event.target.id === 'intakeEmail') {
@@ -3381,21 +3375,6 @@ function closeDetail(id) {
       }
     }
   }, true);
-
-  card.addEventListener('change', function (event) {
-    if (event.target.id === 'intakePhoneCountry') {
-      var selected = event.target.selectedOptions[0];
-      if (selected) {
-        var localMax = parseInt(selected.getAttribute('data-max') || '10', 10);
-        var area = document.getElementById('intakePhoneArea');
-        var num = document.getElementById('intakePhoneNumber');
-        // NANP countries (+1) have 3-digit area + 7-digit subscriber; non-NANP use whole subscriber in Number.
-        var isNanp = selected.value.indexOf('+1|') === 0;
-        if (area) area.setAttribute('maxlength', isNanp ? '3' : '4');
-        if (num) num.setAttribute('maxlength', String(isNanp ? 7 : Math.max(4, localMax)));
-      }
-    }
-  });
 
   card.addEventListener('change', function (event) {
     var radio = event.target.closest('[data-flow-radio]');
