@@ -624,26 +624,6 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 @media(max-width:760px){.stats-inner{grid-template-columns:repeat(2,1fr);gap:28px 16px;}.stat-number{font-size:42px;}.stats-strip{padding:36px 1rem;}}
 @media(max-width:380px){.stats-inner{grid-template-columns:1fr;}}
 
-/* Hero sample-form mock — appears far right of hero, fills as user scrolls.
-   Only shows on viewports wide enough that it never overlaps the centered hero text. */
-.hero-sample{display:none;}
-@media(min-width:1500px){
-  .hero-wrap{position:relative;}
-  .hero-sample{display:block;position:absolute;right:24px;top:160px;width:240px;background:#fff;border-radius:12px;box-shadow:0 24px 60px rgba(40,30,20,0.18);padding:14px 14px 10px;font-family:'DM Sans',sans-serif;border:1px solid rgba(40,30,20,0.08);z-index:2;}
-  .hero-sample-row{margin-bottom:8px;}
-  .hero-sample-value{font-size:12px;padding:6px 9px;min-height:26px;}
-  .hero-sample::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#e08a5d,#dba85f,#7d9c7a);border-radius:12px 12px 0 0;}
-  .hero-sample-head{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:1.4px;color:#a45b34;text-transform:uppercase;font-weight:700;margin-bottom:14px;border-bottom:1px solid #f0e6d6;padding-bottom:8px;}
-  .hero-sample-head span:last-child{color:#7d9c7a;}
-  .hero-sample-row{display:flex;flex-direction:column;gap:3px;margin-bottom:11px;}
-  .hero-sample-label{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:#8a7558;font-weight:600;}
-  .hero-sample-value{font-size:13px;color:var(--navy-dark);background:#fdf2e3;border-radius:4px;padding:7px 10px;min-height:30px;letter-spacing:0.2px;font-family:'Courier New',monospace;font-weight:500;}
-  .hero-sample-value.typing::after{content:"";display:inline-block;width:1px;height:14px;background:#a45b34;margin-left:2px;animation:cursor-blink 0.7s infinite;vertical-align:middle;}
-  .hero-sample-value.typed{background:#f0f7e9;color:#3a5a3c;}
-  @keyframes cursor-blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
-  .hero-sample-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:10px;border-top:1px solid #f0e6d6;font-size:9px;color:#a78f6e;letter-spacing:0.8px;}
-}
-
 /* SEO-friendly long-form service sections + FAQ accordion */
 .svc-section{padding:80px 2rem;background:#fffaf2;border-top:1px solid rgba(40,30,20,0.08);}
 .svc-section.alt{background:#fff;}
@@ -781,37 +761,6 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 
 <!-- HERO -->
 <div class="hero-wrap">
-  <!-- Decorative sample-form mock (large desktop only, >=1380px). Fills field-by-field as user scrolls past hero. Positioned relative to .hero-wrap so it never overlaps the centered hero text. -->
-  <aside class="hero-sample" aria-hidden="true">
-      <div class="hero-sample-head">
-        <span>I-485 · Page 1</span>
-        <span>Preview</span>
-      </div>
-      <div class="hero-sample-row">
-        <span class="hero-sample-label">Family Name (Last Name)</span>
-        <span class="hero-sample-value" data-fill="HOVDAN"></span>
-      </div>
-      <div class="hero-sample-row">
-        <span class="hero-sample-label">Given Name (First Name)</span>
-        <span class="hero-sample-value" data-fill="YANA"></span>
-      </div>
-      <div class="hero-sample-row">
-        <span class="hero-sample-label">Middle Name</span>
-        <span class="hero-sample-value" data-fill="OLEKSANDRIVNA"></span>
-      </div>
-      <div class="hero-sample-row">
-        <span class="hero-sample-label">Date of Birth (mm/dd/yyyy)</span>
-        <span class="hero-sample-value" data-fill="03/12/1990"></span>
-      </div>
-      <div class="hero-sample-row">
-        <span class="hero-sample-label">Country of Birth</span>
-        <span class="hero-sample-value" data-fill="UKRAINE"></span>
-      </div>
-      <div class="hero-sample-foot">
-        <span>Form I-485 · Edition 01/20/25</span>
-        <span>Auto-filled at your direction</span>
-      </div>
-  </aside>
   <div class="hero">
     <div class="hero-main">
       <div class="hero-eyebrow">California · Licensed LDA · Immigration Consultant</div>
@@ -4845,34 +4794,8 @@ function closeDetail(id){
       });
     }
 
-    // 6. Sample-form fill animation: PDF-mock card on the right of hero,
-    //    "types" form data one row at a time as the user scrolls past hero.
-    var sampleRows = gsap.utils.toArray('.hero-sample-row .hero-sample-value');
-    if (sampleRows.length) {
-      gsap.set(sampleRows, { width: 0 });
-      sampleRows.forEach(function (row, index) {
-        var full = row.getAttribute('data-fill') || '';
-        ScrollTrigger.create({
-          trigger: '.hero',
-          start: 'top top+=' + (index * 60) + 'px',
-          once: true,
-          onEnter: function () {
-            row.classList.add('typing');
-            var typed = '';
-            var i = 0;
-            var iv = setInterval(function () {
-              typed = full.slice(0, ++i);
-              row.textContent = typed;
-              if (i >= full.length) {
-                clearInterval(iv);
-                row.classList.remove('typing');
-                row.classList.add('typed');
-              }
-            }, 35);
-          }
-        });
-      });
-    }
+    // (Sample-form fill animation removed — used real-looking client data
+    // which could be confused for PII. Removed entirely.)
   }
 
   if (document.readyState === 'loading') {
