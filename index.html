@@ -2430,6 +2430,9 @@ function closeDetail(id) {
       historyAddAddress: 'Add another address',
       historyRemoveAddress: 'Remove',
       historyCoverageWarning: 'Five full years of U.S. residence history may be incomplete. You may add another address or continue if a shorter history applies to this filing.',
+      historyAddEntry: 'Add another entry',
+      historyRemoveEntry: 'Remove',
+      historyWorkCoverageWarning: 'Five full years of work, school, unemployment, or self-employment history may be incomplete. You may add another entry or continue if a shorter history applies to this filing.',
       addressSuggestion: 'Use USPS/local suggested address',
       addressChecking: 'Checking address...',
       services: [
@@ -2537,6 +2540,9 @@ function closeDetail(id) {
       historyAddAddress: 'Добавить еще адрес',
       historyRemoveAddress: 'Удалить',
       historyCoverageWarning: 'Похоже, не хватает полных 5 лет адресов в США. Можно добавить еще адрес или продолжить, если для этой подачи применим более короткий период.',
+      historyAddEntry: 'Добавить еще запись',
+      historyRemoveEntry: 'Удалить',
+      historyWorkCoverageWarning: 'Похоже, не хватает полных 5 лет работы, учебы, безработицы или self-employment. Можно добавить еще запись или продолжить, если для этой подачи применим более короткий период.',
       addressSuggestion: 'Использовать предложенный адрес',
       addressChecking: 'Проверяем адрес...',
       services: [
@@ -2644,6 +2650,9 @@ function closeDetail(id) {
       historyAddAddress: 'Додати ще адресу',
       historyRemoveAddress: 'Видалити',
       historyCoverageWarning: 'Схоже, бракує повних 5 років адрес у США. Можна додати ще адресу або продовжити, якщо для цієї подачі підходить коротший період.',
+      historyAddEntry: 'Додати ще запис',
+      historyRemoveEntry: 'Видалити',
+      historyWorkCoverageWarning: 'Схоже, бракує повних 5 років роботи, навчання, безробіття або self-employment. Можна додати ще запис або продовжити, якщо для цієї подачі підходить коротший період.',
       addressSuggestion: 'Використати запропоновану адресу',
       addressChecking: 'Перевіряємо адресу...',
       services: [
@@ -2751,6 +2760,9 @@ function closeDetail(id) {
       historyAddAddress: 'Agregar otra dirección',
       historyRemoveAddress: 'Eliminar',
       historyCoverageWarning: 'Es posible que falten los 5 años completos de historial de residencia en EE. UU. Puede agregar otra dirección o continuar si corresponde un período más corto para esta solicitud.',
+      historyAddEntry: 'Agregar otra entrada',
+      historyRemoveEntry: 'Eliminar',
+      historyWorkCoverageWarning: 'Es posible que falten los 5 años completos de trabajo, escuela, desempleo o trabajo por cuenta propia. Puede agregar otra entrada o continuar si corresponde un período más corto para esta solicitud.',
       addressSuggestion: 'Usar dirección sugerida',
       addressChecking: 'Verificando dirección...',
       services: [
@@ -3150,27 +3162,33 @@ function closeDetail(id) {
 
   function renderEmploymentHistoryField(field) {
     var copy = t();
-    var rows = historyRows(fieldValue(field), field.entries || 4);
+    var rows = editableHistoryRows(fieldValue(field));
     var options = field.stateOptions || [];
     var countryOptions = field.countryOptions || [];
-    return '<div class="intake-history" data-flow-employment-history="' + esc(field.id) + '">' +
+    var tracksFiveYears = isFiveYearHistoryFieldId(field.id) || /5|five/i.test(String(field.label || ''));
+    var warningActive = tracksFiveYears && shouldWarnAddressHistoryCoverage(rows) ? ' active' : '';
+    return '<div class="intake-history" data-flow-employment-history="' + esc(field.id) + '"' + (tracksFiveYears ? ' data-history-coverage-years="5"' : '') + '>' +
       '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
       rows.map(function (row, index) {
+        var suggestId = historySuggestionId(field.id, index);
         return '<div class="intake-history-entry" data-history-index="' + index + '">' +
-          '<h4>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</h4>' +
+          '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveEntry || copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
           '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyEmployerSchool) + '</label><input type="text" data-history-part="name" autocomplete="organization" value="' + esc(row.name || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyActivity) + '</label><input type="text" data-history-part="activity" value="' + esc(row.activity || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyOccupation) + '</label><input type="text" data-history-part="occupation" value="' + esc(row.occupation || '') + '"></div>' +
-          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><input type="text" data-history-part="line1" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
           '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCountry) + '</label>' + renderCountrySelect('country', row.country || 'United States', countryOptions) + '</div>' +
         '</div>';
-      }).join('') + '</div>';
+      }).join('') +
+      '<div class="intake-history-actions"><button type="button" class="intake-history-add" data-add-history-row="' + esc(field.id) + '">' + esc(copy.historyAddEntry || copy.historyAddAddress) + '</button></div>' +
+      '<div class="intake-history-warning' + warningActive + '" data-history-coverage-warning="' + esc(field.id) + '">' + esc(copy.historyWorkCoverageWarning || copy.historyCoverageWarning) + '</div>' +
+      '</div>';
   }
 
   function parseFlexibleHistoryDate(value) {

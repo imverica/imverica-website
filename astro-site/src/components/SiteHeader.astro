@@ -1,0 +1,41 @@
+---
+interface Props {
+  lang?: 'en' | 'ru' | 'uk' | 'es';
+}
+const { lang = 'en' } = Astro.props;
+
+const NAV: Record<string, { uscis: string; family: string; civil: string; business: string; about: string; portal: string; quote: string }> = {
+  en: { uscis: 'USCIS | EOIR', family: 'Family Law', civil: 'Small Claims & Civil', business: 'Business', about: 'About Us', portal: 'Client Portal', quote: 'Get a Quote' },
+  ru: { uscis: 'USCIS | EOIR', family: 'Семейное право', civil: 'Малые иски и гражданские дела', business: 'Бизнес', about: 'О нас', portal: 'Кабинет', quote: 'Получить цену' },
+  uk: { uscis: 'USCIS | EOIR', family: 'Сімейне право', civil: 'Малі позови та цивільні справи', business: 'Бізнес', about: 'Про нас', portal: 'Кабінет', quote: 'Отримати ціну' },
+  es: { uscis: 'USCIS | EOIR', family: 'Derecho familiar', civil: 'Reclamos menores y civiles', business: 'Negocios', about: 'Sobre nosotros', portal: 'Portal del cliente', quote: 'Obtener cotización' }
+};
+const t = NAV[lang];
+const langPrefix = lang === 'en' ? '' : '/' + lang;
+---
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href={langPrefix + '/'}>
+      <span class="site-brand-mark">i</span>
+      <span>
+        <span class="site-brand-name">Imverica</span>
+        <span class="site-brand-tag">Legal Solutions</span>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href={langPrefix + '/#services-detail'}>{t.uscis}</a>
+      <a href={langPrefix + '/california-family-law'}>{t.family}</a>
+      <a href={langPrefix + '/california-small-claims'}>{t.civil}</a>
+      <a href={langPrefix + '/#business-filings'}>{t.business}</a>
+      <a href={langPrefix + '/about'}>{t.about}</a>
+      <a href="https://portal.imverica.com">{t.portal}</a>
+    </nav>
+    <div class="site-lang" aria-label="Language">
+      <a href="/" class={lang === 'en' ? 'active' : ''}>🇺🇸 EN</a>
+      <a href="/ru/" class={lang === 'ru' ? 'active' : ''}>🇷🇺 RU</a>
+      <a href="/uk/" class={lang === 'uk' ? 'active' : ''}>🇺🇦 UA</a>
+      <a href="/es/" class={lang === 'es' ? 'active' : ''}>🇲🇽 ES</a>
+    </div>
+    <a class="btn btn-accent" href={langPrefix + '/#get-started'}>{t.quote}</a>
+  </div>
+</header>

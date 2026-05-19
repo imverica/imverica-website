@@ -1,0 +1,24 @@
+---
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  sub?: string;
+  ctaPrimary?: { href: string; text: string };
+  ctaSecondary?: { href: string; text: string };
+}
+const { eyebrow, heading, sub, ctaPrimary, ctaSecondary } = Astro.props;
+---
+<section class="hero-wrap">
+  <div class="hero">
+    {eyebrow && <div class="hero-eyebrow">{eyebrow}</div>}
+    <h1>{heading}</h1>
+    {sub && <p class="hero-sub">{sub}</p>}
+    {(ctaPrimary || ctaSecondary) && (
+      <div style="display:flex;justify-content:center;gap:12px;margin-top:1.5rem;flex-wrap:wrap;">
+        {ctaPrimary && <a class="btn btn-accent" href={ctaPrimary.href}>{ctaPrimary.text}</a>}
+        {ctaSecondary && <a class="btn btn-ghost" href={ctaSecondary.href}>{ctaSecondary.text}</a>}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>

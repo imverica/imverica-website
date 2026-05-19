@@ -1,0 +1,30 @@
+---
+interface StatItem {
+  target: number;
+  suffix?: string;
+  label: string;
+}
+interface Props {
+  items?: StatItem[];
+}
+const defaultItems: StatItem[] = [
+  { target: 734, suffix: '+', label: 'USCIS, EOIR & California forms supported' },
+  { target: 18, label: 'Priority forms with curated flows' },
+  { target: 4, label: 'Languages — EN · RU · UA · ES' },
+  { target: 10, suffix: '+', label: 'Years preparing California & USCIS forms' }
+];
+const { items = defaultItems } = Astro.props;
+---
+<section class="stats-strip">
+  <div class="stats-inner">
+    {items.map((s) => (
+      <div class="stat-item">
+        <div class="stat-number">
+          <span data-stat-target={s.target}>0</span>
+          {s.suffix && <span style="font-size:0.55em;color:#a45b34;">{s.suffix}</span>}
+        </div>
+        <div class="stat-label">{s.label}</div>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,63 @@
+---
+import '~/styles/site.css';
+import SiteHeader from '~/components/SiteHeader.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  jsonLd?: object[];
+  /** Language code: en | ru | uk | es */
+  lang?: 'en' | 'ru' | 'uk' | 'es';
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.toString(),
+  ogImage = '/og-default.jpg',
+  noindex = false,
+  jsonLd = [],
+  lang = 'en'
+} = Astro.props;
+
+const fullTitle = title.includes('Imverica') ? title : `${title} | Imverica Legal Solutions`;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" />
+
+  {jsonLd.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+</head>
+<body>
+  <SiteHeader lang={lang} />
+  <main>
+    <slot />
+  </main>
+  <SiteFooter />
+</body>
+</html>

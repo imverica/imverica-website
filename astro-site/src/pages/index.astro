@@ -1,0 +1,60 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import StatsStrip from '~/components/StatsStrip.astro';
+
+const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
+const description =
+  'California Licensed LDA & Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, and probate. Remote service worldwide.';
+
+const legalServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Imverica Legal Solutions',
+  url: 'https://imverica.com',
+  telephone: '+1-916-399-3992',
+  areaServed: [
+    { '@type': 'State', name: 'California' },
+    { '@type': 'Country', name: 'United States' }
+  ],
+  address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
+  description: 'California Licensed Legal Document Assistant and Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, unlawful detainer, and probate.',
+  knowsLanguage: ['en', 'ru', 'uk', 'es'],
+  serviceType: [
+    'USCIS immigration form preparation',
+    'EOIR document preparation',
+    'California family law document preparation',
+    'Small claims and civil court document preparation',
+    'Unlawful detainer document preparation',
+    'Probate document preparation'
+  ],
+  disambiguatingDescription: "Imverica Legal Solutions is not a law firm and does not provide legal advice. Documents are prepared at the client's direction."
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/"
+  jsonLd={[legalServiceSchema]}
+>
+  <Hero
+    eyebrow="California · Licensed LDA · Immigration Consultant"
+    heading="What document do you need prepared?"
+    sub="Describe your situation or enter a form number. We prepare USCIS petitions (I-485, I-130, I-765, I-589, N-400, I-131, I-90), EOIR immigration court documents, California family law forms (FL-100, FL-300), small claims (SC-100), unlawful detainer, restraining orders, probate, and fee waivers — for clients across California and worldwide."
+    ctaPrimary={{ href: '#get-started', text: 'Start document preparation' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <StatsStrip />
+
+  <section class="svc-section">
+    <div class="svc-inner" style="text-align:center;">
+      <div class="svc-kicker">Phase 1 scaffold</div>
+      <h2>Astro migration in progress</h2>
+      <p style="margin:0 auto;">This is the new Astro-powered site running in parallel to the current imverica.com. Service cards, FAQ, wizard, and the 10 dedicated landing pages are being ported next.</p>
+      <p style="margin:1rem auto 0;">
+        <a class="btn" href="/i-485-help">I-485 help (preview)</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
