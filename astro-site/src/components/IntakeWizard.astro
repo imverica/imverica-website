@@ -1,0 +1,57 @@
+---
+/**
+ * IntakeWizard — Astro island that mounts the imported intake wizard.
+ *
+ * Strategy: the legacy 5000-line wizard from index.html was ported as
+ * verbatim as possible into src/scripts/wizard.ts (a single IIFE wrapped
+ * in initIntakeWizard()). This component supplies the same HTML markup
+ * the wizard expects (intakeModal + children) and imports the wizard
+ * script via Astro's `is:inline` so it runs in the page (window-scope)
+ * — exactly like in legacy.
+ *
+ * The wizard exposes `window.openIntakeModal(prefill?)`. Every
+ * "Get Started" CTA across the site calls that global.
+ */
+import '~/styles/wizard.css';
+---
+<!-- Intake modal — markup copied 1:1 from legacy index.html so the
+     ported wizard JS still finds every element by id. -->
+<div id="intakeModal" class="intake-modal">
+  <div class="intake-shell" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
+    <button class="intake-close" type="button" onclick="window.closeIntakeModal && window.closeIntakeModal()" aria-label="Close intake">×</button>
+    <div class="intake-top">
+      <main class="intake-main">
+        <div class="intake-head">
+          <div class="intake-title" id="intakeTitle"></div>
+          <div class="intake-lang" id="intakeLang"></div>
+        </div>
+        <div class="intake-kicker" id="intakeKicker"></div>
+        <div class="intake-sub" id="intakeSub"></div>
+        <div class="intake-progress-row">
+          <span class="intake-progress-label" id="intakeProgressLabel">Progress</span>
+          <span class="intake-progress-processing" id="intakeProcessing"></span>
+          <span class="intake-progress-percent" id="intakeProgressPercent">0%</span>
+        </div>
+        <div class="intake-progress" aria-hidden="true"><span id="intakeProgress"></span></div>
+        <div class="intake-actions">
+          <button class="intake-btn" type="button" id="intakeBack">Previous</button>
+          <button class="intake-btn primary" type="button" id="intakeNext">Next Question</button>
+        </div>
+        <div class="intake-card" id="intakeCard"></div>
+        <div class="intake-disclaimer" id="intakeDisclaimer"></div>
+        <div class="intake-rail-note" id="intakeRailNote" style="display:none"></div>
+        <div class="intake-steps" id="intakeSteps" style="display:none"></div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Wizard module + CTA bridge. Both are deferred ES modules.
+     wizard.ts installs window.openIntakeModal; cta-bridge.ts intercepts
+     all `#get-started` CTA links across the site and calls it. -->
+<script>
+  import { initIntakeWizard } from '~/scripts/wizard';
+  import { installCtaBridge } from '~/scripts/cta-bridge';
+  initIntakeWizard();
+  installCtaBridge();
+</script>

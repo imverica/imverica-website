@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "imverica-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "imverica-astro",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--prefix", "astro-site", "astro", "dev", "--port", "4321"],
+      "port": 4321
+    }
+  ]
+}
