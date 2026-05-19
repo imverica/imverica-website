@@ -1,0 +1,37 @@
+# Netlify redirects — applied at the edge after cutover.
+# Format: <from> <to> <status>
+
+# Old single-page anchor links (legacy index.html service cards) → new
+# dedicated landing pages. 301 = permanent, preserves SEO juice.
+/#immigration-consultant-california                                /i-485-help                              301
+/#eoir-documents                                                   /i-589-asylum-help                       301
+/#family-law-documents-california                                  /california-family-law                   301
+/#unlawful-detainer-document-preparation-california                /california-unlawful-detainer            301
+/#small-claims-document-preparation-california                     /california-small-claims                 301
+/#restraining-orders-california                                    /california-restraining-orders           301
+/#probate-document-preparation-california                          /california-probate                      301
+/#business-filings                                                 /#business-filings                       200
+/#document-translation-california                                  /#document-translation-california        200
+
+# Legacy paths that may exist in backlinks (old preview / portal)
+/portal.html                                                       https://portal.imverica.com              301
+/preview.html                                                      /                                        301
+
+# Common typo / shortcut routes
+/i485                                                              /i-485-help                              301
+/i-485                                                             /i-485-help                              301
+/i589                                                              /i-589-asylum-help                       301
+/i-589                                                             /i-589-asylum-help                       301
+/n400                                                              /n-400-citizenship-help                  301
+/n-400                                                             /n-400-citizenship-help                  301
+/i130                                                              /i-130-family-petition                   301
+/i-130                                                             /i-130-family-petition                   301
+/i765                                                              /i-765-work-permit-help                  301
+/i-765                                                             /i-765-work-permit-help                  301
+/lda                                                               /california-legal-document-assistant     301
+/ud                                                                /california-unlawful-detainer            301
+/sc100                                                             /california-small-claims                 301
+/sc-100                                                            /california-small-claims                 301
+
+# Existing Netlify functions stay as-is — proxy through.
+/.netlify/functions/*                                              /.netlify/functions/:splat               200
