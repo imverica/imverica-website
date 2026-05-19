@@ -27,8 +27,13 @@ function assert(condition, message) {
 
 function syntaxCheckInlineScripts() {
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)]
-    .map((match) => match[1])
+  const scripts = [...html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/gi)]
+    .filter((match) => {
+      const attrs = match[1] || '';
+      const type = attrs.match(/\btype=["']?([^"'\s>]+)/i)?.[1]?.toLowerCase();
+      return !type || type === 'text/javascript' || type === 'module';
+    })
+    .map((match) => match[2])
     .filter((script) => script.trim());
 
   scripts.forEach((script, index) => {
