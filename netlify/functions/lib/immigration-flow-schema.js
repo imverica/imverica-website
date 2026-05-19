@@ -1100,9 +1100,16 @@ function purposeSteps(code, title) {
       autocomplete: 'off',
       help: title
     }),
-    field('preparation_goal', 'What do you want prepared with this form?', 'textarea', {
-      required: true,
-      placeholder: 'Describe the request in your own words.'
+    // 'preparation_goal' textarea was redundant — once the form code is
+    // selected, asking again "what do you want prepared with this form?"
+    // duplicates the hero textarea. The hero situation text is already
+    // captured in state.situation and is shown back on the Review step.
+    // Field still rendered if the form schema explicitly demands it, but
+    // no longer required and hidden by default to remove the friction.
+    field('preparation_goal', 'Notes for the preparer (optional)', 'textarea', {
+      required: false,
+      placeholder: 'Add any context, deadline, or special instructions you want us to know about this filing.',
+      help: 'Optional. We already have your initial description from the start of the wizard.'
     })
   ];
 

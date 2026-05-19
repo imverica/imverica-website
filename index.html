@@ -205,7 +205,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 
 /* HERO */
 .hero-wrap{position:relative;overflow:hidden;background:#fff;border-bottom:1px solid var(--border);}
-.hero{position:relative;z-index:1;padding:70px 2.5rem 58px;max-width:1040px;margin:0 auto;text-align:center;}
+.hero{position:relative;z-index:1;padding:32px 2.5rem 38px;max-width:1040px;margin:0 auto;text-align:center;}
 @media(max-width:768px){
   .hero{padding:62px 1rem 36px;width:100%;max-width:100%;overflow:hidden;}
   .hero-wrap::before{background-size:980px auto;background-position:55% 18px;opacity:0.94;}
@@ -213,14 +213,14 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;display
 }
 .hero-main{max-width:900px;margin:0 auto;}
 .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:0.9rem;opacity:0.62;}
-.hero h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:500;line-height:1.13;color:var(--navy-dark);margin:0 auto 1rem;max-width:760px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:38px;font-weight:500;line-height:1.12;color:var(--navy-dark);margin:0 auto 0.75rem;max-width:760px;}
 @media(max-width:768px){
   .hero-main,.hero h1,.hero-sub,.ai-finder,.ai-examples,.ai-finder-meta,.ai-hero-contact{max-width:100%;width:100%;}
   .hero-eyebrow{font-size:10px;letter-spacing:1.4px;line-height:1.5;max-width:300px;margin-left:auto;margin-right:auto;}
   .hero h1{font-size:26px;line-height:1.15;max-width:310px;overflow-wrap:normal;}
   .hero-sub{font-size:14px;line-height:1.55;max-width:330px;}
 }
-.hero-sub{font-size:15px;color:var(--muted);line-height:1.65;margin:0 auto 1.35rem;font-weight:300;max-width:760px;}
+.hero-sub{font-size:14px;color:var(--muted);line-height:1.55;margin:0 auto 1rem;font-weight:300;max-width:760px;}
 .hero-phone{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);text-decoration:none;font-weight:500;}
 .hero-phone svg{width:18px;height:18px;stroke-width:2.15;}
 .hero-phone:hover{opacity:0.8;}
@@ -1568,8 +1568,8 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 <section class="stats-strip">
   <div class="stats-inner">
     <div class="stat-item">
-      <div class="stat-number"><span data-stat-target="97">0</span></div>
-      <div class="stat-label">USCIS forms supported</div>
+      <div class="stat-number"><span data-stat-target="734">0</span><span style="font-size:0.55em;color:#a45b34;">+</span></div>
+      <div class="stat-label">USCIS, EOIR &amp; California forms supported</div>
     </div>
     <div class="stat-item">
       <div class="stat-number"><span data-stat-target="18">0</span></div>
@@ -1607,7 +1607,8 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
           <li>I-90 — Application to Replace Permanent Resident Card</li>
           <li>I-751 — Petition to Remove Conditions on Residence</li>
           <li>I-821 / I-821D — TPS / DACA</li>
-          <li>G-28 — Notice of Entry of Appearance (representative)</li>
+          <li>I-912 — Request for Fee Waiver</li>
+          <li>I-693 — Report of Medical Examination (assembled by civil surgeon, organized into the filing package)</li>
         </ul>
         <cite>Statutory basis: INA §245(a) (I-485 adjustment); 8 CFR §103.2 (filing requirements); California Bus. &amp; Prof. Code §22440 et seq. (immigration consultant services).<sup><a href="#cite-ina245">2</a></sup></cite>
       </div>
@@ -1616,9 +1617,11 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
         <h3>EOIR immigration court documents</h3>
         <p>Document preparation for proceedings before the Executive Office for Immigration Review — including motions, evidence packets, applications for relief, and supporting declarations. Court representation requires a licensed attorney or BIA-accredited representative.</p>
         <ul>
-          <li>EOIR-28 — Notice of Entry of Appearance (for accredited representatives only)</li>
           <li>EOIR-42A / EOIR-42B — Cancellation of removal applications</li>
+          <li>I-589 — Asylum / withholding / CAT applications filed defensively</li>
+          <li>Motions to reopen / reconsider (drafted at counsel's or pro-se applicant's direction)</li>
           <li>Evidence packets, indexes, and tabbed exhibits per Chief Immigration Judge practice manual</li>
+          <li>Country-conditions evidence assembly and Form I-589 declarations</li>
         </ul>
         <cite>Authority: 8 CFR §292.1 (who may represent). LDA / Immigration Consultant cannot represent in court.<sup><a href="#cite-292-1">3</a></sup></cite>
       </div>
@@ -1702,6 +1705,19 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
           <li>IRS Form SS-4 (EIN application)</li>
         </ul>
         <cite>California Corporations Code §17702.01 (LLC filing); Bus. &amp; Prof. Code §17910 (Fictitious Business Name Act).<sup><a href="#cite-bpc17910">9</a></sup></cite>
+      </div>
+
+      <div class="svc-card" id="document-translation-california">
+        <h3>Translation &amp; certified document assembly</h3>
+        <p>Multilingual document preparation, certified translations for USCIS submissions, and full filing-package assembly with the right exhibits, tabs, and cover sheet.</p>
+        <ul>
+          <li>Certified English translations of foreign-language documents</li>
+          <li>Birth, marriage, divorce, and death certificate translations</li>
+          <li>USCIS Form I-912 fee-waiver document package</li>
+          <li>Civil court fee-waiver (FW-001) document package</li>
+          <li>Full USCIS / EOIR / California court filing-package assembly with cover, index, and tabs</li>
+        </ul>
+        <cite>8 CFR §103.2(b)(3) (certified translation requirement for USCIS submissions); Cal. Rules of Court 3.50-3.58 (fee waivers); USCIS Policy Manual Vol. 1 Part B (filing packages).</cite>
       </div>
 
     </div>
@@ -3053,6 +3069,23 @@ function closeDetail(id) {
     return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
   }
 
+  // A-Number: USCIS uses a 9-digit identifier displayed as "A123-456-789"
+  // (or 123-456-789 when no leading A). We capture exactly 9 digits in
+  // state but show the user the formatted version while typing. PDF
+  // rendering reads the raw digit string and writes one digit per box.
+  function aNumberDigits(value) {
+    var raw = String(value == null ? '' : value);
+    // Strip optional "A" prefix and any non-digits.
+    return raw.replace(/^a/i, '').replace(/\D/g, '').slice(0, 9);
+  }
+  function formatANumber(value) {
+    var d = aNumberDigits(value);
+    if (d.length === 0) return '';
+    if (d.length <= 3) return d;
+    if (d.length <= 6) return d.slice(0, 3) + '-' + d.slice(3);
+    return d.slice(0, 3) + '-' + d.slice(3, 6) + '-' + d.slice(6);
+  }
+
   function historyRows(value, count) {
     var rows = Array.isArray(value) ? value.slice() : [];
     while (rows.length < count) rows.push({});
@@ -3162,8 +3195,23 @@ function closeDetail(id) {
 
     if (field.type === 'addressBlock') return renderAddressBlockField(field);
 
+    // A-number live formatter: any field id matching "*alien_number*" or
+    // ending with "_a_number" gets the 123-456-789 display widget. State
+    // keeps raw 9 digits so PDF rendering writes one digit per box.
+    if (isANumberField(field)) {
+      var digits = aNumberDigits(value);
+      return '<div class="intake-field">' + label +
+        '<input type="text" inputmode="numeric" autocomplete="off" maxlength="11" data-flow-anumber="' + esc(field.id) + '" placeholder="123-456-789" value="' + esc(formatANumber(digits)) + '">' +
+        help + '</div>';
+    }
+
     var type = field.type === 'date' || field.type === 'email' || field.type === 'tel' || field.type === 'number' ? field.type : 'text';
     return '<div class="intake-field">' + label + '<input type="' + esc(type) + '"' + attrsForField(field) + ' value="' + esc(value) + '">' + help + '</div>';
+  }
+
+  function isANumberField(field) {
+    if (!field || !field.id) return false;
+    return /(^|_)alien_number(_|$)|(^|_)a_number(_|$)/i.test(field.id);
   }
 
   function flowConditionMatches(condition) {
@@ -3393,6 +3441,13 @@ function closeDetail(id) {
         areaCode: d.slice(0, 3),
         number: d.slice(3)
       };
+    });
+    // A-number formatted widget: store raw 9 digits in state so PDF renders
+    // one digit per box; UI shows formatted 123-456-789.
+    card.querySelectorAll('[data-flow-anumber]').forEach(function (input) {
+      var key = input.getAttribute('data-flow-anumber');
+      if (!key) return;
+      state.formAnswers[key] = aNumberDigits(input.value);
     });
     card.querySelectorAll('[data-flow-address-block]').forEach(function (group) {
       group.querySelectorAll('[data-flow-address-key]').forEach(function (input) {
@@ -3822,6 +3877,18 @@ function closeDetail(id) {
 
   card.addEventListener('input', function (event) {
     // US single-input phone (contact step + flow phone widget): auto-format (XXX) XXX-XXXX.
+    // A-number widget: reformat as user types, keep caret roughly in place.
+    if (event.target.hasAttribute('data-flow-anumber')) {
+      var posA = event.target.selectionStart;
+      var beforeA = event.target.value.length;
+      var formattedA = formatANumber(event.target.value);
+      event.target.value = formattedA;
+      var diffA = formattedA.length - beforeA;
+      var newA = (posA || formattedA.length) + diffA;
+      if (newA < 0) newA = 0;
+      if (newA > formattedA.length) newA = formattedA.length;
+      try { event.target.setSelectionRange(newA, newA); } catch (e) {}
+    }
     if (event.target.id === 'intakePhoneUS' || event.target.hasAttribute('data-flow-phone-us')) {
       var pos = event.target.selectionStart;
       var beforeLen = event.target.value.length;
