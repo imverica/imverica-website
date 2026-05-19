@@ -3623,18 +3623,41 @@ function closeDetail(id) {
     if (input) {
       if (input.tagName === 'SELECT') nextValue = matchingStateOption(nextValue, input);
       input.value = nextValue;
+      input.dispatchEvent(new Event(input.tagName === 'SELECT' ? 'change' : 'input', { bubbles: true }));
     }
     state.formAnswers[id] = nextValue;
   }
 
+  function findAddressBlockForSuggestion(fieldId) {
+    var input = card.querySelector('[data-address-autocomplete="' + fieldId + '"]')
+      || card.querySelector('[data-flow-address-key="' + fieldId + '"]');
+    return input ? input.closest('[data-flow-address-block]') : null;
+  }
+
+  function setAddressBlockPart(block, part, value) {
+    if (!block) return;
+    var input = block.querySelector('[data-flow-address-part="' + part + '"]');
+    if (!input) return;
+    var key = input.getAttribute('data-flow-address-key');
+    var nextValue = String(value || '');
+    if (input.tagName === 'SELECT') nextValue = matchingStateOption(nextValue, input);
+    input.value = nextValue;
+    input.dispatchEvent(new Event(input.tagName === 'SELECT' ? 'change' : 'input', { bubbles: true }));
+    if (key) state.formAnswers[key] = nextValue;
+  }
+
   function applyAddressSuggestion(fieldId, suggestion) {
     if (!suggestion) return;
-    setAnswerAndInput(fieldId, suggestion.line1 || '');
-    if (fieldId === 'mailing_address_line1') {
-      setAnswerAndInput('mailing_city', suggestion.city || '');
-      setAnswerAndInput('mailing_state', suggestion.state || '');
-      setAnswerAndInput('mailing_zip', suggestion.zip || '');
-      setAnswerAndInput('mailing_country', suggestion.country || 'United States');
+    var block = findAddressBlockForSuggestion(fieldId);
+    if (block) {
+      setAddressBlockPart(block, 'line1', suggestion.line1 || '');
+      setAddressBlockPart(block, 'line2', suggestion.line2 || '');
+      setAddressBlockPart(block, 'city', suggestion.city || '');
+      setAddressBlockPart(block, 'state', suggestion.state || '');
+      setAddressBlockPart(block, 'zip', suggestion.zip || '');
+      setAddressBlockPart(block, 'country', suggestion.country || 'United States');
+    } else {
+      setAnswerAndInput(fieldId, suggestion.line1 || '');
     }
     var box = card.querySelector('[data-address-suggestions="' + fieldId + '"]');
     var note = card.querySelector('[data-address-note="' + fieldId + '"]');

@@ -16,6 +16,8 @@ includes('langManual', 'manual language lock');
 includes('changeIntakeLanguage', 'language switch reload handler');
 includes('data-address-autocomplete', 'address autocomplete input binding');
 includes('addressSuggestEndpoint', 'address suggestion endpoint binding');
+includes('findAddressBlockForSuggestion', 'address suggestion addressBlock resolver');
+includes('setAddressBlockPart(block, \'city\', suggestion.city', 'address suggestions should populate city/state/zip parts');
 includes('data-flow-phone-us', 'single-input US phone widget for form-flow phones');
 includes('intakePhoneUS', 'single-input US contact phone field');
 includes('formatUSPhone', 'US phone (XXX) XXX-XXXX formatter');
