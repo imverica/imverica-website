@@ -1,0 +1,152 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-485 Document Preparation — Adjustment of Status Help | Imverica';
+const description = 'California Licensed LDA prepares Form I-485 adjustment-of-status packages — biographic, address & employment history, supporting evidence, I-693 medical, I-765 work permit, I-131 advance parole. Flat fee. Multilingual.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-485 Application to Register Permanent Residence Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'Country', name: 'United States' },
+    disambiguatingDescription: "Imverica is not a law firm. Document preparation only, at the client's direction."
+  },
+  description: "Form I-485 is the application a noncitizen physically present in the United States files with USCIS to adjust status to lawful permanent resident. Imverica prepares the complete filing package at the client's direction."
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/i-485-help"
+  jsonLd={[serviceSchema]}
+>
+  <Hero
+    eyebrow="USCIS · Adjustment of Status · INA §245(a)"
+    heading="I-485 document preparation — Adjustment of Status help"
+    sub="We prepare the full I-485 package — biographic, address and employment history, supporting evidence, I-693 medical, I-765 work permit, I-131 advance parole — at your direction. Flat-fee. English, Russian, Ukrainian, Spanish."
+    ctaPrimary={{ href: '/#get-started?form=I-485', text: 'Start my I-485 package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-765-work-permit-help', label: 'I-765 — Application for Employment Authorization' },
+    { href: '/i-589-asylum-help', label: 'I-589 — Asylum and Withholding of Removal' },
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-485 is the application a noncitizen physically present in the United
+      States files with USCIS to adjust status to lawful permanent resident (the
+      green card). Imverica prepares the complete I-485 filing package at your
+      direction — biographic data, residence and employment history, supporting
+      evidence, and the related companion forms most adjustment applicants file
+      alongside.
+    </p>
+
+    <h2>Who can file I-485</h2>
+    <p>
+      Adjustment of status under INA §245(a) is available to a person who is
+      physically present in the U.S., was inspected and admitted or paroled (or
+      qualifies under one of the narrower §245(i) / §245(k) / asylee /
+      refugee / special-immigrant routes), is the beneficiary of an approved
+      or concurrently-filed immigrant petition, has an immigrant visa
+      immediately available based on the current Visa Bulletin, and is
+      admissible to the United States or eligible for a waiver of any ground
+      of inadmissibility.
+    </p>
+    <p>
+      Common adjustment paths we see in document preparation: spouse, parent,
+      or child of a U.S. citizen (family-based); employment-based EB-1
+      through EB-5; asylee one year after grant of asylum; refugee one year
+      after admission; VAWA self-petitioner; T or U visa adjustment;
+      diversity visa selectee; and several humanitarian categories.
+    </p>
+
+    <h2>What the I-485 package usually includes</h2>
+    <div class="form-list">
+      <strong>Forms we prepare for the package</strong>
+      <ul>
+        <li><strong>I-485</strong> — Application to Register Permanent Residence or Adjust Status (the main form)</li>
+        <li><strong>I-693</strong> — Report of Medical Examination and Vaccination Record (completed by a USCIS-designated civil surgeon; we organize and submit it with the package)</li>
+        <li><strong>I-765</strong> — Application for Employment Authorization, filed concurrently to obtain a work permit while I-485 is pending</li>
+        <li><strong>I-131</strong> — Application for Travel Document, filed concurrently to obtain advance parole for travel while I-485 is pending</li>
+        <li><strong>I-864</strong> / <strong>I-864A</strong> / <strong>I-864EZ</strong> — Affidavit of Support, required for family-based and some employment-based adjustments</li>
+        <li><strong>I-944</strong> — Declaration of Self-Sufficiency, when required by the current rule</li>
+        <li><strong>I-912</strong> — Request for Fee Waiver, when the applicant meets the household-income or means-tested-benefit criteria</li>
+        <li><strong>Supporting evidence</strong> — birth certificate, marriage certificate, passport biographic page, prior visa stamps, I-94, I-797 receipt and approval notices, prior immigration documents, photographs, and translations of any foreign-language documents under 8 CFR §103.2(b)(3)</li>
+      </ul>
+    </div>
+
+    <h2>How our I-485 intake works</h2>
+    <p>
+      You answer a guided intake wizard at your own pace. The wizard
+      mirrors the USCIS I-485 part-by-part — Part 1 applicant information,
+      Part 2 application type and filing category, Part 3 additional info,
+      Part 4 last five years of address history, Part 5 last five years of
+      employment history, Part 6 marital and family information including
+      all of your children, Part 7 biographic information (ethnicity, race,
+      height, weight, eye and hair color), Part 8 general eligibility, and
+      Part 9 specific eligibility / inadmissibility questions.
+    </p>
+    <p>
+      All your data is saved as you go. You can pause, switch languages, or
+      come back later. When you finish, we assemble the package, generate
+      the filing-ready PDFs, and walk you through what to assemble (USCIS
+      fee or fee-waiver, color photographs to the current spec, civil
+      documents and translations, and the medical exam) before you sign and
+      mail to the appropriate USCIS lockbox.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      As a California Legal Document Assistant and Immigration Consultant
+      we cannot give legal advice, recommend a particular filing strategy,
+      or represent you before USCIS or in immigration court. If during
+      intake your situation looks like it needs a licensed attorney — for
+      example removal proceedings, a complex prior-deportation history, a
+      criminal history with admissibility implications, or strategic
+      decisions about §245(i) vs. consular processing — we will tell you
+      up front and refer you to a licensed California immigration
+      attorney from our referral network. We will not prepare documents
+      we cannot lawfully prepare under Business &amp; Professions Code
+      §6411.
+    </p>
+
+    <h2>What an I-485 case usually costs through Imverica</h2>
+    <p>
+      We quote a flat fee per package, disclosed and agreed to in writing
+      under Business &amp; Professions Code §6410 before any work begins.
+      USCIS filing fees, the civil surgeon's medical-exam fee, biometric
+      fee, and any translator certification fees are separate and go to the
+      respective issuer. A fee-waiver (Form I-912) eliminates many of the
+      USCIS fees for applicants below the income threshold or receiving
+      certain means-tested benefits — we prepare the I-912 package when it
+      applies.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> Immigration and Nationality Act
+      §245(a), 8 U.S.C. §1255(a) (adjustment of status); 8 C.F.R. §§245.1,
+      245.2 (procedure); 8 C.F.R. §103.2 (filing requirements); 8 C.F.R.
+      §103.2(b)(3) (foreign-language translation certification); USCIS
+      Policy Manual Volume 7 (Adjustment of Status). California scope:
+      Cal. Bus. &amp; Prof. Code §§6400-6415 (Legal Document Assistant
+      Act); §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Start your I-485 package today"
+    sub="Multilingual intake. Flat-fee. Document preparation at your direction — not legal advice. Begin in your language and pick up where you left off any time."
+    primaryHref="/#get-started?form=I-485"
+    primaryText="Begin my I-485 intake"
+  />
+</BaseLayout>

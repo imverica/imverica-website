@@ -1,0 +1,126 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'What is a California Legal Document Assistant? | Imverica';
+const description = 'A Legal Document Assistant (LDA) is a California-registered, bonded non-attorney authorized to prepare legal documents at the self-represented party direction. Lower cost than an attorney. Cal. Bus. & Prof. Code §§6400-6415.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Legal Document Assistant Services',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'California Legal Document Assistant services — non-attorney document preparation under Cal. Bus. & Prof. Code §§6400-6415.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/california-legal-document-assistant" jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Bus. & Prof. Code §§6400-6415"
+    heading="What is a California Legal Document Assistant?"
+    sub="The plain-English explanation: when you can use an LDA, when you need an attorney, what it costs, and what consumer protections California built around LDA registration."
+    ctaPrimary={{ href: '/#get-started', text: 'Start with Imverica' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 adjustment of status' },
+    { href: '/california-family-law', label: 'California family law' },
+    { href: '/california-unlawful-detainer', label: 'California unlawful detainer' }
+  ]}>
+    <p class="lead">
+      A California Legal Document Assistant — or LDA — is a registered,
+      bonded, non-attorney professional authorized to prepare legal
+      documents for self-represented parties at the client's direction.
+      Created by the California Legislature in 1998, the LDA scheme aims to
+      give the public access to affordable document help without crossing
+      the line into the unauthorized practice of law.
+    </p>
+
+    <h2>What an LDA can do</h2>
+    <p>
+      Under Business &amp; Professions Code §6400(d), an LDA may, at the
+      client's direction:
+    </p>
+    <ul>
+      <li>Type or assemble legal documents the client has already decided to file</li>
+      <li>Provide pre-printed, attorney-prepared legal forms</li>
+      <li>Provide legal-information publications from a state-published source</li>
+      <li>File documents at the courthouse for the client</li>
+      <li>Provide translation of documents (with translator certification under 8 C.F.R. §103.2(b)(3) for USCIS filings)</li>
+      <li>Help organize and assemble supporting documents into a filing-ready package</li>
+    </ul>
+
+    <h2>What an LDA cannot do</h2>
+    <p>
+      Under Business &amp; Professions Code §6411 an LDA may not:
+    </p>
+    <ul>
+      <li>Give legal advice</li>
+      <li>Make any kind of legal opinion or recommendation</li>
+      <li>Select forms for the client (the client must decide which forms to file)</li>
+      <li>Choose a course of action or legal strategy</li>
+      <li>Represent the client in court or in any agency proceeding</li>
+      <li>Hold themselves out as an attorney</li>
+    </ul>
+    <p>
+      Crossing the §6411 line is treated as the unauthorized practice of
+      law under §6125 — a misdemeanor with civil exposure for the LDA. The
+      strict separation is the consumer protection that makes the LDA
+      scheme work.
+    </p>
+
+    <h2>What an LDA is required to do</h2>
+    <ul>
+      <li><strong>Register with the county clerk.</strong> Each county where the LDA does business. Public registry searchable by anyone.</li>
+      <li><strong>Post a $25,000 bond.</strong> Per §6405. Protects clients in the event of LDA misconduct.</li>
+      <li><strong>Meet education or experience requirements.</strong> Per §6402.1. Two years of law-related experience, paralegal certificate, J.D., or other qualifying paths.</li>
+      <li><strong>Provide a written contract.</strong> Per §6410. States the services, the flat fee, the LDA's registration number, and the §6411 notice that the LDA is not an attorney.</li>
+      <li><strong>Display required disclosures.</strong> Per §6408. Office signage stating "I am NOT an attorney."</li>
+      <li><strong>Renew the registration every two years.</strong></li>
+    </ul>
+
+    <h2>LDA vs. attorney — which one do you need?</h2>
+    <p>
+      <strong>Use an LDA</strong> when you know what you want to file and
+      need someone to prepare the documents accurately — uncontested
+      divorce, small claims, USCIS forms with a clear filing path,
+      probate, restraining orders, business filings, unlawful detainer.
+      Flat fee, typically 60-90% less than an attorney would charge for
+      the same paperwork.
+    </p>
+    <p>
+      <strong>Hire an attorney</strong> when the case is contested or
+      involves strategy — custody disputes with high conflict, complex
+      community-property characterization, criminal exposure related to
+      the immigration filing, removal proceedings, novel legal questions,
+      or any situation where you need someone to advise you on what to
+      do rather than just prepare the papers you have decided to file.
+    </p>
+
+    <h2>How Imverica fits</h2>
+    <p>
+      Imverica Legal Solutions is a California registered LDA and
+      Immigration Consultant. We serve clients across California and
+      remotely worldwide for the USCIS / federal pieces. All our intake
+      is multilingual (English, Russian, Ukrainian, Spanish) with the
+      §6410 written contract before we start, flat-fee pricing disclosed
+      in advance, and the standard §6411 notice that we are not a law
+      firm and cannot give legal advice. We maintain referral
+      relationships with licensed California attorneys for matters that
+      need legal counsel.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> California Business &amp;
+      Professions Code §§6400-6415 (Legal Document Assistant Act),
+      especially §6400(d) (definition), §6402.1 (qualifications), §6405
+      (bond), §6408 (required disclosures and signage), §6410 (written
+      contract), §6411 (prohibited acts); §6125 (unauthorized practice of
+      law). For immigration: §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started" primaryText="Start with Imverica" />
+</BaseLayout>

@@ -1,0 +1,127 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-589 Asylum Document Preparation Help | Imverica';
+const description = 'California Licensed LDA prepares Form I-589 asylum applications — applicant biographic, family, residence/education/employment history, persecution declaration, country-conditions evidence. English, Russian, Ukrainian, Spanish.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-589 Asylum Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'Country', name: 'United States' },
+    disambiguatingDescription: "Imverica is not a law firm. Document preparation only, at the client's direction."
+  },
+  description: 'Imverica prepares the I-589 application for asylum, withholding of removal, and protection under the Convention Against Torture at the applicant’s direction.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/i-589-asylum-help"
+  jsonLd={[serviceSchema]}
+>
+  <Hero
+    eyebrow="USCIS · Asylum · INA §208"
+    heading="I-589 asylum document preparation"
+    sub="We prepare the 12-page Form I-589 with the supporting declaration, family and residence/education/employment history tables, and country-conditions evidence package. Multilingual intake. Flat-fee."
+    ctaPrimary={{ href: '/#get-started?form=I-589', text: 'Start my I-589 package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 — Adjustment of status (one year after asylum)' },
+    { href: '/i-765-work-permit-help', label: 'I-765 — Work permit (c)(8) for pending asylum' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-589 is the application a person in the United States files for
+      asylum, withholding of removal under INA §241(b)(3), and protection
+      under the Convention Against Torture. We prepare the I-589 package at
+      your direction — the form itself, the written declaration that
+      explains your fear of persecution, the residence/education/employment
+      history tables on page 4, family information for spouse and children,
+      and the supporting evidence packet.
+    </p>
+
+    <h2>Key deadlines and eligibility</h2>
+    <p>
+      Under 8 C.F.R. §208.4 you must file the I-589 within one year of your
+      last arrival in the United States, unless you can show changed
+      circumstances or extraordinary circumstances that justify the delay.
+      To qualify for asylum you show past persecution or a well-founded
+      fear of persecution on account of race, religion, nationality,
+      political opinion, or membership in a particular social group
+      (INA §101(a)(42); 8 C.F.R. §208.13).
+    </p>
+    <p>
+      One year after a grant of asylum you become eligible to adjust
+      status to lawful permanent resident by filing Form I-485. While your
+      I-589 is pending you may apply for an Employment Authorization
+      Document (Form I-765 under category (c)(8)) once 150 days have
+      elapsed since the I-589 was filed and was not denied.
+    </p>
+
+    <h2>What we prepare for the I-589 package</h2>
+    <div class="form-list">
+      <strong>Forms and exhibits in a typical I-589 package</strong>
+      <ul>
+        <li><strong>I-589</strong> — Application for Asylum and for Withholding of Removal (12 pages, Parts A.I, A.II, A.III, B, C, D, and supplements as needed)</li>
+        <li><strong>Written declaration</strong> — the persecution narrative explaining what happened, when, where, by whom, and why we believe it is on account of a protected ground</li>
+        <li><strong>Supplement A</strong> — list of additional children where you have more than the form's four built-in slots</li>
+        <li><strong>Supplement B</strong> — additional information for any item on the form needing more space</li>
+        <li><strong>Identity documents</strong> — passport, birth certificate, national ID card, photos, and certified translations under 8 C.F.R. §103.2(b)(3)</li>
+        <li><strong>Evidence packet</strong> — medical reports, witness statements, police reports, news articles, country-conditions reports (U.S. State Department, UNHCR, Human Rights Watch, Amnesty International), social-media or political-party affiliation evidence</li>
+        <li><strong>Cover letter and index</strong> — tabbed exhibits per USCIS / asylum-office preferred format</li>
+      </ul>
+    </div>
+
+    <h2>Page 4 history tables — the hardest part of the form</h2>
+    <p>
+      Page 4 of I-589 asks for five separate tables: last address before
+      coming to the United States, residences over the past 5 years,
+      education history beginning with the most recent school, employment
+      over the past 5 years, and information about parents and siblings.
+      Our wizard renders each table cell individually so a single answer
+      maps to a single cell on the PDF — no overwriting, no gaps. Add as
+      many rows as you need; the wizard auto-numbers them and the renderer
+      places each row's data at the correct PDF coordinate.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      We are a California Legal Document Assistant and Immigration
+      Consultant. We do not represent applicants before USCIS, at the
+      asylum office, or in immigration court. Defensive asylum cases that
+      end up in EOIR removal proceedings need an attorney or BIA-accredited
+      representative to appear — we can still prepare the I-589 and the
+      evidence packet at counsel's or the pro-se applicant's direction.
+      Affirmative interviews at the asylum office can be attended
+      pro se; we cannot accompany you as a representative.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> INA §208, 8 U.S.C. §1158
+      (asylum); INA §241(b)(3) (withholding of removal); INA §101(a)(42)
+      (refugee definition); 8 C.F.R. §208 (asylum regulations); 8 C.F.R.
+      §208.4 (one-year filing deadline); 8 C.F.R. §208.13 (eligibility);
+      8 C.F.R. §208.16 (Convention Against Torture); 8 C.F.R. §103.2(b)(3)
+      (translation certification). California scope: Cal. Bus. &amp; Prof.
+      Code §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Start your I-589 asylum package"
+    sub="Russian, Ukrainian, Spanish, and English intake. Pause and resume any time. Document preparation at your direction — not legal advice."
+    primaryHref="/#get-started?form=I-589"
+    primaryText="Begin my I-589 intake"
+  />
+</BaseLayout>

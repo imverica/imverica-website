@@ -1,0 +1,130 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Unlawful Detainer Document Preparation | Imverica';
+const description = 'California Licensed LDA prepares unlawful detainer (eviction) packages — UD-100 complaint, SUM-130 summons, 3-day/30-day/60-day notices, UD-105 answer, UD-110 judgment, POS-010 proof of service. Strictly at client direction.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Unlawful Detainer Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'State', name: 'California' },
+    disambiguatingDescription: "Imverica is not a law firm. Document preparation only, at the client's direction."
+  },
+  description: "Imverica prepares California unlawful detainer (eviction) documents at the client's direction. UD-100, SUM-130, pre-filing notices, UD-105 answer, UD-110 judgment, POS-010 proof of service."
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/california-unlawful-detainer"
+  jsonLd={[serviceSchema]}
+>
+  <Hero
+    eyebrow="California Civil Procedure · CCP §1161-1170"
+    heading="California unlawful detainer document preparation"
+    sub="Landlord or tenant — we prepare the UD package strictly at your direction. UD-100 complaint, SUM-130 summons, pre-filing notices, UD-105 answer, UD-110 judgment, and POS-010 proof of service. Flat-fee."
+    ctaPrimary={{ href: '/#get-started?form=UD-100', text: 'Start my UD package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/california-small-claims', label: 'California small claims (SC-100 / SC-120)' },
+    { href: '/california-restraining-orders', label: 'California restraining orders (CH / DV / EA / GV / WV)' },
+    { href: '/california-family-law', label: 'California family law forms (FL-100, FL-300)' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Unlawful detainer is California's expedited statutory eviction
+      procedure under Code of Civil Procedure §1161-1170. It is the only
+      lawful way for a landlord to recover possession of residential or
+      commercial property from a tenant who has stopped paying rent,
+      breached the lease, holdover, or refused to leave after proper
+      tenancy-termination notice. Self-help eviction (changing locks,
+      shutting off utilities, removing belongings) is criminally
+      prohibited under Civil Code §789.3 and exposes the landlord to
+      statutory damages.
+    </p>
+
+    <h2>The UD timeline</h2>
+    <ol>
+      <li><strong>Step 1 — Pre-filing notice.</strong> A 3-day notice to pay rent or quit under CCP §1161(2); a 30-day or 60-day notice of termination of tenancy under Civil Code §1946 / §1946.1 (60 days when the tenant has resided 12 months or longer); or a 3-day notice to perform covenants or quit for non-monetary breach.</li>
+      <li><strong>Step 2 — Service of the notice.</strong> Personal service, substitute service plus mailing, or post-and-mail under CCP §1162, depending on which method the law allows for the underlying ground.</li>
+      <li><strong>Step 3 — Wait the notice period.</strong> Excludes weekends and court holidays when the notice expires on those days for shorter notices.</li>
+      <li><strong>Step 4 — File UD-100 + SUM-130.</strong> The unlawful detainer complaint and summons go to the Superior Court of the county where the property is located.</li>
+      <li><strong>Step 5 — Tenant response (5 days).</strong> Tenant files UD-105 answer, demurrer, or motion to quash service within 5 calendar days of service of the summons (CCP §1167).</li>
+      <li><strong>Step 6 — Trial setting.</strong> UD cases are set on an expedited trial calendar (within 20 days of a trial-setting request).</li>
+      <li><strong>Step 7 — Judgment.</strong> Court enters UD-110 judgment for possession (and any monetary recovery). Sheriff serves a Writ of Possession (EJ-130) and posts a 5-day notice to vacate.</li>
+    </ol>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>Documents in a typical UD package</strong>
+      <ul>
+        <li><strong>3-day notice to pay rent or quit</strong> — CCP §1161(2)</li>
+        <li><strong>30-day or 60-day notice of termination</strong> — Civ. Code §1946 / §1946.1</li>
+        <li><strong>3-day notice to perform covenants or quit</strong> — CCP §1161(3)</li>
+        <li><strong>UD-100</strong> — Complaint - Unlawful Detainer</li>
+        <li><strong>SUM-130</strong> — Summons - Unlawful Detainer</li>
+        <li><strong>CM-010</strong> — Civil Case Cover Sheet</li>
+        <li><strong>POS-010</strong> — Proof of Service of Summons</li>
+        <li><strong>UD-150</strong> — Plaintiff's Mandatory Cover Sheet and Supplemental Allegations (commercial / mobilehome / federal moratorium)</li>
+        <li><strong>UD-105</strong> — Answer (tenant)</li>
+        <li><strong>UD-115</strong> — Answer - Stipulation for Entry of Judgment</li>
+        <li><strong>UD-110</strong> — Judgment - Unlawful Detainer</li>
+        <li><strong>EJ-130</strong> — Writ of Execution / Possession</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees (when income-eligible)</li>
+      </ul>
+    </div>
+
+    <h2>Tenant-side: defending an unlawful detainer</h2>
+    <p>
+      Tenants have 5 calendar days from service of the summons to respond
+      (CCP §1167). Skipping the response leads to default judgment and a
+      sheriff lockout in 2-3 weeks. We prepare the UD-105 answer, raising
+      affirmative defenses (uninhabitable conditions, retaliatory eviction,
+      improper notice, discrimination, breach of warranty of habitability
+      under Civil Code §1941.1) where the facts you give us support them.
+      If the case is a non-payment-of-rent UD and there is no genuine
+      dispute, we can prepare a UD-115 stipulation for entry of judgment
+      that buys the tenant additional time to move out by agreement.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      We are a California Legal Document Assistant. We cannot give legal
+      advice, choose your strategy, draft a custom motion that requires
+      legal analysis, or appear in court. We can prepare every standard
+      UD form at your direction. For a contested trial, complex AB 1482
+      / rent-control / Costa-Hawkins issues, or a habitability defense
+      that may need expert witnesses, we recommend you also consult a
+      licensed California attorney before filing.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> California Code of Civil
+      Procedure §§1161-1170 (Unlawful Detainer Act), §1162 (service of
+      notice), §1166 (complaint), §1167 (5-day response), §1170 (trial
+      setting); California Civil Code §§1946-1946.2 (tenancy termination
+      notices), §789.3 (self-help eviction prohibited), §1941.1 (habitable
+      condition); AB 1482 (Tenant Protection Act of 2019). California
+      scope: Cal. Bus. &amp; Prof. Code §§6400-6415 (Legal Document
+      Assistant Act); §6411 (LDA cannot give legal advice).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Start your unlawful detainer package today"
+    sub="Landlord or tenant. Flat-fee. Multilingual intake. Document preparation at your direction — not legal advice."
+    primaryHref="/#get-started?form=UD-100"
+    primaryText="Begin my UD intake"
+  />
+</BaseLayout>

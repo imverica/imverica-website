@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Probate Document Preparation (DE-111) | Imverica';
+const description = 'California Licensed LDA prepares probate documents — DE-111 petition for probate, DE-121 notice, DE-160 inventory and appraisal, DE-221 spousal property petition, small estate affidavit under Probate Code §13100.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Probate Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: "California probate document preparation at the petitioner's direction. Small estates, spousal property, and standard administration."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/california-probate" jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Probate · Probate Code §8000 et seq."
+    heading="California probate document preparation"
+    sub="Small estate affidavits, spousal property petitions, and standard administration in California superior court. Multilingual flat-fee intake."
+    ctaPrimary={{ href: '/#get-started?form=DE-111', text: 'Start my probate package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/california-family-law', label: 'California family law (FL-100, FL-300)' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      California probate is the court process for transferring a deceased
+      person's assets to heirs and beneficiaries. Three common paths:
+      small-estate affidavit (no court hearing, fast), spousal property
+      petition (surviving spouse, simplified), and standard administration
+      (full probate, with letters testamentary or letters of
+      administration).
+    </p>
+
+    <h2>Which path applies</h2>
+    <ul>
+      <li><strong>Small estate affidavit (no real property over $61,500 / total under $184,500).</strong> Probate Code §13100 et seq. Survivors collect personal property by sworn affidavit 40 days after death. No court filing required for personal property; abbreviated court process for real property under §13150.</li>
+      <li><strong>Spousal Property Petition (DE-221).</strong> Probate Code §13500. Surviving spouse or registered domestic partner asks the court to confirm community property and quasi-community property passes to them without full probate.</li>
+      <li><strong>Standard administration (DE-111).</strong> Probate Code §8000. Required when the estate exceeds the small-estate threshold and there is no surviving spouse simplified path. Court appoints executor (with will) or administrator (without will), issues Letters, and the personal representative administers under court supervision.</li>
+    </ul>
+
+    <h2>Standard probate timeline</h2>
+    <ol>
+      <li><strong>DE-111 Petition for Probate.</strong> Filed at the superior court in the decedent's county of residence.</li>
+      <li><strong>DE-121 Notice of Petition.</strong> Published in a local newspaper for 3 successive weeks; mailed to all heirs and beneficiaries.</li>
+      <li><strong>Hearing.</strong> Court appoints the personal representative and issues Letters (DE-150 testamentary or DE-150A administration).</li>
+      <li><strong>DE-160 Inventory and Appraisal.</strong> Personal representative lists all estate assets within 4 months. Probate referee values non-cash assets.</li>
+      <li><strong>Creditor claims.</strong> Creditors have 4 months from issuance of Letters to file claims (Probate Code §9100).</li>
+      <li><strong>Sale of assets, payment of debts, distribution.</strong> Personal representative manages estate, sells assets if needed, pays debts/taxes/expenses, and distributes the residue per the will or intestacy.</li>
+      <li><strong>Final accounting and distribution.</strong> DE-180 / DE-295 final accounting petition. Court approves and discharges the personal representative.</li>
+    </ol>
+
+    <h2>Forms we prepare</h2>
+    <div class="form-list">
+      <strong>Probate document packages</strong>
+      <ul>
+        <li><strong>DE-111</strong> — Petition for Probate</li>
+        <li><strong>DE-121</strong> — Notice of Petition to Administer Estate</li>
+        <li><strong>DE-131</strong> — Proof of Subscribing Witness</li>
+        <li><strong>DE-140</strong> — Order for Probate</li>
+        <li><strong>DE-147</strong> — Duties and Liabilities of Personal Representative</li>
+        <li><strong>DE-150 / DE-150A</strong> — Letters (Testamentary / of Administration)</li>
+        <li><strong>DE-160</strong> — Inventory and Appraisal</li>
+        <li><strong>DE-161</strong> — Attachment to Inventory and Appraisal</li>
+        <li><strong>DE-172</strong> — Creditor's Claim</li>
+        <li><strong>DE-221</strong> — Spousal or Domestic Partner Property Petition</li>
+        <li><strong>Small Estate Affidavit</strong> — Probate Code §13100 (template at our office)</li>
+        <li><strong>Affidavit Re Real Property of Small Value</strong> — Probate Code §13200</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Statutory authority:</strong> California Probate Code
+      §§13100-13211 (small estate procedures); §13500 et seq. (spousal
+      property); §§8000 et seq. (opening administration); §§9000 et seq.
+      (creditor claims); §10800 et seq. (compensation of personal
+      representative); §§11600 et seq. (distribution).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=DE-111" primaryText="Begin my probate intake" />
+</BaseLayout>

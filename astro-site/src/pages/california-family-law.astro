@@ -1,0 +1,100 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Family Law Document Preparation (FL-100, FL-300) | Imverica';
+const description = 'California Licensed LDA prepares family-law forms — FL-100 dissolution petition, FL-120 response, FL-150 income & expense, FL-300 request for order, FL-105 UCCJEA, FL-160 property declaration, FW-001 fee waiver. Flat-fee.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Family Law Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: "California family law document preparation at the party's direction. Dissolution, legal separation, parentage, custody, support."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/california-family-law" jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · Family Code §2330 et seq."
+    heading="California family law document preparation"
+    sub="Divorce, legal separation, parentage, custody, child support, spousal support, restraining orders within a family case. We prepare every standard FL- and FW- form at your direction. Multilingual flat-fee intake."
+    ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Start my family-law package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/california-restraining-orders', label: 'California restraining orders (DV / CH)' },
+    { href: '/california-small-claims', label: 'California small claims (SC-100)' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      California family law covers dissolution of marriage and registered
+      domestic partnership, legal separation, nullity (annulment),
+      parentage actions, custody and visitation, child support, spousal
+      support, and restraining orders entered inside a family case. Our
+      role is document preparation at your direction — we cannot give
+      legal advice but we prepare every standard FL- and FW- form
+      accurately and on time.
+    </p>
+
+    <h2>Dissolution of marriage — the standard path</h2>
+    <ol>
+      <li><strong>Petition (FL-100).</strong> Either spouse files. California is a no-fault state; "irreconcilable differences" is the default reason.</li>
+      <li><strong>Summons (FL-110)</strong> issues automatic temporary restraining orders preventing major asset transfers, removing children from the state, and changing insurance beneficiaries.</li>
+      <li><strong>Service.</strong> Respondent is personally served (FL-115).</li>
+      <li><strong>Response (FL-120).</strong> Respondent has 30 days to file. Without a response the court can grant a default after the 6-month waiting period.</li>
+      <li><strong>Financial disclosures (FL-140 + FL-142 or FL-160 + FL-150).</strong> Both parties exchange preliminary disclosures within 60 days of petition and final disclosures before judgment.</li>
+      <li><strong>Negotiation / mediation / trial.</strong> Most cases settle. Disputed cases proceed to short cause or long cause trial.</li>
+      <li><strong>Judgment (FL-180 + FL-190).</strong> Court enters judgment. Status (single) effective 6 months and 1 day after service.</li>
+    </ol>
+
+    <h2>Forms we prepare</h2>
+    <div class="form-list">
+      <strong>Family-law document packages</strong>
+      <ul>
+        <li><strong>FL-100</strong> — Petition (Marriage / Domestic Partnership)</li>
+        <li><strong>FL-105 / UCCJEA</strong> — Declaration Under Uniform Child Custody Jurisdiction Act (required when minor children are involved)</li>
+        <li><strong>FL-110</strong> — Summons (Family Law)</li>
+        <li><strong>FL-115</strong> — Proof of Service of Summons</li>
+        <li><strong>FL-117</strong> — Notice and Acknowledgment of Receipt</li>
+        <li><strong>FL-120</strong> — Response (Marriage / Domestic Partnership)</li>
+        <li><strong>FL-140</strong> — Declaration of Disclosure</li>
+        <li><strong>FL-141</strong> — Declaration Regarding Service of Declaration of Disclosure</li>
+        <li><strong>FL-142</strong> — Schedule of Assets and Debts</li>
+        <li><strong>FL-150</strong> — Income and Expense Declaration</li>
+        <li><strong>FL-160</strong> — Property Declaration</li>
+        <li><strong>FL-180 / FL-190</strong> — Judgment and Notice of Entry of Judgment</li>
+        <li><strong>FL-300</strong> — Request for Order (temporary orders, modification, contempt, etc.)</li>
+        <li><strong>FL-311</strong> — Child Custody and Visitation Attachment</li>
+        <li><strong>FL-341</strong> — Child Custody and Visitation Order Attachment</li>
+        <li><strong>FL-330</strong> — Proof of Personal Service</li>
+        <li><strong>FW-001 / FW-003</strong> — Fee waiver request and order</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      We do not negotiate settlements on your behalf, draft custom
+      marital settlement agreements that require legal analysis of
+      community-property characterization, or represent you at hearings.
+      Many family-law cases settle by stipulation that we can prepare in
+      the standard form (FL-130, FL-180 attachments). Contested custody
+      cases with high conflict, complex community-property issues, or
+      domestic-violence allegations benefit from a licensed family-law
+      attorney — we can refer you.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> California Family Code §2330
+      (petition for dissolution); §3010-3032 (custody jurisdiction);
+      §3040-3041 (custody factors); §4055 (statewide uniform child support
+      guideline); §4320 (spousal support factors); §2104-2107 (disclosure
+      requirements); §297-299.6 (registered domestic partnerships).
+      California Rules of Court 5.50-5.435 (family law rules).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-100" primaryText="Begin my family-law intake" />
+</BaseLayout>

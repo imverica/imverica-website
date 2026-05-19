@@ -1,0 +1,98 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-130 Family Petition Document Preparation | Imverica';
+const description = 'California Licensed LDA prepares Form I-130 family-based immigrant petitions (spouse, parent, child, sibling). Includes I-130A spouse beneficiary, civil documents, evidence of relationship. Flat-fee multilingual intake.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-130 Family Petition Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-130 family-based immigrant petitions at the petitioner direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-130-family-petition" jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · Family Petition · INA §201, §203"
+    heading="I-130 family petition document preparation"
+    sub="U.S. citizen or LPR petitioning for a relative? We prepare the I-130 + I-130A package — petitioner and beneficiary biographic, marital history, address and employment history, evidence of relationship. Multilingual. Flat-fee."
+    ctaPrimary={{ href: '/#get-started?form=I-130', text: 'Start my I-130 package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 — Adjustment of status (beneficiary inside the U.S.)' },
+    { href: '/n-400-citizenship-help', label: 'N-400 — Naturalization (after green card)' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-130 is the petition a U.S. citizen or lawful permanent
+      resident files to establish a qualifying family relationship with a
+      foreign-national relative so that relative can later apply for an
+      immigrant visa or adjust status. Imverica prepares the I-130 package
+      at the petitioner's direction — the petition itself, the I-130A
+      Supplemental Information for Spouse Beneficiary when the relationship
+      is marriage, civil documents, and the evidence-of-relationship
+      packet.
+    </p>
+
+    <h2>Who can be petitioned on I-130</h2>
+    <p>
+      <strong>U.S. citizen petitioners</strong> can file for spouse,
+      unmarried child under 21 (immediate relative), unmarried son or
+      daughter 21 or over (F1), married son or daughter of any age (F3),
+      sibling (F4), and parent (immediate relative; petitioner must be
+      21 or older for parent petitions).
+    </p>
+    <p>
+      <strong>Lawful permanent resident petitioners</strong> can file for
+      spouse (F2A), unmarried child under 21 (F2A), and unmarried son or
+      daughter 21 or over (F2B). LPRs cannot petition married children or
+      siblings.
+    </p>
+
+    <h2>The I-130 package</h2>
+    <div class="form-list">
+      <strong>Forms and supporting evidence we prepare</strong>
+      <ul>
+        <li><strong>I-130</strong> — Petition for Alien Relative</li>
+        <li><strong>I-130A</strong> — Supplemental Information for Spouse Beneficiary (required for marriage cases)</li>
+        <li><strong>G-1145</strong> — e-Notification of Application Acceptance (optional but recommended)</li>
+        <li><strong>Petitioner evidence</strong> — U.S. passport biographic page or naturalization certificate or birth certificate; LPR card</li>
+        <li><strong>Relationship evidence</strong> — for marriage: marriage certificate, photos through the relationship, joint financial records, joint lease/mortgage, affidavits from third parties, birth certificates of joint children; for parent/child: birth certificate showing the relationship; for sibling: both birth certificates showing the same parent</li>
+        <li><strong>Prior marriage dissolutions</strong> — divorce decrees, annulment orders, or death certificates terminating any prior marriage for either party</li>
+        <li><strong>Translations</strong> — certified English translations of foreign-language civil documents under 8 C.F.R. §103.2(b)(3)</li>
+      </ul>
+    </div>
+
+    <h2>Concurrent filing vs. consular processing</h2>
+    <p>
+      Immediate relatives of U.S. citizens (spouse, unmarried child under
+      21, parent) whose beneficiary is already in the U.S. in lawful
+      status can file I-485 concurrently with the I-130. F-category
+      beneficiaries with priority-date wait will file I-485 only when the
+      Visa Bulletin shows their date is current. Beneficiaries outside the
+      U.S. process at the consulate via the National Visa Center after
+      I-130 approval.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> INA §201 (immediate relatives,
+      no annual cap); §203(a) (family-preference categories F1-F4);
+      §204 (procedure for granting immigrant status); 8 C.F.R. §204.1-204.2
+      (procedure). Visa Bulletin published monthly by the Department of
+      State.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Start your I-130 family petition"
+    sub="Multilingual intake. Pause and resume. Flat-fee. Document preparation at your direction — not legal advice."
+    primaryHref="/#get-started?form=I-130"
+    primaryText="Begin my I-130 intake"
+  />
+</BaseLayout>

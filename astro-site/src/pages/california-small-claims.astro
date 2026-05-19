@@ -1,0 +1,92 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Small Claims Document Preparation (SC-100) | Imverica';
+const description = 'California Licensed LDA prepares small claims documents — SC-100 plaintiff complaint, SC-120 defendant claim, SC-104 proof of service, FW-001 fee waiver, SC-133 memorandum of costs. $12,500 limit per CCP §116.221.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: "California small claims court document preparation at the litigant's direction."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/california-small-claims" jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §116.110-116.950"
+    heading="California small claims document preparation"
+    sub="SC-100 plaintiff complaint, SC-120 defendant counterclaim, SC-104 proof of service, FW-001 fee waiver, SC-133 memorandum of costs. $12,500 limit for individuals. Flat-fee."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Start my small claims package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/california-unlawful-detainer', label: 'California unlawful detainer (UD-100)' },
+    { href: '/california-restraining-orders', label: 'California restraining orders' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Small claims court is the people's court — California's
+      simplified procedure where litigants represent themselves to
+      resolve money disputes up to $12,500 (natural persons) or $6,250
+      (corporations and other entities). Attorneys are barred from
+      representing parties at the initial hearing (CCP §116.530), and
+      the filing fee is low (typically $30-$75 depending on the amount
+      claimed, with fee waiver available).
+    </p>
+
+    <h2>Jurisdictional limit</h2>
+    <p>
+      As of January 1, 2024, the limit is <strong>$12,500</strong> for a
+      natural person and <strong>$6,250</strong> for a corporation,
+      partnership, or other legal entity (CCP §116.221). A natural person
+      may not file more than two claims above $2,500 in the same calendar
+      year statewide (CCP §116.231) — this throttles plaintiffs who would
+      otherwise repeatedly split larger disputes into multiple small
+      claims to avoid superior court.
+    </p>
+
+    <h2>Process timeline</h2>
+    <ol>
+      <li><strong>Demand letter (optional but recommended).</strong> A pre-suit demand letter signed by the plaintiff often resolves the dispute and is required by some statutory schemes before suit.</li>
+      <li><strong>SC-100 — Plaintiff's Claim and ORDER.</strong> File at the courthouse where the defendant lives, where the contract was performed, where the injury occurred, or where the property is located.</li>
+      <li><strong>Service.</strong> Defendant must be served at least 15-20 days before the hearing (CCP §116.330), by sheriff service, registered process server, or anyone over 18 not a party. SC-104 proof of service is filed with the court.</li>
+      <li><strong>Defendant's response.</strong> Defendant may file SC-120 (Defendant's Claim) to assert a counterclaim, must be filed at least 5 days before the hearing.</li>
+      <li><strong>Hearing.</strong> Informal, before a judge or commissioner. No attorneys (except for parties who appear pro se and happen to be attorneys for themselves). Both sides present evidence, witnesses, and documents.</li>
+      <li><strong>Judgment.</strong> Court issues SC-130 (Notice of Entry of Judgment). Defendant who loses has the right to appeal to superior court within 30 days; plaintiff who loses on their claim cannot appeal.</li>
+      <li><strong>Collection.</strong> Winning plaintiff uses post-judgment forms (SC-133 memorandum of costs, EJ-001 abstract of judgment, WG-001 wage garnishment, etc.) to collect.</li>
+    </ol>
+
+    <h2>Forms we prepare</h2>
+    <div class="form-list">
+      <strong>Small claims plaintiff and defendant packages</strong>
+      <ul>
+        <li><strong>SC-100</strong> — Plaintiff's Claim and ORDER</li>
+        <li><strong>SC-100A</strong> — Attachment for additional plaintiffs/defendants</li>
+        <li><strong>SC-104</strong> — Proof of Service</li>
+        <li><strong>SC-104A/B/C/D</strong> — Service methods (server, certified mail, etc.)</li>
+        <li><strong>SC-120</strong> — Defendant's Claim and ORDER (counterclaim)</li>
+        <li><strong>SC-130</strong> — Notice of Entry of Judgment</li>
+        <li><strong>SC-133</strong> — Plaintiff's Memorandum of Costs</li>
+        <li><strong>SC-140</strong> — Request to Pay Judgment in Installments</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees</li>
+        <li><strong>FW-003</strong> — Order on Court Fee Waiver</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Statutory authority:</strong> California Code of Civil
+      Procedure §§116.110-116.950 (Small Claims Act); §116.221
+      (jurisdictional limits, eff. 2024-01-01); §116.231 (limit on $2,500+
+      claims per year); §116.330 (service deadlines); §116.530 (no
+      attorney representation at hearing); §116.760 (right to appeal); Cal.
+      Rules of Court 3.50-3.58 (fee waivers).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Begin my small claims intake" />
+</BaseLayout>

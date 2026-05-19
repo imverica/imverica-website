@@ -1,0 +1,130 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'N-400 Naturalization Document Preparation Help | Imverica';
+const description = 'California Licensed LDA prepares Form N-400 naturalization applications — 5-year address and employment history, criminal/moral character questions, military service, name change request. Multilingual flat-fee intake.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'N-400 Application for Naturalization Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'Country', name: 'United States' },
+    disambiguatingDescription: "Imverica is not a law firm. Document preparation only, at the client's direction."
+  },
+  description: 'Imverica prepares the N-400 naturalization application at the applicant’s direction.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/n-400-citizenship-help"
+  jsonLd={[serviceSchema]}
+>
+  <Hero
+    eyebrow="USCIS · Naturalization · INA §316"
+    heading="N-400 citizenship document preparation"
+    sub="Lawful permanent resident applying for U.S. citizenship? We prepare the N-400 package — biographic, 5-year address and employment history, Part 9 moral-character questions, optional name change. Multilingual. Flat-fee."
+    ctaPrimary={{ href: '/#get-started?form=N-400', text: 'Start my N-400 package' }}
+    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-130-family-petition', label: 'I-130 — Family petition (sponsor relatives after citizenship)' },
+    { href: '/i-485-help', label: 'I-485 — Adjustment of status (the step before naturalization)' },
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form N-400 is the application a lawful permanent resident files with
+      USCIS to become a United States citizen. We prepare the full N-400
+      package at your direction — biographic data, 5-year address and
+      employment history, marital and children information, Part 9 moral-
+      character questions, any optional legal name change, and the
+      supporting evidence packet.
+    </p>
+
+    <h2>Who can apply on Form N-400</h2>
+    <p>
+      Most permanent residents qualify under INA §316 after five years of
+      continuous residence as an LPR — three years if you obtained your
+      green card through marriage to a U.S. citizen who has been a citizen
+      for the same three-year period under INA §319. There are special
+      faster paths for U.S. military members (INA §328, §329).
+    </p>
+    <p>
+      Other core eligibility: physical presence in the U.S. for at least
+      half of the qualifying period, continuous residence without breaks
+      longer than six months (or one year, with documented justification),
+      good moral character during the qualifying period, basic English
+      reading/writing/speaking and U.S. civics knowledge (with limited
+      age/disability exemptions), and attachment to the principles of the
+      Constitution.
+    </p>
+
+    <h2>What our N-400 intake covers</h2>
+    <p>
+      Our wizard mirrors the USCIS form part-by-part:
+    </p>
+    <ul>
+      <li><strong>Part 1-2</strong> — applicant name, eligibility basis, optional name change request</li>
+      <li><strong>Part 3</strong> — accommodations request, disability provisions</li>
+      <li><strong>Part 4</strong> — Social Security questions, USCIS online account number</li>
+      <li><strong>Part 5</strong> — biographic information (ethnicity, race, height, weight, eye and hair color)</li>
+      <li><strong>Part 6</strong> — current and prior addresses for the past five years</li>
+      <li><strong>Part 7</strong> — employment, school, and unemployment for the past five years</li>
+      <li><strong>Part 8</strong> — time outside the United States during the qualifying period (every trip, with destination and days away)</li>
+      <li><strong>Part 9</strong> — marital history, current spouse, prior spouses, children — including how children get reported even if they are U.S. citizens or live elsewhere</li>
+      <li><strong>Part 10</strong> — moral character questions (criminal history, immigration history, tax compliance, child support, military, group affiliations, Constitution support)</li>
+      <li><strong>Part 11</strong> — additional information / explanation pages</li>
+      <li><strong>Part 12-13</strong> — applicant statement, interpreter, preparer</li>
+    </ul>
+
+    <h2>Trips, address gaps, and the 5-year rule</h2>
+    <p>
+      Two of the most common N-400 problems are (1) gaps in the 5-year
+      address or employment history and (2) trips outside the U.S. that
+      were longer than 180 days. Our wizard flags both: if your residence
+      entries do not cover the full five years before today, we warn you
+      while still letting you continue — many applicants live in furnished
+      housing or move often and a gap is not automatically disqualifying,
+      but USCIS will ask about it at interview. Similarly, every trip
+      outside the U.S. (departure date, return date, country) must appear
+      on Part 8 even if the trip was short.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      As a California LDA and Immigration Consultant we do not give legal
+      advice. If your moral-character history includes arrests, criminal
+      convictions, immigration violations, or unpaid child support /
+      taxes — we still prepare the N-400, but we will recommend you also
+      consult a licensed immigration attorney before filing. Some
+      naturalization denials can lead to removal, so do not file a
+      borderline case without legal review.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> Immigration and Nationality
+      Act §316 (general naturalization), §319 (spouse of U.S. citizen),
+      §319(b) (overseas employment exception), §328-§329 (military
+      naturalization), §312 (English and civics), §337 (oath of
+      allegiance); 8 U.S.C. §1427 et seq.; USCIS Policy Manual Volume
+      12 (Citizenship and Naturalization). California scope: Cal. Bus.
+      &amp; Prof. Code §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Start your N-400 citizenship application"
+    sub="Multilingual intake. Pause and resume. Flat-fee. Document preparation at your direction — not legal advice."
+    primaryHref="/#get-started?form=N-400"
+    primaryText="Begin my N-400 intake"
+  />
+</BaseLayout>

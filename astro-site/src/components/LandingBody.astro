@@ -1,0 +1,72 @@
+---
+/**
+ * Shared visual shell for service-specific landing pages.
+ * Each page sets its own title/meta/JSON-LD via BaseLayout and writes
+ * unique 600-1000 words of content inside the <slot>.
+ */
+interface RelatedLink {
+  href: string;
+  label: string;
+}
+interface Props {
+  related?: RelatedLink[];
+}
+const { related = [] } = Astro.props;
+---
+<article style="max-width:880px;margin:0 auto;padding:48px 1.5rem 24px;line-height:1.75;color:#2a3140;">
+  <slot />
+
+  {related.length > 0 && (
+    <aside style="margin-top:48px;padding:24px;background:#fff;border:1px solid rgba(40,30,20,0.08);border-radius:12px;">
+      <strong style="display:block;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#a45b34;margin-bottom:12px;">Related services</strong>
+      <ul style="margin:0;padding-left:18px;font-size:14px;color:#4a5a6e;line-height:1.8;">
+        {related.map((r) => (
+          <li><a href={r.href}>{r.label}</a></li>
+        ))}
+      </ul>
+    </aside>
+  )}
+</article>
+
+<style is:global>
+  article h1 { font-size: 36px; margin-bottom: 16px; }
+  article h2 { font-size: 24px; margin: 32px 0 12px; }
+  article h3 { font-size: 18px; margin: 22px 0 8px; }
+  article p { margin: 0 0 14px; }
+  article ul, article ol { margin: 0 0 14px 22px; padding: 0; }
+  article li { margin-bottom: 6px; }
+  article cite {
+    display: block;
+    margin: 18px 0 10px;
+    padding: 14px 18px;
+    background: #fdf6ec;
+    border-left: 3px solid #a45b34;
+    border-radius: 4px;
+    font-size: 13px;
+    font-style: normal;
+    color: #5a4a35;
+    line-height: 1.6;
+  }
+  article cite strong { color: #a45b34; font-weight: 600; }
+  article .lead {
+    font-size: 17px;
+    line-height: 1.65;
+    color: #3a4a5e;
+    margin-bottom: 22px;
+  }
+  article .form-list {
+    background: #fffaf2;
+    border: 1px solid rgba(40,30,20,0.08);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  article .form-list strong {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #a45b34;
+    margin-bottom: 10px;
+  }
+</style>
