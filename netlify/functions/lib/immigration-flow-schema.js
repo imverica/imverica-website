@@ -1349,11 +1349,6 @@ function evidenceSteps() {
         options: ['Yes', 'No', 'Not sure']
       })
     ]),
-    step('documents_interpreter_preparer_need', 'Interpreter or preparer note', 'Use this only when you are not sure which signature section applies.', [
-      field('interpreter_or_preparer_needed', 'Will an interpreter or preparer section be needed?', 'radio', {
-        options: ['Yes', 'No', 'Not sure']
-      })
-    ]),
     step('documents_interpreter', 'Interpreter information', 'Fill only if an interpreter will be used.', [
       field('interpreter_family_name', 'Interpreter family name, if any', 'text', { autocomplete: 'family-name' }),
       field('interpreter_given_name', 'Interpreter given name, if any', 'text', { autocomplete: 'given-name' })
@@ -1451,9 +1446,6 @@ function evidenceFields() {
       placeholder: 'Receipt notices, court records, marriage certificate, tax returns, pay stubs, translations, photos, letters, etc.'
     }),
     field('translation_needed', 'Do any documents need translation?', 'radio', {
-      options: ['Yes', 'No', 'Not sure']
-    }),
-    field('interpreter_or_preparer_needed', 'Will an interpreter or preparer section be needed?', 'radio', {
       options: ['Yes', 'No', 'Not sure']
     }),
     field('has_interpreter', 'Will an interpreter be used for this application?', 'radio', {
@@ -3442,8 +3434,8 @@ function n400SpecificSteps() {
       employmentHistoryField('employment_school_last_five_years', 'Employment or school for the last 5 years', { required: true, entries: 5 })
     ]),
     step('n400_trips_outside_us', 'Trips outside the United States', 'List trips outside the United States during the eligibility period.', [
-      field('trips_outside_us', 'Trips outside the U.S. during eligibility period', 'textarea', {
-        placeholder: 'For each trip: departure date, return date, countries visited, total days.'
+      field('trips_outside_us', 'Trips outside the U.S. during eligibility period', 'travelHistory', {
+        countryOptions: COUNTRY_OPTIONS
       })
     ]),
     step('n400_long_absence', 'Long absences', 'USCIS asks about long trips and continuous residence.', [
@@ -3487,6 +3479,8 @@ function n400SpecificSteps() {
         ]
       }),
       field('n400_criminal_history_details', 'Criminal-history explanation and documents needed', 'textarea', {
+        required: true,
+        placeholder: 'Describe what happened, date/location, charge or citation, court, disposition, sentence/probation, and documents available. This is used for the additional information/review packet.',
         showWhenAny: [
           { id: 'n400_ever_arrested_cited_charged', equals: 'Yes' },
           { id: 'n400_ever_convicted_or_pled', equals: 'Yes' },
@@ -3924,7 +3918,6 @@ function i485OrderedSteps() {
     // Form I-485 Parts 10-13, pages 22-23: contact, interpreter, preparer.
     'contact_info',
     'documents_interpreter_choice',
-    'documents_interpreter_preparer_need',
     'documents_interpreter',
     'documents_interpreter_business',
     'documents_preparer',
@@ -3989,7 +3982,6 @@ function i765OrderedSteps() {
     'i765_applicant_statement',
     'contact_info',
     'documents_interpreter_choice',
-    'documents_interpreter_preparer_need',
     'documents_interpreter',
     'documents_interpreter_business',
     'documents_preparer',

@@ -2136,7 +2136,7 @@ function closeDetail(id) {
 })();
 </script>
 <!-- Guided Intake Modal -->
-<div id="intakeModal" class="intake-modal" onclick="if(event.target===this)closeIntakeModal()">
+<div id="intakeModal" class="intake-modal">
   <div class="intake-shell" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
     <button class="intake-close" type="button" onclick="closeIntakeModal()" aria-label="Close intake">×</button>
     <div class="intake-top">
@@ -2228,7 +2228,55 @@ function closeDetail(id) {
     savedPayload: null,
     orderId: ''
   };
+  var INTAKE_PROGRESS_KEY = 'imvericaIntakeProgressV1';
   var addressSuggestTimer = null;
+
+  function persistIntakeProgress() {
+    if (!modal.classList.contains('open') || state.completed) return;
+    try {
+      localStorage.setItem(INTAKE_PROGRESS_KEY, JSON.stringify({
+        updatedAt: new Date().toISOString(),
+        lang: state.lang,
+        langManual: state.langManual,
+        step: state.step,
+        service: state.service,
+        formCode: state.formCode,
+        situation: state.situation,
+        routeResult: state.routeResult,
+        flowSchema: state.flowSchema,
+        formAnswers: state.formAnswers,
+        officialForm: state.officialForm,
+        i765: state.i765,
+        contact: state.contact,
+        accountMode: state.accountMode
+      }));
+    } catch (err) {}
+  }
+
+  function restoreIntakeProgress() {
+    try {
+      var raw = localStorage.getItem(INTAKE_PROGRESS_KEY);
+      if (!raw) return false;
+      var saved = JSON.parse(raw);
+      if (!saved || !saved.formCode && !saved.situation && !saved.service) return false;
+      state.lang = saved.lang || state.lang;
+      state.langManual = Boolean(saved.langManual);
+      state.step = Number.isFinite(Number(saved.step)) ? Number(saved.step) : state.step;
+      state.service = saved.service || '';
+      state.formCode = saved.formCode || '';
+      state.situation = saved.situation || '';
+      state.routeResult = saved.routeResult || null;
+      state.flowSchema = saved.flowSchema || null;
+      state.formAnswers = saved.formAnswers || {};
+      state.officialForm = saved.officialForm || null;
+      state.i765 = saved.i765 || state.i765;
+      state.contact = saved.contact || state.contact;
+      state.accountMode = saved.accountMode || state.accountMode || 'guest';
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
 
   // (Multi-country phone dropdown removed — Imverica forms only accept US 10-digit phones now.
   // Kept the data block commented out as reference in case international support comes back.)
@@ -3058,7 +3106,7 @@ function closeDetail(id) {
       '<div class="intake-address-title">' + title + '</div>' +
       help +
       '<div class="intake-address-grid">' +
-        '<div class="intake-field wide"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-flow-address-part="line1" data-flow-address-key="' + esc(parts.line1 || '') + '" data-address-autocomplete="' + esc(parts.line1 || field.id) + '" autocomplete="address-line1" value="' + esc(addressPartValue(parts, 'line1', '')) + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(parts.line1 || field.id) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(parts.line1 || field.id) + '"></div></div>' +
+        '<div class="intake-field wide"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-flow-address-part="line1" data-flow-address-key="' + esc(parts.line1 || '') + '" data-address-autocomplete="' + esc(parts.line1 || field.id) + '" data-street-line autocomplete="address-line1" maxlength="48" value="' + esc(addressPartValue(parts, 'line1', '')) + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(parts.line1 || field.id) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(parts.line1 || field.id) + '"></div></div>' +
         input('line2', copy.historyAddress2, ' autocomplete="address-line2"') +
         input('city', copy.historyCity, ' autocomplete="address-level2"') +
         '<div class="intake-field state"><label>' + esc(copy.historyState) + '</label><select data-flow-address-part="state" data-flow-address-key="' + esc(parts.state || '') + '" autocomplete="address-level1"><option value=""></option>' + renderSelectOptions(stateOptions, addressPartValue(parts, 'state', '')) + '</select></div>' +
@@ -3147,7 +3195,7 @@ function closeDetail(id) {
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
           '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
-          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" data-street-line autocomplete="address-line1" maxlength="48" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
@@ -3178,7 +3226,7 @@ function closeDetail(id) {
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyEmployerSchool) + '</label><input type="text" data-history-part="name" autocomplete="organization" value="' + esc(row.name || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyActivity) + '</label><input type="text" data-history-part="activity" value="' + esc(row.activity || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyOccupation) + '</label><input type="text" data-history-part="occupation" value="' + esc(row.occupation || '') + '"></div>' +
-          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" data-street-line autocomplete="address-line1" maxlength="48" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
@@ -3188,6 +3236,25 @@ function closeDetail(id) {
       }).join('') +
       '<div class="intake-history-actions"><button type="button" class="intake-history-add" data-add-history-row="' + esc(field.id) + '">+ ' + esc(copy.historyAddEntry || copy.historyAddAddress) + '</button></div>' +
       '<div class="intake-history-warning' + warningActive + '" data-history-coverage-warning="' + esc(field.id) + '">' + esc(copy.historyWorkCoverageWarning || copy.historyCoverageWarning) + '</div>' +
+      '</div>';
+  }
+
+  function renderTravelHistoryField(field) {
+    var copy = t();
+    var rows = editableHistoryRows(fieldValue(field));
+    var countryOptions = field.countryOptions || [];
+    return '<div class="intake-history" data-flow-travel-history="' + esc(field.id) + '">' +
+      '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
+      rows.map(function (row, index) {
+        return '<div class="intake-history-entry" data-travel-index="' + index + '">' +
+          '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-travel-row="' + esc(field.id) + '" data-remove-travel-index="' + index + '">' + esc(copy.historyRemoveEntry || copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-travel-part="from" value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-travel-part="to" value="' + esc(row.to || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyCountry) + '</label><select data-travel-part="country"><option value=""></option>' + renderSelectOptions(countryOptions, row.country || '') + '</select></div>' +
+          '<div class="intake-field"><label>' + esc(copy.travelDays || 'Total days') + '</label><input type="number" min="0" inputmode="numeric" data-travel-part="days" value="' + esc(row.days || '') + '"></div>' +
+        '</div>';
+      }).join('') +
+      '<div class="intake-history-actions"><button type="button" class="intake-history-add" data-add-travel-row="' + esc(field.id) + '">+ ' + esc(copy.travelAddTrip || 'Add another trip') + '</button></div>' +
       '</div>';
   }
 
@@ -3239,8 +3306,21 @@ function closeDetail(id) {
     });
   }
 
+  function readTravelRows(group, keepEmpty) {
+    return Array.prototype.slice.call(group.querySelectorAll('[data-travel-index]')).map(function (row) {
+      var item = {};
+      row.querySelectorAll('[data-travel-part]').forEach(function (input) {
+        item[input.getAttribute('data-travel-part')] = input.value.trim();
+      });
+      return item;
+    }).filter(function (item) {
+      if (keepEmpty) return true;
+      return Object.keys(item).some(function (name) { return String(item[name] || '').trim(); });
+    });
+  }
+
   function refreshAddressHistoryCoverage(group) {
-    if (!group || !group.hasAttribute('data-flow-address-history')) return;
+    if (!group || !(group.hasAttribute('data-flow-address-history') || group.hasAttribute('data-flow-employment-history'))) return;
     var warning = group.querySelector('[data-history-coverage-warning]');
     if (!warning || !group.hasAttribute('data-history-coverage-years')) return;
     warning.classList.toggle('active', shouldWarnAddressHistoryCoverage(readHistoryRows(group, false)));
@@ -3299,6 +3379,8 @@ function closeDetail(id) {
     if (field.type === 'addressHistory') return renderAddressHistoryField(field);
 
     if (field.type === 'employmentHistory') return renderEmploymentHistoryField(field);
+
+    if (field.type === 'travelHistory') return renderTravelHistoryField(field);
 
     if (field.type === 'addressBlock') return renderAddressBlockField(field);
 
@@ -3568,6 +3650,10 @@ function closeDetail(id) {
       state.formAnswers[key] = readHistoryRows(group, false);
       refreshAddressHistoryCoverage(group);
     });
+    card.querySelectorAll('[data-flow-travel-history]').forEach(function (group) {
+      var key = group.getAttribute('data-flow-travel-history');
+      if (key) state.formAnswers[key] = readTravelRows(group, false);
+    });
     card.querySelectorAll('[data-flow-radio-group]').forEach(function (group) {
       var key = group.getAttribute('data-flow-radio-group');
       var checked = group.querySelector('input[data-flow-radio]:checked');
@@ -3584,6 +3670,7 @@ function closeDetail(id) {
 
     if (!state.formCode) state.formCode = normalizeFormCode(inferIntakeFormCode(state.situation));
     if (isImmigrationFormCode(state.formCode)) state.service = 'immigration';
+    persistIntakeProgress();
   }
 
   function isValidContactName(value) {
@@ -3598,7 +3685,7 @@ function closeDetail(id) {
   }
 
   function isValidEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value || '').trim());
+    return /^[A-Za-z0-9.!#$%&'*+/=?^_{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/.test(String(value || '').trim());
   }
 
   function validateContact() {
@@ -3662,7 +3749,89 @@ function closeDetail(id) {
         return String(row.name || row.activity || row.occupation || row.line1 || row.city || row.state || row.zip || row.from || row.to || '').trim();
       });
     }
+    if (field.type === 'travelHistory') {
+      return !Array.isArray(value) || !value.some(function (row) {
+        return String(row.from || row.to || row.country || row.days || '').trim();
+      });
+    }
     return Array.isArray(value) ? value.length === 0 : !String(value || '').trim();
+  }
+
+  function streetLineLooksOverfilled(value) {
+    var text = String(value || '').trim();
+    if (!text) return false;
+    return /,/.test(text) || /\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\b/i.test(text) || /\b\d{5}(?:-\d{4})?\b/.test(text);
+  }
+
+  function isUSAddressCountry(value) {
+    var text = String(value || '').trim().toLowerCase();
+    return !text || text === 'us' || text === 'usa' || text === 'u.s.' || text === 'united states' || text === 'united states of america';
+  }
+
+  function pushInvalid(invalid, labels, item, label) {
+    if (item) invalid.push(item);
+    if (label) labels.push(String(label).replace(/\s*\*\s*$/, ''));
+  }
+
+  function validateStreetLineCompleteness(inputs, invalid, missingLabels, labelPrefix) {
+    var line1 = inputs.line1;
+    var city = inputs.city;
+    var stateInput = inputs.state;
+    var zip = inputs.zip;
+    var country = inputs.country;
+    var hasStreet = line1 && String(line1.value || '').trim();
+    if (!hasStreet || !isUSAddressCountry(country && country.value)) return;
+    if (streetLineLooksOverfilled(line1.value)) pushInvalid(invalid, missingLabels, line1, (labelPrefix || '') + 'street line only');
+    if (city && !String(city.value || '').trim()) pushInvalid(invalid, missingLabels, city, (labelPrefix || '') + 'city');
+    if (stateInput && !String(stateInput.value || '').trim()) pushInvalid(invalid, missingLabels, stateInput, (labelPrefix || '') + 'state');
+    if (zip && !/^\d{5}(?:-\d{4})?$/.test(String(zip.value || '').trim())) pushInvalid(invalid, missingLabels, zip, (labelPrefix || '') + 'ZIP');
+  }
+
+  function validateAddressBlockField(field, invalid, missingLabels) {
+    var block = card.querySelector('[data-flow-address-block="' + field.id + '"]');
+    if (!block) return;
+    validateStreetLineCompleteness({
+      line1: block.querySelector('[data-flow-address-part="line1"]'),
+      city: block.querySelector('[data-flow-address-part="city"]'),
+      state: block.querySelector('[data-flow-address-part="state"]'),
+      zip: block.querySelector('[data-flow-address-part="zip"]'),
+      country: block.querySelector('[data-flow-address-part="country"]')
+    }, invalid, missingLabels, field.label ? field.label + ' ' : '');
+  }
+
+  function validateHistoryAddressField(field, invalid, missingLabels) {
+    var group = card.querySelector('[data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
+    if (!group) return;
+    group.querySelectorAll('[data-history-index]').forEach(function (row, index) {
+      validateStreetLineCompleteness({
+        line1: row.querySelector('[data-history-part="line1"]'),
+        city: row.querySelector('[data-history-part="city"]'),
+        state: row.querySelector('[data-history-part="state"]'),
+        zip: row.querySelector('[data-history-part="zip"]'),
+        country: row.querySelector('[data-history-part="country"]')
+      }, invalid, missingLabels, (field.label || 'Address') + ' entry ' + (index + 1) + ' ');
+    });
+  }
+
+  function validateTravelHistoryField(field, invalid, missingLabels) {
+    var group = card.querySelector('[data-flow-travel-history="' + field.id + '"]');
+    if (!group) return;
+    var rows = Array.prototype.slice.call(group.querySelectorAll('[data-travel-index]'));
+    var hasAny = false;
+    rows.forEach(function (row, index) {
+      var from = row.querySelector('[data-travel-part="from"]');
+      var to = row.querySelector('[data-travel-part="to"]');
+      var country = row.querySelector('[data-travel-part="country"]');
+      var days = row.querySelector('[data-travel-part="days"]');
+      var any = [from, to, country, days].some(function (input) { return input && String(input.value || '').trim(); });
+      if (!any) return;
+      hasAny = true;
+      if (from && !from.value) pushInvalid(invalid, missingLabels, from, (field.label || 'Trip') + ' ' + (index + 1) + ' from date');
+      if (to && !to.value) pushInvalid(invalid, missingLabels, to, (field.label || 'Trip') + ' ' + (index + 1) + ' return date');
+      if (country && !country.value) pushInvalid(invalid, missingLabels, country, (field.label || 'Trip') + ' ' + (index + 1) + ' country');
+      if (days && !String(days.value || '').trim()) pushInvalid(invalid, missingLabels, days, (field.label || 'Trip') + ' ' + (index + 1) + ' total days');
+    });
+    if (field.required && !hasAny) pushInvalid(invalid, missingLabels, group, field.label || 'Trips');
   }
 
   function validateCurrentFlowStep() {
@@ -3675,12 +3844,24 @@ function closeDetail(id) {
       var empty = isEmptyFlowValue(field, value);
       var digitValue = String(value || '').replace(/\D/g, '');
       var wrongDigits = field.digits && digitValue && digitValue.length !== Number(field.digits);
-      if ((!field.required || !empty) && !wrongDigits) return;
+      if (field.type === 'email' && value && !isValidEmail(value)) {
+        var emailInput = document.getElementById(fieldDomId(field.id));
+        pushInvalid(invalid, missingLabels, emailInput, field.label);
+        return;
+      }
+      if ((!field.required || !empty) && !wrongDigits) {
+        if (field.type === 'addressBlock') validateAddressBlockField(field, invalid, missingLabels);
+        if (field.type === 'addressHistory' || field.type === 'employmentHistory') validateHistoryAddressField(field, invalid, missingLabels);
+        if (field.type === 'travelHistory') validateTravelHistoryField(field, invalid, missingLabels);
+        return;
+      }
       var input = document.getElementById(fieldDomId(field.id))
         || card.querySelector('[data-flow-phone-us="' + field.id + '"]');
-      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-block="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"]');
-      invalid.push(input || group);
-      if (field.label) missingLabels.push(String(field.label).replace(/\s*\*\s*$/, ''));
+      var group = card.querySelector('[data-flow-radio-group="' + field.id + '"], [data-flow-checkbox-group="' + field.id + '"], [data-flow-phone-group="' + field.id + '"], [data-flow-address-block="' + field.id + '"], [data-flow-address-history="' + field.id + '"], [data-flow-employment-history="' + field.id + '"], [data-flow-travel-history="' + field.id + '"]');
+      pushInvalid(invalid, missingLabels, input || group, field.label);
+      if (field.type === 'addressBlock') validateAddressBlockField(field, invalid, missingLabels);
+      if (field.type === 'addressHistory' || field.type === 'employmentHistory') validateHistoryAddressField(field, invalid, missingLabels);
+      if (field.type === 'travelHistory') validateTravelHistoryField(field, invalid, missingLabels);
     });
     card.querySelectorAll('.intake-invalid').forEach(function (item) { item.classList.remove('intake-invalid'); });
     invalid.forEach(function (item) { if (item) item.classList.add('intake-invalid'); });
@@ -3815,6 +3996,27 @@ function closeDetail(id) {
     if (note) note.textContent = suggestions[0].verified ? 'USPS verified.' : 'Select the closest address. USPS can standardize it when credentials are connected.';
   }
 
+  function localAddressSuggestions(query) {
+    var text = String(query || '').trim().replace(/\s+/g, ' ');
+    var suggestions = [];
+    var m = text.match(/^(.+?),\s*([^,]+),\s*([A-Z]{2})\s+(\d{5}(?:-\d{4})?)(?:,\s*(?:United States|USA|US))?$/i);
+    if (!m) m = text.match(/^(.+?)\s*,\s*([^,]+)\s*,\s*([A-Z]{2})\s*,?\s*(\d{5}(?:-\d{4})?)$/i);
+    if (m) {
+      suggestions.push({
+        line1: m[1].trim(),
+        line2: '',
+        city: m[2].trim(),
+        state: m[3].trim().toUpperCase(),
+        zip: m[4].trim(),
+        country: 'United States',
+        label: m[1].trim() + ', ' + m[2].trim() + ', ' + m[3].trim().toUpperCase() + ' ' + m[4].trim() + ', United States',
+        source: 'local-parse',
+        verified: false
+      });
+    }
+    return suggestions;
+  }
+
   async function suggestAddress(fieldId, query) {
     if (!query || query.trim().length < 8) {
       renderAddressSuggestions(fieldId, []);
@@ -3825,10 +4027,12 @@ function closeDetail(id) {
     try {
       var response = await fetch(addressSuggestEndpoint(query), { headers: { 'Accept': 'application/json' } });
       var data = await response.json();
-      renderAddressSuggestions(fieldId, data.ok ? (data.suggestions || []) : []);
+      var remoteSuggestions = data.ok ? (data.suggestions || []) : [];
+      renderAddressSuggestions(fieldId, remoteSuggestions.length ? remoteSuggestions : localAddressSuggestions(query));
     } catch (err) {
-      renderAddressSuggestions(fieldId, []);
-      if (note) note.textContent = '';
+      var local = localAddressSuggestions(query);
+      renderAddressSuggestions(fieldId, local);
+      if (note && !local.length) note.textContent = '';
     }
   }
 
@@ -3969,6 +4173,7 @@ function closeDetail(id) {
       payload.orderId = result.orderId;
       payload.syncStatus = 'synced';
       localStorage.setItem('imvericaIntakeDraft', JSON.stringify(payload));
+      localStorage.removeItem(INTAKE_PROGRESS_KEY);
       state.savedPayload = payload;
       state.orderId = result.orderId || '';
       state.completed = true;
@@ -4003,6 +4208,8 @@ function closeDetail(id) {
     var pdfDraft = event.target.closest('[data-generate-pdf-draft]');
     var addHistoryRow = event.target.closest('[data-add-history-row]');
     var removeHistoryRow = event.target.closest('[data-remove-history-row]');
+    var addTravelRow = event.target.closest('[data-add-travel-row]');
+    var removeTravelRow = event.target.closest('[data-remove-travel-row]');
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
     var account = event.target.closest('[data-account-mode]');
@@ -4021,6 +4228,7 @@ function closeDetail(id) {
       var addGroup = card.querySelector('[data-flow-address-history="' + addKey + '"], [data-flow-employment-history="' + addKey + '"]');
       state.formAnswers[addKey] = addGroup ? readHistoryRows(addGroup, true) : editableHistoryRows(state.formAnswers[addKey]);
       state.formAnswers[addKey].push({});
+      persistIntakeProgress();
       render();
       return;
     }
@@ -4031,6 +4239,27 @@ function closeDetail(id) {
       var removeRows = removeGroup ? readHistoryRows(removeGroup, true) : editableHistoryRows(state.formAnswers[removeKey]);
       if (removeRows.length > 1 && removeIndex >= 0) removeRows.splice(removeIndex, 1);
       state.formAnswers[removeKey] = removeRows;
+      persistIntakeProgress();
+      render();
+      return;
+    }
+    if (addTravelRow) {
+      var addTravelKey = addTravelRow.getAttribute('data-add-travel-row');
+      var travelGroup = card.querySelector('[data-flow-travel-history="' + addTravelKey + '"]');
+      state.formAnswers[addTravelKey] = travelGroup ? readTravelRows(travelGroup, true) : editableHistoryRows(state.formAnswers[addTravelKey]);
+      state.formAnswers[addTravelKey].push({});
+      persistIntakeProgress();
+      render();
+      return;
+    }
+    if (removeTravelRow) {
+      var removeTravelKey = removeTravelRow.getAttribute('data-remove-travel-row');
+      var removeTravelIndex = Number(removeTravelRow.getAttribute('data-remove-travel-index'));
+      var removeTravelGroup = card.querySelector('[data-flow-travel-history="' + removeTravelKey + '"]');
+      var travelRows = removeTravelGroup ? readTravelRows(removeTravelGroup, true) : editableHistoryRows(state.formAnswers[removeTravelKey]);
+      if (travelRows.length > 1 && removeTravelIndex >= 0) travelRows.splice(removeTravelIndex, 1);
+      state.formAnswers[removeTravelKey] = travelRows;
+      persistIntakeProgress();
       render();
       return;
     }
@@ -4080,11 +4309,22 @@ function closeDetail(id) {
       var limit = Number(event.target.getAttribute('data-flow-digits')) || 30;
       event.target.value = event.target.value.replace(/\D/g, '').slice(0, limit);
     }
-    // Email — clear inline error once user edits again.
+    // Email — validate immediately while typing. USCIS-facing emails must be ASCII.
     if (event.target.id === 'intakeEmail') {
       var err = document.getElementById('intakeEmailError');
-      if (err) err.classList.remove('active');
-      event.target.classList.remove('intake-invalid');
+      if (event.target.value.trim() && !isValidEmail(event.target.value)) {
+        if (err) err.classList.add('active');
+        event.target.classList.add('intake-invalid');
+      } else {
+        if (err) err.classList.remove('active');
+        event.target.classList.remove('intake-invalid');
+      }
+    }
+    if (event.target.matches('input[type="email"][data-flow-field]')) {
+      event.target.classList.toggle('intake-invalid', Boolean(event.target.value.trim() && !isValidEmail(event.target.value)));
+    }
+    if (event.target.hasAttribute('data-street-line')) {
+      event.target.classList.toggle('intake-invalid', streetLineLooksOverfilled(event.target.value));
     }
     var addressInput = event.target.closest('[data-address-autocomplete]');
     var historyGroup = event.target.closest('[data-flow-address-history], [data-flow-employment-history]');
@@ -4097,6 +4337,7 @@ function closeDetail(id) {
         suggestAddress(fieldId, addressInput.value.trim());
       }, 280);
     }
+    persistIntakeProgress();
   });
 
   // Email blur validation.
@@ -4117,6 +4358,7 @@ function closeDetail(id) {
   card.addEventListener('change', function (event) {
     var historyGroup = event.target.closest('[data-flow-address-history], [data-flow-employment-history]');
     if (historyGroup) refreshAddressHistoryCoverage(historyGroup);
+    persistIntakeProgress();
     var radio = event.target.closest('[data-flow-radio]');
     var checkbox = event.target.closest('[data-flow-checkbox]');
     if (!radio && !checkbox) return;
@@ -4212,6 +4454,7 @@ function closeDetail(id) {
     state.completed = false;
     state.savedPayload = null;
     state.orderId = '';
+    if (!prefill) restoreIntakeProgress();
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
       var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
@@ -4266,6 +4509,8 @@ function closeDetail(id) {
   };
 
   window.closeIntakeModal = function () {
+    captureStep();
+    persistIntakeProgress();
     modal.classList.remove('open');
     document.body.style.overflow = '';
   };

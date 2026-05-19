@@ -16,12 +16,19 @@ includes('langManual', 'manual language lock');
 includes('changeIntakeLanguage', 'language switch reload handler');
 includes('data-address-autocomplete', 'address autocomplete input binding');
 includes('addressSuggestEndpoint', 'address suggestion endpoint binding');
+includes('localAddressSuggestions', 'local parsed-address fallback for USPS suggestions');
 includes('findAddressBlockForSuggestion', 'address suggestion addressBlock resolver');
 includes('setAddressBlockPart(block, \'city\', suggestion.city', 'address suggestions should populate city/state/zip parts');
 includes('findAddressHistoryRowForSuggestion', 'address suggestion addressHistory row resolver');
 includes('setHistoryRowPart(historyRow, \'city\', suggestion.city', 'address history suggestions should populate city/state/zip parts');
+includes('data-street-line', 'street-only address line marker');
+includes('streetLineLooksOverfilled', 'street line city/state/zip guard');
+includes('validateStreetLineCompleteness', 'address city/state/zip required when street is entered');
 includes('data-add-history-row', 'address history add-another button');
 includes('data-remove-history-row', 'address history remove button');
+includes('data-add-travel-row', 'travel history add-another button');
+includes('data-flow-travel-history', 'structured travel history renderer');
+includes('readTravelRows', 'structured travel history capture');
 includes('data-history-coverage-years="5"', 'address history five-year coverage marker');
 includes('historyCoverageWarning', 'non-blocking five-year address history warning');
 includes('historyWorkCoverageWarning', 'non-blocking five-year work/school history warning');
@@ -32,6 +39,7 @@ includes('data-flow-phone-us', 'single-input US phone widget for form-flow phone
 includes('intakePhoneUS', 'single-input US contact phone field');
 includes('formatUSPhone', 'US phone (XXX) XXX-XXXX formatter');
 includes('phoneDigits', 'US phone digit extractor');
+includes('imvericaIntakeProgressV1', 'local intake progress persistence');
 includes('data-flow-address-history', 'structured address history renderer');
 includes('data-flow-employment-history', 'structured employment history renderer');
 includes('.intake-option input{position:absolute;opacity:0;pointer-events:none;}', 'hidden radio/checkbox dots CSS');
@@ -53,5 +61,7 @@ includes("return usesFilePreview() ? 'https://imverica.com' + path : path;", 'lo
 
 assert(!/if \(data\.language\) state\.lang = data\.language;/.test(html), 'route should not blindly override selected language');
 assert(!/window\.location\.hostname === '127\.0\.0\.1'[\s\S]{0,160}'https:\/\/imverica\.com' \+ path/.test(html), 'localhost route/flow endpoints should not force production');
+assert(!/event\.target===this\)closeIntakeModal\(\)/.test(html), 'intake modal must not close on accidental outside click');
+assert(/A-Za-z0-9\.!\#\$%&'\*\+\/=\?\^_\{\|\}~-/.test(html), 'email validation should be ASCII-only');
 
 console.log('intake UI static QA passed');
