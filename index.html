@@ -3954,11 +3954,14 @@ function closeDetail(id) {
         if (/^(SC|FW|POS|CIV|CM|SUM|PLD)-/i.test(state.formCode)) state.service = 'civil';
         if (/^(CH|EA|GV|WV)-/i.test(state.formCode)) state.service = 'restraining';
         if (/^UD-/i.test(state.formCode)) state.service = 'ud';
-        // Have explicit form code from hero — skip Details step, go straight to form flow.
-        state.step = 3;
+        // Have explicit form code from hero — Details step shows briefly while
+        // we kick off flow load; advance only AFTER the schema is in hand
+        // (handled below). Until then keep step = 2 so user does not land on
+        // the account step with an empty form behind it.
+        state.step = 2;
       } else if (state.formCode) {
-        // Inferred form code — skip Details, go to form flow.
-        state.step = 3;
+        // Inferred form code — same as above.
+        state.step = 2;
       } else if (state.service) {
         // Have service but no form yet — Details step is useful so user can pick.
         state.step = 2;
@@ -3969,6 +3972,19 @@ function closeDetail(id) {
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     render();
+    // If we have an immigration form code from the prefill, eagerly fetch the
+    // flow schema so the user lands directly on the first wizard question
+    // instead of slipping past the (empty) flow to the account step.
+    if (state.formCode && shouldUseImmigrationFlow()) {
+      (async function () {
+        var loaded = await loadImmigrationFlow();
+        if (loaded && flowSteps().length) {
+          state.step = flowStepStart();
+          skipEmptyFlowSteps(1);
+        }
+        render();
+      })();
+    }
   };
 
   window.closeIntakeModal = function () {
