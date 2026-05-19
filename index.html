@@ -572,7 +572,14 @@ footer{background:var(--navy-dark);padding:50px 2.5rem 30px;}
 .intake-history{grid-column:1/-1;border:1px solid var(--border);border-radius:8px;background:#fbfaf7;padding:14px;display:grid;gap:12px;}
 .intake-history-title{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#68788a;font-weight:600;}
 .intake-history-entry{border:1px solid #eeece6;background:#fff;border-radius:8px;padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-.intake-history-entry h4{grid-column:1/-1;font-size:14px;color:var(--navy-dark);font-weight:600;}
+.intake-history-entry h4{grid-column:1/-1;font-size:14px;color:var(--navy-dark);font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.intake-history-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.intake-history-add,.intake-history-remove{border:1px solid var(--border);background:#fff;border-radius:6px;color:var(--navy);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
+.intake-history-add{padding:11px 14px;}
+.intake-history-remove{padding:6px 10px;color:#9c3329;}
+.intake-history-add:hover,.intake-history-remove:hover{background:#f3f7fb;}
+.intake-history-warning{display:none;border-left:3px solid #d19b3f;background:#fff9ec;color:#7b581d;padding:10px 12px;font-size:13px;line-height:1.5;}
+.intake-history-warning.active{display:block;}
 .intake-review{display:grid;gap:10px;font-size:14px;}
 .intake-review-row{display:grid;grid-template-columns:210px 1fr;gap:12px;border-bottom:1px solid #eeece6;padding-bottom:10px;}
 .intake-review-row b{color:#68788a;font-weight:500;}
@@ -2420,6 +2427,9 @@ function closeDetail(id) {
       historyEmployerSchool: 'Employer or school',
       historyActivity: 'Work, school, unemployed, other',
       historyOccupation: 'Occupation or role',
+      historyAddAddress: 'Add another address',
+      historyRemoveAddress: 'Remove',
+      historyCoverageWarning: 'Five full years of U.S. residence history may be incomplete. You may add another address or continue if a shorter history applies to this filing.',
       addressSuggestion: 'Use USPS/local suggested address',
       addressChecking: 'Checking address...',
       services: [
@@ -2524,6 +2534,9 @@ function closeDetail(id) {
       historyEmployerSchool: 'Работодатель или учеба',
       historyActivity: 'Работа, учеба, без работы, другое',
       historyOccupation: 'Должность или роль',
+      historyAddAddress: 'Добавить еще адрес',
+      historyRemoveAddress: 'Удалить',
+      historyCoverageWarning: 'Похоже, не хватает полных 5 лет адресов в США. Можно добавить еще адрес или продолжить, если для этой подачи применим более короткий период.',
       addressSuggestion: 'Использовать предложенный адрес',
       addressChecking: 'Проверяем адрес...',
       services: [
@@ -2628,6 +2641,9 @@ function closeDetail(id) {
       historyEmployerSchool: 'Роботодавець або навчання',
       historyActivity: 'Робота, навчання, без роботи, інше',
       historyOccupation: 'Посада або роль',
+      historyAddAddress: 'Додати ще адресу',
+      historyRemoveAddress: 'Видалити',
+      historyCoverageWarning: 'Схоже, бракує повних 5 років адрес у США. Можна додати ще адресу або продовжити, якщо для цієї подачі підходить коротший період.',
       addressSuggestion: 'Використати запропоновану адресу',
       addressChecking: 'Перевіряємо адресу...',
       services: [
@@ -2732,6 +2748,9 @@ function closeDetail(id) {
       historyEmployerSchool: 'Empleador o escuela',
       historyActivity: 'Trabajo, escuela, desempleado, otro',
       historyOccupation: 'Ocupación o rol',
+      historyAddAddress: 'Agregar otra dirección',
+      historyRemoveAddress: 'Eliminar',
+      historyCoverageWarning: 'Es posible que falten los 5 años completos de historial de residencia en EE. UU. Puede agregar otra dirección o continuar si corresponde un período más corto para esta solicitud.',
       addressSuggestion: 'Usar dirección sugerida',
       addressChecking: 'Verificando dirección...',
       services: [
@@ -3092,26 +3111,41 @@ function closeDetail(id) {
     return rows.slice(0, count);
   }
 
+  function editableHistoryRows(value) {
+    var rows = Array.isArray(value) ? value.slice() : [];
+    return rows.length ? rows : [{}];
+  }
+
+  function historySuggestionId(fieldId, index) {
+    return 'history:' + fieldId + ':' + index;
+  }
+
   function renderAddressHistoryField(field) {
     var copy = t();
-    var rows = historyRows(fieldValue(field), field.entries || 4);
+    var rows = editableHistoryRows(fieldValue(field));
     var options = field.stateOptions || [];
     var countryOptions = field.countryOptions || [];
-    return '<div class="intake-history" data-flow-address-history="' + esc(field.id) + '">' +
+    var tracksFiveYears = isFiveYearHistoryFieldId(field.id) || /5|five/i.test(String(field.label || ''));
+    var warningActive = tracksFiveYears && shouldWarnAddressHistoryCoverage(rows) ? ' active' : '';
+    return '<div class="intake-history" data-flow-address-history="' + esc(field.id) + '"' + (tracksFiveYears ? ' data-history-coverage-years="5"' : '') + '>' +
       '<div class="intake-history-title">' + esc(field.label) + (field.required ? ' *' : '') + '</div>' +
       rows.map(function (row, index) {
+        var suggestId = historySuggestionId(field.id, index);
         return '<div class="intake-history-entry" data-history-index="' + index + '">' +
-          '<h4>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</h4>' +
+          '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
           '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
-          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><input type="text" data-history-part="line1" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"></div>' +
+          '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" autocomplete="address-line1" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyState) + '</label>' + renderStateSelect('state', row.state || '', options) + '</div>' +
           '<div class="intake-field"><label>' + esc(copy.historyZip) + '</label><input type="text" data-history-part="zip" inputmode="numeric" autocomplete="postal-code" value="' + esc(row.zip || '') + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyCountry) + '</label>' + renderCountrySelect('country', row.country || 'United States', countryOptions) + '</div>' +
         '</div>';
-      }).join('') + '</div>';
+      }).join('') +
+      '<div class="intake-history-actions"><button type="button" class="intake-history-add" data-add-history-row="' + esc(field.id) + '">' + esc(copy.historyAddAddress) + '</button></div>' +
+      '<div class="intake-history-warning' + warningActive + '" data-history-coverage-warning="' + esc(field.id) + '">' + esc(copy.historyCoverageWarning) + '</div>' +
+      '</div>';
   }
 
   function renderEmploymentHistoryField(field) {
@@ -3137,6 +3171,61 @@ function closeDetail(id) {
           '<div class="intake-field"><label>' + esc(copy.historyCountry) + '</label>' + renderCountrySelect('country', row.country || 'United States', countryOptions) + '</div>' +
         '</div>';
       }).join('') + '</div>';
+  }
+
+  function parseFlexibleHistoryDate(value) {
+    var text = String(value || '').trim();
+    if (!text) return null;
+    var iso = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    var us = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    var date = null;
+    if (iso) date = new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+    if (us) date = new Date(Number(us[3]), Number(us[1]) - 1, Number(us[2]));
+    if (!date || Number.isNaN(date.getTime())) return null;
+    return date;
+  }
+
+  function isFiveYearHistoryFieldId(fieldId) {
+    return /5|five/i.test(String(fieldId || ''));
+  }
+
+  function shouldWarnAddressHistoryCoverage(rows) {
+    if (!Array.isArray(rows) || !rows.length) return false;
+    var datedRows = rows.map(function (row) {
+      return {
+        from: parseFlexibleHistoryDate(row && row.from),
+        to: parseFlexibleHistoryDate(row && row.to) || new Date()
+      };
+    }).filter(function (row) {
+      return row.from && row.to;
+    });
+    if (!datedRows.length) return false;
+    var earliest = datedRows.reduce(function (min, row) { return !min || row.from < min ? row.from : min; }, null);
+    var latest = datedRows.reduce(function (max, row) { return !max || row.to > max ? row.to : max; }, null);
+    var fiveYearsAgo = new Date();
+    fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+    var recentEnough = latest && latest >= new Date(Date.now() - 1000 * 60 * 60 * 24 * 45);
+    return !(earliest && earliest <= fiveYearsAgo && recentEnough);
+  }
+
+  function readHistoryRows(group, keepEmpty) {
+    return Array.prototype.slice.call(group.querySelectorAll('[data-history-index]')).map(function (row) {
+      var item = {};
+      row.querySelectorAll('[data-history-part]').forEach(function (input) {
+        item[input.getAttribute('data-history-part')] = input.value.trim();
+      });
+      return item;
+    }).filter(function (item) {
+      if (keepEmpty) return true;
+      return Object.keys(item).some(function (name) { return String(item[name] || '').trim(); });
+    });
+  }
+
+  function refreshAddressHistoryCoverage(group) {
+    if (!group || !group.hasAttribute('data-flow-address-history')) return;
+    var warning = group.querySelector('[data-history-coverage-warning]');
+    if (!warning || !group.hasAttribute('data-history-coverage-years')) return;
+    warning.classList.toggle('active', shouldWarnAddressHistoryCoverage(readHistoryRows(group, false)));
   }
 
   function renderFlowField(field) {
@@ -3458,16 +3547,8 @@ function closeDetail(id) {
     card.querySelectorAll('[data-flow-address-history], [data-flow-employment-history]').forEach(function (group) {
       var key = group.getAttribute('data-flow-address-history') || group.getAttribute('data-flow-employment-history');
       if (!key) return;
-      var rows = Array.prototype.slice.call(group.querySelectorAll('[data-history-index]')).map(function (row) {
-        var item = {};
-        row.querySelectorAll('[data-history-part]').forEach(function (input) {
-          item[input.getAttribute('data-history-part')] = input.value.trim();
-        });
-        return item;
-      }).filter(function (item) {
-        return Object.keys(item).some(function (name) { return String(item[name] || '').trim(); });
-      });
-      state.formAnswers[key] = rows;
+      state.formAnswers[key] = readHistoryRows(group, false);
+      refreshAddressHistoryCoverage(group);
     });
     card.querySelectorAll('[data-flow-radio-group]').forEach(function (group) {
       var key = group.getAttribute('data-flow-radio-group');
@@ -3555,7 +3636,7 @@ function closeDetail(id) {
     }
     if (field.type === 'addressHistory') {
       return !Array.isArray(value) || !value.some(function (row) {
-        return String(row.line1 || '').trim() && String(row.city || '').trim();
+        return String(row.line1 || row.city || row.state || row.zip || row.from || row.to || '').trim();
       });
     }
     if (field.type === 'employmentHistory') {
@@ -3634,6 +3715,11 @@ function closeDetail(id) {
     return input ? input.closest('[data-flow-address-block]') : null;
   }
 
+  function findAddressHistoryRowForSuggestion(fieldId) {
+    var input = card.querySelector('[data-address-autocomplete="' + fieldId + '"]');
+    return input ? input.closest('[data-flow-address-history] [data-history-index]') : null;
+  }
+
   function setAddressBlockPart(block, part, value) {
     if (!block) return;
     var input = block.querySelector('[data-flow-address-part="' + part + '"]');
@@ -3644,6 +3730,16 @@ function closeDetail(id) {
     input.value = nextValue;
     input.dispatchEvent(new Event(input.tagName === 'SELECT' ? 'change' : 'input', { bubbles: true }));
     if (key) state.formAnswers[key] = nextValue;
+  }
+
+  function setHistoryRowPart(row, part, value) {
+    if (!row) return;
+    var input = row.querySelector('[data-history-part="' + part + '"]');
+    if (!input) return;
+    var nextValue = String(value || '');
+    if (input.tagName === 'SELECT') nextValue = matchingStateOption(nextValue, input);
+    input.value = nextValue;
+    input.dispatchEvent(new Event(input.tagName === 'SELECT' ? 'change' : 'input', { bubbles: true }));
   }
 
   function applyAddressSuggestion(fieldId, suggestion) {
@@ -3657,7 +3753,23 @@ function closeDetail(id) {
       setAddressBlockPart(block, 'zip', suggestion.zip || '');
       setAddressBlockPart(block, 'country', suggestion.country || 'United States');
     } else {
-      setAnswerAndInput(fieldId, suggestion.line1 || '');
+      var historyRow = findAddressHistoryRowForSuggestion(fieldId);
+      if (historyRow) {
+        setHistoryRowPart(historyRow, 'line1', suggestion.line1 || '');
+        setHistoryRowPart(historyRow, 'line2', suggestion.line2 || '');
+        setHistoryRowPart(historyRow, 'city', suggestion.city || '');
+        setHistoryRowPart(historyRow, 'state', suggestion.state || '');
+        setHistoryRowPart(historyRow, 'zip', suggestion.zip || '');
+        setHistoryRowPart(historyRow, 'country', suggestion.country || 'United States');
+        var group = historyRow.closest('[data-flow-address-history]');
+        if (group) {
+          var key = group.getAttribute('data-flow-address-history');
+          state.formAnswers[key] = readHistoryRows(group, false);
+          refreshAddressHistoryCoverage(group);
+        }
+      } else {
+        setAnswerAndInput(fieldId, suggestion.line1 || '');
+      }
     }
     var box = card.querySelector('[data-address-suggestions="' + fieldId + '"]');
     var note = card.querySelector('[data-address-note="' + fieldId + '"]');
@@ -3869,6 +3981,8 @@ function closeDetail(id) {
   card.addEventListener('click', async function (event) {
     var addressSuggestion = event.target.closest('[data-address-suggestion-index]');
     var pdfDraft = event.target.closest('[data-generate-pdf-draft]');
+    var addHistoryRow = event.target.closest('[data-add-history-row]');
+    var removeHistoryRow = event.target.closest('[data-remove-history-row]');
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
     var account = event.target.closest('[data-account-mode]');
@@ -3880,6 +3994,24 @@ function closeDetail(id) {
       var fieldId = addressSuggestion.getAttribute('data-address-suggestion-field');
       var index = Number(addressSuggestion.getAttribute('data-address-suggestion-index'));
       applyAddressSuggestion(fieldId, (state.addressSuggestions[fieldId] || [])[index]);
+      return;
+    }
+    if (addHistoryRow) {
+      var addKey = addHistoryRow.getAttribute('data-add-history-row');
+      var addGroup = card.querySelector('[data-flow-address-history="' + addKey + '"]');
+      state.formAnswers[addKey] = addGroup ? readHistoryRows(addGroup, true) : editableHistoryRows(state.formAnswers[addKey]);
+      state.formAnswers[addKey].push({});
+      render();
+      return;
+    }
+    if (removeHistoryRow) {
+      var removeKey = removeHistoryRow.getAttribute('data-remove-history-row');
+      var removeIndex = Number(removeHistoryRow.getAttribute('data-remove-history-index'));
+      var removeGroup = card.querySelector('[data-flow-address-history="' + removeKey + '"]');
+      var removeRows = removeGroup ? readHistoryRows(removeGroup, true) : editableHistoryRows(state.formAnswers[removeKey]);
+      if (removeRows.length > 1 && removeIndex >= 0) removeRows.splice(removeIndex, 1);
+      state.formAnswers[removeKey] = removeRows;
+      render();
       return;
     }
     if (lang) {
@@ -3935,13 +4067,16 @@ function closeDetail(id) {
       event.target.classList.remove('intake-invalid');
     }
     var addressInput = event.target.closest('[data-address-autocomplete]');
-    if (!addressInput) return;
-    var fieldId = addressInput.getAttribute('data-address-autocomplete');
-    state.formAnswers[fieldId] = addressInput.value.trim();
-    clearTimeout(addressSuggestTimer);
-    addressSuggestTimer = setTimeout(function () {
-      suggestAddress(fieldId, addressInput.value.trim());
-    }, 280);
+    var historyGroup = event.target.closest('[data-flow-address-history]');
+    if (historyGroup) refreshAddressHistoryCoverage(historyGroup);
+    if (addressInput) {
+      var fieldId = addressInput.getAttribute('data-address-autocomplete');
+      if (fieldId.indexOf('history:') !== 0) state.formAnswers[fieldId] = addressInput.value.trim();
+      clearTimeout(addressSuggestTimer);
+      addressSuggestTimer = setTimeout(function () {
+        suggestAddress(fieldId, addressInput.value.trim());
+      }, 280);
+    }
   });
 
   // Email blur validation.
@@ -3960,6 +4095,8 @@ function closeDetail(id) {
   }, true);
 
   card.addEventListener('change', function (event) {
+    var historyGroup = event.target.closest('[data-flow-address-history]');
+    if (historyGroup) refreshAddressHistoryCoverage(historyGroup);
     var radio = event.target.closest('[data-flow-radio]');
     var checkbox = event.target.closest('[data-flow-checkbox]');
     if (!radio && !checkbox) return;
