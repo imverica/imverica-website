@@ -3,19 +3,37 @@
 When the user approves, switch the live site from the legacy
 `index.html` at repo root to the Astro build at `astro-site/dist/`.
 
+Do not cut over from a dirty branch unless the only dirty files are
+known generated QA artifacts in `answers/`, `payloads/`, or
+`.netlify-deploy-archive/`. Do not include those generated artifacts in
+the cutover commit.
+
 ## Pre-flight checks (do these before flipping)
 
-1. `cd astro-site && npx astro build` — build succeeds, no errors.
-2. `cd astro-site && npx astro preview --port 4321` — open
+1. `npm run qa:astro` from the repo root. This runs:
+   - public-content parity guardrails
+   - `astro check`
+   - Astro production build
+   - generated-route / sitemap / hreflang / asset checks
+2. `cd astro-site && npm run preview -- --port 4321` — open
    `http://localhost:4321/` and click through every landing page,
    verify wizard opens on every CTA, language pills work, contact
    form works, no console errors.
-3. Run all backend QA: `node scripts/qa-uscis-pdf-maps.js && node
-   scripts/qa-priority-forms.js && node scripts/qa-i485-flow-coverage.js
-   && node scripts/qa-i765-flow-coverage.js && node scripts/qa-localization.js
-   && node scripts/qa-i485-part9-flow.js`. All must pass.
-4. Confirm `astro-site/dist/_redirects` covers every old anchor URL
-   that has external backlinks.
+3. Run critical backend / PDF / intake QA from the repo root:
+   `npm run qa:uscis-pdf-maps && npm run qa:immigration-flow &&
+   npm run qa:i485-flow-coverage && npm run qa:i765-flow-coverage &&
+   npm run qa:localization && npm run qa:i485-part9-flow &&
+   npm run qa:intake-ui`. All must pass.
+4. Confirm `astro-site/public/_redirects` covers every old anchor URL
+   that has external backlinks. Rebuild after redirect edits, then run
+   `npm run qa:astro` again.
+5. Manually verify mobile at 393px width:
+   - homepage hero centered
+   - language buttons visible
+   - wizard opens, persists after accidental outside click / reload
+   - address suggestion fills street, city, state, ZIP, country
+   - phone shows `+1 (916) 399-3992`
+   - no sample client PII in public pages
 
 ## Cutover steps (under 5 minutes once approved)
 
@@ -89,16 +107,17 @@ because none of those changed.
 - `overlay-maps/`, `questionnaires/`, `payload-schemas/` — all USCIS
   form data
 - `scripts/*` — dev / QA tooling
-- The wizard's behaviour (lifted byte-for-byte into Astro)
-- ChatGPT's Track D work (address autocomplete, employment history) —
-  those edits to `index.html` won't ship after cutover unless we
-  also port them to the Astro wizard. Coordinate with him before
-  cutting over.
+- PDF renderer alignment, font offsets, checkbox offsets, normalized
+  maps, and scenario builders
+- Current wizard behaviours already ported to Astro must remain:
+  address suggestion fill, incremental history rows, structured trips,
+  criminal detail follow-up, email validation, phone formatting, modal
+  persistence, and interpreter/preparer gating
 
-## What's in scope for a future Phase 5
+## What's in scope for a future phase
 
-- Translated content for `/ru/`, `/uk/`, `/es/` route trees
-- hreflang link rels in `<head>` once translations exist
+- Translate the remaining English-only landing pages under `/ru/`,
+  `/uk/`, and `/es/`
 - Image optimization via Astro Image component
 - Code-split the wizard chunk (only load on CTA click, not eagerly)
 - Replace `@ts-nocheck` in wizard.ts with proper types
