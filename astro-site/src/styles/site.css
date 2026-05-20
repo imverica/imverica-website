@@ -97,22 +97,14 @@ img { max-width: 100%; height: auto; }
 .site-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
   color: var(--navy-dark);
+  flex: 0 0 auto;
 }
-.site-brand-mark {
-  width: 38px;
-  height: 38px;
-  background: var(--navy-dark);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-weight: 600;
+.site-brand-logo {
+  display: block;
+  width: 142px;
+  height: auto;
 }
 .site-brand-name {
   font-family: 'Playfair Display', serif;
@@ -232,7 +224,7 @@ img { max-width: 100%; height: auto; }
   background: #fffaf2;
   border-top: 1px solid rgba(40,30,20,0.08);
 }
-.svc-inner { max-width: 1040px; margin: 0 auto; }
+.svc-inner { max-width: 1200px; margin: 0 auto; }
 .svc-kicker {
   font-size: 11px;
   font-weight: 600;
@@ -248,6 +240,9 @@ img { max-width: 100%; height: auto; }
   color: #3a4a5e;
   margin: 0 0 1rem;
   max-width: 780px;
+}
+.svc-inner > p {
+  max-width: none;
 }
 .svc-grid {
   display: grid;
@@ -294,13 +289,13 @@ img { max-width: 100%; height: auto; }
   background: var(--warm-bg);
   border-top: 1px solid rgba(40,30,20,0.08);
 }
-.faq-inner { max-width: 880px; margin: 0 auto; }
+.faq-inner { max-width: 1200px; margin: 0 auto; }
 .faq-section h2 { font-size: 32px; text-align: center; margin-bottom: 12px; }
 .faq-sub {
   text-align: center;
   color: var(--muted);
   font-size: 15px;
-  max-width: 640px;
+  max-width: 820px;
   margin: 0 auto 36px;
   line-height: 1.6;
 }
@@ -390,7 +385,7 @@ img { max-width: 100%; height: auto; }
 .site-footer-info {
   font-size: 13px;
   line-height: 1.6;
-  color: #95a5be;
+  color: #d8e6f6;
 }
 .site-footer strong {
   display: block;
@@ -405,9 +400,9 @@ img { max-width: 100%; height: auto; }
   max-width: 1280px;
   margin: 28px auto 0;
   padding-top: 18px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255,255,255,0.16);
   font-size: 12px;
-  color: #6b7d96;
+  color: #d8e6f6;
   text-align: center;
 }
 
@@ -423,5 +418,20 @@ img { max-width: 100%; height: auto; }
   .site-footer-inner { grid-template-columns: 1fr; }
   .site-nav { display: none; }
   .stats-inner { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 28px; }
+  .hero {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+  }
+  .hero h1 {
+    min-width: 0;
+    max-width: 310px;
+    font-size: 28px;
+  }
+  .hero-sub {
+    min-width: 0;
+    width: auto;
+    max-width: 330px;
+  }
 }

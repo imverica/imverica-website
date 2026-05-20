@@ -14,8 +14,8 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a1a;}
 
 nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:68px;}
-.logo{font-family:'DM Sans',sans-serif;font-size:24px;letter-spacing:-0.5px;color:var(--navy);text-decoration:none;}
-.logo .im{font-weight:300;}.logo .verica{font-weight:700;}
+.logo{display:flex;align-items:center;text-decoration:none;}
+.logo img{display:block;width:142px;height:auto;}
 .nav-back{font-size:13px;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:6px;opacity:0.7;transition:opacity 0.2s;}
 .nav-back:hover{opacity:1;}
 
@@ -64,13 +64,15 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .info-box strong{color:var(--navy);}
 
 footer{background:var(--navy-dark);padding:30px 2.5rem;text-align:center;margin-top:4rem;}
-footer p{font-size:12px;color:#3a5060;}
+footer p{font-size:12px;color:#d8e6f6;}
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="logo" href="/"><span class="im">im</span><span class="verica">verica</span></a>
+  <a class="logo" href="/" aria-label="Imverica Legal Solutions">
+    <img src="/logo-nav.png" alt="Imverica Legal Solutions">
+  </a>
   <a class="nav-back" href="/">&#8592; Back to main site</a>
 </nav>
 
@@ -157,7 +159,7 @@ footer p{font-size:12px;color:#3a5060;}
 </div>
 
 <footer>
-  <p>&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · (916) 399-3992</p>
+  <p>&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
 </footer>
 
 <script>

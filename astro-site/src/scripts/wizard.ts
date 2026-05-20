@@ -287,7 +287,7 @@ export function initIntakeWizard(): void {
       draftReady: 'I-765 draft PDF generated. Review before filing.',
       draftError: 'Could not generate the I-765 draft PDF yet. Check the required fields or call us.',
       telegram: 'Telegram',
-      callOffice: 'Call (916) 399-3992',
+      callOffice: 'Call +1 (916) 399-3992',
       close: 'Close',
       disclaimer: 'Document preparation only. Possible forms may include official USCIS or California court forms. Imverica is not a law firm or attorney and does not provide legal advice.',
       loadingFlow: 'Checking the current official USCIS form and building the questions...',
@@ -297,9 +297,6 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Cached PDF fallback available',
       routing: 'Identifying the right document route...',
       routeError: 'We could not identify the exact route automatically. You can continue with the details you entered.',
-      phoneCountry: 'Country code',
-      phoneArea: 'Area code',
-      phoneNumber: 'Number',
       historyEntry: 'Entry',
       historyFrom: 'From',
       historyTo: 'To',
@@ -397,7 +394,7 @@ export function initIntakeWizard(): void {
       draftReady: 'Черновик PDF I-765 сгенерирован. Проверьте перед подачей.',
       draftError: 'Пока не удалось сгенерировать черновик PDF I-765. Проверьте обязательные поля или свяжитесь с нами.',
       telegram: 'Telegram',
-      callOffice: 'Позвонить (916) 399-3992',
+      callOffice: 'Позвонить +1 (916) 399-3992',
       close: 'Закрыть',
       disclaimer: 'Только подготовка документов. Возможные формы могут включать официальные формы USCIS или California court. Imverica не является юридической фирмой или адвокатом и не дает юридические консультации.',
       loadingFlow: 'Проверяем актуальную форму USCIS и собираем вопросы...',
@@ -407,9 +404,6 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Локальная PDF-копия доступна',
       routing: 'Определяем правильный маршрут документов...',
       routeError: 'Не удалось автоматически определить точный маршрут. Можно продолжить с введенными деталями.',
-      phoneCountry: 'Код страны',
-      phoneArea: 'Код города',
-      phoneNumber: 'Номер',
       historyEntry: 'Запись',
       historyFrom: 'С',
       historyTo: 'По',
@@ -507,7 +501,7 @@ export function initIntakeWizard(): void {
       draftReady: 'Чернетку PDF I-765 згенеровано. Перевірте перед поданням.',
       draftError: 'Поки не вдалося згенерувати чернетку PDF I-765. Перевірте обов’язкові поля або зв’яжіться з нами.',
       telegram: 'Telegram',
-      callOffice: 'Зателефонувати (916) 399-3992',
+      callOffice: 'Зателефонувати +1 (916) 399-3992',
       close: 'Закрити',
       disclaimer: 'Тільки підготовка документів. Можливі форми можуть включати офіційні форми USCIS або California court. Imverica не є юридичною фірмою чи адвокатом і не надає юридичних консультацій.',
       loadingFlow: 'Перевіряємо актуальну форму USCIS і збираємо питання...',
@@ -517,9 +511,6 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Локальна PDF-копія доступна',
       routing: 'Визначаємо правильний маршрут документів...',
       routeError: 'Не вдалося автоматично визначити точний маршрут. Можна продовжити з введеними деталями.',
-      phoneCountry: 'Код країни',
-      phoneArea: 'Код міста',
-      phoneNumber: 'Номер',
       historyEntry: 'Запис',
       historyFrom: 'З',
       historyTo: 'До',
@@ -617,7 +608,7 @@ export function initIntakeWizard(): void {
       draftReady: 'Borrador PDF I-765 generado. Revíselo antes de presentar.',
       draftError: 'Todavía no se pudo generar el borrador PDF I-765. Revise los campos requeridos o llámenos.',
       telegram: 'Telegram',
-      callOffice: 'Llamar (916) 399-3992',
+      callOffice: 'Llamar +1 (916) 399-3992',
       close: 'Cerrar',
       disclaimer: 'Solo preparación de documentos. Los posibles formularios pueden incluir formularios oficiales de USCIS o California court. Imverica no es un bufete ni abogado y no brinda asesoría legal.',
       loadingFlow: 'Verificando el formulario oficial actual de USCIS y creando las preguntas...',
@@ -627,9 +618,6 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Copia PDF local disponible',
       routing: 'Identificando la ruta correcta de documentos...',
       routeError: 'No pudimos identificar la ruta exacta automáticamente. Puede continuar con los detalles ingresados.',
-      phoneCountry: 'Código de país',
-      phoneArea: 'Código de área',
-      phoneNumber: 'Número',
       historyEntry: 'Entrada',
       historyFrom: 'Desde',
       historyTo: 'Hasta',
@@ -790,7 +778,7 @@ export function initIntakeWizard(): void {
       '<div class="intake-complete-actions">' +
         draftAction +
         '<a class="dark" href="https://t.me/imverica" target="_blank" rel="noopener">' + esc(copy.telegram) + '</a>' +
-        '<a href="tel:9163993992">' + esc(copy.callOffice) + '</a>' +
+        '<a href="tel:+19163993992">' + esc(copy.callOffice) + '</a>' +
       '</div>';
   }
 
