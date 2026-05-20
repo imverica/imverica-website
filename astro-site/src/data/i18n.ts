@@ -30,11 +30,30 @@ export const LOCALES: Record<Locale, LocaleMeta> = {
 
 export const SUPPORTED_LOCALES: Locale[] = ['en', 'ru', 'uk', 'es'];
 
+const translatedSlugs = new Set<string>([
+  '/',
+  '/i-485-help',
+  '/i-589-asylum-help',
+  '/n-400-citizenship-help',
+  '/california-unlawful-detainer'
+]);
+
 /** Build a per-locale URL from a slug. `/i-485-help` for en, `/ru/i-485-help` for ru, etc. */
 export function localizedPath(locale: Locale, slug: string): string {
   const clean = slug.startsWith('/') ? slug : '/' + slug;
   if (locale === 'en') return clean;
   return `/${locale}${clean}`;
+}
+
+/**
+ * Link to a localized page only when that page actually exists.
+ * Until every landing page is translated, this prevents RU/UK/ES pages from
+ * linking users and crawlers into /ru/... 404 routes.
+ */
+export function localizedPathSafe(locale: Locale, slug: string): string {
+  const clean = slug.startsWith('/') ? slug : '/' + slug;
+  if (locale === 'en' || translatedSlugs.has(clean)) return localizedPath(locale, clean);
+  return clean;
 }
 
 /** Return all locale alternates for a given slug — used for hreflang link tags. */

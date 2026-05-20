@@ -1,5 +1,5 @@
 ---
-import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPath, type Locale } from '~/data/i18n';
+import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPathSafe, type Locale } from '~/data/i18n';
 
 interface Props {
   lang?: Locale;
@@ -18,15 +18,15 @@ const prefix = LOCALES[lang].prefix;
     </a>
     <nav class="site-nav" aria-label="Main">
       <a href={prefix + '/#services-detail'}>{t.uscis}</a>
-      <a href={localizedPath(lang, '/california-family-law')}>{t.family}</a>
-      <a href={localizedPath(lang, '/california-small-claims')}>{t.civil}</a>
+      <a href={localizedPathSafe(lang, '/california-family-law')}>{t.family}</a>
+      <a href={localizedPathSafe(lang, '/california-small-claims')}>{t.civil}</a>
       <a href={prefix + '/#business-filings'}>{t.business}</a>
-      <a href={localizedPath(lang, '/california-legal-document-assistant')}>{t.about}</a>
+      <a href={localizedPathSafe(lang, '/california-legal-document-assistant')}>{t.about}</a>
       <a href="https://portal.imverica.com">{t.portal}</a>
     </nav>
     <div class="site-lang" aria-label="Language">
       {SUPPORTED_LOCALES.map((locale) => (
-        <a href={localizedPath(locale, currentSlug)} class={lang === locale ? 'active' : ''}>
+        <a href={localizedPathSafe(locale, currentSlug)} class={lang === locale ? 'active' : ''}>
           {LOCALES[locale].flag} {LOCALES[locale].label}
         </a>
       ))}
