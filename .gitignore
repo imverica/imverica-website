@@ -3,6 +3,8 @@
 node_modules/
 .DS_Store
 *.log
+__pycache__/
+*.py[cod]
 test-*.pdf
 generated-uscis-api-tests/
 qa-reports/
@@ -13,3 +15,8 @@ USCIS forms flattened/
 generated-filled/
 USCIS forms decrypted/
 payloads/*-generated-payload.json
+portal-backend/.venv/
+portal-backend/.env
+portal-backend/db.sqlite3
+portal-backend/media/
+portal-backend/staticfiles/

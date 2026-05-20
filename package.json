@@ -20,6 +20,7 @@
     "qa:astro": "npm run qa:astro-parity && npm --prefix astro-site run check && npm --prefix astro-site run build && npm run qa:astro-routing",
     "qa:astro-parity": "node scripts/qa-astro-parity.js",
     "qa:astro-routing": "node scripts/qa-astro-routing.js",
+    "qa:django-portal": "python3 scripts/qa-django-portal-static.py",
     "qa:pdf-draft": "node scripts/qa-pdf-draft.js"
   },
   "dependencies": {
