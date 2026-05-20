@@ -1,4 +1,6 @@
 ---
+import { CTA, type Locale } from '~/data/i18n';
+
 interface Props {
   heading?: string;
   sub?: string;
@@ -6,14 +8,17 @@ interface Props {
   primaryText?: string;
   secondaryHref?: string;
   secondaryText?: string;
+  lang?: Locale;
 }
+const { lang = 'en' } = Astro.props;
+const defaults = CTA[lang];
 const {
-  heading = 'Ready to start your document package?',
-  sub = "Flat-fee pricing. No legal advice — document preparation only, at your direction. Multilingual intake in English, Russian, Ukrainian, and Spanish.",
+  heading = defaults.heading,
+  sub = defaults.sub,
   primaryHref = '/#get-started',
-  primaryText = 'Start document preparation',
-  secondaryHref = 'tel:9163993992',
-  secondaryText = '📞 (916) 399-3992'
+  primaryText = defaults.startBtn,
+  secondaryHref = 'tel:+19163993992',
+  secondaryText = '📞 +1 (916) 399-3992'
 } = Astro.props;
 ---
 <section style="background:linear-gradient(135deg,#fdf6ec 0%,#fff5e9 100%);padding:64px 1.5rem;border-top:1px solid rgba(40,30,20,0.08);">

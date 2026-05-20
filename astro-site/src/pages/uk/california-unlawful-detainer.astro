@@ -1,0 +1,138 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'Unlawful Detainer Каліфорнія — підготовка документів на виселення | Imverica';
+const description = 'Каліфорнійський ліцензований LDA готує пакет unlawful detainer (виселення) — UD-100 скарга, SUM-130 повістка, 3-/30-/60-денні повідомлення, UD-105 відповідь, UD-110 рішення, POS-010 підтвердження вручення. Строго за дорученням клієнта.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Unlawful Detainer Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'State', name: 'California' },
+    disambiguatingDescription: 'Imverica не є юридичною фірмою. Тільки підготовка документів за дорученням клієнта.'
+  },
+  description: 'Imverica готує документи з unlawful detainer (виселення) у Каліфорнії за дорученням клієнта. UD-100, SUM-130, досудові повідомлення, UD-105 відповідь, UD-110 рішення, POS-010 підтвердження вручення.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/uk/california-unlawful-detainer"
+  jsonLd={[serviceSchema]}
+  lang={lang}
+  slug="/california-unlawful-detainer"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow="Цивільна процедура Каліфорнії · CCP §1161-1170"
+    heading="Unlawful Detainer Каліфорнія — підготовка документів"
+    sub="Орендодавець або орендар — готуємо пакет UD строго за вашим дорученням. UD-100 скарга, SUM-130 повістка, досудові повідомлення, UD-105 відповідь, UD-110 рішення, POS-010 підтвердження вручення. Фіксована ціна."
+    ctaPrimary={{ href: '/#get-started?form=UD-100', text: 'Почати пакет UD' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/uk/california-small-claims', label: 'Малі позови в Каліфорнії (SC-100 / SC-120)' },
+    { href: '/uk/california-restraining-orders', label: 'Захисні ордери в Каліфорнії (CH / DV / EA / GV / WV)' },
+    { href: '/uk/california-family-law', label: 'Форми сімейного права Каліфорнії (FL-100, FL-300)' }
+  ]}>
+    <p class="lead">
+      Unlawful detainer — це прискорена статутна процедура виселення в
+      Каліфорнії згідно Code of Civil Procedure §1161-1170. Це єдиний
+      законний спосіб для орендодавця повернути володіння житловою або
+      комерційною нерухомістю від орендаря, який перестав платити ренту,
+      порушив договір оренди, holdover, або відмовився виїхати після
+      належного повідомлення про припинення оренди. Самовільне виселення
+      (заміна замків, відключення комунальних послуг, винесення речей)
+      кримінально заборонено згідно Civil Code §789.3 і піддає
+      орендодавця статутним збиткам.
+    </p>
+
+    <h2>Хронологія UD</h2>
+    <ol>
+      <li><strong>Крок 1 — Досудове повідомлення.</strong> 3-денне повідомлення про сплату ренти або з'їзд згідно CCP §1161(2); 30- або 60-денне повідомлення про припинення оренди згідно Civil Code §1946 / §1946.1 (60 днів коли орендар проживає 12 місяців або довше); або 3-денне повідомлення про виконання ковенантів або з'їзд за негрошове порушення.</li>
+      <li><strong>Крок 2 — Вручення повідомлення.</strong> Особисте вручення, заміщувальне вручення плюс поштове відправлення, або вивішування-і-відправка згідно CCP §1162, залежно від того, який метод закон дозволяє для відповідної підстави.</li>
+      <li><strong>Крок 3 — Очікувати термін повідомлення.</strong> Виключає вихідні та судові свята коли повідомлення закінчується в ці дні для коротших повідомлень.</li>
+      <li><strong>Крок 4 — Подати UD-100 + SUM-130.</strong> Скарга unlawful detainer і повістка йдуть у Superior Court округу, де знаходиться нерухомість.</li>
+      <li><strong>Крок 5 — Відповідь орендаря (5 днів).</strong> Орендар подає UD-105 відповідь, demurrer, або клопотання про quash service протягом 5 календарних днів з моменту вручення повістки (CCP §1167).</li>
+      <li><strong>Крок 6 — Призначення суду.</strong> Справи UD призначаються на прискорений судовий календар (протягом 20 днів з моменту запиту про призначення).</li>
+      <li><strong>Крок 7 — Рішення.</strong> Суд виносить UD-110 рішення про володіння (і будь-яку грошову компенсацію). Шериф вручає Writ of Possession (EJ-130) і вивішує 5-денне повідомлення про виїзд.</li>
+    </ol>
+
+    <h2>Що ми готуємо</h2>
+    <div class="form-list">
+      <strong>Документи у типовому пакеті UD</strong>
+      <ul>
+        <li><strong>3-денне повідомлення про сплату ренти або з'їзд</strong> — CCP §1161(2)</li>
+        <li><strong>30- або 60-денне повідомлення про припинення</strong> — Civ. Code §1946 / §1946.1</li>
+        <li><strong>3-денне повідомлення про виконання ковенантів або з'їзд</strong> — CCP §1161(3)</li>
+        <li><strong>UD-100</strong> — Complaint - Unlawful Detainer</li>
+        <li><strong>SUM-130</strong> — Summons - Unlawful Detainer</li>
+        <li><strong>CM-010</strong> — Civil Case Cover Sheet</li>
+        <li><strong>POS-010</strong> — Proof of Service of Summons</li>
+        <li><strong>UD-150</strong> — Plaintiff's Mandatory Cover Sheet and Supplemental Allegations</li>
+        <li><strong>UD-105</strong> — Answer (орендар)</li>
+        <li><strong>UD-115</strong> — Answer - Stipulation for Entry of Judgment</li>
+        <li><strong>UD-110</strong> — Judgment - Unlawful Detainer</li>
+        <li><strong>EJ-130</strong> — Writ of Execution / Possession</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees (коли відповідає критеріям доходу)</li>
+      </ul>
+    </div>
+
+    <h2>Сторона орендаря: захист по unlawful detainer</h2>
+    <p>
+      У орендарів є 5 календарних днів з моменту вручення повістки для
+      відповіді (CCP §1167). Пропуск відповіді веде до default judgment і
+      виселення шерифом через 2-3 тижні. Ми готуємо UD-105 відповідь,
+      піднімаючи affirmative defenses (непридатні умови, retaliatory
+      eviction, неналежне повідомлення, дискримінація, порушення гарантії
+      придатності згідно Civil Code §1941.1), де факти, які ви нам
+      надасте, їх підтримують. Якщо справа — UD за несплату ренти і немає
+      реального спору, ми можемо підготувати UD-115 stipulation for entry
+      of judgment, що дає орендарю додатковий час для виїзду за згодою.
+    </p>
+
+    <h2>Що ми НЕ робимо</h2>
+    <p>
+      Ми — каліфорнійський ліцензований помічник з юридичних документів.
+      Ми не можемо надавати юридичних консультацій, обирати вашу
+      стратегію, складати кастомне клопотання, що вимагає юридичного
+      аналізу, або з'являтися в суді. Ми можемо підготувати будь-яку
+      стандартну форму UD за вашим дорученням. Для оскаржуваного суду,
+      складних питань AB 1482 / контролю ренти / Costa-Hawkins, або
+      захисту з придатності, що може потребувати експертів-свідків, ми
+      рекомендуємо також проконсультуватися з ліцензованим каліфорнійським
+      адвокатом перед подачею.
+    </p>
+
+    <cite>
+      <strong>Законодавча база:</strong> California Code of Civil
+      Procedure §§1161-1170 (Unlawful Detainer Act), §1162 (вручення
+      повідомлення), §1166 (скарга), §1167 (5-денна відповідь), §1170
+      (призначення суду); California Civil Code §§1946-1946.2
+      (повідомлення про припинення оренди), §789.3 (заборона самовільного
+      виселення), §1941.1 (придатний стан); AB 1482 (Tenant Protection
+      Act of 2019). Сфера дії в Каліфорнії: Cal. Bus. &amp; Prof. Code
+      §§6400-6415 (Legal Document Assistant Act); §6411 (LDA не може
+      надавати юридичних консультацій).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading="Почніть пакет unlawful detainer сьогодні"
+    sub="Орендодавець або орендар. Фіксована ціна. Багатомовний інтейк. Підготовка документів за вашим дорученням — не юридичні консультації."
+    primaryHref="/#get-started?form=UD-100"
+    primaryText="Почати інтейк UD"
+  />
+</BaseLayout>

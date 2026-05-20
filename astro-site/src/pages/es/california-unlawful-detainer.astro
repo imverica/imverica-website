@@ -1,0 +1,140 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Unlawful Detainer California — preparación de documentos de desalojo | Imverica';
+const description = 'LDA con licencia de California prepara el paquete de unlawful detainer (desalojo) — UD-100 demanda, SUM-130 citación, avisos de 3/30/60 días, UD-105 respuesta, UD-110 sentencia, POS-010 prueba de notificación. Estrictamente bajo la dirección del cliente.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Unlawful Detainer Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'State', name: 'California' },
+    disambiguatingDescription: 'Imverica no es un bufete de abogados. Solo preparación de documentos bajo la dirección del cliente.'
+  },
+  description: 'Imverica prepara documentos de unlawful detainer (desalojo) en California bajo la dirección del cliente. UD-100, SUM-130, avisos previos a la presentación, UD-105 respuesta, UD-110 sentencia, POS-010 prueba de notificación.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/es/california-unlawful-detainer"
+  jsonLd={[serviceSchema]}
+  lang={lang}
+  slug="/california-unlawful-detainer"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow="Procedimiento Civil de California · CCP §1161-1170"
+    heading="Unlawful Detainer California — preparación de documentos"
+    sub="Arrendador o inquilino — preparamos el paquete UD estrictamente bajo su dirección. UD-100 demanda, SUM-130 citación, avisos previos a la presentación, UD-105 respuesta, UD-110 sentencia, POS-010 prueba de notificación. Precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=UD-100', text: 'Iniciar paquete UD' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/es/california-small-claims', label: 'Reclamos menores en California (SC-100 / SC-120)' },
+    { href: '/es/california-restraining-orders', label: 'Órdenes de restricción en California (CH / DV / EA / GV / WV)' },
+    { href: '/es/california-family-law', label: 'Formularios de derecho familiar de California (FL-100, FL-300)' }
+  ]}>
+    <p class="lead">
+      Unlawful detainer es el procedimiento estatutario acelerado de
+      desalojo de California bajo Code of Civil Procedure §1161-1170. Es
+      la única forma legal para que un arrendador recupere la posesión de
+      una propiedad residencial o comercial de un inquilino que dejó de
+      pagar renta, incumplió el contrato, holdover, o se negó a salir
+      después de un aviso adecuado de terminación de arrendamiento. El
+      desalojo por mano propia (cambiar cerraduras, cortar servicios,
+      retirar pertenencias) está penalmente prohibido bajo Civil Code
+      §789.3 y expone al arrendador a daños estatutarios.
+    </p>
+
+    <h2>Cronología del UD</h2>
+    <ol>
+      <li><strong>Paso 1 — Aviso previo a la presentación.</strong> Aviso de 3 días para pagar la renta o desocupar bajo CCP §1161(2); aviso de 30 o 60 días de terminación de arrendamiento bajo Civil Code §1946 / §1946.1 (60 días cuando el inquilino ha residido 12 meses o más); o aviso de 3 días para cumplir convenios o desocupar por incumplimiento no monetario.</li>
+      <li><strong>Paso 2 — Notificación del aviso.</strong> Notificación personal, notificación sustituida más correo, o publicación-y-correo bajo CCP §1162, según el método que la ley permita para el motivo subyacente.</li>
+      <li><strong>Paso 3 — Esperar el período del aviso.</strong> Excluye fines de semana y días festivos del tribunal cuando el aviso vence en esos días para avisos más cortos.</li>
+      <li><strong>Paso 4 — Presentar UD-100 + SUM-130.</strong> La demanda de unlawful detainer y la citación van al Superior Court del condado donde se encuentra la propiedad.</li>
+      <li><strong>Paso 5 — Respuesta del inquilino (5 días).</strong> El inquilino presenta UD-105 respuesta, demurrer, o moción para quash service dentro de los 5 días calendario de la notificación de la citación (CCP §1167).</li>
+      <li><strong>Paso 6 — Programación del juicio.</strong> Los casos UD se programan en un calendario de juicio acelerado (dentro de 20 días de una solicitud de programación).</li>
+      <li><strong>Paso 7 — Sentencia.</strong> El tribunal emite la sentencia UD-110 por posesión (y cualquier recuperación monetaria). El sheriff notifica un Writ of Possession (EJ-130) y publica un aviso de 5 días para desalojar.</li>
+    </ol>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Documentos en un paquete UD típico</strong>
+      <ul>
+        <li><strong>Aviso de 3 días para pagar renta o desocupar</strong> — CCP §1161(2)</li>
+        <li><strong>Aviso de 30 o 60 días de terminación</strong> — Civ. Code §1946 / §1946.1</li>
+        <li><strong>Aviso de 3 días para cumplir convenios o desocupar</strong> — CCP §1161(3)</li>
+        <li><strong>UD-100</strong> — Complaint - Unlawful Detainer</li>
+        <li><strong>SUM-130</strong> — Summons - Unlawful Detainer</li>
+        <li><strong>CM-010</strong> — Civil Case Cover Sheet</li>
+        <li><strong>POS-010</strong> — Proof of Service of Summons</li>
+        <li><strong>UD-150</strong> — Plaintiff's Mandatory Cover Sheet and Supplemental Allegations</li>
+        <li><strong>UD-105</strong> — Answer (inquilino)</li>
+        <li><strong>UD-115</strong> — Answer - Stipulation for Entry of Judgment</li>
+        <li><strong>UD-110</strong> — Judgment - Unlawful Detainer</li>
+        <li><strong>EJ-130</strong> — Writ of Execution / Possession</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees (cuando es elegible por ingresos)</li>
+      </ul>
+    </div>
+
+    <h2>Lado del inquilino: defendiendo un unlawful detainer</h2>
+    <p>
+      Los inquilinos tienen 5 días calendario desde la notificación de la
+      citación para responder (CCP §1167). Saltar la respuesta lleva a
+      sentencia en rebeldía y desalojo por el sheriff en 2-3 semanas.
+      Preparamos la respuesta UD-105, planteando defensas afirmativas
+      (condiciones inhabitables, desalojo en represalia, aviso inadecuado,
+      discriminación, incumplimiento de la garantía de habitabilidad bajo
+      Civil Code §1941.1) donde los hechos que nos proporcione las
+      respalden. Si el caso es un UD por falta de pago de renta y no hay
+      una disputa genuina, podemos preparar una estipulación UD-115 para
+      entrada de sentencia que le compre al inquilino tiempo adicional
+      para mudarse por acuerdo.
+    </p>
+
+    <h2>Lo que NO hacemos</h2>
+    <p>
+      Somos asistente de documentos legales con licencia de California.
+      No podemos dar asesoría legal, elegir su estrategia, redactar una
+      moción personalizada que requiera análisis legal, o comparecer en
+      el tribunal. Podemos preparar cada formulario estándar de UD bajo
+      su dirección. Para un juicio impugnado, asuntos complejos de AB
+      1482 / control de renta / Costa-Hawkins, o una defensa de
+      habitabilidad que pueda necesitar testigos expertos, recomendamos
+      que también consulte a un abogado con licencia de California antes
+      de presentar.
+    </p>
+
+    <cite>
+      <strong>Base legal:</strong> California Code of Civil Procedure
+      §§1161-1170 (Unlawful Detainer Act), §1162 (notificación del
+      aviso), §1166 (demanda), §1167 (respuesta de 5 días), §1170
+      (programación del juicio); California Civil Code §§1946-1946.2
+      (avisos de terminación de arrendamiento), §789.3 (prohibición de
+      desalojo por mano propia), §1941.1 (condición habitable); AB 1482
+      (Tenant Protection Act of 2019). Ámbito de California: Cal. Bus.
+      &amp; Prof. Code §§6400-6415 (Legal Document Assistant Act); §6411
+      (LDA no puede dar asesoría legal).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading="Inicie su paquete de unlawful detainer hoy"
+    sub="Arrendador o inquilino. Precio fijo. Entrevista multilingüe. Preparación de documentos bajo su dirección — no asesoría legal."
+    primaryHref="/#get-started?form=UD-100"
+    primaryText="Comenzar entrevista UD"
+  />
+</BaseLayout>

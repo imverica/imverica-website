@@ -1,0 +1,65 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import StatsStrip from '~/components/StatsStrip.astro';
+import { HERO } from '~/data/i18n';
+
+const lang = 'es' as const;
+const title = 'Imverica Legal Solutions | USCIS · EOIR · Formularios de California';
+const description =
+  'LDA con licencia de California y consultor de inmigración. Preparación de documentos para USCIS, EOIR, derecho familiar, reclamos menores y sucesiones. Servicio remoto en todo el mundo.';
+
+const legalServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Imverica Legal Solutions',
+  url: 'https://imverica.com',
+  telephone: '+1-916-399-3992',
+  areaServed: [
+    { '@type': 'State', name: 'California' },
+    { '@type': 'Country', name: 'United States' }
+  ],
+  address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
+  description: 'Asistente de Documentos Legales con licencia de California y Consultor de Inmigración. Preparación de documentos USCIS, EOIR, derecho familiar, reclamos menores, desalojo y sucesiones.',
+  knowsLanguage: ['en', 'ru', 'uk', 'es'],
+  serviceType: [
+    'Preparación de formularios de inmigración USCIS',
+    'Preparación de documentos EOIR',
+    'Preparación de formularios de derecho familiar de California',
+    'Preparación de documentos de reclamos menores',
+    'Preparación de documentos de desalojo',
+    'Preparación de documentos de sucesión'
+  ],
+  disambiguatingDescription: 'Imverica Legal Solutions no es un bufete de abogados y no brinda asesoría legal. Los documentos se preparan bajo la dirección del cliente.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/es/"
+  jsonLd={[legalServiceSchema]}
+  lang={lang}
+  slug="/"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow={HERO.es.eyebrow}
+    heading={HERO.es.heading}
+    sub={HERO.es.sub}
+  />
+  <StatsStrip lang={lang} />
+
+  <section class="svc-section">
+    <div class="svc-inner" style="text-align:center;">
+      <div class="svc-kicker">Nuestros servicios</div>
+      <h2>USCIS, tribunal de inmigración y preparación de documentos de California</h2>
+      <p style="margin:0 auto;">Imverica Legal Solutions es Asistente de Documentos Legales con licencia de California y Consultor de Inmigración. Preparamos documentos bajo la dirección del cliente — no brindamos asesoría legal.</p>
+      <p style="margin:1rem auto 0;">
+        <a class="btn" href="/es/i-485-help">I-485 — Ajuste de Estatus</a>
+        <a class="btn btn-ghost" href="/es/i-589-asylum-help">I-589 — Asilo</a>
+        <a class="btn btn-ghost" href="/es/n-400-citizenship-help">N-400 — Naturalización</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

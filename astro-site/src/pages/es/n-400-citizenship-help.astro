@@ -1,0 +1,138 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'N-400 preparación de solicitud de ciudadanía | Imverica';
+const description = 'LDA con licencia de California prepara la solicitud N-400 de naturalización — biografía, historial de domicilios y empleo de 5 años, preguntas de carácter moral de la Parte 9, cambio de nombre opcional. Entrevista multilingüe, precio fijo.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'N-400 Application for Naturalization Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'Country', name: 'United States' },
+    disambiguatingDescription: 'Imverica no es un bufete de abogados. Solo preparación de documentos bajo la dirección del cliente.'
+  },
+  description: 'Imverica prepara la solicitud N-400 de naturalización bajo la dirección del solicitante.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/es/n-400-citizenship-help"
+  jsonLd={[serviceSchema]}
+  lang={lang}
+  slug="/n-400-citizenship-help"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Naturalización · INA §316"
+    heading="N-400 — preparación de solicitud de ciudadanía"
+    sub="¿Residente permanente legal solicitando ciudadanía estadounidense? Preparamos el paquete N-400 — biografía, historial de 5 años de domicilios y empleo, preguntas de carácter moral de la Parte 9, cambio de nombre opcional. Entrevista multilingüe. Precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=N-400', text: 'Iniciar paquete N-400' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/es/i-130-family-petition', label: 'I-130 — petición familiar (patrocinar familiares después de la ciudadanía)' },
+    { href: '/es/i-485-help', label: 'I-485 — ajuste de estatus (el paso anterior a la naturalización)' }
+  ]}>
+    <p class="lead">
+      La Forma N-400 es la solicitud que un residente permanente legal
+      presenta a USCIS para convertirse en ciudadano de los Estados Unidos.
+      Preparamos el paquete N-400 completo bajo su dirección — datos
+      biográficos, historial de 5 años de domicilios y empleo, información
+      sobre matrimonio e hijos, preguntas de carácter moral de la Parte 9,
+      cualquier cambio legal opcional de nombre, y el paquete de evidencia
+      de respaldo.
+    </p>
+
+    <h2>Quién puede solicitar con la Forma N-400</h2>
+    <p>
+      La mayoría de los residentes permanentes califican bajo INA §316
+      después de cinco años de residencia continua como LPR — tres años si
+      obtuvo su green card a través del matrimonio con un ciudadano
+      estadounidense que ha sido ciudadano durante el mismo período de tres
+      años bajo INA §319. Hay vías especiales más rápidas para miembros de
+      las fuerzas armadas de EE.UU. (INA §328, §329).
+    </p>
+    <p>
+      Otros requisitos básicos: presencia física en EE.UU. durante al menos
+      la mitad del período de calificación, residencia continua sin
+      ausencias mayores a seis meses (o un año con justificación
+      documentada), buen carácter moral durante el período de calificación,
+      lectura/escritura/conversación básica en inglés y conocimiento de
+      civismo estadounidense (con exenciones limitadas por edad/
+      discapacidad), y adhesión a los principios de la Constitución.
+    </p>
+
+    <h2>Qué cubre nuestra entrevista N-400</h2>
+    <p>
+      Nuestro asistente refleja el formulario USCIS parte por parte:
+    </p>
+    <ul>
+      <li><strong>Part 1-2</strong> — nombre del solicitante, base de elegibilidad, solicitud opcional de cambio de nombre</li>
+      <li><strong>Part 3</strong> — solicitud de accommodations, disposiciones por discapacidad</li>
+      <li><strong>Part 4</strong> — preguntas sobre Social Security, número de USCIS online account</li>
+      <li><strong>Part 5</strong> — información biográfica (etnia, raza, altura, peso, color de ojos y cabello)</li>
+      <li><strong>Part 6</strong> — domicilios actuales y anteriores de los últimos cinco años</li>
+      <li><strong>Part 7</strong> — empleo, estudios y desempleo de los últimos cinco años</li>
+      <li><strong>Part 8</strong> — tiempo fuera de Estados Unidos durante el período de calificación (cada viaje, con destino y días fuera)</li>
+      <li><strong>Part 9</strong> — historial marital, cónyuge actual, cónyuges anteriores, hijos — incluyendo cómo se reportan los hijos aunque sean ciudadanos de EE.UU. o vivan en otro lugar</li>
+      <li><strong>Part 10</strong> — preguntas de carácter moral (historia criminal, historia migratoria, cumplimiento tributario, manutención de hijos, militar, afiliaciones de grupo, apoyo a la Constitución)</li>
+      <li><strong>Part 11</strong> — información adicional / páginas de explicación</li>
+      <li><strong>Part 12-13</strong> — declaración del solicitante, intérprete, preparador</li>
+    </ul>
+
+    <h2>Viajes, huecos de domicilio y la regla de los 5 años</h2>
+    <p>
+      Dos de los problemas más comunes de la N-400 son (1) huecos en el
+      historial de 5 años de domicilios o empleo y (2) viajes fuera de
+      EE.UU. mayores a 180 días. Nuestro asistente marca ambos: si sus
+      entradas de residencia no cubren los cinco años completos hasta hoy,
+      le advertimos pero le permitimos continuar — muchos solicitantes
+      viven en vivienda amueblada o se mudan con frecuencia, y un hueco no
+      es automáticamente descalificante, pero USCIS preguntará al respecto
+      en la entrevista. De manera similar, cada viaje fuera de EE.UU.
+      (fecha de salida, fecha de regreso, país) debe aparecer en la Parte
+      8 aunque el viaje haya sido corto.
+    </p>
+
+    <h2>Lo que NO hacemos</h2>
+    <p>
+      Como LDA de California y consultor de inmigración no damos asesoría
+      legal. Si su historial de carácter moral incluye arrestos,
+      condenas penales, violaciones migratorias, o manutención / impuestos
+      no pagados — aún preparamos la N-400, pero recomendaremos que también
+      consulte a un abogado de inmigración con licencia antes de
+      presentar. Algunas negaciones de naturalización pueden llevar al
+      removal, así que no presente un caso limítrofe sin revisión legal.
+    </p>
+
+    <cite>
+      <strong>Base legal:</strong> Immigration and Nationality Act §316
+      (naturalización general), §319 (cónyuge de ciudadano de EE.UU.),
+      §319(b) (excepción de empleo en el extranjero), §328-§329
+      (naturalización militar), §312 (inglés y civismo), §337 (juramento
+      de lealtad); 8 U.S.C. §1427 et seq.; USCIS Policy Manual Volume 12
+      (Citizenship and Naturalization). Ámbito de California: Cal. Bus.
+      &amp; Prof. Code §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading="Inicie su solicitud N-400 de ciudadanía"
+    sub="Entrevista multilingüe. Puede pausar y continuar. Precio fijo. Preparación de documentos bajo su dirección — no asesoría legal."
+    primaryHref="/#get-started?form=N-400"
+    primaryText="Comenzar entrevista N-400"
+  />
+</BaseLayout>

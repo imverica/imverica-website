@@ -1,0 +1,139 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Unlawful Detainer Калифорния — подготовка документов на выселение | Imverica';
+const description = 'Калифорнийский лицензированный LDA готовит пакет unlawful detainer (выселение) — UD-100 жалоба, SUM-130 повестка, 3-/30-/60-дневные уведомления, UD-105 ответ, UD-110 решение, POS-010 подтверждение вручения. Строго по поручению клиента.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Unlawful Detainer Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'State', name: 'California' },
+    disambiguatingDescription: 'Imverica не является юридической фирмой. Только подготовка документов по поручению клиента.'
+  },
+  description: 'Imverica готовит документы по unlawful detainer (выселение) в Калифорнии по поручению клиента. UD-100, SUM-130, досудебные уведомления, UD-105 ответ, UD-110 решение, POS-010 подтверждение вручения.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/ru/california-unlawful-detainer"
+  jsonLd={[serviceSchema]}
+  lang={lang}
+  slug="/california-unlawful-detainer"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow="Гражданская процедура Калифорнии · CCP §1161-1170"
+    heading="Unlawful Detainer Калифорния — подготовка документов"
+    sub="Арендодатель или арендатор — готовим пакет UD строго по вашему поручению. UD-100 жалоба, SUM-130 повестка, досудебные уведомления, UD-105 ответ, UD-110 решение, POS-010 подтверждение вручения. Фиксированная цена."
+    ctaPrimary={{ href: '/#get-started?form=UD-100', text: 'Начать пакет UD' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/california-small-claims', label: 'Малые иски в Калифорнии (SC-100 / SC-120)' },
+    { href: '/ru/california-restraining-orders', label: 'Защитные ордера в Калифорнии (CH / DV / EA / GV / WV)' },
+    { href: '/ru/california-family-law', label: 'Формы семейного права Калифорнии (FL-100, FL-300)' }
+  ]}>
+    <p class="lead">
+      Unlawful detainer — это ускоренная статутарная процедура выселения в
+      Калифорнии согласно Code of Civil Procedure §1161-1170. Это
+      единственный законный способ для арендодателя вернуть владение
+      жилой или коммерческой недвижимостью от арендатора, который перестал
+      платить ренту, нарушил договор аренды, holdover, или отказался
+      выехать после надлежащего уведомления о прекращении аренды.
+      Самовольное выселение (замена замков, отключение коммунальных услуг,
+      вынос вещей) криминально запрещено согласно Civil Code §789.3 и
+      подвергает арендодателя статутарным убыткам.
+    </p>
+
+    <h2>Хронология UD</h2>
+    <ol>
+      <li><strong>Шаг 1 — Досудебное уведомление.</strong> 3-дневное уведомление о выплате ренты или съезде согласно CCP §1161(2); 30- или 60-дневное уведомление о прекращении аренды согласно Civil Code §1946 / §1946.1 (60 дней когда арендатор проживает 12 месяцев или дольше); или 3-дневное уведомление о выполнении ковенантов или съезде за неденежное нарушение.</li>
+      <li><strong>Шаг 2 — Вручение уведомления.</strong> Личное вручение, замещающее вручение плюс почтовое отправление, или вывешивание-и-отправка согласно CCP §1162, в зависимости от того, какой метод закон разрешает для соответствующего основания.</li>
+      <li><strong>Шаг 3 — Ждать срок уведомления.</strong> Исключает выходные и судебные праздники когда уведомление истекает в эти дни для более коротких уведомлений.</li>
+      <li><strong>Шаг 4 — Подать UD-100 + SUM-130.</strong> Жалоба unlawful detainer и повестка идут в Superior Court округа, где находится недвижимость.</li>
+      <li><strong>Шаг 5 — Ответ арендатора (5 дней).</strong> Арендатор подаёт UD-105 ответ, demurrer, или ходатайство о quash service в течение 5 календарных дней с момента вручения повестки (CCP §1167).</li>
+      <li><strong>Шаг 6 — Назначение суда.</strong> Дела UD назначаются на ускоренный судебный календарь (в течение 20 дней с момента запроса о назначении).</li>
+      <li><strong>Шаг 7 — Решение.</strong> Суд выносит UD-110 решение о владении (и любую денежную компенсацию). Шериф вручает Writ of Possession (EJ-130) и вывешивает 5-дневное уведомление о выезде.</li>
+    </ol>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Документы в типичном пакете UD</strong>
+      <ul>
+        <li><strong>3-дневное уведомление о выплате ренты или съезде</strong> — CCP §1161(2)</li>
+        <li><strong>30- или 60-дневное уведомление о прекращении</strong> — Civ. Code §1946 / §1946.1</li>
+        <li><strong>3-дневное уведомление о выполнении ковенантов или съезде</strong> — CCP §1161(3)</li>
+        <li><strong>UD-100</strong> — Complaint - Unlawful Detainer</li>
+        <li><strong>SUM-130</strong> — Summons - Unlawful Detainer</li>
+        <li><strong>CM-010</strong> — Civil Case Cover Sheet</li>
+        <li><strong>POS-010</strong> — Proof of Service of Summons</li>
+        <li><strong>UD-150</strong> — Plaintiff's Mandatory Cover Sheet and Supplemental Allegations</li>
+        <li><strong>UD-105</strong> — Answer (арендатор)</li>
+        <li><strong>UD-115</strong> — Answer - Stipulation for Entry of Judgment</li>
+        <li><strong>UD-110</strong> — Judgment - Unlawful Detainer</li>
+        <li><strong>EJ-130</strong> — Writ of Execution / Possession</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees (когда соответствует критериям дохода)</li>
+      </ul>
+    </div>
+
+    <h2>Сторона арендатора: защита по unlawful detainer</h2>
+    <p>
+      У арендаторов есть 5 календарных дней с момента вручения повестки
+      для ответа (CCP §1167). Пропуск ответа ведёт к default judgment и
+      выселению шерифом через 2-3 недели. Мы готовим UD-105 ответ,
+      поднимая affirmative defenses (непригодные условия, retaliatory
+      eviction, ненадлежащее уведомление, дискриминация, нарушение
+      гарантии пригодности согласно Civil Code §1941.1), где факты,
+      которые вы нам предоставите, их поддерживают. Если дело — UD по
+      неуплате ренты и нет реального спора, мы можем подготовить UD-115
+      stipulation for entry of judgment, что даёт арендатору
+      дополнительное время для выезда по соглашению.
+    </p>
+
+    <h2>Что мы НЕ делаем</h2>
+    <p>
+      Мы — калифорнийский лицензированный помощник по юридическим
+      документам. Мы не можем давать юридических советов, выбирать вашу
+      стратегию, составлять кастомное ходатайство, требующее юридического
+      анализа, или появляться в суде. Мы можем подготовить любую
+      стандартную форму UD по вашему поручению. Для оспариваемого суда,
+      сложных вопросов AB 1482 / контроля ренты / Costa-Hawkins, или
+      защиты по пригодности, которая может требовать экспертов-свидетелей,
+      мы рекомендуем также проконсультироваться с лицензированным
+      калифорнийским адвокатом перед подачей.
+    </p>
+
+    <cite>
+      <strong>Законодательная база:</strong> California Code of Civil
+      Procedure §§1161-1170 (Unlawful Detainer Act), §1162 (вручение
+      уведомления), §1166 (жалоба), §1167 (5-дневный ответ), §1170
+      (назначение суда); California Civil Code §§1946-1946.2 (уведомления
+      о прекращении аренды), §789.3 (запрет самовольного выселения),
+      §1941.1 (пригодное состояние); AB 1482 (Tenant Protection Act of
+      2019). Сфера действия в Калифорнии: Cal. Bus. &amp; Prof. Code
+      §§6400-6415 (Legal Document Assistant Act); §6411 (LDA не может
+      давать юридических советов).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading="Начните пакет unlawful detainer сегодня"
+    sub="Арендодатель или арендатор. Фиксированная цена. Многоязычный интейк. Подготовка документов по вашему поручению — не юридические консультации."
+    primaryHref="/#get-started?form=UD-100"
+    primaryText="Начать интейк UD"
+  />
+</BaseLayout>

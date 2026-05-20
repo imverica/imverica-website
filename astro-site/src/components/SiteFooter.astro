@@ -1,46 +1,48 @@
 ---
+import { FOOTER, localizedPath, type Locale } from '~/data/i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'en' } = Astro.props;
+const f = FOOTER[lang];
 const year = new Date().getFullYear();
+const disclaimer = f.disclaimer.replace('{year}', String(year));
 ---
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div>
       <div class="site-brand-name" style="color:#fff;font-size:24px;">Imverica</div>
       <div class="site-footer-info" style="margin-top:0.5rem;">
-        Legal Document Assistant · Immigration Consultant · California<br />
-        (916) 399-3992 · imverica.com
+        {f.brandLine}<br />
+        +1 (916) 399-3992 · imverica.com
       </div>
     </div>
     <div>
-      <strong>USCIS / EOIR</strong>
+      <strong>{f.servicesUscis}</strong>
       <div class="site-footer-info">
-        <a href="/i-485-help">I-485 — Adjustment of Status</a><br />
-        <a href="/i-589-asylum-help">I-589 — Asylum</a><br />
-        <a href="/n-400-citizenship-help">N-400 — Naturalization</a><br />
-        <a href="/i-130-family-petition">I-130 — Family petition</a>
+        <a href={localizedPath(lang, '/i-485-help')}>I-485 — Adjustment of Status</a><br />
+        <a href={localizedPath(lang, '/i-589-asylum-help')}>I-589 — Asylum</a><br />
+        <a href={localizedPath(lang, '/n-400-citizenship-help')}>N-400 — Naturalization</a><br />
+        <a href={localizedPath(lang, '/i-130-family-petition')}>I-130 — Family petition</a>
       </div>
     </div>
     <div>
-      <strong>California Court</strong>
+      <strong>{f.servicesCivil}</strong>
       <div class="site-footer-info">
-        <a href="/california-family-law">Family law (FL-100, FL-300)</a><br />
-        <a href="/california-unlawful-detainer">Unlawful detainer</a><br />
-        <a href="/california-small-claims">Small claims (SC-100)</a><br />
-        <a href="/california-restraining-orders">Restraining orders</a><br />
-        <a href="/california-probate">Probate (DE-111)</a>
+        <a href={localizedPath(lang, '/california-family-law')}>Family law (FL-100, FL-300)</a><br />
+        <a href={localizedPath(lang, '/california-unlawful-detainer')}>Unlawful detainer</a><br />
+        <a href={localizedPath(lang, '/california-small-claims')}>Small claims (SC-100)</a><br />
+        <a href={localizedPath(lang, '/california-restraining-orders')}>Restraining orders</a><br />
+        <a href={localizedPath(lang, '/california-probate')}>Probate (DE-111)</a>
       </div>
     </div>
     <div>
-      <strong>About</strong>
+      <strong>{f.about}</strong>
       <div class="site-footer-info">
-        <a href="/about">About Imverica</a><br />
-        <a href="/faq">Frequently Asked Questions</a><br />
-        <a href="/california-legal-document-assistant">What is an LDA?</a><br />
-        <a href="/privacy">Privacy</a><br />
-        <a href="/terms">Terms</a>
+        <a href={localizedPath(lang, '/california-legal-document-assistant')}>What is an LDA?</a>
       </div>
     </div>
   </div>
-  <div class="site-footer-bottom">
-    © {year} Imverica Legal Solutions · California Licensed Legal Document Assistant · Imverica is not a law firm and does not provide legal advice. Documents are prepared at the client's direction. Bonded and registered per California Business &amp; Professions Code §§6400-6415.
-  </div>
+  <div class="site-footer-bottom">{disclaimer}</div>
 </footer>

@@ -36,13 +36,15 @@ const legalServiceSchema = {
   description={description}
   canonical="https://imverica.com/"
   jsonLd={[legalServiceSchema]}
+  slug="/"
+  availableLocales={['en', 'ru', 'uk', 'es']}
 >
   <Hero
     eyebrow="California · Licensed LDA · Immigration Consultant"
     heading="What document do you need prepared?"
     sub="Describe your situation or enter a form number. We prepare USCIS petitions (I-485, I-130, I-765, I-589, N-400, I-131, I-90), EOIR immigration court documents, California family law forms (FL-100, FL-300), small claims (SC-100), unlawful detainer, restraining orders, probate, and fee waivers — for clients across California and worldwide."
     ctaPrimary={{ href: '#get-started', text: 'Start document preparation' }}
-    ctaSecondary={{ href: 'tel:9163993992', text: '📞 (916) 399-3992' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
   />
 
   <StatsStrip />

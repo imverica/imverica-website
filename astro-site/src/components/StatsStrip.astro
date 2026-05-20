@@ -1,19 +1,18 @@
 ---
-interface StatItem {
-  target: number;
-  suffix?: string;
-  label: string;
-}
+import { STATS, type Locale } from '~/data/i18n';
+
 interface Props {
-  items?: StatItem[];
+  lang?: Locale;
 }
-const defaultItems: StatItem[] = [
-  { target: 734, suffix: '+', label: 'USCIS, EOIR & California forms supported' },
-  { target: 18, label: 'Priority forms with curated flows' },
-  { target: 4, label: 'Languages — EN · RU · UA · ES' },
-  { target: 10, suffix: '+', label: 'Years preparing California & USCIS forms' }
+const { lang = 'en' } = Astro.props;
+const labels = STATS[lang];
+
+const items = [
+  { target: 734, suffix: '+', label: labels[0] },
+  { target: 18, suffix: '', label: labels[1] },
+  { target: 4, suffix: '', label: labels[2] },
+  { target: 10, suffix: '+', label: labels[3] }
 ];
-const { items = defaultItems } = Astro.props;
 ---
 <section class="stats-strip">
   <div class="stats-inner">

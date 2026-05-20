@@ -1,0 +1,148 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-485 Preparación de Documentos — Ajuste de Estatus | Imverica';
+const description = 'LDA con licencia de California prepara el paquete I-485 — ajuste de estatus a residente permanente (green card). Información biográfica, historial de domicilios y empleo, evidencia, examen médico I-693, permiso de trabajo I-765, advance parole I-131. Precio fijo.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-485 Adjustment of Status Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'Country', name: 'United States' },
+    disambiguatingDescription: 'Imverica no es un bufete de abogados. Solo preparación de documentos bajo la dirección del cliente.'
+  },
+  description: 'El Formulario I-485 es la solicitud para ajustar el estatus a residente permanente. Imverica prepara el paquete completo bajo la dirección del cliente.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/es/i-485-help"
+  jsonLd={[serviceSchema]}
+  lang={lang}
+  slug="/i-485-help"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Ajuste de Estatus · INA §245(a)"
+    heading="I-485 — preparación de documentos para la green card"
+    sub="Preparamos el paquete completo I-485 bajo su dirección — información biográfica, historial de domicilios y empleo de 5 años, evidencia, examen médico I-693, permiso de trabajo I-765, advance parole I-131. Precio fijo. Español, inglés, ruso, ucraniano."
+    ctaPrimary={{ href: '/#get-started?form=I-485', text: 'Iniciar mi paquete I-485' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/es/i-765-work-permit-help', label: 'I-765 — permiso de trabajo' },
+    { href: '/es/i-589-asylum-help', label: 'I-589 — asilo' },
+    { href: '/es/n-400-citizenship-help', label: 'N-400 — naturalización' }
+  ]}>
+    <p class="lead">
+      El Formulario I-485 es la solicitud que presenta un extranjero que se
+      encuentra físicamente en los Estados Unidos ante USCIS para ajustar su
+      estatus a residente permanente legal (green card). Imverica prepara el
+      paquete completo de I-485 bajo su dirección — datos biográficos, historial
+      de residencia y empleo, evidencia de respaldo, y los formularios
+      complementarios que la mayoría de los solicitantes de ajuste presentan
+      junto con la I-485.
+    </p>
+
+    <h2>Quién puede presentar la I-485</h2>
+    <p>
+      El ajuste de estatus conforme a INA §245(a) está disponible para una
+      persona físicamente presente en los EE. UU., que fue inspeccionada y
+      admitida o paroled (o califica conforme a las rutas más estrechas de
+      §245(i) / §245(k) / asilado / refugiado / inmigrante especial), que es
+      beneficiaria de una petición de inmigrante aprobada o presentada
+      concurrentemente, que tiene una visa de inmigrante inmediatamente
+      disponible según el Visa Bulletin actual, y que es admisible a los
+      Estados Unidos o elegible para una exención de cualquier motivo de
+      inadmisibilidad.
+    </p>
+    <p>
+      Rutas comunes de ajuste que vemos: cónyuge, padre o hijo de ciudadano
+      estadounidense (basado en familia); basado en empleo EB-1 a EB-5;
+      asilado un año después de la concesión del asilo; refugiado un año
+      después de la admisión; auto-peticionario VAWA; ajuste por visa T o U;
+      seleccionado de visa de diversidad; y varias categorías humanitarias.
+    </p>
+
+    <h2>Qué incluye normalmente el paquete I-485</h2>
+    <div class="form-list">
+      <strong>Formularios que preparamos para el paquete</strong>
+      <ul>
+        <li><strong>I-485</strong> — Application to Register Permanent Residence or Adjust Status (formulario principal)</li>
+        <li><strong>I-693</strong> — Reporte de Examen Médico (completado por un médico civil designado por USCIS; lo organizamos y enviamos con el paquete)</li>
+        <li><strong>I-765</strong> — Application for Employment Authorization, se presenta concurrentemente para obtener permiso de trabajo mientras la I-485 está pendiente</li>
+        <li><strong>I-131</strong> — Application for Travel Document, se presenta concurrentemente para obtener advance parole para viajar mientras la I-485 está pendiente</li>
+        <li><strong>I-864</strong> / <strong>I-864A</strong> / <strong>I-864EZ</strong> — Affidavit of Support, requerido para ajustes basados en familia y algunos basados en empleo</li>
+        <li><strong>I-944</strong> — Declaration of Self-Sufficiency, cuando la regla actual lo requiere</li>
+        <li><strong>I-912</strong> — Request for Fee Waiver, cuando el solicitante cumple con los criterios de ingresos familiares o de beneficios sujetos a verificación de recursos</li>
+        <li><strong>Evidencia de respaldo</strong> — acta de nacimiento, acta de matrimonio, página biográfica del pasaporte, estampados de visas anteriores, I-94, I-797 receipt y approval notices, documentos de inmigración anteriores, fotografías, y traducciones certificadas de cualquier documento en idioma extranjero conforme a 8 CFR §103.2(b)(3)</li>
+      </ul>
+    </div>
+
+    <h2>Cómo funciona nuestro intake de I-485</h2>
+    <p>
+      Usted responde un asistente guiado a su propio ritmo. El asistente
+      refleja la I-485 oficial parte por parte — Parte 1 información del
+      solicitante, Parte 2 tipo de solicitud y categoría de presentación,
+      Parte 3 información adicional, Parte 4 historial de domicilios de los
+      últimos 5 años, Parte 5 historial de empleo de los últimos 5 años,
+      Parte 6 información matrimonial y familiar incluyendo todos sus hijos,
+      Parte 7 información biográfica (origen étnico, raza, estatura, peso,
+      color de ojos y cabello), Parte 8 elegibilidad general, y Parte 9
+      preguntas específicas de elegibilidad / inadmisibilidad.
+    </p>
+    <p>
+      Todos sus datos se guardan a medida que avanza. Puede pausar, cambiar
+      de idioma, o volver más tarde. Cuando termine, ensamblamos el paquete,
+      generamos los PDF listos para presentar, y le indicamos qué reunir
+      (tarifa de USCIS o exención de tarifas, fotografías a color según la
+      especificación actual, documentos civiles y traducciones, y el examen
+      médico) antes de que firme y envíe al lockbox correspondiente de
+      USCIS.
+    </p>
+
+    <h2>Lo que NO hacemos</h2>
+    <p>
+      Como Asistente de Documentos Legales con licencia de California y
+      Consultor de Inmigración, no podemos brindar asesoría legal, recomendar
+      una estrategia particular de presentación, ni representarlo ante USCIS o
+      en un tribunal de inmigración. Si durante el intake su situación parece
+      requerir un abogado con licencia — por ejemplo procedimientos de
+      removal, un historial complejo de deportación, un historial criminal con
+      implicaciones de admisibilidad, o decisiones estratégicas sobre §245(i)
+      vs. procesamiento consular — se lo diremos de inmediato y lo
+      referiremos a un abogado de inmigración con licencia de California de
+      nuestra red.
+    </p>
+
+    <cite>
+      <strong>Base estatutaria:</strong> Immigration and Nationality Act
+      §245(a), 8 U.S.C. §1255(a) (ajuste de estatus); 8 C.F.R. §§245.1, 245.2
+      (procedimiento); 8 C.F.R. §103.2 (requisitos de presentación); 8 C.F.R.
+      §103.2(b)(3) (certificación de traducción en idioma extranjero); USCIS
+      Policy Manual Volume 7 (Adjustment of Status). Alcance en California:
+      Cal. Bus. &amp; Prof. Code §§6400-6415 (Legal Document Assistant Act);
+      §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading="Comience su paquete I-485 hoy"
+    sub="Intake multilingüe. Precio fijo. Preparación de documentos bajo su dirección — no asesoría legal. Comience en su idioma y continúe donde lo dejó."
+    primaryHref="/#get-started?form=I-485"
+    primaryText="Iniciar mi intake I-485"
+  />
+</BaseLayout>

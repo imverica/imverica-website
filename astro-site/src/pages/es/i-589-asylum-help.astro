@@ -1,0 +1,132 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-589 preparación de solicitud de asilo | Imverica';
+const description = 'LDA con licencia de California prepara la Forma I-589 — solicitud de asilo. Datos biográficos del solicitante, familia, historial de domicilios/educación/empleo, declaración de persecución, evidencia de condiciones del país. Español, ruso, ucraniano, inglés.';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-589 Asylum Document Preparation',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Imverica Legal Solutions',
+    url: 'https://imverica.com',
+    telephone: '+1-916-399-3992',
+    areaServed: { '@type': 'Country', name: 'United States' },
+    disambiguatingDescription: 'Imverica no es un bufete de abogados. Solo preparación de documentos bajo la dirección del cliente.'
+  },
+  description: 'Imverica prepara la solicitud I-589 de asilo, withholding of removal y protección bajo la Convención contra la Tortura bajo la dirección del solicitante.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/es/i-589-asylum-help"
+  jsonLd={[serviceSchema]}
+  lang={lang}
+  slug="/i-589-asylum-help"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Asilo · INA §208"
+    heading="I-589 — preparación de solicitud de asilo"
+    sub="Preparamos la Forma I-589 de 12 páginas con declaración de persecución, tablas de familia e historial de domicilio/educación/empleo en la página 4, y paquete de evidencia de condiciones del país. Entrevista multilingüe. Precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=I-589', text: 'Iniciar paquete I-589' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/es/i-485-help', label: 'I-485 — ajuste de estatus (un año después del asilo)' },
+    { href: '/es/i-765-work-permit-help', label: 'I-765 — permiso de trabajo (c)(8) para asilo pendiente' }
+  ]}>
+    <p class="lead">
+      La Forma I-589 es la solicitud que presenta una persona que se encuentra
+      en los Estados Unidos para obtener asilo, withholding of removal bajo
+      INA §241(b)(3), y protección bajo la Convención contra la Tortura.
+      Preparamos el paquete I-589 bajo su dirección — el formulario, la
+      declaración escrita que explica el temor a la persecución, las tablas
+      de domicilio/educación/empleo de la página 4, la información de la
+      familia para cónyuge e hijos, y el paquete de evidencia de respaldo.
+    </p>
+
+    <h2>Plazos clave y elegibilidad</h2>
+    <p>
+      Bajo 8 C.F.R. §208.4 debe presentar la I-589 dentro de un año de su
+      última llegada a los Estados Unidos, a menos que pueda mostrar cambios
+      de circunstancias o circunstancias extraordinarias que justifiquen la
+      demora. Para calificar para asilo muestra persecución pasada o un
+      temor bien fundado de persecución por motivos de raza, religión,
+      nacionalidad, opinión política, o pertenencia a un grupo social
+      particular (INA §101(a)(42); 8 C.F.R. §208.13).
+    </p>
+    <p>
+      Un año después de la concesión de asilo usted es elegible para ajustar
+      estatus a residente permanente legal presentando la Forma I-485.
+      Mientras su I-589 está pendiente puede solicitar autorización de
+      empleo (Forma I-765 bajo categoría (c)(8)) 150 días después de
+      presentar la I-589 si no fue denegada.
+    </p>
+
+    <h2>Lo que preparamos para el paquete I-589</h2>
+    <div class="form-list">
+      <strong>Formularios y evidencia en un paquete I-589 típico</strong>
+      <ul>
+        <li><strong>I-589</strong> — Application for Asylum and for Withholding of Removal (12 páginas, Partes A.I, A.II, A.III, B, C, D, y Supplements según se requiera)</li>
+        <li><strong>Declaración escrita</strong> — narrativa de persecución que explica qué pasó, cuándo, dónde, por quién, y por qué creemos que es por un motivo protegido</li>
+        <li><strong>Supplement A</strong> — lista de hijos adicionales cuando hay más de cuatro</li>
+        <li><strong>Supplement B</strong> — información adicional para cualquier ítem del formulario que requiera más espacio</li>
+        <li><strong>Documentos de identidad</strong> — pasaporte, acta de nacimiento, identificación nacional, fotos, y traducciones certificadas bajo 8 C.F.R. §103.2(b)(3)</li>
+        <li><strong>Paquete de evidencia</strong> — reportes médicos, declaraciones de testigos, reportes policiales, artículos de prensa, reportes de condiciones del país (Departamento de Estado de EE.UU., UNHCR, Human Rights Watch, Amnesty International), evidencia de afiliación con redes sociales o partidos políticos</li>
+        <li><strong>Carta de presentación e índice</strong> — anexos numerados según formato preferido de USCIS / asylum office</li>
+      </ul>
+    </div>
+
+    <h2>Página 4 — tablas de historial — la parte más difícil del formulario</h2>
+    <p>
+      La página 4 de la I-589 pide cinco tablas separadas: último domicilio
+      antes de venir a EE.UU., domicilios de los últimos 5 años, historial
+      educativo comenzando con la escuela más reciente, empleo de los últimos
+      5 años, e información sobre padres y hermanos. Nuestro asistente
+      renderiza cada celda de la tabla individualmente para que una sola
+      respuesta corresponda a una sola celda del PDF — sin sobreescrituras,
+      sin huecos. Añada tantas filas como necesite; el asistente las numera
+      automáticamente y el renderer coloca los datos de cada fila en las
+      coordenadas correctas del PDF.
+    </p>
+
+    <h2>Lo que NO hacemos</h2>
+    <p>
+      Somos asistente de documentos legales con licencia de California y
+      consultor de inmigración. No representamos solicitantes ante USCIS, la
+      oficina de asilo, o en corte de inmigración. Casos de asilo defensivo
+      que terminan en procedimientos de removal de EOIR requieren un abogado
+      o representante acreditado por BIA para comparecer — aún así podemos
+      preparar la I-589 y el paquete de evidencia bajo la dirección del
+      abogado o del solicitante pro se.
+    </p>
+
+    <cite>
+      <strong>Base legal:</strong> INA §208, 8 U.S.C. §1158 (asilo);
+      INA §241(b)(3) (withholding of removal); INA §101(a)(42) (definición
+      de refugiado); 8 C.F.R. §208 (regulación de asilo); 8 C.F.R. §208.4
+      (plazo de un año); 8 C.F.R. §208.13 (elegibilidad); 8 C.F.R. §208.16
+      (Convention Against Torture); 8 C.F.R. §103.2(b)(3) (certificación de
+      traducción). Ámbito de California: Cal. Bus. &amp; Prof. Code
+      §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading="Inicie su paquete I-589 de asilo"
+    sub="Entrevista en español, ruso, ucraniano e inglés. Puede pausar y continuar. Preparación de documentos bajo su dirección — no asesoría legal."
+    primaryHref="/#get-started?form=I-589"
+    primaryText="Comenzar entrevista I-589"
+  />
+</BaseLayout>

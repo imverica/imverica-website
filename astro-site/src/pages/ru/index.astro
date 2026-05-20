@@ -1,0 +1,65 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import StatsStrip from '~/components/StatsStrip.astro';
+import { HERO } from '~/data/i18n';
+
+const lang = 'ru' as const;
+const title = 'Imverica Legal Solutions | USCIS · EOIR · Калифорнийские формы';
+const description =
+  'Калифорнийский лицензированный LDA и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков и наследственных дел. Удалённый сервис по всему миру.';
+
+const legalServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Imverica Legal Solutions',
+  url: 'https://imverica.com',
+  telephone: '+1-916-399-3992',
+  areaServed: [
+    { '@type': 'State', name: 'California' },
+    { '@type': 'Country', name: 'United States' }
+  ],
+  address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
+  description: 'Калифорнийский лицензированный помощник по юридическим документам и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков, выселения и наследственных дел.',
+  knowsLanguage: ['en', 'ru', 'uk', 'es'],
+  serviceType: [
+    'Подготовка иммиграционных форм USCIS',
+    'Подготовка документов EOIR',
+    'Подготовка калифорнийских форм семейного права',
+    'Подготовка документов малых исков',
+    'Подготовка документов unlawful detainer',
+    'Подготовка документов по наследственным делам'
+  ],
+  disambiguatingDescription: 'Imverica Legal Solutions не является юридической фирмой и не предоставляет юридических консультаций. Документы готовятся по поручению клиента.'
+};
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/ru/"
+  jsonLd={[legalServiceSchema]}
+  lang={lang}
+  slug="/"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <Hero
+    lang={lang}
+    eyebrow={HERO.ru.eyebrow}
+    heading={HERO.ru.heading}
+    sub={HERO.ru.sub}
+  />
+  <StatsStrip lang={lang} />
+
+  <section class="svc-section">
+    <div class="svc-inner" style="text-align:center;">
+      <div class="svc-kicker">Наши услуги</div>
+      <h2>USCIS, иммиграционный суд и подготовка калифорнийских документов</h2>
+      <p style="margin:0 auto;">Imverica Legal Solutions — калифорнийский лицензированный помощник по юридическим документам и иммиграционный консультант. Мы готовим документы по поручению клиента — не предоставляем юридических консультаций.</p>
+      <p style="margin:1rem auto 0;">
+        <a class="btn" href="/ru/i-485-help">I-485 — изменение статуса</a>
+        <a class="btn btn-ghost" href="/ru/i-589-asylum-help">I-589 — убежище</a>
+        <a class="btn btn-ghost" href="/ru/n-400-citizenship-help">N-400 — гражданство</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
