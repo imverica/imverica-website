@@ -78,6 +78,25 @@ for model in ["Application", "DocumentUpload", "PaymentRecord", "StaffNote"]:
 urls = read("portal-backend/portal/urls.py")
 assert_true('path("health/"' in urls, "health endpoint missing")
 assert_true('path("api/portal/schema/"' in urls, "portal schema endpoint missing")
+assert_true('path("api/portal/intake/"' in urls, "portal intake endpoint missing")
+
+views = read("portal-backend/portal/views.py")
+for marker in [
+    "def portal_intake",
+    "@require_POST",
+    "Application.objects.create",
+    "DocumentUpload.objects.create",
+    "EmailValidator",
+]:
+    assert_true(marker in views, f"views.py missing {marker}")
+
+tests = read("portal-backend/portal/tests.py")
+for marker in [
+    "test_portal_intake_requires_core_fields",
+    "test_portal_intake_creates_user_profile_and_application",
+    "test_portal_intake_accepts_uploaded_documents",
+]:
+    assert_true(marker in tests, f"tests.py missing {marker}")
 
 gitignore = read(".gitignore")
 for marker in ["portal-backend/.venv/", "portal-backend/db.sqlite3", "portal-backend/media/"]:
