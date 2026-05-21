@@ -4,11 +4,9 @@ import Hero from '~/components/Hero.astro';
 import HomeSearch from '~/components/HomeSearch.astro';
 import LatestUpdates from '~/components/LatestUpdates.astro';
 import StatsStrip from '~/components/StatsStrip.astro';
-import WhyUs from '~/components/WhyUs.astro';
+import OurServices from '~/components/OurServices.astro';
 import VisaBulletin from '~/components/VisaBulletin.astro';
 import Testimonials from '~/components/Testimonials.astro';
-import ServiceSections from '~/components/ServiceSections.astro';
-import FAQSection from '~/components/FAQSection.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
@@ -57,15 +55,11 @@ const legalServiceSchema = {
 
   <StatsStrip />
 
-  <ServiceSections />
-
-  <WhyUs />
+  <OurServices />
 
   <LatestUpdates />
 
   <VisaBulletin />
 
   <Testimonials />
-
-  <FAQSection />
 </BaseLayout>

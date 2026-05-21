@@ -3,6 +3,7 @@ import '~/styles/site.css';
 import SiteHeader from '~/components/SiteHeader.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
 import IntakeWizard from '~/components/IntakeWizard.astro';
+import ChatWidget from '~/components/ChatWidget.astro';
 import { LOCALES, localizedPath, type Locale } from '~/data/i18n';
 
 interface Props {
@@ -83,5 +84,6 @@ const alternates = slug && availableLocales.length > 1
   </main>
   <SiteFooter lang={lang} />
   <IntakeWizard />
+  <ChatWidget />
 </body>
 </html>

@@ -1,5 +1,6 @@
 [build]
-  publish = "."
+  publish = "astro-site/dist"
+  command = "npm --prefix astro-site ci && npm --prefix astro-site run build"
   functions = "netlify/functions"
 
 [functions]

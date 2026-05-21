@@ -2,6 +2,8 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import WhyUs from '~/components/WhyUs.astro';
+import FAQSection from '~/components/FAQSection.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'What is a California Legal Document Assistant? | Imverica';
@@ -121,6 +123,10 @@ const schema = {
       law). For immigration: §§22440-22448 (Immigration Consultant Act).
     </cite>
   </LandingBody>
+
+  <WhyUs />
+
+  <FAQSection />
 
   <CTAStrip primaryHref="/#get-started" primaryText="Start with Imverica" />
 </BaseLayout>
