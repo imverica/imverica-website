@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Console — Imverica</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;--bg:#f4f3f0;--border:#dddad4;--muted:#666;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a1a;}
+nav{background:var(--navy-dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;}
+nav .brand{color:#dde5ee;font-family:'Playfair Display',serif;font-size:20px;}
+nav .out{color:#9ab;font-size:13px;background:none;border:1px solid #2a3a4a;border-radius:3px;padding:7px 14px;cursor:pointer;}
+.wrap{max-width:1000px;margin:0 auto;padding:2rem;}
+.tabs{display:flex;gap:6px;margin-bottom:1.4rem;}
+.tab{padding:10px 18px;border:1px solid var(--border);background:#fff;border-radius:3px;cursor:pointer;font-size:14px;font-weight:500;color:var(--navy);}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+.card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:0.9rem;}
+.row{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap;}
+.oid{font-family:monospace;font-size:13px;font-weight:500;color:var(--navy-dark);}
+.who{font-size:13px;color:var(--muted);margin:3px 0;}
+.svc{font-size:15px;font-weight:500;color:var(--navy-dark);}
+.sit{font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px;white-space:pre-wrap;}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;}
+select,input,textarea{font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid var(--border);border-radius:3px;padding:8px 10px;outline:none;}
+select:focus,input:focus,textarea:focus{border-color:var(--navy);}
+button.act{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+button.act:hover{background:var(--navy-light);}
+button.act.ghost{background:#fff;color:var(--navy);border:1px solid var(--border);}
+.note{font-size:12px;margin-left:6px;}
+.note.ok{color:#1a5a3a;} .note.err{color:#c0392b;}
+.badge{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;padding:3px 9px;border-radius:999px;}
+.badge.new{background:#eef2f7;color:#33506e;}.badge.in_review{background:#fff3e0;color:#9a6a00;}.badge.ready{background:#eef7f0;color:#1a5a3a;}
+.login{max-width:420px;margin:8% auto;background:#fff;border:1px solid var(--border);border-radius:6px;padding:2.2rem;}
+.login h2{font-size:20px;margin-bottom:0.4rem;color:var(--navy-dark);font-weight:500;}
+.login p{font-size:13px;color:var(--muted);margin-bottom:1.2rem;}
+.login input{width:100%;margin-bottom:1rem;padding:11px 13px;font-size:14px;}
+.login button{width:100%;background:var(--navy);color:#fff;border:none;padding:13px;border-radius:3px;font-size:14px;font-weight:500;cursor:pointer;}
+.hidden{display:none;}
+.thread{border:1px solid var(--border);border-radius:4px;background:#fafaf8;max-height:340px;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:8px;margin:0.8rem 0;}
+.bubble{max-width:80%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;white-space:pre-wrap;}
+.bubble .m{display:block;font-size:10px;opacity:0.6;margin-top:3px;}
+.bubble.staff{align-self:flex-end;background:var(--navy);color:#fff;}
+.bubble.client{align-self:flex-start;background:#eef2f7;color:#1a2e3e;}
+.inbox-item{display:flex;justify-content:space-between;gap:1rem;padding:11px 14px;border:1px solid var(--border);border-radius:4px;margin-bottom:6px;cursor:pointer;background:#fff;}
+.inbox-item:hover{border-color:var(--navy);}
+.muted{color:var(--muted);font-size:12px;}
+.empty{padding:2rem;text-align:center;color:var(--muted);font-size:14px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Imverica · Staff Console</span>
+  <button class="out hidden" id="logout-btn" onclick="logout()">Sign out</button>
+</nav>
+
+<!-- token login -->
+<div class="login" id="login">
+  <h2>Staff sign-in</h2>
+  <p>Enter the admin token. It is stored only for this browser session.</p>
+  <input type="password" id="token-input" placeholder="Admin token" autocomplete="off">
+  <button onclick="saveToken()">Open console</button>
+  <div class="note err" id="login-err" style="margin-top:0.8rem;"></div>
+</div>
+
+<div class="wrap hidden" id="console">
+  <div class="tabs">
+    <div class="tab on" id="tab-orders" onclick="switchTab('orders')">Orders</div>
+    <div class="tab" id="tab-messages" onclick="switchTab('messages')">Messages</div>
+  </div>
+  <div id="view-orders"></div>
+  <div id="view-messages" class="hidden"></div>
+</div>
+
+<script>
+const $=(id)=>document.getElementById(id);
+function token(){ return sessionStorage.getItem('imv_admin_token')||''; }
+function authHeaders(extra){ return Object.assign({Authorization:'Bearer '+token()}, extra||{}); }
+
+async function api(path, opts){
+  opts=opts||{};
+  opts.headers=authHeaders(opts.headers);
+  const r=await fetch(path, opts);
+  return { status:r.status, data: await r.json().catch(()=>({})) };
+}
+
+async function saveToken(){
+  const t=$('token-input').value.trim();
+  if(!t){ $('login-err').textContent='Enter a token.'; return; }
+  sessionStorage.setItem('imv_admin_token', t);
+  const r=await api('/api/intake');
+  if(r.status===200 && r.data.ok){ openConsole(); }
+  else { sessionStorage.removeItem('imv_admin_token'); $('login-err').textContent='Token rejected.'; }
+}
+function logout(){ sessionStorage.removeItem('imv_admin_token'); location.reload(); }
+
+function openConsole(){
+  $('login').classList.add('hidden');
+  $('console').classList.remove('hidden');
+  $('logout-btn').classList.remove('hidden');
+  loadOrders();
+}
+
+function switchTab(t){
+  $('tab-orders').classList.toggle('on', t==='orders');
+  $('tab-messages').classList.toggle('on', t==='messages');
+  $('view-orders').classList.toggle('hidden', t!=='orders');
+  $('view-messages').classList.toggle('hidden', t!=='messages');
+  if(t==='orders') loadOrders(); else loadInbox();
+}
+
+function badge(s){ s=(s||'new'); const map={new:'Received',in_review:'In review',ready:'Ready'}; return '<span class="badge '+s+'">'+(map[s]||s)+'</span>'; }
+function esc(t){ const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; }
+
+async function loadOrders(){
+  const box=$('view-orders'); box.innerHTML='<div class="empty">Loading…</div>';
+  const r=await api('/api/intake');
+  if(r.status!==200||!r.data.ok){ box.innerHTML='<div class="empty">Could not load orders.</div>'; return; }
+  const recs=r.data.records||[];
+  if(!recs.length){ box.innerHTML='<div class="empty">No orders yet.</div>'; return; }
+  box.innerHTML='';
+  recs.forEach(o=>{
+    const c=o.contact||{};
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=
+      '<div class="row"><div>'+
+        '<div class="oid">'+esc(o.id)+'</div>'+
+        '<div class="svc">'+esc(o.serviceLabel||o.service||'—')+(o.formCode?(' · '+esc(o.formCode)):'')+'</div>'+
+        '<div class="who">'+esc(c.name||'')+' · '+esc(c.email||'')+' · '+esc(c.phone||'')+'</div>'+
+        '<div class="muted">'+(o.createdAt?new Date(o.createdAt).toLocaleString():'')+'</div>'+
+      '</div><div>'+badge(o.status)+'</div></div>'+
+      (o.situation?('<div class="sit">'+esc(o.situation)+'</div>'):'')+
+      '<div class="controls">'+
+        '<select id="st-'+o.id+'">'+
+          ['new','in_review','ready'].map(s=>'<option value="'+s+'"'+((o.status||'new')===s?' selected':'')+'>'+s+'</option>').join('')+
+        '</select>'+
+        '<button class="act ghost" onclick="setStatus(\''+o.id+'\')">Save status</button>'+
+        '<button class="act" onclick="prepareDoc(\''+o.id+'\')">Prepare PDF</button>'+
+        '<span class="note" id="note-'+o.id+'"></span>'+
+      '</div>';
+    box.appendChild(card);
+  });
+}
+
+async function setStatus(orderId){
+  const status=$('st-'+orderId).value; const note=$('note-'+orderId);
+  note.className='note'; note.textContent='Saving…';
+  const r=await api('/api/admin-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId,status})});
+  if(r.status===200&&r.data.ok){ note.className='note ok'; note.textContent='Saved'; } else { note.className='note err'; note.textContent=r.data.error||'Failed'; }
+}
+
+async function prepareDoc(orderId){
+  const note=$('note-'+orderId); note.className='note'; note.textContent='Generating PDF…';
+  const r=await api('/api/prepare-doc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId})});
+  if(r.status===200&&r.data.ok){ note.className='note ok'; note.textContent='PDF added to client cabinet ('+Math.round((r.data.size||0)/1024)+' KB)'; }
+  else { note.className='note err'; note.textContent=r.data.error||'Failed (order may have no form data)'; }
+}
+
+let currentThread='';
+async function loadInbox(){
+  const box=$('view-messages'); box.innerHTML='<div class="empty">Loading…</div>';
+  const r=await api('/api/messages?inbox=1');
+  if(r.status!==200||!r.data.ok){ box.innerHTML='<div class="empty">Could not load messages.</div>'; return; }
+  const threads=r.data.threads||[];
+  box.innerHTML='<div id="inbox"></div><div id="thread-view"></div>';
+  const inbox=$('inbox');
+  if(!threads.length){ inbox.innerHTML='<div class="empty">No conversations yet.</div>'; return; }
+  threads.forEach(t=>{
+    const d=document.createElement('div'); d.className='inbox-item'; d.onclick=()=>openThread(t.email);
+    d.innerHTML='<div><strong>'+esc(t.email)+'</strong><div class="muted">'+esc(t.last?t.last.text:'')+'</div></div>'+
+      '<div class="muted">'+t.count+' msg'+(t.last?(' · '+new Date(t.last.ts).toLocaleDateString()):'')+'</div>';
+    inbox.appendChild(d);
+  });
+}
+
+async function openThread(email){
+  currentThread=email;
+  const r=await api('/api/messages?email='+encodeURIComponent(email));
+  const tv=$('thread-view');
+  const msgs=(r.data&&r.data.messages)||[];
+  tv.innerHTML='<div class="card"><div class="row"><strong>'+esc(email)+'</strong>'+
+    '<button class="act ghost" onclick="loadInbox()">← Back</button></div>'+
+    '<div class="thread" id="adm-thread"></div>'+
+    '<div class="controls"><textarea id="reply" rows="2" style="flex:1;min-width:280px;" placeholder="Reply to client…"></textarea>'+
+    '<button class="act" onclick="reply()">Send reply</button><span class="note" id="reply-note"></span></div></div>';
+  const th=$('adm-thread');
+  if(!msgs.length){ th.innerHTML='<div class="muted" style="margin:auto;">No messages.</div>'; }
+  msgs.forEach(m=>{ const b=document.createElement('div'); b.className='bubble '+(m.from==='staff'?'staff':'client');
+    b.innerHTML=esc(m.text)+'<span class="m">'+(m.from==='staff'?'You':'Client')+' · '+new Date(m.ts).toLocaleString()+'</span>'; th.appendChild(b); });
+  th.scrollTop=th.scrollHeight;
+}
+
+async function reply(){
+  const text=$('reply').value.trim(); const note=$('reply-note'); if(!text) return;
+  note.className='note'; note.textContent='Sending…';
+  const r=await api('/api/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentThread,text})});
+  if(r.status===200&&r.data.ok){ $('reply').value=''; note.textContent=''; openThread(currentThread); }
+  else { note.className='note err'; note.textContent=r.data.error||'Failed'; }
+}
+
+$('token-input').addEventListener('keydown',e=>{ if(e.key==='Enter') saveToken(); });
+// auto-open if token already in this session
+if(token()){ api('/api/intake').then(r=>{ if(r.status===200&&r.data.ok) openConsole(); }); }
+</script>
+</body>
+</html>

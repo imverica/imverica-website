@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — Imverica Legal Solutions</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://imverica.com/account.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;
+  --bg:#f4f3f0;--border:#dddad4;--white:#fff;--muted:#666;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a1a;}
+
+nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:68px;}
+.logo{display:flex;align-items:center;text-decoration:none;}
+.logo img{display:block;width:142px;height:auto;}
+.nav-back{font-size:13px;color:var(--navy);text-decoration:none;opacity:0.7;}
+.nav-back:hover{opacity:1;}
+
+.portal-header{background:var(--navy-dark);padding:54px 2.5rem;text-align:center;}
+.portal-header h1{font-family:'Playfair Display',serif;font-size:38px;font-weight:400;color:#dde5ee;margin-bottom:0.6rem;}
+.portal-header p{font-size:15px;color:#7a95ae;font-weight:300;}
+
+.wrap{max-width:560px;margin:0 auto;padding:48px 2.5rem;}
+.dash-wrap{max-width:760px;margin:0 auto;padding:48px 2.5rem;}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:2.4rem;margin-bottom:1.4rem;}
+.card h2{font-size:20px;font-weight:500;color:var(--navy-dark);margin-bottom:0.5rem;}
+.card p.sub{font-size:14px;color:var(--muted);margin-bottom:1.6rem;font-weight:300;line-height:1.6;}
+
+.form-group{margin-bottom:1.1rem;}
+.form-group label{display:block;font-size:12px;font-weight:500;letter-spacing:0.5px;color:#555;margin-bottom:0.4rem;text-transform:uppercase;}
+.form-group input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:3px;font-size:15px;font-family:'DM Sans',sans-serif;color:#1a1a1a;outline:none;transition:border 0.2s;}
+.form-group input:focus{border-color:var(--navy);}
+#code-input{letter-spacing:8px;font-size:22px;text-align:center;font-weight:500;}
+
+.btn{width:100%;background:var(--navy);color:#fff;border:none;padding:14px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;}
+.btn:hover{background:var(--navy-light);}
+.btn:disabled{background:#aaa;cursor:not-allowed;}
+.btn-link{background:none;border:none;color:var(--navy);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:underline;padding:0;width:auto;margin-top:1rem;}
+
+.msg{padding:0.9rem 1.2rem;border-radius:0 3px 3px 0;margin-bottom:1.1rem;font-size:13px;line-height:1.6;display:none;}
+.msg.error{display:block;background:#fdeeee;border-left:4px solid #c0392b;color:#9a2f24;}
+.msg.info{display:block;background:#eef2f7;border-left:4px solid var(--navy);color:#33506e;}
+.msg.dev{display:block;background:#fff7e6;border-left:4px solid #d99a2b;color:#8a5a00;font-family:monospace;}
+
+.hidden{display:none;}
+
+.dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.6rem;flex-wrap:wrap;gap:1rem;}
+.dash-head .who{font-size:14px;color:var(--muted);}
+.dash-head .who strong{color:var(--navy-dark);}
+.dash-actions{display:flex;gap:10px;}
+.dash-actions a,.dash-actions button{font-size:13px;padding:9px 16px;border-radius:3px;text-decoration:none;font-family:'DM Sans',sans-serif;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:500;}
+.dash-actions a.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+.order{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:0.9rem;}
+.order-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap;}
+.order-id{font-family:monospace;font-size:13px;color:var(--navy-dark);font-weight:500;letter-spacing:0.5px;}
+.order-date{font-size:12px;color:#999;}
+.order-service{font-size:15px;color:var(--navy-dark);font-weight:500;margin-bottom:0.3rem;}
+.order-sit{font-size:13px;color:var(--muted);line-height:1.6;white-space:pre-wrap;}
+.badge{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;padding:4px 10px;border-radius:999px;}
+.badge.new{background:#eef2f7;color:#33506e;}
+.badge.review{background:#fff3e0;color:#9a6a00;}
+.badge.ready{background:#eef7f0;color:#1a5a3a;}
+.empty{background:#fff;border:1px dashed var(--border);border-radius:6px;padding:2.4rem;text-align:center;color:var(--muted);font-size:14px;line-height:1.7;}
+
+.docs{margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem;}
+.docs-label{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#888;margin-bottom:0.6rem;}
+.doc-file{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 11px;background:#f8f8f6;border:1px solid var(--border);border-radius:3px;margin-bottom:6px;font-size:13px;}
+.doc-file a{color:var(--navy);text-decoration:none;font-weight:500;}
+.doc-file a:hover{text-decoration:underline;}
+.doc-file .sz{color:#aaa;font-size:11px;}
+.doc-file .rm{color:#aaa;cursor:pointer;font-size:16px;line-height:1;padding:0 4px;}
+.doc-file .rm:hover{color:#c0392b;}
+.doc-add{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--navy);cursor:pointer;font-weight:500;border:1px dashed var(--border);border-radius:3px;padding:9px 14px;background:#fff;}
+.doc-add:hover{border-color:var(--navy);background:#f0f4f8;}
+.doc-msg{font-size:12px;margin-top:6px;}
+.doc-msg.err{color:#c0392b;}
+.doc-msg.ok{color:#1a5a3a;}
+
+.chat-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.8rem 2rem;margin-top:1.6rem;}
+.chat-card h3{font-size:16px;font-weight:500;color:var(--navy-dark);margin-bottom:0.3rem;}
+.chat-card .chat-sub{font-size:13px;color:var(--muted);margin-bottom:1.2rem;font-weight:300;}
+.chat-thread{border:1px solid var(--border);border-radius:4px;background:#fafaf8;height:300px;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:8px;}
+.chat-empty{margin:auto;color:#aaa;font-size:13px;text-align:center;}
+.bubble{max-width:78%;padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word;}
+.bubble .bmeta{display:block;font-size:10px;opacity:0.6;margin-top:4px;}
+.bubble.client{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:3px;}
+.bubble.staff{align-self:flex-start;background:#eef2f7;color:#1a2e3e;border-bottom-left-radius:3px;}
+.chat-input-row{display:flex;gap:8px;margin-top:0.9rem;}
+.chat-input-row textarea{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:14px;resize:vertical;min-height:44px;outline:none;}
+.chat-input-row textarea:focus{border-color:var(--navy);}
+.chat-send{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:0 20px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.chat-send:hover{background:var(--navy-light);}
+.chat-send:disabled{background:#aaa;cursor:not-allowed;}
+
+footer{background:var(--navy-dark);padding:28px 2.5rem;text-align:center;margin-top:3rem;}
+footer p{font-size:12px;color:#d8e6f6;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/" aria-label="Imverica Legal Solutions"><img src="/logo-nav.png" alt="Imverica Legal Solutions"></a>
+  <a class="nav-back" href="/">&#8592; Back to main site</a>
+</nav>
+
+<div class="portal-header">
+  <h1>My Account</h1>
+  <p>Sign in with a one-time code to view your requests and their status</p>
+</div>
+
+<!-- ===== Login: email step ===== -->
+<div class="wrap" id="step-email">
+  <div class="card">
+    <h2>Sign in</h2>
+    <p class="sub">Enter your email and we'll send you a one-time sign-in code. No password needed.</p>
+    <div class="msg" id="email-msg"></div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email">
+    </div>
+    <button class="btn" id="send-code-btn" onclick="requestCode()">Send me a code</button>
+  </div>
+</div>
+
+<!-- ===== Login: code step ===== -->
+<div class="wrap hidden" id="step-code">
+  <div class="card">
+    <h2>Enter your code</h2>
+    <p class="sub">We sent a sign-in code to <strong id="code-email"></strong>. It expires in 10 minutes.</p>
+    <div class="msg" id="code-msg"></div>
+    <div class="form-group">
+      <label>Sign-in code</label>
+      <input type="text" id="code-input" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
+    </div>
+    <button class="btn" id="verify-btn" onclick="verifyCode()">Sign in</button>
+    <button class="btn-link" onclick="backToEmail()">Use a different email</button>
+    <button class="btn-link" onclick="requestCode(true)" style="margin-left:1rem;">Resend code</button>
+  </div>
+</div>
+
+<!-- ===== Dashboard ===== -->
+<div class="dash-wrap hidden" id="step-dash">
+  <div class="dash-head">
+    <div class="who">Signed in as <strong id="dash-email"></strong></div>
+    <div class="dash-actions">
+      <a class="primary" href="/portal.html">+ New request</a>
+      <button onclick="logout()">Sign out</button>
+    </div>
+  </div>
+  <div class="msg" id="dash-msg"></div>
+  <div id="orders"></div>
+
+  <div class="chat-card">
+    <h3>Messages</h3>
+    <p class="chat-sub">Ask us a question about your documents. We reply here — not legal advice.</p>
+    <div class="chat-thread" id="chat-thread"><div class="chat-empty" id="chat-empty">No messages yet. Send us a note below.</div></div>
+    <div class="chat-input-row">
+      <textarea id="chat-input" placeholder="Type your message…" rows="1"></textarea>
+      <button class="chat-send" id="chat-send" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+function show(step){ ['step-email','step-code','step-dash'].forEach(s=>$(s).classList.toggle('hidden', s!==step)); }
+function msg(id, kind, text){ const el=$(id); el.className='msg '+kind; el.textContent=text; }
+function clearMsg(id){ const el=$(id); el.className='msg'; el.textContent=''; }
+
+let currentEmail = '';
+
+async function api(action, payload){
+  const res = await fetch('/api/auth', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    credentials:'include', body: JSON.stringify({ action, ...payload })
+  });
+  const data = await res.json().catch(()=>({}));
+  return { ok: res.ok && data.ok, status: res.status, data };
+}
+
+async function requestCode(isResend){
+  const email = (isResend ? currentEmail : $('email-input').value).trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg('email-msg','error','Please enter a valid email address.'); return; }
+  currentEmail = email;
+  const btn = isResend ? null : $('send-code-btn');
+  if (btn){ btn.disabled=true; btn.textContent='Sending…'; }
+  clearMsg('email-msg'); clearMsg('code-msg');
+  const r = await api('request-otp', { email });
+  if (btn){ btn.disabled=false; btn.textContent='Send me a code'; }
+  if (!r.ok){ msg(isResend?'code-msg':'email-msg','error', r.data.error || 'Could not send a code. Try again.'); return; }
+  $('code-email').textContent = email;
+  show('step-code'); $('code-input').focus();
+  if (r.data.devCode){ msg('code-msg','dev','DEV MODE — your code is '+r.data.devCode+' (email provider not configured)'); }
+  else { msg('code-msg','info','Code sent. Check your inbox (and spam folder).'); }
+}
+
+async function verifyCode(){
+  const code = $('code-input').value.replace(/\D/g,'');
+  if (code.length!==6){ msg('code-msg','error','Enter the code we emailed you.'); return; }
+  const btn=$('verify-btn'); btn.disabled=true; btn.textContent='Signing in…';
+  const r = await api('verify-otp', { email: currentEmail, code });
+  btn.disabled=false; btn.textContent='Sign in';
+  if (!r.ok){ msg('code-msg','error', r.data.error || 'Incorrect code.'); return; }
+  loadDashboard();
+}
+
+function backToEmail(){ clearMsg('code-msg'); $('code-input').value=''; show('step-email'); }
+
+async function logout(){
+  await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({action:'logout'})});
+  currentEmail=''; $('email-input').value=''; stopChat(); show('step-email');
+}
+
+function badgeFor(status){
+  const s=(status||'new').toLowerCase();
+  if (s.includes('ready')||s.includes('complete')||s.includes('done')) return ['ready','Ready'];
+  if (s.includes('review')||s.includes('progress')) return ['review','In review'];
+  return ['new','Received'];
+}
+
+function renderOrders(orders){
+  const box=$('orders'); box.textContent='';
+  if (!orders.length){
+    const e=document.createElement('div'); e.className='empty';
+    e.innerHTML='You have no requests yet.<br>Use <strong>+ New request</strong> to submit your first one.';
+    box.appendChild(e); return;
+  }
+  orders.forEach(o=>{
+    const card=document.createElement('div'); card.className='order';
+    const top=document.createElement('div'); top.className='order-top';
+    const left=document.createElement('div');
+    const id=document.createElement('span'); id.className='order-id'; id.textContent=o.id||'';
+    left.appendChild(id);
+    const [bcls,btxt]=badgeFor(o.status);
+    const badge=document.createElement('span'); badge.className='badge '+bcls; badge.textContent=btxt;
+    top.appendChild(left); top.appendChild(badge);
+    const svc=document.createElement('div'); svc.className='order-service'; svc.textContent=o.service||'Document preparation request';
+    const date=document.createElement('div'); date.className='order-date';
+    date.textContent = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '';
+    const sit=document.createElement('div'); sit.className='order-sit'; sit.textContent=o.situation||'';
+    card.appendChild(top); card.appendChild(svc); if(date.textContent) card.appendChild(date); if(sit.textContent) card.appendChild(sit);
+
+    // Documents section
+    const docs=document.createElement('div'); docs.className='docs';
+    // Prepared by Imverica (download-only) — shown only when present
+    const pwrap=document.createElement('div'); pwrap.id='prepwrap-'+o.id; pwrap.style.display='none'; pwrap.style.marginBottom='1.1rem';
+    const plabel=document.createElement('div'); plabel.className='docs-label'; plabel.style.color='#1a5a3a'; plabel.textContent='Prepared by Imverica — ready to download';
+    const plist=document.createElement('div'); plist.id='prep-'+o.id;
+    pwrap.appendChild(plabel); pwrap.appendChild(plist);
+    // Client's own uploads
+    const dlabel=document.createElement('div'); dlabel.className='docs-label'; dlabel.textContent='Your documents';
+    const dlist=document.createElement('div'); dlist.id='docs-'+o.id;
+    const input=document.createElement('input'); input.type='file'; input.style.display='none';
+    input.accept='.pdf,.jpg,.jpeg,.png,.docx,.heic,.webp';
+    input.addEventListener('change',()=>{ if(input.files[0]) uploadFile(o.id, input.files[0], dmsg); input.value=''; });
+    const add=document.createElement('button'); add.className='doc-add'; add.type='button';
+    add.textContent='+ Attach a document'; add.onclick=()=>input.click();
+    const dmsg=document.createElement('div'); dmsg.className='doc-msg';
+    docs.appendChild(pwrap); docs.appendChild(dlabel); docs.appendChild(dlist); docs.appendChild(add); docs.appendChild(input); docs.appendChild(dmsg);
+    card.appendChild(docs);
+    box.appendChild(card);
+    loadFiles(o.id);
+  });
+}
+
+function fmtSize(n){ return n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(n/1024))+' KB'; }
+
+function fileRow(orderId, f, removable){
+  const row=document.createElement('div'); row.className='doc-file';
+  const left=document.createElement('span');
+  const a=document.createElement('a'); a.textContent=(f.source==='prepared'?'✅ ':'📄 ')+f.name;
+  a.href='/api/upload?orderId='+encodeURIComponent(orderId)+'&fileId='+encodeURIComponent(f.fileId);
+  const sz=document.createElement('span'); sz.className='sz'; sz.textContent=' ('+fmtSize(f.size)+')';
+  left.appendChild(a); left.appendChild(sz); row.appendChild(left);
+  if(removable){ const rm=document.createElement('span'); rm.className='rm'; rm.textContent='×'; rm.title='Remove'; rm.onclick=()=>removeFile(orderId,f.fileId); row.appendChild(rm); }
+  return row;
+}
+
+async function loadFiles(orderId){
+  const list=document.getElementById('docs-'+orderId);
+  const plist=document.getElementById('prep-'+orderId);
+  const pwrap=document.getElementById('prepwrap-'+orderId);
+  if(!list) return;
+  try{
+    const r=await fetch('/api/upload?orderId='+encodeURIComponent(orderId),{credentials:'include'});
+    const d=await r.json(); if(!d.ok) return;
+    list.textContent=''; if(plist) plist.textContent='';
+    const files=d.files||[];
+    const prepared=files.filter(f=>f.source==='prepared');
+    const mine=files.filter(f=>f.source!=='prepared');
+    if(pwrap) pwrap.style.display = prepared.length ? 'block' : 'none';
+    prepared.forEach(f=>plist.appendChild(fileRow(orderId,f,false)));
+    mine.forEach(f=>list.appendChild(fileRow(orderId,f,true)));
+  }catch(e){}
+}
+
+function uploadFile(orderId, file, msgEl){
+  msgEl.className='doc-msg';
+  if(file.size>4*1024*1024){ msgEl.className='doc-msg err'; msgEl.textContent='File too large (max 4 MB).'; return; }
+  msgEl.textContent='Uploading '+file.name+'…';
+  const reader=new FileReader();
+  reader.onload=async()=>{
+    try{
+      const r=await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64:String(reader.result)})});
+      const d=await r.json();
+      if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error||'Upload failed.'; return; }
+      msgEl.className='doc-msg ok'; msgEl.textContent='Uploaded.'; loadFiles(orderId);
+    }catch(e){ msgEl.className='doc-msg err'; msgEl.textContent='Upload failed. Try again.'; }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function removeFile(orderId, fileId){
+  await fetch('/api/upload?orderId='+encodeURIComponent(orderId)+'&fileId='+encodeURIComponent(fileId),{method:'DELETE',credentials:'include'});
+  loadFiles(orderId);
+}
+
+// ----- chat -----
+let chatPoll=null, chatLastCount=-1;
+function escText(t){ const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+
+async function loadMessages(){
+  const thread=$('chat-thread'); if(!thread) return;
+  try{
+    const r=await fetch('/api/messages',{credentials:'include',headers:{Accept:'application/json'}});
+    if(!r.ok) return;
+    const d=await r.json(); if(!d.ok) return;
+    const msgs=d.messages||[];
+    if(msgs.length===chatLastCount) return; // no change, avoid scroll jump
+    chatLastCount=msgs.length;
+    thread.textContent='';
+    if(!msgs.length){ const e=document.createElement('div'); e.className='chat-empty'; e.textContent='No messages yet. Send us a note below.'; thread.appendChild(e); return; }
+    msgs.forEach(m=>{
+      const b=document.createElement('div'); b.className='bubble '+(m.from==='staff'?'staff':'client');
+      b.innerHTML=escText(m.text)+'<span class="bmeta">'+(m.from==='staff'?'Imverica':'You')+' · '+new Date(m.ts).toLocaleString()+'</span>';
+      thread.appendChild(b);
+    });
+    thread.scrollTop=thread.scrollHeight;
+  }catch(e){}
+}
+
+async function sendMessage(){
+  const inp=$('chat-input'); const btn=$('chat-send');
+  const text=inp.value.trim(); if(!text) return;
+  btn.disabled=true;
+  try{
+    const r=await fetch('/api/messages',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+    const d=await r.json();
+    if(d.ok){ inp.value=''; chatLastCount=-1; await loadMessages(); }
+  }catch(e){}
+  btn.disabled=false; inp.focus();
+}
+
+function startChat(){ loadMessages(); if(!chatPoll) chatPoll=setInterval(loadMessages, 10000); }
+function stopChat(){ if(chatPoll){ clearInterval(chatPoll); chatPoll=null; } chatLastCount=-1; }
+
+async function loadDashboard(){
+  const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
+  if (res.status===401){ show('step-email'); stopChat(); return; }
+  const data = await res.json().catch(()=>({}));
+  if (!data.ok){ show('step-email'); stopChat(); return; }
+  $('dash-email').textContent = data.email||'';
+  renderOrders(data.orders||[]);
+  show('step-dash');
+  startChat();
+}
+
+// Enter-key convenience
+$('email-input').addEventListener('keydown',e=>{ if(e.key==='Enter') requestCode(); });
+$('code-input').addEventListener('keydown',e=>{ if(e.key==='Enter') verifyCode(); });
+$('chat-input').addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
+
+// On load: if a valid session already exists, jump to dashboard.
+loadDashboard();
+</script>
+</body>
+</html>
