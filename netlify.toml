@@ -4,11 +4,30 @@
 
 [functions]
 node_bundler = "esbuild"
+# Small shared libs are fine on every function. Heavy PDF templates (92 MB) and
+# overlay maps are scoped per-function below so the 13 light functions
+# (auth, account, upload, messages, etc.) stay tiny and deploy fast.
 included_files = [
-  "netlify/functions/lib/**",
-  "netlify/functions/pdf-maps/**",
+  "netlify/functions/lib/**"
+]
+
+# Only these functions read the blank PDF templates / overlay maps.
+[functions."generate-pdf"]
+included_files = [
   "assets/form-cache/pdfs/**",
   "overlay-maps/normalized/**"
+]
+
+[functions."prepare-doc"]
+included_files = [
+  "assets/form-cache/pdfs/**",
+  "overlay-maps/normalized/**"
+]
+
+# Only uscis-pdf-map needs the pdf-maps directory.
+[functions."uscis-pdf-map"]
+included_files = [
+  "netlify/functions/pdf-maps/**"
 ]
 
 [[headers]]
