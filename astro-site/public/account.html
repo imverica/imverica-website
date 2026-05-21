@@ -145,10 +145,24 @@ footer p{font-size:12px;color:#d8e6f6;}
   </div>
 </div>
 
+<!-- ===== Profile (required, first time) ===== -->
+<div class="wrap hidden" id="step-profile">
+  <div class="card">
+    <h2>Complete your profile</h2>
+    <p class="sub">We need a few details before we can prepare documents for you. This is stored encrypted.</p>
+    <div class="msg" id="profile-msg"></div>
+    <div class="form-group"><label>First name *</label><input type="text" id="pf-first" placeholder="First name" autocomplete="given-name"></div>
+    <div class="form-group"><label>Last name *</label><input type="text" id="pf-last" placeholder="Last name" autocomplete="family-name"></div>
+    <div class="form-group"><label>Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
+    <div class="form-group"><label>Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" placeholder="Legal name as printed on your documents"></div>
+    <button class="btn" id="pf-save" onclick="saveProfile()">Save and continue</button>
+  </div>
+</div>
+
 <!-- ===== Dashboard ===== -->
 <div class="dash-wrap hidden" id="step-dash">
   <div class="dash-head">
-    <div class="who">Signed in as <strong id="dash-email"></strong></div>
+    <div class="who">Welcome, <strong id="dash-name"></strong> · <span id="dash-email" style="font-size:12px;color:#999;"></span></div>
     <div class="dash-actions">
       <a class="primary" href="/portal.html">+ New request</a>
       <button onclick="logout()">Sign out</button>
@@ -174,7 +188,7 @@ footer p{font-size:12px;color:#d8e6f6;}
 
 <script>
 const $ = (id) => document.getElementById(id);
-function show(step){ ['step-email','step-code','step-dash'].forEach(s=>$(s).classList.toggle('hidden', s!==step)); }
+function show(step){ ['step-email','step-code','step-profile','step-dash'].forEach(s=>$(s).classList.toggle('hidden', s!==step)); }
 function msg(id, kind, text){ const el=$(id); el.className='msg '+kind; el.textContent=text; }
 function clearMsg(id){ const el=$(id); el.className='msg'; el.textContent=''; }
 
@@ -366,11 +380,40 @@ async function sendMessage(){
 function startChat(){ loadMessages(); if(!chatPoll) chatPoll=setInterval(loadMessages, 10000); }
 function stopChat(){ if(chatPoll){ clearInterval(chatPoll); chatPoll=null; } chatLastCount=-1; }
 
+async function ensureProfile(){
+  try{
+    const r = await fetch('/api/profile', { credentials:'include', headers:{Accept:'application/json'} });
+    if (!r.ok) return null;
+    const d = await r.json();
+    return (d && d.profile && d.profile.firstName) ? d.profile : null;
+  }catch(e){ return null; }
+}
+
+async function saveProfile(){
+  const first=$('pf-first').value.trim(), last=$('pf-last').value.trim();
+  const phone=$('pf-phone').value.trim(), legal=$('pf-legal').value.trim();
+  if(!first || !last){ msg('profile-msg','error','Please enter your first and last name.'); return; }
+  if(phone.replace(/\D/g,'').length<10){ msg('profile-msg','error','Please enter a valid phone number.'); return; }
+  const btn=$('pf-save'); btn.disabled=true; btn.textContent='Saving…';
+  try{
+    const r=await fetch('/api/profile',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:first,lastName:last,phone:phone,legalName:legal})});
+    const d=await r.json();
+    if(!r.ok || !d.ok){ btn.disabled=false; btn.textContent='Save and continue'; msg('profile-msg','error',d.error||'Could not save. Try again.'); return; }
+    loadDashboard();
+  }catch(e){ btn.disabled=false; btn.textContent='Save and continue'; msg('profile-msg','error','Could not reach the server.'); }
+}
+
 async function loadDashboard(){
   const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
   if (res.status===401){ show('step-email'); stopChat(); return; }
   const data = await res.json().catch(()=>({}));
   if (!data.ok){ show('step-email'); stopChat(); return; }
+
+  // First time: require a profile before showing the cabinet.
+  const profile = await ensureProfile();
+  if (!profile){ clearMsg('profile-msg'); show('step-profile'); $('pf-first').focus(); return; }
+
+  $('dash-name').textContent = profile.firstName;
   $('dash-email').textContent = data.email||'';
   renderOrders(data.orders||[]);
   show('step-dash');
@@ -381,6 +424,8 @@ async function loadDashboard(){
 $('email-input').addEventListener('keydown',e=>{ if(e.key==='Enter') requestCode(); });
 $('code-input').addEventListener('keydown',e=>{ if(e.key==='Enter') verifyCode(); });
 $('chat-input').addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
+(function(){ var p=$('pf-phone'); if(!p) return; p.addEventListener('input',function(){ var d=p.value.replace(/\D/g,'').slice(0,10); p.value = d.length<=3?(d?'('+d:''):d.length<=6?'('+d.slice(0,3)+') '+d.slice(3):'('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6); }); })();
+$('pf-legal').addEventListener('keydown',e=>{ if(e.key==='Enter') saveProfile(); });
 
 // On load: if a valid session already exists, jump to dashboard.
 loadDashboard();
