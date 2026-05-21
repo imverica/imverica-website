@@ -23,6 +23,12 @@ const USCIS_RSS = 'https://www.uscis.gov/news/rss-feed/59144';
 const FED = 'https://www.federalregister.gov/api/v1/documents.json';
 const CA_GOV_RSS = 'https://www.gov.ca.gov/feed/';
 
+// Google News RSS aggregates headlines from every outlet (Bloomberg, Reuters,
+// CNN, AP, BBC, CBS, CalMatters, law firms, etc.) filtered by a search query.
+function gnews(query) {
+  return `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+}
+
 const SOURCES = [
   { tag: 'USCIS', kind: 'rss', url: USCIS_RSS },
   {
@@ -35,7 +41,10 @@ const SOURCES = [
     kind: 'fedreg',
     url: `${FED}?conditions%5Btype%5D%5B%5D=PRESDOCU&conditions%5Bterm%5D=immigration&order=newest&per_page=8&fields%5B%5D=title&fields%5B%5D=publication_date&fields%5B%5D=html_url`
   },
-  { tag: 'CA Law', kind: 'rss', url: CA_GOV_RSS }
+  { tag: 'CA Law', kind: 'rss', url: CA_GOV_RSS },
+  // Broad media coverage — only immigration/USCIS/EOIR and California-law topics.
+  { tag: 'News', kind: 'gnews', url: gnews('(USCIS OR EOIR OR immigration OR visa OR asylum OR "green card" OR naturalization OR "work permit") when:21d') },
+  { tag: 'News', kind: 'gnews', url: gnews('("California law" OR "Newsom signs" OR "California legislation" OR "California Courts" OR "California Senate Bill" OR "California Assembly Bill") when:30d') }
 ];
 
 const ROUTINE_NOTICE = new RegExp(
@@ -120,10 +129,41 @@ const CA_POLITICS = new RegExp(
   'i'
 );
 
+/** Media (Google News) must be on-topic: US immigration/USCIS/EOIR or CA law. */
+const MEDIA_RELEVANT = new RegExp(
+  [
+    'uscis', 'immigrat', 'immigrant', 'visa', 'asylum', 'refugee', 'green card',
+    'naturaliz', 'citizenship', 'eoir', 'deport', '\\btps\\b', 'daca',
+    'work permit', 'employment authorization', 'h-1b', 'h-2b', 'parole',
+    'adjustment of status', 'i-485', 'n-400', 'i-130', 'i-765', 'i-589',
+    'california law', 'newsom', 'california legislation', 'california court',
+    'california senate bill', 'california assembly bill'
+  ].join('|'),
+  'i'
+);
+
+/** Media noise: blogs/marketing, non-US migration, opinion fluff. */
+const MEDIA_NOISE = new RegExp(
+  [
+    'law review', 'symposium', 'webinar', 'podcast', 'sponsored', 'advertis',
+    'how to', 'best lawyers', 'proud to support',
+    '\\buk\\b', 'u\\.k\\.', 'britain', 'canada', 'australia', 'thailand',
+    'schengen', 'tourist visa', 'golden visa', 'dubai', '\\buae\\b',
+    'passport rank', 'small boats', 'channel crossing', 'eu migration',
+    // tech/AI/entertainment policy — not relevant to Imverica clients
+    'artificial intelligence', 'ai disruption', 'ai job', 'ai-driven',
+    'job displacement', 'chatbot',
+    // Visa Inc. (payment brand), not immigration visas
+    'men in blazers', 'visa team', 'visa direct', 'visa card', 'visa inc',
+    'payment network', 'credit card'
+  ].join('|'),
+  'i'
+);
+
 const DISCLAIMER =
-  'Official government announcements from USCIS, immigration courts (EOIR), and California, ' +
-  'linked verbatim for convenience. Imverica Legal Solutions is not a law firm and does not ' +
-  'provide legal advice. Always verify details with the linked official source.';
+  'Official announcements from USCIS, immigration courts (EOIR), and California, plus ' +
+  'headlines from major news outlets — linked verbatim to each source. Imverica Legal ' +
+  'Solutions is not a law firm and does not provide legal advice. Always verify with the source.';
 
 function decodeEntities(value) {
   return String(value || '')
@@ -187,6 +227,30 @@ function parseFedReg(jsonText, tag) {
     .filter((it) => it.title && it.url);
 }
 
+function parseGNews(xml) {
+  const items = [];
+  const blocks = String(xml || '').split(/<item[\s>]/i).slice(1);
+  for (const block of blocks) {
+    const titleM = block.match(/<title>([\s\S]*?)<\/title>/i);
+    const linkM = block.match(/<link>([\s\S]*?)<\/link>/i);
+    const dateM = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
+    const srcM = block.match(/<source[^>]*>([\s\S]*?)<\/source>/i);
+    if (!titleM || !linkM) continue;
+    let title = decodeEntities(titleM[1]).replace(/\s+/g, ' ');
+    let outlet = srcM ? decodeEntities(srcM[1]) : '';
+    // Google News titles end with " - Outlet"; use it as the source, strip from title.
+    if (!outlet) {
+      const m = title.match(/^(.*) - ([^-]{2,40})$/);
+      if (m) { title = m[1].trim(); outlet = m[2].trim(); }
+    } else if (title.endsWith(` - ${outlet}`)) {
+      title = title.slice(0, -(` - ${outlet}`).length).trim();
+    }
+    const date = dateM ? toDate(decodeEntities(dateM[1])) : null;
+    items.push({ source: outlet || 'News', origin: 'gnews', title, url: decodeEntities(linkM[1]), date: date ? formatDate(date) : '', ts: date ? date.getTime() : 0 });
+  }
+  return items;
+}
+
 async function fetchSource(src) {
   try {
     const res = await fetch(src.url, {
@@ -195,7 +259,9 @@ async function fetchSource(src) {
     });
     if (!res.ok) return [];
     const text = await res.text();
-    return src.kind === 'fedreg' ? parseFedReg(text, src.tag) : parseRss(text, src.tag);
+    if (src.kind === 'fedreg') return parseFedReg(text, src.tag);
+    if (src.kind === 'gnews') return parseGNews(text);
+    return parseRss(text, src.tag);
   } catch {
     return [];
   }
@@ -205,6 +271,12 @@ function keep(item) {
   if (!item.title || !item.url) return false;
   if (ROUTINE_NOTICE.test(item.title)) return false;   // no OMB paperwork
   if (BLOCKED_NEWS.test(item.title)) return false;      // no criminal/violence/unrest
+  if (item.origin === 'gnews') {
+    // Media: must be on-topic and not blog/marketing/foreign noise.
+    if (!MEDIA_RELEVANT.test(item.title)) return false;
+    if (MEDIA_NOISE.test(item.title)) return false;
+    return true;
+  }
   if (item.source === 'White House' && !IMMIG.test(item.title)) return false;
   if (item.source === 'CA Law' && (CA_POLITICS.test(item.title) || !CA_BENEFIT.test(item.title))) return false;
   return true;
@@ -214,18 +286,23 @@ exports.handler = async () => {
   const settled = await Promise.allSettled(SOURCES.map(fetchSource));
   const all = settled.flatMap((r) => (r.status === 'fulfilled' ? r.value : []));
 
+  // Dedup by URL and by a normalized title key (collapses the same story
+  // syndicated across many outlets).
+  const titleKey = (t) => String(t).toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(Boolean).slice(0, 5).join(' ');
   const seen = new Set();
+  const seenTitles = new Set();
   const items = all
     .filter(keep)
     .filter((item) => {
-      if (seen.has(item.url)) return false;
+      const tk = titleKey(item.title);
+      if (seen.has(item.url) || seenTitles.has(tk)) return false;
       seen.add(item.url);
+      seenTitles.add(tk);
       return true;
     })
-    .map((item) => ({ ...item, priority: PRIORITY.test(item.title) ? 1 : 0 }))
-    .sort((a, b) => (b.priority - a.priority) || (b.ts - a.ts))
-    .slice(0, 10)
-    .map(({ priority, ts, ...item }) => item);
+    .sort((a, b) => (b.ts - a.ts) || (PRIORITY.test(b.title) - PRIORITY.test(a.title)))
+    .slice(0, 12)
+    .map(({ ts, origin, ...item }) => item);
 
   return {
     statusCode: 200,
