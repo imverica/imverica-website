@@ -1,7 +1,14 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
+import HomeSearch from '~/components/HomeSearch.astro';
+import LatestUpdates from '~/components/LatestUpdates.astro';
 import StatsStrip from '~/components/StatsStrip.astro';
+import WhyUs from '~/components/WhyUs.astro';
+import VisaBulletin from '~/components/VisaBulletin.astro';
+import Testimonials from '~/components/Testimonials.astro';
+import ServiceSections from '~/components/ServiceSections.astro';
+import FAQSection from '~/components/FAQSection.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
@@ -43,20 +50,22 @@ const legalServiceSchema = {
     eyebrow="California · Licensed LDA · Immigration Consultant"
     heading="What document do you need prepared?"
     sub="Describe your situation or enter a form number. We prepare USCIS petitions (I-485, I-130, I-765, I-589, N-400, I-131, I-90), EOIR immigration court documents, California family law forms (FL-100, FL-300), small claims (SC-100), unlawful detainer, restraining orders, probate, and fee waivers — for clients across California and worldwide."
-    ctaPrimary={{ href: '#get-started', text: 'Start document preparation' }}
-    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
-  />
+    showActions={false}
+  >
+    <HomeSearch />
+  </Hero>
 
   <StatsStrip />
 
-  <section class="svc-section">
-    <div class="svc-inner" style="text-align:center;">
-      <div class="svc-kicker">Phase 1 scaffold</div>
-      <h2>Astro migration in progress</h2>
-      <p style="margin:0 auto;">This is the new Astro-powered site running in parallel to the current imverica.com. Service cards, FAQ, wizard, and the 10 dedicated landing pages are being ported next.</p>
-      <p style="margin:1rem auto 0;">
-        <a class="btn" href="/i-485-help">I-485 help (preview)</a>
-      </p>
-    </div>
-  </section>
+  <ServiceSections />
+
+  <WhyUs />
+
+  <LatestUpdates />
+
+  <VisaBulletin />
+
+  <Testimonials />
+
+  <FAQSection />
 </BaseLayout>

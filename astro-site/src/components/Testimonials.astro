@@ -1,0 +1,117 @@
+---
+const testimonials = [
+  {
+    title: 'Clear steps',
+    body: 'Clients value a guided process that breaks long immigration and court forms into practical questions instead of handing them a blank PDF.'
+  },
+  {
+    title: 'Organized packets',
+    body: 'The goal is a review-ready packet: forms, supporting documents, translations, and next steps gathered in one place before payment and office review.'
+  },
+  {
+    title: 'Language support',
+    body: 'English, Russian, Ukrainian, and Spanish intake helps clients explain facts in the language they actually use every day.'
+  }
+];
+---
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-inner">
+    <div class="testimonials-heading">
+      <div class="testimonials-kicker">Testimonials</div>
+      <h2>What clients value about the process</h2>
+      <p>Representative client-feedback themes. Verified public reviews can be added here as they are collected.</p>
+    </div>
+    <div class="testimonials-grid">
+      {testimonials.map((item) => (
+        <article class="testimonial-card">
+          <div class="quote-mark">“</div>
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background: #fff;
+    border-top: 1px solid rgba(40, 30, 20, 0.08);
+    padding: 76px 1.5rem;
+  }
+
+  .testimonials-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .testimonials-heading {
+    max-width: 760px;
+    margin: 0 auto 30px;
+    text-align: center;
+  }
+
+  .testimonials-kicker {
+    color: var(--terracotta-deep);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .testimonials-heading h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .testimonials-heading p,
+  .testimonial-card p {
+    color: #3a4a5e;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .testimonial-card {
+    position: relative;
+    min-height: 210px;
+    background: #fffaf2;
+    border: 1px solid rgba(40, 30, 20, 0.1);
+    border-radius: 12px;
+    padding: 28px 24px 24px;
+  }
+
+  .quote-mark {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: rgba(164, 91, 52, 0.22);
+    font-family: Georgia, serif;
+    font-size: 64px;
+    line-height: 1;
+  }
+
+  .testimonial-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+
+  @media (max-width: 820px) {
+    .testimonials-section {
+      padding: 56px 1.25rem;
+    }
+
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

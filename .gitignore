@@ -20,3 +20,13 @@ portal-backend/.env
 portal-backend/db.sqlite3
 portal-backend/media/
 portal-backend/staticfiles/
+
+# Local backups & archives (never commit)
+.backup-patches/
+.netlify-deploy-archive/
+*.bak
+deno.lock
+
+# QA fixtures / generated artifacts
+answers/
+payloads/

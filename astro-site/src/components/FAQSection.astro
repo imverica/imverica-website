@@ -1,0 +1,56 @@
+---
+const faqs = [
+  {
+    q: 'What is a California Legal Document Assistant (LDA)?',
+    a: 'A Legal Document Assistant is a registered, bonded, non-attorney document-preparation professional authorized under California law to prepare legal documents for self-represented clients. An LDA cannot provide legal advice or choose documents for a client.'
+  },
+  {
+    q: 'What is a California Immigration Consultant?',
+    a: 'A California Immigration Consultant may provide nonlegal immigration document assistance after meeting California registration, bond, disclosure, and background-check requirements. This does not authorize legal advice or representation.'
+  },
+  {
+    q: 'Can Imverica represent me before USCIS or immigration court?',
+    a: 'No. Representation before USCIS, EOIR, or a court requires an attorney or authorized representative. Imverica prepares documents at the client’s direction and does not appear as legal counsel.'
+  },
+  {
+    q: 'Can you tell me which forms I should file?',
+    a: 'We can identify possible document-preparation options and prepare selected forms at your direction. We cannot decide your legal strategy, determine eligibility, or tell you what you should file.'
+  },
+  {
+    q: 'Do you prepare USCIS forms such as I-485, I-130, I-765, I-589, N-400, and I-131?',
+    a: 'Yes. We can prepare USCIS forms and supporting document packets using official form versions and client-provided information, subject to review and client direction.'
+  },
+  {
+    q: 'Can you help with California court forms?',
+    a: 'Yes. We prepare California Judicial Council court forms for family law, small claims, restraining orders, unlawful detainer, probate, and fee waiver matters at the client’s direction.'
+  },
+  {
+    q: 'How do you handle official form updates?',
+    a: 'For supported forms, our system checks official sources before preparation and can use the latest locally cached official PDF if a government site is temporarily unavailable.'
+  },
+  {
+    q: 'When should I contact an attorney?',
+    a: 'You should contact an attorney whenever you need legal advice, legal strategy, representation, eligibility analysis, court appearance, or help with a contested or high-risk matter.'
+  }
+];
+---
+
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <h2>Frequently Asked Questions</h2>
+    <p class="faq-sub">
+      Straight answers about document preparation, California LDA limits, immigration consultant services, and when a licensed attorney is required.
+    </p>
+    {faqs.map((item) => (
+      <details class="faq-item">
+        <summary>{item.q}</summary>
+        <div class="faq-body">
+          <p>{item.a}</p>
+        </div>
+      </details>
+    ))}
+    <div class="faq-sources">
+      Sources: California Business and Professions Code §§6400 et seq. and §§22440 et seq.; 8 CFR §1292.1; official USCIS, EOIR, and California Judicial Council materials.
+    </div>
+  </div>
+</section>

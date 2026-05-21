@@ -1,0 +1,164 @@
+---
+const examples = ['Family petition', 'Response to divorce', 'Small claims', 'Elder protection'];
+---
+
+<div class="ai-finder" id="aiFinder">
+  <form class="ai-finder-form" id="aiFinderForm">
+    <textarea
+      id="aiFinderInput"
+      name="question"
+      rows="4"
+      placeholder="Enter a form number or describe what you need prepared..."
+      aria-label="Describe the document you need prepared"
+    ></textarea>
+    <button class="ai-finder-submit" type="submit" aria-label="Find possible forms">
+      <span aria-hidden="true">→</span>
+    </button>
+  </form>
+  <div class="ai-result" id="aiFinderResult" aria-live="polite"></div>
+</div>
+
+<div class="ai-examples" aria-label="Common document preparation examples">
+  {examples.map((example) => (
+    <button type="button" class="ai-example" data-ai-example={example}>{example}</button>
+  ))}
+</div>
+
+<div class="ai-finder-meta">
+  <span>Document preparation only</span>
+  <span>No legal advice</span>
+  <span>English · Russian · Ukrainian · Spanish</span>
+</div>
+
+<div class="ai-hero-contact">
+  <a class="hero-phone" href="tel:+19163993992" aria-label="Call Imverica at +1 916 399 3992">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="2" width="10" height="20" rx="2"></rect>
+      <path d="M11 18h2"></path>
+    </svg>
+    <span>+1 (916) 399-3992</span>
+  </a>
+  <a class="ai-services-link" href="#services-detail">See services</a>
+</div>
+
+<script>
+  const form = document.getElementById('aiFinderForm') as HTMLFormElement | null;
+  const input = document.getElementById('aiFinderInput') as HTMLTextAreaElement | null;
+  const result = document.getElementById('aiFinderResult') as HTMLElement | null;
+
+  const labels = {
+    en: {
+      checking: 'Checking possible forms...',
+      error: 'Sorry, please try again or call us at +1 (916) 399-3992.',
+      continue: 'Continue',
+      telegram: 'Telegram',
+      call: 'Call +1 (916) 399-3992'
+    },
+    ru: {
+      checking: 'Проверяем возможные формы...',
+      error: 'Попробуйте ещё раз или позвоните нам: +1 (916) 399-3992.',
+      continue: 'Продолжить',
+      telegram: 'Telegram',
+      call: 'Позвонить +1 (916) 399-3992'
+    },
+    uk: {
+      checking: 'Перевіряємо можливі форми...',
+      error: 'Спробуйте ще раз або зателефонуйте нам: +1 (916) 399-3992.',
+      continue: 'Продовжити',
+      telegram: 'Telegram',
+      call: 'Подзвонити +1 (916) 399-3992'
+    },
+    es: {
+      checking: 'Revisando posibles formularios...',
+      error: 'Inténtelo de nuevo o llámenos al +1 (916) 399-3992.',
+      continue: 'Continuar',
+      telegram: 'Telegram',
+      call: 'Llamar +1 (916) 399-3992'
+    }
+  };
+
+  function detectLang(value: string) {
+    const text = String(value || '').toLowerCase();
+    if (/[іїєґ]/i.test(text)) return 'uk';
+    if (/[а-яё]/i.test(text)) return 'ru';
+    if (/[ñáéíóúü¿¡]/i.test(text)) return 'es';
+    return 'en';
+  }
+
+  function chatEndpoint() {
+    const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
+    return isLocal ? 'https://imverica.com/.netlify/functions/chat' : '/.netlify/functions/chat';
+  }
+
+  function setResult(html: string, open = true) {
+    if (!result) return;
+    result.innerHTML = html;
+    result.classList.toggle('open', open);
+  }
+
+  function continueToWizard(query: string) {
+    const opener = (window as Window & { openIntakeModal?: (prefill?: string) => void }).openIntakeModal;
+    if (typeof opener === 'function') {
+      opener(query);
+      return;
+    }
+    window.location.hash = 'get-started';
+  }
+
+  async function submitQuery(query: string) {
+    const lang = detectLang(query);
+    const t = labels[lang] || labels.en;
+    setResult(`<p>${t.checking}</p>`);
+
+    try {
+      const response = await fetch(chatEndpoint(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: 'user',
+              content: query
+            }
+          ]
+        })
+      });
+      if (!response.ok) throw new Error(`chat failed ${response.status}`);
+      const data = await response.json();
+      const answer = data.answer || data.message || data.content || t.error;
+      setResult(`
+        <p>${String(answer).replace(/\n/g, '<br>')}</p>
+        <div class="ai-result-actions">
+          <button type="button" class="dark" data-ai-continue>${t.continue}</button>
+          <a href="https://t.me/imverica" target="_blank" rel="noopener">${t.telegram}</a>
+          <a href="tel:+19163993992">${t.call}</a>
+        </div>
+      `);
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(query));
+    } catch (_error) {
+      setResult(`<p>${t.error}</p>`);
+    }
+  }
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const query = input?.value?.trim();
+    if (!query) return;
+    submitQuery(query);
+  });
+
+  input?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      form?.requestSubmit();
+    }
+  });
+
+  document.querySelectorAll('[data-ai-example]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const value = button.getAttribute('data-ai-example') || '';
+      if (input) input.value = value;
+      submitQuery(value);
+    });
+  });
+</script>

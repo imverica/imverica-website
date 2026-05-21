@@ -1,0 +1,89 @@
+---
+const services = [
+  {
+    id: 'immigration-consultant-california',
+    title: 'USCIS immigration document preparation',
+    text: 'Full USCIS form package preparation for adjustment of status, work authorization, family petitions, naturalization, asylum, travel documents, and green card replacement.',
+    items: ['I-485 — Application to Register Permanent Residence or Adjust Status', 'I-130 / I-130A — Petition for Alien Relative', 'I-765 — Employment Authorization', 'I-589 — Asylum and Withholding of Removal', 'N-400 — Naturalization', 'I-131 / I-131A — Travel Document'],
+    cite: 'Documents are prepared at the client’s direction. We do not select forms or provide legal advice.'
+  },
+  {
+    id: 'eoir-documents',
+    title: 'EOIR immigration court documents',
+    text: 'Document preparation for proceedings before the Executive Office for Immigration Review, including motions, evidence packets, indexes, declarations, and applications for relief.',
+    items: ['EOIR-28 — Notice of Entry of Appearance', 'EOIR-42A / EOIR-42B — Cancellation applications', 'Evidence packets, indexes, tabs, and supporting declarations'],
+    cite: 'Court representation requires a licensed attorney or accredited representative.'
+  },
+  {
+    id: 'family-law-documents-california',
+    title: 'California family law document preparation',
+    text: 'Petition, response, and supporting documents for California dissolution, legal separation, parentage, custody, support, and fee waiver matters.',
+    items: ['FL-100, FL-110, FL-120, FL-150', 'FL-300 — Request for Order', 'FL-105 / UCCJEA', 'FW-001 — Request to Waive Court Fees'],
+    cite: 'California Family Code and Judicial Council forms.'
+  },
+  {
+    id: 'unlawful-detainer-document-preparation-california',
+    title: 'Unlawful detainer document preparation',
+    text: 'Landlord and tenant document preparation for California unlawful detainer matters, notices, answers, proof of service, and court packets.',
+    items: ['UD-100, UD-105, UD-110', 'SUM-130', 'Proof of service forms', 'Notice and response packets'],
+    cite: 'California Code of Civil Procedure unlawful detainer provisions.'
+  },
+  {
+    id: 'small-claims-document-preparation-california',
+    title: 'Small claims and civil court forms',
+    text: 'Preparation support for small claims, civil complaint packets, proof of service, fee waivers, and related California court documents.',
+    items: ['SC-100, SC-104, SC-120', 'CIV-100 and civil pleading forms', 'POS forms', 'FW-001 fee waiver'],
+    cite: 'California small claims and civil procedure forms.'
+  },
+  {
+    id: 'restraining-orders-california',
+    title: 'Restraining order document preparation',
+    text: 'Document preparation for California civil harassment, domestic violence, elder abuse, gun violence, and workplace violence restraining order packets.',
+    items: ['CH-100', 'DV-100', 'EA-100', 'GV-100', 'WV-100'],
+    cite: 'Court forms are prepared only at the client’s direction.'
+  },
+  {
+    id: 'probate-document-preparation-california',
+    title: 'Probate and small estate documents',
+    text: 'California probate document preparation for estate petitions, notices, inventories, small estate affidavits, and related court packets.',
+    items: ['DE-111, DE-121, DE-160, DE-221', 'Small estate affidavit', 'Probate hearing and notice packets'],
+    cite: 'California Probate Code forms and procedures.'
+  },
+  {
+    id: 'business-filings',
+    title: 'Business filings and records',
+    text: 'Document preparation for California business filings and supporting paperwork, including LLC, fictitious business name, and EIN-related paperwork.',
+    items: ['LLC filing support', 'Fictitious business name forms', 'EIN application support', 'Business record preparation'],
+    cite: 'Business documents prepared at client direction.'
+  },
+  {
+    id: 'document-translation-california',
+    title: 'Translations, notary, and document support',
+    text: 'Multilingual document support for immigration and court packets, including translations, apostille coordination, notary support, and filing package organization.',
+    items: ['Russian, Ukrainian, Spanish, English support', 'Certified translation coordination', 'Document organization', 'Filing package review'],
+    cite: 'Translation support does not include legal advice.'
+  }
+];
+---
+
+<section class="svc-section" id="services-detail">
+  <div class="svc-inner">
+    <div class="svc-kicker">California document preparation services</div>
+    <h2>USCIS, immigration court, and California civil document preparation</h2>
+    <p>
+      Imverica Legal Solutions provides document preparation through California registered Legal Document Assistant and Immigration Consultant services. We prepare documents at the client’s direction across the categories below. We are not a law firm and do not provide legal advice.
+    </p>
+    <div class="svc-grid">
+      {services.map((service) => (
+        <article class="svc-card" id={service.id}>
+          <h3>{service.title}</h3>
+          <p>{service.text}</p>
+          <ul>
+            {service.items.map((item) => <li>{item}</li>)}
+          </ul>
+          <cite>{service.cite}</cite>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

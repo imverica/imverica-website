@@ -1,0 +1,202 @@
+---
+interface Props {
+  heading?: string;
+  subheading?: string;
+}
+
+const {
+  heading = 'Visa Bulletin tracker',
+  subheading = 'Priority-date movement changes every month. This panel links clients to the current official U.S. Department of State bulletin before they rely on category timing.'
+} = Astro.props;
+---
+<section class="visa-section" id="visa-bulletin">
+  <div class="visa-inner">
+    <div class="visa-copy">
+      <div class="visa-kicker">Current or waiting?</div>
+      <h2>{heading}</h2>
+      <p>{subheading}</p>
+    </div>
+
+    <div class="visa-panel" data-visa-panel>
+      <div class="visa-meta" data-visa-status>Loading official Visa Bulletin…</div>
+      <h3 data-visa-title>Official Visa Bulletin</h3>
+      <p data-visa-note>
+        Check both Final Action Dates and Dates for Filing on the official bulletin.
+      </p>
+      <div class="visa-legend" data-visa-legend></div>
+      <a class="visa-link" href="https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html" target="_blank" rel="noopener noreferrer" data-visa-link>
+        Open official Visa Bulletin →
+      </a>
+      <p class="visa-disclaimer" data-visa-disclaimer>
+        Official Department of State information, linked for convenience only. Not legal advice.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  type VisaBulletinPayload = {
+    source?: string;
+    title?: string;
+    url?: string;
+    updated?: string;
+    note?: string;
+    legend?: string[];
+    disclaimer?: string;
+  };
+
+  const status = document.querySelector<HTMLElement>('[data-visa-status]');
+  const title = document.querySelector<HTMLElement>('[data-visa-title]');
+  const note = document.querySelector<HTMLElement>('[data-visa-note]');
+  const legend = document.querySelector<HTMLElement>('[data-visa-legend]');
+  const link = document.querySelector<HTMLAnchorElement>('[data-visa-link]');
+  const disclaimer = document.querySelector<HTMLElement>('[data-visa-disclaimer]');
+
+  function clean(value: unknown) {
+    return String(value || '').trim();
+  }
+
+  function formatUpdated(value: unknown) {
+    const date = new Date(String(value || ''));
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleString();
+  }
+
+  function renderLegend(items: string[]) {
+    if (!legend) return;
+    legend.replaceChildren(
+      ...items.filter(Boolean).slice(0, 4).map((item) => {
+        const pill = document.createElement('span');
+        pill.textContent = item;
+        return pill;
+      })
+    );
+  }
+
+  async function loadVisaBulletin() {
+    try {
+      const response = await fetch('/api/visa-bulletin', { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error(`Visa Bulletin failed: ${response.status}`);
+      const data = (await response.json()) as VisaBulletinPayload;
+
+      const source = clean(data.source) || 'U.S. Department of State';
+      const updated = formatUpdated(data.updated);
+      if (status) status.textContent = [source, updated ? `updated ${updated}` : 'official source'].join(' · ');
+      if (title) title.textContent = clean(data.title) || 'Official Visa Bulletin';
+      if (note) note.textContent = clean(data.note) || 'Check the official bulletin before relying on priority-date movement.';
+      if (link && clean(data.url)) link.href = clean(data.url);
+      if (disclaimer && clean(data.disclaimer)) disclaimer.textContent = clean(data.disclaimer);
+      renderLegend(Array.isArray(data.legend) ? data.legend : []);
+    } catch (_error) {
+      if (status) status.textContent = 'Visa Bulletin tracker is temporarily unavailable.';
+      if (note) note.textContent = 'Open the official State Department Visa Bulletin index to check current priority-date tables.';
+      renderLegend(['C means current', 'U means unavailable']);
+    }
+  }
+
+  loadVisaBulletin();
+</script>
+
+<style>
+  .visa-section {
+    background: #fffaf2;
+    border-top: 1px solid rgba(40, 30, 20, 0.08);
+    padding: 76px 1.5rem;
+  }
+
+  .visa-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.85fr) minmax(360px, 1.15fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  .visa-kicker {
+    color: var(--terracotta-deep);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .visa-copy h2 {
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+
+  .visa-copy p,
+  .visa-panel p {
+    color: #3a4a5e;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .visa-panel {
+    background: #fff;
+    border: 1px solid rgba(40, 30, 20, 0.1);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 8px 22px rgba(40, 30, 20, 0.05);
+  }
+
+  .visa-meta {
+    color: #6b7a90;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .visa-panel h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+
+  .visa-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .visa-legend span {
+    border: 1px solid rgba(26, 46, 74, 0.16);
+    border-radius: 999px;
+    color: var(--navy);
+    background: #f5f8fb;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+  }
+
+  .visa-link {
+    display: inline-flex;
+    color: var(--navy);
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .visa-disclaimer {
+    border-top: 1px solid rgba(40, 30, 20, 0.08);
+    font-size: 12px !important;
+    margin-top: 18px !important;
+    padding-top: 14px;
+  }
+
+  @media (max-width: 820px) {
+    .visa-section {
+      padding: 56px 1.25rem;
+    }
+
+    .visa-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

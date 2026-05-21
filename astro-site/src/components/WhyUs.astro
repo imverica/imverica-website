@@ -1,0 +1,110 @@
+---
+const points = [
+  {
+    title: 'California legal-office workflow',
+    body: 'Our process is shaped by practical paralegal experience in a California law-firm environment: organized intake, clean document packets, evidence checklists, and review-ready files.'
+  },
+  {
+    title: 'Official-source checks',
+    body: 'USCIS and California court form references are checked against official sources before document preparation begins, so clients are not relying on stale file names or copied PDFs.'
+  },
+  {
+    title: 'Multilingual intake',
+    body: 'Clients can explain their situation in English, Russian, Ukrainian, or Spanish. The workflow keeps form codes and legal boundaries clear while making the questions easier to answer.'
+  },
+  {
+    title: 'Client-directed preparation',
+    body: 'We prepare documents at the client’s direction. Imverica is not a law firm, does not give legal advice, and does not choose legal strategy for the client.'
+  }
+];
+---
+<section class="why-section" id="why-imverica">
+  <div class="why-inner">
+    <div class="why-copy">
+      <div class="why-kicker">Why Imverica</div>
+      <h2>Built for real document-preparation work, not generic forms.</h2>
+      <p>
+        Imverica combines California document-preparation discipline, multilingual intake, and official-source form checks so clients can move from “what do I need?” to an organized document packet.
+      </p>
+    </div>
+    <div class="why-grid">
+      {points.map((point) => (
+        <article class="why-card">
+          <h3>{point.title}</h3>
+          <p>{point.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-section {
+    background: #fffaf2;
+    border-top: 1px solid rgba(40, 30, 20, 0.08);
+    padding: 76px 1.5rem;
+  }
+
+  .why-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(360px, 1.2fr);
+    gap: 32px;
+    align-items: start;
+  }
+
+  .why-kicker {
+    color: var(--terracotta-deep);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .why-copy h2 {
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+
+  .why-copy p,
+  .why-card p {
+    color: #3a4a5e;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .why-card {
+    background: #fff;
+    border: 1px solid rgba(40, 30, 20, 0.1);
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 8px 22px rgba(40, 30, 20, 0.05);
+  }
+
+  .why-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+
+  @media (max-width: 820px) {
+    .why-inner,
+    .why-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .why-section {
+      padding: 56px 1.25rem;
+    }
+  }
+</style>

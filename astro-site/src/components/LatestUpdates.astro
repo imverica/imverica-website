@@ -1,0 +1,96 @@
+---
+interface Props {
+  heading?: string;
+  subheading?: string;
+}
+
+const {
+  heading = 'Latest USCIS newsroom updates',
+  subheading = 'High-signal USCIS newsroom headlines are refreshed automatically from the official USCIS source. Routine paperwork notices are filtered out.'
+} = Astro.props;
+---
+<section class="news-section" id="latest-updates">
+  <div class="news-inner">
+    <div class="news-copy">
+      <div class="svc-kicker">Auto-updated news</div>
+      <h2>{heading}</h2>
+      <p>{subheading}</p>
+      <p class="news-note">
+        Headlines are republished for convenience only. Imverica does not summarize or interpret these announcements and does not provide legal advice.
+      </p>
+    </div>
+
+    <div class="news-panel" data-news-panel>
+      <div class="news-status" data-news-status>Loading official updates…</div>
+      <div class="news-list" data-news-list></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  type NewsItem = {
+    source: string;
+    title: string;
+    url: string;
+    date?: string;
+  };
+
+  const panel = document.querySelector<HTMLElement>('[data-news-panel]');
+  const status = document.querySelector<HTMLElement>('[data-news-status]');
+  const list = document.querySelector<HTMLElement>('[data-news-list]');
+
+  function text(value: unknown) {
+    return String(value || '').trim();
+  }
+
+  function renderItem(item: NewsItem) {
+    const link = document.createElement('a');
+    link.className = 'news-link';
+    link.href = item.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    const meta = document.createElement('div');
+    meta.className = 'news-meta';
+    meta.textContent = [item.source, item.date].filter(Boolean).join(' · ');
+
+    const title = document.createElement('div');
+    title.className = 'news-title';
+    title.textContent = item.title;
+
+    link.append(meta, title);
+    return link;
+  }
+
+  async function loadNews() {
+    if (!panel || !status || !list) return;
+    try {
+      const response = await fetch('/api/news', { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error(`News failed: ${response.status}`);
+      const data = await response.json();
+      const items = Array.isArray(data.items) ? data.items : [];
+      const cleanItems = items
+        .map((item: NewsItem) => ({
+          source: text(item.source),
+          title: text(item.title),
+          url: text(item.url),
+          date: text(item.date)
+        }))
+        .filter((item: NewsItem) => item.source && item.title && item.url)
+        .slice(0, 6);
+
+      if (!cleanItems.length) {
+        status.textContent = 'No USCIS newsroom updates are available right now.';
+        return;
+      }
+
+      list.replaceChildren(...cleanItems.map(renderItem));
+      status.textContent = `Updated automatically · ${new Date(data.updated || Date.now()).toLocaleString()}`;
+      panel.dataset.loaded = 'true';
+    } catch (_error) {
+      status.textContent = 'USCIS newsroom updates are temporarily unavailable. Please check uscis.gov directly.';
+    }
+  }
+
+  loadNews();
+</script>
