@@ -1331,7 +1331,7 @@ export function initIntakeWizard(): void {
       : (state.step === finalStep() ? copy.finish : copy.next);
     backBtn.style.display = '';
     nextBtn.style.display = '';
-    backBtn.disabled = state.step === 0 || loading;
+    backBtn.disabled = state.step <= 2 || loading;
     nextBtn.disabled = loading;
     var pct = Math.round((state.step + 1) / activeSteps().length * 100);
     progress.style.width = pct + '%';
@@ -2218,8 +2218,9 @@ export function initIntakeWizard(): void {
   backBtn.addEventListener('click', function () {
     captureStep();
     if (state.step > 0) state.step -= 1;
-    // Service-category step (1) is hidden: skip back over it from Details (2) → Language (0).
-    if (state.step === 1) state.step = 0;
+    // Language (0) and service-category (1) steps are inherited from the site
+    // language and hidden — Details (2) is the first visible step.
+    if (state.step < 2) state.step = 2;
     skipEmptyFlowSteps(-1);
     render();
   });
@@ -2257,10 +2258,20 @@ export function initIntakeWizard(): void {
     await saveIntake();
   });
 
+  function detectSiteLang() {
+    var htmlLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+    if (htmlLang.indexOf('uk') === 0) return 'uk';
+    if (htmlLang.indexOf('ru') === 0) return 'ru';
+    if (htmlLang.indexOf('es') === 0) return 'es';
+    return 'en';
+  }
+
   window.openIntakeModal = function (prefill) {
-    var rememberedLang = state.lang || 'en';
+    // The visitor already picked a language on the site (header switcher).
+    // Inherit it so we never re-ask "Choose your preferred language".
+    var rememberedLang = detectSiteLang();
     state.lang = rememberedLang;
-    state.langManual = false;
+    state.langManual = true;
     state.step = 0;
     state.service = '';
     state.formCode = '';
@@ -2280,7 +2291,12 @@ export function initIntakeWizard(): void {
     state.completed = false;
     state.savedPayload = null;
     state.orderId = '';
-    if (!prefill) restoreIntakeProgress();
+    if (!prefill) {
+      var restored = restoreIntakeProgress();
+      // Language already chosen on the site — skip step 0 (Language) and the
+      // hidden service step (1), landing the visitor on Details (step 2).
+      if (!restored && state.step === 0) state.step = 2;
+    }
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
       var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);

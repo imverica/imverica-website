@@ -125,7 +125,7 @@ const examples = ['Family petition', 'Response to divorce', 'Small claims', 'Eld
       });
       if (!response.ok) throw new Error(`chat failed ${response.status}`);
       const data = await response.json();
-      const answer = data.answer || data.message || data.content || t.error;
+      const answer = data.reply || data.answer || data.message || data.content || t.error;
       setResult(`
         <p>${String(answer).replace(/\n/g, '<br>')}</p>
         <div class="ai-result-actions">
