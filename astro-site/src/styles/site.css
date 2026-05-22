@@ -731,6 +731,8 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 720px) {
   .site-header-inner {
     padding: 12px 1rem;
+    flex-wrap: wrap;
+    row-gap: 8px;
   }
   .site-brand-logo {
     width: 150px;
@@ -738,30 +740,35 @@ img { max-width: 100%; height: auto; }
   .site-header .btn {
     display: none;
   }
-  .site-lang a {
-    width: 42px;
-    height: 42px;
-    font-size: 10px;
-  }
-  .site-lang-flag {
-    font-size: 12px;
-  }
-}
-@media (max-width: 560px) {
-  .site-footer-inner { grid-template-columns: 1fr; }
-  .stats-inner { grid-template-columns: 1fr; }
-  .site-header-inner {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: 8px;
-  }
+  /* Language switcher drops to its own centered row so ES is never cut off. */
   .site-lang {
     order: 3;
     flex: 1 0 100%;
     width: 100%;
     justify-content: center;
-    margin-top: 4px;
+    margin-top: 2px;
   }
+  .site-lang a {
+    width: 44px;
+    height: 44px;
+    font-size: 10px;
+  }
+  .site-lang-flag {
+    font-size: 12px;
+  }
+  /* Justified text leaves ragged gaps on narrow screens — use clean
+     left alignment on mobile for service/landing body copy. */
+  .svc-card p,
+  .svc-inner > p,
+  .lb-article p,
+  .lb-article li {
+    text-align: left;
+  }
+}
+@media (max-width: 560px) {
+  .site-footer-inner { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: 1fr; }
+  /* Header wrap + full-width language row handled at <=720px above. */
   .hero {
     width: 100%;
     max-width: 100%;

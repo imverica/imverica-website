@@ -13,8 +13,11 @@ const prefix = LOCALES[lang].prefix;
 ---
 <header class="site-header">
   <div class="site-topbar" aria-label="Contact">
-    <a href="tel:+19163993992">Call/Text +1 (916) 399-3992</a>
-    <span>Document preparation only · No legal advice</span>
+    <a class="site-topbar-phone" href="tel:+19163993992">
+      <span class="site-topbar-label">Call | Text</span>
+      <span class="site-topbar-number">+1 (916) 399-3992</span>
+    </a>
+    <span class="site-topbar-note">Document preparation only · No legal advice</span>
   </div>
   <div class="site-header-inner">
     <a class="site-brand" href={prefix + '/'} aria-label="Imverica Legal Solutions">
@@ -68,14 +71,31 @@ const prefix = LOCALES[lang].prefix;
     color: #f7d7b1;
   }
 
+  .site-topbar-phone {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .site-topbar-number {
+    white-space: nowrap;
+  }
+
   @media (max-width: 720px) {
     .site-topbar {
       justify-content: space-between;
+      align-items: flex-start;
       gap: 0.75rem;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
     }
 
-    .site-topbar span {
+    /* Phone label on row 1, full number on row 2 — never truncated. */
+    .site-topbar-phone {
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .site-topbar-note {
       text-align: right;
     }
   }
