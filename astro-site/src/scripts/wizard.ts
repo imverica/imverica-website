@@ -1331,9 +1331,12 @@ export function initIntakeWizard(): void {
       : (state.step === finalStep() ? copy.finish : copy.next);
     backBtn.style.display = '';
     nextBtn.style.display = '';
-    backBtn.disabled = state.step <= 2 || loading;
+    backBtn.disabled = state.step <= 1 || loading;
     nextBtn.disabled = loading;
-    var pct = Math.round((state.step + 1) / activeSteps().length * 100);
+    // Language (step 0) is inherited from the site and never shown, so the
+    // service-tiles step (1) is the real start. Measure progress across the
+    // visible journey (steps 1..final) so the first screen isn't already 60%.
+    var pct = Math.round(Math.max(0, state.step) / Math.max(1, finalStep()) * 100);
     progress.style.width = pct + '%';
     if (progressPercent) progressPercent.textContent = pct + '%';
     if (progressLabelEl && copy.progressLabel) progressLabelEl.textContent = copy.progressLabel;
@@ -2218,9 +2221,9 @@ export function initIntakeWizard(): void {
   backBtn.addEventListener('click', function () {
     captureStep();
     if (state.step > 0) state.step -= 1;
-    // Language (0) and service-category (1) steps are inherited from the site
-    // language and hidden — Details (2) is the first visible step.
-    if (state.step < 2) state.step = 2;
+    // Language (0) is inherited from the site and hidden — the service-tiles
+    // step (1) is the first visible step, so never go below it.
+    if (state.step < 1) state.step = 1;
     skipEmptyFlowSteps(-1);
     render();
   });
@@ -2249,8 +2252,6 @@ export function initIntakeWizard(): void {
     }
     if (state.step < finalStep()) {
       state.step += 1;
-      // Service-category step (1) is hidden: skip it forward from Language (0) → Details (2).
-      if (state.step === 1) state.step = 2;
       skipEmptyFlowSteps(1);
       render();
       return;
@@ -2293,9 +2294,9 @@ export function initIntakeWizard(): void {
     state.orderId = '';
     if (!prefill) {
       var restored = restoreIntakeProgress();
-      // Language already chosen on the site — skip step 0 (Language) and the
-      // hidden service step (1), landing the visitor on Details (step 2).
-      if (!restored && state.step === 0) state.step = 2;
+      // Language is inherited from the site, so skip step 0 (Language) and
+      // open on the service-category tiles (step 1) — the welcoming first step.
+      if (!restored && state.step === 0) state.step = 1;
     }
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
