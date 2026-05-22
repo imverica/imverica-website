@@ -316,7 +316,7 @@ function handleSubmit() {
     .then(function(r){ return r.json().then(function(data){ return { ok: r.ok, data: data }; }); })
     .then(function(res){
       if (!res.ok || !res.data || !res.data.ok) {
-        var msg = (res.data && res.data.error) ? res.data.error : 'Something went wrong. Please try again or call us at (916) 399-3992.';
+        var msg = (res.data && res.data.error) ? res.data.error : 'Something went wrong. Please try again or call us at +1 (916) 399-3992.';
         btn.disabled = false; btn.textContent = 'Submit Request';
         return showError(msg);
       }
@@ -327,7 +327,7 @@ function handleSubmit() {
     })
     .catch(function(){
       btn.disabled = false; btn.textContent = 'Submit Request';
-      showError('Could not reach our server. Please check your connection or call us at (916) 399-3992.');
+      showError('Could not reach our server. Please check your connection or call us at +1 (916) 399-3992.');
     });
 }
 

@@ -198,7 +198,7 @@ exports.handler = async function (event) {
     // If no provider is configured AND this is a deployed host (not localhost),
     // that's a misconfiguration — never leak the code in the response.
     if (dev && !isLocalHost(event)) {
-      return json(503, { ok: false, error: 'Sign-in email is not configured yet. Please contact us at (916) 399-3992.' });
+      return json(503, { ok: false, error: 'Sign-in email is not configured yet. Please contact us at +1 (916) 399-3992.' });
     }
 
     // Locally (no provider) we return the code so the flow is testable.
