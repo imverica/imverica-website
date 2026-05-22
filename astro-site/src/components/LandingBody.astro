@@ -3,6 +3,10 @@
  * Shared visual shell for service-specific landing pages.
  * Each page sets its own title/meta/JSON-LD via BaseLayout and writes
  * unique 600-1000 words of content inside the <slot>.
+ *
+ * Carded document layout matching the USCIS|EOIR page: a white content
+ * card on the warm section background, accented section headers, form
+ * lists rendered as cards, and a sticky "related services" rail.
  */
 interface RelatedLink {
   href: string;
@@ -13,60 +17,166 @@ interface Props {
 }
 const { related = [] } = Astro.props;
 ---
-<article style="max-width:880px;margin:0 auto;padding:48px 1.5rem 24px;line-height:1.75;color:#2a3140;">
-  <slot />
+<section class="lb-section">
+  <div class="lb-inner">
+    <article class="lb-article">
+      <slot />
+    </article>
 
-  {related.length > 0 && (
-    <aside style="margin-top:48px;padding:24px;background:#fff;border:1px solid rgba(40,30,20,0.08);border-radius:12px;">
-      <strong style="display:block;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#a45b34;margin-bottom:12px;">Related services</strong>
-      <ul style="margin:0;padding-left:18px;font-size:14px;color:#4a5a6e;line-height:1.8;">
-        {related.map((r) => (
-          <li><a href={r.href}>{r.label}</a></li>
-        ))}
-      </ul>
+    <aside class="lb-aside">
+      {related.length > 0 && (
+        <div class="lb-related">
+          <strong>Related services</strong>
+          <ul>
+            {related.map((r) => (
+              <li><a href={r.href}>{r.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <div class="lb-cta-card">
+        <strong>Ready to start?</strong>
+        <p>We prepare your documents at your direction — flat fee, confirmed before filing.</p>
+        <a class="btn btn-accent" href="/#get-started">Start with Imverica</a>
+        <a class="lb-cta-phone" href="tel:+19163993992">📞 +1 (916) 399-3992</a>
+      </div>
     </aside>
-  )}
-</article>
+  </div>
+</section>
 
 <style is:global>
-  article h1 { font-size: 36px; margin-bottom: 16px; }
-  article h2 { font-size: 24px; margin: 32px 0 12px; }
-  article h3 { font-size: 18px; margin: 22px 0 8px; }
-  article p { margin: 0 0 14px; }
-  article ul, article ol { margin: 0 0 14px 22px; padding: 0; }
-  article li { margin-bottom: 6px; }
-  article cite {
+  .lb-section {
+    padding: 64px 2rem;
+    background: #fffaf2;
+    border-top: 1px solid rgba(40,30,20,0.08);
+  }
+  .lb-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 36px;
+    align-items: start;
+  }
+  @media (max-width: 920px) {
+    .lb-inner { grid-template-columns: 1fr; }
+    .lb-section { padding: 44px 1.25rem; }
+  }
+
+  .lb-article {
+    background: #fff;
+    border: 1px solid rgba(40,30,20,0.08);
+    border-radius: 16px;
+    padding: 44px 48px;
+    box-shadow: 0 10px 30px rgba(40,30,20,0.05);
+    line-height: 1.75;
+    color: #2a3140;
+  }
+  @media (max-width: 600px) {
+    .lb-article { padding: 28px 22px; }
+  }
+
+  .lb-article h1 { font-size: 34px; margin: 0 0 16px; }
+  .lb-article h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    color: var(--navy-dark);
+    margin: 34px 0 14px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+  }
+  .lb-article h2:first-of-type { border-top: none; padding-top: 0; }
+  .lb-article h3 { font-size: 18px; margin: 24px 0 8px; }
+  .lb-article p { margin: 0 0 14px; }
+  .lb-article ul, .lb-article ol { margin: 0 0 16px 22px; padding: 0; }
+  .lb-article li { margin-bottom: 7px; }
+
+  .lb-article .lead {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #3a4a5e;
+    margin-bottom: 24px;
+  }
+
+  .lb-article cite {
     display: block;
-    margin: 18px 0 10px;
-    padding: 14px 18px;
+    margin: 20px 0 6px;
+    padding: 16px 20px;
     background: #fdf6ec;
-    border-left: 3px solid #a45b34;
-    border-radius: 4px;
+    border-left: 3px solid var(--terracotta-deep);
+    border-radius: 6px;
     font-size: 13px;
     font-style: normal;
     color: #5a4a35;
     line-height: 1.6;
   }
-  article cite strong { color: #a45b34; font-weight: 600; }
-  article .lead {
-    font-size: 17px;
-    line-height: 1.65;
-    color: #3a4a5e;
-    margin-bottom: 22px;
-  }
-  article .form-list {
+  .lb-article cite strong { color: var(--terracotta-deep); font-weight: 600; }
+
+  /* Form lists render as a bordered card with a 2-column grid of forms. */
+  .lb-article .form-list {
     background: #fffaf2;
     border: 1px solid rgba(40,30,20,0.08);
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin: 16px 0;
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin: 20px 0;
+    box-shadow: 0 6px 20px rgba(40,30,20,0.04);
   }
-  article .form-list strong {
+  .lb-article .form-list > strong {
     display: block;
     font-size: 12px;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: #a45b34;
-    margin-bottom: 10px;
+    color: var(--terracotta-deep);
+    margin-bottom: 14px;
   }
+  .lb-article .form-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 28px;
+  }
+  @media (max-width: 640px) {
+    .lb-article .form-list ul { grid-template-columns: 1fr; }
+  }
+  .lb-article .form-list li {
+    margin: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(40,30,20,0.06);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .lb-article .form-list li strong { color: var(--terracotta-deep); font-weight: 600; }
+
+  /* Sidebar rail */
+  .lb-aside { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 18px; }
+  @media (max-width: 920px) { .lb-aside { position: static; } }
+
+  .lb-related, .lb-cta-card {
+    background: #fff;
+    border: 1px solid rgba(40,30,20,0.08);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 6px 20px rgba(40,30,20,0.04);
+  }
+  .lb-related strong, .lb-cta-card strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--terracotta-deep);
+    margin-bottom: 12px;
+  }
+  .lb-related ul { margin: 0; padding: 0; list-style: none; }
+  .lb-related li { margin-bottom: 10px; font-size: 14px; line-height: 1.5; }
+  .lb-related li a { color: var(--navy); font-weight: 500; }
+  .lb-related li a:hover { color: var(--terracotta-deep); }
+
+  .lb-cta-card { background: var(--navy-dark); border-color: var(--navy-dark); }
+  .lb-cta-card strong { color: #f7d7b1; }
+  .lb-cta-card p { font-size: 13.5px; line-height: 1.6; color: #d8e6f6; margin: 0 0 16px; }
+  .lb-cta-card .btn-accent { width: 100%; text-align: center; margin-bottom: 10px; }
+  .lb-cta-phone { display: block; text-align: center; color: #fff; font-weight: 600; font-size: 14px; }
+  .lb-cta-phone:hover { color: #f7d7b1; }
 </style>

@@ -1,0 +1,103 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Business Filing Document Preparation (LLC, DBA, EIN) | Imverica';
+const description = 'California Licensed LDA prepares business documents at your direction — LLC Articles of Organization (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA), and EIN application support. Flat fee, no legal advice.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Business Filing Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'California business filing document preparation — LLC, DBA, EIN, and entity records prepared at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/business" jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Business Filings"
+    heading="Business Filing Document Preparation"
+    sub="LLC formation (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA), and EIN application support — prepared accurately at your direction, flat fee, no surprises."
+    ctaPrimary={{ href: '/#get-started?service=business', text: 'Start my business filing' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/california-legal-document-assistant', label: 'What is a California Legal Document Assistant?' },
+    { href: '/california-small-claims', label: 'California small claims (SC-100)' },
+    { href: '/uscis-eoir', label: 'USCIS | EOIR immigration documents' }
+  ]}>
+    <p class="lead">
+      Starting or maintaining a California business means paperwork — entity
+      formation, name registration, tax identification, and the ongoing
+      filings that keep the entity in good standing. As a registered Legal
+      Document Assistant, Imverica prepares these documents accurately at your
+      direction. We are not a law firm and do not give legal or tax advice; we
+      prepare the documents you have decided to file.
+    </p>
+
+    <h2>Forming an LLC in California</h2>
+    <p>
+      A California limited liability company is formed by filing
+      <strong>Articles of Organization (Form LLC-1)</strong> with the
+      Secretary of State. Within 90 days of formation — and every two years
+      after — the LLC must file a <strong>Statement of Information (Form
+      LLC-12)</strong>. California LLCs are also subject to the annual $800
+      franchise tax administered by the Franchise Tax Board. We prepare the
+      filing documents; we do not provide tax advice or choose your entity
+      type for you.
+    </p>
+
+    <h2>Forms and documents we prepare</h2>
+    <div class="form-list">
+      <strong>Business document packages</strong>
+      <ul>
+        <li><strong>LLC-1</strong> — Articles of Organization (LLC formation)</li>
+        <li><strong>LLC-12</strong> — Statement of Information (initial & biennial)</li>
+        <li><strong>LLC-1A</strong> — Registration of out-of-state LLC</li>
+        <li><strong>ARTS-GS / ARTS-PB</strong> — Corporation Articles of Incorporation</li>
+        <li><strong>SI-550</strong> — Corporation Statement of Information</li>
+        <li><strong>FBN / DBA</strong> — Fictitious Business Name statement (county)</li>
+        <li><strong>SS-4 / EIN</strong> — Federal Employer Identification Number support</li>
+        <li><strong>Operating agreement</strong> — LLC operating agreement assembly</li>
+      </ul>
+    </div>
+
+    <h2>Fictitious business name (DBA)</h2>
+    <p>
+      A sole proprietor or entity operating under a name different from its
+      legal name files a <strong>Fictitious Business Name statement</strong>
+      with the county clerk where the business is located, then publishes it
+      in a county-approved newspaper for four consecutive weeks. We prepare the
+      county FBN statement and help organize the publication step.
+    </p>
+
+    <h2>EIN — Employer Identification Number</h2>
+    <p>
+      Most businesses need a federal <strong>EIN</strong> (Form SS-4) from the
+      IRS to open a bank account, hire employees, or file taxes. We help
+      prepare the SS-4 information so your application is complete and accurate.
+    </p>
+
+    <h2>What we cannot do</h2>
+    <p>
+      We do not give legal or tax advice, recommend which entity type to form,
+      advise on liability, or represent you before any agency. Those decisions
+      are yours (or your attorney's / CPA's). We maintain referral
+      relationships with licensed California professionals for matters that
+      need legal or tax counsel.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Corporations Code (LLC and
+      corporation filings); California Business &amp; Professions Code
+      §§17900-17930 (fictitious business names); California Business &amp;
+      Professions Code §§6400-6415 (Legal Document Assistant Act). Document
+      preparation only — not legal or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started" primaryText="Start with Imverica" />
+</BaseLayout>

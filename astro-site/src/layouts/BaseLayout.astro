@@ -85,5 +85,64 @@ const alternates = slug && availableLocales.length > 1
   <SiteFooter lang={lang} />
   <IntakeWizard />
   <ChatWidget />
+
+  <style is:global>
+    /* Reveal-on-scroll. The hidden state is only applied once JS confirms
+       IntersectionObserver + no reduce-motion (html.reveal-init), so content
+       is always visible if JS is disabled or motion is reduced. */
+    html.reveal-init .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      will-change: opacity, transform;
+    }
+    html.reveal-init .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+  <script>
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) return;
+
+      var SELECTORS = '.ourserv-card, .svc-card, .faq-item, .why-list li, .news-card, .stat-item, .vt, .testi-card, .form-list, .lb-related, .lb-cta-card';
+
+      function setupReveal() {
+        var els = Array.prototype.slice.call(document.querySelectorAll(SELECTORS));
+        if (!els.length) return;
+        document.documentElement.classList.add('reveal-init');
+
+        // Stagger each element by its index within its own parent container.
+        var counts = new Map();
+        els.forEach(function (el) {
+          if (el.classList.contains('reveal')) return;
+          el.classList.add('reveal');
+          var parent = el.parentElement;
+          var i = counts.get(parent) || 0;
+          counts.set(parent, i + 1);
+          el.style.transitionDelay = Math.min(i, 8) * 60 + 'ms';
+        });
+
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+        els.forEach(function (el) { obs.observe(el); });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupReveal);
+      } else {
+        setupReveal();
+      }
+      document.addEventListener('astro:after-swap', setupReveal);
+    })();
+  </script>
 </body>
 </html>
