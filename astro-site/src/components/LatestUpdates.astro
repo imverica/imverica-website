@@ -5,8 +5,8 @@ interface Props {
 }
 
 const {
-  heading = 'Latest USCIS newsroom updates',
-  subheading = 'High-signal USCIS newsroom headlines are refreshed automatically from the official USCIS source. Routine paperwork notices are filtered out.'
+  heading = 'Latest immigration & California legal updates',
+  subheading = 'Official headlines from USCIS, the immigration courts (EOIR), and California — refreshed automatically. We republish links only; routine paperwork notices are filtered out.'
 } = Astro.props;
 ---
 <section class="news-section" id="latest-updates">
@@ -80,7 +80,7 @@ const {
         .slice(0, 6);
 
       if (!cleanItems.length) {
-        status.textContent = 'No USCIS newsroom updates are available right now.';
+        status.textContent = 'No official updates are available right now.';
         return;
       }
 
@@ -88,7 +88,7 @@ const {
       status.textContent = `Updated automatically · ${new Date(data.updated || Date.now()).toLocaleString()}`;
       panel.dataset.loaded = 'true';
     } catch (_error) {
-      status.textContent = 'USCIS newsroom updates are temporarily unavailable. Please check uscis.gov directly.';
+      status.textContent = 'Official updates are temporarily unavailable. Please check uscis.gov or courts.ca.gov directly.';
     }
   }
 

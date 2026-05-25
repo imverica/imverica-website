@@ -17,7 +17,6 @@ const prefix = LOCALES[lang].prefix;
       <span class="site-topbar-label">Call | Text</span>
       <span class="site-topbar-number">+1 (916) 399-3992</span>
     </a>
-    <span class="site-topbar-note">Document preparation only · No legal advice</span>
   </div>
   <div class="site-header-inner">
     <a class="site-brand" href={prefix + '/'} aria-label="Imverica Legal Solutions">
@@ -43,9 +42,44 @@ const prefix = LOCALES[lang].prefix;
         </a>
       ))}
     </div>
-    <a class="btn btn-accent" href={prefix + '/#get-started'}>{t.quote}</a>
+    <a class="btn btn-accent site-quote" href={prefix + '/#get-started'}>{t.quote}</a>
+    <button class="site-burger" id="siteBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteMobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+  <nav class="site-mobile-menu" id="siteMobileMenu" aria-label="Mobile navigation" hidden>
+    <a href="/uscis-eoir">{t.uscis}</a>
+    <a href={localizedPathSafe(lang, '/california-family-law')}>{t.family}</a>
+    <a href={localizedPathSafe(lang, '/california-small-claims')}>{t.civil}</a>
+    <a href="/business">{t.business}</a>
+    <a href={localizedPathSafe(lang, '/california-legal-document-assistant')}>{t.about}</a>
+    <a href="/account.html">{t.portal}</a>
+    <a class="btn btn-accent" href={prefix + '/#get-started'}>{t.quote}</a>
+  </nav>
 </header>
+
+<script>
+  (function () {
+    var burger = document.getElementById('siteBurger');
+    var menu = document.getElementById('siteMobileMenu');
+    if (!burger || !menu) return;
+    function setOpen(open) {
+      menu.hidden = !open;
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.classList.toggle('open', open);
+    }
+    burger.addEventListener('click', function () {
+      setOpen(menu.hidden);
+    });
+    // Close when a link is tapped or on Escape.
+    menu.addEventListener('click', function (e) {
+      if (e.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  })();
+</script>
 
 <style>
   .site-topbar {
@@ -79,24 +113,5 @@ const prefix = LOCALES[lang].prefix;
 
   .site-topbar-number {
     white-space: nowrap;
-  }
-
-  @media (max-width: 720px) {
-    .site-topbar {
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-size: 0.78rem;
-    }
-
-    /* Phone label on row 1, full number on row 2 — never truncated. */
-    .site-topbar-phone {
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .site-topbar-note {
-      text-align: right;
-    }
   }
 </style>

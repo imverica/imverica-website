@@ -10,6 +10,7 @@
 <style>
 :root{
   --navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;
+  --terracotta:#e08a5d;--terracotta-deep:#a45b34;
   --bg:#f4f3f0;--border:#dddad4;--white:#fff;--muted:#666;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -101,9 +102,129 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 
 footer{background:var(--navy-dark);padding:28px 2.5rem;text-align:center;margin-top:3rem;}
 footer p{font-size:12px;color:#d8e6f6;}
+
+/* ================================================================
+   Modern auth screens (login email → code → profile)
+   Soft pastel background with brand-tinted blur blobs, centered
+   white card with gradient logo + button. Brand: navy → terracotta.
+   ================================================================ */
+body.is-auth { background: linear-gradient(180deg, #f6f1ea 0%, #efece4 100%); min-height: 100vh; position: relative; overflow-x: hidden; }
+body.is-auth::before,
+body.is-auth::after {
+  content: ''; position: fixed; pointer-events: none; z-index: 0;
+  border-radius: 50%; filter: blur(80px);
+}
+/* Warm terracotta blob top-right + soft sage blob bottom-left — keeps a
+   professional document-center palette (no purple). */
+body.is-auth::before {
+  top: -160px; right: -120px; width: 460px; height: 460px;
+  background: radial-gradient(circle, rgba(224,138,93,0.42), transparent 70%);
+}
+body.is-auth::after {
+  bottom: -180px; left: -140px; width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(125,156,122,0.35), transparent 70%);
+}
+body.is-auth nav,
+body.is-auth .portal-header,
+body.is-auth footer { display: none !important; }
+
+.auth-shell {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px; position: relative; z-index: 1; max-width: none;
+}
+.auth-card {
+  background: #fff; width: 100%; max-width: 460px;
+  border-radius: 22px; padding: 44px 38px;
+  box-shadow: 0 22px 64px rgba(40,30,20,0.10), 0 2px 8px rgba(40,30,20,0.04);
+  position: relative;
+}
+@media (max-width: 480px) {
+  .auth-shell { padding: 24px 16px; }
+  .auth-card { padding: 32px 24px; border-radius: 20px; }
+}
+.auth-logo {
+  width: 64px; height: 64px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 45%, var(--terracotta) 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; margin-bottom: 28px;
+  box-shadow: 0 14px 36px rgba(26,46,74,0.32);
+}
+.auth-logo svg { width: 30px; height: 30px; }
+.auth-kicker {
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 12px;
+}
+.auth-h1 {
+  font-family: 'Playfair Display', serif; font-size: 34px; line-height: 1.15;
+  color: #0c1424; font-weight: 700; margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 480px) {
+  .auth-h1 { font-size: 30px; }
+}
+.auth-sub {
+  font-size: 14.5px; color: #6b7689; line-height: 1.6;
+  margin: 0 0 28px; font-weight: 400;
+}
+/* Override the legacy .card/.form-group/.btn/.msg inside the auth card. */
+.auth-card .form-group { margin-bottom: 18px; }
+.auth-card .form-group label {
+  font-size: 13.5px; font-weight: 700; color: #2b3450;
+  text-transform: none; letter-spacing: 0; margin-bottom: 8px;
+}
+.auth-card .form-group input {
+  padding: 14px 16px; border-radius: 12px; border: 1px solid #e1ddd4;
+  font-size: 15px; color: #1a1a1a; background: #fff;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.auth-card .form-group input:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 4px rgba(26,46,74,0.10);
+}
+.auth-card .form-group input::placeholder { color: #aab1bd; }
+.auth-card #code-input {
+  letter-spacing: 8px; font-size: 22px; text-align: center; font-weight: 600;
+}
+.auth-card .btn {
+  width: 100%; padding: 15px; border: none; border-radius: 14px;
+  /* Brand gradient visible from the start: deep navy → terracotta. */
+  background: linear-gradient(95deg, var(--navy-dark) 0%, var(--navy) 35%, var(--terracotta-deep) 78%, var(--terracotta) 100%);
+  color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer;
+  letter-spacing: 0.3px;
+  box-shadow: 0 10px 26px rgba(26,46,74,0.28);
+  transition: filter 0.18s, transform 0.15s, box-shadow 0.15s;
+  margin-top: 8px;
+}
+.auth-card .btn:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(164,91,52,0.30);
+}
+.auth-card .btn:disabled {
+  background: #c8d0db; box-shadow: none; cursor: not-allowed; transform: none;
+}
+.auth-card .btn-link {
+  background: none; border: none; color: var(--navy); font-weight: 600;
+  text-decoration: underline; cursor: pointer; padding: 0;
+  font-size: 13px; font-family: inherit;
+}
+.auth-aside {
+  margin-top: 22px; text-align: center; font-size: 13px; color: #6b7689;
+}
+.auth-aside .btn-link + .btn-link { margin-left: 14px; }
+/* Re-skin the message bubbles inside the auth card to match the new look. */
+.auth-card .msg {
+  display: none; padding: 12px 16px; border-radius: 12px;
+  margin-top: 18px; margin-bottom: 0; border: 1px solid;
+  font-size: 13.5px; text-align: center; line-height: 1.55;
+  border-left-width: 1px; /* drop the legacy left bar */
+}
+.auth-card .msg.error { display: block; background: #fde9e9; border-color: #f4c2c2; color: #b3302e; }
+.auth-card .msg.info  { display: block; background: #eef2f7; border-color: #c8d3e0; color: #2c4664; text-align: left; }
+.auth-card .msg.dev   { display: block; background: #fff7e6; border-color: #f0d8a8; color: #8a5a00; font-family: monospace; text-align: left; }
 </style>
 </head>
-<body>
+<body class="is-auth">
 
 <nav>
   <a class="logo" href="/" aria-label="Imverica Legal Solutions"><img src="/logo-nav.png" alt="Imverica Legal Solutions"></a>
@@ -116,46 +237,60 @@ footer p{font-size:12px;color:#d8e6f6;}
 </div>
 
 <!-- ===== Login: email step ===== -->
-<div class="wrap" id="step-email">
-  <div class="card">
-    <h2>Sign in</h2>
-    <p class="sub">Enter your email and we'll send you a one-time sign-in code. No password needed.</p>
-    <div class="msg" id="email-msg"></div>
+<div class="auth-shell" id="step-email">
+  <div class="auth-card">
+    <div class="auth-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 L13.7 9.3 L21.5 11 L13.7 12.7 L12 22.5 L10.3 12.7 L2.5 11 L10.3 9.3 Z"/></svg>
+    </div>
+    <div class="auth-kicker">Welcome</div>
+    <h1 class="auth-h1">Sign in to your account</h1>
+    <p class="auth-sub">Enter your email below — we'll send a one-time code to sign you in. No password needed.</p>
     <div class="form-group">
-      <label>Email</label>
+      <label for="email-input">Email</label>
       <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email">
     </div>
     <button class="btn" id="send-code-btn" onclick="requestCode()">Send me a code</button>
+    <div class="msg" id="email-msg"></div>
   </div>
 </div>
 
 <!-- ===== Login: code step ===== -->
-<div class="wrap hidden" id="step-code">
-  <div class="card">
-    <h2>Enter your code</h2>
-    <p class="sub">We sent a sign-in code to <strong id="code-email"></strong>. It expires in 10 minutes.</p>
-    <div class="msg" id="code-msg"></div>
+<div class="auth-shell hidden" id="step-code">
+  <div class="auth-card">
+    <div class="auth-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 L13.7 9.3 L21.5 11 L13.7 12.7 L12 22.5 L10.3 12.7 L2.5 11 L10.3 9.3 Z"/></svg>
+    </div>
+    <div class="auth-kicker">Almost there</div>
+    <h1 class="auth-h1">Check your email</h1>
+    <p class="auth-sub">We sent a 6-digit sign-in code to <strong id="code-email"></strong>. It expires in 10 minutes.</p>
     <div class="form-group">
-      <label>Sign-in code</label>
+      <label for="code-input">Sign-in code</label>
       <input type="text" id="code-input" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
     </div>
     <button class="btn" id="verify-btn" onclick="verifyCode()">Sign in</button>
-    <button class="btn-link" onclick="backToEmail()">Use a different email</button>
-    <button class="btn-link" onclick="requestCode(true)" style="margin-left:1rem;">Resend code</button>
+    <div class="msg" id="code-msg"></div>
+    <div class="auth-aside">
+      <button class="btn-link" onclick="backToEmail()">Use a different email</button>
+      <button class="btn-link" onclick="requestCode(true)">Resend code</button>
+    </div>
   </div>
 </div>
 
 <!-- ===== Profile (required, first time) ===== -->
-<div class="wrap hidden" id="step-profile">
-  <div class="card">
-    <h2>Complete your profile</h2>
-    <p class="sub">We need a few details before we can prepare documents for you. This is stored encrypted.</p>
-    <div class="msg" id="profile-msg"></div>
-    <div class="form-group"><label>First name *</label><input type="text" id="pf-first" placeholder="First name" autocomplete="given-name"></div>
-    <div class="form-group"><label>Last name *</label><input type="text" id="pf-last" placeholder="Last name" autocomplete="family-name"></div>
-    <div class="form-group"><label>Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
-    <div class="form-group"><label>Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" placeholder="Legal name as printed on your documents"></div>
+<div class="auth-shell hidden" id="step-profile">
+  <div class="auth-card">
+    <div class="auth-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 L13.7 9.3 L21.5 11 L13.7 12.7 L12 22.5 L10.3 12.7 L2.5 11 L10.3 9.3 Z"/></svg>
+    </div>
+    <div class="auth-kicker">One last step</div>
+    <h1 class="auth-h1">Complete your profile</h1>
+    <p class="auth-sub">A few details so we can prepare your documents accurately. Stored encrypted, never shared.</p>
+    <div class="form-group"><label for="pf-first">First name *</label><input type="text" id="pf-first" placeholder="First name" autocomplete="given-name"></div>
+    <div class="form-group"><label for="pf-last">Last name *</label><input type="text" id="pf-last" placeholder="Last name" autocomplete="family-name"></div>
+    <div class="form-group"><label for="pf-phone">Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
+    <div class="form-group"><label for="pf-legal">Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" placeholder="Legal name as printed on your documents"></div>
     <button class="btn" id="pf-save" onclick="saveProfile()">Save and continue</button>
+    <div class="msg" id="profile-msg"></div>
   </div>
 </div>
 
@@ -188,7 +323,11 @@ footer p{font-size:12px;color:#d8e6f6;}
 
 <script>
 const $ = (id) => document.getElementById(id);
-function show(step){ ['step-email','step-code','step-profile','step-dash'].forEach(s=>$(s).classList.toggle('hidden', s!==step)); }
+function show(step){
+  ['step-email','step-code','step-profile','step-dash'].forEach(s=>$(s).classList.toggle('hidden', s!==step));
+  // Soft pastel auth shell for login/code/profile; hide it for the dashboard.
+  document.body.classList.toggle('is-auth', step !== 'step-dash');
+}
 function msg(id, kind, text){ const el=$(id); el.className='msg '+kind; el.textContent=text; }
 function clearMsg(id){ const el=$(id); el.className='msg'; el.textContent=''; }
 

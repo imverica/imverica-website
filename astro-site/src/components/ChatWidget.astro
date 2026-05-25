@@ -39,6 +39,12 @@
 .iw-disclaimer-wrap{padding:10px 14px 14px;border-top:1px solid #eee;margin-top:4px;}
 .iw-disclaimer-label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:11px;color:#555;line-height:1.5;}
 .iw-disclaimer-label input[type=checkbox]{margin-top:2px;flex-shrink:0;width:15px;height:15px;cursor:pointer;accent-color:#1a2e4a;}
+@media (max-width: 720px){
+  /* Align the chat button to the same right gutter as page content and the
+     hero arrow, and keep it a touch smaller so it doesn't cover text. */
+  #iw-launcher{bottom:18px;right:16px;width:54px;height:54px;font-size:25px;}
+  #iw-window{bottom:84px;right:16px;}
+}
 </style>
 
 <button id="iw-launcher" aria-label="Open chat">💬</button>
