@@ -106,7 +106,9 @@ const alternates = slug && availableLocales.length > 1
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce || !('IntersectionObserver' in window)) return;
 
-      var SELECTORS = '.ourserv-card, .svc-card, .faq-item, .why-list li, .news-card, .stat-item, .vt, .testi-card, .form-list, .lb-related, .lb-cta-card, .about-card';
+      /* .stat-item intentionally excluded — stats sit just under the hero
+         and must be visible immediately, without a scroll-reveal flash. */
+      var SELECTORS = '.ourserv-card, .svc-card, .faq-item, .why-list li, .news-card, .vt, .testi-card, .form-list, .lb-related, .lb-cta-card, .about-card';
 
       function setupReveal() {
         var els = Array.prototype.slice.call(document.querySelectorAll(SELECTORS));

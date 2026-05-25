@@ -769,9 +769,12 @@ img { max-width: 100%; height: auto; }
     padding-right: 16px;
   }
 }
-@media (max-width: 980px) {
-  /* Mobile header: logo + compact flag-only language pills + hamburger,
-     all on one row. Nav links and the Quote button move into the menu. */
+@media (max-width: 1280px) {
+  /* Mobile/tablet/small-desktop header: logo + compact flag-only language
+     pills + hamburger, all on one row. Nav links and the Quote button move
+     into the menu. 1280 chosen so longer non-English labels (RU/UA/ES
+     "Получить цену", "Portal del cliente", "Семейное право") never collide
+     with the logo or language switcher at any locale. */
   .site-nav { display: none; }
   .site-burger { display: flex; }
   .site-quote { display: none; }

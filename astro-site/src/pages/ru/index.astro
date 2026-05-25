@@ -52,14 +52,37 @@ const legalServiceSchema = {
 
   <section class="svc-section">
     <div class="svc-inner" style="text-align:center;">
-      <div class="svc-kicker">Наши услуги</div>
-      <h2>USCIS, иммиграционный суд и подготовка калифорнийских документов</h2>
-      <p style="margin:0 auto;">Imverica Legal Solutions — калифорнийский лицензированный помощник по юридическим документам и иммиграционный консультант. Мы готовим документы по поручению клиента — не предоставляем юридических консультаций.</p>
-      <p style="margin:1rem auto 0;">
-        <a class="btn" href="/ru/i-485-help">I-485 — изменение статуса</a>
+      <div class="svc-kicker">Что мы делаем</div>
+      <h2>USCIS, EOIR и калифорнийские формы — готовим под ключ</h2>
+      <p style="margin:0 auto 1.4rem;max-width:780px;">
+        Помощь с подготовкой документов на русском, английском, украинском и испанском.
+        Не юридическая фирма, юридические консультации не даём — готовим формы аккуратно
+        и по поручению клиента.
+      </p>
+      <div class="ru-form-grid">
+        <a class="btn" href="/ru/i-485-help">I-485 — грин-карта (AOS)</a>
         <a class="btn btn-ghost" href="/ru/i-589-asylum-help">I-589 — убежище</a>
         <a class="btn btn-ghost" href="/ru/n-400-citizenship-help">N-400 — гражданство</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-130 — семейная петиция</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-765 — разрешение на работу</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-131 — travel document</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#eoir-documents">EOIR-28 / 42A / 42B</a>
+        <a class="btn btn-ghost" href="/ru/california-unlawful-detainer">Выселение (UD-100)</a>
+      </div>
+      <p style="margin:1.4rem auto 0;font-size:13px;color:var(--muted);">
+        Полный список USCIS, EOIR и калифорнийских форм — на странице
+        <a href="/uscis-eoir">USCIS | EOIR</a>.
       </p>
     </div>
   </section>
+
+  <style>
+    .ru-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+  </style>
 </BaseLayout>

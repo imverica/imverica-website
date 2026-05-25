@@ -3,15 +3,38 @@ const services = [
   {
     id: 'immigration-consultant-california',
     title: 'USCIS immigration document preparation',
-    text: 'Full USCIS form package preparation for adjustment of status, work authorization, family petitions, naturalization, asylum, travel documents, and green card replacement.',
-    items: ['I-485 — Application to Register Permanent Residence or Adjust Status', 'I-130 / I-130A — Petition for Alien Relative', 'I-765 — Employment Authorization', 'I-589 — Asylum and Withholding of Removal', 'N-400 — Naturalization', 'I-131 / I-131A — Travel Document'],
+    text: 'Full USCIS form package preparation for adjustment of status, work authorization, family petitions, naturalization, asylum, travel documents, green card replacement, and supporting affidavits.',
+    items: [
+      'I-485 — Adjustment of Status',
+      'I-130 / I-130A — Petition for Alien Relative',
+      'I-765 — Employment Authorization',
+      'I-589 — Asylum & Withholding of Removal',
+      'N-400 — Naturalization',
+      'I-131 / I-131A — Travel Document / Re-entry Permit',
+      'I-90 — Green Card Renewal / Replacement',
+      'I-864 / I-864A — Affidavit of Support',
+      'I-693 — Medical Examination submittal',
+      'I-751 — Removal of Conditions on Residence',
+      'I-539 — Change / Extend Non-immigrant Status',
+      'I-824 — Action on Approved Application'
+    ],
     cite: 'Documents are prepared at the client’s direction. We do not select forms or provide legal advice.'
   },
   {
     id: 'eoir-documents',
     title: 'EOIR immigration court documents',
-    text: 'Document preparation for proceedings before the Executive Office for Immigration Review, including motions, evidence packets, indexes, declarations, and applications for relief.',
-    items: ['EOIR-28 — Notice of Entry of Appearance', 'EOIR-42A / EOIR-42B — Cancellation applications', 'Evidence packets, indexes, tabs, and supporting declarations'],
+    text: 'Document preparation for proceedings before the Executive Office for Immigration Review (EOIR) — motions, evidence packets, indexes, declarations, and applications for relief.',
+    items: [
+      'EOIR-28 — Notice of Entry of Appearance',
+      'EOIR-29 — Notice of Appeal (BIA)',
+      'EOIR-42A — Cancellation of Removal (LPR)',
+      'EOIR-42B — Cancellation of Removal (Non-LPR)',
+      'EOIR-40 — Suspension of Deportation',
+      'Motion to reopen / reconsider packets',
+      'Evidence packets, indexes, tabs',
+      'Country-conditions evidence assembly',
+      'Witness declarations & translation prep'
+    ],
     cite: 'Court representation requires a licensed attorney or accredited representative.'
   },
   {
@@ -64,17 +87,29 @@ const services = [
     cite: 'Translation support does not include legal advice.'
   }
 ];
+
+interface Props {
+  /** Filter to a specific subset of service IDs (e.g. only USCIS + EOIR). */
+  include?: string[];
+  /** Override the section heading and kicker. */
+  kicker?: string;
+  heading?: string;
+  intro?: string;
+}
+const { include, kicker, heading, intro } = Astro.props;
+const visible = include ? services.filter((s) => include.includes(s.id)) : services;
+const finalKicker = kicker || 'California document preparation services';
+const finalHeading = heading || 'USCIS, immigration court, and California civil document preparation';
+const finalIntro = intro || 'Imverica Legal Solutions provides document preparation through California registered Legal Document Assistant and Immigration Consultant services. We prepare documents at the client’s direction across the categories below. We are not a law firm and do not provide legal advice.';
 ---
 
 <section class="svc-section" id="services-detail">
   <div class="svc-inner">
-    <div class="svc-kicker">California document preparation services</div>
-    <h2>USCIS, immigration court, and California civil document preparation</h2>
-    <p>
-      Imverica Legal Solutions provides document preparation through California registered Legal Document Assistant and Immigration Consultant services. We prepare documents at the client’s direction across the categories below. We are not a law firm and do not provide legal advice.
-    </p>
+    <div class="svc-kicker">{finalKicker}</div>
+    <h2>{finalHeading}</h2>
+    <p>{finalIntro}</p>
     <div class="svc-grid">
-      {services.map((service) => (
+      {visible.map((service) => (
         <article class="svc-card" id={service.id}>
           <h3>{service.title}</h3>
           <p>{service.text}</p>

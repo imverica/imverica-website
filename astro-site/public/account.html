@@ -51,9 +51,12 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 
 .hidden{display:none;}
 
-.dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.6rem;flex-wrap:wrap;gap:1rem;}
+.dash-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.6rem;flex-wrap:wrap;gap:1.2rem;}
 .dash-head .who{font-size:14px;color:var(--muted);}
-.dash-head .who strong{color:var(--navy-dark);}
+.dash-head .who strong{color:var(--navy-dark);font-weight:700;}
+.dash-kicker{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--terracotta-deep);margin-bottom:6px;}
+.dash-greeting{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy-dark);line-height:1.2;margin-bottom:6px;letter-spacing:-0.005em;}
+.dash-sub{font-size:13.5px;color:#6b7689;line-height:1.5;max-width:520px;}
 .dash-actions{display:flex;gap:10px;}
 .dash-actions a,.dash-actions button{font-size:13px;padding:9px 16px;border-radius:3px;text-decoration:none;font-family:'DM Sans',sans-serif;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:500;}
 .dash-actions a.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
@@ -240,7 +243,13 @@ body.is-auth footer { display: none !important; }
 <div class="auth-shell" id="step-email">
   <div class="auth-card">
     <div class="auth-logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 L13.7 9.3 L21.5 11 L13.7 12.7 L12 22.5 L10.3 12.7 L2.5 11 L10.3 9.3 Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v18"/>
+        <path d="M5 21h14"/>
+        <path d="M5 7l-3 5a3 3 0 0 0 6 0L5 7Z"/>
+        <path d="M19 7l-3 5a3 3 0 0 0 6 0L19 7Z"/>
+        <path d="M3 7h18"/>
+      </svg>
     </div>
     <div class="auth-kicker">Welcome</div>
     <h1 class="auth-h1">Sign in to your account</h1>
@@ -258,7 +267,13 @@ body.is-auth footer { display: none !important; }
 <div class="auth-shell hidden" id="step-code">
   <div class="auth-card">
     <div class="auth-logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 L13.7 9.3 L21.5 11 L13.7 12.7 L12 22.5 L10.3 12.7 L2.5 11 L10.3 9.3 Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v18"/>
+        <path d="M5 21h14"/>
+        <path d="M5 7l-3 5a3 3 0 0 0 6 0L5 7Z"/>
+        <path d="M19 7l-3 5a3 3 0 0 0 6 0L19 7Z"/>
+        <path d="M3 7h18"/>
+      </svg>
     </div>
     <div class="auth-kicker">Almost there</div>
     <h1 class="auth-h1">Check your email</h1>
@@ -280,7 +295,13 @@ body.is-auth footer { display: none !important; }
 <div class="auth-shell hidden" id="step-profile">
   <div class="auth-card">
     <div class="auth-logo" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5 L13.7 9.3 L21.5 11 L13.7 12.7 L12 22.5 L10.3 12.7 L2.5 11 L10.3 9.3 Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v18"/>
+        <path d="M5 21h14"/>
+        <path d="M5 7l-3 5a3 3 0 0 0 6 0L5 7Z"/>
+        <path d="M19 7l-3 5a3 3 0 0 0 6 0L19 7Z"/>
+        <path d="M3 7h18"/>
+      </svg>
     </div>
     <div class="auth-kicker">One last step</div>
     <h1 class="auth-h1">Complete your profile</h1>
@@ -297,7 +318,11 @@ body.is-auth footer { display: none !important; }
 <!-- ===== Dashboard ===== -->
 <div class="dash-wrap hidden" id="step-dash">
   <div class="dash-head">
-    <div class="who">Welcome, <strong id="dash-name"></strong> · <span id="dash-email" style="font-size:12px;color:#999;"></span></div>
+    <div class="who">
+      <div class="dash-kicker">Imverica · Personal account</div>
+      <div class="dash-greeting">Welcome back, <strong id="dash-name"></strong></div>
+      <div class="dash-sub">Upload documents, message us, and track your requests — all in one place. <span id="dash-email" style="opacity:0.7;"></span></div>
+    </div>
     <div class="dash-actions">
       <a class="primary" href="/portal.html">+ New request</a>
       <button onclick="logout()">Sign out</button>

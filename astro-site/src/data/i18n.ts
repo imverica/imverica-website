@@ -114,12 +114,12 @@ export const NAV: Record<Locale, {
   },
   es: {
     uscis: 'USCIS | EOIR',
-    family: 'Derecho familiar',
-    civil: 'Reclamos menores y civiles',
+    family: 'Familia',
+    civil: 'Reclamos menores',
     business: 'Negocios',
-    about: 'Sobre nosotros',
-    portal: 'Portal del cliente',
-    quote: 'Obtener cotización',
+    about: 'Acerca',
+    portal: 'Mi portal',
+    quote: 'Cotización',
     start: 'Iniciar preparación de documentos',
     phoneCta: '📞 +1 (916) 399-3992'
   }
@@ -199,16 +199,16 @@ export const STATS: Record<Locale, string[]> = {
     'Years preparing California & USCIS forms'
   ],
   ru: [
-    'Поддерживаемые формы USCIS, EOIR и Калифорнии',
-    'Приоритетные формы с пошаговыми флоу',
-    'Языки — EN · RU · UA · ES',
-    'Лет подготовки калифорнийских и USCIS форм'
+    'Форм USCIS, EOIR и Калифорнии в работе',
+    'Приоритетных форм с готовой анкетой',
+    'Языка — EN · RU · UA · ES',
+    'Лет подготовки документов USCIS и Калифорнии'
   ],
   uk: [
-    'Підтримувані форми USCIS, EOIR та Каліфорнії',
-    'Пріоритетні форми з покроковими флоу',
+    'Форм USCIS, EOIR і Каліфорнії в роботі',
+    'Пріоритетних форм з готовою анкетою',
     'Мови — EN · RU · UA · ES',
-    'Років підготовки каліфорнійських і USCIS форм'
+    'Років підготовки документів USCIS і Каліфорнії'
   ],
   es: [
     'Formularios USCIS, EOIR y California compatibles',

@@ -52,14 +52,35 @@ const legalServiceSchema = {
 
   <section class="svc-section">
     <div class="svc-inner" style="text-align:center;">
-      <div class="svc-kicker">Наші послуги</div>
-      <h2>USCIS, імміграційний суд та підготовка каліфорнійських документів</h2>
-      <p style="margin:0 auto;">Imverica Legal Solutions — каліфорнійський ліцензований помічник з юридичних документів та імміграційний консультант. Ми готуємо документи за дорученням клієнта — не надаємо юридичних консультацій.</p>
-      <p style="margin:1rem auto 0;">
-        <a class="btn" href="/uk/i-485-help">I-485 — зміна статусу</a>
+      <div class="svc-kicker">Що ми робимо</div>
+      <h2>USCIS, EOIR і каліфорнійські форми — готуємо під ключ</h2>
+      <p style="margin:0 auto 1.4rem;max-width:780px;">
+        Допомога з підготовкою документів українською, російською, англійською та іспанською. Не юридична фірма, юридичних порад не надаємо — готуємо форми акуратно за дорученням клієнта.
+      </p>
+      <div class="uk-form-grid">
+        <a class="btn" href="/uk/i-485-help">I-485 — грін-карта (AOS)</a>
         <a class="btn btn-ghost" href="/uk/i-589-asylum-help">I-589 — притулок</a>
         <a class="btn btn-ghost" href="/uk/n-400-citizenship-help">N-400 — громадянство</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-130 — сімейна петиція</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-765 — дозвіл на роботу</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-131 — travel document</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#eoir-documents">EOIR-28 / 42A / 42B</a>
+        <a class="btn btn-ghost" href="/uk/california-unlawful-detainer">Виселення (UD-100)</a>
+      </div>
+      <p style="margin:1.4rem auto 0;font-size:13px;color:var(--muted);">
+        Повний перелік форм USCIS, EOIR і Каліфорнії — на сторінці
+        <a href="/uscis-eoir">USCIS | EOIR</a>.
       </p>
     </div>
   </section>
+
+  <style>
+    .uk-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+  </style>
 </BaseLayout>

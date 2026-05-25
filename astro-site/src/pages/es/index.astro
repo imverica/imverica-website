@@ -52,14 +52,35 @@ const legalServiceSchema = {
 
   <section class="svc-section">
     <div class="svc-inner" style="text-align:center;">
-      <div class="svc-kicker">Nuestros servicios</div>
-      <h2>USCIS, tribunal de inmigración y preparación de documentos de California</h2>
-      <p style="margin:0 auto;">Imverica Legal Solutions es Asistente de Documentos Legales con licencia de California y Consultor de Inmigración. Preparamos documentos bajo la dirección del cliente — no brindamos asesoría legal.</p>
-      <p style="margin:1rem auto 0;">
+      <div class="svc-kicker">Lo que hacemos</div>
+      <h2>USCIS, EOIR y formularios de California — preparados al detalle</h2>
+      <p style="margin:0 auto 1.4rem;max-width:780px;">
+        Preparación de documentos en español, inglés, ruso y ucraniano. No somos un bufete de abogados ni brindamos asesoría legal — preparamos los formularios con precisión bajo la dirección del cliente.
+      </p>
+      <div class="es-form-grid">
         <a class="btn" href="/es/i-485-help">I-485 — Ajuste de Estatus</a>
         <a class="btn btn-ghost" href="/es/i-589-asylum-help">I-589 — Asilo</a>
         <a class="btn btn-ghost" href="/es/n-400-citizenship-help">N-400 — Naturalización</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-130 — Petición familiar</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-765 — Permiso de trabajo</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#immigration-consultant-california">I-131 — Documento de viaje</a>
+        <a class="btn btn-ghost" href="/uscis-eoir#eoir-documents">EOIR-28 / 42A / 42B</a>
+        <a class="btn btn-ghost" href="/es/california-unlawful-detainer">Desalojo (UD-100)</a>
+      </div>
+      <p style="margin:1.4rem auto 0;font-size:13px;color:var(--muted);">
+        Lista completa de formularios USCIS, EOIR y California en la página
+        <a href="/uscis-eoir">USCIS | EOIR</a>.
       </p>
     </div>
   </section>
+
+  <style>
+    .es-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+  </style>
 </BaseLayout>

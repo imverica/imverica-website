@@ -1333,10 +1333,12 @@ export function initIntakeWizard(): void {
     nextBtn.style.display = '';
     backBtn.disabled = state.step <= 1 || loading;
     nextBtn.disabled = loading;
-    // Language (step 0) is inherited from the site and never shown, so the
-    // service-tiles step (1) is the real start. Measure progress across the
-    // visible journey (steps 1..final) so the first screen isn't already 60%.
-    var pct = Math.round(Math.max(0, state.step) / Math.max(1, finalStep()) * 100);
+    // Step 1 (service tiles) is the entry — show 0% there. Progress counts
+    // completed steps: pct = (current - first) / (final - first) * 100.
+    // First visible = 1. So step 1 → 0%, step 2 → 25%, final → 100%.
+    var first = 1;
+    var span = Math.max(1, finalStep() - first);
+    var pct = Math.round(Math.max(0, state.step - first) / span * 100);
     progress.style.width = pct + '%';
     if (progressPercent) progressPercent.textContent = pct + '%';
     if (progressLabelEl && copy.progressLabel) progressLabelEl.textContent = copy.progressLabel;
