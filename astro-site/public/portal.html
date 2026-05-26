@@ -104,7 +104,9 @@ footer p{font-size:12px;color:#d8e6f6;}
 
 <div class="portal-body">
 
-  <div class="info-box">
+  <!-- "How it works" is onboarding for first-time visitors; hidden when
+       the visitor is already a signed-in client (see signed-in mode below). -->
+  <div class="info-box" id="how-it-works">
     <p><strong>How it works:</strong> Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.</p>
   </div>
 
@@ -390,6 +392,21 @@ function handleSubmit() {
 
     const personalBox = document.getElementById('personal-info');
     if (personalBox) personalBox.style.display = 'none';
+
+    // "How it works" is onboarding text — not needed for a signed-in client.
+    const howItWorks = document.getElementById('how-it-works');
+    if (howItWorks) howItWorks.style.display = 'none';
+
+    // Slim the dark page header — a returning client doesn't need the big
+    // marketing banner. Replace the h1 with "New request" and shrink padding.
+    const portalHeader = document.querySelector('.portal-header');
+    if (portalHeader) {
+      portalHeader.style.padding = '24px 2.5rem';
+      const h1 = portalHeader.querySelector('h1');
+      const p = portalHeader.querySelector('p');
+      if (h1) { h1.textContent = 'New request'; h1.style.fontSize = '26px'; h1.style.marginBottom = '4px'; }
+      if (p) p.textContent = 'Tell us what you need and drop the documents below.';
+    }
 
     const banner = document.getElementById('signed-in-banner');
     const bName = document.getElementById('signed-in-name');
