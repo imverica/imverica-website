@@ -554,6 +554,7 @@ async function ensureProfile(){
 }
 
 async function saveProfile(){
+  clearMsg('profile-msg');
   const first=$('pf-first').value.trim(), last=$('pf-last').value.trim();
   const phone=$('pf-phone').value.trim(), legal=$('pf-legal').value.trim();
   if(!first || !last){ msg('profile-msg','error','Please enter your first and last name.'); return; }

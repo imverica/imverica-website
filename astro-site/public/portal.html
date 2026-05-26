@@ -108,7 +108,16 @@ footer p{font-size:12px;color:#d8e6f6;}
     <p><strong>How it works:</strong> Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.</p>
   </div>
 
-  <div class="upload-box">
+  <!-- Signed-in banner: shown only when /api/profile resolves with a valid session.
+       When present, the personal-info block below is hidden and name/phone/email
+       are auto-filled from the encrypted profile + session. -->
+  <div id="signed-in-banner" class="signed-in-banner" style="display:none;background:#eef7f0;border:1px solid #bdd9c2;border-left:4px solid #1a5a3a;border-radius:4px;padding:14px 18px;margin-bottom:1.4rem;color:#1a3a2c;font-size:14px;line-height:1.55;">
+    <strong>Signed in as <span id="signed-in-name"></span></strong>
+    <span id="signed-in-email" style="opacity:0.75;font-size:13px;display:block;margin-top:2px;"></span>
+    <span style="font-size:12px;opacity:0.7;display:block;margin-top:6px;">Your contact details are already on file — just tell us what you need and drop the documents below. <a href="/account.html" style="color:#1a5a3a;">Edit profile</a></span>
+  </div>
+
+  <div class="upload-box" id="personal-info">
     <h2>Your Information</h2>
     <p>Please provide your contact details and a brief description of what documents you need prepared.</p>
 
@@ -351,6 +360,46 @@ function handleSubmit() {
       });
     })
     .catch(function(){ /* leave fallback */ });
+})();
+
+// ----- Signed-in client mode -----
+// If a valid session + encrypted profile exist, prefill the personal fields
+// from the profile/email and hide the "Your Information" block — the client
+// shouldn't have to re-enter who they are on every request.
+(async function(){
+  try {
+    const [profileRes, accountRes] = await Promise.all([
+      fetch('/api/profile', { credentials:'include', headers:{Accept:'application/json'} }),
+      fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} })
+    ]);
+    if (!profileRes.ok || !accountRes.ok) return;
+    const profileData = await profileRes.json().catch(()=>null);
+    const accountData = await accountRes.json().catch(()=>null);
+    const prof = profileData && profileData.ok && profileData.profile;
+    const email = accountData && accountData.ok && accountData.email;
+    if (!prof || !prof.firstName) return;
+
+    const fname = document.getElementById('fname');
+    const lname = document.getElementById('lname');
+    const phone = document.getElementById('phone');
+    const emailEl = document.getElementById('email');
+    if (fname) fname.value = prof.firstName || '';
+    if (lname) lname.value = prof.lastName || '';
+    if (phone) phone.value = prof.phone || '';
+    if (emailEl) emailEl.value = email || '';
+
+    const personalBox = document.getElementById('personal-info');
+    if (personalBox) personalBox.style.display = 'none';
+
+    const banner = document.getElementById('signed-in-banner');
+    const bName = document.getElementById('signed-in-name');
+    const bEmail = document.getElementById('signed-in-email');
+    if (bName) bName.textContent = (prof.firstName + (prof.lastName ? ' ' + prof.lastName : '')).trim();
+    if (bEmail) bEmail.textContent = email || '';
+    if (banner) banner.style.display = 'block';
+  } catch (_e) {
+    /* offline or not signed in — show the full form as a guest */
+  }
 })();
 </script>
 </body>
