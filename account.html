@@ -49,7 +49,75 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .msg.info{display:block;background:#eef2f7;border-left:4px solid var(--navy);color:#33506e;}
 .msg.dev{display:block;background:#fff7e6;border-left:4px solid #d99a2b;color:#8a5a00;font-family:monospace;}
 
-.hidden{display:none;}
+.hidden{display:none !important;}
+
+/* ===== Quick-action tiles (dashboard top) ===== */
+.quick-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.8rem;}
+@media (max-width:980px){.quick-tiles{grid-template-columns:repeat(4,1fr);gap:10px;}}
+@media (max-width:760px){.quick-tiles{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:420px){.quick-tiles{grid-template-columns:1fr;}}
+.qt{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 16px;text-align:left;cursor:pointer;transition:transform .15s, box-shadow .15s, border-color .15s;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;font-family:'DM Sans',sans-serif;position:relative;min-height:128px;}
+.qt:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(40,30,20,0.08);border-color:rgba(26,46,74,0.18);}
+.qt-icon-wrap{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--terracotta-deep) 100%);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(26,46,74,0.20);}
+.qt-icon-wrap svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.qt-title{font-size:15px;font-weight:700;color:var(--navy-dark);line-height:1.25;}
+.qt-sub{font-size:12.5px;color:var(--muted);line-height:1.45;}
+.qt-badge{position:absolute;top:14px;right:14px;min-width:20px;height:20px;padding:0 6px;background:var(--terracotta-deep);color:#fff;border-radius:10px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.profile-panel{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.4rem;}
+.profile-panel h3{font-size:16px;font-weight:600;color:var(--navy-dark);margin-bottom:0.4rem;}
+.profile-panel .pp-row{display:flex;justify-content:space-between;gap:1rem;padding:8px 0;border-bottom:1px solid #f0ede5;font-size:14px;}
+.profile-panel .pp-row:last-of-type{border-bottom:none;}
+.profile-panel .pp-row .pp-key{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+.profile-panel .pp-actions{display:flex;gap:10px;margin-top:1rem;}
+.profile-panel .pp-actions button{font-size:13px;padding:9px 16px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:500;}
+.profile-panel .pp-actions button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* ===== My Documents modal ===== */
+.md-overlay{position:fixed;inset:0;background:rgba(15,22,35,0.55);backdrop-filter:blur(2px);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px;}
+.md-overlay.hidden{display:none !important;}
+.md-modal{background:#fff;border-radius:16px;width:100%;max-width:760px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(15,22,35,0.4);overflow:hidden;}
+.md-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);}
+.md-head h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy-dark);margin:0;}
+.md-close{background:none;border:none;font-size:28px;line-height:1;cursor:pointer;color:#8c8c8c;padding:0 6px;}
+.md-close:hover{color:var(--navy-dark);}
+.md-tabs{display:flex;gap:6px;padding:14px 24px 0;border-bottom:1px solid var(--border);}
+.md-tab{background:none;border:none;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;}
+.md-tab.active{color:var(--navy-dark);border-bottom-color:var(--terracotta-deep);}
+.md-tab:hover{color:var(--navy-dark);}
+.md-body{padding:18px 24px 24px;overflow-y:auto;flex:1;}
+.md-empty{text-align:center;color:var(--muted);font-size:14px;padding:40px 20px;}
+.md-group{margin-bottom:1.4rem;}
+.md-group-title{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--terracotta-deep);margin-bottom:10px;}
+.md-group-meta{font-size:12px;color:var(--muted);margin-left:6px;font-weight:500;letter-spacing:0;text-transform:none;}
+.md-file{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f8f6;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:13.5px;}
+.md-file-icon{flex:0 0 auto;width:32px;height:32px;border-radius:8px;background:#eef2f7;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:14px;font-weight:700;}
+.md-file-prepared .md-file-icon{background:#eef7f0;color:#1a5a3a;}
+.md-file-name{flex:1;color:var(--navy-dark);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.md-file-meta{flex:0 0 auto;color:var(--muted);font-size:12px;}
+.md-file-tag{flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#eef2f7;color:#33506e;}
+.md-file-prepared .md-file-tag{background:#eef7f0;color:#1a5a3a;}
+.md-file-dl{flex:0 0 auto;color:var(--navy);text-decoration:none;font-weight:600;font-size:12.5px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;}
+.md-file-dl:hover{background:#f0f4f8;}
+
+/* ===== Notifications dropdown ===== */
+.notif-overlay{position:fixed;inset:0;z-index:998;display:none;}
+.notif-overlay.open{display:block;}
+.notif-panel{position:absolute;top:60px;right:5%;background:#fff;border:1px solid var(--border);border-radius:14px;width:360px;max-width:calc(100vw - 40px);max-height:480px;box-shadow:0 22px 60px rgba(15,22,35,0.22);display:flex;flex-direction:column;overflow:hidden;z-index:1000;}
+.notif-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.notif-head h4{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy-dark);margin:0;}
+.notif-mark{background:none;border:none;font-size:12px;color:var(--navy);cursor:pointer;font-family:inherit;font-weight:500;text-decoration:underline;}
+.notif-list{overflow-y:auto;flex:1;}
+.notif-empty{text-align:center;color:var(--muted);font-size:13px;padding:30px 20px;}
+.notif-item{display:flex;gap:10px;padding:12px 18px;border-bottom:1px solid #f3f0eb;font-size:13px;line-height:1.45;cursor:pointer;transition:background .15s;}
+.notif-item:hover{background:#fafaf7;}
+.notif-item.unread{background:#fff7ec;}
+.notif-item:last-child{border-bottom:none;}
+.notif-dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--terracotta-deep);margin-top:6px;}
+.notif-item.read .notif-dot{background:#ccc;}
+.notif-body{flex:1;}
+.notif-title{font-weight:600;color:var(--navy-dark);}
+.notif-text{color:#4a5a6e;margin-top:2px;}
+.notif-time{font-size:11px;color:#a0a4ad;margin-top:4px;}
 
 .dash-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.6rem;flex-wrap:wrap;gap:1.2rem;}
 .dash-head .who{font-size:14px;color:var(--muted);}
@@ -329,6 +397,90 @@ body.is-auth footer { display: none !important; }
     </div>
   </div>
   <div class="msg" id="dash-msg"></div>
+
+  <!-- Quick-action tiles -->
+  <div class="quick-tiles" aria-label="Quick actions">
+    <a class="qt" href="/portal.html" aria-label="Start a new document request">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+      </div>
+      <div class="qt-title">+ New request</div>
+      <div class="qt-sub">Start a document package</div>
+    </a>
+
+    <button class="qt" type="button" onclick="quickUpload()" aria-label="Upload documents">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <div class="qt-title">Upload documents</div>
+      <div class="qt-sub">Drop files into a request</div>
+    </button>
+
+    <button class="qt" type="button" onclick="focusChat()" aria-label="Message Imverica">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </div>
+      <div class="qt-title">Message us</div>
+      <div class="qt-sub">Ask about your documents</div>
+      <span class="qt-badge" id="qt-msg-badge" style="display:none;">0</span>
+    </button>
+
+    <a class="qt" href="tel:+19163993992" aria-label="Call Imverica">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div class="qt-title">Call us</div>
+      <div class="qt-sub">+1 (916) 399-3992</div>
+    </a>
+
+    <button class="qt" type="button" onclick="openMyDocuments()" aria-label="My documents — all files">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="qt-title">My documents</div>
+      <div class="qt-sub">All files across requests</div>
+      <span class="qt-badge" id="qt-orders-badge" style="display:none;">0</span>
+    </button>
+
+    <button class="qt" type="button" onclick="openProfilePanel()" aria-label="Edit profile">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="qt-title">Profile</div>
+      <div class="qt-sub">Name, phone, settings</div>
+    </button>
+
+    <button class="qt" type="button" onclick="openNotifications()" aria-label="Notifications">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </div>
+      <div class="qt-title">Notifications</div>
+      <div class="qt-sub">Replies & status updates</div>
+      <span class="qt-badge" id="qt-notif-badge" style="display:none;">0</span>
+    </button>
+
+    <a class="qt" href="/lda" aria-label="Help and what is an LDA">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div class="qt-title">Help & FAQ</div>
+      <div class="qt-sub">What is a California LDA?</div>
+    </a>
+  </div>
+
+  <!-- Profile panel (hidden by default; toggled by the Profile tile) -->
+  <div class="profile-panel hidden" id="profile-panel">
+    <h3>Your profile</h3>
+    <div class="pp-row"><span class="pp-key">Name</span><span id="pp-name"></span></div>
+    <div class="pp-row"><span class="pp-key">Phone</span><span id="pp-phone"></span></div>
+    <div class="pp-row"><span class="pp-key">Email</span><span id="pp-email"></span></div>
+    <div class="pp-row"><span class="pp-key">Legal name</span><span id="pp-legal"></span></div>
+    <div class="pp-actions">
+      <button class="primary" type="button" onclick="editProfile()">Edit profile</button>
+      <button type="button" onclick="document.getElementById('profile-panel').classList.add('hidden')">Close</button>
+    </div>
+  </div>
+
   <div id="orders"></div>
 
   <div class="chat-card">
@@ -338,6 +490,37 @@ body.is-auth footer { display: none !important; }
     <div class="chat-input-row">
       <textarea id="chat-input" placeholder="Type your message…" rows="1"></textarea>
       <button class="chat-send" id="chat-send" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== My Documents modal — lists every file from every request ===== -->
+<div class="md-overlay hidden" id="md-overlay" onclick="if(event.target===this) closeMyDocuments()">
+  <div class="md-modal" role="dialog" aria-modal="true" aria-labelledby="md-title">
+    <div class="md-head">
+      <h3 id="md-title">My documents</h3>
+      <button class="md-close" type="button" aria-label="Close" onclick="closeMyDocuments()">×</button>
+    </div>
+    <div class="md-tabs" role="tablist">
+      <button class="md-tab active" type="button" data-md-filter="all" onclick="filterMyDocuments('all')">All</button>
+      <button class="md-tab" type="button" data-md-filter="prepared" onclick="filterMyDocuments('prepared')">Prepared by Imverica</button>
+      <button class="md-tab" type="button" data-md-filter="mine" onclick="filterMyDocuments('mine')">Your uploads</button>
+    </div>
+    <div class="md-body" id="md-body">
+      <div class="md-empty">Loading your documents…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Notifications dropdown ===== -->
+<div class="notif-overlay" id="notif-overlay" onclick="if(event.target===this) closeNotifications()">
+  <div class="notif-panel" role="dialog" aria-modal="true" aria-labelledby="notif-title">
+    <div class="notif-head">
+      <h4 id="notif-title">Notifications</h4>
+      <button class="notif-mark" type="button" onclick="markAllRead()">Mark all read</button>
+    </div>
+    <div class="notif-list" id="notif-list">
+      <div class="notif-empty">No notifications yet.</div>
     </div>
   </div>
 </div>
@@ -509,6 +692,24 @@ async function removeFile(orderId, fileId){
 let chatPoll=null, chatLastCount=-1;
 function escText(t){ const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
 
+// localStorage key for the last staff message the client has acknowledged
+// (cleared when they click the Message tile or visit the chat).
+const LAST_SEEN_KEY = 'imverica_last_seen_staff_ts';
+function setTileBadge(id, n){
+  const el = document.getElementById(id); if(!el) return;
+  el.textContent = String(n);
+  el.style.display = n > 0 ? 'inline-flex' : 'none';
+}
+function markStaffSeen(){
+  try{ localStorage.setItem(LAST_SEEN_KEY, String(Date.now())); }catch(e){}
+  setTileBadge('qt-msg-badge', 0);
+  setTileBadge('qt-notif-badge', 0);
+}
+// Clear the badge when the user focuses the chat input.
+document.addEventListener('focusin', (e) => {
+  if (e.target && e.target.id === 'chat-input') markStaffSeen();
+});
+
 async function loadMessages(){
   const thread=$('chat-thread'); if(!thread) return;
   try{
@@ -516,6 +717,11 @@ async function loadMessages(){
     if(!r.ok) return;
     const d=await r.json(); if(!d.ok) return;
     const msgs=d.messages||[];
+    // Update tile badges based on staff messages newer than "last seen".
+    const lastSeen = Number(localStorage.getItem(LAST_SEEN_KEY) || 0);
+    const unread = msgs.filter(m => m.from === 'staff' && new Date(m.ts).getTime() > lastSeen).length;
+    setTileBadge('qt-msg-badge', unread);
+    setTileBadge('qt-notif-badge', unread);
     if(msgs.length===chatLastCount) return; // no change, avoid scroll jump
     chatLastCount=msgs.length;
     thread.textContent='';
@@ -568,6 +774,11 @@ async function saveProfile(){
   }catch(e){ btn.disabled=false; btn.textContent='Save and continue'; msg('profile-msg','error','Could not reach the server.'); }
 }
 
+// Latest dashboard data — used by the quick-tile actions (profile panel,
+// badges, edit-profile flow).
+let currentProfile = null;
+let currentSessionEmail = '';
+
 async function loadDashboard(){
   const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
   if (res.status===401){ show('step-email'); stopChat(); return; }
@@ -578,12 +789,265 @@ async function loadDashboard(){
   const profile = await ensureProfile();
   if (!profile){ clearMsg('profile-msg'); show('step-profile'); $('pf-first').focus(); return; }
 
+  currentProfile = profile;
+  currentSessionEmail = data.email || '';
+
   $('dash-name').textContent = profile.firstName;
-  $('dash-email').textContent = data.email||'';
+  $('dash-email').textContent = currentSessionEmail;
   renderOrders(data.orders||[]);
+  refreshTileBadges(data.orders||[]);
   show('step-dash');
   startChat();
 }
+
+/* ===== Quick-action tile handlers ===== */
+function refreshTileBadges(orders){
+  const ob = document.getElementById('qt-orders-badge');
+  if (ob){
+    const n = (orders||[]).length;
+    ob.textContent = String(n);
+    ob.style.display = n ? 'inline-flex' : 'none';
+  }
+  // Message + notification badges are wired off the chat poll once it runs.
+}
+
+function focusChat(){
+  const card = document.querySelector('.chat-card');
+  const input = document.getElementById('chat-input');
+  if (card) card.scrollIntoView({behavior:'smooth', block:'start'});
+  if (input) setTimeout(() => input.focus(), 350);
+}
+
+function scrollToOrders(){
+  const list = document.getElementById('orders');
+  if (list) list.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function quickUpload(){
+  // Clicks the first order's "+ Attach a document" if any; otherwise nudges
+  // the user to create a request first (files are always tied to a request).
+  const firstAdd = document.querySelector('#orders .doc-add');
+  if (firstAdd){ firstAdd.click(); scrollToOrders(); return; }
+  const orders = document.getElementById('orders');
+  if (orders){
+    orders.scrollIntoView({behavior:'smooth', block:'start'});
+    orders.style.outline = '2px dashed var(--terracotta-deep)';
+    setTimeout(() => { orders.style.outline = ''; }, 2400);
+  }
+  msg('dash-msg','info','Start a New request first — files attach to an active request.');
+  setTimeout(() => clearMsg('dash-msg'), 4000);
+}
+
+function openProfilePanel(){
+  if (!currentProfile){ return; }
+  const p = currentProfile;
+  document.getElementById('pp-name').textContent = ((p.firstName||'') + ' ' + (p.lastName||'')).trim() || '—';
+  document.getElementById('pp-phone').textContent = p.phone || '—';
+  document.getElementById('pp-email').textContent = currentSessionEmail || '—';
+  document.getElementById('pp-legal').textContent = p.legalName || '—';
+  const panel = document.getElementById('profile-panel');
+  if (panel){ panel.classList.remove('hidden'); panel.scrollIntoView({behavior:'smooth', block:'start'}); }
+}
+
+function editProfile(){
+  if (!currentProfile) return;
+  const p = currentProfile;
+  $('pf-first').value = p.firstName || '';
+  $('pf-last').value  = p.lastName  || '';
+  $('pf-phone').value = p.phone     || '';
+  $('pf-legal').value = p.legalName || '';
+  clearMsg('profile-msg');
+  show('step-profile');
+  document.getElementById('profile-panel').classList.add('hidden');
+}
+
+/* ===== My Documents modal ===== */
+let mdAllFiles = []; // [{orderId, orderLabel, file: {fileId,name,type,size,uploadedAt,source}}]
+let mdFilter = 'all';
+
+function openMyDocuments(){
+  const overlay = document.getElementById('md-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  loadMyDocuments();
+}
+function closeMyDocuments(){
+  const overlay = document.getElementById('md-overlay');
+  if (!overlay) return;
+  overlay.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function filterMyDocuments(f){
+  mdFilter = f;
+  document.querySelectorAll('.md-tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('data-md-filter') === f);
+  });
+  renderMyDocuments();
+}
+async function loadMyDocuments(){
+  const body = document.getElementById('md-body');
+  if (!body) return;
+  body.innerHTML = '<div class="md-empty">Loading your documents…</div>';
+  try {
+    const accountRes = await fetch('/api/account', { credentials:'include' });
+    const account = await accountRes.json();
+    if (!account || !account.ok) {
+      body.innerHTML = '<div class="md-empty">Could not load documents. Please try again.</div>';
+      return;
+    }
+    const orders = account.orders || [];
+    if (!orders.length){
+      body.innerHTML = '<div class="md-empty">You have no requests yet — start a New request to upload documents.</div>';
+      return;
+    }
+    // Fetch files for each order in parallel.
+    const allFiles = [];
+    await Promise.all(orders.map(async (o) => {
+      try {
+        const r = await fetch('/api/upload?orderId=' + encodeURIComponent(o.id), { credentials:'include' });
+        const d = await r.json();
+        if (d && d.ok && Array.isArray(d.files)){
+          d.files.forEach(f => allFiles.push({
+            orderId: o.id,
+            orderLabel: (o.service || o.serviceLabel || 'Request') + (o.formCode ? ' · ' + o.formCode : ''),
+            file: f
+          }));
+        }
+      } catch(e){}
+    }));
+    mdAllFiles = allFiles;
+    renderMyDocuments();
+  } catch(e){
+    body.innerHTML = '<div class="md-empty">Could not load documents. Please try again.</div>';
+  }
+}
+function renderMyDocuments(){
+  const body = document.getElementById('md-body');
+  if (!body) return;
+  let items = mdAllFiles;
+  if (mdFilter === 'prepared') items = items.filter(x => x.file.source === 'prepared');
+  if (mdFilter === 'mine')     items = items.filter(x => x.file.source !== 'prepared');
+  if (!items.length){
+    body.innerHTML = '<div class="md-empty">No files in this view yet.</div>';
+    return;
+  }
+  // Group by order.
+  const byOrder = new Map();
+  items.forEach(x => {
+    if (!byOrder.has(x.orderId)) byOrder.set(x.orderId, { orderLabel: x.orderLabel, files: [] });
+    byOrder.get(x.orderId).files.push(x.file);
+  });
+  const fmtSize = (n) => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(n/1024))+' KB';
+  let html = '';
+  byOrder.forEach((g, orderId) => {
+    html += '<div class="md-group">';
+    html += '<div class="md-group-title">' + escText(orderId) + '<span class="md-group-meta">' + escText(g.orderLabel) + '</span></div>';
+    g.files.forEach(f => {
+      const isPrep = f.source === 'prepared';
+      const ext = (f.name.split('.').pop() || '?').toUpperCase().slice(0,4);
+      html += '<div class="md-file' + (isPrep ? ' md-file-prepared' : '') + '">';
+      html += '<span class="md-file-icon">' + escText(ext) + '</span>';
+      html += '<span class="md-file-name">' + escText(f.name) + '</span>';
+      html += '<span class="md-file-meta">' + fmtSize(f.size) + '</span>';
+      html += '<span class="md-file-tag">' + (isPrep ? 'Prepared' : 'Uploaded') + '</span>';
+      html += '<a class="md-file-dl" href="/api/upload?orderId=' + encodeURIComponent(orderId) + '&fileId=' + encodeURIComponent(f.fileId) + '">Download</a>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  body.innerHTML = html;
+}
+
+/* ===== Notifications dropdown ===== */
+const NOTIF_READ_KEY = 'imverica_notif_read_ts';
+function openNotifications(){
+  const overlay = document.getElementById('notif-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  loadNotifications();
+}
+function closeNotifications(){
+  const overlay = document.getElementById('notif-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+}
+function markAllRead(){
+  try { localStorage.setItem(NOTIF_READ_KEY, String(Date.now())); } catch(e){}
+  markStaffSeen();
+  loadNotifications();
+}
+async function loadNotifications(){
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+  const readTs = Number(localStorage.getItem(NOTIF_READ_KEY) || 0);
+  const items = [];
+  // Recent staff chat messages.
+  try {
+    const r = await fetch('/api/messages', { credentials:'include' });
+    const d = await r.json();
+    if (d && d.ok && Array.isArray(d.messages)){
+      d.messages.filter(m => m.from === 'staff').slice(-5).reverse().forEach(m => {
+        items.push({
+          ts: new Date(m.ts).getTime(),
+          title: 'Imverica replied',
+          text: (m.text || '').slice(0, 140) + ((m.text||'').length > 140 ? '…' : ''),
+          onClick: 'closeNotifications(); focusChat();'
+        });
+      });
+    }
+  } catch(e){}
+  // Recent order status changes (latest first 5 with non-default status).
+  try {
+    const r = await fetch('/api/account', { credentials:'include' });
+    const d = await r.json();
+    if (d && d.ok && Array.isArray(d.orders)){
+      d.orders.slice(0, 5).forEach(o => {
+        const st = (o.status || '').toLowerCase();
+        if (st && st !== 'new'){
+          items.push({
+            ts: new Date(o.updatedAt || o.createdAt || Date.now()).getTime(),
+            title: 'Status: ' + (st.includes('ready') ? 'Ready' : st.includes('review') ? 'In review' : st),
+            text: 'Request ' + o.id + ' · ' + (o.service || o.serviceLabel || ''),
+            onClick: 'closeNotifications(); scrollToOrders();'
+          });
+        }
+      });
+    }
+  } catch(e){}
+  items.sort((a,b) => b.ts - a.ts);
+  if (!items.length){
+    list.innerHTML = '<div class="notif-empty">No notifications yet. Replies from Imverica and status updates will show here.</div>';
+    return;
+  }
+  list.innerHTML = items.map(it => {
+    const unread = it.ts > readTs;
+    const when = new Date(it.ts);
+    const ago = relativeTime(when);
+    return '<div class="notif-item ' + (unread ? 'unread' : 'read') + '" onclick="' + it.onClick + '">' +
+           '<span class="notif-dot"></span>' +
+           '<div class="notif-body">' +
+             '<div class="notif-title">' + escText(it.title) + '</div>' +
+             '<div class="notif-text">' + escText(it.text) + '</div>' +
+             '<div class="notif-time">' + ago + '</div>' +
+           '</div></div>';
+  }).join('');
+}
+function relativeTime(d){
+  const diff = (Date.now() - d.getTime()) / 1000;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff/60) + ' min ago';
+  if (diff < 86400) return Math.floor(diff/3600) + ' hour' + (Math.floor(diff/3600)===1?'':'s') + ' ago';
+  if (diff < 86400*7) return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
+  return d.toLocaleDateString();
+}
+// Close notifications/modal on Escape.
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape'){
+    closeNotifications();
+    closeMyDocuments();
+  }
+});
 
 // Enter-key convenience
 $('email-input').addEventListener('keydown',e=>{ if(e.key==='Enter') requestCode(); });

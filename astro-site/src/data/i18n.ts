@@ -24,8 +24,8 @@ export interface LocaleMeta {
 export const LOCALES: Record<Locale, LocaleMeta> = {
   en: { code: 'en', htmlLang: 'en-US', ogLocale: 'en_US', flag: '🇺🇸', label: 'EN', prefix: '' },
   ru: { code: 'ru', htmlLang: 'ru-RU', ogLocale: 'ru_RU', flag: '🇷🇺', label: 'RU', prefix: '/ru' },
-  uk: { code: 'uk', htmlLang: 'uk-UA', ogLocale: 'uk_UA', flag: '🇺🇦', label: 'UA', prefix: '/uk' },
-  es: { code: 'es', htmlLang: 'es-MX', ogLocale: 'es_MX', flag: '🇲🇽', label: 'ES', prefix: '/es' }
+  uk: { code: 'uk', htmlLang: 'uk-UA', ogLocale: 'uk_UA', flag: '🇺🇦', label: 'UA', prefix: '/ua' },
+  es: { code: 'es', htmlLang: 'es-MX', ogLocale: 'es_MX', flag: '🇲🇽', label: 'MX', prefix: '/mx' }
 };
 
 export const SUPPORTED_LOCALES: Locale[] = ['en', 'ru', 'uk', 'es'];
@@ -38,11 +38,12 @@ const translatedSlugs = new Set<string>([
   '/california-unlawful-detainer'
 ]);
 
-/** Build a per-locale URL from a slug. `/i-485-help` for en, `/ru/i-485-help` for ru, etc. */
+/** Build a per-locale URL from a slug. Uses the prefix in LOCALES, so URLs
+ *  can diverge from the locale code (e.g. uk → /ua, es → /mx). */
 export function localizedPath(locale: Locale, slug: string): string {
   const clean = slug.startsWith('/') ? slug : '/' + slug;
   if (locale === 'en') return clean;
-  return `/${locale}${clean}`;
+  return `${LOCALES[locale].prefix}${clean}`;
 }
 
 /**

@@ -23,11 +23,11 @@ const prefix = LOCALES[lang].prefix;
       <img class="site-brand-logo" src="/logo-nav.png" alt="Imverica Legal Solutions" width="279" height="92" />
     </a>
     <nav class="site-nav" aria-label="Main">
-      <a href="/uscis-eoir">{t.uscis}</a>
-      <a href={localizedPathSafe(lang, '/california-family-law')}>{t.family}</a>
-      <a href={localizedPathSafe(lang, '/california-small-claims')}>{t.civil}</a>
+      <a href="/immigration">{t.uscis}</a>
+      <a href={localizedPathSafe(lang, '/fl')}>{t.family}</a>
+      <a href={localizedPathSafe(lang, '/sc')}>{t.civil}</a>
       <a href="/business">{t.business}</a>
-      <a href={localizedPathSafe(lang, '/california-legal-document-assistant')}>{t.about}</a>
+      <a href={localizedPathSafe(lang, '/lda')}>{t.about}</a>
       <a href="/account.html">{t.portal}</a>
     </nav>
     <div class="site-lang" aria-label="Language">
@@ -48,11 +48,11 @@ const prefix = LOCALES[lang].prefix;
     </button>
   </div>
   <nav class="site-mobile-menu" id="siteMobileMenu" aria-label="Mobile navigation" hidden>
-    <a href="/uscis-eoir">{t.uscis}</a>
-    <a href={localizedPathSafe(lang, '/california-family-law')}>{t.family}</a>
-    <a href={localizedPathSafe(lang, '/california-small-claims')}>{t.civil}</a>
+    <a href="/immigration">{t.uscis}</a>
+    <a href={localizedPathSafe(lang, '/fl')}>{t.family}</a>
+    <a href={localizedPathSafe(lang, '/sc')}>{t.civil}</a>
     <a href="/business">{t.business}</a>
-    <a href={localizedPathSafe(lang, '/california-legal-document-assistant')}>{t.about}</a>
+    <a href={localizedPathSafe(lang, '/lda')}>{t.about}</a>
     <a href="/account.html">{t.portal}</a>
     <a class="btn btn-accent" href={prefix + '/#get-started'}>{t.quote}</a>
   </nav>

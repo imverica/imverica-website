@@ -8,11 +8,21 @@
 
 # Old single-page anchor links (legacy index.html service cards) → new
 # dedicated landing pages. 301 = permanent, preserves SEO juice.
+# --- 2026-05-25 URL shortening: short clean paths for major sections.
+#     Permanent 301s preserve any external/social SEO juice from the old paths.
+/california-family-law                                             /fl                                      301
+/california-small-claims                                           /sc                                      301
+/california-legal-document-assistant                               /lda                                     301
+/uscis-eoir                                                        /immigration                             301
+# Locale URL renames: /uk → /ua (Ukrainian), /es → /mx (Mexican Spanish).
+/uk/*                                                              /ua/:splat                               301
+/es/*                                                              /mx/:splat                               301
+
 /#immigration-consultant-california                                /i-485-help                              301
 /#eoir-documents                                                   /i-589-asylum-help                       301
-/#family-law-documents-california                                  /california-family-law                   301
+/#family-law-documents-california                                  /fl                                      301
 /#unlawful-detainer-document-preparation-california                /california-unlawful-detainer            301
-/#small-claims-document-preparation-california                     /california-small-claims                 301
+/#small-claims-document-preparation-california                     /sc                                      301
 /#restraining-orders-california                                    /california-restraining-orders           301
 /#probate-document-preparation-california                          /california-probate                      301
 /#business-filings                                                 /#business-filings                       200

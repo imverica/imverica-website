@@ -24,11 +24,11 @@ const URLS: SitemapEntry[] = [
   { slug: '/california-unlawful-detainer', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/i-130-family-petition', priority: 0.9, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/i-765-work-permit-help', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/california-small-claims', priority: 0.8, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/sc', priority: 0.8, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/california-restraining-orders', priority: 0.8, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/california-family-law', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/fl', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/california-probate', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/california-legal-document-assistant', priority: 0.7, changefreq: 'monthly', translatedLocales: [] }
+  { slug: '/lda', priority: 0.7, changefreq: 'monthly', translatedLocales: [] }
 ];
 
 function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {
