@@ -96,7 +96,10 @@ const t = STRINGS[lang] || STRINGS.en;
     </svg>
     <span>+1 (916) 399-3992</span>
   </a>
-  <a class="ai-services-link" href="/immigration">{t.seeServices}</a>
+  {/* All services overview lives on the homepage #services section
+     (Our Services component) — not the /immigration page which only
+     lists USCIS / EOIR. Anchor jump keeps the visitor on the same page. */}
+  <a class="ai-services-link" href="#services">{t.seeServices}</a>
 </div>
 
 <script>

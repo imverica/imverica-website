@@ -88,13 +88,19 @@ const testimonials = [
     font-size: 36px;
     margin-bottom: 14px;
     font-weight: 700;
+    text-wrap: balance;
   }
 
+  /* text-wrap: pretty + max-width keeps "they speak" from orphaning on its
+     own line — modern browsers redistribute words across all lines so
+     each line has a similar count. */
   .testimonials-heading p {
     color: #3a4a5e;
     font-size: 15px;
     line-height: 1.7;
     margin: 0;
+    text-wrap: pretty;
+    max-width: 60ch;
   }
 
   .testimonials-grid {

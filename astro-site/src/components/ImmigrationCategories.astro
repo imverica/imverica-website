@@ -131,12 +131,14 @@ const cats = [
   { ...N.i130, href: `${lp}/i-130-family-petition`,  flag: '👨‍👩‍👧', color: 'var(--terracotta)' },
   { ...N.i765, href: `${lp}/i-765-work-permit-help`, flag: '💼', color: 'var(--navy)' },
   { ...N.eoir, href: `${lp}/immigration#eoir-documents`, flag: '⚖️', color: 'var(--navy-dark)' },
-  // Row 3 — humanitarian / specialty forms route to the wizard so the
-  // visitor starts an intake instead of landing on a generic services list.
-  { ...N.uvisa, href: `${lp}/#get-started?form=I-918&topic=U-visa`, flag: '🆘', color: 'var(--terracotta-deep)' },
-  { ...N.i539,  href: `${lp}/#get-started?form=I-539`,              flag: '🔄', color: 'var(--navy)' },
-  { ...N.i90,   href: `${lp}/#get-started?form=I-90`,               flag: '♻️', color: 'var(--sage)' },
-  { ...N.vawa,  href: `${lp}/#get-started?form=I-360&topic=VAWA`,   flag: '🛡️', color: 'var(--terracotta)' }
+  // Row 3 — humanitarian / specialty forms: land on the USCIS service
+  // section of /immigration so the visitor sees the full form list and
+  // its scope first, then decides whether to start an intake. Hash
+  // anchors scroll directly to the explanatory cards.
+  { ...N.uvisa, href: `${lp}/immigration#immigration-consultant-california`, flag: '🆘', color: 'var(--terracotta-deep)' },
+  { ...N.i539,  href: `${lp}/immigration#immigration-consultant-california`, flag: '🔄', color: 'var(--navy)' },
+  { ...N.i90,   href: `${lp}/immigration#immigration-consultant-california`, flag: '♻️', color: 'var(--sage)' },
+  { ...N.vawa,  href: `${lp}/immigration#immigration-consultant-california`, flag: '🛡️', color: 'var(--terracotta)' }
 ];
 ---
 <section class="imm-cats-section">

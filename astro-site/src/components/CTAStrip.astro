@@ -17,9 +17,15 @@ const {
   sub = defaults.sub,
   primaryHref = '/#get-started',
   primaryText = defaults.startBtn,
-  secondaryHref = 'tel:+19163993992',
-  secondaryText = '📞 +1 (916) 399-3992'
+  // Secondary CTA is opt-in. The footer already displays brand + phone +
+  // email, so calling them out a third time right above looks like
+  // copy-paste fatigue. Pages that genuinely need a phone shortcut
+  // (e.g. emergency restraining-order help) pass secondaryHref + Text
+  // explicitly.
+  secondaryHref = '',
+  secondaryText = ''
 } = Astro.props;
+const showSecondary = Boolean(secondaryHref && secondaryText);
 ---
 <section style="background:linear-gradient(135deg,#fdf6ec 0%,#fff5e9 100%);padding:64px 1.5rem;border-top:1px solid rgba(40,30,20,0.08);">
   <div style="max-width:760px;margin:0 auto;text-align:center;">
@@ -27,7 +33,7 @@ const {
     <p style="font-size:15px;color:#6b5a44;line-height:1.6;margin:0 auto 28px;max-width:560px;">{sub}</p>
     <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
       <a class="btn btn-accent" href={primaryHref}>{primaryText}</a>
-      <a class="btn btn-ghost" href={secondaryHref}>{secondaryText}</a>
+      {showSecondary && <a class="btn btn-ghost" href={secondaryHref}>{secondaryText}</a>}
     </div>
   </div>
 </section>

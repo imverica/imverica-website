@@ -7,14 +7,16 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const f = FOOTER[lang];
 const year = new Date().getFullYear();
-const disclaimer = f.disclaimer.replace('{year}', String(year));
+// Two-line disclaimer: legal status on top, bond/citation below.
+// The `||` separator in the i18n string is the split point.
+const disclaimerLines = f.disclaimer.replace('{year}', String(year)).split('||').map((s) => s.trim());
 ---
 <footer class="site-footer site-footer--lean">
   <div class="site-footer-brand">
-    <div class="site-brand-name">Imverica</div>
+    <div class="site-brand-name">Imverica Legal Solutions</div>
     <div class="site-footer-info">
       {f.brandLine}<br />
-      +1 (916) 399-3992 · imverica.com
+      <a href="tel:+19163993992">+1 (916) 399-3992</a> · <a href="mailto:info@imverica.com">info@imverica.com</a> · imverica.com
     </div>
   </div>
 
@@ -33,7 +35,9 @@ const disclaimer = f.disclaimer.replace('{year}', String(year));
     </a>
   </div>
 
-  <div class="site-footer-bottom">{disclaimer}</div>
+  <div class="site-footer-bottom">
+    {disclaimerLines.map((line) => <div>{line}</div>)}
+  </div>
 </footer>
 
 <style>

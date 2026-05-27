@@ -144,33 +144,37 @@ export const FOOTER: Record<Locale, {
   brandLine: string;
   disclaimer: string;
 }> = {
+  // The footer renders the disclaimer as two lines: legal status first,
+  // then the bonding/registration cite. The `||` marker is the split
+  // point — keeping it as one string lets each locale read naturally
+  // when the markers are removed.
   en: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'California Court',
     about: 'About',
     brandLine: 'Legal Document Assistant · Immigration Consultant · California',
-    disclaimer: '© {year} Imverica Legal Solutions · California Licensed Legal Document Assistant · Imverica is not a law firm and does not provide legal advice. Documents are prepared at the client\'s direction. Bonded and registered per California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions · California Licensed Legal Document Assistant · Imverica is not a law firm and does not provide legal advice.||Documents are prepared at the client\'s direction. Bonded and registered per California Business & Professions Code §§6400-6415.'
   },
   ru: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Калифорнийский суд',
     about: 'О нас',
     brandLine: 'Помощник по юридическим документам · Иммиграционный консультант · Калифорния',
-    disclaimer: '© {year} Imverica Legal Solutions · Калифорнийский лицензированный помощник по подготовке документов · Imverica не является юридической фирмой и не предоставляет юридических консультаций. Документы готовятся по поручению клиента. Зарегистрированы и под залогом согласно California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions · Калифорнийский лицензированный помощник по подготовке документов · Imverica не является юридической фирмой и не предоставляет юридических консультаций.||Документы готовятся по поручению клиента. Зарегистрированы и под залогом согласно California Business & Professions Code §§6400-6415.'
   },
   uk: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Каліфорнійський суд',
     about: 'Про нас',
     brandLine: 'Помічник з юридичних документів · Імміграційний консультант · Каліфорнія',
-    disclaimer: '© {year} Imverica Legal Solutions · Каліфорнійський ліцензований помічник з підготовки документів · Imverica не є юридичною фірмою і не надає юридичних консультацій. Документи готуються за дорученням клієнта. Зареєстровані під заставою згідно California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions · Каліфорнійський ліцензований помічник з підготовки документів · Imverica не є юридичною фірмою і не надає юридичних консультацій.||Документи готуються за дорученням клієнта. Зареєстровані під заставою згідно California Business & Professions Code §§6400-6415.'
   },
   es: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Corte de California',
     about: 'Sobre nosotros',
     brandLine: 'Asistente de Documentos Legales · Consultor de Inmigración · California',
-    disclaimer: '© {year} Imverica Legal Solutions · Asistente de Documentos Legales con licencia de California · Imverica no es un bufete de abogados y no brinda asesoría legal. Los documentos se preparan bajo la dirección del cliente. Registrado y afianzado conforme al California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions · Asistente de Documentos Legales con licencia de California · Imverica no es un bufete de abogados y no brinda asesoría legal.||Los documentos se preparan bajo la dirección del cliente. Registrado y afianzado conforme al California Business & Professions Code §§6400-6415.'
   }
 };
 

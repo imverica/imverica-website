@@ -613,6 +613,9 @@ img { max-width: 100%; height: auto; }
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 6px 20px rgba(40,30,20,0.04);
+  /* Each card is its own anchor target (#eoir-documents etc.). Reserve
+     space at the top so the sticky header doesn't cover the heading. */
+  scroll-margin-top: 110px;
 }
 .svc-card h3 {
   font-size: 18px;
@@ -623,13 +626,47 @@ img { max-width: 100%; height: auto; }
   margin: 0 0 0.6rem;
   text-align: justify;
 }
-.svc-card ul {
-  margin: 8px 0 0 18px;
+.svc-card ul,
+.svc-card ul.svc-card-forms {
+  margin: 12px 0 0;
   padding: 0;
+  list-style: none;
   font-size: 13px;
   color: #4a5a6e;
-  line-height: 1.65;
+  line-height: 1.6;
 }
+.svc-card-forms li {
+  padding: 7px 0;
+  border-bottom: 1px dashed rgba(40,30,20,0.07);
+}
+.svc-card-forms li:last-child { border-bottom: none; }
+.svc-card-forms li.svc-card-plain { color: #4a5a6e; padding-left: 0; }
+.svc-card-forms a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--navy-dark);
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.svc-card-forms a:hover { color: var(--terracotta-deep); }
+.svc-card-forms a:hover .svc-card-code { background: var(--navy); color: #fff; border-color: var(--navy); }
+.svc-card-code {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid rgba(26,46,74,0.18);
+  border-radius: 6px;
+  background: #f4f7fb;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.svc-card-rest { color: #4a5a6e; font-size: 13px; }
+.svc-card-multi { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.svc-card-pill { padding: 0; }
 .svc-card cite {
   display: block;
   margin-top: 12px;

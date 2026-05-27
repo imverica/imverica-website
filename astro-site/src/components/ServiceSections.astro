@@ -111,6 +111,72 @@ const visible = include ? source.filter((s) => include.includes(s.id)) : source;
 const finalKicker = kicker || 'California document preparation services';
 const finalHeading = heading || 'USCIS, immigration court, and California civil document preparation';
 const finalIntro = intro || 'Imverica Legal Solutions provides document preparation through California registered Legal Document Assistant and Immigration Consultant services. We prepare documents at the client’s direction across the categories below. We are not a law firm and do not provide legal advice.';
+
+// Each bullet inside a service card becomes a clickable link to that
+// form's prep page (or, when no dedicated page exists yet, the intake
+// wizard preset to that form code). The splitItem helper understands:
+//   "I-485 — Adjustment of Status"   → codes=['I-485'], rest='Adjustment of Status'
+//   "FL-100, FL-110, FL-120, FL-150" → codes=[FL-100..150], rest=''
+//   "Russian, Ukrainian, Spanish"    → no recognizable codes → plain text
+const FORM_LINKS: Record<string, string> = {
+  'I-485': '/i-485-help',
+  'I-130': '/i-130-family-petition',
+  'I-130A': '/i-130-family-petition',
+  'I-765': '/i-765-work-permit-help',
+  'I-589': '/i-589-asylum-help',
+  'N-400': '/n-400-citizenship-help',
+  'I-131': '/#get-started?form=I-131',
+  'I-131A': '/#get-started?form=I-131A',
+  'I-90': '/#get-started?form=I-90',
+  'I-864': '/#get-started?form=I-864',
+  'I-864A': '/#get-started?form=I-864A',
+  'I-693': '/#get-started?form=I-693',
+  'I-751': '/#get-started?form=I-751',
+  'I-539': '/#get-started?form=I-539',
+  'I-824': '/#get-started?form=I-824',
+  'EOIR-28': '/#get-started?form=EOIR-28',
+  'EOIR-29': '/#get-started?form=EOIR-29',
+  'EOIR-42A': '/#get-started?form=EOIR-42A',
+  'EOIR-42B': '/#get-started?form=EOIR-42B',
+  'EOIR-40': '/#get-started?form=EOIR-40',
+  'FL-100': '/fl',
+  'FL-110': '/fl',
+  'FL-120': '/fl',
+  'FL-150': '/fl',
+  'FL-300': '/fl',
+  'FL-105': '/fl',
+  'UCCJEA': '/fl',
+  'FW-001': '/#get-started?form=FW-001',
+  'SC-100': '/sc',
+  'SC-104': '/sc',
+  'SC-120': '/sc',
+  'UD-100': '/california-unlawful-detainer',
+  'UD-105': '/california-unlawful-detainer',
+  'UD-110': '/california-unlawful-detainer',
+  'SUM-130': '/california-unlawful-detainer',
+  'CH-100': '/california-restraining-orders',
+  'DV-100': '/california-restraining-orders',
+  'EA-100': '/california-restraining-orders',
+  'GV-100': '/california-restraining-orders',
+  'WV-100': '/california-restraining-orders',
+  'DE-111': '/california-probate',
+  'DE-121': '/california-probate',
+  'DE-160': '/california-probate',
+  'DE-221': '/california-probate'
+};
+
+function splitItem(raw: string): { codes: string[]; rest: string } {
+  // "I-485 — Adjustment of Status" → codes=['I-485'], rest='Adjustment...'
+  // "FL-100, FL-110, FL-120, FL-150" → multiple codes, no rest
+  // "Russian, Ukrainian, Spanish, English support" → no codes
+  const trimmed = String(raw || '').trim();
+  const m = trimmed.match(/^([A-Z][\w-]*(?:\s*[,/]\s*[A-Z][\w-]*)*)\s*(?:[—–-]\s*)?(.*)$/);
+  if (!m) return { codes: [], rest: trimmed };
+  const codeText = m[1] || '';
+  const rest = (m[2] || '').trim();
+  const codes = codeText.split(/[,/]/).map((c) => c.trim()).filter((c) => /^[A-Z][\w-]*$/.test(c) && FORM_LINKS[c.toUpperCase()]);
+  return { codes, rest };
+}
 ---
 
 <section class="svc-section" id="services-detail">
@@ -123,8 +189,34 @@ const finalIntro = intro || 'Imverica Legal Solutions provides document preparat
         <article class="svc-card" id={service.id}>
           <h3>{service.title}</h3>
           <p>{service.text}</p>
-          <ul>
-            {service.items.map((item) => <li>{item}</li>)}
+          <ul class="svc-card-forms">
+            {service.items.map((item) => {
+              const { codes, rest } = splitItem(item);
+              if (!codes.length) {
+                return <li class="svc-card-plain">{item}</li>;
+              }
+              if (codes.length === 1) {
+                const code = codes[0];
+                return (
+                  <li>
+                    <a href={FORM_LINKS[code]}>
+                      <span class="svc-card-code">{code}</span>
+                      {rest && <span class="svc-card-rest"> — {rest}</span>}
+                    </a>
+                  </li>
+                );
+              }
+              return (
+                <li class="svc-card-multi">
+                  {codes.map((c, i) => (
+                    <a href={FORM_LINKS[c]} class="svc-card-pill">
+                      <span class="svc-card-code">{c}</span>
+                    </a>
+                  ))}
+                  {rest && <span class="svc-card-rest"> — {rest}</span>}
+                </li>
+              );
+            })}
           </ul>
           <cite>{service.cite}</cite>
         </article>
