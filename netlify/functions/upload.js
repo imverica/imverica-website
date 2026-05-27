@@ -34,6 +34,10 @@ const MAX_FILES_PER_ORDER = 20;
 // magic bytes, MIME allow-list, filename ban-list, and double-extension
 // tricks like `report.pdf.exe`. Anything not on the list is rejected.
 const { validateUpload, ALLOWED_MIME } = require('./lib/file-validator');
+// Defence-in-depth: also ask VirusTotal whether the SHA-256 of the file
+// is already known-bad. Falls back to skipped/allow if VT is not
+// configured or unreachable — see lib/virus-scan.js for the contract.
+const { scanBuffer } = require('./lib/virus-scan');
 
 function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
@@ -356,6 +360,21 @@ exports.handler = async function (event) {
     const validation = validateUpload(buf, name, type);
     if (!validation.ok) {
       return json(415, { ok: false, error: validation.error, code: validation.code });
+    }
+
+    // VirusTotal hash lookup (best-effort). Privacy-safe: we never upload
+    // the file, only its SHA-256. Hard rejects only when an AV engine has
+    // already flagged this exact hash as malicious or several engines
+    // call it suspicious. Falls back to allow if VT is unconfigured or
+    // unreachable so a third-party outage cannot block client uploads.
+    const scan = await scanBuffer(buf);
+    if (scan.verdict === 'malicious') {
+      console.warn('upload: blocked by VT, hash flagged as malicious by', scan.stats?.malicious, 'engines');
+      return json(415, { ok: false, error: 'This file is flagged as malicious by anti-virus engines. Please re-export from a clean source.', code: 'vt-malicious' });
+    }
+    if (scan.verdict === 'suspicious') {
+      console.warn('upload: blocked by VT, hash flagged as suspicious by', scan.stats?.suspicious, 'engines');
+      return json(415, { ok: false, error: 'This file is flagged as suspicious by anti-virus engines. Please verify and re-upload.', code: 'vt-suspicious' });
     }
 
     const meta = (await readJson(filesStore, metaKey, FILES_DIR)) || { files: [] };

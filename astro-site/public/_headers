@@ -1,0 +1,32 @@
+# Site-wide security headers — picked up by Netlify's CDN edge.
+# More specific rules below override the default `/*` block.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Cabinet, portal and admin consoles handle PII and uploaded documents.
+# Strict CSP keeps an injected payload from phoning home and stops the
+# pages from being embedded in any third-party iframe.
+# (`unsafe-inline` is needed because these HTML files use inline <script>
+# and inline styles. Refactoring to external files is a follow-up.)
+
+/account.html
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://imverica.com; frame-ancestors 'none'; form-action 'self'; object-src 'none'; base-uri 'self'
+  X-Frame-Options: DENY
+
+/portal.html
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://imverica.com; frame-ancestors 'none'; form-action 'self'; object-src 'none'; base-uri 'self'
+  X-Frame-Options: DENY
+
+/admin.html
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://imverica.com; frame-ancestors 'none'; form-action 'self'; object-src 'none'; base-uri 'self'
+  X-Frame-Options: DENY
+  Cache-Control: no-store
+
+# /api/upload responses already set Content-Security-Policy in code
+# (sandbox + default-src 'none') because they serve raw file bytes —
+# Netlify static rules cannot match those function paths anyway.
