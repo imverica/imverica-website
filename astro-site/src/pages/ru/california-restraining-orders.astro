@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Подготовка документов restraining order Калифорнии | Imverica';
+const description = 'California Licensed LDA готовит пакеты restraining order — CH-100 civil harassment, DV-100 domestic violence, EA-100 elder abuse, GV-100 gun violence, WV-100 workplace violence. TRO в день обращения. Многоязычно.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Restraining Order Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов restraining order Калифорнии по поручению петиционера. Серия CH/DV/EA/GV/WV-100.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/california-restraining-orders"
+  slug="/california-restraining-orders" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil & Family · CCP §527.6 · Fam. Code §6200"
+    heading="Подготовка документов restraining order Калифорнии"
+    sub="Готовим правильный пакет TRO для ваших отношений и типа угрозы — Civil Harassment (CH-100), Domestic Violence (DV-100), Elder/Dependent Adult Abuse (EA-100), Gun Violence (GV-100), Workplace Violence (WV-100). Многие категории подаются без судебной пошлины."
+    ctaPrimary={{ href: '/#get-started?form=DV-100', text: 'Начать пакет restraining order' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/fl', label: 'California формы семейного права (FL-100, FL-300)' },
+    { href: '/ru/california-unlawful-detainer', label: 'California unlawful detainer (UD-100)' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Калифорнийский restraining order (также называемый protective order)
+      — это судебный приказ, запрещающий одному человеку преследовать,
+      угрожать, контактировать или приближаться к другому. Существует
+      пять различных схем restraining order, у каждой свои формы и
+      процедура в зависимости от отношений между сторонами.
+    </p>
+
+    <h2>Какой restraining order применяется</h2>
+    <ul>
+      <li><strong>CH-100 — Civil Harassment.</strong> Нет близких семейных/романтических отношений. CCP §527.6. Покрывает соседей, коллег, знакомых, посторонних.</li>
+      <li><strong>DV-100 — Domestic Violence.</strong> Супруг, бывший супруг, dating/sexual партнёр, родитель вашего ребёнка, кровный родственник, член домохозяйства. Family Code §6200 et seq. (Domestic Violence Prevention Act).</li>
+      <li><strong>EA-100 — Elder or Dependent Adult Abuse.</strong> Петиционер 65+ или dependent adult. Welfare &amp; Institutions Code §15657.03.</li>
+      <li><strong>GV-100 — Gun Violence.</strong> Подаётся ближайшим членом семьи, работодателем, коллегой или сотрудником правоохранительных органов для запрета лицу владеть огнестрельным оружием. Penal Code §18100 et seq.</li>
+      <li><strong>WV-100 — Workplace Violence.</strong> Подаётся работодателем от имени работника, который подвергся насилию или credible threat от любого лица. CCP §527.8.</li>
+    </ul>
+
+    <h2>Процедура Temporary Restraining Order (TRO)</h2>
+    <ol>
+      <li><strong>Петиция.</strong> Подайте серию CH-100 / DV-100 / EA-100 / GV-100 / WV-100 в superior court вашего округа.</li>
+      <li><strong>Ex parte TRO.</strong> Суд рассматривает петицию в тот же день. Если факты показывают непосредственный вред, суд выдаёт Temporary Restraining Order (CH-110 / DV-110 / EA-110 / GV-110 / WV-110), действующий до слушания — обычно 21 день.</li>
+      <li><strong>Service на респондента.</strong> Респонденту должны быть вручены документы лично до слушания (CH-200 / DV-200 / EA-200 / GV-200 / WV-200 proof of service).</li>
+      <li><strong>Слушание.</strong> Обе стороны являются. Суд выдаёт более длительный Restraining Order After Hearing (до 5 лет для CH, DV, EA; до 3 лет для GV) либо отклоняет петицию.</li>
+    </ol>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Полный пакет restraining order</strong>
+      <ul>
+        <li>Петиция (CH-100 / DV-100 / EA-100 / GV-100 / WV-100) с supporting declaration, объясняющей, что случилось, когда, где, и непосредственная угроза</li>
+        <li>Order on Petition (CH-130 / DV-130 / и т. д.) — proposed order, который подпишет судья</li>
+        <li>Proof of Personal Service (CH-200 / DV-200 / и т. д.) для респондента</li>
+        <li>FW-001 fee waiver при необходимости (для DV, EA подач судебной пошлины нет по закону штата)</li>
+        <li>Child-custody attachments (FL-105/UCCJEA), когда DV order затрагивает детей</li>
+        <li>Firearms relinquishment формы, когда order требует, чтобы респондент сдал оружие</li>
+        <li>CLETS информация (для клерка для занесения order в общештатную базу CLETS для исполнения правоохранителями)</li>
+      </ul>
+    </div>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Как California Legal Document Assistant мы не можем представлять
+      вас на слушании или защищать вашу позицию перед судьёй. Многие
+      петиционеры успешно представляют себя сами с нашими подготовленными
+      документами. Спорные слушания (где респондент является с адвокатом
+      и оспаривает факты) часто выигрывают от наличия собственного
+      адвоката — мы можем дать referral. Мы никогда не будем готовить
+      restraining-order петицию, которую считаем направленной на травлю
+      респондента или придуманной для получения преимущества в другом деле.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure
+      §527.6 (civil harassment), §527.8 (workplace violence); California
+      Family Code §§6200-6409 (Domestic Violence Prevention Act);
+      California Welfare &amp; Institutions Code §15657.03 (elder or
+      dependent adult abuse); California Penal Code §§18100-18205 (Gun
+      Violence Restraining Order Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=DV-100" primaryText="Начать анкету restraining order" />
+</BaseLayout>

@@ -1,0 +1,128 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Подготовка бизнес-документов Калифорнии (LLC, DBA, EIN) | Imverica';
+const description = 'California Licensed LDA готовит бизнес-документы по вашему поручению — LLC Articles of Organization (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA), поддержка EIN. Фиксированная цена, без юридических консультаций.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Business Filing Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка бизнес-документов Калифорнии — LLC, DBA, EIN и корпоративные записи по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/business"
+  slug="/business" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="Бизнес-документы Калифорнии"
+    heading="Подготовка бизнес-документов"
+    sub="Создание LLC (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA) и поддержка EIN — готовим аккуратно по вашему поручению, фиксированная цена, без сюрпризов."
+    ctaPrimary={{ href: '/#get-started?service=business', text: 'Начать бизнес-подачу' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Выберите подачу"
+    heading="California Business"
+    intro="LLC, корпорация, DBA, EIN — начните нужный пакет."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Создать LLC',         desc: 'Articles of Organization в Secretary of State.', href: '/#get-started?form=LLC-1',   color: 'var(--navy)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info',  desc: 'Начальная + биеннальная Statement of Information.', href: '/#get-started?form=LLC-12', color: 'var(--terracotta)' },
+      { icon: '🏛️', title: 'ARTS — Корпорация',          desc: 'General-stock или public-benefit Articles.',         href: '/#get-started?form=ARTS-GS', color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                   desc: 'Fictitious business name у county clerk.',           href: '/#get-started?form=FBN',     color: 'var(--gold)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                  desc: 'Поддержка федерального EIN.',                        href: '/#get-started?form=SS-4',    color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Operating agreement',         desc: 'Сборка LLC operating agreement.',                    href: '/#get-started?form=OA',      color: 'var(--terracotta-deep)' },
+      { icon: '🔄', title: 'LLC-1A — Из другого штата',   desc: 'Регистрация foreign LLC для работы в Калифорнии.',   href: '/#get-started?form=LLC-1A',  color: 'var(--navy)' },
+      { icon: '📊', title: 'SI-550 — Corp Statement',     desc: 'Statement of Information корпорации.',                href: '/#get-started?form=SI-550', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' },
+    { href: '/ru/sc', label: 'California малые иски (SC-100)' },
+    { href: '/ru/immigration', label: 'USCIS | EOIR иммиграционные документы' }
+  ]}>
+    <p class="lead">
+      Открытие или ведение бизнеса в Калифорнии означает бумажную работу
+      — регистрация компании, регистрация имени, налоговая идентификация
+      и текущие подачи, поддерживающие компанию в good standing. Как
+      зарегистрированный Legal Document Assistant, Imverica готовит эти
+      документы аккуратно по вашему поручению. Мы не являемся юридической
+      фирмой и не даём юридических или налоговых консультаций; мы готовим
+      те документы, которые вы уже решили подать.
+    </p>
+
+    <h2>Создание LLC в Калифорнии</h2>
+    <p>
+      Калифорнийское LLC создаётся подачей формы
+      <strong>Articles of Organization (Form LLC-1)</strong> в Secretary
+      of State. В течение 90 дней с момента создания — и каждые два года
+      после — LLC должно подавать <strong>Statement of Information (Form
+      LLC-12)</strong>. Калифорнийские LLC также облагаются ежегодным
+      $800 franchise tax от Franchise Tax Board. Мы готовим документы
+      для подачи; мы не даём налоговых консультаций и не выбираем за вас
+      тип компании.
+    </p>
+
+    <h2>Формы и документы, которые мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакеты бизнес-документов</strong>
+      <ul>
+        <li><strong>LLC-1</strong> — Articles of Organization (создание LLC)</li>
+        <li><strong>LLC-12</strong> — Statement of Information (начальная и раз в 2 года)</li>
+        <li><strong>LLC-1A</strong> — Регистрация LLC из другого штата</li>
+        <li><strong>ARTS-GS / ARTS-PB</strong> — Articles of Incorporation корпорации</li>
+        <li><strong>SI-550</strong> — Statement of Information корпорации</li>
+        <li><strong>FBN / DBA</strong> — Fictitious Business Name statement (округ)</li>
+        <li><strong>SS-4 / EIN</strong> — Поддержка федерального Employer Identification Number</li>
+        <li><strong>Operating agreement</strong> — Сборка LLC operating agreement</li>
+      </ul>
+    </div>
+
+    <h2>Fictitious business name (DBA)</h2>
+    <p>
+      Индивидуальный предприниматель или компания, работающая под именем,
+      отличным от своего юридического имени, подаёт
+      <strong>Fictitious Business Name statement</strong> в county clerk
+      по месту бизнеса, затем публикует его в одобренной округом газете
+      четыре недели подряд. Мы готовим FBN statement и помогаем
+      организовать шаг публикации.
+    </p>
+
+    <h2>EIN — Employer Identification Number</h2>
+    <p>
+      Большинству бизнесов нужен федеральный <strong>EIN</strong>
+      (Form SS-4) от IRS для открытия банковского счёта, найма
+      сотрудников или подачи налогов. Мы помогаем подготовить
+      информацию для SS-4, чтобы ваша заявка была полной и точной.
+    </p>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Мы не даём юридических или налоговых консультаций, не рекомендуем
+      какой тип компании создавать, не консультируем по liability и не
+      представляем вас перед какой-либо инстанцией. Эти решения за вами
+      (или вашим адвокатом / CPA). У нас установлены referral-отношения
+      с лицензированными калифорнийскими специалистами для вопросов, что
+      требуют юридического или налогового сопровождения.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Corporations Code (LLC и
+      корпоративные подачи); California Business &amp; Professions Code
+      §§17900-17930 (fictitious business names); California Business
+      &amp; Professions Code §§6400-6415 (Legal Document Assistant Act).
+      Только подготовка документов — не юридические или налоговые
+      консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started" primaryText="Начать с Imverica" />
+</BaseLayout>

@@ -1,0 +1,126 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos de negocios en California (LLC, DBA, EIN) | Imverica';
+const description = 'California Licensed LDA prepara documentos de negocios bajo su dirección — LLC Articles of Organization (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA), apoyo de EIN. Precio fijo, sin asesoría legal.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Business Filing Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos de negocios de California — LLC, DBA, EIN y registros corporativos bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/business"
+  slug="/business" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="Documentos de negocio de California"
+    heading="Preparación de documentos de negocios"
+    sub="Formación de LLC (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA) y apoyo de EIN — preparados con precisión bajo su dirección, precio fijo, sin sorpresas."
+    ctaPrimary={{ href: '/#get-started?service=business', text: 'Comenzar registro de negocio' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Elija una presentación"
+    heading="California Business"
+    intro="LLC, corporación, DBA, EIN — inicie el paquete correcto."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Formar un LLC',        desc: 'Articles of Organization ante Secretary of State.',     href: '/#get-started?form=LLC-1',   color: 'var(--navy)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info',   desc: 'Statement of Information inicial y bienal.',             href: '/#get-started?form=LLC-12', color: 'var(--terracotta)' },
+      { icon: '🏛️', title: 'ARTS — Corporación',          desc: 'Articles general-stock o public-benefit.',                href: '/#get-started?form=ARTS-GS', color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                    desc: 'Fictitious business name ante county clerk.',             href: '/#get-started?form=FBN',     color: 'var(--gold)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                   desc: 'Apoyo de Federal Employer Identification Number.',        href: '/#get-started?form=SS-4',    color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Operating agreement',          desc: 'Armado de LLC operating agreement.',                      href: '/#get-started?form=OA',      color: 'var(--terracotta-deep)' },
+      { icon: '🔄', title: 'LLC-1A — Fuera del estado',    desc: 'Registrar foreign LLC para operar en California.',        href: '/#get-started?form=LLC-1A',  color: 'var(--navy)' },
+      { icon: '📊', title: 'SI-550 — Corp Statement',      desc: 'Statement of Information de corporación.',                href: '/#get-started?form=SI-550', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' },
+    { href: '/mx/sc', label: 'California reclamos menores (SC-100)' },
+    { href: '/mx/immigration', label: 'USCIS | EOIR documentos de inmigración' }
+  ]}>
+    <p class="lead">
+      Abrir o mantener un negocio en California significa papeleo —
+      formación de entidad, registro de nombre, identificación fiscal y
+      las presentaciones continuas que mantienen a la entidad en good
+      standing. Como Legal Document Assistant registrado, Imverica
+      prepara estos documentos con precisión bajo su dirección. No somos
+      un bufete y no damos asesoría legal o fiscal; preparamos los
+      documentos que usted ya decidió presentar.
+    </p>
+
+    <h2>Formación de LLC en California</h2>
+    <p>
+      Una California limited liability company se forma presentando
+      <strong>Articles of Organization (Form LLC-1)</strong> ante el
+      Secretary of State. Dentro de 90 días de la formación — y cada dos
+      años después — el LLC debe presentar <strong>Statement of
+      Information (Form LLC-12)</strong>. Los LLC de California también
+      están sujetos al franchise tax anual de $800 administrado por el
+      Franchise Tax Board. Preparamos los documentos de presentación;
+      no damos asesoría fiscal ni elegimos su tipo de entidad.
+    </p>
+
+    <h2>Formularios y documentos que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquetes de documentos de negocio</strong>
+      <ul>
+        <li><strong>LLC-1</strong> — Articles of Organization (formación de LLC)</li>
+        <li><strong>LLC-12</strong> — Statement of Information (inicial y bienal)</li>
+        <li><strong>LLC-1A</strong> — Registro de LLC fuera del estado</li>
+        <li><strong>ARTS-GS / ARTS-PB</strong> — Articles of Incorporation de corporación</li>
+        <li><strong>SI-550</strong> — Statement of Information de corporación</li>
+        <li><strong>FBN / DBA</strong> — Fictitious Business Name statement (condado)</li>
+        <li><strong>SS-4 / EIN</strong> — Apoyo de Federal Employer Identification Number</li>
+        <li><strong>Operating agreement</strong> — Armado de operating agreement de LLC</li>
+      </ul>
+    </div>
+
+    <h2>Fictitious business name (DBA)</h2>
+    <p>
+      Un propietario único o entidad que opera bajo un nombre distinto al
+      legal presenta un <strong>Fictitious Business Name statement</strong>
+      ante el county clerk donde se ubica el negocio, y luego lo publica
+      en un periódico aprobado por el condado durante cuatro semanas
+      consecutivas. Preparamos el FBN statement del condado y ayudamos a
+      organizar el paso de publicación.
+    </p>
+
+    <h2>EIN — Employer Identification Number</h2>
+    <p>
+      La mayoría de los negocios necesita un <strong>EIN</strong> federal
+      (Form SS-4) del IRS para abrir cuenta bancaria, contratar empleados
+      o presentar impuestos. Ayudamos a preparar la información de SS-4
+      para que su solicitud sea completa y precisa.
+    </p>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      No damos asesoría legal o fiscal, no recomendamos qué tipo de
+      entidad formar, no asesoramos sobre liability ni lo representamos
+      ante agencia alguna. Esas decisiones son suyas (o de su
+      abogado/CPA). Mantenemos referrals con profesionales licenciados
+      de California para asuntos que requieren asesoría legal o fiscal.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code (LLC y
+      presentaciones corporativas); California Business &amp; Professions
+      Code §§17900-17930 (fictitious business names); California Business
+      &amp; Professions Code §§6400-6415 (Legal Document Assistant Act).
+      Solo preparación de documentos — no asesoría legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started" primaryText="Empezar con Imverica" />
+</BaseLayout>

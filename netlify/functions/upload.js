@@ -107,6 +107,117 @@ function sanitizeName(name) {
   const base = String(name || 'file').split(/[\\/]/).pop().replace(/[^\w.\- ]/g, '_').slice(0, 120);
   return base || 'file';
 }
+
+// ----- Google Drive mirror -----
+// Best-effort: every client upload is also copied into a Drive folder owned
+// by imverica@gmail.com so the team can browse incoming docs without logging
+// into the admin console. Folder structure:
+//   {GDRIVE_PARENT_FOLDER_ID}
+//     └─ {YYYY-MM-DD} · {client name or email}
+//         └─ {original-file-name}
+// Requires env vars GDRIVE_SERVICE_ACCOUNT_JSON (full SA key JSON, raw string)
+// and GDRIVE_PARENT_FOLDER_ID. See SETUP-DRIVE.md for the 5-minute setup.
+function b64urlBuf(buf) {
+  return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+async function getDriveAccessToken(creds) {
+  const now = Math.floor(Date.now() / 1000);
+  const header = b64urlBuf(Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })));
+  const claim = b64urlBuf(Buffer.from(JSON.stringify({
+    iss: creds.client_email,
+    scope: 'https://www.googleapis.com/auth/drive.file',
+    aud: 'https://oauth2.googleapis.com/token',
+    exp: now + 3600,
+    iat: now
+  })));
+  const sigInput = `${header}.${claim}`;
+  const sig = crypto.createSign('RSA-SHA256').update(sigInput).sign(creds.private_key);
+  const jwt = `${sigInput}.${b64urlBuf(sig)}`;
+  const r = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: jwt
+    })
+  });
+  if (!r.ok) throw new Error(`drive token http ${r.status}`);
+  const j = await r.json();
+  return j.access_token;
+}
+async function ensureDriveSubfolder(accessToken, parentId, folderName) {
+  // Find or create. Quote-escape single quotes for the query.
+  const safeName = folderName.replace(/'/g, "\\'");
+  const q = `name='${safeName}' and '${parentId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`;
+  const search = await fetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id,name)`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  if (search.ok) {
+    const sj = await search.json();
+    if (sj.files && sj.files[0] && sj.files[0].id) return sj.files[0].id;
+  }
+  const create = await fetch('https://www.googleapis.com/drive/v3/files', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: folderName, mimeType: 'application/vnd.google-apps.folder', parents: [parentId] })
+  });
+  if (!create.ok) throw new Error(`drive mkdir http ${create.status}`);
+  const cj = await create.json();
+  return cj.id;
+}
+async function uploadFileToDriveFolder(accessToken, folderId, fileName, buffer, mimeType) {
+  const boundary = 'imverica-' + crypto.randomBytes(8).toString('hex');
+  const metaJson = JSON.stringify({ name: fileName, parents: [folderId] });
+  const body = Buffer.concat([
+    Buffer.from(`--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${metaJson}\r\n`),
+    Buffer.from(`--${boundary}\r\nContent-Type: ${mimeType || 'application/octet-stream'}\r\n\r\n`),
+    buffer,
+    Buffer.from(`\r\n--${boundary}--`)
+  ]);
+  const r = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': `multipart/related; boundary=${boundary}` },
+    body
+  });
+  if (!r.ok) throw new Error(`drive upload http ${r.status}`);
+  return await r.json();
+}
+async function mirrorToDrive({ orderId, fileName, buffer, mimeType, clientName, clientEmail }) {
+  const rawJson = process.env.GDRIVE_SERVICE_ACCOUNT_JSON;
+  const parentId = process.env.GDRIVE_PARENT_FOLDER_ID;
+  if (!rawJson || !parentId) return null; // not configured — silently skip
+  let creds;
+  try { creds = JSON.parse(rawJson); } catch (e) { console.error('drive: bad SA JSON', e.message); return null; }
+  if (!creds.client_email || !creds.private_key) {
+    console.error('drive: SA JSON missing client_email/private_key');
+    return null;
+  }
+  try {
+    const token = await getDriveAccessToken(creds);
+    const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const personLabel = (clientName || clientEmail || orderId).replace(/[\\/]/g, '_').slice(0, 80);
+    const folderName = `${date} · ${personLabel}`;
+    const folderId = await ensureDriveSubfolder(token, parentId, folderName);
+    return await uploadFileToDriveFolder(token, folderId, fileName, buffer, mimeType);
+  } catch (err) {
+    console.error('drive mirror failed', err && err.message ? err.message : err);
+    return null;
+  }
+}
+async function loadOrderRecord(orderId) {
+  const id = safeId(orderId);
+  if (!id) return null;
+  const s = await store('imverica-intakes');
+  if (s) {
+    try {
+      const rec = await s.get(`orders/${id}.json`, { type: 'json' });
+      if (rec) return rec;
+    } catch { /* fall */ }
+  }
+  try {
+    return JSON.parse(await fs.readFile(path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${id}.json`), 'utf8'));
+  } catch { return null; }
+}
 function extOf(name) { return (String(name).split('.').pop() || '').toLowerCase(); }
 
 exports.handler = async function (event) {
@@ -181,6 +292,27 @@ exports.handler = async function (event) {
     await writeBlob(filesStore, `blob/${orderId}/${fileId}`, buf, FILES_DIR);
     meta.files.push({ fileId, name, type: type || 'application/octet-stream', size: buf.length, uploadedAt: new Date().toISOString(), source: 'client' });
     await writeJson(filesStore, metaKey, meta, FILES_DIR);
+
+    // Best-effort: also push a copy to the Imverica Google Drive so the team
+    // sees incoming docs in a per-client/per-date folder. If Drive is not
+    // configured (no env vars) or the API fails, the upload still succeeds.
+    try {
+      const record = await loadOrderRecord(orderId);
+      const driveRes = await mirrorToDrive({
+        orderId,
+        fileName: name,
+        buffer: buf,
+        mimeType: type || 'application/octet-stream',
+        clientName: record && record.contact ? record.contact.name : '',
+        clientEmail: session.email
+      });
+      if (driveRes && driveRes.id) {
+        meta.files[meta.files.length - 1].driveFileId = driveRes.id;
+        if (driveRes.webViewLink) meta.files[meta.files.length - 1].driveLink = driveRes.webViewLink;
+        await writeJson(filesStore, metaKey, meta, FILES_DIR);
+      }
+    } catch (e) { console.error('mirrorToDrive threw', e && e.message ? e.message : e); }
+
     return json(200, { ok: true, fileId, name, size: buf.length });
   }
 

@@ -1,0 +1,101 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos para Formulario I-130 (Family Petition) | Imverica';
+const description = 'California Licensed LDA prepara peticiones de inmigración familiar I-130 (cónyuge, padre, hijo, hermano). Incluye I-130A para cónyuge beneficiario, civil documents, evidencia de relación. Precio fijo, entrevista multilingüe.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-130 Family Petition Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para Formulario I-130 (peticiones de inmigración familiar) bajo la dirección del peticionario.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-130-family-petition"
+  slug="/i-130-family-petition" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Family Petition · INA §201, §203"
+    heading="I-130 — Petition for Alien Relative"
+    sub="¿Ciudadano de EE. UU. o LPR peticionando por un familiar? Preparamos el paquete I-130 + I-130A — biográficos de peticionario y beneficiario, historial marital, de domicilios y empleos, evidencia de relación. Multilingüe. Precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=I-130', text: 'Comenzar paquete I-130' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — ajuste de estatus (beneficiario en EE. UU.)' },
+    { href: '/mx/n-400-citizenship-help', label: 'N-400 — naturalización (después del green card)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario I-130 es la petición que un ciudadano de EE. UU. o
+      residente permanente legal (LPR) presenta para establecer una
+      relación familiar calificada con un familiar extranjero, para que
+      ese familiar pueda luego solicitar una visa de inmigrante o ajustar
+      estatus. Imverica prepara el paquete I-130 bajo la dirección del
+      peticionario — la petición misma, el I-130A (Supplemental Information
+      for Spouse Beneficiary) cuando la relación es matrimonio, civil
+      documents y el paquete de evidencia de relación.
+    </p>
+
+    <h2>Por quién se puede peticionar con I-130</h2>
+    <p>
+      <strong>Ciudadanos de EE. UU.</strong> pueden presentar por
+      cónyuge, hijo soltero menor de 21 (immediate relative), hijo soltero
+      de 21 o más (F1), hijo casado de cualquier edad (F3), hermano (F4)
+      y padre (immediate relative; el peticionario debe tener 21+ para
+      peticiones por padres).
+    </p>
+    <p>
+      <strong>Residentes permanentes legales (LPR)</strong> pueden
+      presentar por cónyuge (F2A), hijo soltero menor de 21 (F2A) e hijo
+      soltero de 21 o más (F2B). Los LPR no pueden peticionar por hijos
+      casados ni por hermanos.
+    </p>
+
+    <h2>El paquete I-130</h2>
+    <div class="form-list">
+      <strong>Formularios y evidencia de respaldo que preparamos</strong>
+      <ul>
+        <li><strong>I-130</strong> — Petition for Alien Relative</li>
+        <li><strong>I-130A</strong> — Supplemental Information for Spouse Beneficiary (obligatorio para casos de matrimonio)</li>
+        <li><strong>G-1145</strong> — e-Notification of Application Acceptance (opcional pero recomendado)</li>
+        <li><strong>Evidencia del peticionario</strong> — página biográfica del pasaporte de EE. UU., certificado de naturalización o acta de nacimiento; tarjeta LPR</li>
+        <li><strong>Evidencia de relación</strong> — para matrimonio: acta de matrimonio, fotos a lo largo de la relación, documentos financieros conjuntos, contrato/hipoteca conjuntos, affidavits de terceros, actas de nacimiento de hijos comunes; para padre/hijo: acta de nacimiento que muestre la relación; para hermanos: ambas actas de nacimiento mostrando el mismo padre o madre</li>
+        <li><strong>Disolución de matrimonios anteriores</strong> — decretos de divorcio, órdenes de anulación o actas de defunción que terminen cualquier matrimonio anterior de cualquiera de las partes</li>
+        <li><strong>Traducciones</strong> — traducciones certificadas al inglés de documentos en lengua extranjera según 8 C.F.R. §103.2(b)(3)</li>
+      </ul>
+    </div>
+
+    <h2>Concurrent filing vs. proceso consular</h2>
+    <p>
+      Immediate relatives de ciudadanos de EE. UU. (cónyuge, hijo soltero
+      menor de 21, padre), cuyo beneficiario ya está en EE. UU. en estatus
+      legal, pueden presentar I-485 concurrentemente con I-130. Los
+      beneficiarios de categorías F con cola priority date presentarán
+      I-485 sólo cuando el Visa Bulletin muestre su fecha current. Los
+      beneficiarios fuera de EE. UU. procesan en el consulado por medio
+      del National Visa Center tras la aprobación del I-130.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §201 (immediate relatives, sin tope
+      anual); §203(a) (categorías family-preference F1-F4); §204
+      (procedimiento para otorgar estatus de inmigrante); 8 C.F.R.
+      §204.1-204.2 (procedimiento). Visa Bulletin publicado mensualmente
+      por el Department of State.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Inicie su petición familiar I-130"
+    sub="Entrevista multilingüe. Pause y continúe. Precio fijo. Preparación de documentos bajo su dirección — sin asesoría legal."
+    primaryHref="/#get-started?form=I-130"
+    primaryText="Comenzar entrevista I-130"
+  />
+</BaseLayout>

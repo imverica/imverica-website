@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'U4U — підготовка документів Uniting for Ukraine | Imverica';
+const description = 'California Licensed LDA готує пакети Uniting for Ukraine (U4U) — гуманітарний parole, I-765 (c)(11) дозвіл на роботу, I-131 advance parole, повторна реєстрація TPS, I-485 за наявності підстав.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U4U Uniting for Ukraine Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для українських гуманітарних parolees за програмою Uniting for Ukraine за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/u4u"
+  slug="/u4u" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
+    heading="U4U — підготовка документів Uniting for Ukraine"
+    sub="Якщо ви приїхали за програмою Uniting for Ukraine, ви маєте право на дозвіл на роботу, travel-документи і повторну реєстрацію TPS. Готуємо кожне подання акуратно за вашим дорученням — фіксована ціна, багатомовна анкета (укр./рос./англ.)."
+    ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Почати пакет U4U' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Часто подавані форми U4U"
+    heading="Що включає U4U"
+    intro="Пакет U4U зазвичай поєднує кілька подань USCIS. Натисніть плитку для деталей."
+    tiles={[
+      { icon: '💼', title: 'I-765 (c)(11) — Дозвіл на роботу', desc: 'EAD за категорією parolee. Безкоштовно для U4U-parolees.',                     href: '/ua/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'TPS — Тимчасовий захист',          desc: 'Повторна реєстрація TPS для України поверх parole.',                            href: '/ua/tps',                    color: 'var(--navy)' },
+      { icon: '🛂', title: 'I-131 — Advance parole',           desc: 'Travel-документ для виїзду і повернення без втрати parole.',                    href: '/#get-started?form=I-131',   color: 'var(--sage)' },
+      { icon: '🟢', title: 'I-485 — Зміна статусу',            desc: 'Коли виникає підстава (asylum, шлюб з USC тощо) — пакет на green card.',         href: '/ua/i-485-help',             color: 'var(--gold)' },
+      { icon: '🏛️', title: 'I-589 — Притулок',                 desc: 'Affirmative asylum, якщо повертатися небезпечно — окремий шлях від parole.',     href: '/ua/i-589-asylum-help',      color: 'var(--navy-light)' },
+      { icon: '🌐', title: 'Переклади',                        desc: 'Засвідчені переклади укр./рос. → англ. супровідних документів.',                href: '/ua/immigration#document-translation-california', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-765-work-permit-help', label: 'I-765 — дозвіл на роботу (деталі)' },
+    { href: '/ua/tps', label: 'TPS — Тимчасовий захист' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Uniting for Ukraine (U4U) — програма гуманітарного parole, запущена
+      у квітні 2022 року, щоб громадяни України могли в'їхати до США через
+      US-спонсора. Parolees приймаються на початковий термін 2 роки і
+      одразу мають право подавати на дозвіл на роботу. U4U-parole сам по
+      собі не веде до green card — але може поєднуватися з TPS, asylum,
+      сімейними петиціями або іншими шляхами залежно від ситуації.
+    </p>
+
+    <h2>U4U — коротко про eligibility</h2>
+    <ul>
+      <li>Ви громадянин України (і певні найближчі родичі).</li>
+      <li>Ваш US-спонсор подав I-134A на вашу користь і був схвалений.</li>
+      <li>Ви прилетіли до США, і CBP-офіцер оформив вам parole.</li>
+      <li>Ви пройшли первинну вакцинацію, біометрію і перевірку безпеки.</li>
+    </ul>
+
+    <h2>Що ми готуємо для U4U-parolees</h2>
+    <ul>
+      <li><strong>I-765 категорія (c)(11)</strong> — дозвіл на роботу (EAD). Для U4U USCIS скасовує filing fee та biometrics fee.</li>
+      <li><strong>Повторна реєстрація Україна TPS</strong> — коли DHS продовжує Україні designation, готуємо пакет I-821 + I-765 на повторну реєстрацію.</li>
+      <li><strong>I-131 advance parole</strong> — travel-документ для виїзду і повернення до США без втрати parole.</li>
+      <li><strong>Re-parole requests</strong> — коли початковий 2-річний parole добігає кінця, готуємо документи для розгляду re-parole.</li>
+      <li><strong>I-485 зміна статусу</strong> — коли виникає підстава (asylum, шлюб з USC, employment-based тощо).</li>
+      <li><strong>Засвідчені переклади укр./рос. → англ.</strong> свідоцтв про народження, шлюб, військових документів тощо.</li>
+    </ul>
+
+    <h2>Чого U4U-parole НЕ робить</h2>
+    <p>
+      Parole — це discretionary, обмежений у часі в'їзд: це не віза, не
+      статус і не шлях до green card сам по собі. Продовження parole,
+      подача на TPS, на asylum і зміна статусу — це <em>окремі рішення</em>
+      зі своїми формами і термінами. Ми можемо підготувати документи для
+      того шляху, який ви оберете. Юридичних консультацій з вибору
+      стратегії не надаємо — для цього у нас referral-відносини з
+      ліцензованими адвокатами Каліфорнії.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §212(d)(5) (parole authority); USCIS
+      policy guidance щодо Uniting for Ukraine (з квітня 2022); 8 C.F.R.
+      §274a.12(c)(11); INA §244 (TPS framework); 8 C.F.R. §244. Лише
+      підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=U4U" primaryText="Почати анкету U4U" />
+</BaseLayout>

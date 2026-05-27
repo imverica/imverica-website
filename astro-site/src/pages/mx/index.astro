@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
+import HomeSearch from '~/components/HomeSearch.astro';
 import StatsStrip from '~/components/StatsStrip.astro';
 import { HERO } from '~/data/i18n';
 
@@ -36,7 +37,7 @@ const legalServiceSchema = {
 <BaseLayout
   title={title}
   description={description}
-  canonical="https://imverica.com/es/"
+  canonical="https://imverica.com/mx/"
   jsonLd={[legalServiceSchema]}
   lang={lang}
   slug="/"
@@ -47,7 +48,10 @@ const legalServiceSchema = {
     eyebrow={HERO.es.eyebrow}
     heading={HERO.es.heading}
     sub={HERO.es.sub}
-  />
+    showActions={false}
+  >
+    <HomeSearch lang={lang} />
+  </Hero>
   <StatsStrip lang={lang} />
 
   <section class="svc-section">

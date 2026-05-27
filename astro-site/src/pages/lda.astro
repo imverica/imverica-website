@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
 import WhyUs from '~/components/WhyUs.astro';
 import FAQSection from '~/components/FAQSection.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
@@ -25,6 +26,22 @@ const schema = {
     sub="The plain-English explanation: when you can use an LDA, when you need an attorney, what it costs, and what consumer protections California built around LDA registration."
     ctaPrimary={{ href: '/#get-started', text: 'Start with Imverica' }}
     ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="What we cover"
+    heading="Areas of California document preparation"
+    intro="Tap any area to see the forms we prepare and start your package."
+    tiles={[
+      { icon: '🌎', title: 'Immigration Consultant', desc: 'California-registered IC under B&P §§22440-22448. USCIS / EOIR document preparation.', href: '/immigration',                  color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'Family Law',           desc: 'FL-100 dissolution, FL-300 custody/support, UCCJEA.', href: '/fl',                       color: 'var(--terracotta)' },
+      { icon: '⚖️', title: 'Small Claims',          desc: 'SC-100/120 up to $12,500 — plaintiff or defendant.',  href: '/sc',                          color: 'var(--sage)' },
+      { icon: '🏢', title: 'Business Filings',       desc: 'LLC, corporation, DBA, EIN, operating agreement.',    href: '/business',                    color: 'var(--gold)' },
+      { icon: '🛡️', title: 'Restraining Orders',     desc: 'CH-100, DV-100, EA-100, GV-100, WV-100.',             href: '/california-restraining-orders', color: 'var(--terracotta-deep)' },
+      { icon: '🏠', title: 'Unlawful Detainer',      desc: 'UD-100 eviction, response, proof of service.',        href: '/california-unlawful-detainer', color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Probate',                desc: 'DE-111 petition, DE-121 notice, small-estate.',       href: '/california-probate',          color: 'var(--navy)' },
+      { icon: '🌐', title: 'Translations & Notary',   desc: 'Certified translations, apostille, notary support.',  href: '/immigration#document-translation-california', color: 'var(--sage)' }
+    ]}
   />
 
   <LandingBody related={[
@@ -83,6 +100,30 @@ const schema = {
       <li><strong>Display required disclosures.</strong> Per §6408. Office signage stating "I am NOT an attorney."</li>
       <li><strong>Renew the registration every two years.</strong></li>
     </ul>
+
+    <h2>What is a California Immigration Consultant?</h2>
+    <p>
+      A California Immigration Consultant is a separate, state-registered
+      role under the Immigration Consultant Act (California Business
+      &amp; Professions Code §§22440-22448). An Immigration Consultant
+      may prepare immigration forms (USCIS, EOIR, consular) at the
+      client's direction, gather supporting documents, and translate
+      filings — but, like an LDA, cannot give legal advice, select
+      forms for the client, or appear before USCIS or the immigration
+      court on the client's behalf. To be authorized to represent
+      clients before USCIS, a person must be either an attorney
+      licensed in any U.S. state or a representative accredited by the
+      DOJ (8 C.F.R. §1292.1).
+    </p>
+    <p>
+      Imverica Legal Solutions is registered both as a California Legal
+      Document Assistant <strong>and</strong> as a California
+      Immigration Consultant, posting the bond and notices required by
+      each statute. That dual registration lets us prepare California
+      civil-court documents and federal USCIS / EOIR document packets
+      under one office — all at the client's direction, without
+      crossing into legal advice.
+    </p>
 
     <h2>LDA vs. attorney — which one do you need?</h2>
     <p>

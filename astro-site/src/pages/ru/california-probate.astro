@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Подготовка документов для probate Калифорнии (DE-111) | Imverica';
+const description = 'California Licensed LDA готовит документы probate — DE-111 petition for probate, DE-121 notice, DE-160 inventory and appraisal, DE-221 spousal property petition, small estate affidavit согласно Probate Code §13100.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Probate Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов probate Калифорнии по поручению петиционера. Small estates, spousal property и стандартное администрирование.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/california-probate"
+  slug="/california-probate" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Probate · Probate Code §8000 et seq."
+    heading="Подготовка документов probate Калифорнии"
+    sub="Small estate affidavits, spousal property petitions и стандартное администрирование в superior court Калифорнии. Многоязычная анкета, фиксированная цена."
+    ctaPrimary={{ href: '/#get-started?form=DE-111', text: 'Начать пакет probate' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/fl', label: 'California семейное право (FL-100, FL-300)' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      California probate — это судебный процесс передачи активов
+      умершего наследникам и бенефициарам. Три распространённых пути:
+      small-estate affidavit (без судебного слушания, быстро), spousal
+      property petition (переживший супруг, упрощённо) и стандартное
+      администрирование (полный probate, с letters testamentary или
+      letters of administration).
+    </p>
+
+    <h2>Какой путь применяется</h2>
+    <ul>
+      <li><strong>Small estate affidavit (без real property свыше $61,500 / общая сумма ниже $184,500).</strong> Probate Code §13100 et seq. Наследники собирают личное имущество по присяжному affidavit через 40 дней после смерти. Подачи в суд для личного имущества не требуется; сокращённая судебная процедура для real property по §13150.</li>
+      <li><strong>Spousal Property Petition (DE-221).</strong> Probate Code §13500. Переживший супруг или зарегистрированный domestic partner просит суд подтвердить, что community property и quasi-community property переходит к нему без полного probate.</li>
+      <li><strong>Стандартное администрирование (DE-111).</strong> Probate Code §8000. Требуется, когда estate превышает порог small-estate и нет упрощённого пути для пережившего супруга. Суд назначает executor (с завещанием) или administrator (без завещания), выдаёт Letters, и personal representative администрирует под надзором суда.</li>
+    </ul>
+
+    <h2>Хронология стандартного probate</h2>
+    <ol>
+      <li><strong>DE-111 Petition for Probate.</strong> Подаётся в superior court в округе проживания умершего.</li>
+      <li><strong>DE-121 Notice of Petition.</strong> Публикуется в местной газете 3 недели подряд; рассылается всем наследникам и бенефициарам.</li>
+      <li><strong>Слушание.</strong> Суд назначает personal representative и выдаёт Letters (DE-150 testamentary или DE-150A administration).</li>
+      <li><strong>DE-160 Inventory and Appraisal.</strong> Personal representative перечисляет все активы estate в течение 4 месяцев. Probate referee оценивает неденежные активы.</li>
+      <li><strong>Creditor claims.</strong> У кредиторов 4 месяца с момента выдачи Letters для подачи claims (Probate Code §9100).</li>
+      <li><strong>Продажа активов, оплата долгов, распределение.</strong> Personal representative управляет estate, продаёт активы при необходимости, оплачивает долги/налоги/расходы и распределяет остаток по завещанию или intestacy.</li>
+      <li><strong>Окончательный отчёт и распределение.</strong> DE-180 / DE-295 final accounting petition. Суд утверждает и освобождает personal representative.</li>
+    </ol>
+
+    <h2>Формы, которые мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакеты документов probate</strong>
+      <ul>
+        <li><strong>DE-111</strong> — Petition for Probate</li>
+        <li><strong>DE-121</strong> — Notice of Petition to Administer Estate</li>
+        <li><strong>DE-131</strong> — Proof of Subscribing Witness</li>
+        <li><strong>DE-140</strong> — Order for Probate</li>
+        <li><strong>DE-147</strong> — Duties and Liabilities of Personal Representative</li>
+        <li><strong>DE-150 / DE-150A</strong> — Letters (Testamentary / of Administration)</li>
+        <li><strong>DE-160</strong> — Inventory and Appraisal</li>
+        <li><strong>DE-161</strong> — Attachment to Inventory and Appraisal</li>
+        <li><strong>DE-172</strong> — Creditor's Claim</li>
+        <li><strong>DE-221</strong> — Spousal or Domestic Partner Property Petition</li>
+        <li><strong>Small Estate Affidavit</strong> — Probate Code §13100 (шаблон у нас в офисе)</li>
+        <li><strong>Affidavit Re Real Property of Small Value</strong> — Probate Code §13200</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Источник:</strong> California Probate Code §§13100-13211
+      (процедуры small estate); §13500 et seq. (spousal property);
+      §§8000 et seq. (открытие administration); §§9000 et seq. (creditor
+      claims); §10800 et seq. (вознаграждение personal representative);
+      §§11600 et seq. (распределение).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=DE-111" primaryText="Начать анкету probate" />
+</BaseLayout>

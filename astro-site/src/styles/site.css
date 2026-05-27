@@ -92,9 +92,11 @@ img { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(0.65rem, 1.1vw, 1rem);
-  padding: 14px 1.5rem;
-  max-width: 1280px;
+  gap: clamp(0.4rem, 0.9vw, 0.8rem);
+  /* Logo flush-left: drop the left padding so the brand mark sits at the
+     viewport edge (still pinned to 1280-px max-width above). */
+  padding: 14px 0.5rem 14px 0;
+  max-width: 1320px;
   margin: 0 auto;
 }
 .site-brand {
@@ -125,32 +127,38 @@ img { max-width: 100%; height: auto; }
 }
 .site-nav {
   display: flex;
-  gap: clamp(12px, 1.35vw, 22px);
+  gap: clamp(4px, 0.6vw, 12px);
   align-items: center;
   justify-content: center;
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 14px;
+  font-size: 13px;
 }
 .site-nav a {
   color: var(--text);
   font-weight: 500;
   white-space: nowrap;
-  transition: color 0.18s ease;
+  padding: 6px 9px;
+  border-radius: 7px;
+  transition: color 0.18s ease, background 0.18s ease;
 }
-.site-nav a:hover {
-  color: var(--terracotta-deep);
-}
+/* Brand-tinted hover backgrounds per nav item — uses the palette from
+   --navy, --terracotta, --sage, --gold so each section has its own accent. */
+.site-nav a[data-nav="uscis"]:hover    { background: rgba(26,46,74,0.10);   color: var(--navy-dark); }
+.site-nav a[data-nav="family"]:hover   { background: rgba(224,138,93,0.14); color: var(--terracotta-deep); }
+.site-nav a[data-nav="civil"]:hover    { background: rgba(125,156,122,0.18); color: #3a5a44; }
+.site-nav a[data-nav="business"]:hover { background: rgba(212,175,86,0.20); color: #7a5a18; }
+.site-nav a[data-nav="about"]:hover    { background: rgba(26,46,74,0.08);   color: var(--navy); }
 .site-lang {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 5px;
   flex: 0 0 auto;
 }
 .site-lang a {
-  width: 54px;
-  height: 54px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: 50%;
   border: 1px solid var(--border);
@@ -160,10 +168,10 @@ img { max-width: 100%; height: auto; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 2px;
   text-align: center;
   line-height: 1;
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -438,12 +446,17 @@ img { max-width: 100%; height: auto; }
   font-weight: 500;
 }
 
-/* Stats strip */
+/* Stats strip — pulled up over the hero so the band sits right beneath
+   the headline, with enough vertical room for the captions under each
+   number to be fully visible. */
 .stats-strip {
   background: linear-gradient(135deg, #fdf6ec 0%, #fff5e9 100%);
   border-top: 1px solid rgba(40,30,20,0.08);
   border-bottom: 1px solid rgba(40,30,20,0.08);
-  padding: 48px 2rem;
+  padding: 36px 2rem 44px;
+  margin-top: -36px;
+  position: relative;
+  z-index: 2;
 }
 .stats-inner {
   max-width: 1040px;
@@ -464,9 +477,11 @@ img { max-width: 100%; height: auto; }
   font-feature-settings: "tnum";
 }
 .stat-label {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.45;
+  font-size: 13.5px;
+  color: #4a5568;
+  line-height: 1.55;
+  max-width: 220px;
+  margin: 6px auto 0;
 }
 
 /* Auto-updated official news */
@@ -547,6 +562,9 @@ img { max-width: 100%; height: auto; }
   padding: 80px 2rem;
   background: #fffaf2;
   border-top: 1px solid rgba(40,30,20,0.08);
+  /* Offset for the sticky header so #services-detail anchor scrolls
+     to the real top of the section, not under the header. */
+  scroll-margin-top: 110px;
 }
 .svc-inner { max-width: 1200px; margin: 0 auto; }
 .svc-kicker {

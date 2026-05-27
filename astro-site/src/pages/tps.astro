@@ -1,0 +1,96 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'TPS — Temporary Protected Status document preparation | Imverica';
+const description = 'California Licensed LDA prepares Temporary Protected Status (TPS) packages — I-821 initial registration and re-registration, I-765 work permit (c)(19) / (a)(12), I-131 travel authorization. Currently designated: Ukraine, Venezuela, Haiti, Syria, Nicaragua, Honduras and others.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'TPS Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Temporary Protected Status (TPS) — initial registration and re-registration packages at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/tps"
+  slug="/tps" jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · Temporary Protected Status · INA §244"
+    heading="TPS — Temporary Protected Status document preparation"
+    sub="If your country of nationality is TPS-designated, you're eligible to apply for protection from removal and to work in the U.S. We prepare initial registration and re-registration packets — I-821, I-765, I-131, I-912 fee waiver."
+    ctaPrimary={{ href: '/#get-started?topic=TPS', text: 'Start my TPS package' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms commonly filed for TPS"
+    heading="What a TPS filing involves"
+    intro="A TPS packet usually combines several forms. Tap any tile to see details."
+    tiles={[
+      { icon: '📋', title: 'I-821 — TPS application', desc: 'Initial registration or re-registration for the designated period.',                  href: '/#get-started?form=I-821',  color: 'var(--navy)' },
+      { icon: '💼', title: 'I-765 (c)(19) / (a)(12)',  desc: 'Work permit (EAD) for TPS holders — initial or renewal.',                              href: '/i-765-work-permit-help',   color: 'var(--terracotta-deep)' },
+      { icon: '🛂', title: 'I-131 — Advance Parole',    desc: 'Travel authorization for TPS holders who need to leave the U.S. and return.',          href: '/#get-started?form=I-131',  color: 'var(--sage)' },
+      { icon: '🧾', title: 'I-912 — Fee waiver',         desc: "Request to waive the I-821 and/or I-765 fee if you meet the income threshold.",       href: '/#get-started?form=I-912',  color: 'var(--gold)' },
+      { icon: '🇺🇦', title: 'U4U + Ukraine TPS',         desc: 'How TPS layers on top of Uniting for Ukraine parole.',                                href: '/u4u',                      color: 'var(--navy-light)' },
+      { icon: '🌐', title: 'Translations',                desc: 'Certified translations of country-of-nationality documents.',                          href: '/immigration#document-translation-california', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-765-work-permit-help', label: 'I-765 work permit' },
+    { href: '/u4u', label: 'Uniting for Ukraine (U4U)' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Temporary Protected Status (TPS) is a humanitarian protection given to
+      nationals of countries designated by the Secretary of Homeland Security
+      because of armed conflict, environmental disaster, or other
+      extraordinary conditions. TPS grants protection from removal,
+      authorization to work, and the ability to apply for travel
+      authorization, but does not by itself lead to a green card or
+      citizenship.
+    </p>
+
+    <h2>Currently TPS-designated countries (verify the live list)</h2>
+    <p>
+      Designations and re-designation dates change frequently. As of recent
+      DHS announcements, TPS designations include:
+      <strong>Ukraine, Venezuela, Haiti, Syria, Nicaragua, Honduras, El
+      Salvador, Somalia, Sudan, South Sudan, Yemen, Burma, Cameroon,
+      Afghanistan, Ethiopia,</strong> and others. Always confirm the current
+      list and registration window at uscis.gov/tps before filing — windows
+      are short and missing them disqualifies you until the next designation.
+    </p>
+
+    <h2>Initial registration vs. re-registration</h2>
+    <ul>
+      <li><strong>Initial registration</strong> — first-time application during an open initial registration period. Requires I-821 + supporting evidence of nationality, identity, and continuous physical presence / residence.</li>
+      <li><strong>Re-registration</strong> — current TPS holders re-file I-821 every time DHS extends the designation. Re-registration windows are narrow (often 60 days). Missing them ends your TPS unless you can show "good cause" for late filing.</li>
+      <li><strong>Late initial</strong> — limited circumstances allow filing initial TPS after the original window if you qualify for a "late initial" filing reason.</li>
+    </ul>
+
+    <h2>What we prepare for TPS</h2>
+    <ul>
+      <li><strong>I-821 application package</strong> — initial registration or re-registration with evidence checklist.</li>
+      <li><strong>I-765 work permit</strong> — under category (c)(19) for initial TPS or (a)(12) for re-registration / pending TPS.</li>
+      <li><strong>I-131 advance parole</strong> — when you need to travel internationally and return.</li>
+      <li><strong>I-912 fee waiver</strong> — if you qualify based on income or means-tested benefits.</li>
+      <li><strong>Supporting evidence package</strong> — passport, birth certificate, country-conditions records, proof of continuous physical presence and continuous residence.</li>
+      <li><strong>Certified translations</strong> of foreign-language civil documents.</li>
+    </ul>
+
+    <cite>
+      <strong>Authority:</strong> INA §244 (TPS framework); 8 C.F.R. Part
+      244 (TPS regulations); 8 C.F.R. §274a.12(a)(12), §274a.12(c)(19)
+      (employment authorization categories); Federal Register notices for
+      each country-specific designation and extension. Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=TPS" primaryText="Begin my TPS intake" />
+</BaseLayout>

@@ -1,0 +1,177 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import WhyUs from '~/components/WhyUs.astro';
+import FAQSection from '~/components/FAQSection.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = '¿Qué es un California Legal Document Assistant (LDA)? | Imverica';
+const description = 'Un LDA es un profesional registrado y afianzado de California, no abogado, autorizado para preparar documentos legales bajo la dirección del cliente. Más económico que un abogado. Cal. Bus. & Prof. Code §§6400-6415.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Legal Document Assistant Services',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Servicios de California Legal Document Assistant — preparación de documentos sin abogados bajo Cal. Bus. & Prof. Code §§6400-6415.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/lda"
+  slug="/lda" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Bus. & Prof. Code §§6400-6415"
+    heading="¿Qué es un California Legal Document Assistant (LDA)?"
+    sub="En lenguaje sencillo: cuándo conviene un LDA, cuándo necesita un abogado, cuánto cuesta y qué protecciones al consumidor diseñó California en torno al registro de LDA."
+    ctaPrimary={{ href: '/#get-started', text: 'Empezar con Imverica' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Áreas que cubrimos"
+    heading="Áreas de preparación de documentos en California"
+    intro="Toque un área para ver los formularios e iniciar su paquete."
+    tiles={[
+      { icon: '🌎', title: 'Immigration Consultant', desc: 'California IC registrado bajo B&P §§22440-22448. Preparación USCIS / EOIR.', href: '/mx/immigration',                  color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'Derecho de familia', desc: 'FL-100 divorcio, FL-300 custodia/pensión, UCCJEA.',       href: '/mx/fl',                          color: 'var(--terracotta)' },
+      { icon: '⚖️', title: 'Reclamos menores',       desc: 'SC-100/120 hasta $12,500 — demandante o demandado.',     href: '/mx/sc',                          color: 'var(--sage)' },
+      { icon: '🏢', title: 'Documentos de negocio',  desc: 'LLC, corporación, DBA, EIN, operating agreement.',        href: '/mx/business',                    color: 'var(--gold)' },
+      { icon: '🛡️', title: 'Órdenes de restricción', desc: 'CH-100, DV-100, EA-100, GV-100, WV-100.',                href: '/mx/california-restraining-orders', color: 'var(--terracotta-deep)' },
+      { icon: '🏠', title: 'Unlawful detainer',      desc: 'UD-100 desalojo, respuesta, proof of service.',           href: '/mx/california-unlawful-detainer', color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Probate',                desc: 'DE-111 petición, DE-121 aviso, small-estate.',            href: '/mx/california-probate',          color: 'var(--navy)' },
+      { icon: '🌐', title: 'Traducciones y notario', desc: 'Traducciones certificadas, apostille, apoyo notarial.',   href: '/mx/immigration#document-translation-california', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/fl', label: 'California family law' },
+    { href: '/mx/california-unlawful-detainer', label: 'California unlawful detainer (desalojo)' }
+  ]}>
+    <p class="lead">
+      Un California Legal Document Assistant — o LDA — es un profesional
+      registrado, afianzado (con fianza de $25,000), no abogado,
+      autorizado para preparar documentos legales bajo la dirección de
+      una parte que se representa a sí misma. El esquema LDA fue creado
+      por la legislatura de California en 1998 para dar al público acceso
+      a preparación de documentos de calidad a un precio razonable, sin
+      cruzar la línea de la práctica no autorizada del derecho.
+    </p>
+
+    <h2>Lo que un LDA puede hacer</h2>
+    <p>
+      Bajo Business &amp; Professions Code §6400(d), un LDA, bajo la
+      dirección del cliente, puede:
+    </p>
+    <ul>
+      <li>Mecanografiar o ensamblar documentos legales que el cliente ya decidió presentar</li>
+      <li>Proveer formularios legales pre-impresos preparados por abogados</li>
+      <li>Proveer publicaciones de información legal de fuentes estatales</li>
+      <li>Presentar documentos en el tribunal por el cliente</li>
+      <li>Traducir documentos (con certification de traductor bajo 8 C.F.R. §103.2(b)(3) para presentaciones ante USCIS)</li>
+      <li>Ayudar a organizar y ensamblar documentos de respaldo en un paquete listo para presentar</li>
+    </ul>
+
+    <h2>Lo que un LDA no puede hacer</h2>
+    <p>
+      Bajo Business &amp; Professions Code §6411, un LDA no puede:
+    </p>
+    <ul>
+      <li>Brindar asesoría legal</li>
+      <li>Emitir opinión legal o recomendación de cualquier tipo</li>
+      <li>Seleccionar formularios por el cliente (el cliente debe decidir qué presentar)</li>
+      <li>Elegir un curso de acción o estrategia legal</li>
+      <li>Representar al cliente en tribunal o ante cualquier agencia</li>
+      <li>Hacerse pasar por abogado</li>
+    </ul>
+    <p>
+      Cruzar la línea del §6411 se trata como práctica no autorizada del
+      derecho bajo §6125 — un delito menor (misdemeanor) con exposición
+      civil para el LDA. La separación estricta es la protección al
+      consumidor que hace funcionar el esquema LDA.
+    </p>
+
+    <h2>Lo que un LDA está obligado a hacer</h2>
+    <ul>
+      <li><strong>Registrarse en el county clerk.</strong> En cada condado donde el LDA opera. Registro público consultable por cualquiera.</li>
+      <li><strong>Constituir fianza de $25,000.</strong> Según §6405. Protege a los clientes en caso de mala conducta del LDA.</li>
+      <li><strong>Cumplir requisitos de educación o experiencia.</strong> Según §6402.1. Dos años de experiencia legal, certificado de paralegal, J.D. u otras vías calificadas.</li>
+      <li><strong>Proveer contrato escrito.</strong> Según §6410. Indica servicios, precio fijo, número de registro del LDA, y la nota §6411 de que el LDA no es abogado.</li>
+      <li><strong>Mostrar avisos obligatorios.</strong> Según §6408. Letrero en oficina: «I am NOT an attorney».</li>
+      <li><strong>Renovar el registro cada dos años.</strong></li>
+    </ul>
+
+    <h2>¿Qué es un California Immigration Consultant?</h2>
+    <p>
+      Un California Immigration Consultant es un rol separado,
+      registrado por el estado bajo el Immigration Consultant Act
+      (California Business &amp; Professions Code §§22440-22448). Un
+      Immigration Consultant puede preparar formularios de inmigración
+      (USCIS, EOIR, consulares) bajo la dirección del cliente, reunir
+      documentos de respaldo y traducir presentaciones — pero, como un
+      LDA, no puede dar asesoría legal, seleccionar formularios por el
+      cliente, ni representar al cliente ante USCIS o la corte de
+      inmigración. Para representar a un cliente ante USCIS hay que
+      ser abogado licenciado en cualquier estado de EE. UU. o
+      representative acreditado por el DOJ (8 C.F.R. §1292.1).
+    </p>
+    <p>
+      Imverica Legal Solutions está registrada como California Legal
+      Document Assistant <strong>y</strong> como California Immigration
+      Consultant — con la fianza y los avisos requeridos por cada
+      estatuto. Esa doble registración nos permite preparar documentos
+      para las cortes civiles de California y paquetes federales USCIS
+      / EOIR bajo una misma oficina — todo bajo la dirección del
+      cliente, sin cruzar a la asesoría legal.
+    </p>
+
+    <h2>LDA o abogado — ¿cuál necesita?</h2>
+    <p>
+      <strong>Use un LDA</strong> cuando sabe qué quiere presentar y
+      necesita alguien que prepare los documentos con precisión —
+      divorcio no contencioso, reclamos menores, formularios USCIS con
+      ruta clara, sucesiones, órdenes de restricción, registros
+      empresariales, desalojos. Precio fijo, generalmente 60–90% más
+      económico que un abogado para el mismo trabajo de documentos.
+    </p>
+    <p>
+      <strong>Contrate un abogado</strong> cuando el caso es contencioso
+      o requiere estrategia — disputas de custodia con alto conflicto,
+      caracterización compleja de bienes comunes, exposición penal
+      vinculada a la presentación migratoria, removal proceedings,
+      cuestiones legales novedosas, o cualquier situación donde necesite
+      asesoría sobre qué hacer y no solo ayuda con los papeles que ya
+      decidió presentar.
+    </p>
+
+    <h2>Cómo encaja Imverica</h2>
+    <p>
+      Imverica Legal Solutions es un California LDA registrado e
+      Immigration Consultant. Atendemos clientes en toda California y de
+      forma remota en todo el mundo (para piezas de USCIS / federales).
+      Entrevista en cuatro idiomas (inglés, ruso, ucraniano, español),
+      contrato escrito §6410 antes de iniciar, precio fijo informado por
+      adelantado, y la nota estándar §6411 de que no somos un bufete y
+      no brindamos asesoría legal. Mantenemos relaciones de referido
+      con abogados con licencia en California para asuntos que requieran
+      asesoría legal.
+    </p>
+
+    <cite>
+      <strong>Autoridad legal:</strong> California Business &amp;
+      Professions Code §§6400-6415 (Legal Document Assistant Act),
+      especialmente §6400(d) (definición), §6402.1 (calificaciones),
+      §6405 (fianza), §6408 (avisos y letrero obligatorios), §6410
+      (contrato escrito), §6411 (actos prohibidos); §6125 (práctica
+      no autorizada del derecho). Para inmigración: §§22440-22448
+      (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <WhyUs />
+  <FAQSection />
+  <CTAStrip primaryHref="/#get-started" primaryText="Empezar con Imverica" />
+</BaseLayout>

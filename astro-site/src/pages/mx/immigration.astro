@@ -1,0 +1,79 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ImmigrationCategories from '~/components/ImmigrationCategories.astro';
+import ServiceSections from '~/components/ServiceSections.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos de inmigración USCIS y EOIR | Imverica Legal Solutions';
+const description =
+  'California Licensed LDA e Immigration Consultant. Preparación de documentos USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90) y para corte de inmigración EOIR — bajo la dirección del cliente.';
+
+const servicesES = [
+  {
+    id: 'immigration-consultant-california',
+    title: 'Preparación de documentos de inmigración USCIS',
+    text: 'Preparación completa de paquetes de formularios USCIS — ajuste de estatus, permiso de trabajo, peticiones familiares, naturalización, asilo, documentos de viaje, reposición de green card y affidavits de respaldo.',
+    items: [
+      'I-485 — Adjustment of Status',
+      'I-130 / I-130A — Petition for Alien Relative',
+      'I-765 — Employment Authorization',
+      'I-589 — Asylum & Withholding of Removal',
+      'N-400 — Naturalization',
+      'I-131 / I-131A — Travel Document / Re-entry Permit',
+      'I-90 — Green Card Renewal / Replacement',
+      'I-864 / I-864A — Affidavit of Support',
+      'I-693 — Medical Examination submittal',
+      'I-751 — Removal of Conditions on Residence',
+      'I-539 — Change / Extend Non-immigrant Status',
+      'I-824 — Action on Approved Application'
+    ],
+    cite: 'Los documentos se preparan bajo la dirección del cliente. No seleccionamos formularios ni brindamos asesoría legal.'
+  },
+  {
+    id: 'eoir-documents',
+    title: 'Documentos para corte de inmigración EOIR',
+    text: 'Preparación de documentos para procesos ante el Executive Office for Immigration Review (EOIR) — motions, evidence packets, indexes, declarations y solicitudes de relief.',
+    items: [
+      'EOIR-28 — Notice of Entry of Appearance',
+      'EOIR-29 — Notice of Appeal (BIA)',
+      'EOIR-42A — Cancellation of Removal (LPR)',
+      'EOIR-42B — Cancellation of Removal (Non-LPR)',
+      'EOIR-40 — Suspension of Deportation',
+      'Motion to reopen / reconsider — paquetes',
+      'Evidence packets, indexes, tabs',
+      'Armado de country-conditions evidence',
+      'Declaraciones de testigos y preparación de traducciones'
+    ],
+    cite: 'La representación en corte requiere abogado licenciado o accredited representative.'
+  },
+  {
+    id: 'document-translation-california',
+    title: 'Traducciones, notario y apoyo de documentos',
+    text: 'Apoyo multilingüe de documentos para paquetes de inmigración y corte — traducciones, coordinación de apostille, apoyo notarial y armado de paquetes para presentar.',
+    items: [
+      'Inglés, ruso, ucraniano, español',
+      'Coordinación de traducciones certificadas',
+      'Organización de documentos',
+      'Revisión del paquete antes de presentar'
+    ],
+    cite: 'El apoyo de traducción no incluye asesoría legal.'
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/mx/immigration"
+  slug="/immigration"
+  lang={lang}
+  availableLocales={['en', 'ru', 'uk', 'es']}
+>
+  <ImmigrationCategories lang={lang} />
+  <ServiceSections
+    include={['immigration-consultant-california', 'eoir-documents', 'document-translation-california']}
+    servicesOverride={servicesES}
+    kicker="USCIS · EOIR · Preparación de documentos de inmigración"
+    heading="Peticiones USCIS y documentos para corte de inmigración EOIR"
+    intro="Imverica Legal Solutions es un Immigration Consultant y Legal Document Assistant registrado en California. Preparamos peticiones USCIS y paquetes de documentos para corte de inmigración (EOIR) bajo la dirección del cliente — con precisión, organizados y a tiempo. No somos un bufete y no brindamos asesoría legal."
+  />
+</BaseLayout>

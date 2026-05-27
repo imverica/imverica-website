@@ -1,0 +1,241 @@
+---
+/**
+ * Quick-pick immigration categories — large icon tiles above the
+ * detailed ServiceSections cards on /immigration.
+ *
+ * Each tile links to the most relevant landing page (form-specific
+ * help page when one exists; in-page anchor on the ServiceSections
+ * grid otherwise). Flags hint at the largest client communities.
+ */
+type Lang = 'en' | 'ru' | 'uk' | 'es';
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props as Props;
+const localePrefix: Record<Lang, string> = { en: '', ru: '/ru', uk: '/ua', es: '/mx' };
+const lp = localePrefix[lang];
+
+const STRINGS = {
+  en: {
+    kicker: 'Pick a category to get started',
+    h2: 'USCIS & EOIR',
+    intro: 'Most common immigration matters we handle. Tap any tile for the form-specific landing page with details, requirements, and a starter intake.',
+    footPre: "Can't find your form? See the",
+    footLink: 'full list of USCIS & EOIR documents we prepare',
+    footMid: ', or',
+    footTellLink: "tell us what you need",
+    footPost: " and we'll route the right form.",
+  },
+  ru: {
+    kicker: 'Выберите категорию, чтобы начать',
+    h2: 'USCIS и EOIR',
+    intro: 'Самые частые иммиграционные вопросы, с которыми мы работаем. Нажмите любую плитку, чтобы перейти на страницу с описанием формы, требованиями и началом анкеты.',
+    footPre: 'Не нашли свою форму? Посмотрите',
+    footLink: 'полный список документов USCIS и EOIR, которые мы готовим',
+    footMid: ', или',
+    footTellLink: 'опишите, что вам нужно',
+    footPost: ' — мы подберём правильную форму.',
+  },
+  uk: {
+    kicker: 'Оберіть категорію, щоб почати',
+    h2: 'USCIS та EOIR',
+    intro: 'Найчастіші імміграційні справи, з якими ми працюємо. Натисніть будь-яку плитку, щоб перейти на сторінку форми з деталями, вимогами та анкетою.',
+    footPre: 'Не знайшли свою форму? Перегляньте',
+    footLink: 'повний список документів USCIS та EOIR, які ми готуємо',
+    footMid: ', або',
+    footTellLink: 'опишіть, що вам потрібно',
+    footPost: ' — ми підберемо правильну форму.',
+  },
+  es: {
+    kicker: 'Elija una categoría para comenzar',
+    h2: 'USCIS y EOIR',
+    intro: 'Los asuntos de inmigración más comunes que manejamos. Toque cualquier tile para ver la página de la forma con detalles, requisitos y una entrevista inicial.',
+    footPre: '¿No encuentra su formulario? Vea la',
+    footLink: 'lista completa de documentos USCIS y EOIR que preparamos',
+    footMid: ', o',
+    footTellLink: 'cuéntenos lo que necesita',
+    footPost: ' y le indicaremos el formulario correcto.',
+  },
+} as const;
+const T = STRINGS[lang];
+
+const TITLES = {
+  en: {
+    u4u: { title: 'U4U — Uniting for Ukraine', desc: 'Humanitarian parole, I-765 work permit (c)(11) and TPS re-registration support for Ukrainian parolees.' },
+    tps: { title: 'TPS — Temporary Protected Status', desc: 'Initial registration and re-registration for designated countries (UA, VE, HT, SY, NI and others).' },
+    i485: { title: 'I-485 — Adjustment of Status', desc: 'Family-based and asylum-based green-card packages prepared at your direction.' },
+    i589: { title: 'I-589 — Asylum & Withholding', desc: 'Affirmative asylum + withholding of removal applications and supporting packets.' },
+    n400: { title: 'N-400 — Naturalization', desc: 'Citizenship application with civics + history support; multilingual intake.' },
+    i130: { title: 'I-130 — Family Petition', desc: 'Spouse, parent, child, and sibling petitions (with I-130A for spouses).' },
+    i765: { title: 'I-765 — Work Permit (EAD)', desc: 'All eligibility categories: (c)(8), (c)(9), TPS, DACA, parolee, and more.' },
+    eoir: { title: 'EOIR — Immigration Court', desc: 'EOIR-28 / 42A / 42B, motions, evidence packets, declarations, country conditions.' },
+    uvisa: { title: 'U visa — Crime victims', desc: 'I-918 + I-918A self-petition for survivors of qualifying crimes who help law enforcement.' },
+    i539: { title: 'I-539 — Change / Extend Status', desc: 'Change to or extend a non-immigrant status (B, F, H4, L2, others) while in the US.' },
+    i90: { title: 'I-90 — Green Card Renewal', desc: 'Renew, replace, or correct your Permanent Resident Card (10-year renewal, lost/stolen).' },
+    vawa: { title: 'VAWA — I-360 self-petition', desc: 'Self-petition for spouses, children, and parents of abusive US citizens or LPRs.' },
+  },
+  ru: {
+    u4u: { title: 'U4U — Uniting for Ukraine', desc: 'Гуманитарный parole, I-765 (c)(11) разрешение на работу и поддержка повторной регистрации TPS для украинских parolees.' },
+    tps: { title: 'TPS — Временный защищённый статус', desc: 'Первичная и повторная регистрация для назначенных стран (UA, VE, HT, SY, NI и других).' },
+    i485: { title: 'I-485 — Изменение статуса', desc: 'Семейные и убежищные пакеты на green card, готовим по вашему поручению.' },
+    i589: { title: 'I-589 — Убежище и Withholding', desc: 'Affirmative asylum и withholding of removal — заявления и сопроводительные пакеты.' },
+    n400: { title: 'N-400 — Натурализация', desc: 'Заявление на гражданство с поддержкой по civics и истории; многоязычная анкета.' },
+    i130: { title: 'I-130 — Семейная петиция', desc: 'Петиции за супруга, родителя, ребёнка и брата/сестру (с I-130A для супругов).' },
+    i765: { title: 'I-765 — Разрешение на работу (EAD)', desc: 'Все категории eligibility: (c)(8), (c)(9), TPS, DACA, parolee и др.' },
+    eoir: { title: 'EOIR — Иммиграционный суд', desc: 'EOIR-28 / 42A / 42B, ходатайства, evidence packets, декларации, country conditions.' },
+    uvisa: { title: 'U visa — жертвы преступлений', desc: 'I-918 + I-918A self-petition для пострадавших от квалифицирующих преступлений, помогающих правоохранителям.' },
+    i539: { title: 'I-539 — смена/продление статуса', desc: 'Смена или продление неиммиграционного статуса (B, F, H4, L2 и др.) в США.' },
+    i90: { title: 'I-90 — обновление green card', desc: 'Обновить, заменить или исправить вашу Permanent Resident Card (10-летнее обновление, утеря/кража).' },
+    vawa: { title: 'VAWA — I-360 self-petition', desc: 'Self-petition для супругов, детей и родителей граждан США или LPR, совершавших насилие.' },
+  },
+  uk: {
+    u4u: { title: 'U4U — Uniting for Ukraine', desc: 'Гуманітарний parole + I-765 (c)(11) дозвіл на роботу та підтримка повторної реєстрації TPS для українських parolees.' },
+    tps: { title: 'TPS — Тимчасовий захищений статус', desc: 'Первинна та повторна реєстрація для призначених країн (UA, VE, HT, SY, NI та інших).' },
+    i485: { title: 'I-485 — Зміна статусу', desc: 'Сімейні та притульні пакети на green card, готуємо за вашим дорученням.' },
+    i589: { title: 'I-589 — Притулок і Withholding', desc: 'Affirmative asylum і withholding of removal — заяви та супровідні пакети.' },
+    n400: { title: 'N-400 — Натуралізація', desc: 'Заява на громадянство з підтримкою з civics та історії; багатомовна анкета.' },
+    i130: { title: 'I-130 — Сімейна петиція', desc: 'Петиції за дружину/чоловіка, батьків, дитину та брата/сестру (з I-130A для подружжя).' },
+    i765: { title: 'I-765 — Дозвіл на роботу (EAD)', desc: 'Усі категорії eligibility: (c)(8), (c)(9), TPS, DACA, parolee та ін.' },
+    eoir: { title: 'EOIR — Імміграційний суд', desc: 'EOIR-28 / 42A / 42B, клопотання, evidence packets, декларації, country conditions.' },
+    uvisa: { title: 'U visa — Жертви злочинів', desc: 'I-918 + I-918A self-petition для постраждалих від кваліфікуючих злочинів, які допомагають правоохоронцям.' },
+    i539: { title: 'I-539 — Зміна/продовження статусу', desc: 'Змінити або продовжити неімміграційний статус (B, F, H4, L2 та ін.) у США.' },
+    i90: { title: 'I-90 — Поновлення green card', desc: 'Поновити, замінити або виправити вашу Permanent Resident Card (10-річне поновлення, втрата/крадіжка).' },
+    vawa: { title: 'VAWA — I-360 self-petition', desc: 'Self-petition для подружжя, дітей та батьків кривдників-громадян США чи LPR.' },
+  },
+  es: {
+    u4u: { title: 'U4U — Uniting for Ukraine', desc: 'Parole humanitario + I-765 (c)(11) permiso de trabajo y apoyo de re-registro TPS para parolees ucranianos.' },
+    tps: { title: 'TPS — Estatus de Protección Temporal', desc: 'Registro inicial y re-registro para países designados (UA, VE, HT, SY, NI y otros).' },
+    i485: { title: 'I-485 — Ajuste de Estatus', desc: 'Paquetes de green card por familia y por asilo preparados bajo su dirección.' },
+    i589: { title: 'I-589 — Asilo y Withholding', desc: 'Affirmative asylum y withholding of removal — solicitudes y paquetes de respaldo.' },
+    n400: { title: 'N-400 — Naturalización', desc: 'Solicitud de ciudadanía con apoyo de civics e historia; entrevista multilingüe.' },
+    i130: { title: 'I-130 — Petición Familiar', desc: 'Peticiones por cónyuge, padre, hijo y hermano (con I-130A para cónyuges).' },
+    i765: { title: 'I-765 — Permiso de Trabajo (EAD)', desc: 'Todas las categorías de eligibility: (c)(8), (c)(9), TPS, DACA, parolee y más.' },
+    eoir: { title: 'EOIR — Corte de Inmigración', desc: 'EOIR-28 / 42A / 42B, mociones, evidence packets, declaraciones, country conditions.' },
+    uvisa: { title: 'U visa — Víctimas de delito', desc: 'I-918 + I-918A self-petition para sobrevivientes de delitos calificados que ayuden a las autoridades.' },
+    i539: { title: 'I-539 — Cambio/Extensión de Estatus', desc: 'Cambiar o extender un estatus no-inmigrante (B, F, H4, L2, otros) en EE. UU.' },
+    i90: { title: 'I-90 — Renovación de Green Card', desc: 'Renovar, reemplazar o corregir su Permanent Resident Card (renovación de 10 años, perdida/robada).' },
+    vawa: { title: 'VAWA — I-360 self-petition', desc: 'Self-petition para cónyuges, hijos y padres de ciudadanos o LPR abusivos de EE. UU.' },
+  },
+} as const;
+const N = TITLES[lang];
+
+const cats = [
+  // Row 1 — humanitarian + most-asked. U4U and TPS each have their own
+  // explainer landing page that lists every form involved (parole, TPS,
+  // EAD, advance parole, fee waiver). Going to a dedicated page beats
+  // dropping the user into a single-form wizard.
+  { ...N.u4u,  href: `${lp}/u4u`, flag: '🇺🇦', color: 'var(--terracotta-deep)' },
+  { ...N.tps,  href: `${lp}/tps`, flag: '🛡️', color: 'var(--navy)' },
+  { ...N.i485, href: `${lp}/i-485-help`,             flag: '🟢', color: 'var(--sage)' },
+  { ...N.i589, href: `${lp}/i-589-asylum-help`,      flag: '🏛️', color: 'var(--navy-light)' },
+  // Row 2 — common USCIS forms
+  { ...N.n400, href: `${lp}/n-400-citizenship-help`, flag: '📜', color: 'var(--gold)' },
+  { ...N.i130, href: `${lp}/i-130-family-petition`,  flag: '👨‍👩‍👧', color: 'var(--terracotta)' },
+  { ...N.i765, href: `${lp}/i-765-work-permit-help`, flag: '💼', color: 'var(--navy)' },
+  { ...N.eoir, href: `${lp}/immigration#eoir-documents`, flag: '⚖️', color: 'var(--navy-dark)' },
+  // Row 3 — humanitarian / specialty forms route to the wizard so the
+  // visitor starts an intake instead of landing on a generic services list.
+  { ...N.uvisa, href: `${lp}/#get-started?form=I-918&topic=U-visa`, flag: '🆘', color: 'var(--terracotta-deep)' },
+  { ...N.i539,  href: `${lp}/#get-started?form=I-539`,              flag: '🔄', color: 'var(--navy)' },
+  { ...N.i90,   href: `${lp}/#get-started?form=I-90`,               flag: '♻️', color: 'var(--sage)' },
+  { ...N.vawa,  href: `${lp}/#get-started?form=I-360&topic=VAWA`,   flag: '🛡️', color: 'var(--terracotta)' }
+];
+---
+<section class="imm-cats-section">
+  <div class="imm-cats-inner">
+    <div class="imm-cats-kicker">{T.kicker}</div>
+    <h2>{T.h2}</h2>
+    <p>{T.intro}</p>
+    <div class="imm-cats-grid">
+      {cats.map((c) => (
+        <a class="imm-cat" href={c.href}>
+          <div class="imm-cat-icon" style={`background:${c.color};`}>
+            <span aria-hidden="true">{c.flag}</span>
+          </div>
+          <div class="imm-cat-title">{c.title}</div>
+          <div class="imm-cat-desc">{c.desc}</div>
+        </a>
+      ))}
+    </div>
+
+    <div class="imm-cats-footnote">
+      <p>
+        {T.footPre} <a href={`${lp}/immigration#services-detail`}>{T.footLink}</a>{T.footMid}
+        <a href={`${lp}/#get-started`}>{T.footTellLink}</a>{T.footPost}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .imm-cats-section {
+    padding: 76px 1.5rem 0;
+    background: #fff;
+  }
+  .imm-cats-inner { max-width: 1200px; margin: 0 auto; }
+  .imm-cats-kicker {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 10px;
+  }
+  .imm-cats-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 14px; }
+  .imm-cats-section > .imm-cats-inner > p {
+    color: #3a4a5e; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 780px;
+  }
+  .imm-cats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  @media (max-width: 980px) { .imm-cats-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .imm-cats-grid { grid-template-columns: 1fr; } }
+  .imm-cat {
+    display: block;
+    background: #fff;
+    border: 1px solid rgba(40,30,20,0.10);
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .imm-cat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(40,30,20,0.10);
+    border-color: rgba(26,46,74,0.20);
+  }
+  .imm-cat-icon {
+    width: 60px; height: 60px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 32px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 18px rgba(26,46,74,0.22);
+  }
+  .imm-cats-footnote {
+    margin-top: 28px;
+    padding: 18px 22px;
+    background: #fffaf2;
+    border: 1px solid rgba(40,30,20,0.08);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .imm-cats-footnote p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #3a4a5e;
+  }
+  .imm-cats-footnote a {
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .imm-cats-footnote a:hover { color: var(--terracotta-deep); }
+  .imm-cat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--navy-dark);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .imm-cat-desc {
+    font-size: 13px; line-height: 1.6; color: #4a5a6e;
+  }
+</style>

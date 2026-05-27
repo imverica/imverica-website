@@ -88,6 +88,13 @@ const services = [
   }
 ];
 
+interface ServiceItem {
+  id: string;
+  title: string;
+  text: string;
+  items: string[];
+  cite: string;
+}
 interface Props {
   /** Filter to a specific subset of service IDs (e.g. only USCIS + EOIR). */
   include?: string[];
@@ -95,9 +102,12 @@ interface Props {
   kicker?: string;
   heading?: string;
   intro?: string;
+  /** Override the per-service cards entirely (e.g. for localized pages). */
+  servicesOverride?: ServiceItem[];
 }
-const { include, kicker, heading, intro } = Astro.props;
-const visible = include ? services.filter((s) => include.includes(s.id)) : services;
+const { include, kicker, heading, intro, servicesOverride } = Astro.props;
+const source = servicesOverride && servicesOverride.length ? servicesOverride : services;
+const visible = include ? source.filter((s) => include.includes(s.id)) : source;
 const finalKicker = kicker || 'California document preparation services';
 const finalHeading = heading || 'USCIS, immigration court, and California civil document preparation';
 const finalIntro = intro || 'Imverica Legal Solutions provides document preparation through California registered Legal Document Assistant and Immigration Consultant services. We prepare documents at the client’s direction across the categories below. We are not a law firm and do not provide legal advice.';

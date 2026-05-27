@@ -1,0 +1,98 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'U4U — preparación de documentos Uniting for Ukraine | Imverica';
+const description = 'California Licensed LDA prepara paquetes Uniting for Ukraine (U4U) — parole humanitario, I-765 (c)(11) permiso de trabajo, I-131 advance parole, re-registro de TPS, I-485 cuando aplica.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U4U Uniting for Ukraine Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para parolees ucranianos bajo el programa Uniting for Ukraine bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/u4u"
+  slug="/u4u" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
+    heading="U4U — preparación de documentos Uniting for Ukraine"
+    sub="Si llegó bajo Uniting for Ukraine, tiene derecho a permiso de trabajo, documentos de viaje y re-registro de TPS. Preparamos cada presentación bajo su dirección — precio fijo, entrevista multilingüe (ucraniano, ruso, inglés)."
+    ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Comenzar paquete U4U' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios comunes para U4U"
+    heading="Qué incluye U4U"
+    intro="El paquete U4U usualmente combina varias presentaciones USCIS. Toque un tile para ver detalles."
+    tiles={[
+      { icon: '💼', title: 'I-765 (c)(11) — Permiso de trabajo', desc: 'EAD bajo categoría parolee. Gratis para parolees U4U.',                            href: '/mx/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'TPS — Estatus de Protección Temporal', desc: 'Re-registro de TPS Ucrania, protección adicional sobre el parole.',                href: '/mx/tps',                    color: 'var(--navy)' },
+      { icon: '🛂', title: 'I-131 — Advance parole',              desc: 'Documento de viaje para salir y volver a EE. UU. sin perder su parole.',           href: '/#get-started?form=I-131',   color: 'var(--sage)' },
+      { icon: '🟢', title: 'I-485 — Ajuste de estatus',           desc: 'Cuando califica (asilo, matrimonio con ciudadano, etc.) — paquete de green card.', href: '/mx/i-485-help',             color: 'var(--gold)' },
+      { icon: '🏛️', title: 'I-589 — Asilo',                       desc: 'Affirmative asylum si no puede regresar — camino aparte del parole.',                href: '/mx/i-589-asylum-help',      color: 'var(--navy-light)' },
+      { icon: '🌐', title: 'Traducciones',                        desc: 'Traducciones certificadas ucraniano/ruso → inglés de documentos de respaldo.',     href: '/mx/immigration#document-translation-california', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-765-work-permit-help', label: 'I-765 — permiso de trabajo (detalles)' },
+    { href: '/mx/tps', label: 'TPS — Estatus de Protección Temporal' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Uniting for Ukraine (U4U) es el programa de parole humanitario lanzado
+      en abril de 2022 para permitir que nacionales ucranianos entren a EE.
+      UU. con un patrocinador en EE. UU. Los parolees son admitidos por un
+      periodo inicial de dos años y son elegibles de inmediato para
+      solicitar autorización de trabajo. El parole U4U por sí solo no lleva
+      a green card — pero puede combinarse con TPS, asilo, peticiones
+      familiares u otras vías según su situación.
+    </p>
+
+    <h2>Elegibilidad U4U — versión corta</h2>
+    <ul>
+      <li>Es ciudadano ucraniano (y ciertos familiares inmediatos).</li>
+      <li>Su patrocinador en EE. UU. presentó I-134A en su nombre y fue aprobado.</li>
+      <li>Viajó a EE. UU. y un oficial de CBP le otorgó parole.</li>
+      <li>Pasó vacunación inicial, biometría y verificación de seguridad.</li>
+    </ul>
+
+    <h2>Lo que preparamos para parolees U4U</h2>
+    <ul>
+      <li><strong>I-765 categoría (c)(11)</strong> — permiso de trabajo (EAD). Para U4U, USCIS exime el costo de presentación y biometría.</li>
+      <li><strong>Re-registro Ucrania TPS</strong> — cuando DHS extiende la designation, preparamos el paquete I-821 + I-765 de re-registro.</li>
+      <li><strong>I-131 advance parole</strong> — documento de viaje para salir y volver sin perder parole.</li>
+      <li><strong>Solicitudes de re-parole</strong> — cuando el parole inicial de 2 años se acerca a expiración, preparamos la documentación de respaldo.</li>
+      <li><strong>I-485 ajuste de estatus</strong> — cuando califica por otra vía (asilo, matrimonio con ciudadano, empleo, etc.).</li>
+      <li><strong>Traducciones certificadas</strong> ucraniano/ruso → inglés de documentos civiles, militares y de respaldo.</li>
+    </ul>
+
+    <h2>Lo que el parole U4U NO hace</h2>
+    <p>
+      El parole es una admisión discretional y limitada en el tiempo — no
+      es una visa, no es un estatus y no es un camino a green card por sí
+      solo. Renovar el parole, solicitar TPS, solicitar asilo y ajustar
+      estatus son <em>decisiones separadas</em> con sus propios formularios
+      y plazos. Podemos preparar los documentos para la vía que decida. No
+      damos asesoría legal sobre la estrategia — para eso mantenemos
+      referrals con abogados de inmigración licenciados en California.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §212(d)(5) (parole authority); guía de
+      política USCIS sobre Uniting for Ukraine (desde abril 2022); 8 C.F.R.
+      §274a.12(c)(11); INA §244 (marco de TPS); 8 C.F.R. §244. Solo
+      preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=U4U" primaryText="Comenzar entrevista U4U" />
+</BaseLayout>

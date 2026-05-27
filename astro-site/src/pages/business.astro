@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'California Business Filing Document Preparation (LLC, DBA, EIN) | Imverica';
@@ -23,6 +24,22 @@ const schema = {
     sub="LLC formation (LLC-1), Statement of Information (LLC-12), fictitious business name (DBA), and EIN application support — prepared accurately at your direction, flat fee, no surprises."
     ctaPrimary={{ href: '/#get-started?service=business', text: 'Start my business filing' }}
     ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Pick a Business filing"
+    heading="California Business"
+    intro="LLC, corporation, DBA, EIN — start the right package."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Form an LLC',       desc: 'Articles of Organization with the Secretary of State.', href: '/#get-started?form=LLC-1',   color: 'var(--navy)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Initial + biennial Statement of Information.',          href: '/#get-started?form=LLC-12',  color: 'var(--terracotta)' },
+      { icon: '🏛️', title: 'ARTS — Corporation',         desc: 'General-stock or public-benefit Articles.',             href: '/#get-started?form=ARTS-GS', color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Fictitious business name at the county clerk.',         href: '/#get-started?form=FBN',     color: 'var(--gold)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Federal Employer Identification Number support.',      href: '/#get-started?form=SS-4',    color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'LLC operating agreement assembly.',                    href: '/#get-started?form=OA',      color: 'var(--terracotta-deep)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Register a foreign LLC to do business in California.', href: '/#get-started?form=LLC-1A',  color: 'var(--navy)' },
+      { icon: '📊', title: 'SI-550 — Corp Statement',    desc: 'Corporation Statement of Information.',                href: '/#get-started?form=SI-550', color: 'var(--sage)' }
+    ]}
   />
 
   <LandingBody related={[

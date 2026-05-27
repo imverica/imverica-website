@@ -1,0 +1,112 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Подготовка документов для малых исков Калифорнии (SC-100) | Imverica';
+const description = 'California Licensed LDA готовит документы для малых исков — SC-100 (иск истца), SC-120 (встречный иск ответчика), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Лимит $12,500 согласно CCP §116.221.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для малых исков Калифорнии по поручению стороны спора.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/sc"
+  slug="/sc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.110-116.950"
+    heading="SC-100 — Plaintiff's Claim and ORDER (Малые иски Калифорнии)"
+    sub="SC-100 (иск истца), SC-120 (встречный иск ответчика), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Лимит $12,500 для физлиц. Фиксированная цена."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Начать пакет малого иска' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Выберите свою роль"
+    heading="California Small Claims"
+    intro="Истец, ответчик или взыскание после judgment — начните нужный пакет."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Истец',          desc: 'Иск истца до $12,500 (физлица).',                       href: '/#get-started?form=SC-100',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Ответчик',       desc: 'Встречный иск и ответ ответчика.',                       href: '/#get-started?form=SC-120',  color: 'var(--terracotta)' },
+      { icon: '📨', title: 'SC-104 — Service',         desc: 'Proof of service (шериф / заказное / 18+).',             href: '/#get-started?form=SC-104',  color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',           desc: 'Memorandum of costs истца после judgment.',              href: '/#get-started?form=SC-133',  color: 'var(--gold)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',      desc: 'Освобождение от пошлины для подходящих сторон.',         href: '/#get-started?form=FW-001',  color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',     desc: 'Wage garnishment для исполнения judgment.',              href: '/#get-started?form=WG-001',  color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',         desc: 'Abstract of judgment для залога на недвижимость.',       href: '/#get-started?form=EJ-001',  color: 'var(--navy)' },
+      { icon: '📅', title: 'SC-140 — Рассрочка',       desc: 'Просьба оплачивать judgment частями.',                   href: '/#get-started?form=SC-140',  color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/california-unlawful-detainer', label: 'California unlawful detainer (UD-100)' },
+    { href: '/california-restraining-orders', label: 'California restraining orders' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Small claims court — это «народный суд» Калифорнии: упрощённая
+      процедура, где стороны представляют себя сами, чтобы разрешить
+      денежные споры на сумму до $12,500 (физические лица) или $6,250
+      (корпорации и иные организации). Адвокатам запрещено представлять
+      стороны на первом слушании (CCP §116.530), а судебная пошлина
+      невелика (обычно $30-$75 в зависимости от суммы иска, с возможностью
+      fee waiver).
+    </p>
+
+    <h2>Юрисдикционный лимит</h2>
+    <p>
+      С 1 января 2024 года лимит составляет <strong>$12,500</strong> для
+      физического лица и <strong>$6,250</strong> для корпорации, partnership
+      или иной организации (CCP §116.221). Физическое лицо не может подать
+      более двух исков на сумму свыше $2,500 в один календарный год по
+      всему штату (CCP §116.231) — это ограничивает истцов, которые иначе
+      могли бы дробить крупные споры на несколько мелких, чтобы избежать
+      superior court.
+    </p>
+
+    <h2>Хронология процесса</h2>
+    <ol>
+      <li><strong>Demand letter (опционально, но рекомендуется).</strong> Досудебное письмо-требование, подписанное истцом, часто разрешает спор и обязательно по некоторым специальным законам перед подачей иска.</li>
+      <li><strong>SC-100 — Plaintiff's Claim and ORDER.</strong> Подаётся в суд по месту жительства ответчика, по месту исполнения договора, по месту причинения вреда или по месту нахождения имущества.</li>
+      <li><strong>Service.</strong> Ответчику должны быть вручены документы минимум за 15-20 дней до слушания (CCP §116.330) — через шерифа, зарегистрированного process server или любое совершеннолетнее лицо, не являющееся стороной. SC-104 (proof of service) подаётся в суд.</li>
+      <li><strong>Ответ ответчика.</strong> Ответчик может подать SC-120 (Defendant's Claim) для встречного иска не позднее чем за 5 дней до слушания.</li>
+      <li><strong>Слушание.</strong> Неформальное, перед судьёй или commissioner. Без адвокатов (кроме сторон, которые сами являются адвокатами и представляют себя). Обе стороны представляют доказательства, свидетелей и документы.</li>
+      <li><strong>Judgment.</strong> Суд выдаёт SC-130 (Notice of Entry of Judgment). Проигравший ответчик имеет право обжаловать в superior court в течение 30 дней; проигравший истец по своему иску обжаловать не может.</li>
+      <li><strong>Взыскание.</strong> Выигравший истец использует пост-судебные формы (SC-133 memorandum of costs, EJ-001 abstract of judgment, WG-001 wage garnishment и т. д.) для взыскания.</li>
+    </ol>
+
+    <h2>Формы, которые мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакеты для истца и ответчика по малым искам</strong>
+      <ul>
+        <li><strong>SC-100</strong> — Plaintiff's Claim and ORDER</li>
+        <li><strong>SC-100A</strong> — Attachment для дополнительных истцов/ответчиков</li>
+        <li><strong>SC-104</strong> — Proof of Service</li>
+        <li><strong>SC-104A/B/C/D</strong> — Способы service (server, certified mail и др.)</li>
+        <li><strong>SC-120</strong> — Defendant's Claim and ORDER (встречный иск)</li>
+        <li><strong>SC-130</strong> — Notice of Entry of Judgment</li>
+        <li><strong>SC-133</strong> — Plaintiff's Memorandum of Costs</li>
+        <li><strong>SC-140</strong> — Request to Pay Judgment in Installments</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees</li>
+        <li><strong>FW-003</strong> — Order on Court Fee Waiver</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure
+      §§116.110-116.950 (Small Claims Act); §116.221 (юрисдикционные
+      лимиты, действует с 2024-01-01); §116.231 (лимит на иски свыше
+      $2,500 в год); §116.330 (сроки service); §116.530 (запрет
+      представительства адвокатом на слушании); §116.760 (право на
+      апелляцию); Cal. Rules of Court 3.50-3.58 (fee waivers).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Начать анкету по малому иску" />
+</BaseLayout>

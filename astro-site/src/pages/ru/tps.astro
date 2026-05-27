@@ -1,0 +1,95 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'TPS — подготовка документов Временной защиты | Imverica';
+const description = 'California Licensed LDA готовит пакеты Temporary Protected Status (TPS) — I-821 начальная регистрация и re-registration, I-765 разрешение на работу (c)(19) / (a)(12), I-131 advance parole. Действующие designations: Украина, Венесуэла, Гаити, Сирия, Никарагуа, Гондурас и другие.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'TPS Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов Temporary Protected Status (TPS) — начальная регистрация и повторная регистрация по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/tps"
+  slug="/tps" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Temporary Protected Status · INA §244"
+    heading="TPS — подготовка документов Временной защиты"
+    sub="Если ваша страна гражданства имеет TPS designation, у вас есть право на защиту от высылки и работу в США. Готовим пакеты начальной регистрации и re-registration — I-821, I-765, I-131, I-912 fee waiver."
+    ctaPrimary={{ href: '/#get-started?topic=TPS', text: 'Начать пакет TPS' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Часто подаваемые формы для TPS"
+    heading="Что включает подача TPS"
+    intro="Пакет TPS обычно объединяет несколько форм. Нажмите плитку для деталей."
+    tiles={[
+      { icon: '📋', title: 'I-821 — заявление TPS',           desc: 'Начальная регистрация или re-registration на designated период.',          href: '/#get-started?form=I-821',  color: 'var(--navy)' },
+      { icon: '💼', title: 'I-765 (c)(19) / (a)(12)',          desc: 'Разрешение на работу (EAD) для TPS holders — начальное или продление.',     href: '/ru/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '🛂', title: 'I-131 — Advance Parole',           desc: 'Travel-документ для выезда и возврата для TPS holders.',                    href: '/#get-started?form=I-131',  color: 'var(--sage)' },
+      { icon: '🧾', title: 'I-912 — Fee waiver',                desc: 'Запрос на освобождение от пошлины при соответствии income threshold.',     href: '/#get-started?form=I-912',  color: 'var(--gold)' },
+      { icon: '🇺🇦', title: 'U4U + Украина TPS',                desc: 'Как TPS добавляется к Uniting for Ukraine.',                               href: '/ru/u4u',                   color: 'var(--navy-light)' },
+      { icon: '🌐', title: 'Переводы',                          desc: 'Заверенные переводы документов страны гражданства.',                       href: '/ru/immigration#document-translation-california', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-765-work-permit-help', label: 'I-765 — разрешение на работу' },
+    { href: '/ru/u4u', label: 'Uniting for Ukraine (U4U)' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Temporary Protected Status (TPS) — гуманитарная защита, выдаваемая
+      гражданам стран, designated DHS из-за вооружённого конфликта,
+      экологической катастрофы или иных чрезвычайных условий. TPS даёт
+      защиту от высылки, право на работу и возможность подать на travel
+      authorization, но сам по себе не ведёт к green card или гражданству.
+    </p>
+
+    <h2>Страны с действующим TPS (проверьте актуальный список)</h2>
+    <p>
+      Designations и сроки re-registration часто меняются. По последним
+      объявлениям DHS, TPS designations включают:
+      <strong>Украина, Венесуэла, Гаити, Сирия, Никарагуа, Гондурас, Сальвадор,
+      Сомали, Судан, Южный Судан, Йемен, Бирма, Камерун, Афганистан,
+      Эфиопия,</strong> и другие. Перед подачей всегда сверяйтесь с актуальным
+      списком и окном регистрации на uscis.gov/tps — окна короткие, и их
+      пропуск дисквалифицирует до следующей designation.
+    </p>
+
+    <h2>Начальная регистрация vs. re-registration</h2>
+    <ul>
+      <li><strong>Начальная регистрация</strong> — первичная подача в открытое начальное окно. Требует I-821 + доказательства гражданства, идентичности и непрерывного физического присутствия / проживания.</li>
+      <li><strong>Re-registration</strong> — текущие TPS holders заново подают I-821 при каждом продлении designation от DHS. Окна re-registration узкие (часто 60 дней). Их пропуск прекращает TPS, если не докажете «good cause» для поздней подачи.</li>
+      <li><strong>Late initial</strong> — ограниченные случаи позволяют подать начальный TPS после оригинального окна, если соответствуете «late initial» reason.</li>
+    </ul>
+
+    <h2>Что мы готовим для TPS</h2>
+    <ul>
+      <li><strong>Пакет I-821</strong> — начальная регистрация или re-registration с evidence checklist.</li>
+      <li><strong>I-765 разрешение на работу</strong> — категория (c)(19) для начального TPS или (a)(12) для re-registration / pending TPS.</li>
+      <li><strong>I-131 advance parole</strong> — когда нужно международное путешествие и возврат.</li>
+      <li><strong>I-912 fee waiver</strong> — при соответствии по доходу или means-tested benefits.</li>
+      <li><strong>Supporting evidence package</strong> — паспорт, свидетельство о рождении, country-conditions, доказательства continuous physical presence и continuous residence.</li>
+      <li><strong>Заверенные переводы</strong> документов на иностранных языках.</li>
+    </ul>
+
+    <cite>
+      <strong>Источник:</strong> INA §244 (TPS framework); 8 C.F.R. Part 244
+      (TPS regulations); 8 C.F.R. §274a.12(a)(12), §274a.12(c)(19); Federal
+      Register notices для каждой country designation и extension. Только
+      подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=TPS" primaryText="Начать анкету TPS" />
+</BaseLayout>

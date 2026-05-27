@@ -1,0 +1,176 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import WhyUs from '~/components/WhyUs.astro';
+import FAQSection from '~/components/FAQSection.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'Хто такий California Legal Document Assistant (LDA)? | Imverica';
+const description = 'LDA — це ліцензований і застрахований професіонал штату Каліфорнія, що не є адвокатом, який готує юридичні документи за дорученням клієнта. Дешевше за адвоката. Cal. Bus. & Prof. Code §§6400-6415.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Legal Document Assistant Services',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Підготовка документів California Legal Document Assistant — не адвокат, під Cal. Bus. & Prof. Code §§6400-6415.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/lda"
+  slug="/lda" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Bus. & Prof. Code §§6400-6415"
+    heading="Хто такий California Legal Document Assistant (LDA)?"
+    sub="Простими словами: коли потрібен LDA, коли — адвокат, скільки це коштує і які споживчі захисти Каліфорнія вбудувала в систему LDA-реєстрації."
+    ctaPrimary={{ href: '/#get-started', text: 'Почати з Imverica' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Чим ми займаємося"
+    heading="Напрями підготовки документів у Каліфорнії"
+    intro="Натисніть будь-який напрям, щоб побачити форми і почати пакет."
+    tiles={[
+      { icon: '🌎', title: 'Immigration Consultant', desc: 'Зареєстрований California IC за B&P §§22440-22448. Підготовка USCIS / EOIR.', href: '/ua/immigration',                  color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'Сімейне право',       desc: 'FL-100 розлучення, FL-300 опіка/аліменти, UCCJEA.',         href: '/ua/fl',                          color: 'var(--terracotta)' },
+      { icon: '⚖️', title: 'Малі позови',            desc: 'SC-100/120 до $12,500 — позивач або відповідач.',           href: '/ua/sc',                          color: 'var(--sage)' },
+      { icon: '🏢', title: 'Бізнес-документи',       desc: 'LLC, корпорація, DBA, EIN, operating agreement.',           href: '/ua/business',                    color: 'var(--gold)' },
+      { icon: '🛡️', title: 'Restraining orders',     desc: 'CH-100, DV-100, EA-100, GV-100, WV-100.',                   href: '/ua/california-restraining-orders', color: 'var(--terracotta-deep)' },
+      { icon: '🏠', title: 'Unlawful detainer',      desc: 'UD-100 виселення, відповідь, proof of service.',            href: '/ua/california-unlawful-detainer', color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Probate',                desc: 'DE-111 петиція, DE-121 повідомлення, small-estate.',         href: '/ua/california-probate',          color: 'var(--navy)' },
+      { icon: '🌐', title: 'Переклади та нотаріус',  desc: 'Засвідчені переклади, apostille, нотаріальна підтримка.',  href: '/ua/immigration#document-translation-california', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-485-help', label: 'I-485 — зміна статусу' },
+    { href: '/fl', label: 'California family law' },
+    { href: '/ua/california-unlawful-detainer', label: 'California unlawful detainer (виселення)' }
+  ]}>
+    <p class="lead">
+      California Legal Document Assistant — або LDA — це
+      зареєстрований, застрахований (на $25 000) професіонал, що не є
+      адвокатом, який має право готувати юридичні документи за дорученням
+      клієнта, що веде свою справу самостійно. Систему LDA було створено
+      законодавчим органом Каліфорнії у 1998 році, щоб дати людям доступ
+      до якісної підготовки документів за розумну ціну, без переходу межі
+      несанкціонованої юридичної практики.
+    </p>
+
+    <h2>Що LDA має право робити</h2>
+    <p>
+      Згідно з Business &amp; Professions Code §6400(d), LDA за дорученням
+      клієнта може:
+    </p>
+    <ul>
+      <li>Друкувати або збирати юридичні документи, які клієнт уже вирішив подати</li>
+      <li>Надавати стандартні, заздалегідь підготовлені адвокатами бланки</li>
+      <li>Надавати опубліковану державою юридичну інформацію</li>
+      <li>Подавати документи до суду від імені клієнта</li>
+      <li>Робити переклад документів (з certification перекладача згідно з 8 C.F.R. §103.2(b)(3) для USCIS-подань)</li>
+      <li>Допомагати збирати й організовувати супровідні документи у готовий пакет</li>
+    </ul>
+
+    <h2>Що LDA не має права робити</h2>
+    <p>
+      Згідно з Business &amp; Professions Code §6411, LDA не може:
+    </p>
+    <ul>
+      <li>Надавати юридичні консультації</li>
+      <li>Висловлювати юридичні висновки чи рекомендації</li>
+      <li>Обирати форми за клієнта (клієнт сам вирішує, які форми подавати)</li>
+      <li>Обирати стратегію чи лінію поведінки у справі</li>
+      <li>Представляти клієнта в суді або в будь-якій державній інстанції</li>
+      <li>Видавати себе за адвоката</li>
+    </ul>
+    <p>
+      Перехід межі §6411 вважається несанкціонованою юридичною
+      практикою згідно з §6125 — це кримінальне правопорушення
+      (misdemeanor) з цивільною відповідальністю для LDA. Суворе
+      розмежування — це і є споживчий захист, який змушує систему LDA
+      працювати.
+    </p>
+
+    <h2>Що LDA зобов'язаний робити</h2>
+    <ul>
+      <li><strong>Зареєструватися у county clerk.</strong> У кожному окрузі, де LDA веде діяльність. Публічний реєстр доступний будь-кому.</li>
+      <li><strong>Внести заставу на $25 000.</strong> Згідно з §6405. Захищає клієнтів у випадку порушень з боку LDA.</li>
+      <li><strong>Відповідати освітнім чи досвідовим вимогам.</strong> Згідно з §6402.1. Два роки юридичного досвіду, сертифікат paralegal, J.D. або інші кваліфікації.</li>
+      <li><strong>Надати письмовий договір.</strong> Згідно з §6410. З переліком послуг, фіксованою ціною, реєстраційним номером LDA та повідомленням §6411 про те, що LDA не адвокат.</li>
+      <li><strong>Розміщувати обов'язкові попередження.</strong> Згідно з §6408. Табличка в офісі «I am NOT an attorney».</li>
+      <li><strong>Оновлювати реєстрацію кожні два роки.</strong></li>
+    </ul>
+
+    <h2>Хто такий California Immigration Consultant?</h2>
+    <p>
+      California Immigration Consultant — це окрема роль, зареєстрована
+      штатом за Immigration Consultant Act (California Business &amp;
+      Professions Code §§22440-22448). Імміграційний консультант має
+      право готувати імміграційні форми (USCIS, EOIR, консульські) за
+      дорученням клієнта, збирати супровідні документи та перекладати
+      подання — але, як і LDA, не може надавати юридичних консультацій,
+      обирати форми за клієнта чи представляти клієнта перед USCIS або
+      імміграційним судом. Щоб представляти клієнта перед USCIS, треба
+      бути адвокатом, ліцензованим у будь-якому штаті США, або
+      DOJ-accredited representative (8 C.F.R. §1292.1).
+    </p>
+    <p>
+      Imverica Legal Solutions зареєстрована і як California Legal
+      Document Assistant, і як California Immigration Consultant —
+      внесені застави та обов'язкові повідомлення за кожним законом.
+      Така подвійна реєстрація дозволяє нам готувати документи для
+      каліфорнійських судів і федеральні пакети USCIS / EOIR в одному
+      офісі — все за дорученням клієнта, без переходу в юридичні
+      консультації.
+    </p>
+
+    <h2>LDA чи адвокат — хто вам потрібен?</h2>
+    <p>
+      <strong>Використовуйте LDA</strong>, коли ви знаєте, що хочете
+      подати, і потрібен той, хто акуратно підготує документи —
+      розлучення без суперечок, малі позови, USCIS-форми зі зрозумілим
+      маршрутом, спадкові справи, restraining orders, бізнес-документи,
+      виселення. Фіксована ціна, зазвичай на 60–90% дешевше, ніж
+      підготовка тих самих документів у адвоката.
+    </p>
+    <p>
+      <strong>Наймайте адвоката</strong>, коли справа спірна або вимагає
+      стратегії — спори про опіку з високим рівнем конфлікту, складна
+      community property, кримінальна експозиція, пов'язана з
+      імміграційною подачею, removal proceedings, нові юридичні
+      питання, або будь-яка ситуація, де вам потрібна порада, що
+      робити, а не просто допомога з документами, які ви вже вирішили
+      подавати.
+    </p>
+
+    <h2>Як Imverica працює</h2>
+    <p>
+      Imverica Legal Solutions — зареєстрований California LDA та
+      Immigration Consultant. Ми обслуговуємо клієнтів по всій Каліфорнії
+      і віддалено по всьому світу (для USCIS / федеральних справ). Анкета
+      чотирма мовами (англійська, російська, українська, іспанська),
+      письмовий договір §6410 до початку роботи, фіксована ціна
+      оголошується заздалегідь, і стандартне повідомлення §6411 про те,
+      що ми не юридична фірма і не надаємо юридичних консультацій. У нас
+      встановлені referral-стосунки з ліцензованими адвокатами
+      Каліфорнії для справ, що потребують юридичного супроводу.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Business &amp; Professions
+      Code §§6400-6415 (Legal Document Assistant Act), особливо §6400(d)
+      (визначення), §6402.1 (кваліфікації), §6405 (застава), §6408
+      (обов'язкові попередження і табличка), §6410 (письмовий договір),
+      §6411 (заборонені дії); §6125 (несанкціонована юридична практика).
+      Для імміграції: §§22440-22448 (Immigration Consultant Act).
+    </cite>
+  </LandingBody>
+
+  <WhyUs />
+  <FAQSection />
+  <CTAStrip primaryHref="/#get-started" primaryText="Почати з Imverica" />
+</BaseLayout>

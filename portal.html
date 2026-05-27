@@ -19,6 +19,10 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .logo img{display:block;width:142px;height:auto;}
 .nav-back{font-size:13px;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:6px;opacity:0.7;transition:opacity 0.2s;}
 .nav-back:hover{opacity:1;}
+.lang-switch{display:flex;gap:4px;align-items:center;}
+.lang-switch a{font-size:11px;font-weight:600;letter-spacing:0.6px;color:var(--muted);text-decoration:none;padding:4px 7px;border-radius:3px;border:1px solid transparent;transition:all 0.18s;}
+.lang-switch a:hover{color:var(--navy);background:#f0f4f8;}
+.lang-switch a.active{color:var(--navy);background:#eef2f7;border-color:#c5d0de;}
 
 .portal-header{background:var(--navy-dark);padding:60px 2.5rem;text-align:center;}
 .portal-header h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:#dde5ee;margin-bottom:0.8rem;}
@@ -93,14 +97,20 @@ footer p{font-size:12px;color:#d8e6f6;}
     <img src="/logo-nav.png" alt="Imverica Legal Solutions">
   </a>
   <div style="display:flex;gap:1.6rem;align-items:center;">
-    <a class="nav-back" href="/account.html">My Account &#8594;</a>
-    <a class="nav-back" href="/">&#8592; Back to main site</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <a href="?lang=en" data-lang="en">EN</a>
+      <a href="?lang=ru" data-lang="ru">RU</a>
+      <a href="?lang=uk" data-lang="uk">UA</a>
+      <a href="?lang=es" data-lang="es">MX</a>
+    </div>
+    <a class="nav-back" href="/account.html" data-i18n="navMyAccount">My Account &#8594;</a>
+    <a class="nav-back" href="/" data-i18n="navBack">&#8592; Back to main site</a>
   </div>
 </nav>
 
 <div class="portal-header">
-  <h1>Client Document Portal</h1>
-  <p>Securely submit your information and documents to Imverica Legal Solutions</p>
+  <h1 data-i18n="headerTitle">Client Document Portal</h1>
+  <p data-i18n="headerSub">Securely submit your information and documents to Imverica Legal Solutions</p>
 </div>
 
 <div class="portal-body">
@@ -108,74 +118,74 @@ footer p{font-size:12px;color:#d8e6f6;}
   <!-- "How it works" is onboarding for first-time visitors; hidden when
        the visitor is already a signed-in client (see signed-in mode below). -->
   <div class="info-box" id="how-it-works">
-    <p><strong>How it works:</strong> Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.</p>
+    <p><strong data-i18n="howItWorksLabel">How it works:</strong> <span data-i18n="howItWorksText">Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.</span></p>
   </div>
 
   <!-- Signed-in banner: shown only when /api/profile resolves with a valid session.
        When present, the personal-info block below is hidden and name/phone/email
        are auto-filled from the encrypted profile + session. -->
   <div id="signed-in-banner" class="signed-in-banner" style="display:none;background:#eef7f0;border:1px solid #bdd9c2;border-left:4px solid #1a5a3a;border-radius:4px;padding:14px 18px;margin-bottom:1.4rem;color:#1a3a2c;font-size:14px;line-height:1.55;">
-    <strong>Signed in as <span id="signed-in-name"></span></strong>
+    <strong><span data-i18n="signedInAs">Signed in as</span> <span id="signed-in-name"></span></strong>
     <span id="signed-in-email" style="opacity:0.75;font-size:13px;display:block;margin-top:2px;"></span>
-    <span style="font-size:12px;opacity:0.7;display:block;margin-top:6px;">Your contact details are already on file — just tell us what you need and drop the documents below. <a href="/account.html" style="color:#1a5a3a;">Edit profile</a></span>
+    <span style="font-size:12px;opacity:0.7;display:block;margin-top:6px;"><span data-i18n="signedInHint">Your contact details are already on file — just tell us what you need and drop the documents below.</span> <a href="/account.html" style="color:#1a5a3a;" data-i18n="editProfile">Edit profile</a></span>
   </div>
 
   <div class="upload-box" id="personal-info">
-    <h2>Your Information</h2>
-    <p>Please provide your contact details and a brief description of what documents you need prepared.</p>
+    <h2 data-i18n="yourInfoH2">Your Information</h2>
+    <p data-i18n="yourInfoP">Please provide your contact details and a brief description of what documents you need prepared.</p>
 
     <div class="form-row">
       <div class="form-group">
-        <label>First Name *</label>
-        <input type="text" id="fname" placeholder="First name" required>
+        <label data-i18n="firstName">First Name *</label>
+        <input type="text" id="fname" data-i18n-placeholder="firstNamePh" placeholder="First name" required>
       </div>
       <div class="form-group">
-        <label>Last Name *</label>
-        <input type="text" id="lname" placeholder="Last name" required>
+        <label data-i18n="lastName">Last Name *</label>
+        <input type="text" id="lname" data-i18n-placeholder="lastNamePh" placeholder="Last name" required>
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <label>Phone Number *</label>
+        <label data-i18n="phoneNumber">Phone Number *</label>
         <input type="tel" id="phone" placeholder="(916) 000-0000" required>
       </div>
       <div class="form-group">
-        <label>Email *</label>
+        <label data-i18n="emailLabel">Email *</label>
         <input type="email" id="email" placeholder="your@email.com" required>
       </div>
     </div>
 
     <div class="form-group">
-      <label>Service Needed *</label>
+      <label data-i18n="serviceNeeded">Service Needed *</label>
       <select id="service" required>
-        <option value="">Select a service...</option>
-        <option>USCIS / EOIR Immigration</option>
-        <option>California Family Law / Divorce</option>
-        <option>Small Claims &amp; Civil Court Forms</option>
-        <option>Document Translation</option>
-        <option>DMV &amp; Passport Help</option>
-        <option>Notary / Apostille</option>
-        <option>Business Filings</option>
-        <option>Other</option>
+        <option value="" data-i18n="serviceSelect">Select a service...</option>
+        <option value="uscis-eoir-immigration" data-i18n="svcImmigration">USCIS / EOIR Immigration</option>
+        <option value="california-family-law-divorce" data-i18n="svcFamily">California Family Law / Divorce</option>
+        <option value="small-claims-civil-court-forms" data-i18n="svcCivil">Small Claims &amp; Civil Court Forms</option>
+        <option value="document-translation" data-i18n="svcTranslation">Document Translation</option>
+        <option value="dmv-passport-help" data-i18n="svcDmv">DMV &amp; Passport Help</option>
+        <option value="notary-apostille" data-i18n="svcNotary">Notary / Apostille</option>
+        <option value="business-filings" data-i18n="svcBusiness">Business Filings</option>
+        <option value="other" data-i18n="svcOther">Other</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label>Brief Description</label>
-      <textarea id="description" placeholder="Briefly describe your situation and what you need help with..."></textarea>
+      <label data-i18n="briefDesc">Brief Description</label>
+      <textarea id="description" data-i18n-placeholder="briefDescPh" placeholder="Briefly describe your situation and what you need help with..."></textarea>
     </div>
   </div>
 
   <div class="upload-box">
-    <h2>Documents You Have</h2>
-    <p>List the documents you already have (passport, ID, prior notices, court papers, etc.) so we know what to expect. For your security, we collect the actual files over an encrypted channel after we contact you — nothing is uploaded from this page.</p>
+    <h2 data-i18n="docsH2">Documents You Have</h2>
+    <p data-i18n="docsP">List the documents you already have (passport, ID, prior notices, court papers, etc.) so we know what to expect. For your security, we collect the actual files over an encrypted channel after we contact you — nothing is uploaded from this page.</p>
 
     <div class="drop-zone" id="drop-zone">
       <div class="drop-icon">&#128196;</div>
       <div class="drop-text">
-        Drag &amp; drop files to list them, or <strong onclick="document.getElementById('file-input').click()">browse files</strong>
-        <small>We record only the file names here, not the files themselves.</small>
+        <span data-i18n="dropPre">Drag &amp; drop files to list them, or</span> <strong onclick="document.getElementById('file-input').click()" data-i18n="dropBrowse">browse files</strong>
+        <small data-i18n="dropSmall">We record only the file names here, not the files themselves.</small>
       </div>
     </div>
     <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.docx">
@@ -184,25 +194,25 @@ footer p{font-size:12px;color:#d8e6f6;}
     <div id="error-box" class="error-box"></div>
 
     <div id="success-box" class="success-box">
-      <h3>&#10003; Submission received!</h3>
-      <p>Thank you. We have received your information. A member of our team will contact you within 1 business day at the phone number you provided to securely collect your documents and discuss next steps and pricing.</p>
+      <h3>&#10003; <span data-i18n="successH3">Submission received!</span></h3>
+      <p data-i18n="successP">Thank you. We have received your information. A member of our team will contact you within 1 business day at the phone number you provided to securely collect your documents and discuss next steps and pricing.</p>
       <div class="order-id-row">
-        <span class="order-id-label">Your reference number</span>
+        <span class="order-id-label" data-i18n="refLabel">Your reference number</span>
         <span class="order-id-value" id="order-id">—</span>
-        <button type="button" class="order-id-copy" id="order-id-copy" onclick="copyOrderId()">Copy</button>
+        <button type="button" class="order-id-copy" id="order-id-copy" onclick="copyOrderId()" data-i18n="copyBtn">Copy</button>
       </div>
-      <p class="order-id-hint">Save this number — quote it when you contact us so we can find your submission instantly.</p>
+      <p class="order-id-hint" data-i18n="refHint">Save this number — quote it when you contact us so we can find your submission instantly.</p>
     </div>
 
-    <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">Submit Request</button>
+    <button class="submit-btn" id="submit-btn" onclick="handleSubmit()" data-i18n="submitBtn">Submit Request</button>
   </div>
 
   <div class="news-box" id="latest-updates-box">
-    <h2>Latest Official Updates</h2>
-    <div class="news-disclaimer">Official announcements from USCIS, immigration courts (EOIR), and California, republished verbatim with a link to each source. Imverica is not a law firm and does not provide legal advice — always verify details with the official source.</div>
+    <h2 data-i18n="newsH2">Latest Official Updates</h2>
+    <div class="news-disclaimer" data-i18n="newsDisclaimer">Official announcements from USCIS, immigration courts (EOIR), and California, republished verbatim with a link to each source. Imverica is not a law firm and does not provide legal advice — always verify details with the official source.</div>
     <div id="pnews-list">
       <a class="pnews-item" style="border-style:dashed;pointer-events:none;">
-        <div class="pnews-title" style="color:#999;">Loading the latest official updates…</div>
+        <div class="pnews-title" style="color:#999;" data-i18n="newsLoading">Loading the latest official updates…</div>
       </a>
     </div>
   </div>
@@ -210,10 +220,256 @@ footer p{font-size:12px;color:#d8e6f6;}
 </div>
 
 <footer>
-  <p>&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
+  <p data-i18n="footer">&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
 </footer>
 
 <script>
+// ===== i18n =====
+// Translatable strings live in STRINGS[locale]. Markup carries data-i18n="key"
+// or data-i18n-placeholder="key". Locale comes from ?lang= or document.referrer
+// (referring page /ru/* → ru, /ua/* → uk, /mx/* → es). Default: en.
+const STRINGS = {
+  en: {
+    navMyAccount: 'My Account →',
+    navBack: '← Back to main site',
+    headerTitle: 'Client Portal',
+    headerSub: 'Here you can securely upload and send requested documents to our office.',
+    howItWorksLabel: 'How it works:',
+    howItWorksText: 'Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.',
+    signedInAs: 'Signed in as',
+    signedInHint: 'Your contact details are already on file — just tell us what you need and drop the documents below.',
+    editProfile: 'Edit profile',
+    yourInfoH2: 'Your Information',
+    yourInfoP: 'Please provide your contact details and a brief description of what documents you need prepared.',
+    firstName: 'First Name *', firstNamePh: 'First name',
+    lastName: 'Last Name *', lastNamePh: 'Last name',
+    phoneNumber: 'Phone Number *',
+    emailLabel: 'Email *',
+    serviceNeeded: 'Service Needed *',
+    serviceSelect: 'Select a service...',
+    svcImmigration: 'USCIS / EOIR Immigration',
+    svcFamily: 'California Family Law / Divorce',
+    svcCivil: 'Small Claims & Civil Court Forms',
+    svcTranslation: 'Document Translation',
+    svcDmv: 'DMV & Passport Help',
+    svcNotary: 'Notary / Apostille',
+    svcBusiness: 'Business Filings',
+    svcOther: 'Other',
+    briefDesc: 'Brief Description',
+    briefDescPh: 'Briefly describe your situation and what you need help with...',
+    docsH2: 'Documents You Have',
+    docsP: 'List the documents you already have (passport, ID, prior notices, court papers, etc.) so we know what to expect. For your security, we collect the actual files over an encrypted channel after we contact you — nothing is uploaded from this page.',
+    dropPre: 'Drag & drop files to list them, or', dropBrowse: 'browse files',
+    dropSmall: 'We record only the file names here, not the files themselves.',
+    successH3: 'Submission received!',
+    successP: 'Thank you. We have received your information. A member of our team will contact you within 1 business day at the phone number you provided to securely collect your documents and discuss next steps and pricing.',
+    refLabel: 'Your reference number', copyBtn: 'Copy', copyDone: 'Copied',
+    refHint: 'Save this number — quote it when you contact us so we can find your submission instantly.',
+    submitBtn: 'Submit Request', submitting: 'Submitting…',
+    newsH2: 'Latest Official Updates',
+    newsDisclaimer: 'Official announcements from USCIS, immigration courts (EOIR), and California, republished verbatim with a link to each source. Imverica is not a law firm and does not provide legal advice — always verify details with the official source.',
+    newsLoading: 'Loading the latest official updates…',
+    newsReadOnSource: 'Read on the official source →',
+    footer: '© 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992',
+    errName: 'Please enter your first and last name.',
+    errPhone: 'Please enter a valid phone number (at least 10 digits).',
+    errEmail: 'Please enter a valid email address — we use it to send your reference number.',
+    errService: 'Please pick a service from the dropdown above.',
+    errGeneric: 'Something went wrong. Please try again or call us at +1 (916) 399-3992.',
+    errNetwork: 'Could not reach our server. Please check your connection or call us at +1 (916) 399-3992.',
+    signedInNewRequest: 'New request',
+    signedInNewSub: 'Tell us what you need and drop the documents below.'
+  },
+  ru: {
+    navMyAccount: 'Личный кабинет →',
+    navBack: '← На главную',
+    headerTitle: 'Клиентский портал',
+    headerSub: 'Здесь вы можете безопасно загружать и отправлять запрашиваемые документы к нам в офис.',
+    howItWorksLabel: 'Как это работает:',
+    howItWorksText: 'Заполните форму ниже и перечислите документы, которые у вас есть. Мы рассмотрим вашу заявку и свяжемся с вами в течение 1 рабочего дня, чтобы безопасно получить документы и обсудить следующие шаги и цену.',
+    signedInAs: 'Вы вошли как',
+    signedInHint: 'Ваши контактные данные уже у нас — просто опишите, что нужно, и приложите документы ниже.',
+    editProfile: 'Редактировать профиль',
+    yourInfoH2: 'Ваши данные',
+    yourInfoP: 'Укажите контактные данные и кратко опишите, какие документы нужно подготовить.',
+    firstName: 'Имя *', firstNamePh: 'Имя',
+    lastName: 'Фамилия *', lastNamePh: 'Фамилия',
+    phoneNumber: 'Номер телефона *',
+    emailLabel: 'Email *',
+    serviceNeeded: 'Нужная услуга *',
+    serviceSelect: 'Выберите услугу...',
+    svcImmigration: 'USCIS / EOIR Иммиграция',
+    svcFamily: 'Семейное право Калифорнии / Развод',
+    svcCivil: 'Малые иски и гражданский суд',
+    svcTranslation: 'Перевод документов',
+    svcDmv: 'DMV и паспортная помощь',
+    svcNotary: 'Нотариус / Apostille',
+    svcBusiness: 'Бизнес-документы',
+    svcOther: 'Другое',
+    briefDesc: 'Краткое описание',
+    briefDescPh: 'Кратко опишите вашу ситуацию и что нужно сделать...',
+    docsH2: 'Документы, которые у вас есть',
+    docsP: 'Перечислите документы, которые у вас уже есть (паспорт, ID, прежние уведомления, судебные бумаги и т. д.), чтобы мы знали, чего ожидать. В целях безопасности сами файлы мы получаем по зашифрованному каналу после связи с вами — с этой страницы ничего не загружается.',
+    dropPre: 'Перетащите файлы для списка или', dropBrowse: 'выберите файлы',
+    dropSmall: 'Мы записываем здесь только названия файлов, а не сами файлы.',
+    successH3: 'Заявка получена!',
+    successP: 'Спасибо. Мы получили вашу информацию. Член нашей команды свяжется с вами в течение 1 рабочего дня по указанному номеру, чтобы безопасно получить документы и обсудить следующие шаги и цену.',
+    refLabel: 'Ваш номер заявки', copyBtn: 'Копировать', copyDone: 'Скопировано',
+    refHint: 'Сохраните этот номер — упомяните его при обращении, и мы мгновенно найдём вашу заявку.',
+    submitBtn: 'Отправить заявку', submitting: 'Отправка…',
+    newsH2: 'Свежие официальные обновления',
+    newsDisclaimer: 'Официальные сообщения USCIS, иммиграционных судов (EOIR) и Калифорнии, опубликованные дословно со ссылкой на источник. Imverica не является юридической фирмой и не даёт юридических консультаций — всегда проверяйте детали в официальном источнике.',
+    newsLoading: 'Загружаем свежие официальные обновления…',
+    newsReadOnSource: 'Читать в официальном источнике →',
+    footer: '© 2026 Imverica Legal Solutions · Не юридическая фирма · Юридических консультаций не даём · +1 (916) 399-3992',
+    errName: 'Пожалуйста, введите имя и фамилию.',
+    errPhone: 'Пожалуйста, введите корректный номер телефона (минимум 10 цифр).',
+    errEmail: 'Пожалуйста, введите корректный email — мы отправим на него номер вашей заявки.',
+    errService: 'Пожалуйста, выберите услугу из выпадающего списка выше.',
+    errGeneric: 'Что-то пошло не так. Попробуйте ещё раз или позвоните нам +1 (916) 399-3992.',
+    errNetwork: 'Не удалось связаться с сервером. Проверьте соединение или позвоните нам +1 (916) 399-3992.',
+    signedInNewRequest: 'Новая заявка',
+    signedInNewSub: 'Опишите, что нужно, и приложите документы ниже.'
+  },
+  uk: {
+    navMyAccount: 'Особистий кабінет →',
+    navBack: '← На головну',
+    headerTitle: 'Клієнтський портал',
+    headerSub: 'Тут ви можете безпечно завантажувати та надсилати запитувані документи до нашого офісу.',
+    howItWorksLabel: 'Як це працює:',
+    howItWorksText: 'Заповніть форму нижче і перелічіть документи, які у вас є. Ми розглянемо вашу заявку і зв\'яжемося з вами протягом 1 робочого дня, щоб безпечно отримати документи та обговорити наступні кроки і ціну.',
+    signedInAs: 'Ви увійшли як',
+    signedInHint: 'Ваші контактні дані вже у нас — просто опишіть, що потрібно, і додайте документи нижче.',
+    editProfile: 'Редагувати профіль',
+    yourInfoH2: 'Ваші дані',
+    yourInfoP: 'Вкажіть контактні дані та коротко опишіть, які документи треба підготувати.',
+    firstName: 'Ім\'я *', firstNamePh: 'Ім\'я',
+    lastName: 'Прізвище *', lastNamePh: 'Прізвище',
+    phoneNumber: 'Номер телефону *',
+    emailLabel: 'Email *',
+    serviceNeeded: 'Потрібна послуга *',
+    serviceSelect: 'Оберіть послугу...',
+    svcImmigration: 'USCIS / EOIR Імміграція',
+    svcFamily: 'Сімейне право Каліфорнії / Розлучення',
+    svcCivil: 'Малі позови і цивільний суд',
+    svcTranslation: 'Переклад документів',
+    svcDmv: 'DMV і паспортна допомога',
+    svcNotary: 'Нотаріус / Apostille',
+    svcBusiness: 'Бізнес-документи',
+    svcOther: 'Інше',
+    briefDesc: 'Короткий опис',
+    briefDescPh: 'Коротко опишіть вашу ситуацію і що потрібно зробити...',
+    docsH2: 'Документи, які у вас є',
+    docsP: 'Перелічіть документи, які у вас уже є (паспорт, ID, попередні повідомлення, судові папери тощо), щоб ми знали, на що очікувати. З міркувань безпеки самі файли ми отримуємо зашифрованим каналом після зв\'язку з вами — з цієї сторінки нічого не завантажується.',
+    dropPre: 'Перетягніть файли для списку або', dropBrowse: 'оберіть файли',
+    dropSmall: 'Ми записуємо тут лише назви файлів, а не самі файли.',
+    successH3: 'Заявку отримано!',
+    successP: 'Дякуємо. Ми отримали вашу інформацію. Член нашої команди зв\'яжеться з вами протягом 1 робочого дня за вказаним номером, щоб безпечно отримати документи та обговорити наступні кроки і ціну.',
+    refLabel: 'Ваш номер заявки', copyBtn: 'Копіювати', copyDone: 'Скопійовано',
+    refHint: 'Збережіть цей номер — згадайте його при зверненні, і ми миттєво знайдемо вашу заявку.',
+    submitBtn: 'Надіслати заявку', submitting: 'Надсилання…',
+    newsH2: 'Свіжі офіційні оновлення',
+    newsDisclaimer: 'Офіційні повідомлення USCIS, імміграційних судів (EOIR) і Каліфорнії, опубліковані дослівно з посиланням на джерело. Imverica не є юридичною фірмою і не надає юридичних консультацій — завжди перевіряйте деталі в офіційному джерелі.',
+    newsLoading: 'Завантажуємо свіжі офіційні оновлення…',
+    newsReadOnSource: 'Читати в офіційному джерелі →',
+    footer: '© 2026 Imverica Legal Solutions · Не юридична фірма · Юридичних консультацій не надаємо · +1 (916) 399-3992',
+    errName: 'Будь ласка, введіть ім\'я та прізвище.',
+    errPhone: 'Будь ласка, введіть коректний номер телефону (мінімум 10 цифр).',
+    errEmail: 'Будь ласка, введіть коректний email — ми надішлемо на нього номер вашої заявки.',
+    errService: 'Будь ласка, оберіть послугу з випадного списку вище.',
+    errGeneric: 'Щось пішло не так. Спробуйте ще раз або зателефонуйте нам +1 (916) 399-3992.',
+    errNetwork: 'Не вдалося зв\'язатися з сервером. Перевірте з\'єднання або зателефонуйте нам +1 (916) 399-3992.',
+    signedInNewRequest: 'Нова заявка',
+    signedInNewSub: 'Опишіть, що потрібно, і додайте документи нижче.'
+  },
+  es: {
+    navMyAccount: 'Mi cuenta →',
+    navBack: '← Volver al sitio principal',
+    headerTitle: 'Portal del cliente',
+    headerSub: 'Aquí puede cargar y enviar de forma segura los documentos solicitados a nuestra oficina.',
+    howItWorksLabel: 'Cómo funciona:',
+    howItWorksText: 'Complete el formulario a continuación y liste los documentos que tiene. Revisaremos su solicitud y lo contactaremos en 1 día hábil para recolectar sus documentos de forma segura y discutir los siguientes pasos y precio.',
+    signedInAs: 'Sesión iniciada como',
+    signedInHint: 'Sus datos de contacto ya están en el archivo — solo díganos qué necesita y suba los documentos abajo.',
+    editProfile: 'Editar perfil',
+    yourInfoH2: 'Sus datos',
+    yourInfoP: 'Proporcione sus datos de contacto y una breve descripción de qué documentos necesita preparar.',
+    firstName: 'Nombre *', firstNamePh: 'Nombre',
+    lastName: 'Apellido *', lastNamePh: 'Apellido',
+    phoneNumber: 'Número de teléfono *',
+    emailLabel: 'Email *',
+    serviceNeeded: 'Servicio que necesita *',
+    serviceSelect: 'Seleccione un servicio...',
+    svcImmigration: 'USCIS / EOIR Inmigración',
+    svcFamily: 'Derecho de familia de California / Divorcio',
+    svcCivil: 'Reclamos menores y corte civil',
+    svcTranslation: 'Traducción de documentos',
+    svcDmv: 'Ayuda con DMV y pasaporte',
+    svcNotary: 'Notario / Apostille',
+    svcBusiness: 'Documentos de negocio',
+    svcOther: 'Otro',
+    briefDesc: 'Breve descripción',
+    briefDescPh: 'Describa brevemente su situación y en qué necesita ayuda...',
+    docsH2: 'Documentos que tiene',
+    docsP: 'Liste los documentos que ya tiene (pasaporte, ID, avisos previos, papeles judiciales, etc.) para que sepamos qué esperar. Por seguridad, recolectamos los archivos por canal cifrado después de contactarlo — desde esta página no se sube nada.',
+    dropPre: 'Arrastre y suelte archivos para listarlos, o', dropBrowse: 'examinar archivos',
+    dropSmall: 'Solo registramos los nombres de los archivos aquí, no los archivos en sí.',
+    successH3: '¡Solicitud recibida!',
+    successP: 'Gracias. Recibimos su información. Un miembro de nuestro equipo lo contactará en 1 día hábil al número que proporcionó para recolectar los documentos de forma segura y discutir los próximos pasos y precio.',
+    refLabel: 'Su número de referencia', copyBtn: 'Copiar', copyDone: 'Copiado',
+    refHint: 'Guarde este número — menciónelo al contactarnos y encontraremos su solicitud al instante.',
+    submitBtn: 'Enviar solicitud', submitting: 'Enviando…',
+    newsH2: 'Últimas actualizaciones oficiales',
+    newsDisclaimer: 'Anuncios oficiales de USCIS, cortes de inmigración (EOIR) y California, republicados textualmente con enlace a cada fuente. Imverica no es un bufete y no brinda asesoría legal — siempre verifique los detalles en la fuente oficial.',
+    newsLoading: 'Cargando últimas actualizaciones oficiales…',
+    newsReadOnSource: 'Leer en la fuente oficial →',
+    footer: '© 2026 Imverica Legal Solutions · No es un bufete · No brindamos asesoría legal · +1 (916) 399-3992',
+    errName: 'Por favor, ingrese su nombre y apellido.',
+    errPhone: 'Por favor, ingrese un número de teléfono válido (al menos 10 dígitos).',
+    errEmail: 'Por favor, ingrese un email válido — lo usamos para enviarle su número de referencia.',
+    errService: 'Por favor, seleccione un servicio del menú desplegable.',
+    errGeneric: 'Algo salió mal. Inténtelo de nuevo o llámenos al +1 (916) 399-3992.',
+    errNetwork: 'No pudimos contactar al servidor. Revise su conexión o llámenos al +1 (916) 399-3992.',
+    signedInNewRequest: 'Nueva solicitud',
+    signedInNewSub: 'Díganos qué necesita y suba los documentos abajo.'
+  }
+};
+
+function detectLocale() {
+  var q = new URLSearchParams(window.location.search).get('lang');
+  if (q && STRINGS[q]) return q;
+  try {
+    var ref = document.referrer || '';
+    if (ref) {
+      var u = new URL(ref);
+      var p = u.pathname || '';
+      if (p.startsWith('/ru/') || p === '/ru') return 'ru';
+      if (p.startsWith('/ua/') || p === '/ua') return 'uk';
+      if (p.startsWith('/mx/') || p === '/mx') return 'es';
+    }
+  } catch (_e) {}
+  return 'en';
+}
+var CURRENT_LANG = detectLocale();
+var T = STRINGS[CURRENT_LANG] || STRINGS.en;
+
+function applyI18n() {
+  document.documentElement.lang = CURRENT_LANG === 'uk' ? 'uk' : (CURRENT_LANG === 'ru' ? 'ru' : (CURRENT_LANG === 'es' ? 'es' : 'en'));
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if (T[k]) el.textContent = T[k];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var k = el.getAttribute('data-i18n-placeholder');
+    if (T[k]) el.setAttribute('placeholder', T[k]);
+  });
+  document.querySelectorAll('.lang-switch a').forEach(function(a){
+    if (a.getAttribute('data-lang') === CURRENT_LANG) a.classList.add('active');
+  });
+}
+applyI18n();
+// ===== /i18n =====
+
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const fileList = document.getElementById('file-list');
@@ -276,7 +532,7 @@ function copyOrderId(){
   var val = document.getElementById('order-id').textContent;
   if (navigator.clipboard) navigator.clipboard.writeText(val);
   var btn = document.getElementById('order-id-copy');
-  var old = btn.textContent; btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = old; }, 1500);
+  var old = btn.textContent; btn.textContent = T.copyDone || 'Copied'; setTimeout(function(){ btn.textContent = old; }, 1500);
 }
 
 // Mirror the backend validators in netlify/functions/intake.js
@@ -296,15 +552,15 @@ function handleSubmit() {
   var description = document.getElementById('description').value.trim();
 
   var fullName = (fname + ' ' + lname).trim();
-  if (!validName(fullName)) return showError('Please enter your first and last name.');
-  if (!validPhone(phone)) return showError('Please enter a valid phone number (at least 10 digits).');
-  if (!validEmail(email)) return showError('Please enter a valid email address — we use it to send your reference number.');
+  if (!validName(fullName)) return showError(T.errName);
+  if (!validPhone(phone)) return showError(T.errPhone);
+  if (!validEmail(email)) return showError(T.errEmail);
   if (!service) {
     serviceSel.focus();
     serviceSel.scrollIntoView({behavior:'smooth', block:'center'});
     serviceSel.classList.add('field-error');
     setTimeout(function(){ serviceSel.classList.remove('field-error'); }, 3000);
-    return showError('Please pick a service from the dropdown above.');
+    return showError(T.errService);
   }
 
   // The backend can't store file bytes (size-limited). Record the file NAMES
@@ -313,18 +569,21 @@ function handleSubmit() {
     ? '\n\nDocuments the client already has: ' + selectedFiles.map(function(f){ return f.name; }).join(', ')
     : '';
 
+  // The English label from the dropdown's value attribute keeps the backend
+  // slug stable across locales; serviceLabel sends the user-visible text.
+  var serviceLabel = serviceSel.options[serviceSel.selectedIndex].textContent;
   var payload = {
     accountMode: 'portal',
-    language: 'en',
-    service: service.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-    serviceLabel: service,
+    language: CURRENT_LANG,
+    service: service,
+    serviceLabel: serviceLabel,
     situation: (description || 'Submitted via Client Document Portal.') + fileNote,
     contact: { name: fullName, phone: phone, email: email }
   };
 
   var btn = document.getElementById('submit-btn');
   btn.disabled = true;
-  btn.textContent = 'Submitting…';
+  btn.textContent = T.submitting;
 
   fetch('/.netlify/functions/intake', {
     method: 'POST',
@@ -334,8 +593,8 @@ function handleSubmit() {
     .then(function(r){ return r.json().then(function(data){ return { ok: r.ok, data: data }; }); })
     .then(function(res){
       if (!res.ok || !res.data || !res.data.ok) {
-        var msg = (res.data && res.data.error) ? res.data.error : 'Something went wrong. Please try again or call us at +1 (916) 399-3992.';
-        btn.disabled = false; btn.textContent = 'Submit Request';
+        var msg = (res.data && res.data.error) ? res.data.error : T.errGeneric;
+        btn.disabled = false; btn.textContent = T.submitBtn;
         return showError(msg);
       }
       document.getElementById('order-id').textContent = res.data.orderId || '—';
@@ -344,8 +603,8 @@ function handleSubmit() {
       document.getElementById('success-box').scrollIntoView({behavior:'smooth'});
     })
     .catch(function(){
-      btn.disabled = false; btn.textContent = 'Submit Request';
-      showError('Could not reach our server. Please check your connection or call us at +1 (916) 399-3992.');
+      btn.disabled = false; btn.textContent = T.submitBtn;
+      showError(T.errNetwork);
     });
 }
 
@@ -364,7 +623,7 @@ function handleSubmit() {
         var meta = document.createElement('div'); meta.className = 'pnews-meta';
         meta.textContent = it.source + (it.date ? ' · ' + it.date : '');
         var title = document.createElement('div'); title.className = 'pnews-title'; title.textContent = it.title;
-        var link = document.createElement('div'); link.className = 'pnews-link'; link.textContent = 'Read on the official source →';
+        var link = document.createElement('div'); link.className = 'pnews-link'; link.textContent = T.newsReadOnSource;
         a.appendChild(meta); a.appendChild(title); a.appendChild(link); list.appendChild(a);
       });
     })
@@ -417,16 +676,15 @@ function handleSubmit() {
       portalHeader.style.padding = '24px 2.5rem';
       const h1 = portalHeader.querySelector('h1');
       const p = portalHeader.querySelector('p');
-      if (h1) { h1.textContent = 'New request'; h1.style.fontSize = '26px'; h1.style.marginBottom = '4px'; }
-      if (p) p.textContent = 'Tell us what you need and drop the documents below.';
+      if (h1) { h1.textContent = T.signedInNewRequest; h1.style.fontSize = '26px'; h1.style.marginBottom = '4px'; }
+      if (p) p.textContent = T.signedInNewSub;
     }
 
+    // The user finds the "Signed in as ..." green banner redundant — the
+    // form already prefills + hides the personal-info block, so they know
+    // they're signed in. Keep the banner element in the DOM but don't show.
     const banner = document.getElementById('signed-in-banner');
-    const bName = document.getElementById('signed-in-name');
-    const bEmail = document.getElementById('signed-in-email');
-    if (bName) bName.textContent = (prof.firstName + (prof.lastName ? ' ' + prof.lastName : '')).trim();
-    if (bEmail) bEmail.textContent = email || '';
-    if (banner) banner.style.display = 'block';
+    if (banner) banner.style.display = 'none';
   } catch (_e) {
     /* offline or not signed in — show the full form as a guest */
   }

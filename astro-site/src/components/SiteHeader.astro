@@ -23,12 +23,11 @@ const prefix = LOCALES[lang].prefix;
       <img class="site-brand-logo" src="/logo-nav.png" alt="Imverica Legal Solutions" width="279" height="92" />
     </a>
     <nav class="site-nav" aria-label="Main">
-      <a href="/immigration">{t.uscis}</a>
-      <a href={localizedPathSafe(lang, '/fl')}>{t.family}</a>
-      <a href={localizedPathSafe(lang, '/sc')}>{t.civil}</a>
-      <a href="/business">{t.business}</a>
-      <a href={localizedPathSafe(lang, '/lda')}>{t.about}</a>
-      <a href="/account.html">{t.portal}</a>
+      <a href={localizedPathSafe(lang, '/immigration')} data-nav="uscis">{t.uscis}</a>
+      <a href={localizedPathSafe(lang, '/fl')} data-nav="family">{t.family}</a>
+      <a href={localizedPathSafe(lang, '/sc')} data-nav="civil">{t.civil}</a>
+      <a href={localizedPathSafe(lang, '/business')} data-nav="business">{t.business}</a>
+      <a href={localizedPathSafe(lang, '/lda')} data-nav="about">{t.about}</a>
     </nav>
     <div class="site-lang" aria-label="Language">
       {SUPPORTED_LOCALES.map((locale) => (
@@ -48,12 +47,11 @@ const prefix = LOCALES[lang].prefix;
     </button>
   </div>
   <nav class="site-mobile-menu" id="siteMobileMenu" aria-label="Mobile navigation" hidden>
-    <a href="/immigration">{t.uscis}</a>
+    <a href={localizedPathSafe(lang, '/immigration')}>{t.uscis}</a>
     <a href={localizedPathSafe(lang, '/fl')}>{t.family}</a>
     <a href={localizedPathSafe(lang, '/sc')}>{t.civil}</a>
-    <a href="/business">{t.business}</a>
+    <a href={localizedPathSafe(lang, '/business')}>{t.business}</a>
     <a href={localizedPathSafe(lang, '/lda')}>{t.about}</a>
-    <a href="/account.html">{t.portal}</a>
     <a class="btn btn-accent" href={prefix + '/#get-started'}>{t.quote}</a>
   </nav>
 </header>

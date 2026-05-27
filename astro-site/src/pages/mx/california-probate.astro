@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos de sucesión (probate) de California (DE-111) | Imverica';
+const description = 'California Licensed LDA prepara documentos de probate — DE-111 petition for probate, DE-121 notice, DE-160 inventory and appraisal, DE-221 spousal property petition, small estate affidavit conforme Probate Code §13100.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Probate Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos de probate de California bajo la dirección del peticionario. Small estates, spousal property y administración estándar.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/california-probate"
+  slug="/california-probate" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Probate · Probate Code §8000 et seq."
+    heading="Preparación de documentos de probate de California"
+    sub="Small estate affidavits, spousal property petitions y administración estándar en superior court de California. Entrevista multilingüe a precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=DE-111', text: 'Comenzar paquete de probate' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl', label: 'California derecho de familia (FL-100, FL-300)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      California probate es el proceso judicial para transferir los
+      activos de una persona fallecida a herederos y beneficiarios.
+      Tres caminos comunes: small-estate affidavit (sin audiencia, rápido),
+      spousal property petition (cónyuge sobreviviente, simplificado) y
+      administración estándar (probate completo, con letters testamentary
+      o letters of administration).
+    </p>
+
+    <h2>Qué camino aplica</h2>
+    <ul>
+      <li><strong>Small estate affidavit (sin real property sobre $61,500 / total bajo $184,500).</strong> Probate Code §13100 et seq. Los sobrevivientes recogen bienes personales por affidavit jurado 40 días después de la muerte. No se requiere presentación judicial para bienes personales; proceso judicial abreviado para real property bajo §13150.</li>
+      <li><strong>Spousal Property Petition (DE-221).</strong> Probate Code §13500. Cónyuge sobreviviente o domestic partner registrado pide al tribunal que confirme que la community property y quasi-community property pasa a su nombre sin probate completo.</li>
+      <li><strong>Administración estándar (DE-111).</strong> Probate Code §8000. Requerida cuando el estate excede el umbral de small-estate y no hay vía simplificada para cónyuge sobreviviente. El tribunal nombra executor (con testamento) o administrator (sin testamento), emite Letters y el personal representative administra bajo supervisión judicial.</li>
+    </ul>
+
+    <h2>Cronología de probate estándar</h2>
+    <ol>
+      <li><strong>DE-111 Petition for Probate.</strong> Presentada en el superior court del condado de residencia del difunto.</li>
+      <li><strong>DE-121 Notice of Petition.</strong> Publicada en un periódico local 3 semanas consecutivas; enviada por correo a todos los herederos y beneficiarios.</li>
+      <li><strong>Audiencia.</strong> El tribunal nombra al personal representative y emite Letters (DE-150 testamentary o DE-150A administration).</li>
+      <li><strong>DE-160 Inventory and Appraisal.</strong> El personal representative lista todos los activos del estate en 4 meses. El probate referee valora activos no monetarios.</li>
+      <li><strong>Creditor claims.</strong> Los acreedores tienen 4 meses desde la emisión de Letters para presentar claims (Probate Code §9100).</li>
+      <li><strong>Venta de activos, pago de deudas, distribución.</strong> El personal representative administra el estate, vende activos si es necesario, paga deudas/impuestos/gastos y distribuye el remanente conforme al testamento o intestacy.</li>
+      <li><strong>Contabilidad final y distribución.</strong> DE-180 / DE-295 final accounting petition. El tribunal aprueba y libera al personal representative.</li>
+    </ol>
+
+    <h2>Formularios que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquetes de documentos de probate</strong>
+      <ul>
+        <li><strong>DE-111</strong> — Petition for Probate</li>
+        <li><strong>DE-121</strong> — Notice of Petition to Administer Estate</li>
+        <li><strong>DE-131</strong> — Proof of Subscribing Witness</li>
+        <li><strong>DE-140</strong> — Order for Probate</li>
+        <li><strong>DE-147</strong> — Duties and Liabilities of Personal Representative</li>
+        <li><strong>DE-150 / DE-150A</strong> — Letters (Testamentary / of Administration)</li>
+        <li><strong>DE-160</strong> — Inventory and Appraisal</li>
+        <li><strong>DE-161</strong> — Attachment to Inventory and Appraisal</li>
+        <li><strong>DE-172</strong> — Creditor's Claim</li>
+        <li><strong>DE-221</strong> — Spousal or Domestic Partner Property Petition</li>
+        <li><strong>Small Estate Affidavit</strong> — Probate Code §13100 (plantilla en nuestra oficina)</li>
+        <li><strong>Affidavit Re Real Property of Small Value</strong> — Probate Code §13200</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Fuente:</strong> California Probate Code §§13100-13211
+      (procedimientos de small estate); §13500 et seq. (spousal property);
+      §§8000 et seq. (apertura de administration); §§9000 et seq. (creditor
+      claims); §10800 et seq. (compensación del personal representative);
+      §§11600 et seq. (distribución).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=DE-111" primaryText="Comenzar entrevista de probate" />
+</BaseLayout>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos para órdenes de restricción de California | Imverica';
+const description = 'California Licensed LDA prepara paquetes de restraining order — CH-100 civil harassment, DV-100 domestic violence, EA-100 elder abuse, GV-100 gun violence, WV-100 workplace violence. TRO el mismo día. Multilingüe.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Restraining Order Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para órdenes de restricción de California bajo la dirección del peticionario. Series CH/DV/EA/GV/WV-100.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/california-restraining-orders"
+  slug="/california-restraining-orders" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil & Family · CCP §527.6 · Fam. Code §6200"
+    heading="Preparación de documentos para órdenes de restricción de California"
+    sub="Preparamos el paquete TRO correcto para su relación y tipo de amenaza — Civil Harassment (CH-100), Domestic Violence (DV-100), Elder/Dependent Adult Abuse (EA-100), Gun Violence (GV-100), Workplace Violence (WV-100). Muchas categorías sin costo de presentación."
+    ctaPrimary={{ href: '/#get-started?form=DV-100', text: 'Comenzar paquete de orden de restricción' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl', label: 'California formularios de derecho de familia (FL-100, FL-300)' },
+    { href: '/mx/california-unlawful-detainer', label: 'California unlawful detainer (UD-100)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Una orden de restricción de California (también llamada protective
+      order) es una orden judicial que prohíbe a una persona acosar,
+      amenazar, contactar o acercarse a otra. Existen cinco esquemas
+      distintos de orden de restricción, cada uno con sus propios
+      formularios y procedimiento según la relación entre las partes.
+    </p>
+
+    <h2>Qué orden de restricción aplica</h2>
+    <ul>
+      <li><strong>CH-100 — Civil Harassment.</strong> Sin relación familiar/sentimental cercana. CCP §527.6. Cubre vecinos, compañeros de trabajo, conocidos, extraños.</li>
+      <li><strong>DV-100 — Domestic Violence.</strong> Cónyuge, ex-cónyuge, pareja dating/sexual, padre de su hijo, pariente consanguíneo, miembro del hogar. Family Code §6200 et seq. (Domestic Violence Prevention Act).</li>
+      <li><strong>EA-100 — Elder or Dependent Adult Abuse.</strong> Peticionario 65+ o dependent adult. Welfare &amp; Institutions Code §15657.03.</li>
+      <li><strong>GV-100 — Gun Violence.</strong> Presentada por miembro inmediato de la familia, empleador, compañero de trabajo o policía para prohibir a una persona poseer armas. Penal Code §18100 et seq.</li>
+      <li><strong>WV-100 — Workplace Violence.</strong> Presentada por un empleador en nombre de un empleado que sufrió violencia o credible threat de cualquier persona. CCP §527.8.</li>
+    </ul>
+
+    <h2>Proceso para Temporary Restraining Order (TRO)</h2>
+    <ol>
+      <li><strong>Petición.</strong> Presente la serie CH-100 / DV-100 / EA-100 / GV-100 / WV-100 ante el superior court de su condado.</li>
+      <li><strong>Ex parte TRO.</strong> El tribunal revisa la petición el mismo día. Si los hechos muestran daño inmediato, emite un Temporary Restraining Order (CH-110 / DV-110 / EA-110 / GV-110 / WV-110) vigente hasta la audiencia — usualmente 21 días.</li>
+      <li><strong>Service al respondiente.</strong> El respondiente debe ser notificado personalmente antes de la audiencia (CH-200 / DV-200 / EA-200 / GV-200 / WV-200 proof of service).</li>
+      <li><strong>Audiencia.</strong> Ambos lados comparecen. El tribunal emite un Restraining Order After Hearing más largo (hasta 5 años para CH, DV, EA; hasta 3 años para GV) o niega la petición.</li>
+    </ol>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete completo de orden de restricción</strong>
+      <ul>
+        <li>La petición (CH-100 / DV-100 / EA-100 / GV-100 / WV-100) con la supporting declaration explicando qué pasó, cuándo, dónde y la amenaza inmediata</li>
+        <li>Order on Petition (CH-130 / DV-130 / etc.) — la proposed order que firmará el juez</li>
+        <li>Proof of Personal Service (CH-200 / DV-200 / etc.) para el respondiente</li>
+        <li>FW-001 fee waiver si aplica (DV, EA no tienen costo de presentación por ley estatal)</li>
+        <li>Anexos de custodia (FL-105/UCCJEA) cuando la orden DV involucra niños</li>
+        <li>Formularios de entrega de armas cuando la orden requiere que el respondiente entregue armas de fuego</li>
+        <li>Información CLETS (para que el secretario ingrese la orden en la base CLETS estatal para ejecución policial)</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      Como California Legal Document Assistant no podemos representarlo
+      en la audiencia ni argumentar su caso ante el juez. Muchos
+      peticionarios se representan con éxito con nuestros documentos
+      preparados. Las audiencias en disputa (donde el respondiente
+      comparece con abogado y disputa los hechos) suelen beneficiarse de
+      su propio abogado — podemos darle un referral. Nunca prepararemos
+      una petición de orden de restricción que consideremos destinada a
+      acosar al respondiente o inventada para obtener ventaja en otro caso.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure
+      §527.6 (civil harassment), §527.8 (workplace violence); California
+      Family Code §§6200-6409 (Domestic Violence Prevention Act);
+      California Welfare &amp; Institutions Code §15657.03 (elder or
+      dependent adult abuse); California Penal Code §§18100-18205 (Gun
+      Violence Restraining Order Act).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=DV-100" primaryText="Comenzar entrevista de orden de restricción" />
+</BaseLayout>

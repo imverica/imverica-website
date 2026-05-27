@@ -21,6 +21,10 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .logo img{display:block;width:142px;height:auto;}
 .nav-back{font-size:13px;color:var(--navy);text-decoration:none;opacity:0.7;}
 .nav-back:hover{opacity:1;}
+.lang-switch{display:flex;gap:4px;align-items:center;}
+.lang-switch a{font-size:11px;font-weight:600;letter-spacing:0.6px;color:var(--muted);text-decoration:none;padding:4px 7px;border-radius:3px;border:1px solid transparent;transition:all 0.18s;}
+.lang-switch a:hover{color:var(--navy);background:#f0f4f8;}
+.lang-switch a.active{color:var(--navy);background:#eef2f7;border-color:#c5d0de;}
 
 .portal-header{background:var(--navy-dark);padding:54px 2.5rem;text-align:center;}
 .portal-header h1{font-family:'Playfair Display',serif;font-size:38px;font-weight:400;color:#dde5ee;margin-bottom:0.6rem;}
@@ -58,7 +62,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 @media (max-width:420px){.quick-tiles{grid-template-columns:1fr;}}
 .qt{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 16px;text-align:left;cursor:pointer;transition:transform .15s, box-shadow .15s, border-color .15s;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;font-family:'DM Sans',sans-serif;position:relative;min-height:128px;}
 .qt:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(40,30,20,0.08);border-color:rgba(26,46,74,0.18);}
-.qt-icon-wrap{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--terracotta-deep) 100%);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(26,46,74,0.20);}
+.qt-icon-wrap{width:42px;height:42px;border-radius:12px;background:var(--navy);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(26,46,74,0.18);}
 .qt-icon-wrap svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
 .qt-title{font-size:15px;font-weight:700;color:var(--navy-dark);line-height:1.25;}
 .qt-sub{font-size:12.5px;color:var(--muted);line-height:1.45;}
@@ -175,26 +179,10 @@ footer{background:var(--navy-dark);padding:28px 2.5rem;text-align:center;margin-
 footer p{font-size:12px;color:#d8e6f6;}
 
 /* ================================================================
-   Modern auth screens (login email → code → profile)
-   Soft pastel background with brand-tinted blur blobs, centered
-   white card with gradient logo + button. Brand: navy → terracotta.
+   Auth screens (login email → code → profile)
+   Solid brand navy palette, matching the main site (no warm blobs).
    ================================================================ */
-body.is-auth { background: linear-gradient(180deg, #f6f1ea 0%, #efece4 100%); min-height: 100vh; position: relative; overflow-x: hidden; }
-body.is-auth::before,
-body.is-auth::after {
-  content: ''; position: fixed; pointer-events: none; z-index: 0;
-  border-radius: 50%; filter: blur(80px);
-}
-/* Warm terracotta blob top-right + soft sage blob bottom-left — keeps a
-   professional document-center palette (no purple). */
-body.is-auth::before {
-  top: -160px; right: -120px; width: 460px; height: 460px;
-  background: radial-gradient(circle, rgba(224,138,93,0.42), transparent 70%);
-}
-body.is-auth::after {
-  bottom: -180px; left: -140px; width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(125,156,122,0.35), transparent 70%);
-}
+body.is-auth { background: var(--bg); min-height: 100vh; position: relative; overflow-x: hidden; }
 body.is-auth nav,
 body.is-auth .portal-header,
 body.is-auth footer { display: none !important; }
@@ -215,15 +203,15 @@ body.is-auth footer { display: none !important; }
 }
 .auth-logo {
   width: 64px; height: 64px; border-radius: 16px;
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 45%, var(--terracotta) 100%);
+  background: var(--navy);
   display: flex; align-items: center; justify-content: center;
   color: #fff; margin-bottom: 28px;
-  box-shadow: 0 14px 36px rgba(26,46,74,0.32);
+  box-shadow: 0 14px 36px rgba(26,46,74,0.22);
 }
 .auth-logo svg { width: 30px; height: 30px; }
 .auth-kicker {
   font-size: 12px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 12px;
+  text-transform: uppercase; color: var(--navy); margin-bottom: 12px;
 }
 .auth-h1 {
   font-family: 'Playfair Display', serif; font-size: 34px; line-height: 1.15;
@@ -258,18 +246,19 @@ body.is-auth footer { display: none !important; }
 }
 .auth-card .btn {
   width: 100%; padding: 15px; border: none; border-radius: 14px;
-  /* Brand gradient visible from the start: deep navy → terracotta. */
-  background: linear-gradient(95deg, var(--navy-dark) 0%, var(--navy) 35%, var(--terracotta-deep) 78%, var(--terracotta) 100%);
+  /* Solid brand navy — matches the rest of the site. */
+  background: var(--navy);
   color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer;
   letter-spacing: 0.3px;
-  box-shadow: 0 10px 26px rgba(26,46,74,0.28);
+  box-shadow: 0 10px 26px rgba(26,46,74,0.20);
+  transition: background 0.18s;
   transition: filter 0.18s, transform 0.15s, box-shadow 0.15s;
   margin-top: 8px;
 }
 .auth-card .btn:hover {
-  filter: brightness(1.06);
+  background: var(--navy-light);
   transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(164,91,52,0.30);
+  box-shadow: 0 14px 30px rgba(26,46,74,0.26);
 }
 .auth-card .btn:disabled {
   background: #c8d0db; box-shadow: none; cursor: not-allowed; transform: none;
@@ -299,13 +288,20 @@ body.is-auth footer { display: none !important; }
 
 <nav>
   <a class="logo" href="/" aria-label="Imverica Legal Solutions"><img src="/logo-nav.png" alt="Imverica Legal Solutions"></a>
-  <a class="nav-back" href="/">&#8592; Back to main site</a>
+  <div style="display:flex;gap:1.2rem;align-items:center;">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <a href="?lang=en" data-lang="en">EN</a>
+      <a href="?lang=ru" data-lang="ru">RU</a>
+      <a href="?lang=uk" data-lang="uk">UA</a>
+      <a href="?lang=es" data-lang="es">MX</a>
+    </div>
+    <a class="nav-back" href="/" data-i18n="navBack">&#8592; Back to main site</a>
+  </div>
 </nav>
 
-<div class="portal-header">
-  <h1>My Account</h1>
-  <p>Sign in with a one-time code to view your requests and their status</p>
-</div>
+<!-- Removed the dark "My Account / Sign in with a one-time code" banner —
+     the auth-shell cards and the dashboard greeting say it better, twice
+     was redundant. -->
 
 <!-- ===== Login: email step ===== -->
 <div class="auth-shell" id="step-email">
@@ -319,14 +315,14 @@ body.is-auth footer { display: none !important; }
         <path d="M3 7h18"/>
       </svg>
     </div>
-    <div class="auth-kicker">Welcome</div>
-    <h1 class="auth-h1">Sign in to your account</h1>
-    <p class="auth-sub">Enter your email below — we'll send a one-time code to sign you in. No password needed.</p>
+    <div class="auth-kicker" data-i18n="authWelcome">Welcome</div>
+    <h1 class="auth-h1" data-i18n="authSignIn">Sign in to your account</h1>
+    <p class="auth-sub" data-i18n="authEmailSub">Enter your email below — we'll send a one-time code to sign you in. No password needed.</p>
     <div class="form-group">
-      <label for="email-input">Email</label>
+      <label for="email-input" data-i18n="authEmailLabel">Email</label>
       <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email">
     </div>
-    <button class="btn" id="send-code-btn" onclick="requestCode()">Send me a code</button>
+    <button class="btn" id="send-code-btn" onclick="requestCode()" data-i18n="authSendCode">Send me a code</button>
     <div class="msg" id="email-msg"></div>
   </div>
 </div>
@@ -343,18 +339,18 @@ body.is-auth footer { display: none !important; }
         <path d="M3 7h18"/>
       </svg>
     </div>
-    <div class="auth-kicker">Almost there</div>
-    <h1 class="auth-h1">Check your email</h1>
-    <p class="auth-sub">We sent a 6-digit sign-in code to <strong id="code-email"></strong>. It expires in 10 minutes.</p>
+    <div class="auth-kicker" data-i18n="authAlmost">Almost there</div>
+    <h1 class="auth-h1" data-i18n="authCheckEmail">Check your email</h1>
+    <p class="auth-sub"><span data-i18n="authCodeSubPre">We sent a 6-digit sign-in code to</span> <strong id="code-email"></strong>. <span data-i18n="authCodeSubPost">It expires in 10 minutes.</span></p>
     <div class="form-group">
-      <label for="code-input">Sign-in code</label>
+      <label for="code-input" data-i18n="authCodeLabel">Sign-in code</label>
       <input type="text" id="code-input" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code">
     </div>
-    <button class="btn" id="verify-btn" onclick="verifyCode()">Sign in</button>
+    <button class="btn" id="verify-btn" onclick="verifyCode()" data-i18n="authSignInBtn">Sign in</button>
     <div class="msg" id="code-msg"></div>
     <div class="auth-aside">
-      <button class="btn-link" onclick="backToEmail()">Use a different email</button>
-      <button class="btn-link" onclick="requestCode(true)">Resend code</button>
+      <button class="btn-link" onclick="backToEmail()" data-i18n="authUseDifferent">Use a different email</button>
+      <button class="btn-link" onclick="requestCode(true)" data-i18n="authResend">Resend code</button>
     </div>
   </div>
 </div>
@@ -371,14 +367,14 @@ body.is-auth footer { display: none !important; }
         <path d="M3 7h18"/>
       </svg>
     </div>
-    <div class="auth-kicker">One last step</div>
-    <h1 class="auth-h1">Complete your profile</h1>
-    <p class="auth-sub">A few details so we can prepare your documents accurately. Stored encrypted, never shared.</p>
-    <div class="form-group"><label for="pf-first">First name *</label><input type="text" id="pf-first" placeholder="First name" autocomplete="given-name"></div>
-    <div class="form-group"><label for="pf-last">Last name *</label><input type="text" id="pf-last" placeholder="Last name" autocomplete="family-name"></div>
-    <div class="form-group"><label for="pf-phone">Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
-    <div class="form-group"><label for="pf-legal">Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" placeholder="Legal name as printed on your documents"></div>
-    <button class="btn" id="pf-save" onclick="saveProfile()">Save and continue</button>
+    <div class="auth-kicker" data-i18n="profKicker">One last step</div>
+    <h1 class="auth-h1" data-i18n="profH1">Complete your profile</h1>
+    <p class="auth-sub" data-i18n="profSub">A few details so we can prepare your documents accurately. Stored encrypted, never shared.</p>
+    <div class="form-group"><label for="pf-first" data-i18n="profFirst">First name *</label><input type="text" id="pf-first" data-i18n-placeholder="profFirstPh" placeholder="First name" autocomplete="given-name"></div>
+    <div class="form-group"><label for="pf-last" data-i18n="profLast">Last name *</label><input type="text" id="pf-last" data-i18n-placeholder="profLastPh" placeholder="Last name" autocomplete="family-name"></div>
+    <div class="form-group"><label for="pf-phone" data-i18n="profPhone">Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
+    <div class="form-group"><label for="pf-legal" data-i18n="profLegal">Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" data-i18n-placeholder="profLegalPh" placeholder="Legal name as printed on your documents"></div>
+    <button class="btn" id="pf-save" onclick="saveProfile()" data-i18n="profSave">Save and continue</button>
     <div class="msg" id="profile-msg"></div>
   </div>
 </div>
@@ -387,13 +383,14 @@ body.is-auth footer { display: none !important; }
 <div class="dash-wrap hidden" id="step-dash">
   <div class="dash-head">
     <div class="who">
-      <div class="dash-kicker">Imverica · Personal account</div>
-      <div class="dash-greeting">Welcome back, <strong id="dash-name"></strong></div>
-      <div class="dash-sub">Upload documents, message us, and track your requests — all in one place. <span id="dash-email" style="opacity:0.7;"></span></div>
+      <div class="dash-kicker" data-i18n="dashKicker">Imverica · Personal account</div>
+      <div class="dash-greeting"><span data-i18n="dashWelcomeBack">Welcome back,</span> <strong id="dash-name"></strong></div>
+      <div class="dash-sub" data-i18n="dashSub">Upload documents, message us, and track your requests — all in one place.</div>
+      <span id="dash-email" hidden></span>
     </div>
     <div class="dash-actions">
-      <a class="primary" href="/portal.html">+ New request</a>
-      <button onclick="logout()">Sign out</button>
+      <!-- "+ New request" lives in the quick-tiles grid below now; no need to duplicate it here. -->
+      <button onclick="logout()" data-i18n="dashSignOut">Sign out</button>
     </div>
   </div>
   <div class="msg" id="dash-msg"></div>
@@ -404,24 +401,24 @@ body.is-auth footer { display: none !important; }
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
       </div>
-      <div class="qt-title">+ New request</div>
-      <div class="qt-sub">Start a document package</div>
+      <div class="qt-title" data-i18n="tileNewTitle">+ New request</div>
+      <div class="qt-sub" data-i18n="tileNewSub">Start a document package</div>
     </a>
 
     <button class="qt" type="button" onclick="quickUpload()" aria-label="Upload documents">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       </div>
-      <div class="qt-title">Upload documents</div>
-      <div class="qt-sub">Drop files into a request</div>
+      <div class="qt-title" data-i18n="tileUploadTitle">Upload documents</div>
+      <div class="qt-sub" data-i18n="tileUploadSub">Drop files into a request</div>
     </button>
 
     <button class="qt" type="button" onclick="focusChat()" aria-label="Message Imverica">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
       </div>
-      <div class="qt-title">Message us</div>
-      <div class="qt-sub">Ask about your documents</div>
+      <div class="qt-title" data-i18n="tileMsgTitle">Message us</div>
+      <div class="qt-sub" data-i18n="tileMsgSub">Ask about your documents</div>
       <span class="qt-badge" id="qt-msg-badge" style="display:none;">0</span>
     </button>
 
@@ -429,7 +426,7 @@ body.is-auth footer { display: none !important; }
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </div>
-      <div class="qt-title">Call us</div>
+      <div class="qt-title" data-i18n="tileCallTitle">Call us</div>
       <div class="qt-sub">+1 (916) 399-3992</div>
     </a>
 
@@ -437,8 +434,8 @@ body.is-auth footer { display: none !important; }
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       </div>
-      <div class="qt-title">My documents</div>
-      <div class="qt-sub">All files across requests</div>
+      <div class="qt-title" data-i18n="tileDocsTitle">My documents</div>
+      <div class="qt-sub" data-i18n="tileDocsSub">All files across requests</div>
       <span class="qt-badge" id="qt-orders-badge" style="display:none;">0</span>
     </button>
 
@@ -446,16 +443,16 @@ body.is-auth footer { display: none !important; }
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </div>
-      <div class="qt-title">Profile</div>
-      <div class="qt-sub">Name, phone, settings</div>
+      <div class="qt-title" data-i18n="tileProfileTitle">Profile</div>
+      <div class="qt-sub" data-i18n="tileProfileSub">Name, phone, settings</div>
     </button>
 
     <button class="qt" type="button" onclick="openNotifications()" aria-label="Notifications">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       </div>
-      <div class="qt-title">Notifications</div>
-      <div class="qt-sub">Replies & status updates</div>
+      <div class="qt-title" data-i18n="tileNotifTitle">Notifications</div>
+      <div class="qt-sub" data-i18n="tileNotifSub">Replies & status updates</div>
       <span class="qt-badge" id="qt-notif-badge" style="display:none;">0</span>
     </button>
 
@@ -463,33 +460,33 @@ body.is-auth footer { display: none !important; }
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
-      <div class="qt-title">Help & FAQ</div>
-      <div class="qt-sub">What is a California LDA?</div>
+      <div class="qt-title" data-i18n="tileHelpTitle">Help & FAQ</div>
+      <div class="qt-sub" data-i18n="tileHelpSub">What is a California LDA?</div>
     </a>
   </div>
 
   <!-- Profile panel (hidden by default; toggled by the Profile tile) -->
   <div class="profile-panel hidden" id="profile-panel">
-    <h3>Your profile</h3>
-    <div class="pp-row"><span class="pp-key">Name</span><span id="pp-name"></span></div>
-    <div class="pp-row"><span class="pp-key">Phone</span><span id="pp-phone"></span></div>
-    <div class="pp-row"><span class="pp-key">Email</span><span id="pp-email"></span></div>
-    <div class="pp-row"><span class="pp-key">Legal name</span><span id="pp-legal"></span></div>
+    <h3 data-i18n="ppTitle">Your profile</h3>
+    <div class="pp-row"><span class="pp-key" data-i18n="ppKeyName">Name</span><span id="pp-name"></span></div>
+    <div class="pp-row"><span class="pp-key" data-i18n="ppKeyPhone">Phone</span><span id="pp-phone"></span></div>
+    <div class="pp-row"><span class="pp-key" data-i18n="ppKeyEmail">Email</span><span id="pp-email"></span></div>
+    <div class="pp-row"><span class="pp-key" data-i18n="ppKeyLegal">Legal name</span><span id="pp-legal"></span></div>
     <div class="pp-actions">
-      <button class="primary" type="button" onclick="editProfile()">Edit profile</button>
-      <button type="button" onclick="document.getElementById('profile-panel').classList.add('hidden')">Close</button>
+      <button class="primary" type="button" onclick="editProfile()" data-i18n="ppEdit">Edit profile</button>
+      <button type="button" onclick="document.getElementById('profile-panel').classList.add('hidden')" data-i18n="ppClose">Close</button>
     </div>
   </div>
 
   <div id="orders"></div>
 
   <div class="chat-card">
-    <h3>Messages</h3>
-    <p class="chat-sub">Ask us a question about your documents. We reply here — not legal advice.</p>
-    <div class="chat-thread" id="chat-thread"><div class="chat-empty" id="chat-empty">No messages yet. Send us a note below.</div></div>
+    <h3 data-i18n="chatTitle">Messages</h3>
+    <p class="chat-sub" data-i18n="chatSub">Ask us a question about your documents. We reply here — not legal advice.</p>
+    <div class="chat-thread" id="chat-thread"><div class="chat-empty" id="chat-empty" data-i18n="chatEmpty">No messages yet. Send us a note below.</div></div>
     <div class="chat-input-row">
-      <textarea id="chat-input" placeholder="Type your message…" rows="1"></textarea>
-      <button class="chat-send" id="chat-send" onclick="sendMessage()">Send</button>
+      <textarea id="chat-input" data-i18n-placeholder="chatInputPh" placeholder="Type your message…" rows="1"></textarea>
+      <button class="chat-send" id="chat-send" onclick="sendMessage()" data-i18n="chatSend">Send</button>
     </div>
   </div>
 </div>
@@ -498,16 +495,16 @@ body.is-auth footer { display: none !important; }
 <div class="md-overlay hidden" id="md-overlay" onclick="if(event.target===this) closeMyDocuments()">
   <div class="md-modal" role="dialog" aria-modal="true" aria-labelledby="md-title">
     <div class="md-head">
-      <h3 id="md-title">My documents</h3>
+      <h3 id="md-title" data-i18n="mdTitle">My documents</h3>
       <button class="md-close" type="button" aria-label="Close" onclick="closeMyDocuments()">×</button>
     </div>
     <div class="md-tabs" role="tablist">
-      <button class="md-tab active" type="button" data-md-filter="all" onclick="filterMyDocuments('all')">All</button>
-      <button class="md-tab" type="button" data-md-filter="prepared" onclick="filterMyDocuments('prepared')">Prepared by Imverica</button>
-      <button class="md-tab" type="button" data-md-filter="mine" onclick="filterMyDocuments('mine')">Your uploads</button>
+      <button class="md-tab active" type="button" data-md-filter="all" onclick="filterMyDocuments('all')" data-i18n="mdTabAll">All</button>
+      <button class="md-tab" type="button" data-md-filter="prepared" onclick="filterMyDocuments('prepared')" data-i18n="mdTabPrepared">Prepared by Imverica</button>
+      <button class="md-tab" type="button" data-md-filter="mine" onclick="filterMyDocuments('mine')" data-i18n="mdTabMine">Your uploads</button>
     </div>
     <div class="md-body" id="md-body">
-      <div class="md-empty">Loading your documents…</div>
+      <div class="md-empty" data-i18n="mdLoading">Loading your documents…</div>
     </div>
   </div>
 </div>
@@ -516,20 +513,398 @@ body.is-auth footer { display: none !important; }
 <div class="notif-overlay" id="notif-overlay" onclick="if(event.target===this) closeNotifications()">
   <div class="notif-panel" role="dialog" aria-modal="true" aria-labelledby="notif-title">
     <div class="notif-head">
-      <h4 id="notif-title">Notifications</h4>
-      <button class="notif-mark" type="button" onclick="markAllRead()">Mark all read</button>
+      <h4 id="notif-title" data-i18n="notifTitle">Notifications</h4>
+      <button class="notif-mark" type="button" onclick="markAllRead()" data-i18n="notifMarkAll">Mark all read</button>
     </div>
     <div class="notif-list" id="notif-list">
-      <div class="notif-empty">No notifications yet.</div>
+      <div class="notif-empty" data-i18n="notifEmpty">No notifications yet.</div>
     </div>
   </div>
 </div>
 
 <footer>
-  <p>&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
+  <p data-i18n="footer">&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
 </footer>
 
 <script>
+// ===== i18n =====
+const STRINGS = {
+  en: {
+    navBack: '← Back to main site',
+    authWelcome: 'Welcome',
+    authSignIn: 'Sign in to your account',
+    authEmailSub: "Enter your email below — we'll send a one-time code. This code acts as your password — no separate signup needed.",
+    authEmailLabel: 'Email',
+    authSendCode: 'Send me a code',
+    authSending: 'Sending…',
+    authAlmost: 'Almost there',
+    authCheckEmail: 'Check your email',
+    authCodeSubPre: 'We sent a 6-digit sign-in code to',
+    authCodeSubPost: 'It expires in 10 minutes.',
+    authCodeLabel: 'Sign-in code',
+    authSignInBtn: 'Sign in',
+    authSigningIn: 'Signing in…',
+    authUseDifferent: 'Use a different email',
+    authResend: 'Resend code',
+    profKicker: 'One last step',
+    profH1: 'Complete your profile',
+    profSub: 'A few details so we can prepare your documents accurately. Stored encrypted, never shared.',
+    profFirst: 'First name *', profFirstPh: 'First name',
+    profLast: 'Last name *', profLastPh: 'Last name',
+    profPhone: 'Phone *',
+    profLegal: 'Full legal name (optional, as on your ID)', profLegalPh: 'Legal name as printed on your documents',
+    profSave: 'Save and continue', profSaving: 'Saving…',
+    dashKicker: 'Imverica · Personal account',
+    dashWelcomeBack: 'Welcome back,',
+    dashSub: 'Upload documents, message us, and track your requests — all in one place.',
+    dashSignOut: 'Sign out',
+    tileNewTitle: '+ New request', tileNewSub: 'Start a document package',
+    tileUploadTitle: 'Upload documents', tileUploadSub: 'Drop files into a request',
+    tileMsgTitle: 'Message us', tileMsgSub: 'Ask about your documents',
+    tileCallTitle: 'Call us',
+    tileDocsTitle: 'My documents', tileDocsSub: 'All files across requests',
+    tileProfileTitle: 'Profile', tileProfileSub: 'Name, phone, settings',
+    tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
+    tileHelpTitle: 'Help & FAQ', tileHelpSub: 'What is a California LDA?',
+    ppTitle: 'Your profile',
+    ppKeyName: 'Name', ppKeyPhone: 'Phone', ppKeyEmail: 'Email', ppKeyLegal: 'Legal name',
+    ppEdit: 'Edit profile', ppClose: 'Close',
+    chatTitle: 'Messages',
+    chatSub: 'Ask us a question about your documents. We reply here — not legal advice.',
+    chatEmpty: 'No messages yet. Send us a note below.',
+    chatInputPh: 'Type your message…',
+    chatSend: 'Send',
+    chatStaffName: 'Imverica', chatYouName: 'You',
+    mdTitle: 'My documents', mdTabAll: 'All', mdTabPrepared: 'Prepared by Imverica', mdTabMine: 'Your uploads',
+    mdLoading: 'Loading your documents…',
+    mdLoadFail: 'Could not load documents. Please try again.',
+    mdNoOrders: 'You have no requests yet — start a New request to upload documents.',
+    mdNoneInView: 'No files in this view yet.',
+    mdTagPrepared: 'Prepared', mdTagUploaded: 'Uploaded',
+    mdDownload: 'Download', mdRequestLabel: 'Request',
+    notifTitle: 'Notifications', notifMarkAll: 'Mark all read',
+    notifEmpty: 'No notifications yet.', notifEmptyLong: 'No notifications yet. Replies from Imverica and status updates will show here.',
+    notifImvericaReplied: 'Imverica replied', notifStatus: 'Status:',
+    notifRequest: 'Request',
+    footer: '© 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992',
+    errEmailInvalid: 'Please enter a valid email address.',
+    errCodeShort: 'Enter the code we emailed you.',
+    errCodeWrong: 'Incorrect code.',
+    errSendFail: 'Could not send a code. Try again.',
+    errSaveFail: 'Could not save. Try again.',
+    errNameMissing: 'Please enter your first and last name.',
+    errPhoneShort: 'Please enter a valid phone number.',
+    errServerUnreach: 'Could not reach the server.',
+    errFileBig: 'File too large (max 4 MB).',
+    errUploadFail: 'Upload failed.',
+    errUploadFailRetry: 'Upload failed. Try again.',
+    okUploaded: 'Uploaded.',
+    msgUploading: 'Uploading',
+    msgCodeSent: 'Code sent. Check your inbox (and spam folder).',
+    msgDevMode: 'DEV MODE — your code is',
+    msgDevTail: '(email provider not configured)',
+    msgNoRequests: 'You have no requests yet.',
+    msgNoRequestsHint: 'Use <strong>+ New request</strong> to submit your first one.',
+    statusReady: 'Ready', statusReview: 'In review', statusNew: 'Received',
+    docsPrepLabel: 'Prepared by Imverica — ready to download',
+    docsYourLabel: 'Your documents',
+    docAttach: '+ Attach a document',
+    docRemove: 'Remove',
+    defaultService: 'Document preparation request',
+    nudgeNoFiles: 'Start a New request first — files attach to an active request.',
+    relJustNow: 'just now', relMin: 'min ago', relHour: 'hour', relHours: 'hours', relAgo: 'ago', relDay: 'day', relDays: 'days'
+  },
+  ru: {
+    navBack: '← На главную',
+    authWelcome: 'Добро пожаловать',
+    authSignIn: 'Войти в личный кабинет',
+    authEmailSub: 'Введите email — мы отправим одноразовый код для входа. Этот код будет вашим паролем — отдельная регистрация не нужна.',
+    authEmailLabel: 'Email',
+    authSendCode: 'Отправить код',
+    authSending: 'Отправляем…',
+    authAlmost: 'Почти готово',
+    authCheckEmail: 'Проверьте почту',
+    authCodeSubPre: 'Мы отправили 6-значный код для входа на',
+    authCodeSubPost: 'Он действителен 10 минут.',
+    authCodeLabel: 'Код входа',
+    authSignInBtn: 'Войти',
+    authSigningIn: 'Входим…',
+    authUseDifferent: 'Использовать другой email',
+    authResend: 'Отправить код заново',
+    profKicker: 'Последний шаг',
+    profH1: 'Заполните профиль',
+    profSub: 'Несколько деталей, чтобы мы точно подготовили ваши документы. Хранится зашифровано, никому не передаётся.',
+    profFirst: 'Имя *', profFirstPh: 'Имя',
+    profLast: 'Фамилия *', profLastPh: 'Фамилия',
+    profPhone: 'Телефон *',
+    profLegal: 'Полное имя как в ID (необязательно)', profLegalPh: 'Имя как в документах',
+    profSave: 'Сохранить и продолжить', profSaving: 'Сохраняем…',
+    dashKicker: 'Imverica · Личный кабинет',
+    dashWelcomeBack: 'С возвращением,',
+    dashSub: 'Загружайте документы, пишите нам и отслеживайте заявки — всё в одном месте.',
+    dashSignOut: 'Выйти',
+    tileNewTitle: '+ Новая заявка', tileNewSub: 'Создать пакет документов',
+    tileUploadTitle: 'Загрузить документы', tileUploadSub: 'Добавить файлы к заявке',
+    tileMsgTitle: 'Сообщения', tileMsgSub: 'Спросить о ваших документах',
+    tileCallTitle: 'Позвонить',
+    tileDocsTitle: 'Мои документы', tileDocsSub: 'Все файлы по всем заявкам',
+    tileProfileTitle: 'Профиль', tileProfileSub: 'Имя, телефон, настройки',
+    tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
+    tileHelpTitle: 'Помощь и FAQ', tileHelpSub: 'Кто такой California LDA?',
+    ppTitle: 'Ваш профиль',
+    ppKeyName: 'Имя', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Имя как в ID',
+    ppEdit: 'Редактировать профиль', ppClose: 'Закрыть',
+    chatTitle: 'Сообщения',
+    chatSub: 'Задайте вопрос о ваших документах. Мы отвечаем здесь — не юридическая консультация.',
+    chatEmpty: 'Сообщений пока нет. Напишите нам ниже.',
+    chatInputPh: 'Введите сообщение…',
+    chatSend: 'Отправить',
+    chatStaffName: 'Imverica', chatYouName: 'Вы',
+    mdTitle: 'Мои документы', mdTabAll: 'Все', mdTabPrepared: 'Подготовлено Imverica', mdTabMine: 'Ваши загрузки',
+    mdLoading: 'Загружаем ваши документы…',
+    mdLoadFail: 'Не удалось загрузить документы. Попробуйте ещё раз.',
+    mdNoOrders: 'У вас пока нет заявок — создайте новую, чтобы загрузить документы.',
+    mdNoneInView: 'Файлов в этом виде пока нет.',
+    mdTagPrepared: 'Готово', mdTagUploaded: 'Загружено',
+    mdDownload: 'Скачать', mdRequestLabel: 'Заявка',
+    notifTitle: 'Уведомления', notifMarkAll: 'Отметить всё прочитанным',
+    notifEmpty: 'Уведомлений пока нет.', notifEmptyLong: 'Уведомлений пока нет. Здесь появятся ответы от Imverica и обновления статусов.',
+    notifImvericaReplied: 'Imverica ответили', notifStatus: 'Статус:',
+    notifRequest: 'Заявка',
+    footer: '© 2026 Imverica Legal Solutions · Не юридическая фирма · Юридических консультаций не даём · +1 (916) 399-3992',
+    errEmailInvalid: 'Пожалуйста, введите корректный email.',
+    errCodeShort: 'Введите код, который мы отправили на email.',
+    errCodeWrong: 'Неверный код.',
+    errSendFail: 'Не удалось отправить код. Попробуйте ещё раз.',
+    errSaveFail: 'Не удалось сохранить. Попробуйте ещё раз.',
+    errNameMissing: 'Пожалуйста, введите имя и фамилию.',
+    errPhoneShort: 'Пожалуйста, введите корректный номер телефона.',
+    errServerUnreach: 'Не удалось связаться с сервером.',
+    errFileBig: 'Файл слишком большой (максимум 4 МБ).',
+    errUploadFail: 'Не удалось загрузить.',
+    errUploadFailRetry: 'Не удалось загрузить. Попробуйте ещё раз.',
+    okUploaded: 'Загружено.',
+    msgUploading: 'Загружаем',
+    msgCodeSent: 'Код отправлен. Проверьте почту (и папку спам).',
+    msgDevMode: 'DEV MODE — ваш код',
+    msgDevTail: '(email-провайдер не настроен)',
+    msgNoRequests: 'У вас пока нет заявок.',
+    msgNoRequestsHint: 'Нажмите <strong>+ Новая заявка</strong>, чтобы создать первую.',
+    statusReady: 'Готово', statusReview: 'В работе', statusNew: 'Принято',
+    docsPrepLabel: 'Подготовлено Imverica — готово к скачиванию',
+    docsYourLabel: 'Ваши документы',
+    docAttach: '+ Прикрепить документ',
+    docRemove: 'Удалить',
+    defaultService: 'Запрос на подготовку документов',
+    nudgeNoFiles: 'Сначала создайте новую заявку — файлы прикрепляются к активной заявке.',
+    relJustNow: 'только что', relMin: 'мин назад', relHour: 'час', relHours: 'час.', relAgo: 'назад', relDay: 'день', relDays: 'дн.'
+  },
+  uk: {
+    navBack: '← На головну',
+    authWelcome: 'Ласкаво просимо',
+    authSignIn: 'Увійти в особистий кабінет',
+    authEmailSub: 'Введіть email — ми надішлемо одноразовий код для входу. Цей код буде вашим паролем — окрема реєстрація не потрібна.',
+    authEmailLabel: 'Email',
+    authSendCode: 'Надіслати код',
+    authSending: 'Надсилаємо…',
+    authAlmost: 'Майже готово',
+    authCheckEmail: 'Перевірте пошту',
+    authCodeSubPre: 'Ми надіслали 6-значний код для входу на',
+    authCodeSubPost: 'Він дійсний 10 хвилин.',
+    authCodeLabel: 'Код входу',
+    authSignInBtn: 'Увійти',
+    authSigningIn: 'Входимо…',
+    authUseDifferent: 'Використати інший email',
+    authResend: 'Надіслати код повторно',
+    profKicker: 'Останній крок',
+    profH1: 'Заповніть профіль',
+    profSub: 'Кілька деталей, щоб ми точно підготували ваші документи. Зберігається зашифровано, нікому не передається.',
+    profFirst: 'Ім\'я *', profFirstPh: 'Ім\'я',
+    profLast: 'Прізвище *', profLastPh: 'Прізвище',
+    profPhone: 'Телефон *',
+    profLegal: 'Повне ім\'я як в ID (необов\'язково)', profLegalPh: 'Ім\'я як у документах',
+    profSave: 'Зберегти і продовжити', profSaving: 'Зберігаємо…',
+    dashKicker: 'Imverica · Особистий кабінет',
+    dashWelcomeBack: 'З поверненням,',
+    dashSub: 'Завантажуйте документи, пишіть нам і відстежуйте заявки — все в одному місці.',
+    dashSignOut: 'Вийти',
+    tileNewTitle: '+ Нова заявка', tileNewSub: 'Створити пакет документів',
+    tileUploadTitle: 'Завантажити документи', tileUploadSub: 'Додати файли до заявки',
+    tileMsgTitle: 'Повідомлення', tileMsgSub: 'Запитати про ваші документи',
+    tileCallTitle: 'Зателефонувати',
+    tileDocsTitle: 'Мої документи', tileDocsSub: 'Усі файли по всіх заявках',
+    tileProfileTitle: 'Профіль', tileProfileSub: 'Ім\'я, телефон, налаштування',
+    tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
+    tileHelpTitle: 'Допомога і FAQ', tileHelpSub: 'Хто такий California LDA?',
+    ppTitle: 'Ваш профіль',
+    ppKeyName: 'Ім\'я', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Ім\'я як в ID',
+    ppEdit: 'Редагувати профіль', ppClose: 'Закрити',
+    chatTitle: 'Повідомлення',
+    chatSub: 'Поставте запитання про ваші документи. Ми відповідаємо тут — не юридична консультація.',
+    chatEmpty: 'Повідомлень поки немає. Напишіть нам нижче.',
+    chatInputPh: 'Введіть повідомлення…',
+    chatSend: 'Надіслати',
+    chatStaffName: 'Imverica', chatYouName: 'Ви',
+    mdTitle: 'Мої документи', mdTabAll: 'Усі', mdTabPrepared: 'Підготовлено Imverica', mdTabMine: 'Ваші завантаження',
+    mdLoading: 'Завантажуємо ваші документи…',
+    mdLoadFail: 'Не вдалося завантажити документи. Спробуйте ще раз.',
+    mdNoOrders: 'У вас поки немає заявок — створіть нову, щоб завантажити документи.',
+    mdNoneInView: 'Файлів у цьому вигляді поки немає.',
+    mdTagPrepared: 'Готово', mdTagUploaded: 'Завантажено',
+    mdDownload: 'Завантажити', mdRequestLabel: 'Заявка',
+    notifTitle: 'Сповіщення', notifMarkAll: 'Позначити все прочитаним',
+    notifEmpty: 'Сповіщень поки немає.', notifEmptyLong: 'Сповіщень поки немає. Тут з\'являться відповіді від Imverica та оновлення статусів.',
+    notifImvericaReplied: 'Imverica відповіли', notifStatus: 'Статус:',
+    notifRequest: 'Заявка',
+    footer: '© 2026 Imverica Legal Solutions · Не юридична фірма · Юридичних консультацій не надаємо · +1 (916) 399-3992',
+    errEmailInvalid: 'Будь ласка, введіть коректний email.',
+    errCodeShort: 'Введіть код, який ми надіслали на email.',
+    errCodeWrong: 'Невірний код.',
+    errSendFail: 'Не вдалося надіслати код. Спробуйте ще раз.',
+    errSaveFail: 'Не вдалося зберегти. Спробуйте ще раз.',
+    errNameMissing: 'Будь ласка, введіть ім\'я та прізвище.',
+    errPhoneShort: 'Будь ласка, введіть коректний номер телефону.',
+    errServerUnreach: 'Не вдалося зв\'язатися з сервером.',
+    errFileBig: 'Файл задовгий (максимум 4 МБ).',
+    errUploadFail: 'Не вдалося завантажити.',
+    errUploadFailRetry: 'Не вдалося завантажити. Спробуйте ще раз.',
+    okUploaded: 'Завантажено.',
+    msgUploading: 'Завантажуємо',
+    msgCodeSent: 'Код надіслано. Перевірте пошту (і папку спам).',
+    msgDevMode: 'DEV MODE — ваш код',
+    msgDevTail: '(email-провайдер не налаштовано)',
+    msgNoRequests: 'У вас поки немає заявок.',
+    msgNoRequestsHint: 'Натисніть <strong>+ Нова заявка</strong>, щоб створити першу.',
+    statusReady: 'Готово', statusReview: 'У роботі', statusNew: 'Прийнято',
+    docsPrepLabel: 'Підготовлено Imverica — готово до завантаження',
+    docsYourLabel: 'Ваші документи',
+    docAttach: '+ Прикріпити документ',
+    docRemove: 'Видалити',
+    defaultService: 'Запит на підготовку документів',
+    nudgeNoFiles: 'Спершу створіть нову заявку — файли прикріплюються до активної заявки.',
+    relJustNow: 'щойно', relMin: 'хв тому', relHour: 'год', relHours: 'год', relAgo: 'тому', relDay: 'день', relDays: 'дн.'
+  },
+  es: {
+    navBack: '← Volver al sitio principal',
+    authWelcome: 'Bienvenido',
+    authSignIn: 'Inicie sesión en su cuenta',
+    authEmailSub: 'Ingrese su email — le enviaremos un código de un solo uso. Este código será su contraseña — sin registro aparte.',
+    authEmailLabel: 'Email',
+    authSendCode: 'Enviarme un código',
+    authSending: 'Enviando…',
+    authAlmost: 'Casi listo',
+    authCheckEmail: 'Revise su email',
+    authCodeSubPre: 'Enviamos un código de 6 dígitos a',
+    authCodeSubPost: 'Expira en 10 minutos.',
+    authCodeLabel: 'Código de acceso',
+    authSignInBtn: 'Iniciar sesión',
+    authSigningIn: 'Iniciando sesión…',
+    authUseDifferent: 'Usar otro email',
+    authResend: 'Reenviar código',
+    profKicker: 'Un paso más',
+    profH1: 'Complete su perfil',
+    profSub: 'Algunos datos para preparar sus documentos con precisión. Almacenado cifrado, nunca compartido.',
+    profFirst: 'Nombre *', profFirstPh: 'Nombre',
+    profLast: 'Apellido *', profLastPh: 'Apellido',
+    profPhone: 'Teléfono *',
+    profLegal: 'Nombre legal completo (opcional, como en su ID)', profLegalPh: 'Nombre legal como aparece en sus documentos',
+    profSave: 'Guardar y continuar', profSaving: 'Guardando…',
+    dashKicker: 'Imverica · Cuenta personal',
+    dashWelcomeBack: 'Bienvenido,',
+    dashSub: 'Suba documentos, mensajéenos y siga sus solicitudes — todo en un solo lugar.',
+    dashSignOut: 'Cerrar sesión',
+    tileNewTitle: '+ Nueva solicitud', tileNewSub: 'Iniciar un paquete de documentos',
+    tileUploadTitle: 'Subir documentos', tileUploadSub: 'Adjuntar archivos a una solicitud',
+    tileMsgTitle: 'Mensajes', tileMsgSub: 'Pregunte sobre sus documentos',
+    tileCallTitle: 'Llamarnos',
+    tileDocsTitle: 'Mis documentos', tileDocsSub: 'Todos los archivos de todas las solicitudes',
+    tileProfileTitle: 'Perfil', tileProfileSub: 'Nombre, teléfono, ajustes',
+    tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
+    tileHelpTitle: 'Ayuda y FAQ', tileHelpSub: '¿Qué es un California LDA?',
+    ppTitle: 'Su perfil',
+    ppKeyName: 'Nombre', ppKeyPhone: 'Teléfono', ppKeyEmail: 'Email', ppKeyLegal: 'Nombre legal',
+    ppEdit: 'Editar perfil', ppClose: 'Cerrar',
+    chatTitle: 'Mensajes',
+    chatSub: 'Pregúntenos sobre sus documentos. Respondemos aquí — no es asesoría legal.',
+    chatEmpty: 'No hay mensajes aún. Envíenos una nota abajo.',
+    chatInputPh: 'Escriba su mensaje…',
+    chatSend: 'Enviar',
+    chatStaffName: 'Imverica', chatYouName: 'Usted',
+    mdTitle: 'Mis documentos', mdTabAll: 'Todos', mdTabPrepared: 'Preparados por Imverica', mdTabMine: 'Sus archivos',
+    mdLoading: 'Cargando sus documentos…',
+    mdLoadFail: 'No se pudieron cargar los documentos. Inténtelo de nuevo.',
+    mdNoOrders: 'No tiene solicitudes aún — inicie una Nueva solicitud para subir documentos.',
+    mdNoneInView: 'No hay archivos en esta vista aún.',
+    mdTagPrepared: 'Preparado', mdTagUploaded: 'Subido',
+    mdDownload: 'Descargar', mdRequestLabel: 'Solicitud',
+    notifTitle: 'Notificaciones', notifMarkAll: 'Marcar todo leído',
+    notifEmpty: 'No hay notificaciones aún.', notifEmptyLong: 'No hay notificaciones aún. Aquí aparecerán respuestas de Imverica y actualizaciones de estado.',
+    notifImvericaReplied: 'Imverica respondió', notifStatus: 'Estado:',
+    notifRequest: 'Solicitud',
+    footer: '© 2026 Imverica Legal Solutions · No es un bufete · No brindamos asesoría legal · +1 (916) 399-3992',
+    errEmailInvalid: 'Por favor, ingrese un email válido.',
+    errCodeShort: 'Ingrese el código que le enviamos por email.',
+    errCodeWrong: 'Código incorrecto.',
+    errSendFail: 'No se pudo enviar el código. Inténtelo de nuevo.',
+    errSaveFail: 'No se pudo guardar. Inténtelo de nuevo.',
+    errNameMissing: 'Por favor, ingrese su nombre y apellido.',
+    errPhoneShort: 'Por favor, ingrese un número de teléfono válido.',
+    errServerUnreach: 'No se pudo contactar al servidor.',
+    errFileBig: 'Archivo demasiado grande (máx. 4 MB).',
+    errUploadFail: 'La carga falló.',
+    errUploadFailRetry: 'La carga falló. Inténtelo de nuevo.',
+    okUploaded: 'Cargado.',
+    msgUploading: 'Cargando',
+    msgCodeSent: 'Código enviado. Revise su bandeja (y la carpeta de spam).',
+    msgDevMode: 'DEV MODE — su código es',
+    msgDevTail: '(proveedor de email no configurado)',
+    msgNoRequests: 'No tiene solicitudes aún.',
+    msgNoRequestsHint: 'Use <strong>+ Nueva solicitud</strong> para enviar la primera.',
+    statusReady: 'Listo', statusReview: 'En revisión', statusNew: 'Recibido',
+    docsPrepLabel: 'Preparado por Imverica — listo para descargar',
+    docsYourLabel: 'Sus documentos',
+    docAttach: '+ Adjuntar un documento',
+    docRemove: 'Eliminar',
+    defaultService: 'Solicitud de preparación de documentos',
+    nudgeNoFiles: 'Inicie una Nueva solicitud primero — los archivos se adjuntan a una solicitud activa.',
+    relJustNow: 'ahora', relMin: 'min atrás', relHour: 'hora', relHours: 'horas', relAgo: 'atrás', relDay: 'día', relDays: 'días'
+  }
+};
+
+function detectLocale(){
+  var q = new URLSearchParams(window.location.search).get('lang');
+  if (q && STRINGS[q]) return q;
+  try {
+    var ref = document.referrer || '';
+    if (ref){
+      var u = new URL(ref); var p = u.pathname || '';
+      if (p.startsWith('/ru/') || p === '/ru') return 'ru';
+      if (p.startsWith('/ua/') || p === '/ua') return 'uk';
+      if (p.startsWith('/mx/') || p === '/mx') return 'es';
+    }
+  } catch(_e){}
+  return 'en';
+}
+var CURRENT_LANG = detectLocale();
+var T = STRINGS[CURRENT_LANG] || STRINGS.en;
+
+function applyI18n(){
+  document.documentElement.lang = CURRENT_LANG === 'uk' ? 'uk' : (CURRENT_LANG === 'ru' ? 'ru' : (CURRENT_LANG === 'es' ? 'es' : 'en'));
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if (T[k]) el.textContent = T[k];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var k = el.getAttribute('data-i18n-placeholder');
+    if (T[k]) el.setAttribute('placeholder', T[k]);
+  });
+  document.querySelectorAll('.lang-switch a').forEach(function(a){
+    if (a.getAttribute('data-lang') === CURRENT_LANG) a.classList.add('active');
+  });
+}
+applyI18n();
+// ===== /i18n =====
+
 const $ = (id) => document.getElementById(id);
 function show(step){
   ['step-email','step-code','step-profile','step-dash'].forEach(s=>$(s).classList.toggle('hidden', s!==step));
@@ -552,27 +927,27 @@ async function api(action, payload){
 
 async function requestCode(isResend){
   const email = (isResend ? currentEmail : $('email-input').value).trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg('email-msg','error','Please enter a valid email address.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg('email-msg','error', T.errEmailInvalid); return; }
   currentEmail = email;
   const btn = isResend ? null : $('send-code-btn');
-  if (btn){ btn.disabled=true; btn.textContent='Sending…'; }
+  if (btn){ btn.disabled=true; btn.textContent=T.authSending; }
   clearMsg('email-msg'); clearMsg('code-msg');
   const r = await api('request-otp', { email });
-  if (btn){ btn.disabled=false; btn.textContent='Send me a code'; }
-  if (!r.ok){ msg(isResend?'code-msg':'email-msg','error', r.data.error || 'Could not send a code. Try again.'); return; }
+  if (btn){ btn.disabled=false; btn.textContent=T.authSendCode; }
+  if (!r.ok){ msg(isResend?'code-msg':'email-msg','error', r.data.error || T.errSendFail); return; }
   $('code-email').textContent = email;
   show('step-code'); $('code-input').focus();
-  if (r.data.devCode){ msg('code-msg','dev','DEV MODE — your code is '+r.data.devCode+' (email provider not configured)'); }
-  else { msg('code-msg','info','Code sent. Check your inbox (and spam folder).'); }
+  if (r.data.devCode){ msg('code-msg','dev', T.msgDevMode + ' ' + r.data.devCode + ' ' + T.msgDevTail); }
+  else { msg('code-msg','info', T.msgCodeSent); }
 }
 
 async function verifyCode(){
   const code = $('code-input').value.replace(/\D/g,'');
-  if (code.length!==6){ msg('code-msg','error','Enter the code we emailed you.'); return; }
-  const btn=$('verify-btn'); btn.disabled=true; btn.textContent='Signing in…';
+  if (code.length!==6){ msg('code-msg','error', T.errCodeShort); return; }
+  const btn=$('verify-btn'); btn.disabled=true; btn.textContent=T.authSigningIn;
   const r = await api('verify-otp', { email: currentEmail, code });
-  btn.disabled=false; btn.textContent='Sign in';
-  if (!r.ok){ msg('code-msg','error', r.data.error || 'Incorrect code.'); return; }
+  btn.disabled=false; btn.textContent=T.authSignInBtn;
+  if (!r.ok){ msg('code-msg','error', r.data.error || T.errCodeWrong); return; }
   loadDashboard();
 }
 
@@ -585,16 +960,16 @@ async function logout(){
 
 function badgeFor(status){
   const s=(status||'new').toLowerCase();
-  if (s.includes('ready')||s.includes('complete')||s.includes('done')) return ['ready','Ready'];
-  if (s.includes('review')||s.includes('progress')) return ['review','In review'];
-  return ['new','Received'];
+  if (s.includes('ready')||s.includes('complete')||s.includes('done')) return ['ready', T.statusReady];
+  if (s.includes('review')||s.includes('progress')) return ['review', T.statusReview];
+  return ['new', T.statusNew];
 }
 
 function renderOrders(orders){
   const box=$('orders'); box.textContent='';
   if (!orders.length){
     const e=document.createElement('div'); e.className='empty';
-    e.innerHTML='You have no requests yet.<br>Use <strong>+ New request</strong> to submit your first one.';
+    e.innerHTML= T.msgNoRequests + '<br>' + T.msgNoRequestsHint;
     box.appendChild(e); return;
   }
   orders.forEach(o=>{
@@ -606,7 +981,7 @@ function renderOrders(orders){
     const [bcls,btxt]=badgeFor(o.status);
     const badge=document.createElement('span'); badge.className='badge '+bcls; badge.textContent=btxt;
     top.appendChild(left); top.appendChild(badge);
-    const svc=document.createElement('div'); svc.className='order-service'; svc.textContent=o.service||'Document preparation request';
+    const svc=document.createElement('div'); svc.className='order-service'; svc.textContent=o.service || T.defaultService;
     const date=document.createElement('div'); date.className='order-date';
     date.textContent = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '';
     const sit=document.createElement('div'); sit.className='order-sit'; sit.textContent=o.situation||'';
@@ -616,17 +991,17 @@ function renderOrders(orders){
     const docs=document.createElement('div'); docs.className='docs';
     // Prepared by Imverica (download-only) — shown only when present
     const pwrap=document.createElement('div'); pwrap.id='prepwrap-'+o.id; pwrap.style.display='none'; pwrap.style.marginBottom='1.1rem';
-    const plabel=document.createElement('div'); plabel.className='docs-label'; plabel.style.color='#1a5a3a'; plabel.textContent='Prepared by Imverica — ready to download';
+    const plabel=document.createElement('div'); plabel.className='docs-label'; plabel.style.color='#1a5a3a'; plabel.textContent= T.docsPrepLabel;
     const plist=document.createElement('div'); plist.id='prep-'+o.id;
     pwrap.appendChild(plabel); pwrap.appendChild(plist);
     // Client's own uploads
-    const dlabel=document.createElement('div'); dlabel.className='docs-label'; dlabel.textContent='Your documents';
+    const dlabel=document.createElement('div'); dlabel.className='docs-label'; dlabel.textContent= T.docsYourLabel;
     const dlist=document.createElement('div'); dlist.id='docs-'+o.id;
     const input=document.createElement('input'); input.type='file'; input.style.display='none';
     input.accept='.pdf,.jpg,.jpeg,.png,.docx,.heic,.webp';
     input.addEventListener('change',()=>{ if(input.files[0]) uploadFile(o.id, input.files[0], dmsg); input.value=''; });
     const add=document.createElement('button'); add.className='doc-add'; add.type='button';
-    add.textContent='+ Attach a document'; add.onclick=()=>input.click();
+    add.textContent= T.docAttach; add.onclick=()=>input.click();
     const dmsg=document.createElement('div'); dmsg.className='doc-msg';
     docs.appendChild(pwrap); docs.appendChild(dlabel); docs.appendChild(dlist); docs.appendChild(add); docs.appendChild(input); docs.appendChild(dmsg);
     card.appendChild(docs);
@@ -644,7 +1019,7 @@ function fileRow(orderId, f, removable){
   a.href='/api/upload?orderId='+encodeURIComponent(orderId)+'&fileId='+encodeURIComponent(f.fileId);
   const sz=document.createElement('span'); sz.className='sz'; sz.textContent=' ('+fmtSize(f.size)+')';
   left.appendChild(a); left.appendChild(sz); row.appendChild(left);
-  if(removable){ const rm=document.createElement('span'); rm.className='rm'; rm.textContent='×'; rm.title='Remove'; rm.onclick=()=>removeFile(orderId,f.fileId); row.appendChild(rm); }
+  if(removable){ const rm=document.createElement('span'); rm.className='rm'; rm.textContent='×'; rm.title= T.docRemove; rm.onclick=()=>removeFile(orderId,f.fileId); row.appendChild(rm); }
   return row;
 }
 
@@ -668,17 +1043,17 @@ async function loadFiles(orderId){
 
 function uploadFile(orderId, file, msgEl){
   msgEl.className='doc-msg';
-  if(file.size>4*1024*1024){ msgEl.className='doc-msg err'; msgEl.textContent='File too large (max 4 MB).'; return; }
-  msgEl.textContent='Uploading '+file.name+'…';
+  if(file.size>4*1024*1024){ msgEl.className='doc-msg err'; msgEl.textContent= T.errFileBig; return; }
+  msgEl.textContent= T.msgUploading + ' ' + file.name + '…';
   const reader=new FileReader();
   reader.onload=async()=>{
     try{
       const r=await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64:String(reader.result)})});
       const d=await r.json();
-      if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error||'Upload failed.'; return; }
-      msgEl.className='doc-msg ok'; msgEl.textContent='Uploaded.'; loadFiles(orderId);
-    }catch(e){ msgEl.className='doc-msg err'; msgEl.textContent='Upload failed. Try again.'; }
+      if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error || T.errUploadFail; return; }
+      msgEl.className='doc-msg ok'; msgEl.textContent= T.okUploaded; loadFiles(orderId);
+    }catch(e){ msgEl.className='doc-msg err'; msgEl.textContent= T.errUploadFailRetry; }
   };
   reader.readAsDataURL(file);
 }
@@ -725,10 +1100,10 @@ async function loadMessages(){
     if(msgs.length===chatLastCount) return; // no change, avoid scroll jump
     chatLastCount=msgs.length;
     thread.textContent='';
-    if(!msgs.length){ const e=document.createElement('div'); e.className='chat-empty'; e.textContent='No messages yet. Send us a note below.'; thread.appendChild(e); return; }
+    if(!msgs.length){ const e=document.createElement('div'); e.className='chat-empty'; e.textContent= T.chatEmpty; thread.appendChild(e); return; }
     msgs.forEach(m=>{
       const b=document.createElement('div'); b.className='bubble '+(m.from==='staff'?'staff':'client');
-      b.innerHTML=escText(m.text)+'<span class="bmeta">'+(m.from==='staff'?'Imverica':'You')+' · '+new Date(m.ts).toLocaleString()+'</span>';
+      b.innerHTML=escText(m.text)+'<span class="bmeta">'+(m.from==='staff' ? T.chatStaffName : T.chatYouName)+' · '+new Date(m.ts).toLocaleString()+'</span>';
       thread.appendChild(b);
     });
     thread.scrollTop=thread.scrollHeight;
@@ -763,15 +1138,15 @@ async function saveProfile(){
   clearMsg('profile-msg');
   const first=$('pf-first').value.trim(), last=$('pf-last').value.trim();
   const phone=$('pf-phone').value.trim(), legal=$('pf-legal').value.trim();
-  if(!first || !last){ msg('profile-msg','error','Please enter your first and last name.'); return; }
-  if(phone.replace(/\D/g,'').length<10){ msg('profile-msg','error','Please enter a valid phone number.'); return; }
-  const btn=$('pf-save'); btn.disabled=true; btn.textContent='Saving…';
+  if(!first || !last){ msg('profile-msg','error', T.errNameMissing); return; }
+  if(phone.replace(/\D/g,'').length<10){ msg('profile-msg','error', T.errPhoneShort); return; }
+  const btn=$('pf-save'); btn.disabled=true; btn.textContent= T.profSaving;
   try{
     const r=await fetch('/api/profile',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:first,lastName:last,phone:phone,legalName:legal})});
     const d=await r.json();
-    if(!r.ok || !d.ok){ btn.disabled=false; btn.textContent='Save and continue'; msg('profile-msg','error',d.error||'Could not save. Try again.'); return; }
+    if(!r.ok || !d.ok){ btn.disabled=false; btn.textContent= T.profSave; msg('profile-msg','error',d.error || T.errSaveFail); return; }
     loadDashboard();
-  }catch(e){ btn.disabled=false; btn.textContent='Save and continue'; msg('profile-msg','error','Could not reach the server.'); }
+  }catch(e){ btn.disabled=false; btn.textContent= T.profSave; msg('profile-msg','error', T.errServerUnreach); }
 }
 
 // Latest dashboard data — used by the quick-tile actions (profile panel,
@@ -834,7 +1209,7 @@ function quickUpload(){
     orders.style.outline = '2px dashed var(--terracotta-deep)';
     setTimeout(() => { orders.style.outline = ''; }, 2400);
   }
-  msg('dash-msg','info','Start a New request first — files attach to an active request.');
+  msg('dash-msg','info', T.nudgeNoFiles);
   setTimeout(() => clearMsg('dash-msg'), 4000);
 }
 
@@ -888,17 +1263,17 @@ function filterMyDocuments(f){
 async function loadMyDocuments(){
   const body = document.getElementById('md-body');
   if (!body) return;
-  body.innerHTML = '<div class="md-empty">Loading your documents…</div>';
+  body.innerHTML = '<div class="md-empty">' + T.mdLoading + '</div>';
   try {
     const accountRes = await fetch('/api/account', { credentials:'include' });
     const account = await accountRes.json();
     if (!account || !account.ok) {
-      body.innerHTML = '<div class="md-empty">Could not load documents. Please try again.</div>';
+      body.innerHTML = '<div class="md-empty">' + T.mdLoadFail + '</div>';
       return;
     }
     const orders = account.orders || [];
     if (!orders.length){
-      body.innerHTML = '<div class="md-empty">You have no requests yet — start a New request to upload documents.</div>';
+      body.innerHTML = '<div class="md-empty">' + T.mdNoOrders + '</div>';
       return;
     }
     // Fetch files for each order in parallel.
@@ -910,7 +1285,7 @@ async function loadMyDocuments(){
         if (d && d.ok && Array.isArray(d.files)){
           d.files.forEach(f => allFiles.push({
             orderId: o.id,
-            orderLabel: (o.service || o.serviceLabel || 'Request') + (o.formCode ? ' · ' + o.formCode : ''),
+            orderLabel: (o.service || o.serviceLabel || T.mdRequestLabel) + (o.formCode ? ' · ' + o.formCode : ''),
             file: f
           }));
         }
@@ -919,7 +1294,7 @@ async function loadMyDocuments(){
     mdAllFiles = allFiles;
     renderMyDocuments();
   } catch(e){
-    body.innerHTML = '<div class="md-empty">Could not load documents. Please try again.</div>';
+    body.innerHTML = '<div class="md-empty">' + T.mdLoadFail + '</div>';
   }
 }
 function renderMyDocuments(){
@@ -929,7 +1304,7 @@ function renderMyDocuments(){
   if (mdFilter === 'prepared') items = items.filter(x => x.file.source === 'prepared');
   if (mdFilter === 'mine')     items = items.filter(x => x.file.source !== 'prepared');
   if (!items.length){
-    body.innerHTML = '<div class="md-empty">No files in this view yet.</div>';
+    body.innerHTML = '<div class="md-empty">' + T.mdNoneInView + '</div>';
     return;
   }
   // Group by order.
@@ -950,8 +1325,8 @@ function renderMyDocuments(){
       html += '<span class="md-file-icon">' + escText(ext) + '</span>';
       html += '<span class="md-file-name">' + escText(f.name) + '</span>';
       html += '<span class="md-file-meta">' + fmtSize(f.size) + '</span>';
-      html += '<span class="md-file-tag">' + (isPrep ? 'Prepared' : 'Uploaded') + '</span>';
-      html += '<a class="md-file-dl" href="/api/upload?orderId=' + encodeURIComponent(orderId) + '&fileId=' + encodeURIComponent(f.fileId) + '">Download</a>';
+      html += '<span class="md-file-tag">' + (isPrep ? T.mdTagPrepared : T.mdTagUploaded) + '</span>';
+      html += '<a class="md-file-dl" href="/api/upload?orderId=' + encodeURIComponent(orderId) + '&fileId=' + encodeURIComponent(f.fileId) + '">' + T.mdDownload + '</a>';
       html += '</div>';
     });
     html += '</div>';
@@ -990,7 +1365,7 @@ async function loadNotifications(){
       d.messages.filter(m => m.from === 'staff').slice(-5).reverse().forEach(m => {
         items.push({
           ts: new Date(m.ts).getTime(),
-          title: 'Imverica replied',
+          title: T.notifImvericaReplied,
           text: (m.text || '').slice(0, 140) + ((m.text||'').length > 140 ? '…' : ''),
           onClick: 'closeNotifications(); focusChat();'
         });
@@ -1007,8 +1382,8 @@ async function loadNotifications(){
         if (st && st !== 'new'){
           items.push({
             ts: new Date(o.updatedAt || o.createdAt || Date.now()).getTime(),
-            title: 'Status: ' + (st.includes('ready') ? 'Ready' : st.includes('review') ? 'In review' : st),
-            text: 'Request ' + o.id + ' · ' + (o.service || o.serviceLabel || ''),
+            title: T.notifStatus + ' ' + (st.includes('ready') ? T.statusReady : st.includes('review') ? T.statusReview : st),
+            text: T.notifRequest + ' ' + o.id + ' · ' + (o.service || o.serviceLabel || ''),
             onClick: 'closeNotifications(); scrollToOrders();'
           });
         }
@@ -1017,7 +1392,7 @@ async function loadNotifications(){
   } catch(e){}
   items.sort((a,b) => b.ts - a.ts);
   if (!items.length){
-    list.innerHTML = '<div class="notif-empty">No notifications yet. Replies from Imverica and status updates will show here.</div>';
+    list.innerHTML = '<div class="notif-empty">' + T.notifEmptyLong + '</div>';
     return;
   }
   list.innerHTML = items.map(it => {
@@ -1035,10 +1410,10 @@ async function loadNotifications(){
 }
 function relativeTime(d){
   const diff = (Date.now() - d.getTime()) / 1000;
-  if (diff < 60) return 'just now';
-  if (diff < 3600) return Math.floor(diff/60) + ' min ago';
-  if (diff < 86400) return Math.floor(diff/3600) + ' hour' + (Math.floor(diff/3600)===1?'':'s') + ' ago';
-  if (diff < 86400*7) return Math.floor(diff/86400) + ' day' + (Math.floor(diff/86400)===1?'':'s') + ' ago';
+  if (diff < 60) return T.relJustNow;
+  if (diff < 3600) return Math.floor(diff/60) + ' ' + T.relMin;
+  if (diff < 86400) { const n = Math.floor(diff/3600); return n + ' ' + (n===1 ? T.relHour : T.relHours) + ' ' + T.relAgo; }
+  if (diff < 86400*7) { const n = Math.floor(diff/86400); return n + ' ' + (n===1 ? T.relDay : T.relDays) + ' ' + T.relAgo; }
   return d.toLocaleDateString();
 }
 // Close notifications/modal on Escape.

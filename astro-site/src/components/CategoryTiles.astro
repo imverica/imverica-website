@@ -1,0 +1,91 @@
+---
+/**
+ * Generic category-tile grid (same shell as ImmigrationCategories), used on
+ * Family Law / Small Claims / Business / About pages so each section has a
+ * consistent visual entry-point. Tiles fade in on scroll because the .cat-tile
+ * class is wired into the global reveal observer in BaseLayout.
+ *
+ * Props: kicker, heading, intro (already-translated by the parent page),
+ * tiles[] with { icon (emoji), title, desc, href, color (CSS var or hex) }.
+ */
+interface Tile {
+  icon: string;
+  title: string;
+  desc: string;
+  href: string;
+  color?: string;
+}
+interface Props {
+  kicker?: string;
+  heading: string;
+  intro?: string;
+  tiles: Tile[];
+}
+const { kicker, heading, intro, tiles } = Astro.props as Props;
+---
+<section class="cat-tiles-section">
+  <div class="cat-tiles-inner">
+    {kicker && <div class="cat-tiles-kicker">{kicker}</div>}
+    <h2>{heading}</h2>
+    {intro && <p>{intro}</p>}
+    <div class="cat-tiles-grid">
+      {tiles.map((t) => (
+        <a class="cat-tile" href={t.href}>
+          <div class="cat-tile-icon" style={`background:${t.color || 'var(--navy)'};`}>
+            <span aria-hidden="true">{t.icon}</span>
+          </div>
+          <div class="cat-tile-title">{t.title}</div>
+          <div class="cat-tile-desc">{t.desc}</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cat-tiles-section { padding: 60px 1.5rem 32px; background: #fff; }
+  .cat-tiles-inner { max-width: 1200px; margin: 0 auto; }
+  .cat-tiles-kicker {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+    text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 10px;
+  }
+  .cat-tiles-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+  .cat-tiles-section > .cat-tiles-inner > p {
+    color: #3a4a5e; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 780px;
+  }
+  .cat-tiles-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  @media (max-width: 980px) { .cat-tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .cat-tiles-grid { grid-template-columns: 1fr; } }
+  .cat-tile {
+    display: block;
+    background: #fff;
+    border: 1px solid rgba(40,30,20,0.10);
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .cat-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(40,30,20,0.10);
+    border-color: rgba(26,46,74,0.20);
+  }
+  .cat-tile-icon {
+    width: 60px; height: 60px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 30px;
+    margin-bottom: 14px;
+    box-shadow: 0 8px 18px rgba(26,46,74,0.22);
+  }
+  .cat-tile-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--navy-dark);
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+  .cat-tile-desc { font-size: 13px; line-height: 1.6; color: #4a5a6e; }
+</style>

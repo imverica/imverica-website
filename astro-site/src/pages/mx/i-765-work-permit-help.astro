@@ -1,0 +1,92 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos I-765 — permiso de trabajo (EAD) | Imverica';
+const description = 'California Licensed LDA prepara Form I-765 — Application for Employment Authorization. Pending asylum (c)(8), adjustment (c)(9), TPS (c)(19/a)(12), DACA (c)(33) y otras categorías. Entrevista multilingüe a precio fijo.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-765 Employment Authorization Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para Form I-765 (Application for Employment Authorization) bajo la dirección del solicitante.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-765-work-permit-help"
+  slug="/i-765-work-permit-help" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Employment Authorization · 8 CFR §274a.12"
+    heading="I-765 — Application for Employment Authorization"
+    sub="Preparamos el paquete I-765 para cualquier categoría de eligibility — pending asylum (c)(8), adjustment of status (c)(9), TPS (a)(12)/(c)(19), DACA (c)(33), parolee (c)(11), cónyuge de L-1/E (a)(18), y más. Precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=I-765', text: 'Comenzar paquete I-765' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus (concurrent I-765 c)(9))' },
+    { href: '/mx/i-589-asylum-help', label: 'I-589 — Pending asylum ((c)(8) EAD tras 150 días)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario I-765 es la solicitud de Employment Authorization
+      Document (EAD), la tarjeta física que un no-ciudadano necesita
+      para acreditar que puede trabajar legalmente en EE. UU. Preparamos
+      el I-765 bajo la dirección del solicitante, eligiendo la categoría
+      de eligibility correcta según su estatus y reuniendo la evidencia
+      de respaldo.
+    </p>
+
+    <h2>Categorías de eligibility comunes que preparamos</h2>
+    <ul>
+      <li><strong>(c)(8)</strong> — Solicitante con asilo pendiente. Elegible 150 días después de presentar I-589, más el clock de 30 días, sin negación de I-589.</li>
+      <li><strong>(c)(9)</strong> — Solicitante con I-485 (ajuste de estatus) pendiente. Concurrent filing común con AOS familiar o por asilo.</li>
+      <li><strong>(a)(12)</strong> / <strong>(c)(19)</strong> — Temporary Protected Status (TPS), inicial / renewal. Las designations varían por país y fecha de re-designation.</li>
+      <li><strong>(c)(33)</strong> — DACA (Deferred Action for Childhood Arrivals), inicial / renewal.</li>
+      <li><strong>(c)(11)</strong> — Parolee (humanitarian parole, U4U, parolees CHNV).</li>
+      <li><strong>(a)(18)</strong> — Cónyuge de L-1 intracompany transferee.</li>
+      <li><strong>(c)(26)</strong> — Cónyuge de H-1B con I-140 aprobado.</li>
+      <li><strong>(c)(14)</strong> — Receptor de deferred action.</li>
+      <li><strong>(c)(16)</strong> — Self-petitioning religious worker, Special Immigrant Juvenile, etc.</li>
+    </ul>
+
+    <h2>Lo que necesitamos de usted para I-765</h2>
+    <ul>
+      <li>Información biográfica (nombre legal, nombres anteriores, DOB, país de nacimiento, país de ciudadanía)</li>
+      <li>SSN si fue emitido antes, o solicitud de tarjeta SSA mediante la propia I-765</li>
+      <li>Direcciones actuales y anteriores en EE. UU.</li>
+      <li>El I-94 más reciente o admission record; página biográfica del pasaporte; cualquier EAD previa</li>
+      <li>Evidencia de la categoría de eligibility (recibo de I-589 pendiente para (c)(8), I-485 pendiente para (c)(9), TPS registration para (a)(12), etc.)</li>
+      <li>Dos fotos passport-style (proporcionamos la especificación)</li>
+    </ul>
+
+    <h2>Filing fee y fee waiver</h2>
+    <p>
+      El costo de presentación del I-765 depende de la categoría y de si
+      se presenta con I-485 concurrente — algunas categorías no pagan
+      tarifa separada si se presentan con el formulario subyacente. El
+      Formulario I-912 fee waiver está disponible para solicitantes
+      bajo el umbral de ingresos o que reciben ciertos beneficios
+      means-tested. Preparamos el I-912 cuando aplica.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> Immigration and Nationality Act §274A
+      (employment authorization); 8 C.F.R. §274a.12 (categorías de
+      extranjeros autorizados a trabajar); 8 C.F.R. §274a.13
+      (solicitud); USCIS Policy Manual Volume 10 (Employment
+      Authorization).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Inicie su solicitud de permiso de trabajo I-765"
+    sub="Entrevista multilingüe. Pause y continúe. Precio fijo. Preparación de documentos bajo su dirección — sin asesoría legal."
+    primaryHref="/#get-started?form=I-765"
+    primaryText="Comenzar entrevista I-765"
+  />
+</BaseLayout>

@@ -1,5 +1,5 @@
 ---
-import { FOOTER, localizedPathSafe, type Locale } from '~/data/i18n';
+import { FOOTER, type Locale } from '~/data/i18n';
 
 interface Props {
   lang?: Locale;
@@ -9,40 +9,21 @@ const f = FOOTER[lang];
 const year = new Date().getFullYear();
 const disclaimer = f.disclaimer.replace('{year}', String(year));
 ---
-<footer class="site-footer">
-  <div class="site-footer-inner">
-    <div>
-      <div class="site-brand-name" style="color:#fff;font-size:24px;">Imverica</div>
-      <div class="site-footer-info" style="margin-top:0.5rem;">
-        {f.brandLine}<br />
-        +1 (916) 399-3992 · imverica.com
-      </div>
-    </div>
-    <div>
-      <strong>{f.servicesUscis}</strong>
-      <div class="site-footer-info">
-        <a href="/immigration">USCIS &amp; immigration court</a><br />
-        <a href={localizedPathSafe(lang, '/n-400-citizenship-help')}>Naturalization</a><br />
-        <a href={localizedPathSafe(lang, '/i-130-family-petition')}>Family petition</a><br />
-        <a href={localizedPathSafe(lang, '/i-589-asylum-help')}>Asylum</a>
-      </div>
-    </div>
-    <div>
-      <strong>{f.servicesCivil}</strong>
-      <div class="site-footer-info">
-        <a href={localizedPathSafe(lang, '/fl')}>Family law</a><br />
-        <a href={localizedPathSafe(lang, '/sc')}>Small claims</a><br />
-        <a href={localizedPathSafe(lang, '/california-unlawful-detainer')}>Unlawful detainer</a><br />
-        <a href="/business">Business filings</a>
-      </div>
-    </div>
-    <div>
-      <strong>{f.about}</strong>
-      <div class="site-footer-info">
-        <a href={localizedPathSafe(lang, '/lda')}>What is an LDA?</a><br />
-        <a href="/account.html">Client Portal</a>
-      </div>
+<footer class="site-footer site-footer--lean">
+  <div class="site-footer-brand">
+    <div class="site-brand-name">Imverica</div>
+    <div class="site-footer-info">
+      {f.brandLine}<br />
+      +1 (916) 399-3992 · imverica.com
     </div>
   </div>
   <div class="site-footer-bottom">{disclaimer}</div>
 </footer>
+
+<style>
+  .site-footer--lean { padding: 40px 2rem 28px; text-align: center; }
+  .site-footer--lean .site-footer-brand { margin-bottom: 18px; }
+  .site-footer--lean .site-brand-name { color: #fff; font-size: 24px; margin-bottom: 6px; }
+  .site-footer--lean .site-footer-info { color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.6; }
+  .site-footer--lean .site-footer-bottom { color: rgba(255,255,255,0.55); font-size: 12px; line-height: 1.6; max-width: 880px; margin: 0 auto; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+</style>

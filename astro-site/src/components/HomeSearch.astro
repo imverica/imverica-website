@@ -1,5 +1,63 @@
 ---
-const examples = ['Family petition', 'Response to divorce', 'Small claims', 'Elder protection'];
+import type { Locale } from '~/data/i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'en' } = Astro.props;
+
+const STRINGS = {
+  en: {
+    placeholder: 'Enter a form number or describe what you need prepared...',
+    aria: 'Describe the document you need prepared',
+    submit: 'Find possible forms',
+    examplesLabel: 'Common document preparation examples',
+    examples: ['Family petition', 'Response to divorce', 'Small claims', 'Elder protection'],
+    metaA: 'Document preparation only',
+    metaB: 'No legal advice',
+    metaC: 'English · Russian · Ukrainian · Spanish',
+    callAria: 'Call Imverica at +1 916 399 3992',
+    seeServices: 'See services'
+  },
+  ru: {
+    placeholder: 'Введите номер формы или опишите, какой документ нужно подготовить...',
+    aria: 'Опишите документ, который нужно подготовить',
+    submit: 'Найти подходящие формы',
+    examplesLabel: 'Примеры запросов',
+    examples: ['Семейная петиция', 'Ответ на развод', 'Малый иск', 'Защита пожилых'],
+    metaA: 'Только подготовка документов',
+    metaB: 'Юридических консультаций не даём',
+    metaC: 'English · Русский · Українська · Español',
+    callAria: 'Позвонить в Imverica +1 916 399 3992',
+    seeServices: 'Услуги'
+  },
+  uk: {
+    placeholder: 'Введіть номер форми або опишіть, який документ потрібно підготувати...',
+    aria: 'Опишіть документ, який потрібно підготувати',
+    submit: 'Знайти відповідні форми',
+    examplesLabel: 'Приклади запитів',
+    examples: ['Сімейна петиція', 'Відповідь на розлучення', 'Малий позов', 'Захист людей похилого віку'],
+    metaA: 'Лише підготовка документів',
+    metaB: 'Юридичних порад не надаємо',
+    metaC: 'English · Русский · Українська · Español',
+    callAria: 'Зателефонувати до Imverica +1 916 399 3992',
+    seeServices: 'Послуги'
+  },
+  es: {
+    placeholder: 'Ingrese un número de formulario o describa lo que necesita preparar...',
+    aria: 'Describa el documento que necesita preparar',
+    submit: 'Encontrar formularios posibles',
+    examplesLabel: 'Ejemplos comunes',
+    examples: ['Petición familiar', 'Respuesta a divorcio', 'Reclamos menores', 'Protección de mayores'],
+    metaA: 'Solo preparación de documentos',
+    metaB: 'No brindamos asesoría legal',
+    metaC: 'English · Русский · Українська · Español',
+    callAria: 'Llamar a Imverica +1 916 399 3992',
+    seeServices: 'Servicios'
+  }
+} as const;
+
+const t = STRINGS[lang] || STRINGS.en;
 ---
 
 <div class="ai-finder" id="aiFinder">
@@ -8,37 +66,37 @@ const examples = ['Family petition', 'Response to divorce', 'Small claims', 'Eld
       id="aiFinderInput"
       name="question"
       rows="4"
-      placeholder="Enter a form number or describe what you need prepared..."
-      aria-label="Describe the document you need prepared"
+      placeholder={t.placeholder}
+      aria-label={t.aria}
     ></textarea>
-    <button class="ai-finder-submit" type="submit" aria-label="Find possible forms">
+    <button class="ai-finder-submit" type="submit" aria-label={t.submit}>
       <span aria-hidden="true">→</span>
     </button>
   </form>
   <div class="ai-result" id="aiFinderResult" aria-live="polite"></div>
 </div>
 
-<div class="ai-examples" aria-label="Common document preparation examples">
-  {examples.map((example) => (
+<div class="ai-examples" aria-label={t.examplesLabel}>
+  {t.examples.map((example) => (
     <button type="button" class="ai-example" data-ai-example={example}>{example}</button>
   ))}
 </div>
 
 <div class="ai-finder-meta">
-  <span>Document preparation only</span>
-  <span>No legal advice</span>
-  <span>English · Russian · Ukrainian · Spanish</span>
+  <span>{t.metaA}</span>
+  <span>{t.metaB}</span>
+  <span>{t.metaC}</span>
 </div>
 
 <div class="ai-hero-contact">
-  <a class="hero-phone" href="tel:+19163993992" aria-label="Call Imverica at +1 916 399 3992">
+  <a class="hero-phone" href="tel:+19163993992" aria-label={t.callAria}>
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="7" y="2" width="10" height="20" rx="2"></rect>
       <path d="M11 18h2"></path>
     </svg>
     <span>+1 (916) 399-3992</span>
   </a>
-  <a class="ai-services-link" href="/immigration">See services</a>
+  <a class="ai-services-link" href="/immigration">{t.seeServices}</a>
 </div>
 
 <script>

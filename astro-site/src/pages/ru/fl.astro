@@ -1,0 +1,123 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Калифорнийское семейное право — подготовка форм (FL-100, FL-300) | Imverica';
+const description = 'California Licensed LDA готовит формы семейного права — FL-100 (заявление о расторжении), FL-120 (ответ), FL-150 (income & expense), FL-300 (request for order), FL-105 UCCJEA, FL-160 (property), FW-001 (fee waiver). Фиксированная цена.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Family Law Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов семейного права Калифорнии по поручению стороны. Развод, separation, parentage, custody, support.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/fl"
+  slug="/fl" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Family Code §2330 et seq."
+    heading="FL-100, FL-300 — Расторжение брака, опека, алименты"
+    sub="Готовим все стандартные формы FL- и FW- семейного права по вашему поручению — petition (FL-100), summons (FL-110), Request for Order (FL-300), financial disclosures, UCCJEA, и fee-waiver. Многоязычная анкета по фиксированной цене."
+    ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Начать пакет семейного права' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Выберите направление"
+    heading="California Family Law"
+    intro="Нажмите любую плитку, чтобы начать пакет или узнать о формах."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Развод',            desc: 'Заявление о разводе (no-fault), summons, service.',     href: '/#get-started?form=FL-100',  color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Опека / Алименты',  desc: 'Request for Order: временные приказы, изменение.',      href: '/#get-started?form=FL-300',  color: 'var(--terracotta)' },
+      { icon: '💰', title: 'FL-150 — Доходы и расходы',  desc: 'Финансовые disclosures для support и judgment.',         href: '/#get-started?form=FL-150',  color: 'var(--sage)' },
+      { icon: '🏠', title: 'FL-160 — Имущество',         desc: 'Декларация community / separate property.',              href: '/#get-started?form=FL-160',  color: 'var(--gold)' },
+      { icon: '🛡️', title: 'DV-100 — Restraining order', desc: 'Domestic-violence TRO + RO After Hearing.',             href: '/ru/california-restraining-orders', color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Декларация о юрисдикции опеки над детьми.',              href: '/#get-started?form=FL-105', color: 'var(--navy-light)' },
+      { icon: '📝', title: 'FL-120 — Ответ',             desc: 'Ответ респондента в течение 30 дней с service.',         href: '/#get-started?form=FL-120', color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Освобождение от судебной пошлины при квалификации.',    href: '/#get-started?form=FW-001', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/california-restraining-orders', label: 'California restraining orders (DV / CH)' },
+    { href: '/ru/sc', label: 'California малые иски (SC-100)' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Семейное право Калифорнии охватывает расторжение брака и
+      зарегистрированных domestic partnerships, юридическое разделение
+      (legal separation), аннулирование (nullity), установление
+      отцовства (parentage), опеку и порядок общения, алименты на детей и
+      на супруга, а также restraining orders внутри семейного дела. Наша
+      роль — подготовка документов по вашему поручению; мы не даём
+      юридических консультаций, но готовим каждую стандартную форму FL-
+      и FW- аккуратно и в срок.
+    </p>
+
+    <h2>Расторжение брака — стандартный путь</h2>
+    <ol>
+      <li><strong>Petition (FL-100).</strong> Подаёт любой из супругов. Калифорния — no-fault штат: «irreconcilable differences» — стандартная причина.</li>
+      <li><strong>Summons (FL-110)</strong> автоматически вводит временные restraining orders, запрещающие крупные перемещения активов, вывоз детей из штата и смену получателей страховок.</li>
+      <li><strong>Service.</strong> Респондент получает документы лично (FL-115).</li>
+      <li><strong>Response (FL-120).</strong> У респондента 30 дней на ответ. Без ответа суд может вынести default по истечении 6-месячного waiting period.</li>
+      <li><strong>Financial disclosures (FL-140 + FL-142 или FL-160 + FL-150).</strong> Обе стороны обмениваются preliminary disclosures в течение 60 дней с подачи и final disclosures до judgment.</li>
+      <li><strong>Переговоры / медиация / судебное разбирательство.</strong> Большинство дел заканчиваются соглашением. Спорные идут на short cause или long cause trial.</li>
+      <li><strong>Judgment (FL-180 + FL-190).</strong> Суд выносит решение. Статус «single» вступает в силу через 6 месяцев и 1 день после service.</li>
+    </ol>
+
+    <h2>Формы, которые мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакеты семейного права</strong>
+      <ul>
+        <li><strong>FL-100</strong> — Petition (Marriage / Domestic Partnership)</li>
+        <li><strong>FL-105 / UCCJEA</strong> — Declaration по Uniform Child Custody Jurisdiction Act (обязательна при несовершеннолетних детях)</li>
+        <li><strong>FL-110</strong> — Summons (Family Law)</li>
+        <li><strong>FL-115</strong> — Proof of Service of Summons</li>
+        <li><strong>FL-117</strong> — Notice and Acknowledgment of Receipt</li>
+        <li><strong>FL-120</strong> — Response (Marriage / Domestic Partnership)</li>
+        <li><strong>FL-140</strong> — Declaration of Disclosure</li>
+        <li><strong>FL-141</strong> — Declaration Regarding Service of Declaration of Disclosure</li>
+        <li><strong>FL-142</strong> — Schedule of Assets and Debts</li>
+        <li><strong>FL-150</strong> — Income and Expense Declaration</li>
+        <li><strong>FL-160</strong> — Property Declaration</li>
+        <li><strong>FL-180 / FL-190</strong> — Judgment and Notice of Entry of Judgment</li>
+        <li><strong>FL-300</strong> — Request for Order (временные приказы, изменение, contempt, и др.)</li>
+        <li><strong>FL-311</strong> — Child Custody and Visitation Attachment</li>
+        <li><strong>FL-341</strong> — Child Custody and Visitation Order Attachment</li>
+        <li><strong>FL-330</strong> — Proof of Personal Service</li>
+        <li><strong>FW-001 / FW-003</strong> — Запрос и приказ о fee waiver</li>
+      </ul>
+    </div>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Мы не ведём переговоры от вашего имени, не составляем
+      индивидуальные marital settlement agreements, требующие
+      юридического анализа community-property, и не представляем вас на
+      слушаниях. Большинство семейных дел заканчиваются stipulation,
+      которое мы можем оформить в стандартной форме (FL-130, FL-180
+      attachments). Спорные дела об опеке с высоким уровнем конфликта,
+      сложные community-property вопросы или обвинения в
+      domestic-violence лучше передать лицензированному
+      family-law-адвокату — мы можем дать referral.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Family Code §2330 (petition
+      о расторжении); §§3010-3032 (custody jurisdiction); §§3040-3041
+      (custody factors); §4055 (statewide uniform child support
+      guideline); §4320 (spousal support factors); §§2104-2107
+      (disclosure requirements); §§297-299.6 (registered domestic
+      partnerships). California Rules of Court 5.50-5.435 (family law
+      rules).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-100" primaryText="Начать заявку по семейному праву" />
+</BaseLayout>

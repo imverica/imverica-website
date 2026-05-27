@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import ImmigrationCategories from '~/components/ImmigrationCategories.astro';
 import ServiceSections from '~/components/ServiceSections.astro';
 
 const title = 'USCIS & EOIR Immigration Document Preparation | Imverica Legal Solutions';
@@ -12,6 +13,7 @@ const description =
   canonical="https://imverica.com/immigration"
   slug="/immigration"
 >
+  <ImmigrationCategories />
   <ServiceSections
     include={['immigration-consultant-california', 'eoir-documents', 'document-translation-california']}
     kicker="USCIS · EOIR · Immigration document preparation"

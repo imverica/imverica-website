@@ -1,0 +1,100 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'Підготовка документів за формою I-130 (Family Petition) | Imverica';
+const description = 'California Licensed LDA готує сімейні імміграційні петиції за формою I-130 (чоловік/дружина, батько/мати, дитина, брат/сестра). Включно з I-130A для подружжя-бенефіціара, civil documents, докази стосунків. Фіксована ціна, багатомовна анкета.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-130 Family Petition Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів за формою I-130 (сімейні імміграційні петиції) за дорученням петиціонера.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/i-130-family-petition"
+  slug="/i-130-family-petition" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Family Petition · INA §201, §203"
+    heading="I-130 — Petition for Alien Relative"
+    sub="Громадянин США або LPR подає за родича? Готуємо пакет I-130 + I-130A — біографічні дані петиціонера і бенефіціара, історія шлюбів, адрес і роботи, докази стосунків. Багатомовно. Фіксована ціна."
+    ctaPrimary={{ href: '/#get-started?form=I-130', text: 'Почати пакет I-130' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-485-help', label: 'I-485 — зміна статусу (бенефіціар у США)' },
+    { href: '/ua/n-400-citizenship-help', label: 'N-400 — натуралізація (після green card)' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-130 — це петиція, яку громадянин США чи законний постійний
+      мешканець (LPR) подає, щоб встановити кваліфікуючий родинний
+      зв'язок з іноземцем-родичем, аби той міг згодом подати на
+      імміграційну візу або змінити статус. Imverica готує пакет I-130 за
+      дорученням петиціонера — саму петицію, форму I-130A (Supplemental
+      Information for Spouse Beneficiary) коли стосунки — шлюб, civil
+      documents та пакет доказів стосунків.
+    </p>
+
+    <h2>За кого можна подавати I-130</h2>
+    <p>
+      <strong>Громадяни США</strong> можуть подавати за чоловіка/дружину,
+      неодруженого сина чи доньку до 21 (immediate relative),
+      неодруженого сина/доньку 21+ (F1), одруженого сина/доньку
+      будь-якого віку (F3), брата/сестру (F4) та батьків (immediate
+      relative; петиціонеру має бути 21+ для батьківських петицій).
+    </p>
+    <p>
+      <strong>Законні постійні мешканці (LPR)</strong> можуть подавати за
+      чоловіка/дружину (F2A), неодруженого сина/доньку до 21 (F2A) та
+      неодруженого сина/доньку 21+ (F2B). LPR не можуть подавати за
+      одружених дітей чи братів/сестер.
+    </p>
+
+    <h2>Пакет I-130</h2>
+    <div class="form-list">
+      <strong>Форми та підтверджувальні документи, які ми готуємо</strong>
+      <ul>
+        <li><strong>I-130</strong> — Petition for Alien Relative</li>
+        <li><strong>I-130A</strong> — Supplemental Information for Spouse Beneficiary (обов'язково для шлюбних справ)</li>
+        <li><strong>G-1145</strong> — e-Notification of Application Acceptance (необов'язково, але рекомендовано)</li>
+        <li><strong>Документи петиціонера</strong> — біографічна сторінка паспорта США, свідоцтво про натуралізацію або свідоцтво про народження; LPR-карта</li>
+        <li><strong>Докази стосунків</strong> — для шлюбу: свідоцтво про шлюб, фото протягом стосунків, спільні фінансові документи, спільна оренда/іпотека, affidavits від третіх осіб, свідоцтва про народження спільних дітей; для батьки/діти: свідоцтво про народження, що показує зв'язок; для брат/сестра: обидва свідоцтва про народження, що показують спільного батька або матір</li>
+        <li><strong>Припинення попередніх шлюбів</strong> — судові рішення про розлучення, про анулювання або свідоцтва про смерть, що припиняють будь-який попередній шлюб кожної зі сторін</li>
+        <li><strong>Переклади</strong> — засвідчені англійські переклади документів іноземними мовами згідно з 8 C.F.R. §103.2(b)(3)</li>
+      </ul>
+    </div>
+
+    <h2>Concurrent filing vs. консульська обробка</h2>
+    <p>
+      Immediate relatives громадян США (чоловік/дружина, неодружена
+      дитина до 21, батько/мати), чий бенефіціар уже перебуває в США в
+      законному статусі, можуть подавати I-485 одночасно з I-130.
+      F-категорійні бенефіціари з чергою priority date подадуть I-485
+      лише коли Visa Bulletin покаже, що їхня дата current. Бенефіціари
+      поза США проходять процес у консульстві через National Visa Center
+      після схвалення I-130.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §201 (immediate relatives, без
+      річного ліміту); §203(a) (family-preference categories F1-F4);
+      §204 (процедура надання імміграційного статусу); 8 C.F.R.
+      §204.1-204.2 (процедура). Visa Bulletin публікується щомісяця
+      Department of State.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Розпочніть вашу сімейну петицію I-130"
+    sub="Багатомовна анкета. Можна зберегти і продовжити пізніше. Фіксована ціна. Підготовка документів за вашим дорученням — без юридичних консультацій."
+    primaryHref="/#get-started?form=I-130"
+    primaryText="Почати анкету I-130"
+  />
+</BaseLayout>

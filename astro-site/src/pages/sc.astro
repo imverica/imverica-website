@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'California Small Claims Document Preparation (SC-100) | Imverica';
@@ -19,10 +20,26 @@ const schema = {
   slug="/sc" jsonLd={[schema]}>
   <Hero
     eyebrow="California Civil · CCP §116.110-116.950"
-    heading="California Small Claims Document Preparation"
+    heading="SC-100 — Plaintiff's Claim and ORDER (California Small Claims)"
     sub="SC-100 plaintiff complaint, SC-120 defendant counterclaim, SC-104 proof of service, FW-001 fee waiver, SC-133 memorandum of costs. $12,500 limit for individuals. Flat-fee."
     ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Start my small claims package' }}
     ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Pick a Small Claims path"
+    heading="California Small Claims"
+    intro="Plaintiff, defendant, or post-judgment collection — start the right package."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff', desc: 'Plaintiff complaint up to $12,500 (individuals).',   href: '/#get-started?form=SC-100',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Defendant', desc: 'Defendant counterclaim and answer.',                 href: '/#get-started?form=SC-120',  color: 'var(--terracotta)' },
+      { icon: '📨', title: 'SC-104 — Service',   desc: 'Proof of service (sheriff / certified mail / 18+).',  href: '/#get-started?form=SC-104',  color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',      desc: "Plaintiff's memorandum of costs after judgment.",   href: '/#get-started?form=SC-133',  color: 'var(--gold)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver', desc: 'Court-fee waiver for qualifying parties.',           href: '/#get-started?form=FW-001',  color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment', desc: 'Wage garnishment to enforce a judgment.',           href: '/#get-started?form=WG-001',  color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',    desc: 'Abstract of judgment for real-property lien.',      href: '/#get-started?form=EJ-001',  color: 'var(--navy)' },
+      { icon: '📅', title: 'SC-140 — Installments', desc: 'Request to pay judgment in installments.',         href: '/#get-started?form=SC-140',  color: 'var(--sage)' }
+    ]}
   />
 
   <LandingBody related={[

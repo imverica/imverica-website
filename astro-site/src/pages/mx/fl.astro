@@ -1,0 +1,122 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Derecho de familia de California — preparación de formularios (FL-100, FL-300) | Imverica';
+const description = 'California Licensed LDA prepara formularios de derecho de familia — FL-100 (petición de divorcio), FL-120 (respuesta), FL-150 (income & expense), FL-300 (request for order), FL-105 UCCJEA, FL-160 (property), FW-001 (fee waiver). Precio fijo.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Family Law Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos de derecho de familia de California bajo la dirección del cliente. Divorcio, separation, parentage, custody, support.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fl"
+  slug="/fl" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Family Code §2330 et seq."
+    heading="FL-100, FL-300 — Divorcio, custodia y pensión alimenticia"
+    sub="Preparamos todos los formularios estándar FL- y FW- de derecho de familia bajo su dirección — petition (FL-100), summons (FL-110), Request for Order (FL-300), financial disclosures, UCCJEA y fee-waiver. Entrevista multilingüe a precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Comenzar paquete de derecho de familia' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Elija un asunto familiar"
+    heading="California Family Law"
+    intro="Toque cualquier tile para iniciar el paquete o conocer los formularios."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Divorcio',           desc: 'Petición de divorcio (no-fault), summons, service.', href: '/#get-started?form=FL-100',  color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Custodia / Pensión', desc: 'Request for Order: órdenes temporales, modificación.', href: '/#get-started?form=FL-300', color: 'var(--terracotta)' },
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'Disclosures financieras para support y judgment.',     href: '/#get-started?form=FL-150', color: 'var(--sage)' },
+      { icon: '🏠', title: 'FL-160 — Propiedad',          desc: 'Declaración de community / separate property.',       href: '/#get-started?form=FL-160', color: 'var(--gold)' },
+      { icon: '🛡️', title: 'DV-100 — Orden de restricción', desc: 'Domestic-violence TRO + RO After Hearing.',         href: '/mx/california-restraining-orders', color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Declaración de jurisdicción de custodia.',           href: '/#get-started?form=FL-105', color: 'var(--navy-light)' },
+      { icon: '📝', title: 'FL-120 — Respuesta',          desc: 'Respuesta del respondiente en 30 días tras service.', href: '/#get-started?form=FL-120', color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Exención de tasas judiciales si califica.',           href: '/#get-started?form=FW-001', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/california-restraining-orders', label: 'California restraining orders (DV / CH)' },
+    { href: '/mx/sc', label: 'California reclamos menores (SC-100)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El derecho de familia de California cubre divorcio y domestic
+      partnerships registradas, separación legal (legal separation),
+      anulación (nullity), establecimiento de paternidad (parentage),
+      custodia y régimen de visitas, pensión alimenticia para hijos y
+      cónyuge, y restraining orders dentro de un caso familiar. Nuestro
+      rol es preparar documentos bajo su dirección; no damos asesoría
+      legal, pero preparamos cada formulario estándar FL- y FW- con
+      precisión y a tiempo.
+    </p>
+
+    <h2>Divorcio — camino estándar</h2>
+    <ol>
+      <li><strong>Petition (FL-100).</strong> La presenta cualquiera de los cónyuges. California es estado no-fault: «irreconcilable differences» es la causa estándar.</li>
+      <li><strong>Summons (FL-110)</strong> introduce automáticamente restraining orders temporales que prohíben transferencias grandes de activos, sacar a los niños del estado y cambiar beneficiarios de seguros.</li>
+      <li><strong>Service.</strong> El respondiente recibe los documentos personalmente (FL-115).</li>
+      <li><strong>Response (FL-120).</strong> El respondiente tiene 30 días para responder. Sin respuesta el tribunal puede dictar default tras el waiting period de 6 meses.</li>
+      <li><strong>Financial disclosures (FL-140 + FL-142 o FL-160 + FL-150).</strong> Ambas partes intercambian preliminary disclosures dentro de 60 días desde la presentación y final disclosures antes del judgment.</li>
+      <li><strong>Negociación / mediación / juicio.</strong> La mayoría de los casos terminan en acuerdo. Los disputados van a short cause o long cause trial.</li>
+      <li><strong>Judgment (FL-180 + FL-190).</strong> El tribunal dicta sentencia. El estatus de «single» surte efecto 6 meses y 1 día después del service.</li>
+    </ol>
+
+    <h2>Formularios que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquetes de derecho de familia</strong>
+      <ul>
+        <li><strong>FL-100</strong> — Petition (Marriage / Domestic Partnership)</li>
+        <li><strong>FL-105 / UCCJEA</strong> — Declaration bajo Uniform Child Custody Jurisdiction Act (obligatoria si hay hijos menores)</li>
+        <li><strong>FL-110</strong> — Summons (Family Law)</li>
+        <li><strong>FL-115</strong> — Proof of Service of Summons</li>
+        <li><strong>FL-117</strong> — Notice and Acknowledgment of Receipt</li>
+        <li><strong>FL-120</strong> — Response (Marriage / Domestic Partnership)</li>
+        <li><strong>FL-140</strong> — Declaration of Disclosure</li>
+        <li><strong>FL-141</strong> — Declaration Regarding Service of Declaration of Disclosure</li>
+        <li><strong>FL-142</strong> — Schedule of Assets and Debts</li>
+        <li><strong>FL-150</strong> — Income and Expense Declaration</li>
+        <li><strong>FL-160</strong> — Property Declaration</li>
+        <li><strong>FL-180 / FL-190</strong> — Judgment and Notice of Entry of Judgment</li>
+        <li><strong>FL-300</strong> — Request for Order (órdenes temporales, modificación, contempt, etc.)</li>
+        <li><strong>FL-311</strong> — Child Custody and Visitation Attachment</li>
+        <li><strong>FL-341</strong> — Child Custody and Visitation Order Attachment</li>
+        <li><strong>FL-330</strong> — Proof of Personal Service</li>
+        <li><strong>FW-001 / FW-003</strong> — Solicitud y orden de fee waiver</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      No negociamos en su nombre, no redactamos marital settlement
+      agreements individualizados que requieran análisis legal de
+      community-property, y no lo representamos en audiencias. La mayoría
+      de los casos familiares terminan en stipulation, que podemos
+      tramitar en formato estándar (FL-130, anexos FL-180). Casos de
+      custodia disputados con alto nivel de conflicto, asuntos complejos
+      de community-property o acusaciones de domestic-violence se
+      manejan mejor con un abogado licenciado de family law — podemos
+      dar un referral.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Family Code §2330 (petition de
+      divorcio); §§3010-3032 (custody jurisdiction); §§3040-3041 (custody
+      factors); §4055 (statewide uniform child support guideline); §4320
+      (spousal support factors); §§2104-2107 (disclosure requirements);
+      §§297-299.6 (registered domestic partnerships). California Rules of
+      Court 5.50-5.435 (family law rules).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-100" primaryText="Comenzar solicitud de derecho de familia" />
+</BaseLayout>

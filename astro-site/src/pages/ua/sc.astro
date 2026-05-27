@@ -1,0 +1,110 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'Підготовка документів для малих позовів Каліфорнії (SC-100) | Imverica';
+const description = 'California Licensed LDA готує документи для малих позовів — SC-100 (позов позивача), SC-120 (зустрічний позов відповідача), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Ліміт $12,500 згідно CCP §116.221.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Підготовка документів для малих позовів Каліфорнії за дорученням сторони спору.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/sc"
+  slug="/sc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.110-116.950"
+    heading="SC-100 — Plaintiff's Claim and ORDER (Малі позови Каліфорнії)"
+    sub="SC-100 (позов позивача), SC-120 (зустрічний позов відповідача), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Ліміт $12,500 для фізосіб. Фіксована ціна."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Почати пакет малого позову' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Оберіть свою роль"
+    heading="California Small Claims"
+    intro="Позивач, відповідач або стягнення після judgment — почніть потрібний пакет."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Позивач',         desc: 'Позов позивача до $12,500 (фізособи).',                href: '/#get-started?form=SC-100',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Відповідач',     desc: 'Зустрічний позов і відповідь відповідача.',             href: '/#get-started?form=SC-120',  color: 'var(--terracotta)' },
+      { icon: '📨', title: 'SC-104 — Service',         desc: 'Proof of service (шериф / рекомендований лист / 18+).', href: '/#get-started?form=SC-104',  color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',           desc: 'Memorandum of costs позивача після judgment.',          href: '/#get-started?form=SC-133',  color: 'var(--gold)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',      desc: 'Звільнення від мита для відповідних сторін.',           href: '/#get-started?form=FW-001',  color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',     desc: 'Wage garnishment для виконання judgment.',              href: '/#get-started?form=WG-001',  color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',         desc: 'Abstract of judgment для застави на нерухомість.',     href: '/#get-started?form=EJ-001',  color: 'var(--navy)' },
+      { icon: '📅', title: 'SC-140 — Розстрочка',       desc: 'Прохання сплачувати judgment частинами.',              href: '/#get-started?form=SC-140',  color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/california-unlawful-detainer', label: 'California unlawful detainer (UD-100)' },
+    { href: '/california-restraining-orders', label: 'California restraining orders' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Small claims court — це «народний суд» Каліфорнії: спрощена
+      процедура, де сторони представляють себе самі, щоб вирішити
+      грошові спори на суму до $12,500 (фізичні особи) або $6,250
+      (корпорації та інші організації). Адвокатам заборонено представляти
+      сторони на першому слуханні (CCP §116.530), а судове мито невелике
+      (зазвичай $30-$75 залежно від суми позову, з можливістю fee waiver).
+    </p>
+
+    <h2>Юрисдикційний ліміт</h2>
+    <p>
+      З 1 січня 2024 року ліміт становить <strong>$12,500</strong> для
+      фізичної особи та <strong>$6,250</strong> для корпорації, partnership
+      або іншої організації (CCP §116.221). Фізична особа не може подати
+      більше двох позовів на суму понад $2,500 за один календарний рік по
+      всьому штату (CCP §116.231) — це обмежує позивачів, які інакше могли
+      б дробити великі спори на кілька малих, щоб уникнути superior court.
+    </p>
+
+    <h2>Хронологія процесу</h2>
+    <ol>
+      <li><strong>Demand letter (необов'язково, але рекомендовано).</strong> Досудовий лист-вимога, підписаний позивачем, часто вирішує спір і обов'язковий за деякими спеціальними законами перед подачею позову.</li>
+      <li><strong>SC-100 — Plaintiff's Claim and ORDER.</strong> Подається до суду за місцем проживання відповідача, за місцем виконання договору, за місцем заподіяння шкоди або за місцем розташування майна.</li>
+      <li><strong>Service.</strong> Відповідачу мають бути вручені документи мінімум за 15-20 днів до слухання (CCP §116.330) — через шерифа, зареєстрованого process server або будь-яку повнолітню особу, що не є стороною. SC-104 (proof of service) подається до суду.</li>
+      <li><strong>Відповідь відповідача.</strong> Відповідач може подати SC-120 (Defendant's Claim) для зустрічного позову не пізніше ніж за 5 днів до слухання.</li>
+      <li><strong>Слухання.</strong> Неформальне, перед суддею чи commissioner. Без адвокатів (крім сторін, які самі є адвокатами та представляють себе). Обидві сторони подають докази, свідків і документи.</li>
+      <li><strong>Judgment.</strong> Суд видає SC-130 (Notice of Entry of Judgment). Відповідач, що програв, має право оскаржити в superior court протягом 30 днів; позивач, що програв за своїм позовом, оскаржити не може.</li>
+      <li><strong>Стягнення.</strong> Виграний позивач використовує постсудові форми (SC-133 memorandum of costs, EJ-001 abstract of judgment, WG-001 wage garnishment тощо) для стягнення.</li>
+    </ol>
+
+    <h2>Форми, які ми готуємо</h2>
+    <div class="form-list">
+      <strong>Пакети для позивача та відповідача за малими позовами</strong>
+      <ul>
+        <li><strong>SC-100</strong> — Plaintiff's Claim and ORDER</li>
+        <li><strong>SC-100A</strong> — Attachment для додаткових позивачів/відповідачів</li>
+        <li><strong>SC-104</strong> — Proof of Service</li>
+        <li><strong>SC-104A/B/C/D</strong> — Способи service (server, certified mail та ін.)</li>
+        <li><strong>SC-120</strong> — Defendant's Claim and ORDER (зустрічний позов)</li>
+        <li><strong>SC-130</strong> — Notice of Entry of Judgment</li>
+        <li><strong>SC-133</strong> — Plaintiff's Memorandum of Costs</li>
+        <li><strong>SC-140</strong> — Request to Pay Judgment in Installments</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees</li>
+        <li><strong>FW-003</strong> — Order on Court Fee Waiver</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure
+      §§116.110-116.950 (Small Claims Act); §116.221 (юрисдикційні ліміти,
+      діє з 2024-01-01); §116.231 (ліміт на позови понад $2,500 на рік);
+      §116.330 (терміни service); §116.530 (заборона представництва
+      адвокатом на слуханні); §116.760 (право на апеляцію); Cal. Rules of
+      Court 3.50-3.58 (fee waivers).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Почати анкету за малим позовом" />
+</BaseLayout>

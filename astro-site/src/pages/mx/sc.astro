@@ -1,0 +1,112 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de documentos para reclamos menores de California (SC-100) | Imverica';
+const description = 'California Licensed LDA prepara documentos de reclamos menores — SC-100 (demanda del demandante), SC-120 (contrademanda del demandado), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Límite $12,500 según CCP §116.221.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para reclamos menores de California bajo la dirección de la parte litigante.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/sc"
+  slug="/sc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.110-116.950"
+    heading="SC-100 — Plaintiff's Claim and ORDER (Reclamos menores de California)"
+    sub="SC-100 (demanda del demandante), SC-120 (contrademanda del demandado), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Límite $12,500 para personas físicas. Precio fijo."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Comenzar paquete de reclamo menor' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Elija su rol"
+    heading="California Small Claims"
+    intro="Demandante, demandado o cobro post-judgment — inicie el paquete correcto."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',       desc: 'Demanda de demandante hasta $12,500 (personas físicas).', href: '/#get-started?form=SC-100',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Demandado',        desc: 'Contrademanda y respuesta del demandado.',                  href: '/#get-started?form=SC-120',  color: 'var(--terracotta)' },
+      { icon: '📨', title: 'SC-104 — Service',          desc: 'Proof of service (sheriff / certificado / 18+).',           href: '/#get-started?form=SC-104',  color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',            desc: 'Memorandum of costs del demandante post-judgment.',         href: '/#get-started?form=SC-133',  color: 'var(--gold)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',       desc: 'Exención de tasas judiciales si califica.',                 href: '/#get-started?form=FW-001',  color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',      desc: 'Wage garnishment para ejecutar judgment.',                  href: '/#get-started?form=WG-001',  color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Abstract of judgment para gravamen sobre propiedad.',       href: '/#get-started?form=EJ-001',  color: 'var(--navy)' },
+      { icon: '📅', title: 'SC-140 — Cuotas',           desc: 'Solicitud de pago de judgment en cuotas.',                  href: '/#get-started?form=SC-140',  color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/california-unlawful-detainer', label: 'California unlawful detainer (UD-100)' },
+    { href: '/california-restraining-orders', label: 'California restraining orders' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Small claims court es la «corte del pueblo» de California:
+      procedimiento simplificado donde las partes se representan a sí
+      mismas para resolver disputas de dinero hasta $12,500 (personas
+      físicas) o $6,250 (corporaciones y otras entidades). Los abogados
+      no pueden representar partes en la primera audiencia (CCP
+      §116.530), y el costo de presentación es bajo (típicamente $30-$75
+      según el monto reclamado, con fee waiver disponible).
+    </p>
+
+    <h2>Límite jurisdiccional</h2>
+    <p>
+      A partir del 1 de enero de 2024, el límite es de
+      <strong>$12,500</strong> para personas físicas y <strong>$6,250</strong>
+      para corporaciones, partnerships u otras entidades (CCP §116.221).
+      Una persona física no puede presentar más de dos reclamos por
+      encima de $2,500 en el mismo año calendario en todo el estado (CCP
+      §116.231) — esto limita a demandantes que de otra forma dividirían
+      disputas grandes en varias pequeñas para evitar superior court.
+    </p>
+
+    <h2>Cronología del proceso</h2>
+    <ol>
+      <li><strong>Demand letter (opcional pero recomendada).</strong> Una carta de demanda previa firmada por el demandante a menudo resuelve la disputa y es requerida por algunos esquemas legales antes de demandar.</li>
+      <li><strong>SC-100 — Plaintiff's Claim and ORDER.</strong> Se presenta en el tribunal del domicilio del demandado, del lugar de cumplimiento del contrato, del lugar del daño, o de la ubicación de la propiedad.</li>
+      <li><strong>Service.</strong> El demandado debe ser notificado al menos 15-20 días antes de la audiencia (CCP §116.330), por sheriff, process server registrado o cualquier mayor de 18 que no sea parte. SC-104 (proof of service) se presenta en el tribunal.</li>
+      <li><strong>Respuesta del demandado.</strong> El demandado puede presentar SC-120 (Defendant's Claim) para contrademanda, mínimo 5 días antes de la audiencia.</li>
+      <li><strong>Audiencia.</strong> Informal, ante un juez o commissioner. Sin abogados (excepto partes que también son abogados representándose a sí mismas). Ambos lados presentan evidencia, testigos y documentos.</li>
+      <li><strong>Judgment.</strong> El tribunal emite SC-130 (Notice of Entry of Judgment). El demandado que pierde tiene derecho a apelar a superior court dentro de 30 días; el demandante que pierde su reclamo no puede apelar.</li>
+      <li><strong>Cobro.</strong> El demandante ganador usa formularios post-judgment (SC-133 memorandum of costs, EJ-001 abstract of judgment, WG-001 wage garnishment, etc.) para cobrar.</li>
+    </ol>
+
+    <h2>Formularios que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquetes para demandante y demandado en reclamos menores</strong>
+      <ul>
+        <li><strong>SC-100</strong> — Plaintiff's Claim and ORDER</li>
+        <li><strong>SC-100A</strong> — Attachment para demandantes/demandados adicionales</li>
+        <li><strong>SC-104</strong> — Proof of Service</li>
+        <li><strong>SC-104A/B/C/D</strong> — Métodos de service (server, certified mail, etc.)</li>
+        <li><strong>SC-120</strong> — Defendant's Claim and ORDER (contrademanda)</li>
+        <li><strong>SC-130</strong> — Notice of Entry of Judgment</li>
+        <li><strong>SC-133</strong> — Plaintiff's Memorandum of Costs</li>
+        <li><strong>SC-140</strong> — Request to Pay Judgment in Installments</li>
+        <li><strong>FW-001</strong> — Request to Waive Court Fees</li>
+        <li><strong>FW-003</strong> — Order on Court Fee Waiver</li>
+      </ul>
+    </div>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure
+      §§116.110-116.950 (Small Claims Act); §116.221 (límites
+      jurisdiccionales, vigente 2024-01-01); §116.231 (límite a reclamos
+      sobre $2,500 al año); §116.330 (plazos de service); §116.530 (sin
+      representación de abogado en audiencia); §116.760 (derecho a
+      apelar); Cal. Rules of Court 3.50-3.58 (fee waivers).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Comenzar entrevista de reclamo menor" />
+</BaseLayout>

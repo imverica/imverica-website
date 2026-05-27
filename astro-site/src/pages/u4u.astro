@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'U4U — Uniting for Ukraine document preparation | Imverica';
+const description = 'California Licensed LDA prepares Uniting for Ukraine (U4U) document packages — humanitarian parole, I-765 (c)(11) work permit, I-131 advance parole, TPS re-registration, I-485 adjustment of status when eligible.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U4U Uniting for Ukraine Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Ukrainian humanitarian parolees under the Uniting for Ukraine program at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/u4u"
+  slug="/u4u" jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
+    heading="U4U — Uniting for Ukraine document preparation"
+    sub="If you arrived under Uniting for Ukraine, you're eligible for work authorization, travel documents, and TPS re-registration. We prepare each filing accurately at your direction — fixed fee, multilingual intake (Ukrainian, Russian, English)."
+    ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Start my U4U package' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms commonly filed by U4U parolees"
+    heading="What U4U involves"
+    intro="The U4U package usually combines several USCIS filings. Tap any tile to see details."
+    tiles={[
+      { icon: '💼', title: 'I-765 (c)(11) — Work permit', desc: 'Employment Authorization Document under the parolee category. Free for U4U parolees.',  href: '/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'TPS — Temporary Protected Status', desc: 'Ukraine TPS re-registration; secondary protection on top of parole.',                   href: '/tps',                    color: 'var(--navy)' },
+      { icon: '🛂', title: 'I-131 — Advance parole',       desc: 'Travel document so you can re-enter the U.S. after international travel.',                     href: '/#get-started?form=I-131', color: 'var(--sage)' },
+      { icon: '🟢', title: 'I-485 — Adjustment of Status',  desc: 'If you become eligible (asylum approved, marriage to USC, etc.) — green-card package.',         href: '/i-485-help',              color: 'var(--gold)' },
+      { icon: '🏛️', title: 'I-589 — Asylum',                desc: 'Affirmative asylum if you cannot safely return to Ukraine — separate path from parole.',         href: '/i-589-asylum-help',       color: 'var(--navy-light)' },
+      { icon: '🌐', title: 'Translations',                  desc: 'Certified Ukrainian/Russian → English translations of supporting documents.',                    href: '/immigration#document-translation-california', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-765-work-permit-help', label: 'I-765 work permit (full details)' },
+    { href: '/tps', label: 'TPS — Temporary Protected Status' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Uniting for Ukraine (U4U) is the humanitarian parole program launched in
+      April 2022 to let Ukrainian nationals enter the United States with a
+      U.S.-based supporter. Parolees are admitted for an initial period of two
+      years and are immediately eligible to apply for work authorization. U4U
+      parole is not a status that leads to a green card by itself — but it
+      can be combined with TPS (Temporary Protected Status), asylum, family
+      petitions, or other pathways depending on your situation.
+    </p>
+
+    <h2>U4U eligibility — the short version</h2>
+    <ul>
+      <li>You are a Ukrainian citizen (and certain immediate family of one).</li>
+      <li>You have a U.S.-based supporter who filed Form I-134A on your behalf and was approved.</li>
+      <li>You completed travel to the U.S. and were paroled in by a CBP officer.</li>
+      <li>You passed initial vaccination, biometrics, and security screening.</li>
+    </ul>
+
+    <h2>What we prepare for U4U parolees</h2>
+    <ul>
+      <li><strong>I-765 with (c)(11) category</strong> — work permit (EAD). For U4U parolees, USCIS waives the filing fee and the biometrics fee.</li>
+      <li><strong>Re-registration for Ukraine TPS</strong> — when DHS extends the Ukraine designation, we prepare the I-821 + I-765 re-registration packet.</li>
+      <li><strong>I-131 advance parole</strong> — travel document so you can leave the U.S. and return without losing your parole status.</li>
+      <li><strong>Re-parole requests</strong> — when the initial 2-year parole nears expiration, we prepare the supporting documentation for re-parole consideration.</li>
+      <li><strong>I-485 adjustment of status</strong> — when you become eligible through another path (asylum approval, marriage to a U.S. citizen, employment-based petition, etc.).</li>
+      <li><strong>Certified Ukrainian / Russian → English translations</strong> of birth certificates, marriage certificates, military records, and other supporting evidence.</li>
+    </ul>
+
+    <h2>What U4U parole does NOT do</h2>
+    <p>
+      Parole is a discretionary, time-limited admission — it is not a visa,
+      not a status, and not a path to a green card by itself. Renewing your
+      parole, applying for TPS, applying for asylum, and adjusting status
+      are <em>separate decisions</em> with their own forms and deadlines. We
+      can prepare the documents for whichever path you decide to file. We do
+      not give legal advice on which strategy is best — for that we maintain
+      referrals to licensed California immigration attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> INA §212(d)(5) (parole authority); Uniting
+      for Ukraine USCIS policy guidance (since April 2022); 8 C.F.R.
+      §274a.12(c)(11) (work authorization for parolees); INA §244 (TPS
+      framework); 8 C.F.R. §244 (TPS regulations). Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=U4U" primaryText="Begin my U4U intake" />
+</BaseLayout>

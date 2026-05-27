@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'U4U — подготовка документов Uniting for Ukraine | Imverica';
+const description = 'California Licensed LDA готовит пакеты Uniting for Ukraine (U4U) — гуманитарный parole, I-765 (c)(11) разрешение на работу, I-131 advance parole, повторная регистрация TPS, I-485 при наличии оснований.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U4U Uniting for Ukraine Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для украинских гуманитарных parolees по программе Uniting for Ukraine по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/u4u"
+  slug="/u4u" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
+    heading="U4U — подготовка документов Uniting for Ukraine"
+    sub="Если вы приехали по программе Uniting for Ukraine, вы имеете право на разрешение на работу, travel-документы и повторную регистрацию TPS. Готовим каждую подачу аккуратно по вашему поручению — фиксированная цена, многоязычная анкета (укр./рус./англ.)."
+    ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Начать пакет U4U' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <CategoryTiles
+    kicker="Часто подаваемые формы U4U"
+    heading="Что включает U4U"
+    intro="Пакет U4U обычно объединяет несколько подач USCIS. Нажмите плитку для деталей."
+    tiles={[
+      { icon: '💼', title: 'I-765 (c)(11) — Разрешение на работу', desc: 'EAD по категории parolee. Бесплатно для U4U-parolees.',                       href: '/ru/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'TPS — Временная защита',               desc: 'Повторная регистрация TPS для Украины поверх parole.',                         href: '/ru/tps',                    color: 'var(--navy)' },
+      { icon: '🛂', title: 'I-131 — Advance parole',                desc: 'Travel-документ для выезда и въезда обратно без потери parole.',               href: '/#get-started?form=I-131',   color: 'var(--sage)' },
+      { icon: '🟢', title: 'I-485 — Изменение статуса',             desc: 'Когда возникает основание (asylum, брак с USC и т. д.) — пакет на green card.', href: '/ru/i-485-help',             color: 'var(--gold)' },
+      { icon: '🏛️', title: 'I-589 — Убежище',                       desc: 'Affirmative asylum, если небезопасно возвращаться — отдельный путь от parole.',  href: '/ru/i-589-asylum-help',      color: 'var(--navy-light)' },
+      { icon: '🌐', title: 'Переводы',                              desc: 'Заверенные переводы укр./рус. → англ. сопроводительных документов.',           href: '/ru/immigration#document-translation-california', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-765-work-permit-help', label: 'I-765 — разрешение на работу (детали)' },
+    { href: '/ru/tps', label: 'TPS — Временная защита' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Uniting for Ukraine (U4U) — программа гуманитарного parole, запущенная
+      в апреле 2022 года, чтобы граждане Украины могли въехать в США через
+      US-спонсора. Parolees принимаются на начальный срок 2 года и сразу
+      имеют право подавать на разрешение на работу. U4U-parole сам по себе
+      не ведёт к green card — но может сочетаться с TPS, asylum, семейными
+      петициями или другими путями в зависимости от вашей ситуации.
+    </p>
+
+    <h2>U4U — кратко об eligibility</h2>
+    <ul>
+      <li>Вы гражданин Украины (и определённые ближайшие родственники).</li>
+      <li>Ваш US-спонсор подал I-134A в вашу пользу и был одобрен.</li>
+      <li>Вы прилетели в США, и CBP-офицер оформил вам parole.</li>
+      <li>Вы прошли первичную вакцинацию, биометрию и проверку безопасности.</li>
+    </ul>
+
+    <h2>Что мы готовим для U4U-parolees</h2>
+    <ul>
+      <li><strong>I-765 категория (c)(11)</strong> — разрешение на работу (EAD). Для U4U USCIS отменяет filing fee и biometrics fee.</li>
+      <li><strong>Повторная регистрация Украина TPS</strong> — когда DHS продлевает Украине designation, готовим пакет I-821 + I-765 на повторную регистрацию.</li>
+      <li><strong>I-131 advance parole</strong> — travel-документ для выезда и возврата в США без потери parole.</li>
+      <li><strong>Re-parole requests</strong> — когда начальный 2-летний parole близится к окончанию, готовим документы для рассмотрения re-parole.</li>
+      <li><strong>I-485 изменение статуса</strong> — когда возникает основание (asylum, брак с USC, employment-based и т. д.).</li>
+      <li><strong>Заверенные переводы укр./рус. → англ.</strong> свидетельств о рождении, браке, военных документов и др.</li>
+    </ul>
+
+    <h2>Чего U4U-parole НЕ делает</h2>
+    <p>
+      Parole — это discretionary, ограниченный по времени въезд: это не виза,
+      не статус и не путь к green card сам по себе. Продление parole, подача
+      на TPS, на asylum и изменение статуса — это <em>отдельные решения</em>
+      с собственными формами и сроками. Мы можем подготовить документы для
+      того пути, который вы выберете. Юридических консультаций по выбору
+      стратегии не даём — для этого у нас есть referral-отношения с
+      лицензированными адвокатами Калифорнии.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §212(d)(5) (parole authority); USCIS
+      policy guidance по Uniting for Ukraine (с апреля 2022); 8 C.F.R.
+      §274a.12(c)(11); INA §244 (TPS framework); 8 C.F.R. §244. Только
+      подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=U4U" primaryText="Начать анкету U4U" />
+</BaseLayout>

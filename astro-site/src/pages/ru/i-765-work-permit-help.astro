@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Подготовка документов I-765 — разрешение на работу (EAD) | Imverica';
+const description = 'California Licensed LDA готовит Form I-765 — Application for Employment Authorization. Pending asylum (c)(8), adjustment (c)(9), TPS (c)(19/a)(12), DACA (c)(33) и другие категории. Многоязычная анкета, фиксированная цена.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-765 Employment Authorization Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов по форме I-765 (Application for Employment Authorization) по поручению заявителя.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/i-765-work-permit-help"
+  slug="/i-765-work-permit-help" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Employment Authorization · 8 CFR §274a.12"
+    heading="I-765 — Application for Employment Authorization"
+    sub="Готовим пакет I-765 для любой категории eligibility — pending asylum (c)(8), adjustment of status (c)(9), TPS (a)(12)/(c)(19), DACA (c)(33), parolee (c)(11), супруг L-1/E (a)(18) и др. Фиксированная цена."
+    ctaPrimary={{ href: '/#get-started?form=I-765', text: 'Начать пакет I-765' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-485-help', label: 'I-485 — Adjustment of status (concurrent I-765 c)(9))' },
+    { href: '/ru/i-589-asylum-help', label: 'I-589 — Pending asylum (c)(8) EAD через 150 дней)' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-765 — это заявление на Employment Authorization Document
+      (EAD), физическую карту, которая нужна не-гражданину, чтобы
+      подтвердить право легально работать в США. Мы готовим I-765 по
+      поручению заявителя, подбирая правильную категорию eligibility
+      на основе вашего статуса и собирая подтверждающие доказательства.
+    </p>
+
+    <h2>Распространённые категории eligibility, которые мы готовим</h2>
+    <ul>
+      <li><strong>(c)(8)</strong> — Заявитель с pending asylum. Право возникает через 150 дней после подачи I-589, плюс 30-дневный clock, без denial I-589.</li>
+      <li><strong>(c)(9)</strong> — Заявитель с pending I-485 (adjustment of status). Concurrent filing типично с семейным AOS или asylum-based AOS.</li>
+      <li><strong>(a)(12)</strong> / <strong>(c)(19)</strong> — Temporary Protected Status (TPS), начальная / renewal. Designations различаются по стране и дате re-designation.</li>
+      <li><strong>(c)(33)</strong> — DACA (Deferred Action for Childhood Arrivals), начальная / renewal.</li>
+      <li><strong>(c)(11)</strong> — Parolee (humanitarian parole, U4U, CHNV parolees).</li>
+      <li><strong>(a)(18)</strong> — Супруг L-1 intracompany transferee.</li>
+      <li><strong>(c)(26)</strong> — Супруг H-1B с одобренным I-140.</li>
+      <li><strong>(c)(14)</strong> — Получатель deferred action.</li>
+      <li><strong>(c)(16)</strong> — Self-petitioning religious worker, Special Immigrant Juvenile и др.</li>
+    </ul>
+
+    <h2>Что нам нужно от вас для I-765</h2>
+    <ul>
+      <li>Биографические данные (юридическое имя, прежние имена, DOB, страна рождения, страна гражданства)</li>
+      <li>SSN, если ранее выдавался, или запрос карты SSA через саму I-765</li>
+      <li>Текущие и предыдущие адреса в США</li>
+      <li>Последний I-94 или admission record; биографическая страница паспорта; любая предыдущая EAD</li>
+      <li>Доказательства категории eligibility (квитанция pending I-589 для (c)(8), pending I-485 для (c)(9), TPS registration для (a)(12) и т. д.)</li>
+      <li>Две passport-style фотографии (мы предоставляем спецификацию)</li>
+    </ul>
+
+    <h2>Filing fee и fee waiver</h2>
+    <p>
+      Размер filing fee для I-765 зависит от категории и от того, подаётся
+      ли она с concurrent I-485 — некоторые категории не платят отдельную
+      пошлину при подаче с основной формой. Форма I-912 fee waiver
+      доступна для заявителей ниже income threshold или получающих
+      определённые means-tested benefits. Мы готовим I-912, когда она
+      применима.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> Immigration and Nationality Act §274A
+      (employment authorization); 8 C.F.R. §274a.12 (категории
+      иностранцев, имеющих право работать); 8 C.F.R. §274a.13
+      (заявление); USCIS Policy Manual Volume 10 (Employment
+      Authorization).
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Начните заявку I-765 на разрешение на работу"
+    sub="Многоязычная анкета. Можно сохранить и продолжить. Фиксированная цена. Подготовка документов по вашему поручению — без юридических консультаций."
+    primaryHref="/#get-started?form=I-765"
+    primaryText="Начать анкету I-765"
+  />
+</BaseLayout>
