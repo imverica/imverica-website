@@ -872,6 +872,14 @@ export function initIntakeWizard(): void {
     if (field.maxLength) attrs += ' maxlength="' + esc(field.maxLength) + '"';
     if (field.digits) attrs += ' data-flow-digits="' + esc(field.digits) + '"';
     if (field.placeholder) attrs += ' placeholder="' + esc(field.placeholder) + '"';
+    // Bound every date input to a plausible legal range. Native pickers
+    // refuse anything outside [min, max] so a user can no longer enter
+    // 4342 for a passport expiry. Schemas may override per-field with
+    // field.min / field.max.
+    if (field.type === 'date') {
+      attrs += ' min="' + esc(field.min || '1900-01-01') + '"';
+      attrs += ' max="' + esc(field.max || '2049-12-31') + '"';
+    }
     return attrs;
   }
 
@@ -1019,8 +1027,8 @@ export function initIntakeWizard(): void {
         var suggestId = historySuggestionId(field.id, index);
         return '<div class="intake-history-entry" data-history-index="' + index + '">' +
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
-          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" data-street-line autocomplete="address-line1" maxlength="48" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
@@ -1047,8 +1055,8 @@ export function initIntakeWizard(): void {
         var suggestId = historySuggestionId(field.id, index);
         return '<div class="intake-history-entry" data-history-index="' + index + '">' +
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveEntry || copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
-          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyEmployerSchool) + '</label><input type="text" data-history-part="name" autocomplete="organization" value="' + esc(row.name || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyActivity) + '</label><input type="text" data-history-part="activity" value="' + esc(row.activity || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyOccupation) + '</label><input type="text" data-history-part="occupation" value="' + esc(row.occupation || '') + '"></div>' +
@@ -1074,8 +1082,8 @@ export function initIntakeWizard(): void {
       rows.map(function (row, index) {
         return '<div class="intake-history-entry" data-travel-index="' + index + '">' +
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-travel-row="' + esc(field.id) + '" data-remove-travel-index="' + index + '">' + esc(copy.historyRemoveEntry || copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
-          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" data-travel-part="from" value="' + esc(row.from || '') + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" data-travel-part="to" value="' + esc(row.to || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.to || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCountry) + '</label><select data-travel-part="country"><option value=""></option>' + renderSelectOptions(countryOptions, row.country || '') + '</select></div>' +
           '<div class="intake-field"><label>' + esc(copy.travelDays || 'Total days') + '</label><input type="number" min="0" inputmode="numeric" data-travel-part="days" value="' + esc(row.days || '') + '"></div>' +
         '</div>';
@@ -1154,7 +1162,17 @@ export function initIntakeWizard(): void {
 
   function renderFlowField(field) {
     var value = fieldValue(field);
-    var label = '<label for="' + esc(fieldDomId(field.id)) + '">' + esc(field.label) + (field.required ? ' *' : '') + '</label>';
+    // Bilingual label rendering: when the active locale differs from English
+    // AND the schema provided a different translation, show the English
+    // first (as the legal authority) and the translation below it in
+    // muted style. If they're the same string, render only one line.
+    var enLabel = field.labelEn || field.label;
+    var trLabel = field.label;
+    var labelInner = esc(enLabel) + (field.required ? ' *' : '');
+    if (state.lang !== 'en' && trLabel && trLabel !== enLabel) {
+      labelInner += '<div class="intake-label-tr">' + esc(trLabel) + '</div>';
+    }
+    var label = '<label for="' + esc(fieldDomId(field.id)) + '">' + labelInner + '</label>';
     var help = field.help ? '<div class="intake-help" style="margin:4px 0 0;">' + esc(field.help) + '</div>' : '';
     var options = Array.isArray(field.options) ? field.options : [];
 
@@ -1276,6 +1294,17 @@ export function initIntakeWizard(): void {
     var copy = t();
     var official = state.officialForm || {};
     var fields = visibleFlowFields(schemaStep);
+    // Bug fix: once a conditional field (e.g. "If yes, explain") becomes
+    // hidden because the parent answer flipped back to No, drop its
+    // stored value so the textarea doesn't "follow" the user with stale
+    // text the next time a sibling field re-shows it.
+    (schemaStep.fields || []).forEach(function (field) {
+      var hasCondition = (Array.isArray(field.showWhen) && field.showWhen.length) ||
+                         (Array.isArray(field.showWhenAny) && field.showWhenAny.length);
+      if (hasCondition && !isFlowFieldVisible(field) && field.id) {
+        delete state.formAnswers[field.id];
+      }
+    });
     var pageLabel = [schemaStep.formPart, schemaStep.formPage].filter(Boolean).join(' · ');
     var pageBadge = pageLabel ? '<div class="intake-form-page">' + esc(pageLabel) + '</div>' : '';
     var gridClass = fields.length <= 1 ? 'intake-grid intake-grid-single' : 'intake-grid';
@@ -1285,7 +1314,20 @@ export function initIntakeWizard(): void {
         (official.editionDate ? ' · ' + esc(official.editionDate) : '') +
         (official.cachedPdfUrl ? ' · ' + esc(copy.cachedFallback) : '') + '</div>';
     }
-    card.innerHTML = pageBadge + '<div class="intake-question">' + esc(schemaStep.title) + '</div><div class="intake-help">' + esc(schemaStep.help || '') + '</div>' + officialNote +
+    // Bilingual question + help: EN on top, locale translation below.
+    var enTitle = schemaStep.titleEn || schemaStep.title;
+    var titleHtml = '<div class="intake-question">' + esc(enTitle) +
+      (state.lang !== 'en' && schemaStep.title && schemaStep.title !== enTitle
+        ? '<div class="intake-question-tr">' + esc(schemaStep.title) + '</div>'
+        : '') +
+      '</div>';
+    var enHelp = schemaStep.helpEn || schemaStep.help || '';
+    var helpHtml = '<div class="intake-help">' + esc(enHelp) +
+      (state.lang !== 'en' && schemaStep.help && schemaStep.help !== enHelp
+        ? '<div class="intake-help-tr">' + esc(schemaStep.help) + '</div>'
+        : '') +
+      '</div>';
+    card.innerHTML = pageBadge + titleHtml + helpHtml + officialNote +
       '<div class="' + gridClass + '">' + fields.map(renderFlowField).join('') + '</div><div id="intakeFlowError" class="intake-error"></div>';
   }
 

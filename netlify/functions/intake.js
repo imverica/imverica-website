@@ -52,6 +52,20 @@ function cleanLong(value) {
   return clean(value, MAX_TEXT);
 }
 
+// Hard bounds for any date-like string ("YYYY-MM-DD"): no birthdates before
+// 1900-01-01 and no future dates beyond 2049-12-31. Catches obvious typos
+// like 4342 for a passport expiry — both client and server enforce this so
+// it survives a malicious / outdated client.
+const MIN_DATE = '1900-01-01';
+const MAX_DATE = '2049-12-31';
+function clampDateLike(s) {
+  if (typeof s !== 'string') return s;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  if (s < MIN_DATE) return MIN_DATE;
+  if (s > MAX_DATE) return MAX_DATE;
+  return s;
+}
+
 function cleanStructured(value, depth = 0) {
   if (depth > 5) return '';
   if (Array.isArray(value)) {
@@ -65,7 +79,7 @@ function cleanStructured(value, depth = 0) {
     }, {});
   }
   if (typeof value === 'number' || typeof value === 'boolean') return value;
-  return cleanLong(value);
+  return clampDateLike(cleanLong(value));
 }
 
 function cleanCodeList(value) {

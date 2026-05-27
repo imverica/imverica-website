@@ -4154,22 +4154,38 @@ function localizeFlow(flow, langValue = 'en') {
   };
 
   const translated = JSON.parse(JSON.stringify(flow));
-  translated.steps = translated.steps.map((item) => ({
-    ...item,
-    title: translatedByStepId('steps', item.id) || item.title,
-    help: translatedByStepId('stepHelp', item.id) || item.help,
-    fields: (item.fields || []).map((fieldItem) => ({
-      ...fieldItem,
-      label: copy.fields?.[fieldItem.id] || fieldItem.label,
-      placeholder: copy.placeholders?.[fieldItem.id] || fieldItem.placeholder,
-      options: Array.isArray(fieldItem.options)
-        ? fieldItem.options.map(localizeOption)
-        : fieldItem.options,
-      countryOptions: Array.isArray(fieldItem.countryOptions)
-        ? fieldItem.countryOptions.map(localizeOption)
-        : fieldItem.countryOptions
-    }))
-  }));
+  // Keep the canonical English copy alongside the translation so the
+  // wizard can render "English text → translation" bilingually. If the
+  // dictionary has no entry, both EN and translated values are the same
+  // English string — the wizard then renders just one line.
+  translated.steps = translated.steps.map((item) => {
+    const titleTr = translatedByStepId('steps', item.id) || item.title;
+    const helpTr = translatedByStepId('stepHelp', item.id) || item.help;
+    return {
+      ...item,
+      titleEn: item.title,
+      title: titleTr,
+      helpEn: item.help,
+      help: helpTr,
+      fields: (item.fields || []).map((fieldItem) => {
+        const labelTr = copy.fields?.[fieldItem.id] || fieldItem.label;
+        const placeholderTr = copy.placeholders?.[fieldItem.id] || fieldItem.placeholder;
+        return {
+          ...fieldItem,
+          labelEn: fieldItem.label,
+          label: labelTr,
+          placeholderEn: fieldItem.placeholder,
+          placeholder: placeholderTr,
+          options: Array.isArray(fieldItem.options)
+            ? fieldItem.options.map(localizeOption)
+            : fieldItem.options,
+          countryOptions: Array.isArray(fieldItem.countryOptions)
+            ? fieldItem.countryOptions.map(localizeOption)
+            : fieldItem.countryOptions
+        };
+      })
+    };
+  });
   return translated;
 }
 
