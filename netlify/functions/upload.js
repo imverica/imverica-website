@@ -30,8 +30,10 @@ const CORS = {
 
 const MAX_FILE_BYTES = 4 * 1024 * 1024; // 4 MB raw (function body limit ~6MB)
 const MAX_FILES_PER_ORDER = 20;
-const ALLOWED_EXT = ['pdf', 'jpg', 'jpeg', 'png', 'docx', 'heic', 'webp'];
-const ALLOWED_TYPE = /^(application\/pdf|image\/(jpeg|png|heic|webp)|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document)$/;
+// Strict upload validation lives in lib/file-validator.js — it checks
+// magic bytes, MIME allow-list, filename ban-list, and double-extension
+// tricks like `report.pdf.exe`. Anything not on the list is rejected.
+const { validateUpload, ALLOWED_MIME } = require('./lib/file-validator');
 
 function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
@@ -295,12 +297,20 @@ exports.handler = async function (event) {
       buf = plain;
     }
     const pub = publicEntry(entry);
+    // Lock the response so a hostile uploaded file can never be rendered
+    // inline by the browser even if a cookie leak / typo somewhere served
+    // it as text/html. The four headers below cover stored-XSS, MIME
+    // sniffing, embedding via <iframe>, and inline script execution.
     return {
       statusCode: 200,
       headers: {
         ...CORS,
         'Content-Type': pub.type || 'application/octet-stream',
-        'Content-Disposition': `attachment; filename="${String(pub.name).replace(/"/g, '')}"`
+        'Content-Disposition': `attachment; filename="${String(pub.name).replace(/"/g, '')}"`,
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'Content-Security-Policy': "default-src 'none'; sandbox",
+        'Cache-Control': 'private, no-store'
       },
       body: buf.toString('base64'),
       isBase64Encoded: true
@@ -328,13 +338,25 @@ exports.handler = async function (event) {
     const type = String(body.type || '').toLowerCase();
     const data = String(body.dataBase64 || '').replace(/^data:[^;]+;base64,/, '');
     if (!data) return json(400, { ok: false, error: 'No file data' });
-    if (!ALLOWED_EXT.includes(extOf(name)) || (type && !ALLOWED_TYPE.test(type))) {
-      return json(415, { ok: false, error: 'Unsupported file type. Use PDF, JPG, PNG, or DOCX.' });
+    // Quick MIME pre-check; the full magic-byte / filename / signature
+    // verification happens after the body is decoded (see validateUpload
+    // below). Returning a fast 415 here saves us decoding multi-MB junk.
+    if (!ALLOWED_MIME.includes(String(type || '').toLowerCase())) {
+      return json(415, { ok: false, error: 'Only PDF, JPG, PNG, or DOCX files are accepted.' });
     }
     let buf;
     try { buf = Buffer.from(data, 'base64'); } catch { return json(400, { ok: false, error: 'Invalid file data' }); }
     if (!buf.length) return json(400, { ok: false, error: 'Empty file' });
     if (buf.length > MAX_FILE_BYTES) return json(413, { ok: false, error: 'File too large (max 4 MB).' });
+
+    // Strict server-side validation — confirm the body actually matches
+    // the claimed MIME (magic bytes), reject dangerous filenames /
+    // extensions, and refuse anything outside the PDF/JPG/PNG/DOCX
+    // allow-list. The client may lie about `type`; the file body cannot.
+    const validation = validateUpload(buf, name, type);
+    if (!validation.ok) {
+      return json(415, { ok: false, error: validation.error, code: validation.code });
+    }
 
     const meta = (await readJson(filesStore, metaKey, FILES_DIR)) || { files: [] };
     if (meta.files.length >= MAX_FILES_PER_ORDER) return json(409, { ok: false, error: 'Too many files on this request.' });
