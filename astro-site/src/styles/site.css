@@ -16,14 +16,16 @@
   --muted: #6b5a44;
   --text: #2a3140;
 
-  /* System font stack — resolves to Apple's SF Pro on iOS / iPadOS /
-     macOS (already installed), Segoe UI on Windows, Roboto on Android,
-     and the OS sans-serif elsewhere. This is the legitimate way to use
-     SF Pro on the web (Apple's license forbids hosting it as a web
-     font). The Display variant has slightly larger optical sizing —
-     used for hero titles and headings. */
+  /* Body / UI: native system stack — SF Pro on Apple, Segoe UI on
+     Windows, Roboto on Android. Zero webfont download, instant render.
+
+     Headings: Playfair Display, the classic editorial serif used by
+     NYT, top law firms and premium magazines — communicates
+     trustworthy / established / serious legal authority. One webfont
+     (~15 KB woff2) gives Imverica a distinct brand signature that the
+     bare system stack cannot. Loaded via Google Fonts in BaseLayout. */
   --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
 * { box-sizing: border-box; }
