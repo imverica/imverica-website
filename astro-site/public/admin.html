@@ -6,13 +6,12 @@
 <title>Staff Console — Imverica</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="canonical" href="https://imverica.com/admin.html">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;--bg:#f4f3f0;--border:#dddad4;--muted:#666;}
+:root{--navy:#1a2e4a;--navy-light:#243d60;--navy-dark:#111e30;--bg:#f4f3f0;--border:#dddad4;--muted:#666;--font-system:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro","Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;--font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro","Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:#1a1a1a;}
+body{font-family:var(--font-system);background:var(--bg);color:#1a1a1a;}
 nav{background:var(--navy-dark);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;}
-nav .brand{color:#dde5ee;font-family:'Playfair Display',serif;font-size:20px;}
+nav .brand{color:#dde5ee;font-family:var(--font-display);font-size:20px;}
 nav .out{color:#9ab;font-size:13px;background:none;border:1px solid #2a3a4a;border-radius:3px;padding:7px 14px;cursor:pointer;}
 .wrap{max-width:1000px;margin:0 auto;padding:2rem;}
 .tabs{display:flex;gap:6px;margin-bottom:1.4rem;}
@@ -25,9 +24,9 @@ nav .out{color:#9ab;font-size:13px;background:none;border:1px solid #2a3a4a;bord
 .svc{font-size:15px;font-weight:500;color:var(--navy-dark);}
 .sit{font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px;white-space:pre-wrap;}
 .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;}
-select,input,textarea{font-family:'DM Sans',sans-serif;font-size:13px;border:1px solid var(--border);border-radius:3px;padding:8px 10px;outline:none;}
+select,input,textarea{font-family:var(--font-system);font-size:13px;border:1px solid var(--border);border-radius:3px;padding:8px 10px;outline:none;}
 select:focus,input:focus,textarea:focus{border-color:var(--navy);}
-button.act{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+button.act{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-system);}
 button.act:hover{background:var(--navy-light);}
 button.act.ghost{background:#fff;color:var(--navy);border:1px solid var(--border);}
 .note{font-size:12px;margin-left:6px;}

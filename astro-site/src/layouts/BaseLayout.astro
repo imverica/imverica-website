@@ -69,9 +69,9 @@ const alternates = slug && availableLocales.length > 1
     <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
   )}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" />
+  <!-- Typography: SF Pro on Apple devices via -apple-system, Segoe UI on
+       Windows, Roboto on Android — see --font-system / --font-display in
+       site.css. No webfont download, so the page renders instantly. -->
 
   {jsonLd.map((schema) => (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

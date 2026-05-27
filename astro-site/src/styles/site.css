@@ -15,6 +15,15 @@
   --border: #e5e3dc;
   --muted: #6b5a44;
   --text: #2a3140;
+
+  /* System font stack — resolves to Apple's SF Pro on iOS / iPadOS /
+     macOS (already installed), Segoe UI on Windows, Roboto on Android,
+     and the OS sans-serif elsewhere. This is the legitimate way to use
+     SF Pro on the web (Apple's license forbids hosting it as a web
+     font). The Display variant has slightly larger optical sizing —
+     used for hero titles and headings. */
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -23,7 +32,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: 'DM Sans', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-system);
   color: var(--text);
   background: #fff;
   line-height: 1.6;
@@ -32,7 +41,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-display);
   font-weight: 600;
   color: var(--navy-dark);
   line-height: 1.18;
@@ -112,14 +121,14 @@ img { max-width: 100%; height: auto; }
   height: auto;
 }
 .site-brand-name {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: 18px;
   font-weight: 500;
   line-height: 1.1;
 }
 .site-brand-tag {
   display: block;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-system);
   font-size: 10px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -467,7 +476,7 @@ img { max-width: 100%; height: auto; }
 }
 .stat-item { text-align: center; }
 .stat-number {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: 54px;
   font-weight: 500;
   color: var(--navy-dark);
