@@ -91,16 +91,19 @@ const testimonials = [
     text-wrap: balance;
   }
 
-  /* text-wrap: pretty + max-width keeps "they speak" from orphaning on its
-     own line — modern browsers redistribute words across all lines so
-     each line has a similar count. */
+  /* Keep the testimonials lead on a single line on desktop so the
+     "in the language they speak" tail doesn't orphan. The line is long
+     enough to wrap on narrow viewports — that's intentional. */
   .testimonials-heading p {
     color: #3a4a5e;
     font-size: 15px;
     line-height: 1.7;
     margin: 0;
-    text-wrap: pretty;
-    max-width: 60ch;
+    max-width: 100%;
+    white-space: normal;
+  }
+  @media (min-width: 980px) {
+    .testimonials-heading p { white-space: nowrap; }
   }
 
   .testimonials-grid {

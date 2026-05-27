@@ -500,6 +500,24 @@ img { max-width: 100%; height: auto; }
   padding: 72px 2rem;
   background: #fff;
   border-top: 1px solid rgba(40,30,20,0.08);
+  font-family: var(--font-system);
+}
+/* Force every element inside the news + visa-bulletin panels to render
+   in the body system font (SF Pro on Apple, Segoe UI on Windows). The
+   panels show third-party headlines and the official Visa Bulletin —
+   they should read like UI / news, not editorial Playfair. */
+.news-section .news-copy h2,
+.news-section .news-title,
+.news-section .news-meta,
+.news-section .news-status,
+.visa-section h2,
+.visa-section h3,
+.visa-section [data-visa-title],
+.visa-section [data-visa-status],
+.visa-section [data-visa-note],
+.visa-section .visa-legend,
+.visa-section .visa-link {
+  font-family: var(--font-system);
 }
 .news-inner {
   max-width: 1120px;
@@ -636,24 +654,32 @@ img { max-width: 100%; height: auto; }
   line-height: 1.6;
 }
 .svc-card-forms li {
-  padding: 7px 0;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
   border-bottom: 1px dashed rgba(40,30,20,0.07);
 }
 .svc-card-forms li:last-child { border-bottom: none; }
-.svc-card-forms li.svc-card-plain { color: #4a5a6e; padding-left: 0; }
-.svc-card-forms a {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+.svc-card-forms li.svc-card-plain {
+  display: block;
+  color: #4a5a6e;
+}
+.svc-card-forms li > a {
+  display: contents;
   color: var(--navy-dark);
   text-decoration: none;
   transition: color 0.18s;
 }
-.svc-card-forms a:hover { color: var(--terracotta-deep); }
-.svc-card-forms a:hover .svc-card-code { background: var(--navy); color: #fff; border-color: var(--navy); }
+.svc-card-forms li > a:hover .svc-card-code { background: var(--navy); color: #fff; border-color: var(--navy); }
+.svc-card-forms li > a:hover .svc-card-rest { color: var(--terracotta-deep); }
 .svc-card-code {
-  display: inline-block;
-  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  padding: 4px 10px;
   border: 1px solid rgba(26,46,74,0.18);
   border-radius: 6px;
   background: #f4f7fb;
@@ -664,9 +690,20 @@ img { max-width: 100%; height: auto; }
   white-space: nowrap;
   transition: background 0.18s, color 0.18s, border-color 0.18s;
 }
-.svc-card-rest { color: #4a5a6e; font-size: 13px; }
-.svc-card-multi { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
-.svc-card-pill { padding: 0; }
+.svc-card-rest {
+  color: #4a5a6e;
+  font-size: 13px;
+  transition: color 0.18s;
+}
+.svc-card-multi {
+  grid-template-columns: auto 1fr;
+}
+.svc-card-multi .svc-card-multi-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.svc-card-pill { text-decoration: none; }
 .svc-card cite {
   display: block;
   margin-top: 12px;

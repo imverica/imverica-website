@@ -118,27 +118,40 @@ const finalIntro = intro || 'Imverica Legal Solutions provides document preparat
 //   "I-485 — Adjustment of Status"   → codes=['I-485'], rest='Adjustment of Status'
 //   "FL-100, FL-110, FL-120, FL-150" → codes=[FL-100..150], rest=''
 //   "Russian, Ukrainian, Spanish"    → no recognizable codes → plain text
+// Each form code maps to a *content* destination — either the form's
+// dedicated explainer page or the relevant section anchor. We never
+// route directly to the intake wizard from these chips: the previous
+// behaviour confused visitors who clicked an EOIR code expecting an
+// explanation and were dropped into the I-918 / I-131 / EOIR-42 wizard
+// for a form the schema may not even have. Use the wizard only when
+// the user clicks "Start" on a dedicated page.
 const FORM_LINKS: Record<string, string> = {
+  // USCIS petitions with dedicated explainer pages
   'I-485': '/i-485-help',
   'I-130': '/i-130-family-petition',
   'I-130A': '/i-130-family-petition',
   'I-765': '/i-765-work-permit-help',
   'I-589': '/i-589-asylum-help',
   'N-400': '/n-400-citizenship-help',
-  'I-131': '/#get-started?form=I-131',
-  'I-131A': '/#get-started?form=I-131A',
-  'I-90': '/#get-started?form=I-90',
-  'I-864': '/#get-started?form=I-864',
-  'I-864A': '/#get-started?form=I-864A',
-  'I-693': '/#get-started?form=I-693',
-  'I-751': '/#get-started?form=I-751',
-  'I-539': '/#get-started?form=I-539',
-  'I-824': '/#get-started?form=I-824',
-  'EOIR-28': '/#get-started?form=EOIR-28',
-  'EOIR-29': '/#get-started?form=EOIR-29',
-  'EOIR-42A': '/#get-started?form=EOIR-42A',
-  'EOIR-42B': '/#get-started?form=EOIR-42B',
-  'EOIR-40': '/#get-started?form=EOIR-40',
+  // USCIS forms without a dedicated page yet — link to the USCIS
+  // service card so the visitor sees its scope in context.
+  'I-131': '/immigration#immigration-consultant-california',
+  'I-131A': '/immigration#immigration-consultant-california',
+  'I-90': '/immigration#immigration-consultant-california',
+  'I-864': '/immigration#immigration-consultant-california',
+  'I-864A': '/immigration#immigration-consultant-california',
+  'I-693': '/immigration#immigration-consultant-california',
+  'I-751': '/immigration#immigration-consultant-california',
+  'I-539': '/immigration#immigration-consultant-california',
+  'I-824': '/immigration#immigration-consultant-california',
+  // EOIR series — all route to the EOIR card on the immigration page,
+  // not the wizard (the wizard has no EOIR-* flow).
+  'EOIR-28': '/immigration#eoir-documents',
+  'EOIR-29': '/immigration#eoir-documents',
+  'EOIR-42A': '/immigration#eoir-documents',
+  'EOIR-42B': '/immigration#eoir-documents',
+  'EOIR-40': '/immigration#eoir-documents',
+  // California court / family / civil — dedicated pages
   'FL-100': '/fl',
   'FL-110': '/fl',
   'FL-120': '/fl',
@@ -146,7 +159,7 @@ const FORM_LINKS: Record<string, string> = {
   'FL-300': '/fl',
   'FL-105': '/fl',
   'UCCJEA': '/fl',
-  'FW-001': '/#get-started?form=FW-001',
+  'FW-001': '/fl',
   'SC-100': '/sc',
   'SC-104': '/sc',
   'SC-120': '/sc',
@@ -201,19 +214,21 @@ function splitItem(raw: string): { codes: string[]; rest: string } {
                   <li>
                     <a href={FORM_LINKS[code]}>
                       <span class="svc-card-code">{code}</span>
-                      {rest && <span class="svc-card-rest"> — {rest}</span>}
+                      {rest && <span class="svc-card-rest">{rest}</span>}
                     </a>
                   </li>
                 );
               }
               return (
                 <li class="svc-card-multi">
-                  {codes.map((c, i) => (
-                    <a href={FORM_LINKS[c]} class="svc-card-pill">
-                      <span class="svc-card-code">{c}</span>
-                    </a>
-                  ))}
-                  {rest && <span class="svc-card-rest"> — {rest}</span>}
+                  <span class="svc-card-multi-chips">
+                    {codes.map((c) => (
+                      <a href={FORM_LINKS[c]} class="svc-card-pill">
+                        <span class="svc-card-code">{c}</span>
+                      </a>
+                    ))}
+                  </span>
+                  {rest && <span class="svc-card-rest">{rest}</span>}
                 </li>
               );
             })}
