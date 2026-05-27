@@ -2,6 +2,21 @@ const crypto = require('crypto');
 const fs = require('fs/promises');
 const os = require('os');
 const path = require('path');
+const { encryptRecord, decryptRecord, emailHash } = require('./lib/crypto');
+
+/**
+ * PII fields encrypted at rest. `id`, `status`, `createdAt`, `service`
+ * (slug), `language` and `formCode` stay plaintext for indexing /
+ * filtering / sitemaps. Adding `emailHash` (HMAC of email) lets account.js
+ * filter "my orders" without decrypting every record on every request.
+ */
+const PII_PATHS = [
+  'contact.name',
+  'contact.email',
+  'contact.phone',
+  'serviceLabel',
+  'situation'
+];
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -153,37 +168,44 @@ async function getBlobStore() {
   return getStore('imverica-intakes');
 }
 
-async function saveRecord(record) {
+async function saveRecord(record, event) {
+  // Stamp an emailHash before encryption so we can still filter "my records"
+  // without ever decrypting other clients' rows. Then encrypt the PII paths.
+  const email = record?.contact?.email || '';
+  const recordWithHash = { ...record, emailHash: emailHash(email, event) };
+  const encrypted = encryptRecord(recordWithHash, PII_PATHS, event);
   const key = `orders/${record.id}.json`;
 
   if (process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT) {
     const store = await getBlobStore();
-    await store.setJSON(key, record);
+    await store.setJSON(key, encrypted);
     return { storage: 'netlify-blobs', key };
   }
 
   const dir = path.join(os.tmpdir(), 'imverica-intakes', 'orders');
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, `${record.id}.json`), JSON.stringify(record, null, 2));
+  await fs.writeFile(path.join(dir, `${record.id}.json`), JSON.stringify(encrypted, null, 2));
   return { storage: 'local-temp', key };
 }
 
-async function getRecord(id) {
+async function getRecord(id, event) {
   const safeId = clean(id, 80).replace(/[^A-Z0-9-]/gi, '');
   if (!safeId) return null;
   const key = `orders/${safeId}.json`;
 
+  let raw = null;
   if (process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT) {
     const store = await getBlobStore();
-    return await store.get(key, { type: 'json' });
+    raw = await store.get(key, { type: 'json' });
+  } else {
+    try {
+      const file = path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${safeId}.json`);
+      raw = JSON.parse(await fs.readFile(file, 'utf8'));
+    } catch { raw = null; }
   }
-
-  try {
-    const file = path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${safeId}.json`);
-    return JSON.parse(await fs.readFile(file, 'utf8'));
-  } catch {
-    return null;
-  }
+  // decryptRecord is backward-compatible: legacy plaintext records (no _v)
+  // are returned as-is, encrypted ones get their PII fields restored.
+  return raw ? decryptRecord(raw, PII_PATHS, event) : null;
 }
 
 async function listRecords() {
@@ -230,16 +252,10 @@ function summarizeRecord(record) {
   };
 }
 
-function isAdmin(event) {
-  const token = process.env.INTAKE_ADMIN_TOKEN;
-  if (!token) return false;
-
-  const headers = event.headers || {};
-  const auth = headers.authorization || headers.Authorization || '';
-  const bearer = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-  const queryToken = event.queryStringParameters?.token || '';
-  return bearer === token || queryToken === token;
-}
+// Admin authentication is two-factor: bearer token + TOTP code.
+// See lib/admin-auth.js for the contract and how to provision the
+// ADMIN_TOTP_SECRET env variable.
+const { isAdmin } = require('./lib/admin-auth');
 
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
@@ -267,7 +283,7 @@ exports.handler = async function (event) {
     }
 
     try {
-      const saved = await saveRecord(record);
+      const saved = await saveRecord(record, event);
       return json(200, {
         ok: true,
         orderId: record.id,
@@ -289,14 +305,14 @@ exports.handler = async function (event) {
 
     const id = event.queryStringParameters?.id;
     if (id) {
-      const record = await getRecord(id);
+      const record = await getRecord(id, event);
       return record ? json(200, { ok: true, record }) : json(404, { ok: false, error: 'Not found' });
     }
 
     const records = await listRecords();
     const summaries = [];
     for (const item of records.slice(0, 100)) {
-      const record = await getRecord(idFromKey(item.key));
+      const record = await getRecord(idFromKey(item.key), event);
       if (record) summaries.push(summarizeRecord(record));
     }
     summaries.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));

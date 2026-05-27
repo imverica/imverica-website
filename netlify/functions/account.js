@@ -14,6 +14,17 @@ const crypto = require('crypto');
 const os = require('os');
 const path = require('path');
 const fs = require('fs/promises');
+const { decryptRecord, emailHash } = require('./lib/crypto');
+
+// Keep PII_PATHS in sync with intake.js — what was encrypted on write
+// must be decrypted on read.
+const PII_PATHS = [
+  'contact.name',
+  'contact.email',
+  'contact.phone',
+  'serviceLabel',
+  'situation'
+];
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -26,8 +37,23 @@ function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
 }
 
-function sessionSecret() {
-  return process.env.SESSION_SECRET || 'imverica-dev-session-secret-change-me';
+/**
+ * Return the HMAC secret used to verify session cookies.
+ *
+ * SECURITY: in production we refuse to fall back to a hard-coded dev secret —
+ * doing so would let anyone with read access to this repo forge a session
+ * cookie for any email. When SESSION_SECRET is missing on a non-localhost
+ * host, this returns null and verifySession will fail closed, forcing
+ * operators to set the env var on Netlify before any cabinet access works.
+ */
+function sessionSecret(event) {
+  const secret = process.env.SESSION_SECRET;
+  if (secret && secret.length >= 20) return secret;
+  const host = String(event?.headers?.host || event?.headers?.Host || '');
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return 'imverica-dev-session-secret-change-me';
+  }
+  return null;
 }
 
 function b64url(buf) {
@@ -43,10 +69,12 @@ function parseCookie(header, name) {
   return '';
 }
 
-function verifySession(token) {
+function verifySession(token, event) {
   if (!token || !token.includes('.')) return null;
+  const secret = sessionSecret(event);
+  if (!secret) return null;
   const [body, sig] = token.split('.');
-  const expected = b64url(crypto.createHmac('sha256', sessionSecret()).update(body).digest());
+  const expected = b64url(crypto.createHmac('sha256', secret).update(body).digest());
   // constant-time compare
   const a = Buffer.from(sig);
   const b = Buffer.from(expected);
@@ -110,7 +138,7 @@ exports.handler = async function (event) {
   if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
 
   const token = parseCookie(event.headers?.cookie || event.headers?.Cookie, 'imv_session');
-  const session = verifySession(token);
+  const session = verifySession(token, event);
   if (!session) return json(401, { ok: false, error: 'Not signed in' });
 
   let records;
@@ -122,8 +150,18 @@ exports.handler = async function (event) {
     return json(500, { ok: false, error: 'Could not load your account right now.' });
   }
 
-  const mine = records
-    .filter((r) => r && r.contact && String(r.contact.email || '').toLowerCase() === session.email)
+  // Two-pass filter:
+  //   1. New records carry emailHash (HMAC) we can compare without decrypting.
+  //   2. Legacy plaintext records still have contact.email visible — match
+  //      directly. Only decrypt the records that are owned by this session.
+  const myHash = emailHash(session.email, event);
+  const mineRaw = records.filter((r) => {
+    if (!r) return false;
+    if (r.emailHash) return r.emailHash === myHash;
+    return r.contact && String(r.contact.email || '').toLowerCase() === session.email;
+  });
+  const mine = mineRaw
+    .map((r) => decryptRecord(r, PII_PATHS, event))
     .map(summarize)
     .sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
 

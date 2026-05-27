@@ -18,6 +18,7 @@ const crypto = require('crypto');
 const os = require('os');
 const path = require('path');
 const fs = require('fs/promises');
+const { encryptString, encryptBuffer } = require('./lib/crypto');
 const fsSync = require('fs');
 
 const CORS = {
@@ -30,15 +31,8 @@ function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
 }
 
-function isAdmin(event) {
-  const token = process.env.INTAKE_ADMIN_TOKEN;
-  if (!token) return false;
-  const h = event.headers || {};
-  const auth = h.authorization || h.Authorization || '';
-  const bearer = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-  const queryToken = event.queryStringParameters?.token || '';
-  return bearer === token || queryToken === token;
-}
+// Two-factor admin auth (bearer token + TOTP). See lib/admin-auth.js.
+const { isAdmin } = require('./lib/admin-auth');
 
 function safeId(v) { return String(v || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64); }
 
@@ -123,10 +117,18 @@ exports.handler = async function (event) {
   const metaKey = `meta/${orderId}.json`;
   const meta = (await readMeta(filesStore, metaKey)) || { files: [] };
   const fileId = crypto.randomBytes(8).toString('hex');
-  await writeBlob(filesStore, `blob/${orderId}/${fileId}`, buf);
+  // Encrypt the PDF body so a Blobs leak yields opaque ciphertext, not
+  // the client's prepared filing. Same format as upload.js uses.
+  const encBuf = encryptBuffer(buf, event);
+  await writeBlob(filesStore, `blob/${orderId}/${fileId}`, encBuf);
   meta.files.push({
-    fileId, name, type: 'application/pdf', size: buf.length,
-    uploadedAt: new Date().toISOString(), source: 'prepared'
+    fileId,
+    name: encryptString(name, event),
+    type: encryptString('application/pdf', event),
+    size: buf.length,
+    uploadedAt: new Date().toISOString(),
+    source: 'prepared',
+    enc: true
   });
   await writeMeta(filesStore, metaKey, meta);
 

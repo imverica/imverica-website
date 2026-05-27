@@ -38,7 +38,17 @@ function json(statusCode, body) {
 }
 
 // ----- session (mirrors account.js) -----
-function sessionSecret() { return process.env.SESSION_SECRET || 'imverica-dev-session-secret-change-me'; }
+// SECURITY: refuse the dev fallback on a deployed host. Without SESSION_SECRET
+// set on Netlify, verifySession returns null and the endpoint fails closed.
+function sessionSecret(event) {
+  const secret = process.env.SESSION_SECRET;
+  if (secret && secret.length >= 20) return secret;
+  const host = String(event?.headers?.host || event?.headers?.Host || '');
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return 'imverica-dev-session-secret-change-me';
+  }
+  return null;
+}
 function b64url(buf) { return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
 function parseCookie(header, name) {
   for (const part of String(header || '').split(';')) {
@@ -47,10 +57,12 @@ function parseCookie(header, name) {
   }
   return '';
 }
-function verifySession(token) {
+function verifySession(token, event) {
   if (!token || !token.includes('.')) return null;
+  const secret = sessionSecret(event);
+  if (!secret) return null;
   const [body, sig] = token.split('.');
-  const expected = b64url(crypto.createHmac('sha256', sessionSecret()).update(body).digest());
+  const expected = b64url(crypto.createHmac('sha256', secret).update(body).digest());
   const a = Buffer.from(sig); const b = Buffer.from(expected);
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
   let payload;
@@ -91,7 +103,12 @@ async function deleteBlob(s, key, fallbackDir) {
 const FILES_DIR = path.join(os.tmpdir(), 'imverica-files');
 
 // ----- ownership: does this order belong to the session email? -----
-async function ownsOrder(email, orderId) {
+// Encrypted records store emailHash (HMAC) — match against that without
+// decrypting the email. Legacy plaintext records still have contact.email
+// in the clear, so fall back to direct comparison for them.
+const { emailHash, encryptString, decryptString, encryptBuffer, decryptBuffer } = require('./lib/crypto');
+
+async function ownsOrder(email, orderId, event) {
   const id = safeId(orderId);
   if (!id) return false;
   const s = await store('imverica-intakes');
@@ -100,7 +117,10 @@ async function ownsOrder(email, orderId) {
   if (!record) {
     try { record = JSON.parse(await fs.readFile(path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${id}.json`), 'utf8')); } catch { /* none */ }
   }
-  return Boolean(record && record.contact && String(record.contact.email || '').toLowerCase() === email);
+  if (!record) return false;
+  if (record.emailHash) return record.emailHash === emailHash(email, event);
+  // Legacy plaintext: compare directly.
+  return Boolean(record.contact && String(record.contact.email || '').toLowerCase() === email);
 }
 
 function sanitizeName(name) {
@@ -204,52 +224,83 @@ async function mirrorToDrive({ orderId, fileName, buffer, mimeType, clientName, 
     return null;
   }
 }
-async function loadOrderRecord(orderId) {
+async function loadOrderRecord(orderId, event) {
   const id = safeId(orderId);
   if (!id) return null;
   const s = await store('imverica-intakes');
+  let raw = null;
   if (s) {
-    try {
-      const rec = await s.get(`orders/${id}.json`, { type: 'json' });
-      if (rec) return rec;
-    } catch { /* fall */ }
+    try { raw = await s.get(`orders/${id}.json`, { type: 'json' }); } catch { /* fall */ }
   }
-  try {
-    return JSON.parse(await fs.readFile(path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${id}.json`), 'utf8'));
-  } catch { return null; }
+  if (!raw) {
+    try { raw = JSON.parse(await fs.readFile(path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${id}.json`), 'utf8')); } catch { return null; }
+  }
+  // Decrypt PII fields so callers (e.g. Drive mirror that needs the client
+  // name for folder labels) see plaintext. Legacy records pass through.
+  if (raw && raw._v) {
+    const out = JSON.parse(JSON.stringify(raw));
+    if (out.contact) {
+      out.contact.name = decryptString(out.contact.name, event);
+      out.contact.email = decryptString(out.contact.email, event);
+      out.contact.phone = decryptString(out.contact.phone, event);
+    }
+    return out;
+  }
+  return raw;
 }
 function extOf(name) { return (String(name).split('.').pop() || '').toLowerCase(); }
 
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
 
-  const session = verifySession(parseCookie(event.headers?.cookie || event.headers?.Cookie, 'imv_session'));
+  const session = verifySession(parseCookie(event.headers?.cookie || event.headers?.Cookie, 'imv_session'), event);
   if (!session) return json(401, { ok: false, error: 'Not signed in' });
 
   const q = event.queryStringParameters || {};
   const orderId = safeId(q.orderId || (event.body ? (() => { try { return JSON.parse(event.body).orderId; } catch { return ''; } })() : ''));
   if (!orderId) return json(400, { ok: false, error: 'Missing orderId' });
-  if (!(await ownsOrder(session.email, orderId))) return json(403, { ok: false, error: 'Not your order' });
+  if (!(await ownsOrder(session.email, orderId, event))) return json(403, { ok: false, error: 'Not your order' });
 
   const filesStore = await store('imverica-files');
   const metaKey = `meta/${orderId}.json`;
+
+  // Helper to expose a file entry to the client UI — decrypts the filename
+  // and mime if they were stored encrypted, keeping the wire format stable.
+  function publicEntry(f) {
+    return {
+      fileId: f.fileId,
+      name: typeof f.name === 'object' && f.name?._enc ? decryptString(f.name, event) : (f.name || ''),
+      type: typeof f.type === 'object' && f.type?._enc ? decryptString(f.type, event) : (f.type || ''),
+      size: f.size,
+      uploadedAt: f.uploadedAt,
+      source: f.source || 'client'
+    };
+  }
 
   if (event.httpMethod === 'GET') {
     const meta = (await readJson(filesStore, metaKey, FILES_DIR)) || { files: [] };
     const fileId = safeId(q.fileId);
     if (!fileId) {
-      return json(200, { ok: true, files: meta.files.map((f) => ({ fileId: f.fileId, name: f.name, type: f.type, size: f.size, uploadedAt: f.uploadedAt, source: f.source || 'client' })) });
+      return json(200, { ok: true, files: meta.files.map(publicEntry) });
     }
     const entry = meta.files.find((f) => f.fileId === fileId);
     if (!entry) return json(404, { ok: false, error: 'File not found' });
-    const buf = await readBlob(filesStore, `blob/${orderId}/${fileId}`, FILES_DIR);
+    let buf = await readBlob(filesStore, `blob/${orderId}/${fileId}`, FILES_DIR);
     if (!buf) return json(404, { ok: false, error: 'File not found' });
+    // If the entry is marked encrypted, decrypt back to original bytes.
+    // Legacy plaintext uploads (no entry.enc flag) pass through.
+    if (entry.enc) {
+      const plain = decryptBuffer(buf, event);
+      if (!plain) return json(500, { ok: false, error: 'Could not decrypt file. Please contact support.' });
+      buf = plain;
+    }
+    const pub = publicEntry(entry);
     return {
       statusCode: 200,
       headers: {
         ...CORS,
-        'Content-Type': entry.type || 'application/octet-stream',
-        'Content-Disposition': `attachment; filename="${entry.name.replace(/"/g, '')}"`
+        'Content-Type': pub.type || 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${String(pub.name).replace(/"/g, '')}"`
       },
       body: buf.toString('base64'),
       isBase64Encoded: true
@@ -289,15 +340,28 @@ exports.handler = async function (event) {
     if (meta.files.length >= MAX_FILES_PER_ORDER) return json(409, { ok: false, error: 'Too many files on this request.' });
 
     const fileId = crypto.randomBytes(8).toString('hex');
-    await writeBlob(filesStore, `blob/${orderId}/${fileId}`, buf, FILES_DIR);
-    meta.files.push({ fileId, name, type: type || 'application/octet-stream', size: buf.length, uploadedAt: new Date().toISOString(), source: 'client' });
+    // Encrypt the file body at rest. iv||tag||ciphertext is stored as one
+    // blob; entry.enc=true tells the GET path it needs decryptBuffer.
+    const encBuf = encryptBuffer(buf, event);
+    await writeBlob(filesStore, `blob/${orderId}/${fileId}`, encBuf, FILES_DIR);
+    meta.files.push({
+      fileId,
+      // Filename + mime are PII (often contain client names, doc category)
+      // so they are stored encrypted in the metadata blob too.
+      name: encryptString(name, event),
+      type: encryptString(type || 'application/octet-stream', event),
+      size: buf.length,
+      uploadedAt: new Date().toISOString(),
+      source: 'client',
+      enc: true
+    });
     await writeJson(filesStore, metaKey, meta, FILES_DIR);
 
     // Best-effort: also push a copy to the Imverica Google Drive so the team
     // sees incoming docs in a per-client/per-date folder. If Drive is not
     // configured (no env vars) or the API fails, the upload still succeeds.
     try {
-      const record = await loadOrderRecord(orderId);
+      const record = await loadOrderRecord(orderId, event);
       const driveRes = await mirrorToDrive({
         orderId,
         fileName: name,

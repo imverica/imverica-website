@@ -25,14 +25,8 @@ function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
 }
 
-function isAdmin(event) {
-  const token = process.env.INTAKE_ADMIN_TOKEN;
-  if (!token) return false;
-  const h = event.headers || {};
-  const auth = h.authorization || h.Authorization || '';
-  const bearer = auth.startsWith('Bearer ') ? auth.slice(7).trim() : '';
-  return bearer === token || (event.queryStringParameters?.token || '') === token;
-}
+// Two-factor admin auth (bearer token + TOTP). See lib/admin-auth.js.
+const { isAdmin } = require('./lib/admin-auth');
 
 function safeId(v) { return String(v || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64); }
 

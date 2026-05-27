@@ -19,6 +19,14 @@
  */
 
 const crypto = require('crypto');
+const { generateSecret, verifyTOTP, otpauthURL, generateRecoveryCodes, hashRecoveryCode } = require('./lib/totp');
+const { readProfile, updateProfile } = require('./lib/profile-store');
+
+// Pre-2FA cookie — short-lived intermediate state after email-OTP passes
+// but before TOTP is verified. Holds only the email so verify-totp knows
+// which account to check, and expires in 5 minutes so a phished email
+// code can't be combined later with a long-running cookie.
+const PRE2FA_TTL_MS = 5 * 60 * 1000;
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -31,7 +39,10 @@ const OTP_TTL_MS = 10 * 60 * 1000;        // code valid 10 minutes
 const MAX_VERIFY_ATTEMPTS = 5;            // per code
 const MAX_REQUESTS_PER_WINDOW = 5;        // request-otp throttle
 const REQUEST_WINDOW_MS = 60 * 60 * 1000; // per hour
-const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+// Shorter session window — 7 days instead of 30 — narrows the window in which
+// a stolen session cookie is useful. The user simply re-authenticates via
+// email-OTP (and TOTP if enabled) at the end of the week.
+const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 function json(statusCode, body, extraHeaders = {}) {
   return {
@@ -57,14 +68,30 @@ function b64url(buf) {
   return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-function sessionSecret() {
-  return process.env.SESSION_SECRET || 'imverica-dev-session-secret-change-me';
+/**
+ * Return the HMAC secret used to sign session cookies.
+ *
+ * SECURITY: refuse to fall back to a hard-coded dev secret in production.
+ * Without SESSION_SECRET set in the deployed environment, signSession
+ * returns null and verify-otp will hard-fail — operators MUST set
+ * SESSION_SECRET on Netlify before sign-in works on the live host.
+ */
+function sessionSecret(event) {
+  const secret = process.env.SESSION_SECRET;
+  if (secret && secret.length >= 20) return secret;
+  const host = String(event?.headers?.host || event?.headers?.Host || '');
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return 'imverica-dev-session-secret-change-me';
+  }
+  return null;
 }
 
-function signSession(email) {
+function signSession(email, event) {
+  const secret = sessionSecret(event);
+  if (!secret) return null;
   const payload = { email, exp: Date.now() + SESSION_TTL_MS };
   const body = b64url(JSON.stringify(payload));
-  const sig = b64url(crypto.createHmac('sha256', sessionSecret()).update(body).digest());
+  const sig = b64url(crypto.createHmac('sha256', secret).update(body).digest());
   return `${body}.${sig}`;
 }
 
@@ -148,6 +175,62 @@ function sessionCookie(token, event, { clear = false } = {}) {
   return `imv_session=${value}; HttpOnly;${secure} SameSite=Lax; Path=/; Max-Age=${maxAge}`;
 }
 
+// ----- pre-2FA bridge cookie -----
+function b64url(buf) {
+  return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function signPre2fa(email, event) {
+  const secret = sessionSecret(event);
+  if (!secret) return null;
+  const payload = { email, kind: 'pre2fa', exp: Date.now() + PRE2FA_TTL_MS };
+  const body = b64url(JSON.stringify(payload));
+  const sig = b64url(crypto.createHmac('sha256', secret).update(body).digest());
+  return `${body}.${sig}`;
+}
+function verifyPre2fa(token, event) {
+  if (!token || !token.includes('.')) return null;
+  const secret = sessionSecret(event);
+  if (!secret) return null;
+  const [body, sig] = token.split('.');
+  const expected = b64url(crypto.createHmac('sha256', secret).update(body).digest());
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  let payload;
+  try { payload = JSON.parse(Buffer.from(body.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')); } catch { return null; }
+  if (!payload || payload.kind !== 'pre2fa' || !payload.email || Date.now() > payload.exp) return null;
+  return payload;
+}
+function pre2faCookie(token, event, { clear = false } = {}) {
+  const secure = isLocalHost(event) ? '' : ' Secure;';
+  const maxAge = clear ? 0 : Math.floor(PRE2FA_TTL_MS / 1000);
+  const value = clear ? '' : token;
+  return `imv_pre2fa=${value}; HttpOnly;${secure} SameSite=Lax; Path=/; Max-Age=${maxAge}`;
+}
+function parseCookieHeader(header, name) {
+  for (const part of String(header || '').split(';')) {
+    const [k, ...v] = part.trim().split('=');
+    if (k === name) return v.join('=');
+  }
+  return '';
+}
+function verifyExistingSession(event) {
+  const cookieHeader = event.headers?.cookie || event.headers?.Cookie || '';
+  const token = parseCookieHeader(cookieHeader, 'imv_session');
+  if (!token || !token.includes('.')) return null;
+  const secret = sessionSecret(event);
+  if (!secret) return null;
+  const [body, sig] = token.split('.');
+  const expected = b64url(crypto.createHmac('sha256', secret).update(body).digest());
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  let payload;
+  try { payload = JSON.parse(Buffer.from(body.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')); } catch { return null; }
+  if (!payload || !payload.email || !payload.exp || Date.now() > payload.exp) return null;
+  return payload;
+}
+
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
@@ -157,7 +240,110 @@ exports.handler = async function (event) {
   const action = String(body.action || '');
 
   if (action === 'logout') {
-    return json(200, { ok: true }, { 'Set-Cookie': sessionCookie('', event, { clear: true }) });
+    // Clear both session and any leftover pre-2FA cookie. We send two
+    // Set-Cookie headers via an array — Netlify Functions supports this.
+    return {
+      statusCode: 200,
+      headers: {
+        ...CORS,
+        'Content-Type': 'application/json'
+      },
+      multiValueHeaders: {
+        'Set-Cookie': [sessionCookie('', event, { clear: true }), pre2faCookie('', event, { clear: true })]
+      },
+      body: JSON.stringify({ ok: true })
+    };
+  }
+
+  // ===== TOTP setup endpoints — require an existing full session =====
+  if (action === 'setup-totp' || action === 'confirm-totp' || action === 'disable-totp') {
+    const sess = verifyExistingSession(event);
+    if (!sess) return json(401, { ok: false, error: 'Not signed in' });
+    const userEmail = sess.email;
+
+    if (action === 'setup-totp') {
+      const secret = generateSecret();
+      // Stash the new secret as PENDING until confirmed by a TOTP code.
+      // If the user abandons setup, the pending value is overwritten on
+      // the next setup-totp call.
+      await updateProfile(userEmail, { totpPendingSecret: secret });
+      const url = otpauthURL({ label: userEmail, secret });
+      return json(200, { ok: true, secret, otpauthURL: url });
+    }
+
+    if (action === 'confirm-totp') {
+      const code = String(body.code || '').replace(/\D/g, '');
+      const profile = (await readProfile(userEmail)) || {};
+      if (!profile.totpPendingSecret) return json(400, { ok: false, error: 'Start setup first.' });
+      if (!verifyTOTP(profile.totpPendingSecret, code)) {
+        return json(401, { ok: false, error: 'Code did not match. Try the latest one from your authenticator app.' });
+      }
+      const recoveryCodes = generateRecoveryCodes(8);
+      await updateProfile(userEmail, {
+        totpSecret: profile.totpPendingSecret,
+        totpEnabledAt: new Date().toISOString(),
+        recoveryCodesHashed: recoveryCodes.map(hashRecoveryCode),
+        totpPendingSecret: null
+      });
+      // Return recovery codes ONCE so the user can save them. They never
+      // appear in any GET response after this — only the hashed versions
+      // are stored, and only the hash is used for verification.
+      return json(200, { ok: true, recoveryCodes });
+    }
+
+    if (action === 'disable-totp') {
+      const code = String(body.code || '').replace(/\D/g, '');
+      const profile = (await readProfile(userEmail)) || {};
+      if (!profile.totpSecret) return json(400, { ok: false, error: 'Two-factor authentication is not enabled.' });
+      if (!verifyTOTP(profile.totpSecret, code)) {
+        return json(401, { ok: false, error: 'Code did not match. Two-factor authentication is still enabled.' });
+      }
+      await updateProfile(userEmail, {
+        totpSecret: null,
+        totpEnabledAt: null,
+        recoveryCodesHashed: null,
+        totpPendingSecret: null
+      });
+      return json(200, { ok: true, totpEnabled: false });
+    }
+  }
+
+  // ===== TOTP login step — requires pre-2FA cookie =====
+  if (action === 'verify-totp' || action === 'use-recovery-code') {
+    const pre = verifyPre2fa(parseCookieHeader(event.headers?.cookie || event.headers?.Cookie, 'imv_pre2fa'), event);
+    if (!pre) return json(401, { ok: false, error: 'Two-factor session expired. Please sign in again.' });
+    const userEmail = pre.email;
+    const profile = (await readProfile(userEmail)) || {};
+    if (!profile.totpSecret) return json(400, { ok: false, error: 'Two-factor authentication is not configured for this account.' });
+
+    if (action === 'verify-totp') {
+      const code = String(body.code || '').replace(/\D/g, '');
+      if (!verifyTOTP(profile.totpSecret, code)) {
+        return json(401, { ok: false, error: 'Incorrect 2FA code.' });
+      }
+    } else {
+      // use-recovery-code: consume one of the stored hashes if it matches.
+      const supplied = hashRecoveryCode(body.code || '');
+      const idx = (profile.recoveryCodesHashed || []).indexOf(supplied);
+      if (idx < 0) return json(401, { ok: false, error: 'Recovery code is invalid or already used.' });
+      const remaining = profile.recoveryCodesHashed.slice();
+      remaining.splice(idx, 1);
+      await updateProfile(userEmail, { recoveryCodesHashed: remaining });
+    }
+
+    const token = signSession(userEmail, event);
+    if (!token) {
+      console.error('SESSION_SECRET missing — cannot complete 2FA sign-in.');
+      return json(503, { ok: false, error: 'Sign-in is not configured on this server.' });
+    }
+    return {
+      statusCode: 200,
+      headers: { ...CORS, 'Content-Type': 'application/json' },
+      multiValueHeaders: {
+        'Set-Cookie': [sessionCookie(token, event), pre2faCookie('', event, { clear: true })]
+      },
+      body: JSON.stringify({ ok: true, email: userEmail })
+    };
   }
 
   const email = cleanEmail(body.email);
@@ -219,7 +405,31 @@ exports.handler = async function (event) {
     }
 
     await deleteState(store, key); // single-use
-    const token = signSession(email);
+
+    // If this account has TOTP 2FA enabled, the email code alone is NOT
+    // enough. Hand out a short-lived pre-2FA cookie and signal the client
+    // to collect a TOTP code next.
+    const profile = (await readProfile(email)) || {};
+    if (profile.totpEnabledAt && profile.totpSecret) {
+      const bridge = signPre2fa(email, event);
+      if (!bridge) {
+        console.error('SESSION_SECRET missing — cannot issue 2FA bridge.');
+        return json(503, { ok: false, error: 'Sign-in is not configured on this server.' });
+      }
+      return {
+        statusCode: 200,
+        headers: { ...CORS, 'Content-Type': 'application/json' },
+        multiValueHeaders: { 'Set-Cookie': [pre2faCookie(bridge, event)] },
+        body: JSON.stringify({ ok: true, email, requireTotp: true })
+      };
+    }
+
+    // No 2FA — issue the full session as before.
+    const token = signSession(email, event);
+    if (!token) {
+      console.error('SESSION_SECRET not configured on this deployment; refusing to issue a session.');
+      return json(503, { ok: false, error: 'Sign-in is not configured on this server. Please contact us at +1 (916) 399-3992.' });
+    }
     return json(200, { ok: true, email }, { 'Set-Cookie': sessionCookie(token, event) });
   }
 

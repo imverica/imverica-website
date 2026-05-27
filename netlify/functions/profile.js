@@ -33,7 +33,17 @@ function cleanField(v, max) {
 }
 
 // ----- session (mirrors account.js) -----
-function sessionSecret() { return process.env.SESSION_SECRET || 'imverica-dev-session-secret-change-me'; }
+// SECURITY: refuse the dev fallback on a deployed host. Without SESSION_SECRET
+// set on Netlify, verifySession returns null and the endpoint fails closed.
+function sessionSecret(event) {
+  const secret = process.env.SESSION_SECRET;
+  if (secret && secret.length >= 20) return secret;
+  const host = String(event?.headers?.host || event?.headers?.Host || '');
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return 'imverica-dev-session-secret-change-me';
+  }
+  return null;
+}
 function b64url(buf) { return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
 function parseCookie(header, name) {
   for (const part of String(header || '').split(';')) {
@@ -42,10 +52,12 @@ function parseCookie(header, name) {
   }
   return '';
 }
-function verifySession(token) {
+function verifySession(token, event) {
   if (!token || !token.includes('.')) return null;
+  const secret = sessionSecret(event);
+  if (!secret) return null;
   const [body, sig] = token.split('.');
-  const expected = b64url(crypto.createHmac('sha256', sessionSecret()).update(body).digest());
+  const expected = b64url(crypto.createHmac('sha256', secret).update(body).digest());
   const a = Buffer.from(sig); const b = Buffer.from(expected);
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
   let payload;
@@ -54,58 +66,29 @@ function verifySession(token) {
   return payload;
 }
 
-// ----- AES-256-GCM field encryption -----
-function dataKey() {
-  const secret = process.env.DATA_ENCRYPTION_KEY || process.env.SESSION_SECRET || 'imverica-dev-data-key';
-  return crypto.createHash('sha256').update(secret).digest();
-}
-function encrypt(obj) {
-  const iv = crypto.randomBytes(12);
-  const cipher = crypto.createCipheriv('aes-256-gcm', dataKey(), iv);
-  const data = Buffer.concat([cipher.update(JSON.stringify(obj), 'utf8'), cipher.final()]);
-  return { enc: 1, iv: iv.toString('base64'), tag: cipher.getAuthTag().toString('base64'), data: data.toString('base64') };
-}
-function decrypt(blob) {
-  if (!blob || blob.enc !== 1) return null;
-  try {
-    const decipher = crypto.createDecipheriv('aes-256-gcm', dataKey(), Buffer.from(blob.iv, 'base64'));
-    decipher.setAuthTag(Buffer.from(blob.tag, 'base64'));
-    const out = Buffer.concat([decipher.update(Buffer.from(blob.data, 'base64')), decipher.final()]);
-    return JSON.parse(out.toString('utf8'));
-  } catch { return null; }
-}
-
-// ----- storage (Blobs + fs fallback) -----
-const DIR = path.join(os.tmpdir(), 'imverica-profiles');
-async function getStore() { try { return require('@netlify/blobs').getStore('imverica-profiles'); } catch { return null; } }
-function key(email) { return `profile/${sha256hex(email)}.json`; }
-function fsName(k) { return k.replace(/[^A-Za-z0-9_-]/g, '_'); }
-
-async function readBlob(s, email) {
-  const k = key(email);
-  if (s) { try { const v = await s.get(k, { type: 'json' }); if (v) return v; } catch (e) { /* fall */ } }
-  try { return JSON.parse(await fs.readFile(path.join(DIR, `${fsName(k)}.json`), 'utf8')); } catch (e) { return null; }
-}
-async function writeBlob(s, email, value) {
-  const k = key(email);
-  if (s) { try { await s.setJSON(k, value); return; } catch (e) { /* fall */ } }
-  await fs.mkdir(DIR, { recursive: true });
-  await fs.writeFile(path.join(DIR, `${fsName(k)}.json`), JSON.stringify(value));
-}
+// Profile encryption + storage are shared with auth.js (TOTP fields).
+// See lib/profile-store.js for the AES-256-GCM envelope format.
+const { readProfile, updateProfile } = require('./lib/profile-store');
 
 const NAME_OK = /[A-Za-zÀ-ɏЀ-ӿ]/;
 
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
 
-  const session = verifySession(parseCookie(event.headers && (event.headers.cookie || event.headers.Cookie), 'imv_session'));
+  const session = verifySession(parseCookie(event.headers && (event.headers.cookie || event.headers.Cookie), 'imv_session'), event);
   if (!session) return json(401, { ok: false, error: 'Not signed in' });
   const email = session.email;
-  const store = await getStore();
 
   if (event.httpMethod === 'GET') {
-    const profile = decrypt(await readBlob(store, email)) || null;
-    return json(200, { ok: true, email, profile });
+    const profile = await readProfile(email);
+    // Don't leak the TOTP secret to the client. Surface only the boolean
+    // flags so the UI can show "2FA enabled / disabled".
+    let safe = null;
+    if (profile) {
+      const { totpSecret, totpPendingSecret, recoveryCodesHashed, ...rest } = profile;
+      safe = { ...rest, totpEnabled: Boolean(profile.totpEnabledAt) };
+    }
+    return json(200, { ok: true, email, profile: safe });
   }
 
   if (event.httpMethod === 'POST') {
@@ -119,14 +102,14 @@ exports.handler = async function (event) {
     if (!NAME_OK.test(lastName)) return json(422, { ok: false, error: 'Please enter your last name.' });
     if (phoneDigits.length < 10 || phoneDigits.length > 15) return json(422, { ok: false, error: 'Please enter a valid phone number.' });
 
-    const profile = {
+    const patch = {
       firstName, lastName, legalName,
-      phone: phoneDigits.length === 10 ? `(${phoneDigits.slice(0, 3)}) ${phoneDigits.slice(3, 6)}-${phoneDigits.slice(6)}` : phoneDigits,
-      email,
-      updatedAt: new Date().toISOString()
+      phone: phoneDigits.length === 10 ? `(${phoneDigits.slice(0, 3)}) ${phoneDigits.slice(3, 6)}-${phoneDigits.slice(6)}` : phoneDigits
     };
-    await writeBlob(store, email, encrypt(profile));
-    return json(200, { ok: true, profile });
+    const merged = await updateProfile(email, patch);
+    // Same projection rules as the GET path: never leak the TOTP secret.
+    const { totpSecret, totpPendingSecret, recoveryCodesHashed, ...rest } = merged;
+    return json(200, { ok: true, profile: { ...rest, totpEnabled: Boolean(merged.totpEnabledAt) } });
   }
 
   return json(405, { ok: false, error: 'Method not allowed' });
