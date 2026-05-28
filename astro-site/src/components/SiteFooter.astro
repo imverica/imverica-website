@@ -74,4 +74,8 @@ const disclaimerLines = f.disclaimer.replace('{year}', String(year)).split('||')
   }
   .footer-social-btn svg { flex: 0 0 auto; }
   .site-footer--lean .site-footer-bottom { color: rgba(255,255,255,0.55); font-size: 12px; line-height: 1.6; max-width: 880px; margin: 0 auto; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+  /* Balance each disclaimer line so the legal-code citation and the last
+     word ("…this site.") never drop to a lonely second line. */
+  .site-footer--lean .site-footer-bottom div { text-wrap: balance; }
+  .site-footer--lean .site-footer-bottom div + div { margin-top: 8px; }
 </style>

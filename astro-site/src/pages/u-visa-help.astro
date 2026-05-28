@@ -1,0 +1,95 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'U visa document preparation — I-918 for crime victims | Imverica';
+const description = 'California Licensed LDA prepares U nonimmigrant (U visa) packages — I-918 petition, I-918 Supplement A (family), I-918 Supplement B (law-enforcement certification), I-192 waiver, I-765 work permit. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U Nonimmigrant Status (U visa) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for U nonimmigrant status petitions for victims of qualifying crimes, at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/u-visa-help"
+  slug="/u-visa-help" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · Humanitarian · INA §101(a)(15)(U)"
+    heading="U visa (I-918) — document preparation for crime victims"
+    sub="The U visa protects victims of qualifying crimes who helped law enforcement. We prepare the full I-918 package accurately at your direction — fixed fee, multilingual intake (Ukrainian, Russian, Spanish, English)."
+    ctaPrimary={{ href: '/#get-started?form=I-918', text: 'Start my U visa package' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms in a U visa package"
+    heading="What the U visa involves"
+    intro="A U visa filing usually combines several USCIS forms. Tap any tile for the form-specific page."
+    tiles={[
+      { icon: '🆘', title: 'I-918 — Principal petition',        desc: 'Petition for U Nonimmigrant Status — the core application for the victim.',              href: '/#get-started?form=I-918',   color: 'var(--terracotta-deep)' },
+      { icon: '🪪', title: 'I-918 Supplement B — Certification', desc: 'Law-enforcement certification of helpfulness. Required and time-sensitive.',             href: '/#get-started?form=I-918B',  color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'I-918 Supplement A — Family',      desc: 'Qualifying family members (spouse, children, and in some cases parents/siblings).',     href: '/#get-started?form=I-918A',  color: 'var(--sage)' },
+      { icon: '📝', title: 'I-192 — Inadmissibility waiver',     desc: 'Waiver of grounds of inadmissibility, filed with most U petitions.',                    href: '/#get-started?form=I-192',   color: 'var(--gold)' },
+      { icon: '💼', title: 'I-765 — Work permit',                desc: 'Employment authorization once a bona-fide determination or approval is made.',           href: '/i-765-work-permit-help',    color: 'var(--navy-light)' },
+      { icon: '🟢', title: 'I-485 — Adjustment of status',       desc: 'Green-card package after holding U status for the required period.',                     href: '/i-485-help',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-765-work-permit-help', label: 'I-765 work permit (full details)' },
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      The U nonimmigrant visa ("U visa") was created by Congress to protect
+      victims of certain serious crimes who suffered substantial abuse and
+      who cooperate with law enforcement in the investigation or prosecution
+      of that crime. It is a humanitarian category — it can lead to work
+      authorization and, after a qualifying period, to a green card.
+    </p>
+
+    <h2>Who the U visa is for</h2>
+    <ul>
+      <li>You were the victim of a qualifying crime (such as domestic violence, felonious assault, sexual abuse, trafficking, kidnapping, or witness tampering, among others).</li>
+      <li>You suffered substantial physical or mental abuse as a result.</li>
+      <li>You have information about the crime and were, are, or are likely to be helpful to law enforcement.</li>
+      <li>The crime occurred in the United States or violated U.S. law.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form I-918</strong> — the principal petition for U status, with the personal statement and supporting exhibits organized.</li>
+      <li><strong>Form I-918 Supplement B</strong> — the certification a law-enforcement agency completes; we prepare the packet so it is ready for the certifying official's signature.</li>
+      <li><strong>Form I-918 Supplement A</strong> — derivative petitions for qualifying family members.</li>
+      <li><strong>Form I-192</strong> — the waiver of inadmissibility filed with most U petitions.</li>
+      <li><strong>Form I-765</strong> — employment authorization once eligible.</li>
+      <li><strong>Certified translations</strong> of police reports, medical records, and other supporting evidence.</li>
+    </ul>
+
+    <h2>What the U visa process does NOT do</h2>
+    <p>
+      Congress caps principal U visa approvals at 10,000 per fiscal year, so
+      petitions routinely wait on a list for several years before a decision;
+      USCIS may grant deferred action and a work permit in the meantime. The
+      U visa is legally complex and the deadlines for law-enforcement
+      certification are strict. Imverica is a registered Legal Document
+      Assistant — not a law firm. We prepare documents at your direction and
+      do not select your category, give legal advice, or guarantee any
+      outcome. For advice or representation we maintain referrals to licensed
+      California immigration attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> INA §101(a)(15)(U) and §214(p) (U status and
+      the 10,000 annual cap); Victims of Trafficking and Violence Protection
+      Act of 2000 (VTVPA); 8 C.F.R. §214.14; 8 U.S.C. §1367 (confidentiality
+      protections). Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-918" primaryText="Begin my U visa intake" />
+</BaseLayout>

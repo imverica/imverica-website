@@ -13,13 +13,6 @@ const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
   'California Licensed LDA & Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, and probate. Remote service worldwide.';
 
-// Live "forms supported" number for the hero trust pill — mirrors the
-// StatsStrip auto-growth formula so the two never disagree.
-const STATS_BASE = Date.UTC(2026, 4, 25);
-const statsDays = Math.max(0, Math.floor((Date.now() - STATS_BASE) / 86400000));
-const formsSupported = 734 + Math.floor((statsDays * 2) / 5);
-const heroPill = `${formsSupported}+ USCIS, EOIR & California forms · 4 languages`;
-
 const legalServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
@@ -53,7 +46,6 @@ const legalServiceSchema = {
   availableLocales={['en', 'ru', 'uk', 'es']}
 >
   <Hero
-    trustPill={heroPill}
     eyebrow="California · Licensed LDA · Immigration Consultant"
     heading="What document do you need prepared?"
     sub="Describe your situation or enter a form number. We prepare USCIS, EOIR, and California court documents at your direction — for clients across California and worldwide."

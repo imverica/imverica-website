@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'I-90 — обновление и замена green card | Imverica';
+const description = 'California Licensed LDA готовит форму I-90 для обновления истекающей 10-летней green card, замены утерянной, украденной или повреждённой карты, исправления ошибки USCIS или смены имени. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-90 Green Card Renewal and Replacement Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для обновления или замены Permanent Resident Card (форма I-90), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/i-90-green-card-renewal"
+  slug="/i-90-green-card-renewal" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §264 · 8 C.F.R. §264.5"
+    heading="I-90 — обновление и замена green card"
+    sub="Обновить истекающую 10-летнюю green card или заменить утерянную, украденную, повреждённую карту либо карту с неверными данными. Готовим форму I-90 аккуратно по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=I-90', text: 'Начать заявление I-90' }}
+  />
+
+  <CategoryTiles
+    kicker="Когда подают I-90"
+    heading="Что покрывает I-90"
+    intro="Форма I-90 поддерживает вашу Permanent Resident Card актуальной. Нажмите плитку под вашу ситуацию."
+    tiles={[
+      { icon: '♻️', title: 'I-90 — Заявление',          desc: 'Application to Replace Permanent Resident Card — основная форма.',                href: '/#get-started?form=I-90',  color: 'var(--terracotta-deep)' },
+      { icon: '📆', title: 'Обновить истекающую карту',  desc: 'Ваша 10-летняя green card истекает или истекла — запросить новую карту.',         href: '/#get-started?form=I-90',  color: 'var(--navy)' },
+      { icon: '🔁', title: 'Утеря / кража / повреждение', desc: 'Заменить карту, которая была потеряна, украдена, испорчена или уничтожена.',     href: '/#get-started?form=I-90',  color: 'var(--sage)' },
+      { icon: '✏️', title: 'Исправить ошибку USCIS',     desc: 'Исправить карту, выданную с неверными данными из-за ошибки USCIS.',               href: '/#get-started?form=I-90',  color: 'var(--gold)' },
+      { icon: '🪪', title: 'Смена имени / данных',        desc: 'Обновить карту после законной смены имени или иной биографической поправки.',     href: '/#get-started?form=I-90',  color: 'var(--navy-light)' },
+      { icon: '🟢', title: 'Условная (2-летняя) карта',   desc: 'Условные резиденты подают I-751, а не I-90 — готовим и этот пакет.',              href: '/#get-started?form=I-751', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/n-400-citizenship-help', label: 'N-400 — Натурализация' },
+    { href: '/ru/immigration', label: 'Все документы USCIS и EOIR, которые мы готовим' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-90 — это Application to Replace Permanent Resident Card.
+      Постоянные резиденты используют её, чтобы обновлять стандартную
+      10-летнюю green card по мере истечения и заменять карту, которая была
+      потеряна, украдена, повреждена или выдана с неверными данными. Ваш
+      статус постоянного резидента не истекает вместе с картой — но вы обязаны
+      носить действующую карту, поэтому держать её актуальной важно для
+      работы, поездок и идентификации.
+    </p>
+
+    <h2>Когда подавать I-90</h2>
+    <ul>
+      <li>Ваша 10-летняя green card истекла или истечёт в ближайшие шесть месяцев.</li>
+      <li>Карта была потеряна, украдена, испорчена или уничтожена.</li>
+      <li>В карте неверные данные из-за ошибки USCIS, либо ваше имя или иные биографические данные законно изменились.</li>
+      <li>Вам выпустили карту, но вы её так и не получили.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форму I-90</strong> с правильно выбранной причиной замены и организованными подтверждающими документами.</li>
+      <li><strong>Подтверждающие документы</strong> — копии существующей или истёкшей карты, документы, удостоверяющие личность, и доказательство смены имени при необходимости.</li>
+      <li><strong>Запрос fee waiver</strong>, если вы подходите по доходу.</li>
+    </ul>
+
+    <h2>Чего I-90 НЕ делает</h2>
+    <p>
+      I-90 <em>не</em> для условных постоянных резидентов с 2-летней картой —
+      им нужно подавать форму I-751 (или I-829) для снятия условий, и ошибочная
+      подача I-90 не сохранит их статус. I-90 — это и не натурализация; если вы
+      хотите стать гражданином США, подаётся форма N-400. Imverica —
+      зарегистрированный Legal Document Assistant, а не юридическая фирма. Мы
+      готовим документы по вашему поручению и не даём юридических консультаций
+      и не гарантируем результат.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §264 и 8 C.F.R. §264.5 (замена
+      регистрационных документов / green card); INA §216 и форма I-751
+      (снятие условий для условных резидентов). Только подготовка документов —
+      не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-90" primaryText="Начать анкету I-90" />
+</BaseLayout>

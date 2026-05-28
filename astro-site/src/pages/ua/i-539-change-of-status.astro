@@ -1,0 +1,93 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'I-539 — зміна або продовження неімміграційного статусу | Imverica';
+const description = 'California Licensed LDA готує форму I-539 для продовження або зміни неімміграційного статусу — B-1/B-2, F/M студент, J, H-4 і L-2 dependents — плюс I-539A для co-applicants. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-539 Change or Extension of Nonimmigrant Status Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для заяв на продовження або зміну неімміграційного статусу (форма I-539), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/i-539-change-of-status"
+  slug="/i-539-change-of-status" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §248 · §214"
+    heading="I-539 — зміна або продовження неімміграційного статусу"
+    sub="Залишитися довше або перейти з одного неімміграційного статусу в інший, перебуваючи всередині США. Готуємо форму I-539 (і I-539A для co-applicants) акуратно й вчасно, за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=I-539', text: 'Почати заяву I-539' }}
+  />
+
+  <CategoryTiles
+    kicker="Часті ситуації I-539"
+    heading="Що покриває I-539"
+    intro="Форма I-539 оформлює продовження та зміну для багатьох неімміграційних категорій. Натисніть плитку, щоб почати."
+    tiles={[
+      { icon: '📄', title: 'I-539 — Заява',                desc: 'Application to Extend / Change Nonimmigrant Status — основна форма.',                href: '/#get-started?form=I-539',  color: 'var(--terracotta-deep)' },
+      { icon: '👥', title: 'I-539A — Co-applicants',        desc: 'Dependents (дружина/чоловік і діти) в одній заяві.',                                 href: '/#get-started?form=I-539A', color: 'var(--navy)' },
+      { icon: '🧳', title: 'Продовжити B-1 / B-2',          desc: 'Попросити більше часу за бізнес- чи тур-візитом до закінчення I-94.',                href: '/#get-started?form=I-539',  color: 'var(--sage)' },
+      { icon: '🎓', title: 'Зміна на F-1 / M-1',            desc: 'Перейти в студентський статус за наявності прийнятої форми I-20.',                   href: '/#get-started?form=I-539',  color: 'var(--gold)' },
+      { icon: '👪', title: 'H-4 / L-2 dependents',          desc: 'Статус dependent, прив’язаний до основного працівника H-1B або L-1.',               href: '/#get-started?form=I-539',  color: 'var(--navy-light)' },
+      { icon: '💼', title: 'I-765 — робота для dependent',  desc: 'Відповідні H-4 і L-2 dependents можуть подати на дозвіл на роботу.',                 href: '/ua/i-765-work-permit-help', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-765-work-permit-help', label: 'I-765 — Дозвіл на роботу (EAD)' },
+    { href: '/ua/immigration', label: 'Усі документи USCIS та EOIR, які ми готуємо' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-539 — це спосіб для людини, яка вже перебуває в США в
+      неімміграційній категорії, попросити USCIS або <em>продовжити</em>
+      поточне перебування, або <em>змінити</em> статус на інший
+      неімміграційний — не виїжджаючи з країни для подачі на нову візу за
+      кордоном.
+    </p>
+
+    <h2>Хто подає I-539</h2>
+    <ul>
+      <li>Відвідувачі B-1/B-2, яким потрібно більше часу до закінчення дозволеного перебування.</li>
+      <li>Ті, хто переходить у статус F-1/M-1 студента або між певними неімміграційними категоріями.</li>
+      <li>Dependents H-4 і L-2 працівників H-1B і L-1 (продовження та зміна).</li>
+      <li>Dependents та окремі основні заявники J, TN, E, O, R та ін., залежно від категорії.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>Форма I-539</strong> — заява на продовження або зміну, з організованою підставою та підтверджуючими документами.</li>
+      <li><strong>Форма I-539A</strong> — сторінки co-applicant, щоб дружина/чоловік і діти подавали разом.</li>
+      <li><strong>Підтверджуючий пакет</strong> — доказ чинного статусу, фінансової підтримки, I-20 або approval notice основного заявника та чіткий таймлайн.</li>
+      <li><strong>Форма I-765</strong> для відповідних H-4 / L-2 dependents, які бажають отримати дозвіл на роботу.</li>
+    </ul>
+
+    <h2>Чого I-539 НЕ робить</h2>
+    <p>
+      Подати потрібно до закінчення дозволеного перебування й не порушивши
+      статус; пізня або неправильна подача може поставити статус під загрозу.
+      I-539 сама по собі не дає дозволу на роботу (більшості категорій потрібна
+      окрема I-765) і не дозволяє змінити статус на будь-який. Imverica —
+      зареєстрований Legal Document Assistant, а не юридична фірма. Ми готуємо
+      документи за вашим дорученням, не радимо, який статус обрати, і не
+      гарантуємо результат; для цього направляємо до ліцензованого адвоката.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §248 (зміна неімміграційної класифікації);
+      INA §214 і 8 C.F.R. §214.1 (умови неімміграційного статусу); 8 C.F.R.
+      §248 (процедура зміни статусу). Лише підготовка документів — не юридичні
+      консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-539" primaryText="Почати анкету I-539" />
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'VAWA self-petition (I-360) — підготовка документів | Imverica';
+const description = 'California Licensed LDA готує конфіденційні пакети VAWA self-petition — форма I-360 для постраждалих від насильства подружжя, дітей та батьків громадян США або LPR, з I-485 і I-765 за наявності підстав. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'VAWA Self-Petition (Form I-360) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Конфіденційна підготовка документів для VAWA self-petition для тих, хто пережив насильство, за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/vawa-self-petition"
+  slug="/vawa-self-petition" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · VAWA · INA §204(a)(1)"
+    heading="VAWA self-petition (I-360) — підготовка документів"
+    sub="Violence Against Women Act дозволяє постраждалим від насильства подружжю, дітям і батькам громадян США чи постійних резидентів подавати петицію самостійно — конфіденційно, без відома та участі кривдника. Готуємо пакет форми I-360 за вашим дорученням, із суворою конфіденційністю."
+    ctaPrimary={{ href: '/#get-started?form=I-360', text: 'Почати пакет VAWA' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми в пакеті VAWA"
+    heading="Що включає VAWA self-petition"
+    intro="Справа VAWA зазвичай об'єднує кілька подач. Усе ведеться конфіденційно. Натисніть плитку, щоб почати."
+    tiles={[
+      { icon: '🛡️', title: 'I-360 — Self-petition',         desc: 'Петиція постраждалого — основна подача VAWA за INA §204(a)(1).',                   href: '/#get-started?form=I-360', color: 'var(--terracotta-deep)' },
+      { icon: '🟢', title: 'I-485 — Зміна статусу',          desc: 'Пакет на green card, коли віза доступна схваленому self-petitioner.',              href: '/ua/i-485-help',           color: 'var(--navy)' },
+      { icon: '💼', title: 'I-765 — Дозвіл на роботу',       desc: 'Дозвіл на роботу для відповідних VAWA self-petitioners.',                          href: '/ua/i-765-work-permit-help', color: 'var(--sage)' },
+      { icon: '📑', title: 'Докази та декларації',           desc: 'Організоване підтвердження стосунків, спільного проживання та насильства.',        href: '/#get-started?form=I-360', color: 'var(--gold)' },
+      { icon: '🔒', title: 'Захист конфіденційності',        desc: 'Подачі VAWA захищені від розкриття за 8 U.S.C. §1367.',                            href: '/#get-started?form=I-360', color: 'var(--navy-light)' },
+      { icon: '⚖️', title: 'Referral до адвоката',           desc: 'Для консультацій, плану безпеки чи представництва — до ліцензованих адвокатів.',    href: '/ua/lda',                  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-485-help', label: 'I-485 — Зміна статусу' },
+    { href: '/ua/i-765-work-permit-help', label: 'I-765 — Дозвіл на роботу (EAD)' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Violence Against Women Act (VAWA) дозволяє певним постраждалим від
+      насильства подавати петицію за себе — незалежно від кривдника-родича —
+      щоб кривдник-громадянин США чи постійний резидент більше не міг
+      використовувати імміграційний статус як інструмент контролю. Попри назву,
+      VAWA гендерно-нейтральна: вона захищає чоловіків, жінок і дітей.
+    </p>
+
+    <h2>Хто може подати self-petition</h2>
+    <ul>
+      <li>Постраждалий з подружжя громадянина США або постійного резидента (діти подружжя можуть бути включені).</li>
+      <li>Постраждала дитина (неодружена, до 21 року) громадянина США чи резидента.</li>
+      <li>Постраждалий з батьків громадянина США, якому 21 рік або більше.</li>
+      <li>Ви проживали з кривдником, стосунки були справжніми, у вас добрий моральний характер і ви пережили battery чи extreme cruelty.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>Форму I-360</strong> — self-petition, зібрану з необхідними доказами eligibility.</li>
+      <li><strong>Підтверджуючий пакет</strong> — ваша особиста декларація, доказ кваліфікуючих стосунків, спільного проживання та документація насильства, організовані для подачі.</li>
+      <li><strong>Форму I-485 і форму I-765</strong> — зміна статусу та дозвіл на роботу за наявності підстав.</li>
+      <li><strong>Завірені переклади</strong> документів іноземною мовою.</li>
+    </ul>
+
+    <h2>Конфіденційність і чого ми НЕ робимо</h2>
+    <p>
+      Подачі VAWA мають особливий захист конфіденційності: закон забороняє
+      USCIS спиратися на інформацію від кривдника та обмежує розкриття справи.
+      Ми ставимося до кожної справи VAWA як до конфіденційної й ніколи не
+      зв’язуємося з кривдником. VAWA юридично складна й часто пов’язана з
+      питаннями безпеки — Imverica є зареєстрованим Legal Document Assistant, а
+      не юридичною фірмою. Ми готуємо документи за вашим дорученням і не
+      надаємо юридичних консультацій, не будуємо стратегію, не робимо план
+      безпеки й не гарантуємо результат. Ми наполегливо рекомендуємо працювати
+      з ліцензованим імміграційним адвокатом або кваліфікованою організацією
+      допомоги постраждалим, і ми маємо referrals.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> Violence Against Women Act of 1994 та його
+      реавторизації; INA §204(a)(1)(A)(iii)-(iv) і (B)(ii)-(iii) (self-petition
+      родичів громадян США і LPR); 8 C.F.R. §204.2(c)-(e); 8 U.S.C. §1367
+      (конфіденційність). Лише підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-360" primaryText="Почати анкету VAWA" />
+</BaseLayout>

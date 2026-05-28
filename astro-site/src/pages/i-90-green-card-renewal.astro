@@ -1,0 +1,92 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-90 — green card renewal & replacement | Imverica';
+const description = 'California Licensed LDA prepares Form I-90 to renew an expiring 10-year green card, replace a lost, stolen, or damaged card, correct a USCIS error, or update your name. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-90 Green Card Renewal and Replacement Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation to renew or replace a Permanent Resident Card (Form I-90), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-90-green-card-renewal"
+  slug="/i-90-green-card-renewal" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §264 · 8 C.F.R. §264.5"
+    heading="I-90 — Green Card Renewal & Replacement"
+    sub="Renew an expiring 10-year green card, or replace one that was lost, stolen, damaged, or has the wrong information. We prepare Form I-90 accurately at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=I-90', text: 'Start my I-90 application' }}
+  />
+
+  <CategoryTiles
+    kicker="When you file I-90"
+    heading="What I-90 covers"
+    intro="Form I-90 keeps your Permanent Resident Card current. Tap a tile that matches your situation."
+    tiles={[
+      { icon: '♻️', title: 'I-90 — Application',        desc: 'Application to Replace Permanent Resident Card — the main form.',                href: '/#get-started?form=I-90', color: 'var(--terracotta-deep)' },
+      { icon: '📆', title: 'Renew expiring card',       desc: 'Your 10-year green card is expiring or has expired — request a fresh card.',     href: '/#get-started?form=I-90', color: 'var(--navy)' },
+      { icon: '🔁', title: 'Lost / stolen / damaged',   desc: 'Replace a card that was lost, stolen, mutilated, or destroyed.',                  href: '/#get-started?form=I-90', color: 'var(--sage)' },
+      { icon: '✏️', title: 'Correct a USCIS error',     desc: 'Fix a card issued with incorrect data because of a USCIS mistake.',              href: '/#get-started?form=I-90', color: 'var(--gold)' },
+      { icon: '🪪', title: 'Name / biographic update',  desc: 'Update the card after a legal name change or other biographic correction.',      href: '/#get-started?form=I-90', color: 'var(--navy-light)' },
+      { icon: '🟢', title: 'Conditional (2-year) card', desc: 'Conditional residents use I-751, not I-90 — we prepare that packet too.',         href: '/#get-started?form=I-751', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/n-400-citizenship-help', label: 'N-400 — Naturalization' },
+    { href: '/immigration', label: 'All USCIS & EOIR documents we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-90 is the Application to Replace Permanent Resident Card. Lawful
+      permanent residents use it to renew the standard 10-year green card as
+      it expires, and to replace a card that has been lost, stolen, damaged,
+      or issued with the wrong information. Your status as a permanent
+      resident does not expire when the card does — but you are required to
+      carry a valid card, so keeping it current matters for work, travel, and
+      identification.
+    </p>
+
+    <h2>When to file I-90</h2>
+    <ul>
+      <li>Your 10-year green card has expired or will expire within six months.</li>
+      <li>Your card was lost, stolen, mutilated, or destroyed.</li>
+      <li>Your card has incorrect data due to a USCIS error, or your name or other biographic details have legally changed.</li>
+      <li>You were issued a card but never received it.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form I-90</strong> with the correct reason for replacement selected and supporting evidence organized.</li>
+      <li><strong>Supporting documents</strong> — copies of the existing or expired card, identity documents, and proof of a name change where relevant.</li>
+      <li><strong>Fee-waiver request</strong> where you qualify based on income.</li>
+    </ul>
+
+    <h2>What I-90 does NOT do</h2>
+    <p>
+      I-90 is <em>not</em> for conditional permanent residents whose card is
+      valid for two years — they must file Form I-751 (or I-829) to remove
+      conditions, and filing I-90 by mistake will not preserve their status.
+      I-90 is also not naturalization; if you want to become a U.S. citizen
+      you file Form N-400. Imverica is a registered Legal Document Assistant —
+      not a law firm. We prepare documents at your direction and do not give
+      legal advice or guarantee an outcome.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> INA §264 and 8 C.F.R. §264.5 (replacement of
+      registration documents / green cards); INA §216 and Form I-751 (removal
+      of conditions for conditional residents). Document preparation only —
+      not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-90" primaryText="Begin my I-90 intake" />
+</BaseLayout>

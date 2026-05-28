@@ -1,0 +1,99 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'U visa — подготовка документов I-918 для жертв преступлений | Imverica';
+const description = 'California Licensed LDA готовит пакеты U nonimmigrant (U visa) — петиция I-918, I-918 Supplement A (семья), I-918 Supplement B (сертификация правоохранителей), I-192 (waiver), I-765 (разрешение на работу). По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U Nonimmigrant Status (U visa) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для петиций U nonimmigrant status для жертв квалифицирующих преступлений, по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/u-visa-help"
+  slug="/u-visa-help" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Humanitarian · INA §101(a)(15)(U)"
+    heading="U visa (I-918) — подготовка документов для жертв преступлений"
+    sub="U visa защищает жертв квалифицирующих преступлений, которые помогали правоохранителям. Готовим полный пакет I-918 аккуратно по вашему поручению — фиксированная цена, многоязычная анкета (укр./рус./исп./англ.)."
+    ctaPrimary={{ href: '/#get-started?form=I-918', text: 'Начать пакет U visa' }}
+  />
+
+  <CategoryTiles
+    kicker="Формы в пакете U visa"
+    heading="Что включает U visa"
+    intro="Подача на U visa обычно объединяет несколько форм USCIS. Нажмите плитку для страницы конкретной формы."
+    tiles={[
+      { icon: '🆘', title: 'I-918 — Основная петиция',          desc: 'Петиция на U Nonimmigrant Status — основное заявление жертвы.',                       href: '/#get-started?form=I-918',   color: 'var(--terracotta-deep)' },
+      { icon: '🪪', title: 'I-918 Supplement B — Сертификация', desc: 'Сертификация helpfulness от правоохранителей. Обязательна и срочна.',                  href: '/#get-started?form=I-918B',  color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'I-918 Supplement A — Семья',      desc: 'Квалифицирующие родственники (супруг, дети, иногда родители/братья и сёстры).',       href: '/#get-started?form=I-918A',  color: 'var(--sage)' },
+      { icon: '📝', title: 'I-192 — Waiver',                    desc: 'Waiver оснований inadmissibility, подаётся с большинством U-петиций.',                 href: '/#get-started?form=I-192',   color: 'var(--gold)' },
+      { icon: '💼', title: 'I-765 — Разрешение на работу',      desc: 'Разрешение на работу после bona-fide determination или одобрения.',                    href: '/ru/i-765-work-permit-help', color: 'var(--navy-light)' },
+      { icon: '🟢', title: 'I-485 — Изменение статуса',         desc: 'Пакет на green card после удержания U-статуса нужный период.',                         href: '/ru/i-485-help',             color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-765-work-permit-help', label: 'I-765 — разрешение на работу (детали)' },
+    { href: '/ru/i-485-help', label: 'I-485 — Изменение статуса' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      U nonimmigrant visa («U visa») создана Конгрессом для защиты жертв
+      определённых серьёзных преступлений, которые понесли существенный
+      ущерб и сотрудничают с правоохранительными органами в расследовании
+      или преследовании этого преступления. Это гуманитарная категория — она
+      может привести к разрешению на работу и, после необходимого срока, к
+      green card.
+    </p>
+
+    <h2>Для кого U visa</h2>
+    <ul>
+      <li>Вы стали жертвой квалифицирующего преступления (домашнее насилие, тяжкое нападение, сексуальное насилие, торговля людьми, похищение, давление на свидетеля и др.).</li>
+      <li>Вы понесли существенный физический или психический ущерб.</li>
+      <li>У вас есть информация о преступлении, и вы были, есть или вероятно будете полезны правоохранителям.</li>
+      <li>Преступление произошло в США или нарушило закон США.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форма I-918</strong> — основная петиция на U-статус, с личным заявлением и организованными приложениями.</li>
+      <li><strong>Форма I-918 Supplement B</strong> — сертификация, которую заполняет правоохранительный орган; готовим пакет к подписи сертифицирующего должностного лица.</li>
+      <li><strong>Форма I-918 Supplement A</strong> — производные петиции для квалифицирующих родственников.</li>
+      <li><strong>Форма I-192</strong> — waiver inadmissibility, подаваемый с большинством U-петиций.</li>
+      <li><strong>Форма I-765</strong> — разрешение на работу при наличии оснований.</li>
+      <li><strong>Заверенные переводы</strong> полицейских отчётов, медицинских и других подтверждающих документов.</li>
+    </ul>
+
+    <h2>Чего процесс U visa НЕ делает</h2>
+    <p>
+      Конгресс ограничивает число основных U visa 10 000 в финансовый год,
+      поэтому петиции регулярно ждут в списке несколько лет до решения; в это
+      время USCIS может предоставить deferred action и разрешение на работу.
+      U visa юридически сложна, а сроки сертификации правоохранителями строгие.
+      Imverica — зарегистрированный Legal Document Assistant, а не юридическая
+      фирма. Мы готовим документы по вашему поручению и не выбираем категорию,
+      не даём юридических консультаций и не гарантируем результат. Для
+      консультаций или представительства у нас есть referral-отношения с
+      лицензированными адвокатами Калифорнии.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §101(a)(15)(U) и §214(p) (U-статус и
+      годовой лимит 10 000); Victims of Trafficking and Violence Protection
+      Act of 2000 (VTVPA); 8 C.F.R. §214.14; 8 U.S.C. §1367 (защита
+      конфиденциальности). Только подготовка документов — не юридические
+      консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-918" primaryText="Начать анкету U visa" />
+</BaseLayout>

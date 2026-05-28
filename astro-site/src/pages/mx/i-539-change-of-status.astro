@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-539 — cambio o extensión de estatus no-inmigrante | Imverica';
+const description = 'California Licensed LDA prepara el Formulario I-539 para extender o cambiar un estatus no-inmigrante — B-1/B-2, estudiante F/M, J, dependientes H-4 y L-2 — más I-539A para co-solicitantes. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-539 Change or Extension of Nonimmigrant Status Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para solicitudes de extensión o cambio de estatus no-inmigrante (Formulario I-539), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-539-change-of-status"
+  slug="/i-539-change-of-status" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §248 · §214"
+    heading="I-539 — cambio o extensión de estatus no-inmigrante"
+    sub="Quedarse más tiempo, o pasar de un estatus no-inmigrante a otro, mientras está dentro de Estados Unidos. Preparamos el Formulario I-539 (y el I-539A para co-solicitantes) con precisión y a tiempo, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=I-539', text: 'Comenzar mi solicitud I-539' }}
+  />
+
+  <CategoryTiles
+    kicker="Situaciones comunes de I-539"
+    heading="Qué cubre el I-539"
+    intro="El Formulario I-539 maneja extensiones y cambios para muchas categorías no-inmigrantes. Toque un tile para comenzar."
+    tiles={[
+      { icon: '📄', title: 'I-539 — Solicitud',            desc: 'Application to Extend / Change Nonimmigrant Status — el formulario principal.',       href: '/#get-started?form=I-539',  color: 'var(--terracotta-deep)' },
+      { icon: '👥', title: 'I-539A — Co-solicitantes',      desc: 'Dependientes (cónyuge e hijos) incluidos en una sola solicitud.',                     href: '/#get-started?form=I-539A', color: 'var(--navy)' },
+      { icon: '🧳', title: 'Extender B-1 / B-2',            desc: 'Pedir más tiempo en una visita de negocios o turismo antes de que venza el I-94.',    href: '/#get-started?form=I-539',  color: 'var(--sage)' },
+      { icon: '🎓', title: 'Cambiar a F-1 / M-1',           desc: 'Pasar a estatus de estudiante cuando tiene un Formulario I-20 aceptado.',             href: '/#get-started?form=I-539',  color: 'var(--gold)' },
+      { icon: '👪', title: 'Dependientes H-4 / L-2',        desc: 'Estatus de dependiente ligado a un trabajador principal H-1B o L-1.',                 href: '/#get-started?form=I-539',  color: 'var(--navy-light)' },
+      { icon: '💼', title: 'I-765 — Permiso para dependientes', desc: 'Dependientes H-4 y L-2 elegibles pueden solicitar autorización de empleo.',         href: '/mx/i-765-work-permit-help', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-765-work-permit-help', label: 'I-765 — Permiso de Trabajo (EAD)' },
+    { href: '/mx/immigration', label: 'Todos los documentos USCIS y EOIR que preparamos' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario I-539 es la forma en que alguien que ya está dentro de
+      Estados Unidos en una categoría no-inmigrante pide a USCIS
+      <em>extender</em> su estancia actual o <em>cambiar</em> a un estatus
+      no-inmigrante distinto — sin salir del país para solicitar una nueva visa
+      en el extranjero.
+    </p>
+
+    <h2>Quién presenta el I-539</h2>
+    <ul>
+      <li>Visitantes B-1/B-2 que necesitan más tiempo antes de que termine su estancia autorizada.</li>
+      <li>Personas que cambian a estatus de estudiante F-1/M-1, o entre ciertas categorías no-inmigrantes.</li>
+      <li>Dependientes H-4 y L-2 de trabajadores H-1B y L-1 (extensiones y cambios).</li>
+      <li>Dependientes y ciertos titulares J, TN, E, O, R y otros, según la categoría.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Formulario I-539</strong> — la solicitud de extensión o cambio, con el motivo y los documentos de apoyo organizados.</li>
+      <li><strong>Formulario I-539A</strong> — páginas de co-solicitante para que cónyuge e hijos presenten juntos.</li>
+      <li><strong>Paquete de apoyo</strong> — prueba de estatus válido, sustento financiero, el I-20 o el aviso de aprobación del titular y una línea de tiempo clara.</li>
+      <li><strong>Formulario I-765</strong> para dependientes H-4 / L-2 elegibles que quieren un permiso de trabajo.</li>
+    </ul>
+
+    <h2>Qué NO hace el I-539</h2>
+    <p>
+      Debe presentarlo antes de que venza su estancia autorizada y sin haber
+      violado su estatus; una presentación tardía o incorrecta puede poner su
+      estatus en riesgo. El I-539 no otorga por sí mismo autorización de empleo
+      (la mayoría de las categorías necesitan un I-765 aparte) y no puede usarse
+      para cambiar a cualquier estatus. Imverica es un Legal Document Assistant
+      registrado — no un bufete de abogados. Preparamos documentos bajo su
+      dirección y no le aconsejamos qué estatus buscar ni garantizamos ningún
+      resultado; para eso lo referimos a un abogado con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §248 (cambio de clasificación no-inmigrante);
+      INA §214 y 8 C.F.R. §214.1 (condiciones del estatus no-inmigrante);
+      8 C.F.R. §248 (procedimiento de cambio de estatus). Solo preparación de
+      documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-539" primaryText="Comenzar mi entrevista I-539" />
+</BaseLayout>

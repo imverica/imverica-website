@@ -14,7 +14,7 @@
 declare global {
   interface Window {
     __imvIntakeInit?: boolean;
-    openIntakeModal?: (prefill?: string) => void;
+    openIntakeModal?: (prefill?: string, mode?: string) => void;
     closeIntakeModal?: () => void;
   }
 }
@@ -654,6 +654,18 @@ export function initIntakeWizard(): void {
   function esc(value) { return String(value || '').replace(/[&<>"]/g, function (ch) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]; }); }
   function selectedService() { return (t().services.find(function (item) { return item[0] === state.service; }) || [state.service, state.service || '-', '']); }
   function normalizeFormCode(value) { return String(value || '').trim().toUpperCase().replace(/\s+/g, ' '); }
+  // Map a known form code (from a ?form= CTA tile) to its service category so
+  // the intake opens in the right context for every practice area.
+  function serviceForFormCode(value) {
+    var fc = normalizeFormCode(value);
+    if (/^(?:I|N|G|EOIR)-/.test(fc) || fc === 'AR-11') return 'immigration';
+    if (/^(?:FL|DV)-/.test(fc)) return 'family';
+    if (/^(?:SC|FW|POS|CIV|CM|SUM|PLD|WG|EJ)-/.test(fc) || /DEMAND/.test(fc)) return 'civil';
+    if (/^(?:CH|EA|GV|WV)-/.test(fc)) return 'restraining';
+    if (/^UD-/.test(fc)) return 'ud';
+    if (/^(?:LLC|ARTS|SS|SI|FBN|DBA|OA|GS|BIZ)/.test(fc)) return 'business';
+    return '';
+  }
   function isImmigrationFormCode(value) { return /^(?:I|N|G)-[0-9A-Z]+(?:\s+SUPPLEMENT(?:\s+[A-Z])?)?$/.test(normalizeFormCode(value)) || normalizeFormCode(value) === 'AR-11'; }
   function shouldUseImmigrationFlow() { return state.service === 'immigration' && isImmigrationFormCode(state.formCode || inferIntakeFormCode(state.situation)); }
   function flowStepStart() { return 3; }
@@ -2311,7 +2323,7 @@ export function initIntakeWizard(): void {
     return 'en';
   }
 
-  window.openIntakeModal = function (prefill) {
+  window.openIntakeModal = function (prefill, mode) {
     // The visitor already picked a language on the site (header switcher).
     // Inherit it so we never re-ask "Choose your preferred language".
     var rememberedLang = detectSiteLang();
@@ -2344,37 +2356,58 @@ export function initIntakeWizard(): void {
     }
     if (prefill && typeof prefill === 'string') {
       var text = prefill.trim();
-      var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
       var detectedLang = detectIntakeLang(text);
-      var inferredService = inferIntakeService(text);
-      var inferredFormCode = inferIntakeFormCode(text);
-      state.situation = text;
       if (detectedLang) {
         state.lang = detectedLang;
         state.langManual = true;
       }
-      if (inferredService) state.service = inferredService;
-      if (inferredFormCode) state.formCode = inferredFormCode;
-      if (codeMatch) {
-        state.formCode = codeMatch[0].toUpperCase();
-        if (/^(I|N|G|EOIR)-/i.test(state.formCode)) state.service = 'immigration';
-        if (/^(FL|DV)-/i.test(state.formCode)) state.service = 'family';
-        if (/^(SC|FW|POS|CIV|CM|SUM|PLD)-/i.test(state.formCode)) state.service = 'civil';
-        if (/^(CH|EA|GV|WV)-/i.test(state.formCode)) state.service = 'restraining';
-        if (/^UD-/i.test(state.formCode)) state.service = 'ud';
-        // Have explicit form code from hero — Details step shows briefly while
-        // we kick off flow load; advance only AFTER the schema is in hand
-        // (handled below). Until then keep step = 2 so user does not land on
-        // the account step with an empty form behind it.
+      if (mode === 'form') {
+        // Explicit form code from a ?form= CTA tile. Populate the form-code
+        // field directly and pick the service from the code prefix — never
+        // dump the code into the free-text "situation" box. (That is what
+        // produced the half-filled, broken-looking wizard for codes the old
+        // matcher didn't recognize: LLC-12, ARTS-GS, FBN, OA, WG-001, etc.)
+        state.formCode = normalizeFormCode(text);
+        state.service = serviceForFormCode(text) || state.service;
         state.step = 2;
-      } else if (state.formCode) {
-        // Inferred form code — same as above.
+      } else if (mode === 'service') {
+        // ?service=business etc. — preset the service category and let the
+        // visitor describe or enter a form on the Details step.
+        state.service = text.toLowerCase();
         state.step = 2;
-      } else if (state.service) {
-        // Have service but no form yet — Details step is useful so user can pick.
+      } else if (mode === 'topic') {
+        // ?topic=EOIR / ?topic=U4U — context (a program or court matter),
+        // not a specific form number. Open on Details with it prefilled.
+        state.situation = text;
+        var topicService = inferIntakeService(text);
+        if (topicService) state.service = topicService;
         state.step = 2;
-      } else if (detectedLang) {
-        state.step = 1;
+      } else {
+        // Free-text prefill (e.g. the homepage search box) — detect a code.
+        state.situation = text;
+        var codeMatch = text.match(/\b(?:I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\([A-Z0-9]+\))?\b/i);
+        var inferredService = inferIntakeService(text);
+        var inferredFormCode = inferIntakeFormCode(text);
+        if (inferredService) state.service = inferredService;
+        if (inferredFormCode) state.formCode = inferredFormCode;
+        if (codeMatch) {
+          state.formCode = codeMatch[0].toUpperCase();
+          state.service = serviceForFormCode(state.formCode) || state.service;
+          // Have explicit form code — Details step shows briefly while we kick
+          // off flow load; advance only AFTER the schema is in hand (handled
+          // below). Until then keep step = 2.
+          state.step = 2;
+        } else if (state.formCode) {
+          state.step = 2;
+        } else if (state.service) {
+          state.step = 2;
+        } else if (detectedLang) {
+          state.step = 1;
+        } else {
+          // Any other prefill text — land on Details so it is visible rather
+          // than re-asking for language (already inherited from the site).
+          state.step = 2;
+        }
       }
     }
     modal.classList.add('open');

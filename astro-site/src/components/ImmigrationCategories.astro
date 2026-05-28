@@ -130,15 +130,15 @@ const cats = [
   { ...N.n400, href: `${lp}/n-400-citizenship-help`, flag: '📜', color: 'var(--gold)' },
   { ...N.i130, href: `${lp}/i-130-family-petition`,  flag: '👨‍👩‍👧', color: 'var(--terracotta)' },
   { ...N.i765, href: `${lp}/i-765-work-permit-help`, flag: '💼', color: 'var(--navy)' },
-  { ...N.eoir, href: `${lp}/immigration#eoir-documents`, flag: '⚖️', color: 'var(--navy-dark)' },
-  // Row 3 — humanitarian / specialty forms: land on the USCIS service
-  // section of /immigration so the visitor sees the full form list and
-  // its scope first, then decides whether to start an intake. Hash
-  // anchors scroll directly to the explanatory cards.
-  { ...N.uvisa, href: `${lp}/immigration#immigration-consultant-california`, flag: '🆘', color: 'var(--terracotta-deep)' },
-  { ...N.i539,  href: `${lp}/immigration#immigration-consultant-california`, flag: '🔄', color: 'var(--navy)' },
-  { ...N.i90,   href: `${lp}/immigration#immigration-consultant-california`, flag: '♻️', color: 'var(--sage)' },
-  { ...N.vawa,  href: `${lp}/immigration#immigration-consultant-california`, flag: '🛡️', color: 'var(--terracotta)' }
+  { ...N.eoir, href: `${lp}/eoir-immigration-court`, flag: '⚖️', color: 'var(--navy-dark)' },
+  // Row 3 — humanitarian / specialty forms. Each now has its own dedicated
+  // explainer page (like /u4u and /tps), so a tap opens a real page with
+  // that category's forms, requirements, and a starter intake — never a
+  // same-page anchor scroll.
+  { ...N.uvisa, href: `${lp}/u-visa-help`,            flag: '🆘', color: 'var(--terracotta-deep)' },
+  { ...N.i539,  href: `${lp}/i-539-change-of-status`, flag: '🔄', color: 'var(--navy)' },
+  { ...N.i90,   href: `${lp}/i-90-green-card-renewal`, flag: '♻️', color: 'var(--sage)' },
+  { ...N.vawa,  href: `${lp}/vawa-self-petition`,     flag: '🛡️', color: 'var(--terracotta)' }
 ];
 ---
 <section class="imm-cats-section">

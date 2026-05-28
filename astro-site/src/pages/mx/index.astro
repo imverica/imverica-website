@@ -11,10 +11,6 @@ const description =
   'LDA con licencia de California y consultor de inmigración. Preparación de documentos para USCIS, EOIR, derecho familiar, reclamos menores y sucesiones. Servicio remoto en todo el mundo.';
 
 
-// Live forms count for the hero trust pill (mirrors StatsStrip).
-const STATS_BASE = Date.UTC(2026, 4, 25);
-const statsDays = Math.max(0, Math.floor((Date.now() - STATS_BASE) / 86400000));
-const formsSupported = 734 + Math.floor((statsDays * 2) / 5);
 const legalServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
@@ -50,7 +46,6 @@ const legalServiceSchema = {
 >
   <Hero
     lang={lang}
-    trustPill={`${formsSupported}+ formularios USCIS, EOIR y California · 4 idiomas`}
     eyebrow={HERO.es.eyebrow}
     heading={HERO.es.heading}
     sub={HERO.es.sub}

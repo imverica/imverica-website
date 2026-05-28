@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'EOIR immigration court document preparation | Imverica';
+const description = 'California Licensed LDA prepares immigration court (EOIR) documents at your direction — applications for relief (EOIR-42A/42B), asylum (I-589), motions to reopen or reconsider, evidence packets, and BIA appeals (EOIR-29). Court representation requires a licensed attorney or accredited representative.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EOIR Immigration Court Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for proceedings before the Executive Office for Immigration Review, at the client direction. Not legal representation.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/eoir-immigration-court"
+  slug="/eoir-immigration-court" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="EOIR · Immigration Court · 8 C.F.R. §1003"
+    heading="EOIR — immigration court document preparation"
+    sub="Document preparation for proceedings before the Executive Office for Immigration Review — applications for relief, motions, evidence packets, and appeals — prepared accurately at your direction. Representation in court requires a licensed attorney or BIA-accredited representative."
+    ctaPrimary={{ href: '/#get-started?topic=EOIR', text: 'Request EOIR document prep' }}
+  />
+
+  <CategoryTiles
+    kicker="Documents we prepare for the court"
+    heading="What EOIR document preparation covers"
+    intro="We organize and prepare court filings at your direction. Tap a tile to start your request."
+    tiles={[
+      { icon: '⚖️', title: 'EOIR-42A — Cancellation (LPR)',     desc: 'Application for cancellation of removal for certain permanent residents.',          href: '/#get-started?topic=EOIR-42A', color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'EOIR-42B — Cancellation (non-LPR)', desc: 'Application for cancellation of removal and adjustment for certain non-residents.',   href: '/#get-started?topic=EOIR-42B', color: 'var(--navy)' },
+      { icon: '🏛️', title: 'I-589 — Asylum in court',            desc: 'Defensive asylum and withholding application filed in proceedings.',                href: '/i-589-asylum-help',           color: 'var(--sage)' },
+      { icon: '🔄', title: 'Motions to reopen / reconsider',     desc: 'Motion packets with supporting evidence and a clear procedural history.',            href: '/#get-started?topic=EOIR-motion', color: 'var(--gold)' },
+      { icon: '📑', title: 'Evidence packets & indexes',         desc: 'Organized exhibits, tabs, indexes, declarations, and country-conditions evidence.',  href: '/#get-started?topic=EOIR-evidence', color: 'var(--navy-light)' },
+      { icon: '📨', title: 'EOIR-29 — Appeal to the BIA',        desc: 'Notice of appeal packet to the Board of Immigration Appeals.',                       href: '/#get-started?topic=EOIR-29',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-589-asylum-help', label: 'I-589 — Asylum & Withholding' },
+    { href: '/immigration', label: 'All USCIS & EOIR documents we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      The Executive Office for Immigration Review (EOIR) runs the immigration
+      courts and the Board of Immigration Appeals (BIA), where removal
+      (deportation) cases are decided. Cases move on strict deadlines and
+      require well-organized written filings — applications for relief,
+      supporting evidence, and motions — submitted to the court.
+    </p>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Applications for relief</strong> such as EOIR-42A and EOIR-42B (cancellation of removal) and Form I-589 (asylum/withholding), assembled with the required supporting evidence.</li>
+      <li><strong>Motions</strong> to reopen or reconsider before the immigration judge or the BIA, with the procedural history and exhibits organized.</li>
+      <li><strong>Evidence packets</strong> — indexed exhibits, tabs, witness declarations, and country-conditions documentation.</li>
+      <li><strong>Appeal packets</strong> to the BIA (EOIR-29) and the supporting record.</li>
+      <li><strong>Certified translations</strong> of foreign-language evidence.</li>
+    </ul>
+
+    <h2>What we do NOT do — this is important</h2>
+    <p>
+      Appearing in immigration court, signing a Notice of Entry of Appearance
+      (EOIR-28), advising you on which relief to seek, or arguing your case
+      are acts of legal representation. A registered Legal Document Assistant
+      <em>cannot</em> represent you before EOIR — only a licensed attorney or
+      a representative accredited by the BIA may do that. Imverica prepares
+      documents at your direction and does not give legal advice, choose your
+      forms or strategy, or guarantee any outcome. Because removal cases carry
+      serious consequences, we strongly encourage you to retain a licensed
+      immigration attorney or an accredited representative, and we maintain
+      referrals.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> 8 C.F.R. Part 1003 (EOIR organization and
+      procedure); INA §240 (removal proceedings); 8 C.F.R. §1003.23 (motions
+      before the immigration judge) and §1003.2 (motions before the BIA);
+      8 C.F.R. Part 1292 (representation and accredited representatives).
+      Document preparation only — not legal advice or representation.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=EOIR" primaryText="Request EOIR document prep" />
+</BaseLayout>

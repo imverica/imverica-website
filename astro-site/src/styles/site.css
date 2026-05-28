@@ -524,23 +524,10 @@ img { max-width: 100%; height: auto; }
   border-top: 1px solid rgba(40,30,20,0.08);
   font-family: var(--font-system);
 }
-/* Force every element inside the news + visa-bulletin panels to render
-   in the body system font (SF Pro on Apple, Segoe UI on Windows). The
-   panels show third-party headlines and the official Visa Bulletin —
-   they should read like UI / news, not editorial Playfair. */
-.news-section .news-copy h2,
-.news-section .news-title,
-.news-section .news-meta,
-.news-section .news-status,
-.visa-section h2,
-.visa-section h3,
-.visa-section [data-visa-title],
-.visa-section [data-visa-status],
-.visa-section [data-visa-note],
-.visa-section .visa-legend,
-.visa-section .visa-link {
-  font-family: var(--font-system);
-}
+/* News + Visa section headings inherit the global Playfair display face
+   like every other section heading, so the two blocks match the rest of
+   the site. Small UI text inside the panels (meta, headline titles,
+   status, legend) stays in the body system font via normal inheritance. */
 .news-inner {
   max-width: 1120px;
   margin: 0 auto;
@@ -696,6 +683,8 @@ img { max-width: 100%; height: auto; }
 }
 .svc-card-forms li > a:hover .svc-card-code { background: var(--navy); color: #fff; border-color: var(--navy); }
 .svc-card-forms li > a:hover .svc-card-rest { color: var(--terracotta-deep); }
+.svc-card-forms li.svc-card-plain > a { display: inline; color: #4a5a6e; text-decoration: none; transition: color 0.18s; }
+.svc-card-forms li.svc-card-plain > a:hover { color: var(--navy); text-decoration: underline; }
 .svc-card-code {
   display: inline-flex;
   align-items: center;

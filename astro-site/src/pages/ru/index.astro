@@ -11,10 +11,6 @@ const description =
   'Калифорнийский лицензированный LDA и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков и наследственных дел. Удалённый сервис по всему миру.';
 
 
-// Live forms count for the hero trust pill (mirrors StatsStrip).
-const STATS_BASE = Date.UTC(2026, 4, 25);
-const statsDays = Math.max(0, Math.floor((Date.now() - STATS_BASE) / 86400000));
-const formsSupported = 734 + Math.floor((statsDays * 2) / 5);
 const legalServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
@@ -50,7 +46,6 @@ const legalServiceSchema = {
 >
   <Hero
     lang={lang}
-    trustPill={`${formsSupported}+ форм USCIS, EOIR и Калифорнии · 4 языка`}
     eyebrow={HERO.ru.eyebrow}
     heading={HERO.ru.heading}
     sub={HERO.ru.sub}

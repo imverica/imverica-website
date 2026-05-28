@@ -28,7 +28,12 @@ const URLS: SitemapEntry[] = [
   { slug: '/california-restraining-orders', priority: 0.8, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/fl', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/california-probate', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/lda', priority: 0.7, changefreq: 'monthly', translatedLocales: [] }
+  { slug: '/lda', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/u-visa-help', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-539-change-of-status', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-90-green-card-renewal', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/vawa-self-petition', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/eoir-immigration-court', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
 ];
 
 function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {

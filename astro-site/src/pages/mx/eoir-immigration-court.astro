@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'EOIR — preparación de documentos de corte de inmigración | Imverica';
+const description = 'California Licensed LDA prepara documentos de corte de inmigración (EOIR) bajo su dirección — solicitudes de alivio (EOIR-42A/42B), asilo (I-589), mociones para reabrir/reconsiderar, paquetes de evidencia y apelaciones ante la BIA (EOIR-29). La representación en corte requiere un abogado con licencia o representante acreditado.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EOIR Immigration Court Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para procedimientos ante el Executive Office for Immigration Review, bajo la dirección del cliente. No es representación legal.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-immigration-court"
+  slug="/eoir-immigration-court" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · Corte de Inmigración · 8 C.F.R. §1003"
+    heading="EOIR — preparación de documentos de corte de inmigración"
+    sub="Preparación de documentos para procedimientos ante el Executive Office for Immigration Review — solicitudes de alivio, mociones, paquetes de evidencia y apelaciones — con precisión bajo su dirección. La representación en corte requiere un abogado con licencia o un representante acreditado por la BIA."
+    ctaPrimary={{ href: '/#get-started?topic=EOIR', text: 'Solicitar preparación de documentos EOIR' }}
+  />
+
+  <CategoryTiles
+    kicker="Documentos que preparamos para la corte"
+    heading="Qué cubre la preparación de documentos EOIR"
+    intro="Preparamos y organizamos las presentaciones de la corte bajo su dirección. Toque un tile para iniciar su solicitud."
+    tiles={[
+      { icon: '⚖️', title: 'EOIR-42A — Cancelación (LPR)',     desc: 'Solicitud de cancelación de remoción para ciertos residentes permanentes.',          href: '/#get-started?topic=EOIR-42A', color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'EOIR-42B — Cancelación (no-LPR)',  desc: 'Solicitud de cancelación de remoción y ajuste para ciertos no-residentes.',           href: '/#get-started?topic=EOIR-42B', color: 'var(--navy)' },
+      { icon: '🏛️', title: 'I-589 — Asilo en corte',          desc: 'Solicitud defensiva de asilo y withholding presentada en el procedimiento.',          href: '/mx/i-589-asylum-help',         color: 'var(--sage)' },
+      { icon: '🔄', title: 'Mociones para reabrir / reconsiderar', desc: 'Paquetes de moción con evidencia de apoyo y un historial procesal claro.',         href: '/#get-started?topic=EOIR-motion', color: 'var(--gold)' },
+      { icon: '📑', title: 'Paquetes de evidencia e índices',  desc: 'Anexos organizados, pestañas, índices, declaraciones y evidencia de condiciones del país.', href: '/#get-started?topic=EOIR-evidence', color: 'var(--navy-light)' },
+      { icon: '📨', title: 'EOIR-29 — Apelación ante la BIA',  desc: 'Paquete de aviso de apelación ante la Junta de Apelaciones de Inmigración.',          href: '/#get-started?topic=EOIR-29',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-589-asylum-help', label: 'I-589 — Asilo y Withholding' },
+    { href: '/mx/immigration', label: 'Todos los documentos USCIS y EOIR que preparamos' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Executive Office for Immigration Review (EOIR) dirige las cortes de
+      inmigración y la Junta de Apelaciones de Inmigración (BIA), donde se
+      deciden los casos de remoción (deportación). Los casos avanzan con plazos
+      estrictos y requieren presentaciones escritas bien organizadas —
+      solicitudes de alivio, evidencia de apoyo y mociones — entregadas a la corte.
+    </p>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Solicitudes de alivio</strong> como EOIR-42A y EOIR-42B (cancelación de remoción) y el Formulario I-589 (asilo/withholding), integradas con la evidencia de apoyo requerida.</li>
+      <li><strong>Mociones</strong> para reabrir o reconsiderar ante el juez de inmigración o la BIA, con el historial procesal y los anexos organizados.</li>
+      <li><strong>Paquetes de evidencia</strong> — anexos indexados, pestañas, declaraciones de testigos y documentación de condiciones del país.</li>
+      <li><strong>Paquetes de apelación</strong> ante la BIA (EOIR-29) y el expediente de apoyo.</li>
+      <li><strong>Traducciones certificadas</strong> de evidencia en idioma extranjero.</li>
+    </ul>
+
+    <h2>Qué NO hacemos — esto es importante</h2>
+    <p>
+      Comparecer en la corte de inmigración, firmar un Notice of Entry of
+      Appearance (EOIR-28), aconsejarle qué alivio solicitar o argumentar su
+      caso son actos de representación legal. Un Legal Document Assistant
+      registrado <em>no puede</em> representarlo ante el EOIR — solo un abogado
+      con licencia o un representante acreditado por la BIA puede hacerlo.
+      Imverica prepara documentos bajo su dirección y no da asesoría legal, no
+      elige sus formularios ni su estrategia, ni garantiza ningún resultado.
+      Como los casos de remoción tienen consecuencias graves, recomendamos
+      enfáticamente contratar a un abogado de inmigración con licencia o a un
+      representante acreditado, y mantenemos referencias.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> 8 C.F.R. Part 1003 (organización y procedimiento
+      del EOIR); INA §240 (procedimientos de remoción); 8 C.F.R. §1003.23
+      (mociones ante el juez de inmigración) y §1003.2 (mociones ante la BIA);
+      8 C.F.R. Part 1292 (representación y representantes acreditados). Solo
+      preparación de documentos — no asesoría legal ni representación.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=EOIR" primaryText="Solicitar preparación de documentos EOIR" />
+</BaseLayout>

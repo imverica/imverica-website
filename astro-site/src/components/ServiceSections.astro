@@ -1,4 +1,6 @@
 ---
+import { localizedPathSafe, type Locale } from '~/data/i18n';
+
 const services = [
   {
     id: 'immigration-consultant-california',
@@ -104,8 +106,10 @@ interface Props {
   intro?: string;
   /** Override the per-service cards entirely (e.g. for localized pages). */
   servicesOverride?: ServiceItem[];
+  /** Locale — used to localize internal page links (chips + plain items). */
+  lang?: Locale;
 }
-const { include, kicker, heading, intro, servicesOverride } = Astro.props;
+const { include, kicker, heading, intro, servicesOverride, lang = 'en' } = Astro.props;
 const source = servicesOverride && servicesOverride.length ? servicesOverride : services;
 const visible = include ? source.filter((s) => include.includes(s.id)) : source;
 const finalKicker = kicker || 'California document preparation services';
@@ -133,24 +137,24 @@ const FORM_LINKS: Record<string, string> = {
   'I-765': '/i-765-work-permit-help',
   'I-589': '/i-589-asylum-help',
   'N-400': '/n-400-citizenship-help',
-  // USCIS forms without a dedicated page yet — link to the USCIS
-  // service card so the visitor sees its scope in context.
-  'I-131': '/immigration#immigration-consultant-california',
-  'I-131A': '/immigration#immigration-consultant-california',
-  'I-90': '/immigration#immigration-consultant-california',
-  'I-864': '/immigration#immigration-consultant-california',
-  'I-864A': '/immigration#immigration-consultant-california',
-  'I-693': '/immigration#immigration-consultant-california',
-  'I-751': '/immigration#immigration-consultant-california',
-  'I-539': '/immigration#immigration-consultant-california',
-  'I-824': '/immigration#immigration-consultant-california',
-  // EOIR series — all route to the EOIR card on the immigration page,
-  // not the wizard (the wizard has no EOIR-* flow).
-  'EOIR-28': '/immigration#eoir-documents',
-  'EOIR-29': '/immigration#eoir-documents',
-  'EOIR-42A': '/immigration#eoir-documents',
-  'EOIR-42B': '/immigration#eoir-documents',
-  'EOIR-40': '/immigration#eoir-documents',
+  // USCIS forms with their own dedicated explainer page.
+  'I-90': '/i-90-green-card-renewal',
+  'I-539': '/i-539-change-of-status',
+  // USCIS forms without a dedicated page yet — open the intake wizard
+  // preset to that form so the click starts a real request.
+  'I-131': '/#get-started?form=I-131',
+  'I-131A': '/#get-started?form=I-131A',
+  'I-864': '/#get-started?form=I-864',
+  'I-864A': '/#get-started?form=I-864A',
+  'I-693': '/#get-started?form=I-693',
+  'I-751': '/#get-started?form=I-751',
+  'I-824': '/#get-started?form=I-824',
+  // EOIR series — route to the dedicated EOIR immigration-court page.
+  'EOIR-28': '/eoir-immigration-court',
+  'EOIR-29': '/eoir-immigration-court',
+  'EOIR-42A': '/eoir-immigration-court',
+  'EOIR-42B': '/eoir-immigration-court',
+  'EOIR-40': '/eoir-immigration-court',
   // California court / family / civil — dedicated pages
   'FL-100': '/fl',
   'FL-110': '/fl',
@@ -190,6 +194,27 @@ function splitItem(raw: string): { codes: string[]; rest: string } {
   const codes = codeText.split(/[,/]/).map((c) => c.trim()).filter((c) => /^[A-Z][\w-]*$/.test(c) && FORM_LINKS[c.toUpperCase()]);
   return { codes, rest };
 }
+
+// Plain bullet items (no form code) link to the most relevant page for
+// that service. Wizard / same-page anchor links (starting with '/#') are
+// left as-is; real page slugs are localized to the current locale so a
+// Russian visitor lands on the Russian page, etc.
+const SERVICE_HREF: Record<string, string> = {
+  'immigration-consultant-california': '/#get-started',
+  'eoir-documents': '/eoir-immigration-court',
+  'document-translation-california': '/#get-started',
+  'family-law-documents-california': '/fl',
+  'unlawful-detainer-document-preparation-california': '/california-unlawful-detainer',
+  'small-claims-document-preparation-california': '/sc',
+  'restraining-orders-california': '/california-restraining-orders',
+  'probate-document-preparation-california': '/california-probate',
+  'business-filings': '/business'
+};
+function pageHref(dest: string): string {
+  if (!dest) return '/#get-started';
+  if (dest.startsWith('/#') || dest.startsWith('http')) return dest;
+  return localizedPathSafe(lang, dest);
+}
 ---
 
 <section class="svc-section" id="services-detail">
@@ -206,13 +231,17 @@ function splitItem(raw: string): { codes: string[]; rest: string } {
             {service.items.map((item) => {
               const { codes, rest } = splitItem(item);
               if (!codes.length) {
-                return <li class="svc-card-plain">{item}</li>;
+                return (
+                  <li class="svc-card-plain">
+                    <a href={pageHref(SERVICE_HREF[service.id])}>{item}</a>
+                  </li>
+                );
               }
               if (codes.length === 1) {
                 const code = codes[0];
                 return (
                   <li>
-                    <a href={FORM_LINKS[code]}>
+                    <a href={pageHref(FORM_LINKS[code])}>
                       <span class="svc-card-code">{code}</span>
                       {rest && <span class="svc-card-rest">{rest}</span>}
                     </a>
@@ -223,7 +252,7 @@ function splitItem(raw: string): { codes: string[]; rest: string } {
                 <li class="svc-card-multi">
                   <span class="svc-card-multi-chips">
                     {codes.map((c) => (
-                      <a href={FORM_LINKS[c]} class="svc-card-pill">
+                      <a href={pageHref(FORM_LINKS[c])} class="svc-card-pill">
                         <span class="svc-card-code">{c}</span>
                       </a>
                     ))}

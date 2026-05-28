@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-539 — change or extend nonimmigrant status | Imverica';
+const description = 'California Licensed LDA prepares Form I-539 to extend or change a nonimmigrant status — B-1/B-2 visitor, F/M student, J exchange, H-4 and L-2 dependents — plus I-539A for co-applicants. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-539 Change or Extension of Nonimmigrant Status Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for applications to extend or change nonimmigrant status (Form I-539), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-539-change-of-status"
+  slug="/i-539-change-of-status" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §248 · §214"
+    heading="I-539 — Change or Extend Nonimmigrant Status"
+    sub="Staying longer, or moving from one nonimmigrant status to another, while you are inside the United States. We prepare Form I-539 (and I-539A for co-applicants) accurately and on time, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=I-539', text: 'Start my I-539 application' }}
+  />
+
+  <CategoryTiles
+    kicker="Common I-539 situations"
+    heading="What I-539 covers"
+    intro="Form I-539 handles extensions and changes for many nonimmigrant categories. Tap a tile to begin."
+    tiles={[
+      { icon: '📄', title: 'I-539 — Application',         desc: 'Application to Extend / Change Nonimmigrant Status — the main form.',                 href: '/#get-started?form=I-539',  color: 'var(--terracotta-deep)' },
+      { icon: '👥', title: 'I-539A — Co-applicants',      desc: 'Dependents (spouse and children) included on one application.',                       href: '/#get-started?form=I-539A', color: 'var(--navy)' },
+      { icon: '🧳', title: 'Extend B-1 / B-2 visitor',    desc: 'Request more time on a business or tourist visit before the I-94 expires.',           href: '/#get-started?form=I-539',  color: 'var(--sage)' },
+      { icon: '🎓', title: 'Change to F-1 / M-1 student', desc: 'Move to student status when you have an accepted Form I-20.',                          href: '/#get-started?form=I-539',  color: 'var(--gold)' },
+      { icon: '👪', title: 'H-4 / L-2 dependents',        desc: 'Dependent status tied to an H-1B or L-1 principal worker.',                            href: '/#get-started?form=I-539',  color: 'var(--navy-light)' },
+      { icon: '💼', title: 'I-765 — Dependent work permit', desc: 'Eligible H-4 and L-2 dependents may file for employment authorization.',             href: '/i-765-work-permit-help',   color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-765-work-permit-help', label: 'I-765 — Work Permit (EAD)' },
+    { href: '/immigration', label: 'All USCIS & EOIR documents we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-539 is how someone already inside the United States in a
+      nonimmigrant category asks USCIS either to <em>extend</em> their current
+      stay or to <em>change</em> to a different nonimmigrant status — without
+      leaving the country to apply for a new visa abroad.
+    </p>
+
+    <h2>Who files I-539</h2>
+    <ul>
+      <li>B-1/B-2 visitors who need more time before their authorized stay ends.</li>
+      <li>People switching to F-1/M-1 student status, or between certain nonimmigrant categories.</li>
+      <li>H-4 and L-2 dependents of H-1B and L-1 workers (extensions and changes).</li>
+      <li>J, TN, E, O, R and other dependents and certain principals, depending on the category.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form I-539</strong> — the extension or change application, with the basis and supporting documents organized.</li>
+      <li><strong>Form I-539A</strong> — co-applicant pages so a spouse and children file together.</li>
+      <li><strong>Supporting packet</strong> — proof of valid status, financial support, the I-20 or principal's approval notice, and a clear timeline.</li>
+      <li><strong>Form I-765</strong> for eligible H-4 / L-2 dependents who want a work permit.</li>
+    </ul>
+
+    <h2>What I-539 does NOT do</h2>
+    <p>
+      You must file before your authorized stay expires and you must not have
+      violated your status; a late or improper filing can put your status at
+      risk. I-539 does not by itself grant work authorization (most categories
+      need a separate I-765), and it cannot be used to change into every
+      status. Imverica is a registered Legal Document Assistant — not a law
+      firm. We prepare documents at your direction and do not advise you on
+      which status to pursue or guarantee any outcome; for that we refer you
+      to a licensed attorney.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> INA §248 (change of nonimmigrant
+      classification); INA §214 and 8 C.F.R. §214.1 (conditions of
+      nonimmigrant status); 8 C.F.R. §248 (change-of-status procedure).
+      Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-539" primaryText="Begin my I-539 intake" />
+</BaseLayout>

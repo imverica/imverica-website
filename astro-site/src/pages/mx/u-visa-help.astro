@@ -1,0 +1,97 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Visa U — preparación de documentos I-918 para víctimas de delitos | Imverica';
+const description = 'California Licensed LDA prepara paquetes U nonimmigrant (visa U) — petición I-918, I-918 Supplement A (familia), I-918 Supplement B (certificación policial), I-192 (waiver), I-765 (permiso de trabajo). Preparados bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'U Nonimmigrant Status (U visa) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para peticiones de U nonimmigrant status para víctimas de delitos calificados, bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/u-visa-help"
+  slug="/u-visa-help" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Humanitario · INA §101(a)(15)(U)"
+    heading="Visa U (I-918) — preparación de documentos para víctimas de delitos"
+    sub="La visa U protege a víctimas de delitos calificados que ayudaron a las autoridades. Preparamos el paquete I-918 completo con precisión bajo su dirección — precio fijo, entrevista multilingüe (ucraniano, ruso, español, inglés)."
+    ctaPrimary={{ href: '/#get-started?form=I-918', text: 'Comenzar mi paquete de visa U' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios del paquete de visa U"
+    heading="Qué incluye la visa U"
+    intro="Una solicitud de visa U suele combinar varios formularios de USCIS. Toque cualquier tile para la página del formulario."
+    tiles={[
+      { icon: '🆘', title: 'I-918 — Petición principal',        desc: 'Petición de U Nonimmigrant Status — la solicitud central de la víctima.',            href: '/#get-started?form=I-918',   color: 'var(--terracotta-deep)' },
+      { icon: '🪪', title: 'I-918 Supplement B — Certificación', desc: 'Certificación de ayuda por parte de la autoridad. Obligatoria y con plazos estrictos.', href: '/#get-started?form=I-918B',  color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'I-918 Supplement A — Familia',     desc: 'Familiares calificados (cónyuge, hijos y, en algunos casos, padres/hermanos).',       href: '/#get-started?form=I-918A',  color: 'var(--sage)' },
+      { icon: '📝', title: 'I-192 — Waiver de inadmisibilidad', desc: 'Perdón de causales de inadmisibilidad, presentado con la mayoría de las peticiones U.', href: '/#get-started?form=I-192',   color: 'var(--gold)' },
+      { icon: '💼', title: 'I-765 — Permiso de trabajo',        desc: 'Autorización de empleo tras una determinación de buena fe o la aprobación.',          href: '/mx/i-765-work-permit-help', color: 'var(--navy-light)' },
+      { icon: '🟢', title: 'I-485 — Ajuste de estatus',         desc: 'Paquete de green card tras mantener el estatus U el periodo requerido.',              href: '/mx/i-485-help',             color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-765-work-permit-help', label: 'I-765 — Permiso de trabajo (detalles)' },
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La visa U nonimmigrant ("visa U") fue creada por el Congreso para
+      proteger a las víctimas de ciertos delitos graves que sufrieron un abuso
+      sustancial y que cooperan con las autoridades en la investigación o el
+      enjuiciamiento de ese delito. Es una categoría humanitaria — puede llevar
+      a la autorización de empleo y, tras un periodo calificado, a la green card.
+    </p>
+
+    <h2>Para quién es la visa U</h2>
+    <ul>
+      <li>Usted fue víctima de un delito calificado (como violencia doméstica, agresión grave, abuso sexual, trata, secuestro o manipulación de testigos, entre otros).</li>
+      <li>Sufrió un abuso físico o mental sustancial como resultado.</li>
+      <li>Tiene información sobre el delito y fue, es o probablemente será de ayuda para las autoridades.</li>
+      <li>El delito ocurrió en Estados Unidos o violó la ley de EE. UU.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Formulario I-918</strong> — la petición principal de estatus U, con la declaración personal y los anexos organizados.</li>
+      <li><strong>Formulario I-918 Supplement B</strong> — la certificación que completa una autoridad; preparamos el paquete listo para la firma del funcionario certificador.</li>
+      <li><strong>Formulario I-918 Supplement A</strong> — peticiones derivadas para familiares calificados.</li>
+      <li><strong>Formulario I-192</strong> — el waiver de inadmisibilidad presentado con la mayoría de las peticiones U.</li>
+      <li><strong>Formulario I-765</strong> — autorización de empleo cuando es elegible.</li>
+      <li><strong>Traducciones certificadas</strong> de informes policiales, expedientes médicos y otra evidencia de apoyo.</li>
+    </ul>
+
+    <h2>Qué NO hace el proceso de visa U</h2>
+    <p>
+      El Congreso limita las aprobaciones de visa U principales a 10,000 por
+      año fiscal, por lo que las peticiones suelen esperar en una lista varios
+      años antes de una decisión; mientras tanto USCIS puede otorgar deferred
+      action y un permiso de trabajo. La visa U es legalmente compleja y los
+      plazos de la certificación policial son estrictos. Imverica es un Legal
+      Document Assistant registrado — no un bufete de abogados. Preparamos
+      documentos bajo su dirección y no elegimos su categoría, no damos asesoría
+      legal ni garantizamos ningún resultado. Para asesoría o representación
+      mantenemos referencias a abogados de inmigración con licencia en California.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §101(a)(15)(U) y §214(p) (estatus U y el
+      límite anual de 10,000); Victims of Trafficking and Violence Protection
+      Act of 2000 (VTVPA); 8 C.F.R. §214.14; 8 U.S.C. §1367 (protección de
+      confidencialidad). Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-918" primaryText="Comenzar mi entrevista de visa U" />
+</BaseLayout>
