@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'LLC-12 — Statement of Information de la LLC de California | Imverica';
+const description = 'California Licensed LDA prepara la Forma LLC-12, el Statement of Information de la LLC presentado dentro de 90 días de la formación y cada dos años después, manteniendo su LLC en good standing. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Statement of Information (LLC-12) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para el Statement of Information de la LLC de California (Forma LLC-12), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/llc-12-statement-of-information"
+  slug="/llc-12-statement-of-information" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17702.09"
+    heading="LLC-12 — Statement of Information"
+    sub="Toda LLC de California presenta la LLC-12 dentro de 90 días de formarse y cada dos años después. La preparamos con precisión y a tiempo bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=LLC-12', text: 'Comenzar mi LLC-12' }}
+  />
+
+  <CategoryTiles
+    kicker="Mantener la LLC en good standing"
+    heading="Con qué trabaja la LLC-12"
+    intro="El Statement of Information es parte de operar una LLC en regla. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Formar una LLC',     desc: 'Los Articles of Organization que crearon la LLC.',                                  href: '/mx/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Las reglas internas que refleja el Statement of Information.',                       href: '/mx/operating-agreement',         color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'ID fiscal federal usado junto con el cumplimiento estatal.',                        href: '/mx/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Registrar un nombre comercial si opera bajo uno.',                                  href: '/mx/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — De otro estado',    desc: 'Las LLC foráneas registradas en California también presentan esto.',                href: '/mx/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '📊', title: 'SI-550 — Corporación',       desc: 'El equivalente de esta presentación para corporaciones.',                          href: '/mx/si-550-corporation-statement', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/llc-1-form-an-llc', label: 'LLC-1 — Formar una LLC en California' },
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La Forma LLC-12, Statement of Information, le dice al California Secretary
+      of State quién administra la LLC, dónde está ubicada y quién es su agent
+      for service of process. Presentarla mantiene la LLC en good standing;
+      omitirla lleva a multas y suspensión.
+    </p>
+
+    <h2>Cuándo presenta la LLC-12</h2>
+    <ul>
+      <li>El Statement of Information inicial vence dentro de <strong>90 días</strong> de formar la LLC.</li>
+      <li>Después, se presenta cada <strong>dos años</strong> (el periodo bienal).</li>
+      <li>Presente una actualización cuando cambie información clave (dirección, administradores, agent).</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Forma LLC-12</strong> completada con la información actual de su empresa.</li>
+      <li>Actualizaciones cuando cambien sus administradores, miembros, dirección o agent.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados ni asesor fiscal. Completamos el statement con la
+      información que proporciona, bajo su dirección. No damos asesoría legal o
+      fiscal ni actuamos como su agent for service of process. Para asesoría
+      mantenemos referencias a abogados y CPAs con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code §17702.09 (LLC
+      Statement of Information). Solo preparación de documentos — no asesoría
+      legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-12" primaryText="Comenzar mi entrevista LLC-12" />
+</BaseLayout>

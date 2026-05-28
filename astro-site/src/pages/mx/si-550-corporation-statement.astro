@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SI-550 — Statement of Information de corporación de California | Imverica';
+const description = 'California Licensed LDA prepara la Forma SI-550, el Statement of Information de corporación presentado dentro de 90 días de incorporarse y cada año después, manteniendo su corporación en good standing. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Corporation Statement of Information (SI-550) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para el Statement of Information de corporación de California (Forma SI-550), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/si-550-corporation-statement"
+  slug="/si-550-corporation-statement" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §1502"
+    heading="SI-550 — Statement of Information de corporación"
+    sub="Las corporaciones de California presentan la Forma SI-550 dentro de 90 días de incorporarse y cada año después. La preparamos con precisión y a tiempo bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SI-550', text: 'Comenzar mi SI-550' }}
+  />
+
+  <CategoryTiles
+    kicker="Mantener la corporación en good standing"
+    heading="Con qué trabaja la SI-550"
+    intro="El Statement of Information es parte de operar una corporación en regla. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '🏛️', title: 'ARTS — Corporación',        desc: 'Los Articles of Incorporation que crearon la empresa.',                            href: '/mx/arts-gs-incorporation',       color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'ID fiscal federal usado junto con el cumplimiento estatal.',                        href: '/mx/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Registrar un nombre comercial que use la corporación.',                            href: '/mx/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'El equivalente de esta presentación para LLC.',                                     href: '/mx/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '🏢', title: 'LLC-1 — Formar una LLC',     desc: '¿Prefiere una estructura LLC?',                                                     href: '/mx/llc-1-form-an-llc',           color: 'var(--navy-light)' },
+      { icon: '🔄', title: 'LLC-1A — De otro estado',    desc: 'Las entidades foráneas registradas en California también presentan.',               href: '/mx/llc-1a-foreign-llc',          color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/arts-gs-incorporation', label: 'ARTS-GS — Incorporarse en California' },
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La Forma SI-550, Statement of Information de corporación, le dice al
+      California Secretary of State quiénes son los directivos (officers) y
+      directores, dónde está ubicada la corporación y quién es su agent for
+      service of process. Presentarla a tiempo mantiene la corporación en good
+      standing; omitirla lleva a multas y posible suspensión.
+    </p>
+
+    <h2>Cuándo presenta la SI-550</h2>
+    <ul>
+      <li>El statement inicial vence dentro de <strong>90 días</strong> de incorporarse.</li>
+      <li>Después, las corporaciones presentan <strong>cada año</strong> (a diferencia de las LLC, que lo hacen cada dos años).</li>
+      <li>Presente una actualización cuando cambien los officers, directores, la dirección o el agent.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Forma SI-550</strong> completada con la información corporativa actual.</li>
+      <li>Actualizaciones cuando cambien sus officers, directores, dirección o agent.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados ni asesor fiscal. Completamos el statement con la
+      información que proporciona, bajo su dirección. No damos asesoría legal o
+      fiscal ni actuamos como su agent for service of process. Para asesoría
+      mantenemos referencias a abogados y CPAs con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code §1502 (Statement of
+      Information de corporación). Solo preparación de documentos — no asesoría
+      legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SI-550" primaryText="Comenzar mi entrevista SI-550" />
+</BaseLayout>

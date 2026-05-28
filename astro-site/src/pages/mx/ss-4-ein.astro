@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SS-4 — EIN (Número de Identificación de Empleador) | Imverica';
+const description = 'California Licensed LDA prepara la solicitud IRS Forma SS-4 de un EIN (Employer Identification Number) para que su LLC, corporación o propietario único pueda abrir cuenta bancaria, contratar y declarar impuestos. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EIN / Form SS-4 Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para la solicitud IRS Forma SS-4 de un EIN, bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/ss-4-ein"
+  slug="/ss-4-ein" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="Federal · IRS Forma SS-4"
+    heading="SS-4 — Número de Identificación de Empleador (EIN)"
+    sub="Un EIN es el ID fiscal federal de su negocio — necesario para abrir una cuenta bancaria, contratar empleados y declarar impuestos. Preparamos la solicitud SS-4 bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SS-4', text: 'Comenzar mi solicitud de EIN' }}
+  />
+
+  <CategoryTiles
+    kicker="El EIN encaja en su nuevo negocio"
+    heading="Con qué trabaja un EIN"
+    intro="El EIN es uno de los primeros pasos tras formar un negocio. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Formar una LLC',     desc: 'Formar la LLC a la que pertenecerá el EIN.',                                        href: '/mx/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '🏛️', title: 'ARTS — Corporación',        desc: 'Incorporar la entidad a la que pertenecerá el EIN.',                                href: '/mx/arts-gs-incorporation',       color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Registrar el nombre comercial que usa el negocio con EIN.',                         href: '/mx/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Mantener la LLC en regla tras obtener el EIN.',                                     href: '/mx/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Configurar cómo se administra la LLC detrás del EIN.',                              href: '/mx/operating-agreement',         color: 'var(--navy-light)' },
+      { icon: '📊', title: 'SI-550 — Corporación',       desc: 'Mantener la corporación en regla tras el EIN.',                                     href: '/mx/si-550-corporation-statement', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/llc-1-form-an-llc', label: 'LLC-1 — Formar una LLC en California' },
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La Forma SS-4 es la solicitud del IRS para un Employer Identification
+      Number (EIN) — el ID fiscal federal de nueve dígitos que identifica a su
+      negocio. La mayoría de los negocios lo necesitan para abrir una cuenta
+      bancaria, contratar empleados y presentar declaraciones federales y
+      estatales.
+    </p>
+
+    <h2>Quién necesita un EIN</h2>
+    <ul>
+      <li>Las LLC y corporaciones (casi siempre), y las partnerships.</li>
+      <li>Propietarios únicos que contratan empleados o quieren un ID fiscal separado de su SSN.</li>
+      <li>Negocios que abren una cuenta bancaria o solicitan licencias que requieren un EIN.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Forma SS-4</strong> completada con los datos de su entidad y la parte responsable.</li>
+      <li>Orientación sobre la información que el IRS necesita para que la solicitud proceda sin problemas.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados, contador ni asesor fiscal. Preparamos la SS-4 con la
+      información que proporciona, bajo su dirección. No damos asesoría fiscal,
+      no elegimos su clasificación tributaria, ni actuamos como su parte
+      responsable o tercero designado salvo que lo autorice por separado. Para
+      asesoría mantenemos referencias a CPAs y abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> Internal Revenue Code §6109 e instrucciones del
+      IRS para la Forma SS-4 (Employer Identification Numbers). Solo preparación
+      de documentos — no asesoría legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SS-4" primaryText="Comenzar mi entrevista de EIN" />
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'ARTS-GS — Incorporarse en California (Articles of Incorporation) | Imverica';
+const description = 'California Licensed LDA prepara los Articles of Incorporation (Forma ARTS-GS de acciones generales, o public-benefit) para formar una corporación de California con el Secretary of State, más SI-550, EIN y bylaws. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Incorporation (Articles of Incorporation) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para incorporarse en California (Articles of Incorporation, Forma ARTS-GS), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/arts-gs-incorporation"
+  slug="/arts-gs-incorporation" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §200 et seq."
+    heading="ARTS-GS — Incorporarse en California"
+    sub="Los Articles of Incorporation (Forma ARTS-GS para una corporación de acciones generales, o el equivalente public-benefit) crean su corporación con el Secretary of State. Preparamos el paquete inicial bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=ARTS-GS', text: 'Comenzar mi incorporación' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios de una nueva corporación"
+    heading="Qué implica incorporarse"
+    intro="Una nueva corporación necesita varias presentaciones para quedar configurada y en regla. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '📊', title: 'SI-550 — Corporación',       desc: 'Statement of Information a los 90 días, luego anualmente.',                         href: '/mx/si-550-corporation-statement', color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Número de identificación de empleador federal para banco e impuestos.',             href: '/mx/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Un nombre comercial ficticio si opera bajo otro nombre.',                           href: '/mx/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '🏢', title: 'LLC-1 — Formar una LLC',     desc: '¿Prefiere una LLC? Articles of Organization.',                                      href: '/mx/llc-1-form-an-llc',           color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — De otro estado',    desc: 'Registrar una entidad foránea para operar en California.',                          href: '/mx/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'La versión LLC del Statement of Information.',                                       href: '/mx/llc-12-statement-of-information', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/si-550-corporation-statement', label: 'SI-550 — Statement of Information de corporación' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Los Articles of Incorporation se presentan ante el California Secretary of
+      State para crear una corporación. La Forma ARTS-GS es la versión estándar
+      de acciones generales; las organizaciones sin fines de lucro y de misión
+      usan los Articles public-benefit o nonprofit correspondientes. Una vez
+      presentados, completa la configuración con bylaws, un EIN y el Statement
+      of Information.
+    </p>
+
+    <h2>Qué requiere incorporarse</h2>
+    <ul>
+      <li>Un nombre corporativo único y un agent for service of process en California.</li>
+      <li>El número de acciones autorizadas (para una corporación de acciones).</li>
+      <li>SI-550 Statement of Information dentro de 90 días, luego anualmente.</li>
+      <li>El impuesto anual de $800 al Franchise Tax Board.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Articles of Incorporation (ARTS-GS</strong> o la forma public-benefit) para presentar.</li>
+      <li><strong>SI-550</strong> Statement of Information y apoyo de <strong>EIN (SS-4)</strong>.</li>
+      <li>Documentos organizativos (bylaws, resoluciones iniciales) según sus instrucciones.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados ni asesor fiscal. Preparamos las presentaciones que
+      usted dirige. No le aconsejamos si incorporarse, no elegimos su entidad o
+      estructura de acciones, no damos asesoría legal o fiscal, ni actuamos como
+      su agent. Para asesoría mantenemos referencias a abogados y CPAs con
+      licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code §200 y §202
+      (Articles of Incorporation); Revenue &amp; Taxation Code §23153 (impuesto
+      anual). Solo preparación de documentos — no asesoría legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=ARTS-GS" primaryText="Comenzar mi entrevista de incorporación" />
+</BaseLayout>

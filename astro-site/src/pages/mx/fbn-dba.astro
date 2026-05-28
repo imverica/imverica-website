@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FBN / DBA — Nombre Comercial Ficticio en California | Imverica';
+const description = 'California Licensed LDA prepara su declaración de Nombre Comercial Ficticio (FBN / DBA) para presentar ante el county clerk, con la publicación en periódico que exige California. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Fictitious Business Name (DBA) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para un nombre comercial ficticio de California (DBA), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fbn-dba"
+  slug="/fbn-dba" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Bus. &amp; Prof. Code §17900 et seq."
+    heading="FBN / DBA — Nombre Comercial Ficticio"
+    sub="Si hace negocios bajo un nombre que no es su nombre legal (ni el nombre exacto de su LLC/corporación), California exige una declaración de Nombre Comercial Ficticio presentada en el condado. La preparamos junto con la publicación requerida, bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=FBN', text: 'Comenzar mi FBN / DBA' }}
+  />
+
+  <CategoryTiles
+    kicker="Cuándo un DBA encaja en su estructura"
+    heading="Con qué trabaja un DBA"
+    intro="Un nombre comercial ficticio se combina con cualquier entidad que opere. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Formar una LLC',     desc: 'Registrar un DBA para una LLC que opera bajo otro nombre.',                         href: '/mx/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '🏛️', title: 'ARTS — Corporación',        desc: 'Una corporación también puede presentar un DBA para un nombre comercial.',         href: '/mx/arts-gs-incorporation',       color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Un ID fiscal federal para el negocio detrás del nombre.',                           href: '/mx/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Mantenga su LLC en regla junto con el DBA.',                                        href: '/mx/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '📊', title: 'SI-550 — Corporación',       desc: 'Mantenga su corporación en regla junto con el DBA.',                                href: '/mx/si-550-corporation-statement', color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Documento interno de la LLC si también formó una.',                                 href: '/mx/operating-agreement',         color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/llc-1-form-an-llc', label: 'LLC-1 — Formar una LLC en California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Un Nombre Comercial Ficticio (FBN), también llamado DBA ("doing business
+      as"), le permite operar bajo un nombre distinto de su nombre personal
+      legal o del nombre exacto de su entidad registrada. California exige
+      presentar la declaración FBN ante el county clerk donde se ubica su
+      negocio, seguida de publicación en un periódico.
+    </p>
+
+    <h2>Cuándo necesita un DBA</h2>
+    <ul>
+      <li>Un propietario único que usa un nombre comercial que no es su apellido.</li>
+      <li>Una LLC o corporación que opera una marca o división bajo un nombre distinto.</li>
+      <li>Los bancos suelen exigir un FBN presentado antes de abrir una cuenta bajo el nombre comercial.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li>La <strong>declaración de Nombre Comercial Ficticio</strong> para presentar ante el county clerk correcto.</li>
+      <li>La coordinación de la <strong>publicación en periódico</strong> requerida (una vez por semana durante cuatro semanas, luego presentar el comprobante).</li>
+      <li>Declaraciones de renovación (los FBN suelen vencer a los cinco años).</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos y tramitamos el FBN que usted dirige. No
+      hacemos una búsqueda de marcas, no aconsejamos si un nombre está
+      disponible o es protegible legalmente, ni damos asesoría legal. Para
+      asesoría mantenemos referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Business &amp; Professions Code §17900
+      y siguientes (Fictitious Business Names), incluido el requisito de
+      publicación del §17917. Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FBN" primaryText="Comenzar mi entrevista FBN / DBA" />
+</BaseLayout>

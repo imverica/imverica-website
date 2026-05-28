@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Registrar una LLC foránea (de otro estado) en California (LLC-5) | Imverica';
+const description = 'California Licensed LDA prepara la Application to Register a Foreign LLC (Forma LLC-5) para que una LLC de otro estado pueda operar legalmente en California, con el Statement of Information y apoyo de EIN. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Foreign LLC Registration (LLC-5) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para registrar una LLC foránea (de otro estado) en California (Forma LLC-5), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/llc-1a-foreign-llc"
+  slug="/llc-1a-foreign-llc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17708.02"
+    heading="Registrar una LLC foránea (de otro estado)"
+    sub="Una LLC formada en otro estado debe registrarse en California antes de operar aquí. Preparamos la Application to Register a Foreign LLC (Forma LLC-5) y las presentaciones siguientes bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=LLC-5', text: 'Comenzar el registro de LLC foránea' }}
+  />
+
+  <CategoryTiles
+    kicker="Registro y cumplimiento"
+    heading="Con qué trabaja el registro de LLC foránea"
+    intro="Una LLC foránea registrada tiene las mismas obligaciones de California que una local. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Las LLC foráneas también presentan el Statement of Information.',                    href: '/mx/llc-12-statement-of-information', color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'ID fiscal federal para el negocio que opera en California.',                        href: '/mx/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Un nombre comercial de California si opera bajo uno.',                              href: '/mx/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Su LLC conserva su operating agreement.',                                           href: '/mx/operating-agreement',         color: 'var(--gold)' },
+      { icon: '🏢', title: 'LLC-1 — LLC local',          desc: '¿Formando una LLC nueva de California en su lugar?',                                href: '/mx/llc-1-form-an-llc',           color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Corporación',        desc: '¿Registrando una corporación foránea? Empiece aquí.',                               href: '/mx/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/llc-1-form-an-llc', label: 'LLC-1 — Formar una LLC en California' },
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Si su LLC se formó en otro estado (una LLC "foránea") y quiere hacer
+      negocios en California, debe registrarla ante el California Secretary of
+      State con la Application to Register a Foreign Limited Liability Company
+      (Forma LLC-5). Una vez registrada, la LLC tiene los mismos deberes de
+      cumplimiento e impuestos de California que una LLC local.
+    </p>
+
+    <h2>Qué requiere el registro foráneo</h2>
+    <ul>
+      <li>Un Certificate of Good Standing vigente del estado de origen de la LLC.</li>
+      <li>Un agent for service of process en California.</li>
+      <li>La LLC-12 Statement of Information tras registrarse, y el impuesto anual de $800.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Forma LLC-5</strong> Application to Register a Foreign LLC para presentar ante el Secretary of State.</li>
+      <li>La <strong>LLC-12</strong> Statement of Information siguiente y apoyo de <strong>EIN</strong> si se necesita.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados ni asesor fiscal. Preparamos el registro que usted
+      dirige con la información que proporciona. No aconsejamos si su actividad
+      requiere registro, no damos asesoría legal o fiscal, ni actuamos como su
+      agent. Para asesoría mantenemos referencias a abogados y CPAs con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code §17708.02 (registro
+      de LLC foráneas) y §17708.03 (Forma LLC-5 / certificate of good standing).
+      Solo preparación de documentos — no asesoría legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-5" primaryText="Comenzar mi entrevista de LLC foránea" />
+</BaseLayout>

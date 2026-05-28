@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'ARTS-GS — реєстрація корпорації в Каліфорнії | Imverica';
+const description = 'California Licensed LDA готує Articles of Incorporation (форма ARTS-GS general stock або public-benefit) для створення каліфорнійської корпорації через Secretary of State, плюс SI-550, EIN та bylaws. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Incorporation (Articles of Incorporation) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Підготовка документів для реєстрації корпорації в Каліфорнії (Articles of Incorporation, форма ARTS-GS), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/arts-gs-incorporation"
+  slug="/arts-gs-incorporation" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §200 et seq."
+    heading="ARTS-GS — реєстрація корпорації в Каліфорнії"
+    sub="Articles of Incorporation (форма ARTS-GS для general-stock корпорації або public-benefit еквівалент) створюють вашу корпорацію через Secretary of State. Готуємо стартовий пакет за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=ARTS-GS', text: 'Почати реєстрацію корпорації' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми в пакеті нової корпорації"
+    heading="Що включає реєстрація корпорації"
+    intro="Новій корпорації потрібно кілька подач для налаштування та відповідності. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '📊', title: 'SI-550 — Корпорація',        desc: 'Statement of Information протягом 90 днів, потім щорічно.',                         href: '/ua/si-550-corporation-statement', color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральний податковий ID для банку та податків.',                                  href: '/ua/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Fictitious business name, якщо працюєте під іншим іменем.',                         href: '/ua/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '🏢', title: 'LLC-1 — Створити LLC',       desc: 'Віддаєте перевагу LLC? Articles of Organization.',                                  href: '/ua/llc-1-form-an-llc',           color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Реєстрація іноземного entity для роботи в Каліфорнії.',                             href: '/ua/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'LLC-версія Statement of Information.',                                               href: '/ua/llc-12-statement-of-information', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/business', label: 'Усі бізнес-подачі Каліфорнії' },
+    { href: '/ua/si-550-corporation-statement', label: 'SI-550 — Statement of Information корпорації' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Articles of Incorporation подаються до California Secretary of State для
+      створення корпорації. Форма ARTS-GS — стандартний general-stock варіант;
+      некомерційні та mission-driven компанії використовують відповідні
+      public-benefit чи nonprofit Articles. Після подачі налаштування завершують
+      bylaws, EIN та Statement of Information.
+    </p>
+
+    <h2>Що потрібно для реєстрації корпорації</h2>
+    <ul>
+      <li>Унікальне ім'я корпорації та каліфорнійський agent for service of process.</li>
+      <li>Кількість authorized shares (для stock-корпорації).</li>
+      <li>SI-550 Statement of Information протягом 90 днів, потім щорічно.</li>
+      <li>Щорічний податок $800 до Franchise Tax Board.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>Articles of Incorporation (ARTS-GS</strong> або public-benefit форму) для подачі.</li>
+      <li><strong>SI-550</strong> Statement of Information та підтримку <strong>EIN (SS-4)</strong>.</li>
+      <li>Організаційні документи (bylaws, початкові resolutions) за вашими вказівками.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма чи податковий консультант. Ми готуємо подачі за вашим
+      дорученням. Ми не радимо, чи реєструвати корпорацію, не обираємо тип
+      entity чи структуру акцій, не надаємо юридичних/податкових консультацій і
+      не виступаємо agent. Для консультацій — referral до адвокатів і CPA.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Corporations Code §200 та §202
+      (Articles of Incorporation); Revenue &amp; Taxation Code §23153 (щорічний
+      податок). Лише підготовка документів — не юридичні чи податкові
+      консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=ARTS-GS" primaryText="Почати анкету реєстрації корпорації" />
+</BaseLayout>

@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Operating Agreement de LLC (California) | Imverica';
+const description = 'California Licensed LDA prepara el operating agreement de su LLC — el reglamento interno de porcentajes de propiedad, administración, votación, distribución de ganancias y cambios de miembros — armado con sus instrucciones. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Operating Agreement Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para un operating agreement de LLC de California, bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/operating-agreement"
+  slug="/operating-agreement" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17701.10"
+    heading="Operating Agreement de LLC"
+    sub="El operating agreement es el reglamento interno de su LLC — quién posee qué, quién administra, cómo se reparten las ganancias y qué pasa cuando un miembro se va. Lo armamos con sus instrucciones — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=OA', text: 'Comenzar mi operating agreement' }}
+  />
+
+  <CategoryTiles
+    kicker="Parte de configurar una LLC"
+    heading="Con qué trabaja el operating agreement"
+    intro="El operating agreement completa una LLC bien configurada. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Formar una LLC',     desc: 'Los Articles of Organization que crean la LLC.',                                    href: '/mx/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'La presentación de cumplimiento que el agreement debe reflejar.',                    href: '/mx/llc-12-statement-of-information', color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'ID fiscal federal para la LLC que rige el agreement.',                              href: '/mx/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Un nombre comercial si la LLC opera bajo uno.',                                     href: '/mx/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — De otro estado',    desc: 'Las LLC foráneas que se registran en California también lo conservan.',             href: '/mx/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Corporación',        desc: 'Las corporaciones usan bylaws en vez de un operating agreement.',                   href: '/mx/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/llc-1-form-an-llc', label: 'LLC-1 — Formar una LLC en California' },
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Un operating agreement de LLC es el contrato interno entre los miembros
+      que fija las reglas de funcionamiento de la empresa. California no lo
+      presenta ante el estado, pero se recomienda enfáticamente (y se espera en
+      la práctica) — sin él, la LLC se rige por las reglas predeterminadas del
+      Corporations Code, que pueden no coincidir con lo que quieren los dueños.
+    </p>
+
+    <h2>Qué cubre un operating agreement</h2>
+    <ul>
+      <li>Porcentajes de propiedad y aportaciones de capital.</li>
+      <li>Administración — member-managed o manager-managed — y derechos de voto.</li>
+      <li>Cómo se asignan las ganancias, pérdidas y distribuciones.</li>
+      <li>Qué pasa cuando un miembro entra, se va, fallece o vende su participación.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li>Un <strong>operating agreement</strong> armado con los términos que usted especifica (single-member o multi-member).</li>
+      <li>Documentos complementarios — certificados de membresía y resoluciones iniciales — a solicitud.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Armamos el agreement con los términos que <em>usted</em>
+      elige, bajo su dirección. No aconsejamos qué términos elegir, no
+      negociamos entre miembros, no damos asesoría legal o fiscal, ni opinamos
+      si los términos lo protegen. Para asesoría mantenemos referencias a
+      abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code §17701.10 (operating
+      agreements) y las reglas predeterminadas del Revised Uniform LLC Act.
+      Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=OA" primaryText="Comenzar mi entrevista de operating agreement" />
+</BaseLayout>

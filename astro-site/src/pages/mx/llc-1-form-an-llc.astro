@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'LLC-1 — Formar una LLC en California (Articles of Organization) | Imverica';
+const description = 'California Licensed LDA prepara la Forma LLC-1 (Articles of Organization) para formar una LLC de California con el Secretary of State, más la LLC-12 Statement of Information, EIN y operating agreement. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Formation (LLC-1) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Preparación de documentos para formar una LLC de California (Forma LLC-1, Articles of Organization), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/llc-1-form-an-llc"
+  slug="/llc-1-form-an-llc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17702.01"
+    heading="LLC-1 — Formar una LLC en California"
+    sub="La Forma LLC-1 (Articles of Organization) crea su LLC con el California Secretary of State. Preparamos el paquete inicial completo bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=LLC-1', text: 'Comenzar la formación de mi LLC' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios de un paquete de nueva LLC"
+    heading="Qué implica formar una LLC"
+    intro="Una nueva LLC suele necesitar varias presentaciones para quedar bien configurada. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Statement of Information inicial, a los 90 días, luego cada 2 años.',                href: '/mx/llc-12-statement-of-information', color: 'var(--terracotta-deep)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'El reglamento interno: propiedad, administración y ganancias.',                     href: '/mx/operating-agreement',         color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Número de identificación de empleador federal para banco e impuestos.',             href: '/mx/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Un nombre comercial ficticio si opera bajo otro nombre.',                           href: '/mx/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — De otro estado',    desc: 'Registrar una LLC foránea (de otro estado) para operar aquí.',                       href: '/mx/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Corporación',        desc: '¿Prefiere una corporación? Articles of Incorporation.',                             href: '/mx/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/business', label: 'Todas las presentaciones de negocios de California que preparamos' },
+    { href: '/mx/llc-12-statement-of-information', label: 'LLC-12 — Statement of Information' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La Forma LLC-1, los Articles of Organization, es el documento que se
+      presenta ante el California Secretary of State para crear legalmente una
+      limited liability company. Una vez presentada y aceptada, su LLC existe —
+      pero unos pasos más (Statement of Information, EIN, operating agreement)
+      terminan de configurarla correctamente.
+    </p>
+
+    <h2>Qué requiere formar una LLC</h2>
+    <ul>
+      <li>Un nombre de LLC único que cumpla las reglas de California.</li>
+      <li>Un agent for service of process en California (registered agent).</li>
+      <li>Estructura de administración — member-managed o manager-managed.</li>
+      <li>La LLC-12 Statement of Information dentro de 90 días, más el impuesto anual de $800 a la FTB.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>Forma LLC-1</strong> Articles of Organization para presentar ante el Secretary of State.</li>
+      <li><strong>LLC-12</strong> Statement of Information inicial.</li>
+      <li>Apoyo de <strong>EIN (SS-4)</strong> y un <strong>operating agreement</strong> según sus instrucciones.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados ni un asesor fiscal. Preparamos las presentaciones que
+      usted dirige con la información que proporciona. No le aconsejamos si una
+      LLC es la entidad correcta, no damos asesoría legal o fiscal, ni actuamos
+      como su registered agent. Para asesoría mantenemos referencias a abogados
+      y CPAs con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Corporations Code §17702.01 (Articles
+      of Organization) y §17701 y siguientes (Revised Uniform LLC Act); Revenue
+      &amp; Taxation Code §17941 (impuesto anual de $800). Solo preparación de
+      documentos — no asesoría legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-1" primaryText="Comenzar mi entrevista de LLC" />
+</BaseLayout>
