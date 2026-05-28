@@ -1,0 +1,83 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SC-133 — Memorandum of Costs After Judgment | Imverica';
+const description = 'California Licensed LDA prepares the SC-133 Memorandum of Costs so a small-claims winner can add allowed post-judgment costs (service, filing, enforcement) to the amount owed. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Memorandum of Costs (SC-133) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California small-claims Memorandum of Costs (Form SC-133), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/sc-133-memorandum-of-costs"
+  slug="/sc-133-memorandum-of-costs" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §116.610 · §685.040"
+    heading="SC-133 — Memorandum of Costs (after judgment)"
+    sub="Won your small-claims case? SC-133 lets you add the costs you spent enforcing the judgment to what the debtor owes. We prepare it from your receipts, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SC-133', text: 'Start my SC-133' }}
+  />
+
+  <CategoryTiles
+    kicker="Collecting after you win"
+    heading="Post-judgment collection forms"
+    intro="A judgment is only the start of collection. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'The case that produced the judgment.',                                              href: '/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Wage garnishment',  desc: 'Collect the judgment from the debtor’s wages.',                                     href: '/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Record a lien against the debtor’s real property.',                                 href: '/ej-001-abstract-of-judgment', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Installments',      desc: 'How a debtor can ask to pay over time.',                                            href: '/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve post-judgment papers correctly.',                                             href: '/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Enforcement fees can be waived if you qualify.',                                    href: '/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/wg-001-wage-garnishment', label: 'WG-001 — Wage garnishment' },
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form SC-133, the Memorandum of Costs After Judgment, lets a judgment
+      creditor add the additional costs of collecting — like service fees and
+      enforcement costs — and credit any payments received, so the court record
+      reflects the true balance the debtor owes.
+    </p>
+
+    <h2>When you use SC-133</h2>
+    <ul>
+      <li>After you win and incur costs enforcing the judgment (sheriff fees, recording, etc.).</li>
+      <li>To record payments the debtor has made and update the remaining balance.</li>
+      <li>Costs must be reasonable and allowed by statute, and claimed within the time limits.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>SC-133</strong> Memorandum of Costs from the receipts and amounts you provide.</li>
+      <li>Proof of service of the memorandum on the debtor.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We list the costs <em>you</em> provide, at your direction. We do
+      not decide which costs are recoverable or represent you. For advice we
+      maintain referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure §116.610
+      and §116.620 (judgment and costs); §685.040 and §685.070 (post-judgment
+      costs). Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-133" primaryText="Begin my SC-133 intake" />
+</BaseLayout>

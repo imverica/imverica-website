@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'WG-001 — Wage garnishment (Earnings Withholding Order) | Imverica';
+const description = 'California Licensed LDA prepares the WG-001 / WG-002 wage-garnishment package (Application and Earnings Withholding Order) so a judgment creditor can collect from the debtor’s paycheck through the sheriff. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Wage Garnishment (WG-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for California wage-garnishment forms (WG-001 / WG-002), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/wg-001-wage-garnishment"
+  slug="/wg-001-wage-garnishment" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §706.020 et seq."
+    heading="WG-001 — Wage garnishment"
+    sub="When a debtor will not pay a judgment, a wage garnishment collects directly from their paycheck through the sheriff. We prepare the WG-001 application and Earnings Withholding Order at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=WG-001', text: 'Start my WG-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Enforcing a judgment"
+    heading="How wage garnishment fits"
+    intro="Garnishment is one way to collect a judgment. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'The case that produced the judgment.',                                              href: '/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Add enforcement costs to what the debtor owes.',                                    href: '/sc-133-memorandum-of-costs', color: 'var(--navy)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Record a lien against the debtor’s real property.',                                 href: '/ej-001-abstract-of-judgment', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Installments',      desc: 'A debtor may ask to pay over time instead.',                                        href: '/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve enforcement papers correctly.',                                               href: '/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Sheriff fees can be waived if you qualify.',                                        href: '/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc-133-memorandum-of-costs', label: 'SC-133 — Memorandum of Costs' },
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      A wage garnishment (Earnings Withholding Order) directs a debtor’s
+      employer to withhold part of each paycheck and send it to the sheriff
+      until a judgment is paid. It is one of the most effective ways to collect
+      from a debtor who is employed but will not pay voluntarily.
+    </p>
+
+    <h2>How it works</h2>
+    <ul>
+      <li>You give the sheriff a Writ of Execution (EJ-130) and the WG-001 application; the sheriff serves the Earnings Withholding Order on the employer.</li>
+      <li>The employer withholds the allowed amount each pay period (state and federal limits protect part of the debtor’s wages).</li>
+      <li>Some income is exempt, and the debtor can claim a hardship exemption.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>WG-001</strong> Application for Earnings Withholding Order and the related WG-002 order.</li>
+      <li>The <strong>Writ of Execution (EJ-130)</strong> request the sheriff needs.</li>
+      <li>The instruction packet for the sheriff or levying officer.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the garnishment forms at your direction. We do not
+      advise on collection strategy, locate assets, or represent you, and the
+      sheriff carries out the levy. For advice we maintain referrals to
+      licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure §706.020
+      et seq. (Wage Garnishment Law); §699.510 (writ of execution); §706.050
+      (withholding limits). Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=WG-001" primaryText="Begin my WG-001 intake" />
+</BaseLayout>

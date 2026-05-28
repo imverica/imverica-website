@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'SC-104 — Proof of Service (малые иски Калифорнии) | Imverica';
+const description = 'California Licensed LDA готовит SC-104 Proof of Service, чтобы ответчика в малом иске вручили правильно и в срок — шерифом, заказным письмом или совершеннолетним, не являющимся стороной. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Proof of Service (SC-104) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для proof of service в малых исках Калифорнии (форма SC-104), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/sc-104-proof-of-service"
+  slug="/sc-104-proof-of-service" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.330 · §116.340"
+    heading="SC-104 — Proof of Service"
+    sub="Дело малого иска могут прекратить, если ответчика не вручили правильно. SC-104 документирует действительное вручение. Готовим её и правильный способ service по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-104', text: 'Начать SC-104' }}
+  />
+
+  <CategoryTiles
+    kicker="Service в структуре дела"
+    heading="Где находится SC-104"
+    intro="Service происходит после подачи и до слушания. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Иск истца',         desc: 'Иск, который вы вручаете ответчику.',                                               href: '/ru/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'SC-120 — Иск ответчика',     desc: 'Ответчик вручает встречный иск так же.',                                            href: '/ru/sc-120-defendant-claim',   color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Пошлины за service шерифа можно освободить.',                                       href: '/ru/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Расходы на service могут быть взысканы после выигрыша.',                            href: '/ru/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '✉️', title: 'Письмо-требование',           desc: 'Шаг, который многие истцы делают до подачи.',                                       href: '/ru/demand-letter',            color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'После judgment взыскать из зарплаты должника.',                                     href: '/ru/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/sc-100-plaintiff-claim', label: 'SC-100 — Иск истца' },
+    { href: '/ru/sc', label: 'Малые иски Калифорнии — полный обзор' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Proof of Service (SC-104) сообщает суду, что другая сторона надлежаще и в
+      срок получила иск. Если service отсутствует или просрочен, слушание
+      обычно откладывают, а дело прекращают — поэтому правильное вручение
+      критично.
+    </p>
+
+    <h2>Как можно вручить ответчику</h2>
+    <ul>
+      <li>Шерифом или маршалом, зарегистрированным process server или любым совершеннолетним, не являющимся стороной.</li>
+      <li>Заказным письмом (с ограниченной доставкой) через клерка суда, где разрешено.</li>
+      <li>Service должен быть завершён минимум за <strong>15 дней</strong> до слушания (20 дней, если ответчик за пределами округа).</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>SC-104</strong> Proof of Service и соответствующую серию SC-104 для используемого способа.</li>
+      <li>Инструкции по service и пакет для шерифа или process server.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма и не process server. Мы готовим формы proof of service
+      по вашему поручению; само вручение делает шериф, зарегистрированный
+      server или иной подходящий совершеннолетний. Мы не даём юридических
+      консультаций. Для консультаций — referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure §116.330
+      (дата слушания и сроки service) и §116.340 (способы service). Только
+      подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-104" primaryText="Начать анкету SC-104" />
+</BaseLayout>

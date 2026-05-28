@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Подготовка досудебного письма-требования (demand letter) | Imverica';
+const description = 'California Licensed LDA готовит чёткое профессиональное досудебное письмо-требование с суммой долга и сроком оплаты — часто решает спор до подачи малого иска. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Pre-Suit Demand Letter Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка досудебных писем-требований по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/demand-letter"
+  slug="/demand-letter" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · Досудебное требование"
+    heading="Письмо-требование — до подачи иска"
+    sub="Чёткое датированное письмо-требование часто решает спор без суда — а многие иски ожидают, что вы сначала попросите оплату. Готовим его по вашим фактам, по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?topic=Demand-Letter', text: 'Начать письмо-требование' }}
+  />
+
+  <CategoryTiles
+    kicker="Если письмо не решило вопрос"
+    heading="Что идёт после письма-требования"
+    intro="Если оплата не поступила, обычно следующий шаг — малый иск. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Иск истца',         desc: 'Подать малый иск на сумму до $12,500 (физлица).',                                   href: '/ru/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Правильно вручить ответчику после подачи.',                                         href: '/ru/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Освободиться от пошлины, если подходите по доходу.',                                href: '/ru/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Взыскать допустимые расходы после выигрыша.',                                       href: '/ru/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Взыскать judgment из зарплаты должника.',                                           href: '/ru/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Зарегистрировать залог на недвижимость должника.',                                  href: '/ru/ej-001-abstract-of-judgment', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/sc', label: 'Малые иски Калифорнии (SC-100) — обзор' },
+    { href: '/ru/sc-100-plaintiff-claim', label: 'SC-100 — Иск истца' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Письмо-требование — это письменная просьба, где указано, кто и сколько
+      должен, почему и к какому сроку должен заплатить до дальнейших действий.
+      Оно создаёт чёткую запись, часто побуждает к оплате или мировой, а для
+      некоторых исков ожидается (или требуется) до подачи — например, возврат
+      депозита арендатора или иски по чекам без покрытия.
+    </p>
+
+    <h2>Что включает хорошее письмо-требование</h2>
+    <ul>
+      <li>Сумму долга и понятное изложение фактов и дат.</li>
+      <li>Конкретный срок оплаты и способ оплаты.</li>
+      <li>Указание, что вы можете подать малый иск (или иные средства) при неурегулировании.</li>
+      <li>Копии подтверждающих документов (договоры, счета, фото).</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li>Профессиональное письмо-требование по предоставленным вами фактам и цифрам.</li>
+      <li>Организацию подтверждающих документов как приложений.</li>
+      <li>Готовый пакет малого иска, если письмо не решило спор.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы пишем письмо по вашему поручению из предоставленных
+      вами фактов. Мы не оцениваем силу вашего требования, не советуем по
+      стратегии, не ведём переговоры за вас и не гарантируем оплату. Для
+      консультаций — referral к лицензированным адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> общая практика гражданского процесса
+      Калифорнии; например, контексты Civil Code §1719 (чек без покрытия) и
+      Civil Code §1950.5 (депозит). Только подготовка документов — не
+      юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=Demand-Letter" primaryText="Начать анкету письма-требования" />
+</BaseLayout>

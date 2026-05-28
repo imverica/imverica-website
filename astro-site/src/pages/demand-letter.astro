@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'Demand letter preparation (pre-suit) | Imverica';
+const description = 'California Licensed LDA prepares a clear, professional pre-suit demand letter that states what you are owed and a deadline to pay — often resolving the dispute before a small-claims filing. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Pre-Suit Demand Letter Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparation of pre-suit demand letters at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/demand-letter"
+  slug="/demand-letter" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · Pre-suit demand"
+    heading="Demand letter — before you file"
+    sub="A clear, dated demand letter often settles a dispute without going to court — and many claims expect you to ask for payment first. We prepare it from your facts, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?topic=Demand-Letter', text: 'Start my demand letter' }}
+  />
+
+  <CategoryTiles
+    kicker="If the letter does not resolve it"
+    heading="What comes after a demand letter"
+    intro="If payment does not arrive, small claims is the usual next step. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'File a small-claims case for up to $12,500 (individuals).',                          href: '/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve the defendant correctly once you file.',                                      href: '/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Waive the filing fee if you qualify by income.',                                    href: '/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Recover allowed costs after you win a judgment.',                                   href: '/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Wage garnishment',  desc: 'Collect a judgment from the debtor’s wages.',                                       href: '/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Record a lien against the debtor’s real property.',                                 href: '/ej-001-abstract-of-judgment', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc', label: 'California small claims (SC-100) overview' },
+    { href: '/sc-100-plaintiff-claim', label: 'SC-100 — Plaintiff’s Claim' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      A demand letter is a written request that states who owes what, why, and
+      by when they must pay before you take further action. It creates a clear
+      record, often prompts payment or settlement, and for some claims is
+      expected (or required) before filing — for example, returning a tenant’s
+      security deposit or bounced-check claims.
+    </p>
+
+    <h2>What a good demand letter includes</h2>
+    <ul>
+      <li>The amount owed and a plain explanation of the facts and dates.</li>
+      <li>A specific deadline to pay and how to pay.</li>
+      <li>A statement that you may pursue small claims (or other remedies) if it is not resolved.</li>
+      <li>Copies of supporting documents (contracts, invoices, photos).</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li>A professional demand letter written from the facts and figures you provide.</li>
+      <li>Organization of your supporting documents as attachments.</li>
+      <li>A matching small-claims packet if the letter does not resolve the dispute.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We write the letter at your direction from the facts you give us.
+      We do not assess the strength of your claim, advise on legal strategy,
+      negotiate for you, or guarantee payment. For advice we maintain referrals
+      to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> general California civil-procedure practice;
+      e.g., Civil Code §1719 (dishonored-check demand) and Civil Code §1950.5
+      (security-deposit) contexts. Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=Demand-Letter" primaryText="Begin my demand-letter intake" />
+</BaseLayout>

@@ -1,0 +1,83 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SC-120 — California small-claims Defendant’s Claim | Imverica';
+const description = 'California Licensed LDA prepares the SC-120 Defendant’s Claim so a defendant in a small-claims case can respond and counter-sue the plaintiff in the same hearing. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Defendant Claim (SC-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California small-claims Defendant’s Claim (Form SC-120), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/sc-120-defendant-claim"
+  slug="/sc-120-defendant-claim" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §116.360"
+    heading="SC-120 — Defendant’s Claim (counter-sue)"
+    sub="Being sued in small claims? The SC-120 lets you bring your own claim against the plaintiff to be heard at the same time. We prepare it accurately and on time, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SC-120', text: 'Start my SC-120' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms a defendant may use"
+    heading="What responding involves"
+    intro="A defendant can answer, counter-sue, and prepare for the hearing. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'The claim filed against you — what you are responding to.',                          href: '/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve your SC-120 on the plaintiff before the hearing.',                            href: '/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Waive the filing fee for your claim if you qualify.',                               href: '/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '✉️', title: 'Demand letter',             desc: 'A demand of your own can support a counterclaim.',                                  href: '/demand-letter',            color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Recover allowed costs if you prevail.',                                             href: '/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '📅', title: 'SC-140 — Installments',      desc: 'Ask to pay a judgment over time if you lose.',                                      href: '/sc-140-installments',      color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc-100-plaintiff-claim', label: 'SC-100 — Plaintiff’s Claim' },
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form SC-120, the Defendant’s Claim, lets a defendant who is being sued in
+      small claims file their own related claim against the plaintiff so both
+      are decided at the same hearing — saving a separate case.
+    </p>
+
+    <h2>Timing and limits</h2>
+    <ul>
+      <li>File and serve the SC-120 before the hearing — generally at least 5 days before (more if you were served fewer than 10 days before).</li>
+      <li>The same dollar limits apply ($12,500 for individuals; $6,250 for entities).</li>
+      <li>Your claim must be related to or arise from the plaintiff’s claim.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>SC-120</strong> Defendant’s Claim from the facts you provide.</li>
+      <li><strong>SC-104</strong> proof of service on the plaintiff.</li>
+      <li><strong>FW-001</strong> fee-waiver request when you qualify.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the claim at your direction. We do not advise whether to
+      counter-sue, assess your case, or appear with you. For advice we maintain
+      referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure §116.360
+      (defendant’s claim) and §§116.110–116.950 (Small Claims Act). Document
+      preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-120" primaryText="Begin my SC-120 intake" />
+</BaseLayout>

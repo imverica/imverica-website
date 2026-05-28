@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'EJ-001 — Abstract of Judgment (real-property lien) | Imverica';
+const description = 'California Licensed LDA prepares the EJ-001 Abstract of Judgment so a judgment creditor can record a lien against the debtor’s real property in any California county. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Abstract of Judgment (EJ-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California Abstract of Judgment (Form EJ-001), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ej-001-abstract-of-judgment"
+  slug="/ej-001-abstract-of-judgment" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §697.310 · §674"
+    heading="EJ-001 — Abstract of Judgment"
+    sub="Recording an Abstract of Judgment places a lien on the debtor’s real property in that county — so if they sell or refinance, your judgment gets paid. We prepare the EJ-001 at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=EJ-001', text: 'Start my EJ-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Enforcing a judgment"
+    heading="How an abstract fits"
+    intro="A property lien is a patient, powerful collection tool. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'The case that produced the judgment.',                                              href: '/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Wage garnishment',  desc: 'Collect from the debtor’s wages in parallel.',                                      href: '/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Add recording and enforcement costs.',                                              href: '/sc-133-memorandum-of-costs', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Installments',      desc: 'A debtor may ask to pay over time.',                                                href: '/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve post-judgment papers correctly.',                                             href: '/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Recording / enforcement fees can be waived.',                                       href: '/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/wg-001-wage-garnishment', label: 'WG-001 — Wage garnishment' },
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form EJ-001, the Abstract of Judgment, is recorded with a county
+      recorder to create a lien on any real property the debtor owns (or later
+      buys) in that county. The lien generally must be paid before the debtor
+      can sell or refinance, which often produces payment without further
+      effort.
+    </p>
+
+    <h2>How it works</h2>
+    <ul>
+      <li>The court issues the certified EJ-001; you record it with the recorder in each county where the debtor owns or may own property.</li>
+      <li>The lien attaches to real property and lasts for the life of the judgment (renewable).</li>
+      <li>Recording in multiple counties extends the reach of the lien.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>EJ-001</strong> Abstract of Judgment from your judgment and debtor details.</li>
+      <li>Recording instructions for the county recorder.</li>
+      <li>A companion <strong>WG-001</strong> wage-garnishment packet if you also want to garnish wages.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the abstract at your direction. We do not search for the
+      debtor’s property, advise on collection strategy, or represent you. For
+      advice we maintain referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure §697.310
+      and §674 (abstract of judgment and real-property liens); §683.020
+      (duration of judgment). Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EJ-001" primaryText="Begin my EJ-001 intake" />
+</BaseLayout>

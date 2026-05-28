@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'SC-120 — встречный иск ответчика (малые иски Калифорнии) | Imverica';
+const description = 'California Licensed LDA готовит SC-120 Defendant’s Claim, чтобы ответчик в деле малого иска ответил и подал встречный иск к истцу на том же слушании. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Defendant Claim (SC-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для встречного иска ответчика в малых исках Калифорнии (форма SC-120), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/sc-120-defendant-claim"
+  slug="/sc-120-defendant-claim" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.360"
+    heading="SC-120 — встречный иск ответчика"
+    sub="Вас судят в малых исках? SC-120 позволяет подать собственный иск к истцу, чтобы его рассмотрели на том же слушании. Готовим аккуратно и в срок по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-120', text: 'Начать SC-120' }}
+  />
+
+  <CategoryTiles
+    kicker="Формы для ответчика"
+    heading="Что включает ответ"
+    intro="Ответчик может ответить, подать встречный иск и подготовиться к слушанию. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Иск истца',         desc: 'Иск, поданный против вас — то, на что вы отвечаете.',                               href: '/ru/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Вручить ваш SC-120 истцу до слушания.',                                             href: '/ru/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Освободиться от пошлины за ваш иск, если подходите.',                               href: '/ru/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '✉️', title: 'Письмо-требование',           desc: 'Собственное требование может поддержать встречный иск.',                            href: '/ru/demand-letter',            color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Взыскать допустимые расходы при выигрыше.',                                         href: '/ru/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '📅', title: 'SC-140 — Рассрочка',         desc: 'Просить оплатить judgment частями при проигрыше.',                                  href: '/ru/sc-140-installments',      color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/sc-100-plaintiff-claim', label: 'SC-100 — Иск истца' },
+    { href: '/ru/sc', label: 'Малые иски Калифорнии — полный обзор' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-120, Defendant’s Claim, позволяет ответчику, которого судят в
+      малых исках, подать собственный связанный иск к истцу, чтобы оба
+      рассмотрели на одном слушании — без отдельного дела.
+    </p>
+
+    <h2>Сроки и лимиты</h2>
+    <ul>
+      <li>Подайте и вручите SC-120 до слушания — обычно минимум за 5 дней (больше, если вам вручили менее чем за 10 дней).</li>
+      <li>Действуют те же лимиты ($12,500 для физлиц; $6,250 для организаций).</li>
+      <li>Ваш иск должен быть связан с иском истца или вытекать из него.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>SC-120</strong> Defendant’s Claim из предоставленных вами фактов.</li>
+      <li><strong>SC-104</strong> proof of service истцу.</li>
+      <li><strong>FW-001</strong> fee waiver при квалификации.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы готовим иск по вашему поручению. Мы не советуем,
+      подавать ли встречный иск, не оцениваем дело и не присутствуем с вами.
+      Для консультаций — referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure §116.360
+      (defendant’s claim) и §§116.110–116.950 (Small Claims Act). Только
+      подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-120" primaryText="Начать анкету SC-120" />
+</BaseLayout>

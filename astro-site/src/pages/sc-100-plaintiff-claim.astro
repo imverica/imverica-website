@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SC-100 — California small-claims Plaintiff’s Claim | Imverica';
+const description = 'California Licensed LDA prepares the SC-100 Plaintiff’s Claim to sue for up to $12,500 (individuals) in California small claims — with proof of service (SC-104) and fee waiver (FW-001). Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Plaintiff Claim (SC-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California small-claims Plaintiff’s Claim (Form SC-100), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/sc-100-plaintiff-claim"
+  slug="/sc-100-plaintiff-claim" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §116.220 · §116.221"
+    heading="SC-100 — Plaintiff’s Claim (small claims)"
+    sub="Small claims is California’s fast, low-cost “people’s court.” The SC-100 starts your case for up to $12,500 (individuals). We prepare it accurately at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Start my SC-100' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms in a small-claims case"
+    heading="What a small-claims filing involves"
+    intro="A claim moves from filing to service to collection. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '✉️', title: 'Demand letter',             desc: 'A pre-suit demand often settles the dispute first.',                                href: '/demand-letter',            color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve the defendant 15–20 days before the hearing.',                                href: '/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Defendant claim',  desc: 'How a defendant answers or counter-sues.',                                          href: '/sc-120-defendant-claim',   color: 'var(--sage)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Waive the filing fee if you qualify.',                                              href: '/fw-001-fee-waiver',        color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Recover allowed costs after you win.',                                              href: '/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Collect the judgment from wages.',                                                  href: '/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/sc-120-defendant-claim', label: 'SC-120 — Defendant’s Claim' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form SC-100, the Plaintiff’s Claim and ORDER, opens a small-claims case.
+      Small claims uses a simplified procedure where the parties represent
+      themselves; lawyers may not represent a party at the first hearing, and
+      filing fees are low.
+    </p>
+
+    <h2>Limits and where to file</h2>
+    <ul>
+      <li>An individual can sue for up to <strong>$12,500</strong>; corporations and other entities are limited to <strong>$6,250</strong>.</li>
+      <li>A person cannot file more than two claims over $2,500 anywhere in the state in one calendar year.</li>
+      <li>File in the proper venue — usually where the defendant lives, where the contract was made or performed, or where the harm happened.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>SC-100</strong> Plaintiff’s Claim, and <strong>SC-100A</strong> for additional parties.</li>
+      <li><strong>SC-104</strong> proof of service and the right service method.</li>
+      <li><strong>FW-001</strong> fee-waiver request when you qualify.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the claim at your direction from the facts you provide.
+      We do not assess whether you will win, advise on strategy, or appear with
+      you. For advice we maintain referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure
+      §§116.110–116.950 (Small Claims Act); §116.220–116.221 (jurisdiction and
+      limits); §116.231 (two-claim limit); §116.530 (no attorney
+      representation at the hearing). Document preparation only — not legal
+      advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Begin my SC-100 intake" />
+</BaseLayout>

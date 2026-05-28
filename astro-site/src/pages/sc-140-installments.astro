@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SC-140 — Request to Pay Judgment in Installments | Imverica';
+const description = 'California Licensed LDA prepares the SC-140 Request to Pay Judgment in Installments so a small-claims debtor can ask the court to set up affordable monthly payments and pause enforcement. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Installment Payment Request (SC-140) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California small-claims Request to Pay Judgment in Installments (Form SC-140), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/sc-140-installments"
+  slug="/sc-140-installments" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §116.620 · §116.880"
+    heading="SC-140 — Pay a judgment in installments"
+    sub="Lost a small-claims case and can’t pay all at once? SC-140 asks the court to approve affordable monthly payments — which can pause wage garnishment and other enforcement. We prepare it at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SC-140', text: 'Start my SC-140' }}
+  />
+
+  <CategoryTiles
+    kicker="If a judgment is entered against you"
+    heading="Options for a small-claims debtor"
+    intro="You have ways to respond after a judgment. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '🛡️', title: 'SC-120 — Defendant claim',  desc: 'Bring your own claim if the case is still open.',                                   href: '/sc-120-defendant-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'A financial statement supports an installment request.',                           href: '/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Court fees can be waived if you qualify.',                                          href: '/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'Understand the claim that led to the judgment.',                                    href: '/sc-100-plaintiff-claim',   color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'What a creditor may use if you do not pay.',                                        href: '/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Serve your request on the other party.',                                            href: '/sc-104-proof-of-service',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/fw-001-fee-waiver', label: 'FW-001 — Fee waiver' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form SC-140, the Request to Pay Judgment in Installments, asks the court
+      to let you pay what you owe in scheduled monthly amounts instead of all
+      at once. An approved installment plan can also stop wage garnishment and
+      bank levies as long as you keep up the payments.
+    </p>
+
+    <h2>When you use SC-140</h2>
+    <ul>
+      <li>A judgment was entered against you and paying in full is not realistic.</li>
+      <li>You can propose a monthly amount you can actually maintain.</li>
+      <li>You provide a brief financial picture to support the request.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>SC-140</strong> with your proposed payment amount and schedule.</li>
+      <li>A supporting financial statement and proof of service on the creditor.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the request from the figures you provide, at your
+      direction. We do not negotiate with the creditor, advise on what amount
+      to offer, or represent you — the court decides. For advice we maintain
+      referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure §116.620
+      and §116.880 (installment payments of small-claims judgments). Document
+      preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-140" primaryText="Begin my SC-140 intake" />
+</BaseLayout>

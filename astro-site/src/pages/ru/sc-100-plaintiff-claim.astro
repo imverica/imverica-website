@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'SC-100 — иск истца в малых исках Калифорнии | Imverica';
+const description = 'California Licensed LDA готовит SC-100 Plaintiff’s Claim для иска до $12,500 (физлица) в малых исках Калифорнии — с proof of service (SC-104) и fee waiver (FW-001). По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Plaintiff Claim (SC-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для иска истца в малых исках Калифорнии (форма SC-100), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/sc-100-plaintiff-claim"
+  slug="/sc-100-plaintiff-claim" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.220 · §116.221"
+    heading="SC-100 — иск истца (малые иски)"
+    sub="Малые иски — это быстрый и недорогой «народный суд» Калифорнии. SC-100 начинает дело на сумму до $12,500 (физлица). Готовим аккуратно по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Начать SC-100' }}
+  />
+
+  <CategoryTiles
+    kicker="Формы в деле малого иска"
+    heading="Что включает подача малого иска"
+    intro="Дело идёт от подачи к service и взысканию. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '✉️', title: 'Письмо-требование',           desc: 'Досудебное требование часто решает спор заранее.',                                  href: '/ru/demand-letter',            color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Вручить ответчику за 15–20 дней до слушания.',                                       href: '/ru/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Иск ответчика',     desc: 'Как ответчик отвечает или подаёт встречный иск.',                                   href: '/ru/sc-120-defendant-claim',   color: 'var(--sage)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Освободиться от пошлины, если подходите.',                                          href: '/ru/fw-001-fee-waiver',        color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Взыскать допустимые расходы после выигрыша.',                                       href: '/ru/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Взыскать judgment из зарплаты.',                                                    href: '/ru/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/sc', label: 'Малые иски Калифорнии — полный обзор' },
+    { href: '/ru/sc-120-defendant-claim', label: 'SC-120 — Иск ответчика' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-100, Plaintiff’s Claim and ORDER, открывает дело малого иска.
+      Малые иски используют упрощённую процедуру, где стороны представляют себя
+      сами; адвокаты не могут представлять сторону на первом слушании, а
+      пошлины невелики.
+    </p>
+
+    <h2>Лимиты и где подавать</h2>
+    <ul>
+      <li>Физлицо может судиться на сумму до <strong>$12,500</strong>; корпорации и иные организации ограничены <strong>$6,250</strong>.</li>
+      <li>Лицо не может подать более двух исков свыше $2,500 по всему штату за один календарный год.</li>
+      <li>Подавайте в надлежащий venue — обычно по месту жительства ответчика, месту заключения/исполнения договора или месту причинения вреда.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>SC-100</strong> Plaintiff’s Claim и <strong>SC-100A</strong> для дополнительных сторон.</li>
+      <li><strong>SC-104</strong> proof of service и правильный способ вручения.</li>
+      <li><strong>FW-001</strong> fee waiver при квалификации.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы готовим иск по вашему поручению из предоставленных
+      фактов. Мы не оцениваем, выиграете ли вы, не советуем по стратегии и не
+      присутствуем с вами. Для консультаций — referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure
+      §§116.110–116.950 (Small Claims Act); §116.220–116.221 (юрисдикция и
+      лимиты); §116.231 (лимит двух исков); §116.530 (без адвоката на
+      слушании). Только подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Начать анкету SC-100" />
+</BaseLayout>

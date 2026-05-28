@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SC-104 — Proof of Service (California small claims) | Imverica';
+const description = 'California Licensed LDA prepares the SC-104 Proof of Service so a small-claims defendant is served correctly and on time — by sheriff, certified mail, or an adult who is not a party. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Proof of Service (SC-104) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California small-claims Proof of Service (Form SC-104), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/sc-104-proof-of-service"
+  slug="/sc-104-proof-of-service" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · CCP §116.330 · §116.340"
+    heading="SC-104 — Proof of Service"
+    sub="A small-claims case can be dismissed if the defendant is not served correctly. SC-104 documents valid service. We prepare it and the right service method, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SC-104', text: 'Start my SC-104' }}
+  />
+
+  <CategoryTiles
+    kicker="Service fits into the case"
+    heading="Where SC-104 fits"
+    intro="Service happens after you file and before the hearing. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Plaintiff claim',  desc: 'The claim you are serving on the defendant.',                                        href: '/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'SC-120 — Defendant claim',  desc: 'A defendant serves their counterclaim the same way.',                               href: '/sc-120-defendant-claim',   color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Sheriff service fees can be waived if you qualify.',                                href: '/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Service costs may be recoverable after you win.',                                   href: '/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '✉️', title: 'Demand letter',             desc: 'The step many plaintiffs take before filing.',                                      href: '/demand-letter',            color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'After judgment, collect from the debtor’s wages.',                                  href: '/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc-100-plaintiff-claim', label: 'SC-100 — Plaintiff’s Claim' },
+    { href: '/sc', label: 'California small claims — full overview' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Proof of Service (SC-104) tells the court that the other side received
+      the claim properly and in time. If service is missing or late, the
+      hearing is usually postponed or the case dismissed — so correct service
+      is essential.
+    </p>
+
+    <h2>How a defendant can be served</h2>
+    <ul>
+      <li>By the sheriff or marshal, by a registered process server, or by any adult who is not a party.</li>
+      <li>By certified mail (with restricted delivery) handled by the court clerk, where allowed.</li>
+      <li>Service must be completed at least <strong>15 days</strong> before the hearing (20 days if the defendant is outside the county).</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>SC-104</strong> Proof of Service and the matching SC-104 series for the method used.</li>
+      <li>Service instructions and the packet for the sheriff or process server.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm, and not a process server. We prepare the proof-of-service forms at
+      your direction; the actual service is done by the sheriff, a registered
+      server, or another eligible adult. We do not give legal advice. For
+      advice we maintain referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Code of Civil Procedure §116.330
+      (hearing date and service timing) and §116.340 (methods of service).
+      Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-104" primaryText="Begin my SC-104 intake" />
+</BaseLayout>
