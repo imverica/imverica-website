@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'EJ-001 — Abstract of Judgment (залог на недвижимость) | Imverica';
+const description = 'California Licensed LDA готовит EJ-001 Abstract of Judgment, чтобы взыскатель зарегистрировал залог на недвижимость должника в любом округе Калифорнии. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Abstract of Judgment (EJ-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для Abstract of Judgment Калифорнии (форма EJ-001), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/ej-001-abstract-of-judgment"
+  slug="/ej-001-abstract-of-judgment" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §697.310 · §674"
+    heading="EJ-001 — Abstract of Judgment"
+    sub="Регистрация Abstract of Judgment ставит залог на недвижимость должника в этом округе — поэтому при продаже или рефинансировании ваш judgment будет оплачен. Готовим EJ-001 по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=EJ-001', text: 'Начать EJ-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Исполнение judgment"
+    heading="Как abstract вписывается"
+    intro="Залог на недвижимость — терпеливый и мощный инструмент взыскания. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Иск истца',         desc: 'Дело, по которому вынесен judgment.',                                               href: '/ru/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Параллельно взыскать из зарплаты должника.',                                        href: '/ru/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Добавить расходы на регистрацию и исполнение.',                                     href: '/ru/sc-133-memorandum-of-costs', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Рассрочка',         desc: 'Должник может просить оплату частями.',                                             href: '/ru/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Правильно вручить постсудебные документы.',                                         href: '/ru/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Сборы за регистрацию/исполнение можно освободить.',                                 href: '/ru/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/wg-001-wage-garnishment', label: 'WG-001 — Wage garnishment' },
+    { href: '/ru/sc', label: 'Малые иски Калифорнии — полный обзор' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EJ-001, Abstract of Judgment, регистрируется у county recorder и
+      создаёт залог на любую недвижимость, которой должник владеет (или купит
+      позже) в этом округе. Залог обычно должен быть погашен до продажи или
+      рефинансирования, что часто приводит к оплате без дополнительных усилий.
+    </p>
+
+    <h2>Как это работает</h2>
+    <ul>
+      <li>Суд выдаёт заверенную EJ-001; вы регистрируете её у recorder в каждом округе, где у должника есть или может быть недвижимость.</li>
+      <li>Залог привязывается к недвижимости и действует весь срок judgment (с возможностью продления).</li>
+      <li>Регистрация в нескольких округах расширяет действие залога.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>EJ-001</strong> Abstract of Judgment по данным judgment и должника.</li>
+      <li>Инструкции по регистрации для county recorder.</li>
+      <li>Сопутствующий пакет <strong>WG-001</strong>, если вы также хотите garnishment зарплаты.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы готовим abstract по вашему поручению. Мы не ищем
+      недвижимость должника, не советуем по стратегии взыскания и не
+      представляем вас. Для консультаций — referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure §697.310 и
+      §674 (abstract of judgment и залоги на недвижимость); §683.020 (срок
+      judgment). Только подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EJ-001" primaryText="Начать анкету EJ-001" />
+</BaseLayout>

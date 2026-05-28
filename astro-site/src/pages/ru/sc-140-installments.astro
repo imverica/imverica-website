@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'SC-140 — оплата judgment в рассрочку | Imverica';
+const description = 'California Licensed LDA готовит SC-140 Request to Pay Judgment in Installments, чтобы должник по малому иску попросил суд установить посильные ежемесячные платежи и приостановить взыскание. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Installment Payment Request (SC-140) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для просьбы об оплате judgment частями в малых исках Калифорнии (форма SC-140), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/sc-140-installments"
+  slug="/sc-140-installments" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.620 · §116.880"
+    heading="SC-140 — оплата judgment в рассрочку"
+    sub="Проиграли малый иск и не можете заплатить сразу? SC-140 просит суд одобрить посильные ежемесячные платежи — что может приостановить garnishment и иное взыскание. Готовим по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-140', text: 'Начать SC-140' }}
+  />
+
+  <CategoryTiles
+    kicker="Если judgment вынесен против вас"
+    heading="Варианты для должника по малому иску"
+    intro="После judgment у вас есть способы отреагировать. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '🛡️', title: 'SC-120 — Иск ответчика',     desc: 'Подать собственный иск, пока дело открыто.',                                        href: '/ru/sc-120-defendant-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Доходы и расходы',   desc: 'Финансовая справка поддерживает просьбу о рассрочке.',                              href: '/ru/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Судебные пошлины можно освободить, если подходите.',                                href: '/ru/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '⚖️', title: 'SC-100 — Иск истца',         desc: 'Понять иск, по которому вынесен judgment.',                                         href: '/ru/sc-100-plaintiff-claim',   color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Что может применить взыскатель, если не платить.',                                  href: '/ru/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Вручить вашу просьбу другой стороне.',                                              href: '/ru/sc-104-proof-of-service',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/sc', label: 'Малые иски Калифорнии — полный обзор' },
+    { href: '/ru/fw-001-fee-waiver', label: 'FW-001 — Fee waiver' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-140, Request to Pay Judgment in Installments, просит суд
+      разрешить платить долг запланированными ежемесячными суммами вместо
+      единовременной оплаты. Одобренный план рассрочки также может остановить
+      garnishment зарплаты и аресты счетов, пока вы соблюдаете платежи.
+    </p>
+
+    <h2>Когда используют SC-140</h2>
+    <ul>
+      <li>Против вас вынесен judgment, и полная оплата нереальна.</li>
+      <li>Вы можете предложить ежемесячную сумму, которую реально выдержите.</li>
+      <li>Вы предоставляете краткую финансовую картину в поддержку просьбы.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>SC-140</strong> с предлагаемой суммой и графиком платежей.</li>
+      <li>Подтверждающую финансовую справку и proof of service взыскателю.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы готовим просьбу по предоставленным вами цифрам, по
+      вашему поручению. Мы не ведём переговоры с взыскателем, не советуем,
+      какую сумму предложить, и не представляем вас — решает суд. Для
+      консультаций — referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Code of Civil Procedure §116.620 и
+      §116.880 (оплата judgment малого иска частями). Только подготовка
+      документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-140" primaryText="Начать анкету SC-140" />
+</BaseLayout>

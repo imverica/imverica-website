@@ -45,10 +45,10 @@ const URLS: SitemapEntry[] = [
   { slug: '/sc-100-plaintiff-claim', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru'] },
   { slug: '/sc-120-defendant-claim', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru'] },
   { slug: '/sc-104-proof-of-service', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru'] },
-  { slug: '/sc-133-memorandum-of-costs', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/wg-001-wage-garnishment', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/ej-001-abstract-of-judgment', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/sc-140-installments', priority: 0.7, changefreq: 'monthly', translatedLocales: [] }
+  { slug: '/sc-133-memorandum-of-costs', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru'] },
+  { slug: '/wg-001-wage-garnishment', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru'] },
+  { slug: '/ej-001-abstract-of-judgment', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru'] },
+  { slug: '/sc-140-installments', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru'] }
 ];
 
 function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {
