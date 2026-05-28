@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FL-120 — Response to a California divorce | Imverica';
+const description = 'California Licensed LDA prepares the FL-120 Response so a spouse who was served with a divorce or legal-separation petition can answer on time — with the required FL-150 and FL-160 disclosures. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Divorce Response (FL-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the response to a California dissolution petition (Form FL-120), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fl-120-divorce-response"
+  slug="/fl-120-divorce-response" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · Fam. Code §2020"
+    heading="FL-120 — Response to a divorce petition"
+    sub="Served with divorce papers? The FL-120 Response is how you answer and protect your position. We prepare it accurately and on time, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=FL-120', text: 'Start my Response' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms a respondent usually files"
+    heading="What responding involves"
+    intro="A response is filed with the same financial disclosures as the petition. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petition',          desc: 'The opening petition you were served with — what you are responding to.',          href: '/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'Your financial disclosure for support and judgment.',                               href: '/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🏠', title: 'FL-160 — Property',           desc: 'Your declaration of community and separate property and debts.',                     href: '/fl-160-property-declaration',      color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Ask for temporary custody, support, or other orders.',                              href: '/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Child-custody jurisdiction declaration when there are minor children.',             href: '/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Request to waive the response filing fee if you qualify.',                          href: '/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl-100-divorce', label: 'FL-100 — Divorce petition' },
+    { href: '/fl', label: 'All California family-law forms we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FL-120 is the Response — the answer filed by the spouse or partner
+      who was served with a Petition (FL-100). Filing a response lets you
+      state your own positions on property, support, and custody instead of
+      letting the case proceed by default.
+    </p>
+
+    <h2>Timing matters</h2>
+    <ul>
+      <li>You generally have <strong>30 days</strong> from the date you were served to file a response.</li>
+      <li>If you miss the deadline, the other spouse can request a default and the case may proceed without your input.</li>
+      <li>A response is filed with your own preliminary declarations of disclosure (FL-150 and FL-160 / FL-142).</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FL-120</strong> Response, completed from your answers.</li>
+      <li>Your <strong>FL-150</strong> income-and-expense and <strong>FL-160 / FL-142</strong> property disclosures.</li>
+      <li><strong>Proof of service</strong> of your response on the other party.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the forms you choose, at your direction, and do not give
+      legal advice, take positions for you, or represent you in court. For
+      advice we maintain referrals to licensed family-law attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Family Code §2020 and §§2104-2105
+      (disclosures); California Rules of Court, title 5. Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-120" primaryText="Begin my Response intake" />
+</BaseLayout>

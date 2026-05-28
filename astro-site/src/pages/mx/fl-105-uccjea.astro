@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FL-105 (UCCJEA) — declaración de jurisdicción de custodia | Imverica';
+const description = 'California Licensed LDA prepara la declaración FL-105 / GC-120 UCCJEA que indica dónde han vivido los hijos, requerida en casos de California que involucran custodia o visitas. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'UCCJEA Declaration (FL-105) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para la declaración UCCJEA de California (Formulario FL-105 / GC-120), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fl-105-uccjea"
+  slug="/fl-105-uccjea" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · UCCJEA · Fam. Code §3400+"
+    heading="FL-105 (UCCJEA) — declaración de jurisdicción de custodia"
+    sub="Cuando un caso de California involucra hijos menores, la FL-105 le dice a la corte dónde han vivido los hijos para confirmar que tiene autoridad para decidir la custodia. La preparamos con sus fechas y direcciones, bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=FL-105', text: 'Comenzar mi FL-105' }}
+  />
+
+  <CategoryTiles
+    kicker="Casos que necesitan la FL-105"
+    heading="Dónde se presenta la declaración UCCJEA"
+    intro="La FL-105 se adjunta a cualquier caso de California que decida custodia o visitas. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petición',          desc: 'Divorcio o separación legal con hijos menores.',                                    href: '/mx/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Solicitudes de custodia o visitas durante o después del caso.',                     href: '/mx/fl-300-request-for-order',         color: 'var(--navy)' },
+      { icon: '📄', title: 'FL-120 — Respuesta',          desc: 'El padre que responde presenta su propia información UCCJEA.',                       href: '/mx/fl-120-divorce-response',          color: 'var(--sage)' },
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'Se presenta con casos de custodia que también fijan manutención.',                  href: '/mx/fl-150-income-expense-declaration', color: 'var(--gold)' },
+      { icon: '🛡️', title: 'DV-100 — Orden de restricción', desc: 'Casos de violencia doméstica que incluyen decisiones de custodia.',                href: '/mx/california-restraining-orders',    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención de tarifas', desc: 'Solicitud para exonerar tarifas de la corte si califica.',                          href: '/mx/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl-100-divorce', label: 'FL-100 — Petición de divorcio' },
+    { href: '/mx/fl', label: 'Todos los formularios de derecho familiar de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario FL-105 es la declaración bajo la Uniform Child Custody
+      Jurisdiction and Enforcement Act (UCCJEA). Enumera cada lugar donde ha
+      vivido cada hijo en los últimos cinco años y cualquier otro caso de
+      custodia, para que una corte de California confirme que es el estado
+      adecuado para decidir la custodia y evitar órdenes contradictorias de
+      distintos estados.
+    </p>
+
+    <h2>Cuándo se requiere la FL-105</h2>
+    <ul>
+      <li>Cualquier caso de divorcio, filiación, tutela o violencia doméstica que pida a la corte decidir custodia o visitas de un menor.</li>
+      <li>Se presenta al inicio del caso y se actualiza si cambia el historial de residencia de los hijos.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>FL-105 / GC-120</strong> completada con el historial de residencia e información del caso que usted proporciona.</li>
+      <li>Páginas de anexo cuando un hijo ha vivido en varias direcciones.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Registramos las fechas, direcciones y detalles del
+      caso que <em>usted</em> proporciona, bajo su dirección. No le aconsejamos
+      qué estado tiene jurisdicción ni lo representamos. Para asesoría
+      mantenemos referencias a abogados familiares con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Family Code §3400 y siguientes
+      (UCCJEA); California Rules of Court, título 5. Solo preparación de
+      documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-105" primaryText="Comenzar mi entrevista FL-105" />
+</BaseLayout>

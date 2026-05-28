@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FL-160 — Declaración de Propiedad (comunitaria y separada) | Imverica';
+const description = 'California Licensed LDA prepara la FL-160 Property Declaration con los bienes y deudas comunitarios y separados para un divorcio en California, junto con la FL-142 Schedule of Assets and Debts. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Property Declaration (FL-160) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para la Property Declaration de California (Formulario FL-160), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fl-160-property-declaration"
+  slug="/fl-160-property-declaration" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §§2104-2105"
+    heading="FL-160 — Declaración de Propiedad"
+    sub="La FL-160 indica qué es bien comunitario y qué es separado, más las deudas, para que la corte tenga el panorama completo de la sentencia. La preparamos a partir de su inventario, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=FL-160', text: 'Comenzar mi FL-160' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios de declaración que van juntos"
+    heading="Con qué trabaja la FL-160"
+    intro="La declaración de propiedad es parte del paquete de divorcio. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petición',          desc: 'La petición inicial de divorcio.',                                                  href: '/mx/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '📄', title: 'FL-120 — Respuesta',          desc: 'La respuesta y declaraciones del otro cónyuge.',                                    href: '/mx/fl-120-divorce-response',          color: 'var(--navy)' },
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'La declaración financiera complementaria para manutención.',                        href: '/mx/fl-150-income-expense-declaration', color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Órdenes temporales mientras el caso sigue abierto.',                                href: '/mx/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Declaración de jurisdicción de custodia cuando hay hijos.',                          href: '/mx/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención de tarifas', desc: 'Solicitud para exonerar tarifas de la corte si califica.',                          href: '/mx/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl-100-divorce', label: 'FL-100 — Petición de divorcio' },
+    { href: '/mx/fl', label: 'Todos los formularios de derecho familiar de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario FL-160 es la Property Declaration. Identifica cada activo y
+      deuda como bien comunitario o separado e indica valores, para que la
+      corte pueda confirmar una división completa y justa en la sentencia.
+      Suele prepararse junto con la FL-142 Schedule of Assets and Debts.
+    </p>
+
+    <h2>Cuándo presenta la FL-160</h2>
+    <ul>
+      <li>Como parte de las declaraciones preliminares y finales en un divorcio o separación legal.</li>
+      <li>Cuando las partes quieren un registro claro y detallado de bienes y deudas adjunto a la sentencia.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>FL-160</strong> Property Declaration completada con su inventario.</li>
+      <li>La <strong>FL-142</strong> Schedule of Assets and Debts complementaria cuando se necesite.</li>
+      <li>Organización de los estados de cuenta y títulos que usted proporcione.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Registramos los bienes y la caracterización que
+      <em>usted</em> proporciona, bajo su dirección. No le aconsejamos si un
+      activo es comunitario o separado, no valoramos bienes en disputa ni lo
+      representamos. Para asesoría mantenemos referencias a abogados con
+      licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Family Code §§2104-2105 (declaraciones)
+      y §§760, 770 (bienes comunitarios y separados); California Rules of Court,
+      título 5. Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-160" primaryText="Comenzar mi entrevista FL-160" />
+</BaseLayout>

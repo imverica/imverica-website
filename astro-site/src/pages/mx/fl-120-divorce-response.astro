@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FL-120 — Respuesta a un divorcio en California | Imverica';
+const description = 'California Licensed LDA prepara la Respuesta FL-120 para que el cónyuge notificado con una petición de divorcio o separación legal responda a tiempo — con las declaraciones FL-150 y FL-160 requeridas. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Divorce Response (FL-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para la respuesta a una petición de divorcio en California (Formulario FL-120), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fl-120-divorce-response"
+  slug="/fl-120-divorce-response" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §2020"
+    heading="FL-120 — Respuesta a una petición de divorcio"
+    sub="¿Le entregaron papeles de divorcio? La Respuesta FL-120 es cómo contesta y protege su posición. La preparamos con precisión y a tiempo, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=FL-120', text: 'Comenzar mi Respuesta' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios que suele presentar quien responde"
+    heading="Qué implica responder"
+    intro="La respuesta se presenta con las mismas declaraciones financieras que la petición. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petición',          desc: 'La petición que le entregaron — a lo que usted responde.',                          href: '/mx/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'Su declaración financiera para manutención y sentencia.',                           href: '/mx/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🏠', title: 'FL-160 — Propiedad',          desc: 'Su declaración de bienes y deudas comunitarios y separados.',                       href: '/mx/fl-160-property-declaration',      color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Pedir custodia, manutención u otras órdenes temporales.',                           href: '/mx/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Declaración de jurisdicción de custodia cuando hay hijos menores.',                  href: '/mx/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención de tarifas', desc: 'Solicitud para exonerar la tarifa de respuesta si califica.',                       href: '/mx/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl-100-divorce', label: 'FL-100 — Petición de divorcio' },
+    { href: '/mx/fl', label: 'Todos los formularios de derecho familiar de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario FL-120 es la Respuesta — la contestación que presenta el
+      cónyuge o pareja a quien le entregaron una Petición (FL-100). Presentar
+      una respuesta le permite establecer sus propias posiciones sobre bienes,
+      manutención y custodia, en vez de dejar que el caso avance por default.
+    </p>
+
+    <h2>El tiempo importa</h2>
+    <ul>
+      <li>Por lo general tiene <strong>30 días</strong> desde la fecha del service para presentar una respuesta.</li>
+      <li>Si pierde el plazo, el otro cónyuge puede pedir un default y el caso puede avanzar sin su participación.</li>
+      <li>La respuesta se presenta con sus declaraciones preliminares (FL-150 y FL-160 / FL-142).</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>FL-120</strong> Respuesta, completada con sus respuestas.</li>
+      <li>Sus <strong>FL-150</strong> (ingresos/gastos) y <strong>FL-160 / FL-142</strong> (bienes).</li>
+      <li><strong>Proof of service</strong> de su respuesta a la otra parte.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos los formularios que usted elige, bajo su
+      dirección, y no damos asesoría legal, no tomamos posiciones por usted ni
+      lo representamos en corte. Para asesoría mantenemos referencias a abogados
+      familiares con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Family Code §2020 y §§2104-2105
+      (declaraciones); California Rules of Court, título 5. Solo preparación de
+      documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-120" primaryText="Comenzar mi entrevista de Respuesta" />
+</BaseLayout>

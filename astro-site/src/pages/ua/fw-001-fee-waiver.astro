@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'FW-001 — прохання звільнити від судового мита (Каліфорнія) | Imverica';
+const description = 'California Licensed LDA готує FW-001 Request to Waive Court Fees із наказом FW-003 для сімейних, малих позовів, цивільних і probate справ, якщо ви підходите за доходом чи пільгами. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Fee Waiver (FW-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для каліфорнійської Request to Waive Court Fees (форма FW-001), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/fw-001-fee-waiver"
+  slug="/fw-001-fee-waiver" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Courts · Gov. Code §68631 · Cal. Rules of Court 3.50"
+    heading="FW-001 — прохання звільнити від судового мита"
+    sub="Якщо дохід обмежений або ви отримуєте пільги, Каліфорнія може звільнити вас від судового мита. Готуємо запит FW-001 (і наказ FW-003) за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=FW-001', text: 'Почати fee waiver' }}
+  />
+
+  <CategoryTiles
+    kicker="Справи, які покриває fee waiver"
+    heading="Де використовується FW-001"
+    intro="Fee waiver додається до більшості судових справ Каліфорнії. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Розлучення',          desc: 'Звільнити від мита за dissolution або legal separation.',                           href: '/ua/fl-100-divorce',          color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'SC-100 — Малі позови',         desc: 'Звільнити від мита за малий позов, якщо підходите.',                                href: '/ua/sc',                      color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Звільнити від мита за сімейне клопотання.',                                         href: '/ua/fl-300-request-for-order', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Unlawful detainer',            desc: 'Орендарі й власники, що підходять, можуть звільнитися від мит UD.',                 href: '/ua/california-unlawful-detainer', color: 'var(--gold)' },
+      { icon: '📜', title: 'Probate',                      desc: 'Подачі зі спадщини та small estate теж можуть підійти.',                           href: '/ua/california-probate',      color: 'var(--navy-light)' },
+      { icon: '🛡️', title: 'Заборонні накази',            desc: 'Справи про домашнє насильство й harassment зазвичай без мита або з waiver.',        href: '/ua/california-restraining-orders', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/fl', label: 'Форми сімейного права Каліфорнії' },
+    { href: '/ua/sc', label: 'Форми малих позовів Каліфорнії' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FW-001 — це Request to Waive Court Fees. Суди Каліфорнії можуть
+      звільнити від мит за подачу та інших судових зборів людей, які отримують
+      певні державні пільги, чий дохід домогосподарства на рівні guideline чи
+      нижче, або хто не може водночас оплачувати базові життєві потреби та
+      судові мита.
+    </p>
+
+    <h2>Хто зазвичай підходить</h2>
+    <ul>
+      <li>Ви отримуєте пільги на кшталт Medi-Cal, CalFresh, CalWORKs, SSI/SSP, GA/GR, IHSS та деякі інші.</li>
+      <li>Ваш валовий місячний дохід домогосподарства на рівні опублікованого guideline для вашого розміру родини чи нижче.</li>
+      <li>Ви можете показати, що оплата судових мит завадила б оплачувати базові потреби.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>FW-001</strong> Request to Waive Court Fees та <strong>FW-003</strong> Order on Court Fee Waiver для підпису суддею.</li>
+      <li><strong>FW-002</strong> — додаток із дод. інформацією, коли суду потрібні деталі.</li>
+      <li>Організацію наданих вами документів про пільги чи дохід.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми заповнюємо запит за наданою <em>вами</em> інформацією
+      про дохід і пільги, за вашим дорученням. Ми не вирішуємо, чи підходите
+      ви, не надаємо юридичних консультацій і не представляємо вас — рішення
+      про waiver ухвалює суд. Для консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Government Code §68630 і далі (fee
+      waivers); California Rules of Court 3.50–3.58. Лише підготовка
+      документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FW-001" primaryText="Почати анкету fee waiver" />
+</BaseLayout>

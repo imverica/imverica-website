@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'FL-105 (UCCJEA) — декларация юрисдикции по опеке | Imverica';
+const description = 'California Licensed LDA готовит декларацию FL-105 / GC-120 UCCJEA, которая указывает, где проживали дети, и требуется в делах Калифорнии об опеке или посещении. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'UCCJEA Declaration (FL-105) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для калифорнийской декларации UCCJEA (форма FL-105 / GC-120), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/fl-105-uccjea"
+  slug="/fl-105-uccjea" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · UCCJEA · Fam. Code §3400+"
+    heading="FL-105 (UCCJEA) — декларация юрисдикции по опеке"
+    sub="Когда в калифорнийском деле есть несовершеннолетние дети, FL-105 сообщает суду, где проживали дети, чтобы он подтвердил полномочия решать вопрос опеки. Готовим её по вашим датам и адресам, по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=FL-105', text: 'Начать FL-105' }}
+  />
+
+  <CategoryTiles
+    kicker="Дела, которым нужна FL-105"
+    heading="Где подаётся декларация UCCJEA"
+    intro="FL-105 прикладывается к любому делу Калифорнии, где решается опека или посещение. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Петиция',            desc: 'Развод или legal separation с несовершеннолетними детьми.',                         href: '/ru/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Запросы об опеке или посещении во время дела или после.',                           href: '/ru/fl-300-request-for-order',         color: 'var(--navy)' },
+      { icon: '📄', title: 'FL-120 — Ответ',              desc: 'Отвечающий родитель подаёт свою информацию UCCJEA.',                                href: '/ru/fl-120-divorce-response',          color: 'var(--sage)' },
+      { icon: '💰', title: 'FL-150 — Доходы и расходы',    desc: 'Подаётся с делами об опеке, где также назначают алименты.',                         href: '/ru/fl-150-income-expense-declaration', color: 'var(--gold)' },
+      { icon: '🛡️', title: 'DV-100 — Запретительный приказ', desc: 'Дела о домашнем насилии, включающие решения по опеке.',                          href: '/ru/california-restraining-orders',    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Просьба освободить от судебных пошлин, если подходите.',                            href: '/ru/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/fl-100-divorce', label: 'FL-100 — петиция о разводе' },
+    { href: '/ru/fl', label: 'Все формы семейного права Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-105 — это декларация по Uniform Child Custody Jurisdiction and
+      Enforcement Act (UCCJEA). Она перечисляет все места, где каждый ребёнок
+      жил последние пять лет, и другие дела об опеке, чтобы калифорнийский суд
+      мог подтвердить, что именно он — надлежащий штат для решения вопроса
+      опеки, и избежать конфликтующих приказов из разных штатов.
+    </p>
+
+    <h2>Когда требуется FL-105</h2>
+    <ul>
+      <li>Любое дело о разводе, parentage, опеке или домашнем насилии, где суд решает вопрос опеки или посещения несовершеннолетнего.</li>
+      <li>Подаётся в начале дела и обновляется, если история проживания детей меняется.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>FL-105 / GC-120</strong>, заполненную по предоставленной вами истории проживания и информации о деле.</li>
+      <li>Дополнительные страницы, когда ребёнок жил по нескольким адресам.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы записываем даты, адреса и детали дела, которые
+      предоставляете <em>вы</em>, по вашему поручению. Мы не советуем, какой
+      штат имеет юрисдикцию, и не представляем вас. Для консультаций —
+      referral к адвокатам семейного права.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Family Code §3400 и далее (UCCJEA);
+      California Rules of Court, title 5. Только подготовка документов — не
+      юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-105" primaryText="Начать анкету FL-105" />
+</BaseLayout>

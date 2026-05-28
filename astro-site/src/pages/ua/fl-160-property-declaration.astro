@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'FL-160 — декларація майна (спільне й роздільне) | Imverica';
+const description = 'California Licensed LDA готує FL-160 Property Declaration зі списком спільного й роздільного майна та боргів для розлучення в Каліфорнії, разом із FL-142 Schedule of Assets and Debts. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Property Declaration (FL-160) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для каліфорнійської Property Declaration (форма FL-160), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/fl-160-property-declaration"
+  slug="/fl-160-property-declaration" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §§2104-2105"
+    heading="FL-160 — декларація майна"
+    sub="FL-160 вказує, що є спільним майном, а що роздільним, плюс борги — щоб у суду була повна картина для judgment. Готуємо її за вашим описом, за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=FL-160', text: 'Почати FL-160' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми розкриття, що йдуть разом"
+    heading="З чим працює FL-160"
+    intro="Розкриття майна — частина пакета disclosure при розлученні. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Петиція',            desc: 'Стартова петиція про розлучення.',                                                  href: '/ua/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '📄', title: 'FL-120 — Відповідь',          desc: 'Відповідь і disclosures другого з подружжя.',                                       href: '/ua/fl-120-divorce-response',          color: 'var(--navy)' },
+      { icon: '💰', title: 'FL-150 — Доходи й витрати',    desc: 'Супутнє фінансове розкриття для аліментів.',                                        href: '/ua/fl-150-income-expense-declaration', color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Тимчасові накази, поки справа відкрита.',                                           href: '/ua/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Декларація юрисдикції з опіки, коли є діти.',                                       href: '/ua/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Прохання звільнити від судового мита, якщо підходите.',                             href: '/ua/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/fl-100-divorce', label: 'FL-100 — петиція про розлучення' },
+    { href: '/ua/fl', label: 'Усі форми сімейного права Каліфорнії' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-160 — це Property Declaration. Вона визначає кожен актив і борг
+      як спільне чи роздільне майно та вказує вартості, щоб суд міг підтвердити
+      повний і справедливий поділ у judgment. Зазвичай готується разом із
+      FL-142 Schedule of Assets and Debts.
+    </p>
+
+    <h2>Коли подають FL-160</h2>
+    <ul>
+      <li>Як частину preliminary і final declarations of disclosure при розлученні чи legal separation.</li>
+      <li>Коли сторони хочуть чіткий, постатейний облік майна й боргів у judgment.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>FL-160</strong> Property Declaration за вашим описом.</li>
+      <li>Супутню <strong>FL-142</strong> Schedule of Assets and Debts за потреби.</li>
+      <li>Організацію наданих вами виписок і правовстановлюючих документів.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми фіксуємо майно та його характеристику, які вказуєте
+      <em>ви</em>, за вашим дорученням. Ми не радимо, чи є актив спільним або
+      роздільним, не оцінюємо спірне майно й не представляємо вас. Для
+      консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Family Code §§2104-2105 (declarations
+      of disclosure) та §§760, 770 (спільне й роздільне майно); California
+      Rules of Court, title 5. Лише підготовка документів — не юридичні
+      консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-160" primaryText="Почати анкету FL-160" />
+</BaseLayout>

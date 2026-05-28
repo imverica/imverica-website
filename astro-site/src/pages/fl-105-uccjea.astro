@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FL-105 (UCCJEA) — child-custody jurisdiction declaration | Imverica';
+const description = 'California Licensed LDA prepares the FL-105 / GC-120 UCCJEA declaration that states where children have lived, required in California cases involving custody or visitation. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'UCCJEA Declaration (FL-105) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California UCCJEA declaration (Form FL-105 / GC-120), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fl-105-uccjea"
+  slug="/fl-105-uccjea" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · UCCJEA · Fam. Code §3400+"
+    heading="FL-105 (UCCJEA) — custody jurisdiction declaration"
+    sub="When a California case involves minor children, FL-105 tells the court where the children have lived so it can confirm it has authority to decide custody. We prepare it from your dates and addresses, at your direction."
+    ctaPrimary={{ href: '/#get-started?form=FL-105', text: 'Start my FL-105' }}
+  />
+
+  <CategoryTiles
+    kicker="Cases that need FL-105"
+    heading="Where the UCCJEA declaration is filed"
+    intro="FL-105 attaches to any California case that decides custody or visitation. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petition',          desc: 'Divorce or legal separation involving minor children.',                            href: '/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Custody or visitation requests during or after a case.',                            href: '/fl-300-request-for-order',         color: 'var(--navy)' },
+      { icon: '📄', title: 'FL-120 — Response',          desc: 'The responding parent files their own UCCJEA information.',                          href: '/fl-120-divorce-response',          color: 'var(--sage)' },
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'Filed with custody matters that also set child support.',                           href: '/fl-150-income-expense-declaration', color: 'var(--gold)' },
+      { icon: '🛡️', title: 'DV-100 — Restraining order', desc: 'Domestic-violence cases that include custody decisions.',                            href: '/california-restraining-orders',    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Request to waive court fees if you qualify.',                                       href: '/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl-100-divorce', label: 'FL-100 — Divorce petition' },
+    { href: '/fl', label: 'All California family-law forms we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FL-105 is the Declaration Under the Uniform Child Custody
+      Jurisdiction and Enforcement Act (UCCJEA). It lists every place each
+      child has lived for the past five years and any other custody cases, so
+      a California court can confirm it is the proper state to decide custody
+      and avoid conflicting orders from different states.
+    </p>
+
+    <h2>When FL-105 is required</h2>
+    <ul>
+      <li>Any divorce, parentage, guardianship, or domestic-violence case that asks the court to decide custody or visitation of a minor child.</li>
+      <li>It is filed at the start of the case and updated if the children’s residence history changes.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FL-105 / GC-120</strong> completed from the residence history and case information you provide.</li>
+      <li>Attachment pages when a child has lived at several addresses.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We record the dates, addresses, and case details <em>you</em>
+      provide, at your direction. We do not advise you on which state has
+      jurisdiction or represent you. For advice we maintain referrals to
+      licensed family-law attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Family Code §3400 et seq. (UCCJEA);
+      California Rules of Court, title 5. Document preparation only — not legal
+      advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-105" primaryText="Begin my FL-105 intake" />
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FW-001 — Request to Waive Court Fees (California) | Imverica';
+const description = 'California Licensed LDA prepares the FW-001 Request to Waive Court Fees, with the FW-003 order, for family law, small claims, civil, and probate cases when you qualify by income or public benefits. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Fee Waiver (FW-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California Request to Waive Court Fees (Form FW-001), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fw-001-fee-waiver"
+  slug="/fw-001-fee-waiver" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Courts · Gov. Code §68631 · Cal. Rules of Court 3.50"
+    heading="FW-001 — Request to Waive Court Fees"
+    sub="If your income is limited or you receive public benefits, California can waive your court filing fees. We prepare the FW-001 request (and the FW-003 order) at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=FW-001', text: 'Start my fee waiver' }}
+  />
+
+  <CategoryTiles
+    kicker="Cases a fee waiver can cover"
+    heading="Where FW-001 is used"
+    intro="A fee waiver attaches to most California court cases. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Divorce',           desc: 'Waive the filing fee for a dissolution or legal separation.',                       href: '/fl-100-divorce',          color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'SC-100 — Small claims',       desc: 'Waive the small-claims filing fee when you qualify.',                               href: '/sc',                      color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Waive the fee for a family-law motion.',                                            href: '/fl-300-request-for-order', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Unlawful detainer',           desc: 'Tenants and landlords who qualify can waive UD fees.',                              href: '/california-unlawful-detainer', color: 'var(--gold)' },
+      { icon: '📜', title: 'Probate',                     desc: 'Estate and small-estate filings may also qualify.',                                href: '/california-probate',      color: 'var(--navy-light)' },
+      { icon: '🛡️', title: 'Restraining orders',         desc: 'Domestic-violence and civil-harassment filings are usually fee-free or waivable.',  href: '/california-restraining-orders', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl', label: 'California family-law forms we prepare' },
+    { href: '/sc', label: 'California small-claims forms we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FW-001 is the Request to Waive Court Fees. California courts can
+      waive filing and other court fees for people who receive certain public
+      benefits, whose household income is at or below the guideline, or who
+      cannot pay for the common necessities of life and also pay court fees.
+    </p>
+
+    <h2>Who usually qualifies</h2>
+    <ul>
+      <li>You receive benefits such as Medi-Cal, CalFresh, CalWORKs, SSI/SSP, GA/GR, IHSS, or certain others.</li>
+      <li>Your gross monthly household income is at or under the published guideline for your household size.</li>
+      <li>You can show that paying court fees would prevent you from paying for basic necessities.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FW-001</strong> Request to Waive Court Fees, and <strong>FW-003</strong> Order on Court Fee Waiver for the judge to sign.</li>
+      <li><strong>FW-002</strong> additional-information attachment when the court needs more detail.</li>
+      <li>Organization of the benefit or income documentation you provide.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We complete the request from the income and benefit information
+      <em>you</em> provide, at your direction. We do not decide whether you
+      qualify, give legal advice, or represent you — the court decides the
+      waiver. For advice we maintain referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Government Code §68630 et seq.
+      (fee waivers); California Rules of Court 3.50–3.58. Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FW-001" primaryText="Begin my fee-waiver intake" />
+</BaseLayout>

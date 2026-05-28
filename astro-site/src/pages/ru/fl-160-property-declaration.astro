@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'FL-160 — декларация имущества (общее и раздельное) | Imverica';
+const description = 'California Licensed LDA готовит FL-160 Property Declaration со списком общего и раздельного имущества и долгов для развода в Калифорнии, вместе с FL-142 Schedule of Assets and Debts. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Property Declaration (FL-160) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для калифорнийской Property Declaration (форма FL-160), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/fl-160-property-declaration"
+  slug="/fl-160-property-declaration" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §§2104-2105"
+    heading="FL-160 — декларация имущества"
+    sub="FL-160 указывает, что является общим имуществом, а что раздельным, плюс долги — чтобы у суда была полная картина для judgment. Готовим её по вашей описи, по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=FL-160', text: 'Начать FL-160' }}
+  />
+
+  <CategoryTiles
+    kicker="Формы раскрытия, которые идут вместе"
+    heading="С чем работает FL-160"
+    intro="Раскрытие имущества — часть пакета disclosure при разводе. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Петиция',            desc: 'Стартовая петиция о разводе.',                                                      href: '/ru/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '📄', title: 'FL-120 — Ответ',              desc: 'Ответ и disclosures второго супруга.',                                              href: '/ru/fl-120-divorce-response',          color: 'var(--navy)' },
+      { icon: '💰', title: 'FL-150 — Доходы и расходы',    desc: 'Сопутствующее финансовое раскрытие для алиментов.',                                 href: '/ru/fl-150-income-expense-declaration', color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Временные приказы, пока дело открыто.',                                             href: '/ru/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Декларация юрисдикции по опеке, когда есть дети.',                                  href: '/ru/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Просьба освободить от судебных пошлин, если подходите.',                            href: '/ru/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/fl-100-divorce', label: 'FL-100 — петиция о разводе' },
+    { href: '/ru/fl', label: 'Все формы семейного права Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-160 — это Property Declaration. Она определяет каждый актив и
+      долг как общее или раздельное имущество и указывает стоимости, чтобы суд
+      мог подтвердить полное и справедливое разделение в judgment. Обычно
+      готовится вместе с FL-142 Schedule of Assets and Debts.
+    </p>
+
+    <h2>Когда подают FL-160</h2>
+    <ul>
+      <li>Как часть preliminary и final declarations of disclosure при разводе или legal separation.</li>
+      <li>Когда стороны хотят чёткий, постатейный учёт имущества и долгов в judgment.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>FL-160</strong> Property Declaration по вашей описи.</li>
+      <li>Сопутствующую <strong>FL-142</strong> Schedule of Assets and Debts при необходимости.</li>
+      <li>Организацию предоставленных вами выписок и правоустанавливающих документов.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы фиксируем имущество и его характеристику, которые
+      указываете <em>вы</em>, по вашему поручению. Мы не советуем, является ли
+      актив общим или раздельным, не оцениваем спорное имущество и не
+      представляем вас. Для консультаций — referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Family Code §§2104-2105
+      (declarations of disclosure) и §§760, 770 (общее и раздельное
+      имущество); California Rules of Court, title 5. Только подготовка
+      документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-160" primaryText="Начать анкету FL-160" />
+</BaseLayout>

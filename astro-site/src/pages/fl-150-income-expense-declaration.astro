@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FL-150 — Income and Expense Declaration | Imverica';
+const description = 'California Licensed LDA prepares the FL-150 Income and Expense Declaration used for child support, spousal support, and judgment in California family law. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Income and Expense Declaration (FL-150) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California Income and Expense Declaration (Form FL-150), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fl-150-income-expense-declaration"
+  slug="/fl-150-income-expense-declaration" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · Fam. Code §§2104-2105"
+    heading="FL-150 — Income and Expense Declaration"
+    sub="FL-150 is the financial picture the court uses to set child and spousal support. We prepare it accurately from your numbers, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=FL-150', text: 'Start my FL-150' }}
+  />
+
+  <CategoryTiles
+    kicker="Where FL-150 is used"
+    heading="What FL-150 supports"
+    intro="The income-and-expense declaration travels with several filings. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petition',          desc: 'Filed with the divorce petition as a preliminary disclosure.',                      href: '/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '📄', title: 'FL-120 — Response',          desc: 'Filed with the response by the other spouse.',                                      href: '/fl-120-divorce-response',          color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Attached when you request support or modification.',                                href: '/fl-300-request-for-order',         color: 'var(--sage)' },
+      { icon: '🏠', title: 'FL-160 — Property',           desc: 'The companion property and debts declaration.',                                     href: '/fl-160-property-declaration',      color: 'var(--gold)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Often filed by the same applicant who qualifies by income.',                        href: '/fw-001-fee-waiver',                color: 'var(--navy-light)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Child-custody jurisdiction declaration when children are involved.',                href: '/fl-105-uccjea',                    color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl-300-request-for-order', label: 'FL-300 — Request for Order (support)' },
+    { href: '/fl', label: 'All California family-law forms we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FL-150, the Income and Expense Declaration, gives the court a sworn
+      snapshot of your earnings, deductions, assets, and monthly expenses. It
+      is the foundation the court uses to calculate child support and spousal
+      support, so accuracy and complete attachments matter.
+    </p>
+
+    <h2>When you file FL-150</h2>
+    <ul>
+      <li>As a preliminary and final declaration of disclosure in a divorce.</li>
+      <li>Whenever you request or respond to a support order (with FL-300).</li>
+      <li>When asking the court to modify an existing support order.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FL-150</strong> completed from the income, deduction, and expense figures you provide.</li>
+      <li>Organization of <strong>pay stubs and tax-return attachments</strong> the form requires.</li>
+      <li>The companion <strong>FL-160 / FL-142</strong> property disclosures where needed.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We enter the figures you give us, at your direction. We do not
+      calculate a "recommended" support number for you, give legal or tax
+      advice, or represent you. For advice we maintain referrals to licensed
+      attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Family Code §§2104-2105
+      (declarations of disclosure) and the statewide child-support guideline,
+      Fam. Code §4055; California Rules of Court, title 5. Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-150" primaryText="Begin my FL-150 intake" />
+</BaseLayout>

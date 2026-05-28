@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'FL-300 — Request for Order (опека, алименты и др.) | Imverica';
+const description = 'California Licensed LDA готовит FL-300 Request for Order, чтобы просить суд о временных или изменённых приказах по опеке, посещению, алиментам на детей и супруга и иным семейным вопросам. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Request for Order (FL-300) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для калифорнийского Request for Order (форма FL-300), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/fl-300-request-for-order"
+  slug="/fl-300-request-for-order" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Cal. Rules of Court 5.92"
+    heading="FL-300 — Request for Order"
+    sub="FL-300 — это как вы просите суд о приказах: опека и посещение, алименты на детей или супруга, изменение действующих приказов. Готовим запрос и приложения по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=FL-300', text: 'Начать Request for Order' }}
+  />
+
+  <CategoryTiles
+    kicker="Формы, подаваемые с Request for Order"
+    heading="Что включает FL-300"
+    intro="Request for Order обычно требует финансовых и опекунских приложений. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '💰', title: 'FL-150 — Доходы и расходы',    desc: 'Требуется, когда вы просите или отвечаете на приказ об алиментах.',                  href: '/ru/fl-150-income-expense-declaration', color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Декларация юрисдикции для запросов об опеке/посещении.',                            href: '/ru/fl-105-uccjea',                    color: 'var(--navy)' },
+      { icon: '💍', title: 'FL-100 — Петиция',            desc: 'Основное дело о разводе или parentage, к которому относится запрос.',                href: '/ru/fl-100-divorce',                   color: 'var(--sage)' },
+      { icon: '📄', title: 'FL-120 — Ответ',              desc: 'Вторая сторона может ответить своей позицией.',                                     href: '/ru/fl-120-divorce-response',          color: 'var(--gold)' },
+      { icon: '🏠', title: 'FL-160 — Имущество',           desc: 'Декларация имущества, когда приказы затрагивают общие активы.',                     href: '/ru/fl-160-property-declaration',      color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Просьба освободить от пошлины, если подходите.',                                    href: '/ru/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/fl-150-income-expense-declaration', label: 'FL-150 — Доходы и расходы' },
+    { href: '/ru/fl', label: 'Все формы семейного права Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-300, Request for Order, — это универсальное ходатайство в
+      семейном суде Калифорнии. Им вы просите судью вынести или изменить
+      приказы — опека и посещение детей, алименты на детей, супружеские
+      алименты, вклад в оплату адвоката, контроль над имуществом и др. —
+      временно, пока дело открыто, или как модификацию позже.
+    </p>
+
+    <h2>Частые случаи</h2>
+    <ul>
+      <li>Временная опека, посещение или алименты, пока развод в процессе.</li>
+      <li>Изменение действующего приказа об опеке или алиментах после изменения обстоятельств.</li>
+      <li>Запросы, связанные с исполнением, и иные приказы, которые может вынести суд.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>FL-300</strong> с конкретными запрашиваемыми приказами и вашей подтверждающей декларацией.</li>
+      <li>Приложения вроде <strong>FL-150</strong> (для алиментов) и деклараций по опеке.</li>
+      <li><strong>Proof of service</strong>, чтобы вторая сторона была надлежаще уведомлена до слушания.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы готовим запрос по вашему поручению и записываем
+      предоставленные вами факты. Мы не советуем, какие приказы просить, не
+      ведём ваше дело и не представляем вас на слушании, не гарантируем
+      результат. Для консультаций — referral к адвокатам семейного права.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Rules of Court 5.92 (Request for
+      Order); California Family Code (например, §3020 и далее, §4055). Только
+      подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-300" primaryText="Начать анкету Request for Order" />
+</BaseLayout>

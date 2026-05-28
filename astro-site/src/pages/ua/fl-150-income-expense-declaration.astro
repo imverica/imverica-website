@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'FL-150 — декларація про доходи та витрати | Imverica';
+const description = 'California Licensed LDA готує FL-150 Income and Expense Declaration для аліментів на дітей, аліментів подружжю та judgment у сімейному праві Каліфорнії. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Income and Expense Declaration (FL-150) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для каліфорнійської Income and Expense Declaration (форма FL-150), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/fl-150-income-expense-declaration"
+  slug="/fl-150-income-expense-declaration" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §§2104-2105"
+    heading="FL-150 — декларація про доходи та витрати"
+    sub="FL-150 — фінансова картина, за якою суд призначає аліменти на дітей і подружжю. Готуємо її акуратно за вашими цифрами, за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=FL-150', text: 'Почати FL-150' }}
+  />
+
+  <CategoryTiles
+    kicker="Де використовується FL-150"
+    heading="Що підтримує FL-150"
+    intro="Декларація про доходи супроводжує кілька подач. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Петиція',            desc: 'Подається з петицією про розлучення як preliminary disclosure.',                    href: '/ua/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '📄', title: 'FL-120 — Відповідь',          desc: 'Подається другим із подружжя разом із відповіддю.',                                 href: '/ua/fl-120-divorce-response',          color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Додається, коли ви просите аліменти або модифікацію.',                              href: '/ua/fl-300-request-for-order',         color: 'var(--sage)' },
+      { icon: '🏠', title: 'FL-160 — Майно',               desc: 'Супутня декларація майна та боргів.',                                               href: '/ua/fl-160-property-declaration',      color: 'var(--gold)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Часто подає той самий заявник, який підходить за доходом.',                         href: '/ua/fw-001-fee-waiver',                color: 'var(--navy-light)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Декларація юрисдикції з опіки, коли є діти.',                                       href: '/ua/fl-105-uccjea',                    color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/fl-300-request-for-order', label: 'FL-300 — Request for Order (аліменти)' },
+    { href: '/ua/fl', label: 'Усі форми сімейного права Каліфорнії' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-150, Income and Expense Declaration, дає суду засвідчений знімок
+      ваших доходів, відрахувань, активів і щомісячних витрат. Це основа, за
+      якою суд розраховує аліменти на дітей і подружжю, тож точність і повні
+      додатки важливі.
+    </p>
+
+    <h2>Коли подають FL-150</h2>
+    <ul>
+      <li>Як preliminary і final declaration of disclosure при розлученні.</li>
+      <li>Щоразу, коли ви просите чи відповідаєте на наказ про аліменти (з FL-300).</li>
+      <li>Коли просите суд змінити чинний наказ про аліменти.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>FL-150</strong>, заповнену за наданими вами цифрами доходів, відрахувань і витрат.</li>
+      <li>Організацію додатків — <strong>pay stubs і податкових декларацій</strong>, які вимагає форма.</li>
+      <li>Супутні <strong>FL-160 / FL-142</strong> за потреби.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми вносимо надані вами цифри за вашим дорученням. Ми не
+      розраховуємо «рекомендовану» суму аліментів, не надаємо юридичних чи
+      податкових консультацій і не представляємо вас. Для консультацій —
+      referral до ліцензованих адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Family Code §§2104-2105 (declarations
+      of disclosure) та загальнодержавний child-support guideline, Fam. Code
+      §4055; California Rules of Court, title 5. Лише підготовка документів —
+      не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-150" primaryText="Почати анкету FL-150" />
+</BaseLayout>

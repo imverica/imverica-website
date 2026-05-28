@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FL-300 — Request for Order (custodia, manutención, más) | Imverica';
+const description = 'California Licensed LDA prepara la FL-300 Request for Order para pedir a la corte órdenes temporales o modificadas de custodia, visitas, manutención de hijos o conyugal y otros asuntos familiares. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Request for Order (FL-300) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para el Request for Order de California (Formulario FL-300), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fl-300-request-for-order"
+  slug="/fl-300-request-for-order" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Cal. Rules of Court 5.92"
+    heading="FL-300 — Request for Order"
+    sub="La FL-300 es cómo pide a la corte órdenes — custodia y visitas, manutención de hijos o conyugal, o cambios a órdenes existentes. Preparamos la solicitud y sus anexos bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=FL-300', text: 'Comenzar mi Request for Order' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios que acompañan un Request for Order"
+    heading="Qué implica una FL-300"
+    intro="Un Request for Order suele necesitar anexos financieros y de custodia. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'Requerida cuando solicita o responde a una orden de manutención.',                  href: '/mx/fl-150-income-expense-declaration', color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Declaración de jurisdicción para solicitudes de custodia/visitas.',                 href: '/mx/fl-105-uccjea',                    color: 'var(--navy)' },
+      { icon: '💍', title: 'FL-100 — Petición',          desc: 'El caso de divorcio o filiación al que pertenece la solicitud.',                    href: '/mx/fl-100-divorce',                   color: 'var(--sage)' },
+      { icon: '📄', title: 'FL-120 — Respuesta',          desc: 'La otra parte puede responder con sus propias posiciones.',                         href: '/mx/fl-120-divorce-response',          color: 'var(--gold)' },
+      { icon: '🏠', title: 'FL-160 — Propiedad',          desc: 'Declaración de propiedad cuando las órdenes afectan bienes comunitarios.',          href: '/mx/fl-160-property-declaration',      color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención de tarifas', desc: 'Solicitud para exonerar la tarifa si califica.',                                    href: '/mx/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl-150-income-expense-declaration', label: 'FL-150 — Ingresos y Gastos' },
+    { href: '/mx/fl', label: 'Todos los formularios de derecho familiar de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario FL-300, Request for Order, es la moción de uso general en la
+      corte familiar de California. Sirve para pedir a un juez que dicte o
+      cambie órdenes — custodia y visitas, manutención de hijos, manutención
+      conyugal, contribución a honorarios, control de bienes y más — ya sea de
+      forma temporal mientras el caso está abierto, o como modificación después.
+    </p>
+
+    <h2>Usos comunes</h2>
+    <ul>
+      <li>Custodia, visitas o manutención temporales mientras el divorcio está pendiente.</li>
+      <li>Modificar una orden de custodia o manutención existente tras un cambio de circunstancias.</li>
+      <li>Solicitudes de ejecución y otras órdenes que la corte puede dictar.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>FL-300</strong> con las órdenes específicas que solicita y su declaración de respaldo.</li>
+      <li>Anexos como <strong>FL-150</strong> (para manutención) y declaraciones de custodia.</li>
+      <li><strong>Proof of service</strong> para que la otra parte sea notificada antes de la audiencia.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos la solicitud que usted dirige y anotamos
+      los hechos que proporciona. No le aconsejamos qué órdenes pedir, no
+      argumentamos su caso ni lo representamos en la audiencia, y no
+      garantizamos ningún resultado. Para asesoría mantenemos referencias a
+      abogados familiares con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Rules of Court 5.92 (Request for
+      Order); California Family Code (p. ej., §3020 y siguientes, §4055). Solo
+      preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-300" primaryText="Comenzar mi entrevista Request for Order" />
+</BaseLayout>

@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FL-300 — Request for Order (custody, support, more) | Imverica';
+const description = 'California Licensed LDA prepares the FL-300 Request for Order to ask the court for temporary or modified orders on custody, visitation, child or spousal support, and other family-law matters. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Request for Order (FL-300) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California Request for Order (Form FL-300), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fl-300-request-for-order"
+  slug="/fl-300-request-for-order" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · Cal. Rules of Court 5.92"
+    heading="FL-300 — Request for Order"
+    sub="FL-300 is how you ask the court for orders — custody and visitation, child or spousal support, or changes to existing orders. We prepare the request and its attachments at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=FL-300', text: 'Start my Request for Order' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms filed with a Request for Order"
+    heading="What an FL-300 involves"
+    intro="A Request for Order usually needs financial and custody attachments. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'Required when you request or respond to a support order.',                          href: '/fl-150-income-expense-declaration', color: 'var(--terracotta-deep)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Child-custody jurisdiction declaration for custody/visitation requests.',           href: '/fl-105-uccjea',                    color: 'var(--navy)' },
+      { icon: '💍', title: 'FL-100 — Petition',           desc: 'The underlying divorce or parentage case the request belongs to.',                  href: '/fl-100-divorce',                   color: 'var(--sage)' },
+      { icon: '📄', title: 'FL-120 — Response',           desc: 'The other party can respond with their own positions.',                             href: '/fl-120-divorce-response',          color: 'var(--gold)' },
+      { icon: '🏠', title: 'FL-160 — Property',           desc: 'Property declaration when orders affect community assets.',                         href: '/fl-160-property-declaration',      color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Request to waive the filing fee if you qualify.',                                   href: '/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl-150-income-expense-declaration', label: 'FL-150 — Income & Expense' },
+    { href: '/fl', label: 'All California family-law forms we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FL-300, the Request for Order, is the general-purpose motion in
+      California family court. You use it to ask a judge to make or change
+      orders — child custody and visitation, child support, spousal support,
+      attorney-fee contributions, property control, and more — either
+      temporarily while a case is open or as a modification later.
+    </p>
+
+    <h2>Common uses</h2>
+    <ul>
+      <li>Temporary custody, visitation, or support while a divorce is pending.</li>
+      <li>Modifying an existing custody or support order after circumstances change.</li>
+      <li>Enforcement-related requests and other orders the court can grant.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FL-300</strong> with the specific orders you are requesting and your supporting declaration.</li>
+      <li>Attachments such as <strong>FL-150</strong> (for support) and child-custody declarations.</li>
+      <li><strong>Proof of service</strong> so the other party is properly notified before the hearing.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the request you direct and write down the facts you
+      provide. We do not advise you on what orders to seek, argue your case, or
+      represent you at the hearing, and we do not guarantee any outcome. For
+      advice we maintain referrals to licensed family-law attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Rules of Court 5.92 (Request for
+      Order); California Family Code support and custody provisions (e.g.,
+      §3020 et seq., §4055). Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-300" primaryText="Begin my Request for Order intake" />
+</BaseLayout>

@@ -51,7 +51,14 @@ const translatedSlugs = new Set<string>([
   '/i-539-change-of-status',
   '/i-90-green-card-renewal',
   '/vawa-self-petition',
-  '/eoir-immigration-court'
+  '/eoir-immigration-court',
+  '/fl-100-divorce',
+  '/fl-120-divorce-response',
+  '/fl-150-income-expense-declaration',
+  '/fl-160-property-declaration',
+  '/fl-300-request-for-order',
+  '/fl-105-uccjea',
+  '/fw-001-fee-waiver'
 ]);
 
 /** Build a per-locale URL from a slug. Uses the prefix in LOCALES, so URLs

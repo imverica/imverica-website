@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'FL-120 — відповідь на розлучення в Каліфорнії | Imverica';
+const description = 'California Licensed LDA готує відповідь FL-120, щоб той із подружжя, кому вручили петицію про розлучення чи legal separation, відповів вчасно — з обов’язковими disclosures FL-150 і FL-160. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Divorce Response (FL-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для відповіді на петицію про розлучення в Каліфорнії (форма FL-120), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/fl-120-divorce-response"
+  slug="/fl-120-divorce-response" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §2020"
+    heading="FL-120 — відповідь на петицію про розлучення"
+    sub="Вручили документи про розлучення? Відповідь FL-120 — це як ви відповідаєте й захищаєте свою позицію. Готуємо її акуратно й вчасно за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=FL-120', text: 'Почати Відповідь' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми, які зазвичай подає сторона-відповідач"
+    heading="Що включає відповідь"
+    intro="Відповідь подається з тими самими фінансовими disclosures, що й петиція. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Петиція',            desc: 'Петиція, яку вам вручили — те, на що ви відповідаєте.',                              href: '/ua/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Доходи й витрати',    desc: 'Ваше фінансове розкриття для аліментів і judgment.',                                href: '/ua/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🏠', title: 'FL-160 — Майно',               desc: 'Ваша декларація спільного й роздільного майна та боргів.',                          href: '/ua/fl-160-property-declaration',      color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Просити тимчасову опіку, аліменти чи інші накази.',                                  href: '/ua/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Декларація юрисдикції з опіки, коли є неповнолітні діти.',                           href: '/ua/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Прохання звільнити від мита за відповідь, якщо підходите.',                          href: '/ua/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/fl-100-divorce', label: 'FL-100 — петиція про розлучення' },
+    { href: '/ua/fl', label: 'Усі форми сімейного права Каліфорнії' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-120 — це відповідь, яку подає той із подружжя чи партнерів, кому
+      вручили петицію (FL-100). Подача відповіді дозволяє заявити власну
+      позицію щодо майна, аліментів та опіки, а не дати справі пройти за
+      default.
+    </p>
+
+    <h2>Строки важливі</h2>
+    <ul>
+      <li>Зазвичай у вас <strong>30 днів</strong> з дати вручення, щоб подати відповідь.</li>
+      <li>Якщо пропустити строк, другий із подружжя може запросити default, і справа піде без вашої участі.</li>
+      <li>Відповідь подається з вашими preliminary declarations of disclosure (FL-150 та FL-160 / FL-142).</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>FL-120</strong> Response, заповнену за вашими відповідями.</li>
+      <li>Ваші <strong>FL-150</strong> (доходи/витрати) та <strong>FL-160 / FL-142</strong> (майно).</li>
+      <li><strong>Proof of service</strong> вашої відповіді другій стороні.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо обрані вами форми за вашим дорученням і не
+      надаємо юридичних консультацій, не займаємо позицію за вас і не
+      представляємо вас у суді. Для консультацій — referral до ліцензованих
+      адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Family Code §2020 і §§2104-2105
+      (disclosures); California Rules of Court, title 5. Лише підготовка
+      документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-120" primaryText="Почати анкету Відповіді" />
+</BaseLayout>

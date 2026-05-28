@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FW-001 — Solicitud para Exonerar Tarifas de la Corte (California) | Imverica';
+const description = 'California Licensed LDA prepara la FW-001 Request to Waive Court Fees, con la orden FW-003, para casos de familia, reclamos menores, civiles y probate cuando califica por ingresos o beneficios públicos. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Fee Waiver (FW-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para la Request to Waive Court Fees de California (Formulario FW-001), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fw-001-fee-waiver"
+  slug="/fw-001-fee-waiver" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Courts · Gov. Code §68631 · Cal. Rules of Court 3.50"
+    heading="FW-001 — Solicitud para Exonerar Tarifas de la Corte"
+    sub="Si su ingreso es limitado o recibe beneficios públicos, California puede exonerar sus tarifas de la corte. Preparamos la solicitud FW-001 (y la orden FW-003) bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=FW-001', text: 'Comenzar mi exención' }}
+  />
+
+  <CategoryTiles
+    kicker="Casos que puede cubrir una exención"
+    heading="Dónde se usa la FW-001"
+    intro="Una exención de tarifas se adjunta a la mayoría de los casos de las cortes de California. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Divorcio',           desc: 'Exonerar la tarifa de una disolución o separación legal.',                          href: '/mx/fl-100-divorce',          color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'SC-100 — Reclamos menores',   desc: 'Exonerar la tarifa de reclamos menores si califica.',                               href: '/mx/sc',                      color: 'var(--navy)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Exonerar la tarifa de una moción familiar.',                                        href: '/mx/fl-300-request-for-order', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Unlawful detainer',           desc: 'Inquilinos y propietarios que califican pueden exonerar tarifas UD.',               href: '/mx/california-unlawful-detainer', color: 'var(--gold)' },
+      { icon: '📜', title: 'Probate',                     desc: 'Presentaciones de sucesiones y small estate también pueden calificar.',            href: '/mx/california-probate',      color: 'var(--navy-light)' },
+      { icon: '🛡️', title: 'Órdenes de restricción',     desc: 'Casos de violencia doméstica y acoso suelen ser sin tarifa o exonerables.',         href: '/mx/california-restraining-orders', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl', label: 'Formularios de derecho familiar de California' },
+    { href: '/mx/sc', label: 'Formularios de reclamos menores de California' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario FW-001 es la Request to Waive Court Fees. Las cortes de
+      California pueden exonerar las tarifas de presentación y otros cargos a
+      personas que reciben ciertos beneficios públicos, cuyo ingreso del hogar
+      está en o por debajo de la guía, o que no pueden pagar las necesidades
+      básicas y además las tarifas de la corte.
+    </p>
+
+    <h2>Quién suele calificar</h2>
+    <ul>
+      <li>Usted recibe beneficios como Medi-Cal, CalFresh, CalWORKs, SSI/SSP, GA/GR, IHSS, entre otros.</li>
+      <li>Su ingreso bruto mensual del hogar está en o por debajo de la guía publicada para el tamaño de su hogar.</li>
+      <li>Puede demostrar que pagar las tarifas le impediría cubrir las necesidades básicas.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>FW-001</strong> Request to Waive Court Fees y <strong>FW-003</strong> Order on Court Fee Waiver para que el juez la firme.</li>
+      <li><strong>FW-002</strong> anexo de información adicional cuando la corte necesita más detalle.</li>
+      <li>Organización de la documentación de beneficios o ingresos que usted proporcione.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Completamos la solicitud con la información de
+      ingresos y beneficios que <em>usted</em> proporciona, bajo su dirección.
+      No decidimos si usted califica, no damos asesoría legal ni lo
+      representamos — la corte decide la exención. Para asesoría mantenemos
+      referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Government Code §68630 y siguientes
+      (exención de tarifas); California Rules of Court 3.50–3.58. Solo
+      preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FW-001" primaryText="Comenzar mi entrevista de exención" />
+</BaseLayout>

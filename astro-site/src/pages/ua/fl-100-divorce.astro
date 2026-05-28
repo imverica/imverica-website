@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'FL-100 — петиція про розлучення в Каліфорнії (dissolution) | Imverica';
+const description = 'California Licensed LDA готує петицію FL-100 для початку розлучення, legal separation чи анулювання — із summons (FL-110), UCCJEA (FL-105), disclosures (FL-150/FL-160) та proof of service. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Divorce Petition (FL-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для петицій про розірвання шлюбу в Каліфорнії (форма FL-100), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/fl-100-divorce"
+  slug="/fl-100-divorce" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §2330"
+    heading="FL-100 — петиція про розлучення (dissolution)"
+    sub="Петиція FL-100 відкриває розлучення, legal separation чи анулювання в Каліфорнії. Готуємо повний стартовий пакет акуратно за вашим дорученням — фіксована ціна, багатомовна анкета (укр./рос./ісп./англ.)."
+    ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Почати пакет про розлучення' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми в пакеті про розлучення"
+    heading="Що включає подача про розлучення"
+    intro="Розлучення об'єднує кілька форм Judicial Council. Натисніть плитку, щоб побачити, для чого кожна."
+    tiles={[
+      { icon: '📄', title: 'FL-120 — Відповідь',          desc: 'Відповідь другого з подружжя на петицію, протягом 30 днів після service.',          href: '/ua/fl-120-divorce-response',          color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Доходи й витрати',    desc: 'Фінансове розкриття для аліментів і judgment.',                                     href: '/ua/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🏠', title: 'FL-160 — Майно',               desc: 'Декларація спільного й роздільного майна та боргів.',                               href: '/ua/fl-160-property-declaration',      color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',   desc: 'Тимчасова опіка, аліменти чи інші накази, поки справа відкрита.',                    href: '/ua/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Декларація юрисдикції з опіки, коли є неповнолітні діти.',                           href: '/ua/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',          desc: 'Прохання звільнити від судового мита, якщо підходите за доходом.',                   href: '/ua/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/fl', label: 'Усі форми сімейного права Каліфорнії, які ми готуємо' },
+    { href: '/ua/fl-120-divorce-response', label: 'FL-120 — Відповідь (друга сторона)' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма FL-100 — це петиція, що починає розлучення в Каліфорнії
+      (розірвання шлюбу чи domestic partnership), legal separation або
+      анулювання. Каліфорнія — no-fault штат, тож петиція зазвичай базується
+      на irreconcilable differences: доводити провину другого з подружжя не
+      потрібно.
+    </p>
+
+    <h2>Перед подачею</h2>
+    <ul>
+      <li><strong>Резидентство:</strong> для розлучення один із подружжя має прожити в Каліфорнії останні 6 місяців і в окрузі подачі — останні 3 місяці. (Для legal separation вимоги до резидентства немає.)</li>
+      <li>Ви вказуєте, чи є неповнолітні діти, спільне майно та чи просите аліменти.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>FL-100</strong> Petition і <strong>FL-110</strong> Summons для відкриття справи.</li>
+      <li><strong>FL-105 (UCCJEA)</strong>, коли є неповнолітні діти.</li>
+      <li><strong>Preliminary declarations of disclosure</strong> — FL-150 (доходи й витрати) та FL-160 / FL-142 (майно й борги).</li>
+      <li><strong>Proof of service</strong>, щоб другого з подружжя належно повідомили.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо обрані вами форми за вашим дорученням. Ми не
+      надаємо юридичних консультацій, не радимо, як ділити майно чи будувати
+      опіку, не представляємо вас у суді й не гарантуємо результат. Для
+      консультацій — referral до ліцензованих адвокатів Каліфорнії.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Family Code §2310 (підстави), §2320
+      (резидентство), §2330 (петиція), §§2104-2105 (declarations of
+      disclosure); California Rules of Court, title 5. Лише підготовка
+      документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-100" primaryText="Почати анкету про розлучення" />
+</BaseLayout>

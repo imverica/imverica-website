@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FL-100 — California divorce petition (dissolution) | Imverica';
+const description = 'California Licensed LDA prepares the FL-100 Petition to start a divorce, legal separation, or annulment — with the summons (FL-110), UCCJEA (FL-105), disclosures (FL-150/FL-160), and proof of service. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Divorce Petition (FL-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for California dissolution / legal separation petitions (Form FL-100), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fl-100-divorce"
+  slug="/fl-100-divorce" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · Fam. Code §2330"
+    heading="FL-100 — Petition for divorce (dissolution)"
+    sub="The FL-100 Petition opens a California divorce, legal separation, or annulment. We prepare the full opening packet accurately at your direction — fixed fee, multilingual intake (Ukrainian, Russian, Spanish, English)."
+    ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Start my divorce packet' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms in a divorce packet"
+    heading="What a divorce filing involves"
+    intro="A dissolution combines several Judicial Council forms. Tap a tile to see what each one is for."
+    tiles={[
+      { icon: '📄', title: 'FL-120 — Response',          desc: 'The other spouse’s answer to the petition, due within 30 days of service.',     href: '/fl-120-divorce-response',          color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'Financial disclosure used for support and judgment.',                               href: '/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🏠', title: 'FL-160 — Property',           desc: 'Declaration of community and separate property and debts.',                         href: '/fl-160-property-declaration',      color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Temporary custody, support, or other orders while the case is open.',               href: '/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Child-custody jurisdiction declaration when minor children are involved.',          href: '/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Request to waive court filing fees if you qualify by income.',                      href: '/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl', label: 'All California family-law forms we prepare' },
+    { href: '/fl-120-divorce-response', label: 'FL-120 — Response (the other side)' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FL-100 is the Petition that starts a California divorce
+      (dissolution of marriage or domestic partnership), legal separation, or
+      annulment. California is a no-fault state, so the petition is normally
+      based on irreconcilable differences — you do not have to prove
+      wrongdoing by the other spouse.
+    </p>
+
+    <h2>Before you can file</h2>
+    <ul>
+      <li><strong>Residency:</strong> for a divorce, either spouse must have lived in California for the last 6 months and in the filing county for the last 3 months. (Legal separation has no residency requirement.)</li>
+      <li>You identify whether there are minor children, community property, and whether you are requesting support.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FL-100</strong> Petition and <strong>FL-110</strong> Summons to open the case.</li>
+      <li><strong>FL-105 (UCCJEA)</strong> when there are minor children.</li>
+      <li><strong>Preliminary declarations of disclosure</strong> — FL-150 (income and expense) and FL-160 / FL-142 (property and debts).</li>
+      <li><strong>Proof of service</strong> forms so the other spouse is properly served.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare the forms you choose, at your direction. We do not give
+      legal advice, recommend how to divide property or structure custody, or
+      represent you in court, and we do not guarantee any outcome. For advice
+      we maintain referrals to licensed California family-law attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Family Code §2310 (grounds),
+      §2320 (residency), §2330 (the petition), §§2104-2105 (declarations of
+      disclosure); California Rules of Court, title 5. Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-100" primaryText="Begin my divorce intake" />
+</BaseLayout>

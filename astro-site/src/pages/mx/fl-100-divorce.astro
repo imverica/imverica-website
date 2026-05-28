@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'FL-100 — petición de divorcio en California (dissolution) | Imverica';
+const description = 'California Licensed LDA prepara la petición FL-100 para iniciar un divorcio, separación legal o anulación — con el summons (FL-110), UCCJEA (FL-105), declaraciones (FL-150/FL-160) y proof of service. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Divorce Petition (FL-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para peticiones de disolución matrimonial en California (Formulario FL-100), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/fl-100-divorce"
+  slug="/fl-100-divorce" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Family Law · Fam. Code §2330"
+    heading="FL-100 — petición de divorcio (dissolution)"
+    sub="La petición FL-100 abre un divorcio, separación legal o anulación en California. Preparamos el paquete inicial completo con precisión bajo su dirección — precio fijo, entrevista multilingüe (ucraniano, ruso, español, inglés)."
+    ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Comenzar mi paquete de divorcio' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios del paquete de divorcio"
+    heading="Qué incluye una presentación de divorcio"
+    intro="Un divorcio combina varios formularios del Judicial Council. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '📄', title: 'FL-120 — Respuesta',          desc: 'La respuesta del otro cónyuge a la petición, dentro de 30 días del service.',        href: '/mx/fl-120-divorce-response',          color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'Declaración financiera para manutención y sentencia.',                              href: '/mx/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🏠', title: 'FL-160 — Propiedad',          desc: 'Declaración de bienes y deudas comunitarios y separados.',                          href: '/mx/fl-160-property-declaration',      color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Órdenes temporales de custodia, manutención u otras mientras el caso sigue abierto.', href: '/mx/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Declaración de jurisdicción de custodia cuando hay hijos menores.',                  href: '/mx/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención de tarifas', desc: 'Solicitud para exonerar las tarifas de la corte si califica por ingresos.',          href: '/mx/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/fl', label: 'Todos los formularios de derecho familiar de California' },
+    { href: '/mx/fl-120-divorce-response', label: 'FL-120 — Respuesta (la otra parte)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario FL-100 es la petición que inicia un divorcio en California
+      (disolución de matrimonio o pareja de hecho), separación legal o
+      anulación. California es un estado no-fault, así que la petición
+      normalmente se basa en diferencias irreconciliables: no tiene que probar
+      culpa del otro cónyuge.
+    </p>
+
+    <h2>Antes de presentar</h2>
+    <ul>
+      <li><strong>Residencia:</strong> para un divorcio, un cónyuge debe haber vivido en California los últimos 6 meses y en el condado de presentación los últimos 3 meses. (La separación legal no exige residencia.)</li>
+      <li>Usted indica si hay hijos menores, bienes comunitarios y si solicita manutención.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>FL-100</strong> Petición y <strong>FL-110</strong> Summons para abrir el caso.</li>
+      <li><strong>FL-105 (UCCJEA)</strong> cuando hay hijos menores.</li>
+      <li><strong>Declaraciones preliminares</strong> — FL-150 (ingresos y gastos) y FL-160 / FL-142 (bienes y deudas).</li>
+      <li><strong>Proof of service</strong> para que el otro cónyuge sea notificado correctamente.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos los formularios que usted elige, bajo su
+      dirección. No damos asesoría legal, no recomendamos cómo dividir bienes o
+      estructurar la custodia, no lo representamos en corte y no garantizamos
+      ningún resultado. Para asesoría mantenemos referencias a abogados
+      familiares con licencia en California.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Family Code §2310 (causales), §2320
+      (residencia), §2330 (la petición), §§2104-2105 (declaraciones); California
+      Rules of Court, título 5. Solo preparación de documentos — no asesoría
+      legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-100" primaryText="Comenzar mi entrevista de divorcio" />
+</BaseLayout>

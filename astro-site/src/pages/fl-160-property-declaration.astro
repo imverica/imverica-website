@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FL-160 — Property Declaration (community & separate) | Imverica';
+const description = 'California Licensed LDA prepares the FL-160 Property Declaration listing community and separate property and debts for a California divorce, alongside the FL-142 Schedule of Assets and Debts. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Property Declaration (FL-160) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the California Property Declaration (Form FL-160), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fl-160-property-declaration"
+  slug="/fl-160-property-declaration" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Family Law · Fam. Code §§2104-2105"
+    heading="FL-160 — Property Declaration"
+    sub="FL-160 lists what is community property and what is separate, plus the debts, so the court has a complete picture for the judgment. We prepare it from your inventory, at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=FL-160', text: 'Start my FL-160' }}
+  />
+
+  <CategoryTiles
+    kicker="Disclosure forms that travel together"
+    heading="What FL-160 works with"
+    intro="Property disclosure is part of the divorce disclosure packet. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '💍', title: 'FL-100 — Petition',          desc: 'The opening divorce petition.',                                                     href: '/fl-100-divorce',                   color: 'var(--terracotta-deep)' },
+      { icon: '📄', title: 'FL-120 — Response',          desc: 'The other spouse’s answer and disclosures.',                                        href: '/fl-120-divorce-response',          color: 'var(--navy)' },
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'The companion financial disclosure for support.',                                   href: '/fl-150-income-expense-declaration', color: 'var(--sage)' },
+      { icon: '👶', title: 'FL-300 — Request for Order',  desc: 'Temporary orders while the case is open.',                                          href: '/fl-300-request-for-order',         color: 'var(--gold)' },
+      { icon: '📑', title: 'FL-105 / UCCJEA',             desc: 'Child-custody jurisdiction declaration when children are involved.',                href: '/fl-105-uccjea',                    color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Request to waive court fees if you qualify.',                                       href: '/fw-001-fee-waiver',                color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fl-100-divorce', label: 'FL-100 — Divorce petition' },
+    { href: '/fl', label: 'All California family-law forms we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form FL-160 is the Property Declaration. It identifies each asset and
+      debt as community or separate property and states values, so the court
+      can confirm a complete and fair division in the judgment. It is usually
+      prepared together with the FL-142 Schedule of Assets and Debts.
+    </p>
+
+    <h2>When you file FL-160</h2>
+    <ul>
+      <li>As part of the preliminary and final declarations of disclosure in a divorce or legal separation.</li>
+      <li>When the parties want a clear, itemized record of property and debts attached to a judgment.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>FL-160</strong> Property Declaration completed from your inventory.</li>
+      <li>The companion <strong>FL-142</strong> Schedule of Assets and Debts when needed.</li>
+      <li>Organization of supporting statements and titles you provide.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We record the property and characterization <em>you</em> provide,
+      at your direction. We do not advise you on whether an asset is community
+      or separate, value disputed property, or represent you. For advice we
+      maintain referrals to licensed attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Family Code §§2104-2105
+      (declarations of disclosure) and §§760, 770 (community vs. separate
+      property); California Rules of Court, title 5. Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FL-160" primaryText="Begin my FL-160 intake" />
+</BaseLayout>

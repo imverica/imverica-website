@@ -33,7 +33,14 @@ const URLS: SitemapEntry[] = [
   { slug: '/i-539-change-of-status', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/i-90-green-card-renewal', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/vawa-self-petition', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/eoir-immigration-court', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
+  { slug: '/eoir-immigration-court', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-100-divorce', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-120-divorce-response', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-150-income-expense-declaration', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-160-property-declaration', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-300-request-for-order', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-105-uccjea', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fw-001-fee-waiver', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
 ];
 
 function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {
