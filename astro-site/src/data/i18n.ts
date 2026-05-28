@@ -98,7 +98,7 @@ export const NAV: Record<Locale, {
     business: 'Business',
     about: 'About Us',
     portal: 'Client Portal',
-    quote: 'Get a Quote',
+    quote: 'Start Your Case',
     start: 'Start document preparation',
     phoneCta: '📞 +1 (916) 399-3992'
   },
@@ -109,7 +109,7 @@ export const NAV: Record<Locale, {
     business: 'Бизнес',
     about: 'О нас',
     portal: 'Кабинет',
-    quote: 'Получить цену',
+    quote: 'Начать кейс',
     start: 'Начать подготовку документов',
     phoneCta: '📞 +1 (916) 399-3992'
   },
@@ -120,7 +120,7 @@ export const NAV: Record<Locale, {
     business: 'Бізнес',
     about: 'Про нас',
     portal: 'Кабінет',
-    quote: 'Отримати ціну',
+    quote: 'Почати кейс',
     start: 'Почати підготовку документів',
     phoneCta: '📞 +1 (916) 399-3992'
   },
@@ -131,7 +131,7 @@ export const NAV: Record<Locale, {
     business: 'Negocios',
     about: 'Acerca',
     portal: 'Mi portal',
-    quote: 'Cotización',
+    quote: 'Iniciar su caso',
     start: 'Iniciar preparación de documentos',
     phoneCta: '📞 +1 (916) 399-3992'
   }
@@ -153,28 +153,28 @@ export const FOOTER: Record<Locale, {
     servicesCivil: 'California Court',
     about: 'About',
     brandLine: 'Legal Document Assistant · Immigration Consultant · California',
-    disclaimer: '© {year} Imverica Legal Solutions · California Licensed Legal Document Assistant · Imverica is not a law firm and does not provide legal advice.||Documents are prepared at the client\'s direction. Bonded and registered per California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions — a registered & bonded California Legal Document Assistant and Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 and §§22440-22448).||Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice, and no attorney-client relationship is created by use of this site. Documents are prepared solely at the client\'s direction. If you need legal advice, consult a licensed attorney.'
   },
   ru: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Калифорнийский суд',
     about: 'О нас',
     brandLine: 'Помощник по юридическим документам · Иммиграционный консультант · Калифорния',
-    disclaimer: '© {year} Imverica Legal Solutions · Калифорнийский лицензированный помощник по подготовке документов · Imverica не является юридической фирмой и не предоставляет юридических консультаций.||Документы готовятся по поручению клиента. Зарегистрированы и под залогом согласно California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions — зарегистрированный и застрахованный California Legal Document Assistant и Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 и §§22440-22448).||Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций; отношения «адвокат-клиент» не возникают при использовании этого сайта. Документы готовятся исключительно по поручению клиента. Если вам нужна юридическая консультация — обратитесь к лицензированному адвокату.'
   },
   uk: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Каліфорнійський суд',
     about: 'Про нас',
     brandLine: 'Помічник з юридичних документів · Імміграційний консультант · Каліфорнія',
-    disclaimer: '© {year} Imverica Legal Solutions · Каліфорнійський ліцензований помічник з підготовки документів · Imverica не є юридичною фірмою і не надає юридичних консультацій.||Документи готуються за дорученням клієнта. Зареєстровані під заставою згідно California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions — зареєстрований і застрахований California Legal Document Assistant та Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 та §§22440-22448).||Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій; відносини «адвокат-клієнт» не виникають при використанні цього сайту. Документи готуються виключно за дорученням клієнта. Якщо вам потрібна юридична консультація — зверніться до ліцензованого адвоката.'
   },
   es: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Corte de California',
     about: 'Sobre nosotros',
     brandLine: 'Asistente de Documentos Legales · Consultor de Inmigración · California',
-    disclaimer: '© {year} Imverica Legal Solutions · Asistente de Documentos Legales con licencia de California · Imverica no es un bufete de abogados y no brinda asesoría legal.||Los documentos se preparan bajo la dirección del cliente. Registrado y afianzado conforme al California Business & Professions Code §§6400-6415.'
+    disclaimer: '© {year} Imverica Legal Solutions — California Legal Document Assistant e Immigration Consultant registrado y afianzado (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal; no se crea relación abogado-cliente por el uso de este sitio. Los documentos se preparan únicamente bajo la dirección del cliente. Si necesita asesoría legal, consulte a un abogado con licencia.'
   }
 };
 

@@ -9,8 +9,10 @@ interface Props {
   ctaSecondary?: { href: string; text: string };
   lang?: Locale;
   showActions?: boolean;
+  /** Social-proof pill rendered above the eyebrow (CourtLinked-style). */
+  trustPill?: string;
 }
-const { eyebrow, heading, sub, ctaPrimary, ctaSecondary, lang = 'en', showActions = true } = Astro.props;
+const { eyebrow, heading, sub, ctaPrimary, ctaSecondary, lang = 'en', showActions = true, trustPill } = Astro.props;
 // Defaults pulled from the i18n table when caller omits CTAs.
 const defaultPrimary = { href: '/#get-started', text: CTA_STRINGS[lang].startBtn };
 const defaultSecondary = { href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' };
@@ -19,6 +21,7 @@ const secondary = ctaSecondary || defaultSecondary;
 ---
 <section class="hero-wrap">
   <div class="hero">
+    {trustPill && <div class="hero-pill"><span aria-hidden="true">★</span> {trustPill} <span aria-hidden="true">★</span></div>}
     {eyebrow && <div class="hero-eyebrow">{eyebrow}</div>}
     <h1>{heading}</h1>
     {sub && <p class="hero-sub">{sub}</p>}
