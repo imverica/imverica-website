@@ -110,6 +110,14 @@ interface Props {
   lang?: Locale;
 }
 const { include, kicker, heading, intro, servicesOverride, lang = 'en' } = Astro.props;
+
+const SOURCE_NOTE: Record<string, string> = {
+  en: 'Form names, numbers, and requirements shown here are general information from official government sources (USCIS, EOIR, California Courts, CA Secretary of State, IRS), provided for informational purposes only — not legal advice. You choose the forms; Imverica prepares them at your direction.',
+  ru: 'Названия, номера и требования форм здесь — общая информация из официальных источников (USCIS, EOIR, суды Калифорнии, Secretary of State Калифорнии, IRS), только для ознакомления, не юридическая консультация. Формы выбираете вы; Imverica готовит их по вашему поручению.',
+  uk: 'Назви, номери та вимоги форм тут — загальна інформація з офіційних джерел (USCIS, EOIR, суди Каліфорнії, Secretary of State Каліфорнії, IRS), лише для ознайомлення, не юридична консультація. Форми обираєте ви; Imverica готує їх за вашим дорученням.',
+  es: 'Los nombres, números y requisitos de los formularios aquí son información general de fuentes oficiales (USCIS, EOIR, Cortes de California, Secretario de Estado de California, IRS), solo con fines informativos — no asesoría legal. Usted elige los formularios; Imverica los prepara bajo su dirección.'
+};
+const sourceNote = SOURCE_NOTE[lang] || SOURCE_NOTE.en;
 const source = servicesOverride && servicesOverride.length ? servicesOverride : services;
 const visible = include ? source.filter((s) => include.includes(s.id)) : source;
 const finalKicker = kicker || 'California document preparation services';
@@ -266,5 +274,16 @@ function pageHref(dest: string): string {
         </article>
       ))}
     </div>
+    <p class="svc-source-note">{sourceNote}</p>
   </div>
 </section>
+
+<style>
+  .svc-source-note {
+    margin: 26px auto 0;
+    max-width: 900px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #6b7a90;
+  }
+</style>

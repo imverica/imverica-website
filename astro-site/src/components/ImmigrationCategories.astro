@@ -117,6 +117,13 @@ const TITLES = {
 } as const;
 const N = TITLES[lang];
 
+const SOURCE_NOTE: Record<Lang, string> = {
+  en: 'Form names, numbers, and requirements shown here are general information from official government sources (USCIS, EOIR, California Courts, CA Secretary of State, IRS), provided for informational purposes only — not legal advice. You choose the forms; Imverica prepares them at your direction.',
+  ru: 'Названия, номера и требования форм здесь — общая информация из официальных источников (USCIS, EOIR, суды Калифорнии, Secretary of State Калифорнии, IRS), только для ознакомления, не юридическая консультация. Формы выбираете вы; Imverica готовит их по вашему поручению.',
+  uk: 'Назви, номери та вимоги форм тут — загальна інформація з офіційних джерел (USCIS, EOIR, суди Каліфорнії, Secretary of State Каліфорнії, IRS), лише для ознайомлення, не юридична консультація. Форми обираєте ви; Imverica готує їх за вашим дорученням.',
+  es: 'Los nombres, números y requisitos de los formularios aquí son información general de fuentes oficiales (USCIS, EOIR, Cortes de California, Secretario de Estado de California, IRS), solo con fines informativos — no asesoría legal. Usted elige los formularios; Imverica los prepara bajo su dirección.'
+};
+
 const cats = [
   // Row 1 — humanitarian + most-asked. U4U and TPS each have their own
   // explainer landing page that lists every form involved (parole, TPS,
@@ -163,6 +170,7 @@ const cats = [
         {T.footPre} <a href={`${lp}/immigration#services-detail`}>{T.footLink}</a>{T.footMid}
         <a href={`${lp}/#get-started`}>{T.footTellLink}</a>{T.footPost}
       </p>
+      <p class="imm-cats-source">{SOURCE_NOTE[lang]}</p>
     </div>
   </div>
 </section>
@@ -230,6 +238,12 @@ const cats = [
     text-decoration: underline;
   }
   .imm-cats-footnote a:hover { color: var(--terracotta-deep); }
+  .imm-cats-footnote .imm-cats-source {
+    margin: 14px 0 0;
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: #6b7a90;
+  }
   .imm-cat-title {
     font-family: var(--font-display);
     font-size: 17px; font-weight: 700;
