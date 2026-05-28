@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SC-100 — Reclamo del demandante (reclamos menores) | Imverica';
+const description = 'California Licensed LDA prepara el SC-100 Plaintiff’s Claim para demandar por hasta $12,500 (individuos) en reclamos menores de California — con proof of service (SC-104) y exención (FW-001). Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Plaintiff Claim (SC-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para el reclamo del demandante en reclamos menores de California (Formulario SC-100), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/sc-100-plaintiff-claim"
+  slug="/sc-100-plaintiff-claim" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.220 · §116.221"
+    heading="SC-100 — Reclamo del demandante (reclamos menores)"
+    sub="Reclamos menores es la “corte del pueblo” rápida y económica de California. El SC-100 inicia su caso por hasta $12,500 (individuos). Lo preparamos con precisión bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Comenzar mi SC-100' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios en un caso de reclamos menores"
+    heading="Qué implica presentar un reclamo menor"
+    intro="Un reclamo va de la presentación al service y a la cobranza. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '✉️', title: 'Carta de demanda',           desc: 'Una demanda previa a menudo resuelve la disputa primero.',                          href: '/mx/demand-letter',            color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar al demandado 15–20 días antes de la audiencia.',                          href: '/mx/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Demandado',         desc: 'Cómo un demandado responde o contrademanda.',                                       href: '/mx/sc-120-defendant-claim',   color: 'var(--sage)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Exonerar la tarifa de presentación si califica.',                                   href: '/mx/fw-001-fee-waiver',        color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costos',            desc: 'Recuperar costos permitidos tras ganar.',                                           href: '/mx/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Cobrar la sentencia del salario.',                                                  href: '/mx/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/sc-120-defendant-claim', label: 'SC-120 — Reclamo del demandado' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario SC-100, Plaintiff’s Claim and ORDER, abre un caso de
+      reclamos menores. Reclamos menores usa un procedimiento simplificado
+      donde las partes se representan a sí mismas; los abogados no pueden
+      representar a una parte en la primera audiencia, y las tarifas son bajas.
+    </p>
+
+    <h2>Límites y dónde presentar</h2>
+    <ul>
+      <li>Un individuo puede demandar por hasta <strong>$12,500</strong>; corporaciones y otras entidades se limitan a <strong>$6,250</strong>.</li>
+      <li>Una persona no puede presentar más de dos reclamos sobre $2,500 en todo el estado en un año calendario.</li>
+      <li>Presente en el venue correcto — usualmente donde vive el demandado, donde se hizo o cumplió el contrato, o donde ocurrió el daño.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>SC-100</strong> Plaintiff’s Claim y <strong>SC-100A</strong> para partes adicionales.</li>
+      <li><strong>SC-104</strong> proof of service y el método de notificación correcto.</li>
+      <li><strong>FW-001</strong> solicitud de exención cuando califica.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos el reclamo bajo su dirección con los
+      hechos que proporciona. No evaluamos si ganará, no asesoramos sobre
+      estrategia ni comparecemos con usted. Para asesoría mantenemos
+      referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure
+      §§116.110–116.950 (Small Claims Act); §116.220–116.221 (jurisdicción y
+      límites); §116.231 (límite de dos reclamos); §116.530 (sin representación
+      de abogado en la audiencia). Solo preparación de documentos — no asesoría
+      legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Comenzar mi entrevista SC-100" />
+</BaseLayout>

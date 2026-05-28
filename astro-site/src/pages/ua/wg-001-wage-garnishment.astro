@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'WG-001 — garnishment зарплати (Earnings Withholding Order) | Imverica';
+const description = 'California Licensed LDA готує пакет garnishment зарплати WG-001 / WG-002 (Application та Earnings Withholding Order), щоб стягувач отримував борг із зарплати боржника через шерифа. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Wage Garnishment (WG-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для garnishment зарплати в Каліфорнії (WG-001 / WG-002), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/wg-001-wage-garnishment"
+  slug="/wg-001-wage-garnishment" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §706.020 et seq."
+    heading="WG-001 — garnishment зарплати"
+    sub="Коли боржник не платить за judgment, garnishment зарплати стягує прямо з його зарплати через шерифа. Готуємо заяву WG-001 та Earnings Withholding Order за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=WG-001', text: 'Почати WG-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Виконання judgment"
+    heading="Як garnishment вписується"
+    intro="Garnishment — один зі способів стягнути judgment. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Позов позивача',    desc: 'Справа, за якою винесено judgment.',                                                href: '/ua/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Додати витрати на виконання до боргу.',                                            href: '/ua/sc-133-memorandum-of-costs', color: 'var(--navy)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Зареєструвати заставу на нерухомість боржника.',                                    href: '/ua/ej-001-abstract-of-judgment', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Розстрочка',        desc: 'Боржник може натомість просити оплату частинами.',                                  href: '/ua/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Правильно вручити документи виконання.',                                            href: '/ua/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Збори шерифа можна звільнити, якщо підходите.',                                     href: '/ua/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/sc-133-memorandum-of-costs', label: 'SC-133 — Memorandum of Costs' },
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії — повний огляд' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Garnishment зарплати (Earnings Withholding Order) наказує роботодавцю
+      боржника утримувати частину кожної зарплати й надсилати її шерифу до
+      погашення judgment. Це один із найефективніших способів стягнути з
+      боржника, який працює, але не платить добровільно.
+    </p>
+
+    <h2>Як це працює</h2>
+    <ul>
+      <li>Ви передаєте шерифу Writ of Execution (EJ-130) і заяву WG-001; шериф вручає Earnings Withholding Order роботодавцю.</li>
+      <li>Роботодавець утримує допустиму суму з кожної зарплати (ліміти штату й федерації захищають частину зарплати боржника).</li>
+      <li>Частина доходу звільнена, і боржник може заявити hardship exemption.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>WG-001</strong> Application for Earnings Withholding Order та пов’язаний наказ WG-002.</li>
+      <li>Запит <strong>Writ of Execution (EJ-130)</strong>, який потрібен шерифу.</li>
+      <li>Пакет інструкцій для шерифа чи levying officer.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо форми garnishment за вашим дорученням. Ми не
+      радимо щодо стратегії стягнення, не шукаємо активи й не представляємо
+      вас, а сам levy виконує шериф. Для консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure §706.020 і
+      далі (Wage Garnishment Law); §699.510 (writ of execution); §706.050
+      (ліміти утримання). Лише підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=WG-001" primaryText="Почати анкету WG-001" />
+</BaseLayout>

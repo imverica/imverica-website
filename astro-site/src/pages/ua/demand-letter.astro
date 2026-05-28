@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'Підготовка досудового листа-вимоги (demand letter) | Imverica';
+const description = 'California Licensed LDA готує чіткий професійний досудовий лист-вимогу із сумою боргу та строком оплати — часто вирішує спір до подачі малого позову. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Pre-Suit Demand Letter Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка досудових листів-вимог за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/demand-letter"
+  slug="/demand-letter" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · Досудова вимога"
+    heading="Лист-вимога — до подачі позову"
+    sub="Чіткий датований лист-вимога часто вирішує спір без суду — а багато позовів очікують, що ви спершу попросите оплату. Готуємо його за вашими фактами, за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?topic=Demand-Letter', text: 'Почати лист-вимогу' }}
+  />
+
+  <CategoryTiles
+    kicker="Якщо лист не вирішив питання"
+    heading="Що йде після листа-вимоги"
+    intro="Якщо оплата не надійшла, зазвичай наступний крок — малий позов. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Позов позивача',    desc: 'Подати малий позов на суму до $12,500 (фізособи).',                                 href: '/ua/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Правильно вручити відповідачу після подачі.',                                       href: '/ua/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Звільнитися від мита, якщо підходите за доходом.',                                  href: '/ua/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Стягнути допустимі витрати після виграшу.',                                         href: '/ua/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Стягнути judgment із зарплати боржника.',                                           href: '/ua/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Зареєструвати заставу на нерухомість боржника.',                                    href: '/ua/ej-001-abstract-of-judgment', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії (SC-100) — огляд' },
+    { href: '/ua/sc-100-plaintiff-claim', label: 'SC-100 — Позов позивача' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Лист-вимога — це письмове прохання, де вказано, хто й скільки винен, чому
+      і до якого строку має заплатити до подальших дій. Він створює чіткий
+      запис, часто спонукає до оплати чи мирової, а для деяких позовів
+      очікується (або вимагається) до подачі — наприклад, повернення депозиту
+      орендаря чи позови за чеками без покриття.
+    </p>
+
+    <h2>Що містить добрий лист-вимога</h2>
+    <ul>
+      <li>Суму боргу та зрозуміле викладення фактів і дат.</li>
+      <li>Конкретний строк оплати та спосіб оплати.</li>
+      <li>Зазначення, що ви можете подати малий позов (чи інші засоби) у разі невирішення.</li>
+      <li>Копії підтверджуючих документів (договори, рахунки, фото).</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li>Професійний лист-вимогу за наданими вами фактами й цифрами.</li>
+      <li>Організацію підтверджуючих документів як додатків.</li>
+      <li>Готовий пакет малого позову, якщо лист не вирішив спір.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми пишемо лист за вашим дорученням із наданих вами
+      фактів. Ми не оцінюємо силу вашої вимоги, не радимо щодо стратегії, не
+      ведемо переговори за вас і не гарантуємо оплату. Для консультацій —
+      referral до ліцензованих адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> загальна практика цивільного процесу
+      Каліфорнії; наприклад, контексти Civil Code §1719 (чек без покриття) та
+      Civil Code §1950.5 (депозит). Лише підготовка документів — не юридичні
+      консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=Demand-Letter" primaryText="Почати анкету листа-вимоги" />
+</BaseLayout>

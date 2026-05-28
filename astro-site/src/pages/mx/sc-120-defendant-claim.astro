@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SC-120 — Reclamo del demandado (reclamos menores) | Imverica';
+const description = 'California Licensed LDA prepara el SC-120 Defendant’s Claim para que un demandado en reclamos menores responda y contrademande al demandante en la misma audiencia. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Defendant Claim (SC-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para el reclamo del demandado en reclamos menores de California (Formulario SC-120), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/sc-120-defendant-claim"
+  slug="/sc-120-defendant-claim" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.360"
+    heading="SC-120 — Reclamo del demandado (contrademandar)"
+    sub="¿Lo demandan en reclamos menores? El SC-120 le permite presentar su propio reclamo contra el demandante para que se escuche al mismo tiempo. Lo preparamos con precisión y a tiempo, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SC-120', text: 'Comenzar mi SC-120' }}
+  />
+
+  <CategoryTiles
+    kicker="Formularios que puede usar un demandado"
+    heading="Qué implica responder"
+    intro="Un demandado puede responder, contrademandar y prepararse para la audiencia. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'El reclamo presentado contra usted — a lo que responde.',                           href: '/mx/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar su SC-120 al demandante antes de la audiencia.',                          href: '/mx/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Exonerar la tarifa de su reclamo si califica.',                                     href: '/mx/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '✉️', title: 'Carta de demanda',           desc: 'Una demanda propia puede respaldar una contrademanda.',                             href: '/mx/demand-letter',            color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costos',            desc: 'Recuperar costos permitidos si prevalece.',                                         href: '/mx/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '📅', title: 'SC-140 — Plazos',            desc: 'Pedir pagar una sentencia a plazos si pierde.',                                     href: '/mx/sc-140-installments',      color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/sc-100-plaintiff-claim', label: 'SC-100 — Reclamo del demandante' },
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario SC-120, Defendant’s Claim, permite a un demandado al que
+      demandan en reclamos menores presentar su propio reclamo relacionado
+      contra el demandante para que ambos se decidan en la misma audiencia —
+      evitando un caso aparte.
+    </p>
+
+    <h2>Tiempos y límites</h2>
+    <ul>
+      <li>Presente y notifique el SC-120 antes de la audiencia — generalmente al menos 5 días antes (más si lo notificaron con menos de 10 días).</li>
+      <li>Aplican los mismos límites en dólares ($12,500 para individuos; $6,250 para entidades).</li>
+      <li>Su reclamo debe estar relacionado con o surgir del reclamo del demandante.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>SC-120</strong> Defendant’s Claim con los hechos que proporciona.</li>
+      <li><strong>SC-104</strong> proof of service al demandante.</li>
+      <li><strong>FW-001</strong> solicitud de exención cuando califica.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos el reclamo bajo su dirección. No
+      asesoramos si contrademandar, no evaluamos su caso ni comparecemos con
+      usted. Para asesoría mantenemos referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure §116.360
+      (reclamo del demandado) y §§116.110–116.950 (Small Claims Act). Solo
+      preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-120" primaryText="Comenzar mi entrevista SC-120" />
+</BaseLayout>

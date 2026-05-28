@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'WG-001 — Garnishment de salario (Earnings Withholding Order) | Imverica';
+const description = 'California Licensed LDA prepara el paquete de garnishment de salario WG-001 / WG-002 (Application y Earnings Withholding Order) para que un acreedor cobre del cheque del deudor a través del sheriff. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Wage Garnishment (WG-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para garnishment de salario en California (WG-001 / WG-002), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/wg-001-wage-garnishment"
+  slug="/wg-001-wage-garnishment" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §706.020 et seq."
+    heading="WG-001 — Garnishment de salario"
+    sub="Cuando un deudor no paga una sentencia, el garnishment de salario cobra directamente de su cheque a través del sheriff. Preparamos la solicitud WG-001 y la Earnings Withholding Order bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=WG-001', text: 'Comenzar mi WG-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Ejecutar una sentencia"
+    heading="Cómo encaja el garnishment de salario"
+    intro="El garnishment es una forma de cobrar una sentencia. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'El caso que produjo la sentencia.',                                                 href: '/mx/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💵', title: 'SC-133 — Costos',            desc: 'Agregar costos de ejecución a lo que debe el deudor.',                              href: '/mx/sc-133-memorandum-of-costs', color: 'var(--navy)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Registrar un gravamen sobre los bienes raíces del deudor.',                         href: '/mx/ej-001-abstract-of-judgment', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Plazos',            desc: 'Un deudor puede pedir pagar a plazos en su lugar.',                                 href: '/mx/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar correctamente los documentos de ejecución.',                              href: '/mx/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Las tarifas del sheriff pueden exonerarse si califica.',                            href: '/mx/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/sc-133-memorandum-of-costs', label: 'SC-133 — Memorando de Costos' },
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Un garnishment de salario (Earnings Withholding Order) ordena al empleador
+      del deudor retener parte de cada cheque y enviarla al sheriff hasta que se
+      pague la sentencia. Es una de las formas más eficaces de cobrar a un
+      deudor que trabaja pero no paga voluntariamente.
+    </p>
+
+    <h2>Cómo funciona</h2>
+    <ul>
+      <li>Usted entrega al sheriff un Writ of Execution (EJ-130) y la solicitud WG-001; el sheriff notifica la Earnings Withholding Order al empleador.</li>
+      <li>El empleador retiene el monto permitido por periodo de pago (los límites estatales y federales protegen parte del salario del deudor).</li>
+      <li>Parte del ingreso está exenta, y el deudor puede reclamar una exención por dificultad.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>WG-001</strong> Application for Earnings Withholding Order y la orden WG-002 relacionada.</li>
+      <li>La solicitud de <strong>Writ of Execution (EJ-130)</strong> que el sheriff necesita.</li>
+      <li>El paquete de instrucciones para el sheriff o levying officer.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos los formularios de garnishment bajo su
+      dirección. No asesoramos sobre estrategia de cobranza, no localizamos
+      bienes ni lo representamos, y el sheriff ejecuta el embargo. Para asesoría
+      mantenemos referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure §706.020 y
+      siguientes (Wage Garnishment Law); §699.510 (writ of execution); §706.050
+      (límites de retención). Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=WG-001" primaryText="Comenzar mi entrevista WG-001" />
+</BaseLayout>

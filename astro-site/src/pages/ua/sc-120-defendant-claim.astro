@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'SC-120 — зустрічний позов відповідача (малі позови) | Imverica';
+const description = 'California Licensed LDA готує SC-120 Defendant’s Claim, щоб відповідач у справі малого позову відповів і подав зустрічний позов до позивача на тому ж слуханні. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Defendant Claim (SC-120) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для зустрічного позову відповідача в малих позовах Каліфорнії (форма SC-120), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/sc-120-defendant-claim"
+  slug="/sc-120-defendant-claim" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.360"
+    heading="SC-120 — зустрічний позов відповідача"
+    sub="Вас судять у малих позовах? SC-120 дозволяє подати власний позов до позивача, щоб його розглянули на тому ж слуханні. Готуємо акуратно й вчасно за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-120', text: 'Почати SC-120' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми для відповідача"
+    heading="Що включає відповідь"
+    intro="Відповідач може відповісти, подати зустрічний позов і підготуватися до слухання. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Позов позивача',    desc: 'Позов, поданий проти вас — те, на що ви відповідаєте.',                             href: '/ua/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Вручити ваш SC-120 позивачу до слухання.',                                          href: '/ua/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Звільнитися від мита за ваш позов, якщо підходите.',                                href: '/ua/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '✉️', title: 'Лист-вимога',                 desc: 'Власна вимога може підтримати зустрічний позов.',                                   href: '/ua/demand-letter',            color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Стягнути допустимі витрати у разі виграшу.',                                        href: '/ua/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '📅', title: 'SC-140 — Розстрочка',        desc: 'Просити сплатити judgment частинами у разі програшу.',                              href: '/ua/sc-140-installments',      color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/sc-100-plaintiff-claim', label: 'SC-100 — Позов позивача' },
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії — повний огляд' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-120, Defendant’s Claim, дозволяє відповідачу, якого судять у
+      малих позовах, подати власний пов’язаний позов до позивача, щоб обидва
+      вирішили на одному слуханні — без окремої справи.
+    </p>
+
+    <h2>Строки та ліміти</h2>
+    <ul>
+      <li>Подайте й вручіть SC-120 до слухання — зазвичай мінімум за 5 днів (більше, якщо вам вручили менш ніж за 10 днів).</li>
+      <li>Діють ті самі ліміти ($12,500 для фізосіб; $6,250 для організацій).</li>
+      <li>Ваш позов має бути пов’язаний із позовом позивача або випливати з нього.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>SC-120</strong> Defendant’s Claim із наданих вами фактів.</li>
+      <li><strong>SC-104</strong> proof of service позивачу.</li>
+      <li><strong>FW-001</strong> fee waiver за кваліфікації.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо позов за вашим дорученням. Ми не радимо, чи
+      подавати зустрічний позов, не оцінюємо справу й не присутні з вами. Для
+      консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure §116.360
+      (defendant’s claim) та §§116.110–116.950 (Small Claims Act). Лише
+      підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-120" primaryText="Почати анкету SC-120" />
+</BaseLayout>

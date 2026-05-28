@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'SC-133 — Memorandum of Costs після judgment | Imverica';
+const description = 'California Licensed LDA готує SC-133 Memorandum of Costs, щоб переможець малого позову додав допустимі післясудові витрати (service, подача, стягнення) до суми боргу. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Memorandum of Costs (SC-133) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для memorandum of costs у малих позовах Каліфорнії (форма SC-133), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/sc-133-memorandum-of-costs"
+  slug="/sc-133-memorandum-of-costs" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.610 · §685.040"
+    heading="SC-133 — Memorandum of Costs (після judgment)"
+    sub="Виграли малий позов? SC-133 дозволяє додати витрати на виконання judgment до суми, яку винен відповідач. Готуємо її за вашими квитанціями, за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-133', text: 'Почати SC-133' }}
+  />
+
+  <CategoryTiles
+    kicker="Стягнення після виграшу"
+    heading="Післясудові форми стягнення"
+    intro="Judgment — це лише початок стягнення. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Позов позивача',    desc: 'Справа, за якою винесено judgment.',                                                href: '/ua/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Стягнути judgment із зарплати боржника.',                                           href: '/ua/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Зареєструвати заставу на нерухомість боржника.',                                    href: '/ua/ej-001-abstract-of-judgment', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Розстрочка',        desc: 'Як боржник може просити оплату частинами.',                                         href: '/ua/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Правильно вручити післясудові документи.',                                          href: '/ua/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Мита за стягнення можна звільнити.',                                                href: '/ua/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/wg-001-wage-garnishment', label: 'WG-001 — Wage garnishment' },
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії — повний огляд' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-133, Memorandum of Costs After Judgment, дозволяє стягувачу
+      додати додаткові витрати на стягнення — наприклад, збори за service та
+      витрати на виконання — і врахувати отримані платежі, щоб судовий запис
+      відображав реальний залишок боргу.
+    </p>
+
+    <h2>Коли використовують SC-133</h2>
+    <ul>
+      <li>Після виграшу, коли несете витрати на виконання (збори шерифа, реєстрація тощо).</li>
+      <li>Щоб урахувати платежі боржника й оновити залишок.</li>
+      <li>Витрати мають бути розумними й допустимими за законом, заявленими вчасно.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>SC-133</strong> Memorandum of Costs за наданими квитанціями та сумами.</li>
+      <li>Proof of service memorandum боржнику.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми вносимо витрати, які надаєте <em>ви</em>, за вашим
+      дорученням. Ми не вирішуємо, які витрати стягуються, і не представляємо
+      вас. Для консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure §116.610 та
+      §116.620 (judgment і costs); §685.040 та §685.070 (післясудові витрати).
+      Лише підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-133" primaryText="Почати анкету SC-133" />
+</BaseLayout>

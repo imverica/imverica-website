@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Preparación de carta de demanda (pre-suit) | Imverica';
+const description = 'California Licensed LDA prepara una carta de demanda previa, clara y profesional, que indica lo que se le debe y un plazo para pagar — a menudo resuelve la disputa antes de presentar un reclamo menor. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Pre-Suit Demand Letter Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de cartas de demanda previas bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/demand-letter"
+  slug="/demand-letter" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · Demanda previa"
+    heading="Carta de demanda — antes de presentar"
+    sub="Una carta de demanda clara y fechada a menudo resuelve una disputa sin ir a la corte — y muchos reclamos esperan que primero pida el pago. La preparamos con sus hechos, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?topic=Demand-Letter', text: 'Comenzar mi carta de demanda' }}
+  />
+
+  <CategoryTiles
+    kicker="Si la carta no lo resuelve"
+    heading="Qué sigue después de una carta de demanda"
+    intro="Si el pago no llega, el siguiente paso usual es reclamos menores. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'Presentar un reclamo menor por hasta $12,500 (individuos).',                        href: '/mx/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar correctamente al demandado tras presentar.',                              href: '/mx/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Exonerar la tarifa de presentación si califica por ingresos.',                      href: '/mx/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costos',            desc: 'Recuperar costos permitidos tras ganar la sentencia.',                              href: '/mx/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Cobrar la sentencia del salario del deudor.',                                       href: '/mx/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Registrar un gravamen sobre los bienes raíces del deudor.',                         href: '/mx/ej-001-abstract-of-judgment', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/sc', label: 'Reclamos menores de California (SC-100) — resumen' },
+    { href: '/mx/sc-100-plaintiff-claim', label: 'SC-100 — Reclamo del demandante' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Una carta de demanda es una solicitud por escrito que indica quién debe
+      qué, por qué, y para cuándo debe pagar antes de tomar más acciones. Crea
+      un registro claro, a menudo provoca el pago o un acuerdo, y para algunos
+      reclamos se espera (o se exige) antes de presentar — por ejemplo, la
+      devolución del depósito de un inquilino o reclamos por cheques sin fondos.
+    </p>
+
+    <h2>Qué incluye una buena carta de demanda</h2>
+    <ul>
+      <li>El monto adeudado y una explicación clara de los hechos y fechas.</li>
+      <li>Un plazo específico para pagar y cómo pagar.</li>
+      <li>Una declaración de que puede recurrir a reclamos menores (u otros remedios) si no se resuelve.</li>
+      <li>Copias de los documentos de respaldo (contratos, facturas, fotos).</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li>Una carta de demanda profesional redactada con los hechos y cifras que usted proporciona.</li>
+      <li>Organización de sus documentos de respaldo como anexos.</li>
+      <li>Un paquete de reclamos menores correspondiente si la carta no resuelve la disputa.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Redactamos la carta bajo su dirección con los hechos
+      que nos da. No evaluamos la fuerza de su reclamo, no asesoramos sobre
+      estrategia legal, no negociamos por usted ni garantizamos el pago. Para
+      asesoría mantenemos referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> práctica general de procedimiento civil de
+      California; p. ej., contextos del Civil Code §1719 (cheque sin fondos) y
+      Civil Code §1950.5 (depósito). Solo preparación de documentos — no
+      asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?topic=Demand-Letter" primaryText="Comenzar mi entrevista de carta de demanda" />
+</BaseLayout>

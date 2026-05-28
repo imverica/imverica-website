@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'EJ-001 — Abstract of Judgment (gravamen sobre bienes raíces) | Imverica';
+const description = 'California Licensed LDA prepara el EJ-001 Abstract of Judgment para que un acreedor registre un gravamen sobre los bienes raíces del deudor en cualquier condado de California. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Abstract of Judgment (EJ-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para el Abstract of Judgment de California (Formulario EJ-001), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/ej-001-abstract-of-judgment"
+  slug="/ej-001-abstract-of-judgment" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §697.310 · §674"
+    heading="EJ-001 — Abstract of Judgment"
+    sub="Registrar un Abstract of Judgment crea un gravamen sobre los bienes raíces del deudor en ese condado — así, si vende o refinancia, su sentencia se paga. Preparamos el EJ-001 bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=EJ-001', text: 'Comenzar mi EJ-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Ejecutar una sentencia"
+    heading="Cómo encaja un abstract"
+    intro="Un gravamen sobre la propiedad es una herramienta de cobranza paciente y poderosa. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'El caso que produjo la sentencia.',                                                 href: '/mx/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Cobrar del salario del deudor en paralelo.',                                        href: '/mx/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '💵', title: 'SC-133 — Costos',            desc: 'Agregar costos de registro y ejecución.',                                           href: '/mx/sc-133-memorandum-of-costs', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Plazos',            desc: 'Un deudor puede pedir pagar a plazos.',                                             href: '/mx/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar correctamente los documentos posteriores.',                               href: '/mx/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Las tarifas de registro/ejecución pueden exonerarse.',                              href: '/mx/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/wg-001-wage-garnishment', label: 'WG-001 — Garnishment de salario' },
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario EJ-001, Abstract of Judgment, se registra con el county
+      recorder para crear un gravamen sobre cualquier bien raíz que el deudor
+      tenga (o compre después) en ese condado. El gravamen generalmente debe
+      pagarse antes de que el deudor pueda vender o refinanciar, lo que a menudo
+      produce el pago sin más esfuerzo.
+    </p>
+
+    <h2>Cómo funciona</h2>
+    <ul>
+      <li>La corte emite el EJ-001 certificado; usted lo registra con el recorder en cada condado donde el deudor tenga o pueda tener propiedad.</li>
+      <li>El gravamen se adhiere a los bienes raíces y dura la vigencia de la sentencia (renovable).</li>
+      <li>Registrarlo en varios condados amplía el alcance del gravamen.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>EJ-001</strong> Abstract of Judgment con los datos de su sentencia y del deudor.</li>
+      <li>Instrucciones de registro para el county recorder.</li>
+      <li>Un paquete <strong>WG-001</strong> complementario si también desea embargar el salario.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos el abstract bajo su dirección. No buscamos
+      la propiedad del deudor, no asesoramos sobre estrategia de cobranza ni lo
+      representamos. Para asesoría mantenemos referencias a abogados con
+      licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure §697.310 y
+      §674 (abstract of judgment y gravámenes sobre bienes raíces); §683.020
+      (duración de la sentencia). Solo preparación de documentos — no asesoría
+      legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EJ-001" primaryText="Comenzar mi entrevista EJ-001" />
+</BaseLayout>

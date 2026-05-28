@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SC-140 — Pagar la sentencia a plazos | Imverica';
+const description = 'California Licensed LDA prepara el SC-140 Request to Pay Judgment in Installments para que un deudor de reclamos menores pida a la corte pagos mensuales accesibles y pause la ejecución. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Installment Payment Request (SC-140) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para la solicitud de pago a plazos en reclamos menores de California (Formulario SC-140), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/sc-140-installments"
+  slug="/sc-140-installments" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.620 · §116.880"
+    heading="SC-140 — Pagar la sentencia a plazos"
+    sub="¿Perdió un caso de reclamos menores y no puede pagar todo de una vez? El SC-140 pide a la corte aprobar pagos mensuales accesibles — lo que puede pausar el garnishment de salario y otra ejecución. Lo preparamos bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SC-140', text: 'Comenzar mi SC-140' }}
+  />
+
+  <CategoryTiles
+    kicker="Si se dicta una sentencia en su contra"
+    heading="Opciones para un deudor de reclamos menores"
+    intro="Después de una sentencia tiene formas de responder. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '🛡️', title: 'SC-120 — Demandado',         desc: 'Presentar su propio reclamo si el caso sigue abierto.',                             href: '/mx/sc-120-defendant-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Ingresos y gastos',  desc: 'Una declaración financiera respalda una solicitud de plazos.',                      href: '/mx/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Las tarifas de la corte pueden exonerarse si califica.',                            href: '/mx/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'Entender el reclamo que llevó a la sentencia.',                                     href: '/mx/sc-100-plaintiff-claim',   color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Lo que un acreedor puede usar si no paga.',                                         href: '/mx/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar su solicitud a la otra parte.',                                           href: '/mx/sc-104-proof-of-service',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/fw-001-fee-waiver', label: 'FW-001 — Exención de tarifas' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario SC-140, Request to Pay Judgment in Installments, pide a la
+      corte que le permita pagar lo que debe en montos mensuales programados en
+      lugar de todo de una vez. Un plan de plazos aprobado también puede
+      detener el garnishment de salario y los embargos bancarios mientras
+      mantenga los pagos.
+    </p>
+
+    <h2>Cuándo usa el SC-140</h2>
+    <ul>
+      <li>Se dictó una sentencia en su contra y pagar el total no es realista.</li>
+      <li>Puede proponer un monto mensual que realmente pueda mantener.</li>
+      <li>Proporciona un panorama financiero breve para respaldar la solicitud.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>SC-140</strong> con su monto y calendario de pago propuestos.</li>
+      <li>Una declaración financiera de respaldo y proof of service al acreedor.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Preparamos la solicitud con las cifras que
+      proporciona, bajo su dirección. No negociamos con el acreedor, no
+      asesoramos qué monto ofrecer ni lo representamos — la corte decide. Para
+      asesoría mantenemos referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure §116.620 y
+      §116.880 (pago a plazos de sentencias de reclamos menores). Solo
+      preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-140" primaryText="Comenzar mi entrevista SC-140" />
+</BaseLayout>

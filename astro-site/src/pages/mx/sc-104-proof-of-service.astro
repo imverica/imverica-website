@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SC-104 — Proof of Service (reclamos menores de California) | Imverica';
+const description = 'California Licensed LDA prepara el SC-104 Proof of Service para que un demandado de reclamos menores sea notificado correctamente y a tiempo — por sheriff, correo certificado o un adulto que no sea parte. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Proof of Service (SC-104) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para el proof of service en reclamos menores de California (Formulario SC-104), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/sc-104-proof-of-service"
+  slug="/sc-104-proof-of-service" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.330 · §116.340"
+    heading="SC-104 — Proof of Service"
+    sub="Un caso de reclamos menores puede desestimarse si el demandado no se notifica correctamente. El SC-104 documenta la notificación válida. Lo preparamos junto con el método correcto, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SC-104', text: 'Comenzar mi SC-104' }}
+  />
+
+  <CategoryTiles
+    kicker="El service dentro del caso"
+    heading="Dónde encaja el SC-104"
+    intro="El service ocurre tras presentar y antes de la audiencia. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'El reclamo que notifica al demandado.',                                             href: '/mx/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'SC-120 — Demandado',         desc: 'Un demandado notifica su contrademanda de igual forma.',                            href: '/mx/sc-120-defendant-claim',   color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Las tarifas de service por sheriff pueden exonerarse si califica.',                 href: '/mx/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '💵', title: 'SC-133 — Costos',            desc: 'Los costos de service pueden recuperarse tras ganar.',                              href: '/mx/sc-133-memorandum-of-costs', color: 'var(--gold)' },
+      { icon: '✉️', title: 'Carta de demanda',           desc: 'El paso que muchos demandantes dan antes de presentar.',                            href: '/mx/demand-letter',            color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Tras la sentencia, cobrar del salario del deudor.',                                 href: '/mx/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/sc-100-plaintiff-claim', label: 'SC-100 — Reclamo del demandante' },
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Proof of Service (SC-104) le dice a la corte que la otra parte recibió
+      el reclamo correctamente y a tiempo. Si la notificación falta o es tardía,
+      la audiencia suele posponerse o el caso se desestima — por eso una
+      notificación correcta es esencial.
+    </p>
+
+    <h2>Cómo se puede notificar a un demandado</h2>
+    <ul>
+      <li>Por el sheriff o marshal, por un process server registrado, o por cualquier adulto que no sea parte.</li>
+      <li>Por correo certificado (con entrega restringida) manejado por el secretario de la corte, donde se permita.</li>
+      <li>El service debe completarse al menos <strong>15 días</strong> antes de la audiencia (20 días si el demandado está fuera del condado).</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>SC-104</strong> Proof of Service y la serie SC-104 correspondiente al método usado.</li>
+      <li>Instrucciones de service y el paquete para el sheriff o process server.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados, ni un process server. Preparamos los formularios de
+      proof of service bajo su dirección; la notificación real la hace el
+      sheriff, un server registrado u otro adulto elegible. No damos asesoría
+      legal. Para asesoría mantenemos referencias a abogados con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure §116.330
+      (fecha de audiencia y tiempos de service) y §116.340 (métodos de service).
+      Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-104" primaryText="Comenzar mi entrevista SC-104" />
+</BaseLayout>

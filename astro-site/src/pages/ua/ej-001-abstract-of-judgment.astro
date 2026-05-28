@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'EJ-001 — Abstract of Judgment (застава на нерухомість) | Imverica';
+const description = 'California Licensed LDA готує EJ-001 Abstract of Judgment, щоб стягувач зареєстрував заставу на нерухомість боржника в будь-якому окрузі Каліфорнії. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Abstract of Judgment (EJ-001) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для Abstract of Judgment Каліфорнії (форма EJ-001), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/ej-001-abstract-of-judgment"
+  slug="/ej-001-abstract-of-judgment" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §697.310 · §674"
+    heading="EJ-001 — Abstract of Judgment"
+    sub="Реєстрація Abstract of Judgment ставить заставу на нерухомість боржника в цьому окрузі — тож при продажу чи рефінансуванні ваш judgment буде сплачено. Готуємо EJ-001 за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=EJ-001', text: 'Почати EJ-001' }}
+  />
+
+  <CategoryTiles
+    kicker="Виконання judgment"
+    heading="Як abstract вписується"
+    intro="Застава на нерухомість — терплячий і потужний інструмент стягнення. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Позов позивача',    desc: 'Справа, за якою винесено judgment.',                                                href: '/ua/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Паралельно стягнути із зарплати боржника.',                                         href: '/ua/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Додати витрати на реєстрацію та виконання.',                                        href: '/ua/sc-133-memorandum-of-costs', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Розстрочка',        desc: 'Боржник може просити оплату частинами.',                                            href: '/ua/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Правильно вручити післясудові документи.',                                          href: '/ua/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Збори за реєстрацію/виконання можна звільнити.',                                    href: '/ua/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/wg-001-wage-garnishment', label: 'WG-001 — Wage garnishment' },
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії — повний огляд' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EJ-001, Abstract of Judgment, реєструється в county recorder і
+      створює заставу на будь-яку нерухомість, якою боржник володіє (чи купить
+      пізніше) у цьому окрузі. Застава зазвичай має бути погашена до продажу чи
+      рефінансування, що часто призводить до оплати без додаткових зусиль.
+    </p>
+
+    <h2>Як це працює</h2>
+    <ul>
+      <li>Суд видає завірену EJ-001; ви реєструєте її в recorder у кожному окрузі, де боржник має чи може мати нерухомість.</li>
+      <li>Застава прив’язується до нерухомості й діє весь строк judgment (з можливістю продовження).</li>
+      <li>Реєстрація в кількох округах розширює дію застави.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>EJ-001</strong> Abstract of Judgment за даними judgment і боржника.</li>
+      <li>Інструкції з реєстрації для county recorder.</li>
+      <li>Супутній пакет <strong>WG-001</strong>, якщо ви також хочете garnishment зарплати.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо abstract за вашим дорученням. Ми не шукаємо
+      нерухомість боржника, не радимо щодо стратегії стягнення й не
+      представляємо вас. Для консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure §697.310 та
+      §674 (abstract of judgment і застави на нерухомість); §683.020 (строк
+      judgment). Лише підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EJ-001" primaryText="Почати анкету EJ-001" />
+</BaseLayout>

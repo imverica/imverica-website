@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'SC-140 — оплата judgment частинами | Imverica';
+const description = 'California Licensed LDA готує SC-140 Request to Pay Judgment in Installments, щоб боржник за малим позовом попросив суд встановити посильні щомісячні платежі та призупинити стягнення. За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Installment Payment Request (SC-140) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для прохання про оплату judgment частинами в малих позовах Каліфорнії (форма SC-140), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/sc-140-installments"
+  slug="/sc-140-installments" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.620 · §116.880"
+    heading="SC-140 — оплата judgment частинами"
+    sub="Програли малий позов і не можете сплатити одразу? SC-140 просить суд схвалити посильні щомісячні платежі — що може призупинити garnishment та інше стягнення. Готуємо за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-140', text: 'Почати SC-140' }}
+  />
+
+  <CategoryTiles
+    kicker="Якщо judgment винесено проти вас"
+    heading="Варіанти для боржника за малим позовом"
+    intro="Після judgment у вас є способи відреагувати. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '🛡️', title: 'SC-120 — Позов відповідача', desc: 'Подати власний позов, поки справа відкрита.',                                       href: '/ua/sc-120-defendant-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '💰', title: 'FL-150 — Доходи й витрати',   desc: 'Фінансова довідка підтримує прохання про розстрочку.',                              href: '/ua/fl-150-income-expense-declaration', color: 'var(--navy)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Судові мита можна звільнити, якщо підходите.',                                      href: '/ua/fw-001-fee-waiver',        color: 'var(--sage)' },
+      { icon: '⚖️', title: 'SC-100 — Позов позивача',    desc: 'Зрозуміти позов, за яким винесено judgment.',                                       href: '/ua/sc-100-plaintiff-claim',   color: 'var(--gold)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Що може застосувати стягувач, якщо не платити.',                                    href: '/ua/wg-001-wage-garnishment',  color: 'var(--navy-light)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Вручити ваше прохання іншій стороні.',                                              href: '/ua/sc-104-proof-of-service',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії — повний огляд' },
+    { href: '/ua/fw-001-fee-waiver', label: 'FW-001 — Fee waiver' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-140, Request to Pay Judgment in Installments, просить суд
+      дозволити сплачувати борг запланованими щомісячними сумами замість
+      одноразової оплати. Схвалений план розстрочки також може зупинити
+      garnishment зарплати й арешти рахунків, поки ви дотримуєтесь платежів.
+    </p>
+
+    <h2>Коли використовують SC-140</h2>
+    <ul>
+      <li>Проти вас винесено judgment, і повна оплата нереальна.</li>
+      <li>Ви можете запропонувати щомісячну суму, яку реально витримаєте.</li>
+      <li>Ви надаєте коротку фінансову картину на підтримку прохання.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>SC-140</strong> із запропонованою сумою та графіком платежів.</li>
+      <li>Підтверджувальну фінансову довідку та proof of service стягувачу.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо прохання за наданими вами цифрами, за вашим
+      дорученням. Ми не ведемо переговори зі стягувачем, не радимо, яку суму
+      запропонувати, і не представляємо вас — вирішує суд. Для консультацій —
+      referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure §116.620 та
+      §116.880 (оплата judgment малого позову частинами). Лише підготовка
+      документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-140" primaryText="Почати анкету SC-140" />
+</BaseLayout>

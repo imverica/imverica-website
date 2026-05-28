@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'SC-100 — позов позивача в малих позовах Каліфорнії | Imverica';
+const description = 'California Licensed LDA готує SC-100 Plaintiff’s Claim для позову до $12,500 (фізособи) у малих позовах Каліфорнії — з proof of service (SC-104) та fee waiver (FW-001). За дорученням клієнта.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Plaintiff Claim (SC-100) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Підготовка документів для позову позивача в малих позовах Каліфорнії (форма SC-100), за дорученням клієнта.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/sc-100-plaintiff-claim"
+  slug="/sc-100-plaintiff-claim" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.220 · §116.221"
+    heading="SC-100 — позов позивача (малі позови)"
+    sub="Малі позови — це швидкий і недорогий «народний суд» Каліфорнії. SC-100 починає справу на суму до $12,500 (фізособи). Готуємо акуратно за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Почати SC-100' }}
+  />
+
+  <CategoryTiles
+    kicker="Форми у справі малого позову"
+    heading="Що включає подача малого позову"
+    intro="Справа йде від подачі до service і стягнення. Натисніть плитку, щоб побачити призначення кожної."
+    tiles={[
+      { icon: '✉️', title: 'Лист-вимога',                 desc: 'Досудова вимога часто вирішує спір заздалегідь.',                                   href: '/ua/demand-letter',            color: 'var(--terracotta-deep)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Вручити відповідачу за 15–20 днів до слухання.',                                    href: '/ua/sc-104-proof-of-service',  color: 'var(--navy)' },
+      { icon: '🛡️', title: 'SC-120 — Позов відповідача', desc: 'Як відповідач відповідає або подає зустрічний позов.',                              href: '/ua/sc-120-defendant-claim',   color: 'var(--sage)' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',        desc: 'Звільнитися від мита, якщо підходите.',                                             href: '/ua/fw-001-fee-waiver',        color: 'var(--gold)' },
+      { icon: '💵', title: 'SC-133 — Costs',             desc: 'Стягнути допустимі витрати після виграшу.',                                         href: '/ua/sc-133-memorandum-of-costs', color: 'var(--navy-light)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Стягнути judgment із зарплати.',                                                    href: '/ua/wg-001-wage-garnishment',  color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/sc', label: 'Малі позови Каліфорнії — повний огляд' },
+    { href: '/ua/sc-120-defendant-claim', label: 'SC-120 — Позов відповідача' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SC-100, Plaintiff’s Claim and ORDER, відкриває справу малого
+      позову. Малі позови використовують спрощену процедуру, де сторони
+      представляють себе самі; адвокати не можуть представляти сторону на
+      першому слуханні, а мита невеликі.
+    </p>
+
+    <h2>Ліміти та де подавати</h2>
+    <ul>
+      <li>Фізособа може судитися на суму до <strong>$12,500</strong>; корпорації та інші організації обмежені <strong>$6,250</strong>.</li>
+      <li>Особа не може подати більше двох позовів понад $2,500 по всьому штату за один календарний рік.</li>
+      <li>Подавайте в належний venue — зазвичай за місцем проживання відповідача, місцем укладення/виконання договору або місцем заподіяння шкоди.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <ul>
+      <li><strong>SC-100</strong> Plaintiff’s Claim і <strong>SC-100A</strong> для додаткових сторін.</li>
+      <li><strong>SC-104</strong> proof of service та правильний спосіб вручення.</li>
+      <li><strong>FW-001</strong> fee waiver за кваліфікації.</li>
+    </ul>
+
+    <h2>Чого ми НЕ робимо</h2>
+    <p>
+      Imverica — зареєстрований California Legal Document Assistant, а не
+      юридична фірма. Ми готуємо позов за вашим дорученням із наданих фактів.
+      Ми не оцінюємо, чи виграєте ви, не радимо щодо стратегії й не присутні з
+      вами. Для консультацій — referral до адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> California Code of Civil Procedure
+      §§116.110–116.950 (Small Claims Act); §116.220–116.221 (юрисдикція та
+      ліміти); §116.231 (ліміт двох позовів); §116.530 (без адвоката на
+      слуханні). Лише підготовка документів — не юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-100" primaryText="Почати анкету SC-100" />
+</BaseLayout>

@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'SC-133 — Memorando de Costos después de la sentencia | Imverica';
+const description = 'California Licensed LDA prepara el SC-133 Memorandum of Costs para que el ganador de un reclamo menor agregue costos permitidos posteriores a la sentencia (service, presentación, ejecución) al monto adeudado. Bajo su dirección.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Small Claims Memorandum of Costs (SC-133) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Preparación de documentos para el memorando de costos en reclamos menores de California (Formulario SC-133), bajo la dirección del cliente.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/sc-133-memorandum-of-costs"
+  slug="/sc-133-memorandum-of-costs" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Civil · CCP §116.610 · §685.040"
+    heading="SC-133 — Memorando de Costos (tras la sentencia)"
+    sub="¿Ganó su caso de reclamos menores? El SC-133 le permite agregar los costos de ejecutar la sentencia a lo que el deudor debe. Lo preparamos con sus recibos, bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=SC-133', text: 'Comenzar mi SC-133' }}
+  />
+
+  <CategoryTiles
+    kicker="Cobrar después de ganar"
+    heading="Formularios de cobranza posteriores a la sentencia"
+    intro="Una sentencia es solo el comienzo de la cobranza. Toque un tile para ver para qué sirve cada uno."
+    tiles={[
+      { icon: '⚖️', title: 'SC-100 — Demandante',        desc: 'El caso que produjo la sentencia.',                                                 href: '/mx/sc-100-plaintiff-claim',   color: 'var(--terracotta-deep)' },
+      { icon: '🏦', title: 'WG-001 — Garnishment',       desc: 'Cobrar la sentencia del salario del deudor.',                                       href: '/mx/wg-001-wage-garnishment',  color: 'var(--navy)' },
+      { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Registrar un gravamen sobre los bienes raíces del deudor.',                         href: '/mx/ej-001-abstract-of-judgment', color: 'var(--sage)' },
+      { icon: '📅', title: 'SC-140 — Plazos',            desc: 'Cómo un deudor puede pedir pagar a plazos.',                                        href: '/mx/sc-140-installments',      color: 'var(--gold)' },
+      { icon: '📨', title: 'SC-104 — Proof of service',  desc: 'Notificar correctamente los documentos posteriores.',                               href: '/mx/sc-104-proof-of-service',  color: 'var(--navy-light)' },
+      { icon: '🧾', title: 'FW-001 — Exención',          desc: 'Las tarifas de ejecución pueden exonerarse si califica.',                           href: '/mx/fw-001-fee-waiver',        color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/wg-001-wage-garnishment', label: 'WG-001 — Garnishment de salario' },
+    { href: '/mx/sc', label: 'Reclamos menores de California — resumen completo' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      El Formulario SC-133, Memorandum of Costs After Judgment, permite al
+      acreedor de una sentencia agregar los costos adicionales de cobrar — como
+      tarifas de service y costos de ejecución — y acreditar los pagos
+      recibidos, para que el registro de la corte refleje el saldo real que el
+      deudor debe.
+    </p>
+
+    <h2>Cuándo usa el SC-133</h2>
+    <ul>
+      <li>Tras ganar y al incurrir en costos de ejecución (tarifas del sheriff, registro, etc.).</li>
+      <li>Para registrar pagos que el deudor ha hecho y actualizar el saldo.</li>
+      <li>Los costos deben ser razonables, permitidos por ley y reclamados dentro de los plazos.</li>
+    </ul>
+
+    <h2>Qué preparamos</h2>
+    <ul>
+      <li><strong>SC-133</strong> Memorandum of Costs con los recibos y montos que proporciona.</li>
+      <li>Proof of service del memorando al deudor.</li>
+    </ul>
+
+    <h2>Qué NO hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant registrado — no un
+      bufete de abogados. Listamos los costos que <em>usted</em> proporciona,
+      bajo su dirección. No decidimos qué costos son recuperables ni lo
+      representamos. Para asesoría mantenemos referencias a abogados con
+      licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> California Code of Civil Procedure §116.610 y
+      §116.620 (sentencia y costos); §685.040 y §685.070 (costos posteriores a
+      la sentencia). Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SC-133" primaryText="Comenzar mi entrevista SC-133" />
+</BaseLayout>
