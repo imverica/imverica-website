@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'Register an out-of-state (foreign) LLC in California (LLC-5) | Imverica';
+const description = 'California Licensed LDA prepares the Application to Register a Foreign LLC (Form LLC-5) so an out-of-state LLC can legally do business in California, with the Statement of Information and EIN support. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Foreign LLC Registration (LLC-5) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Document preparation to register an out-of-state (foreign) LLC in California (Form LLC-5), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/llc-1a-foreign-llc"
+  slug="/llc-1a-foreign-llc" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Business · Corp. Code §17708.02"
+    heading="Register an out-of-state (foreign) LLC"
+    sub="An LLC formed in another state must register in California before doing business here. We prepare the Application to Register a Foreign LLC (Form LLC-5) and the follow-on filings at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=LLC-5', text: 'Start my foreign-LLC registration' }}
+  />
+
+  <CategoryTiles
+    kicker="Registering and staying compliant"
+    heading="What foreign registration works with"
+    intro="A registered foreign LLC has the same California obligations as a domestic one. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Foreign LLCs file the Statement of Information too.',                                href: '/llc-12-statement-of-information', color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Federal tax ID for the business operating in California.',                          href: '/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'A California trade name if you operate under one.',                                 href: '/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Your LLC keeps its operating agreement.',                                           href: '/operating-agreement',         color: 'var(--gold)' },
+      { icon: '🏢', title: 'LLC-1 — Domestic LLC',       desc: 'Forming a brand-new California LLC instead?',                                        href: '/llc-1-form-an-llc',           color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Corporation',        desc: 'Registering a foreign corporation? Start here.',                                    href: '/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/llc-1-form-an-llc', label: 'LLC-1 — Form a California LLC' },
+    { href: '/business', label: 'All California business filings we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      If your LLC was formed in another state (a "foreign" LLC) and you want to
+      do business in California, you must register it with the California
+      Secretary of State using the Application to Register a Foreign Limited
+      Liability Company (Form LLC-5). Once registered, the LLC has the same
+      California compliance and tax duties as a California LLC.
+    </p>
+
+    <h2>What foreign registration takes</h2>
+    <ul>
+      <li>A current Certificate of Good Standing from the LLC's home state.</li>
+      <li>A California agent for service of process.</li>
+      <li>The LLC-12 Statement of Information after registering, and the $800 annual franchise tax.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form LLC-5</strong> Application to Register a Foreign LLC for filing with the Secretary of State.</li>
+      <li>The follow-on <strong>LLC-12</strong> Statement of Information and <strong>EIN</strong> support if needed.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm or tax advisor. We prepare the registration you direct from the
+      information you provide. We do not advise whether your activity requires
+      registration, give legal or tax advice, or act as your agent. For advice
+      we maintain referrals to licensed attorneys and CPAs.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Corporations Code §17708.02
+      (registration of foreign LLCs) and §17708.03 (Form LLC-5 / certificate
+      of good standing). Document preparation only — not legal or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-5" primaryText="Begin my foreign-LLC intake" />
+</BaseLayout>

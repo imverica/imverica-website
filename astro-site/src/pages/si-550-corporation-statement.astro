@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SI-550 — California Corporation Statement of Information | Imverica';
+const description = 'California Licensed LDA prepares Form SI-550, the corporation Statement of Information filed within 90 days of incorporating and every year after, keeping your corporation in good standing with the Secretary of State. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Corporation Statement of Information (SI-550) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Document preparation for the California corporation Statement of Information (Form SI-550), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/si-550-corporation-statement"
+  slug="/si-550-corporation-statement" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Business · Corp. Code §1502"
+    heading="SI-550 — Corporation Statement of Information"
+    sub="California corporations file Form SI-550 within 90 days of incorporating and every year after. We prepare it accurately and on time at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SI-550', text: 'Start my SI-550' }}
+  />
+
+  <CategoryTiles
+    kicker="Keeping the corporation in good standing"
+    heading="What the SI-550 works with"
+    intro="The Statement of Information is part of running a compliant corporation. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '🏛️', title: 'ARTS — Corporation',        desc: 'The Articles of Incorporation that created the company.',                           href: '/arts-gs-incorporation',       color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Federal tax ID used alongside state compliance.',                                   href: '/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Register a trade name the corporation uses.',                                       href: '/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'The LLC equivalent of this filing.',                                                href: '/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '🏢', title: 'LLC-1 — Form an LLC',        desc: 'Prefer an LLC structure instead?',                                                  href: '/llc-1-form-an-llc',           color: 'var(--navy-light)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Foreign entities registered in California file too.',                               href: '/llc-1a-foreign-llc',          color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/arts-gs-incorporation', label: 'ARTS-GS — Incorporate in California' },
+    { href: '/business', label: 'All California business filings we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form SI-550, the corporation Statement of Information, tells the
+      California Secretary of State who the officers and directors are, where
+      the corporation is located, and who its agent for service of process is.
+      Filing it on time keeps the corporation in good standing; missing it
+      leads to penalties and possible suspension.
+    </p>
+
+    <h2>When you file SI-550</h2>
+    <ul>
+      <li>An initial statement is due within <strong>90 days</strong> of incorporating.</li>
+      <li>After that, corporations file <strong>every year</strong> (unlike LLCs, which file every two years).</li>
+      <li>File an update whenever officers, directors, the address, or the agent change.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form SI-550</strong> completed from your current corporate information.</li>
+      <li>Updates when your officers, directors, address, or agent change.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm or tax advisor. We complete the statement from the information you
+      provide, at your direction. We do not give legal or tax advice or act as
+      your agent for service of process. For advice we maintain referrals to
+      licensed attorneys and CPAs.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Corporations Code §1502
+      (corporation Statement of Information). Document preparation only — not
+      legal or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SI-550" primaryText="Begin my SI-550 intake" />
+</BaseLayout>

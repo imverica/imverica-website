@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'LLC-12 — California LLC Statement of Information | Imverica';
+const description = 'California Licensed LDA prepares Form LLC-12, the LLC Statement of Information filed within 90 days of formation and every two years after, keeping your LLC in good standing with the Secretary of State. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Statement of Information (LLC-12) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Document preparation for the California LLC Statement of Information (Form LLC-12), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/llc-12-statement-of-information"
+  slug="/llc-12-statement-of-information" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Business · Corp. Code §17702.09"
+    heading="LLC-12 — Statement of Information"
+    sub="Every California LLC files an LLC-12 within 90 days of forming and every two years after. We prepare it accurately and on time at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=LLC-12', text: 'Start my LLC-12' }}
+  />
+
+  <CategoryTiles
+    kicker="Keeping the LLC in good standing"
+    heading="What the LLC-12 works with"
+    intro="The Statement of Information is part of running a compliant LLC. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Form an LLC',        desc: 'The Articles of Organization that created the LLC.',                                href: '/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'The internal rules the Statement of Information reflects.',                          href: '/operating-agreement',         color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Federal tax ID used alongside state compliance.',                                   href: '/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Register a trade name if you operate under one.',                                   href: '/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Foreign LLCs registered in California also file this.',                             href: '/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '📊', title: 'SI-550 — Corp Statement',    desc: 'The corporation equivalent of this filing.',                                        href: '/si-550-corporation-statement', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/llc-1-form-an-llc', label: 'LLC-1 — Form a California LLC' },
+    { href: '/business', label: 'All California business filings we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form LLC-12, the Statement of Information, tells the California Secretary
+      of State who manages the LLC, where it is located, and who its agent for
+      service of process is. Filing it keeps the LLC in good standing; missing
+      it can lead to penalties and suspension.
+    </p>
+
+    <h2>When you file LLC-12</h2>
+    <ul>
+      <li>An initial Statement of Information is due within <strong>90 days</strong> of forming the LLC.</li>
+      <li>After that, you file every <strong>two years</strong> (the biennial filing period).</li>
+      <li>File an updated one whenever key information (address, managers, agent) changes.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form LLC-12</strong> completed from your current company information.</li>
+      <li>Updates when your managers, members, address, or agent change.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm or tax advisor. We complete the statement from the information you
+      provide, at your direction. We do not give legal or tax advice or act as
+      your agent for service of process. For advice we maintain referrals to
+      licensed attorneys and CPAs.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Corporations Code §17702.09
+      (LLC Statement of Information). Document preparation only — not legal or
+      tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-12" primaryText="Begin my LLC-12 intake" />
+</BaseLayout>

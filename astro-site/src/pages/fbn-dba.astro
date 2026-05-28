@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'FBN / DBA — Fictitious Business Name in California | Imverica';
+const description = 'California Licensed LDA prepares your Fictitious Business Name (FBN / DBA) statement for filing with the county clerk, with the newspaper publication that California requires. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Fictitious Business Name (DBA) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Document preparation for a California fictitious business name (DBA) statement, at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/fbn-dba"
+  slug="/fbn-dba" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Business · Bus. &amp; Prof. Code §17900 et seq."
+    heading="FBN / DBA — Fictitious Business Name"
+    sub="If you do business under a name that isn't your legal name (or your LLC/corporation's exact name), California requires a Fictitious Business Name statement filed at the county. We prepare it and the required publication at your direction."
+    ctaPrimary={{ href: '/#get-started?form=FBN', text: 'Start my FBN / DBA' }}
+  />
+
+  <CategoryTiles
+    kicker="When a DBA fits your setup"
+    heading="What a DBA works with"
+    intro="A fictitious business name pairs with whatever entity you run. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Form an LLC',        desc: 'Register a DBA for an LLC operating under another name.',                           href: '/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '🏛️', title: 'ARTS — Corporation',        desc: 'A corporation can also file a DBA for a trade name.',                               href: '/arts-gs-incorporation',       color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'A federal tax ID for the business behind the name.',                                href: '/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Keep your LLC compliant alongside the DBA.',                                        href: '/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '📊', title: 'SI-550 — Corp Statement',    desc: 'Keep your corporation compliant alongside the DBA.',                                href: '/si-550-corporation-statement', color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Internal LLC document if you also formed an LLC.',                                  href: '/operating-agreement',         color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/business', label: 'All California business filings we prepare' },
+    { href: '/llc-1-form-an-llc', label: 'LLC-1 — Form a California LLC' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      A Fictitious Business Name (FBN), also called a DBA ("doing business
+      as"), lets you operate under a name different from your legal personal
+      name or your registered entity's exact name. California requires the FBN
+      statement to be filed with the county clerk where your business is based,
+      followed by newspaper publication.
+    </p>
+
+    <h2>When you need a DBA</h2>
+    <ul>
+      <li>A sole proprietor using a business name that isn't their own surname.</li>
+      <li>An LLC or corporation operating a brand or division under a different name.</li>
+      <li>Banks often require a filed FBN before opening an account under the trade name.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li>The <strong>Fictitious Business Name statement</strong> for filing with the correct county clerk.</li>
+      <li>The required <strong>newspaper publication</strong> coordination (publish once a week for four weeks, then file proof).</li>
+      <li>Renewal statements (FBNs generally expire after five years).</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm. We prepare and route the FBN you direct. We do not run a trademark
+      search, advise whether a name is legally available or protectable, or
+      give legal advice. For advice we maintain referrals to licensed
+      attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Business &amp; Professions Code
+      §17900 et seq. (Fictitious Business Names), including the publication
+      requirement in §17917. Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FBN" primaryText="Begin my FBN / DBA intake" />
+</BaseLayout>

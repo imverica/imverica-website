@@ -48,7 +48,15 @@ const URLS: SitemapEntry[] = [
   { slug: '/sc-133-memorandum-of-costs', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/wg-001-wage-garnishment', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/ej-001-abstract-of-judgment', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/sc-140-installments', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
+  { slug: '/sc-140-installments', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/llc-1-form-an-llc', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/llc-12-statement-of-information', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/arts-gs-incorporation', priority: 0.8, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/fbn-dba', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/ss-4-ein', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/operating-agreement', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/llc-1a-foreign-llc', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/si-550-corporation-statement', priority: 0.7, changefreq: 'monthly', translatedLocales: [] }
 ];
 
 function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {

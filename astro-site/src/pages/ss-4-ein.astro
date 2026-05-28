@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'SS-4 — EIN (Employer Identification Number) support | Imverica';
+const description = 'California Licensed LDA prepares the IRS Form SS-4 application for an EIN (Employer Identification Number) so your LLC, corporation, or sole proprietorship can open a bank account, hire, and file taxes. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EIN / Form SS-4 Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for the IRS Form SS-4 EIN application, at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ss-4-ein"
+  slug="/ss-4-ein" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="Federal · IRS Form SS-4"
+    heading="SS-4 — Employer Identification Number (EIN)"
+    sub="An EIN is your business's federal tax ID — needed to open a bank account, hire employees, and file taxes. We prepare the SS-4 application at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=SS-4', text: 'Start my EIN application' }}
+  />
+
+  <CategoryTiles
+    kicker="The EIN fits your new business"
+    heading="What an EIN works with"
+    intro="An EIN is one of the first steps after forming a business. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Form an LLC',        desc: 'Form the LLC the EIN will belong to.',                                              href: '/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '🏛️', title: 'ARTS — Corporation',        desc: 'Incorporate the entity the EIN will belong to.',                                    href: '/arts-gs-incorporation',       color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Register the trade name your EIN business uses.',                                   href: '/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Keep the LLC compliant after you get the EIN.',                                     href: '/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Set up how the LLC behind the EIN is run.',                                         href: '/operating-agreement',         color: 'var(--navy-light)' },
+      { icon: '📊', title: 'SI-550 — Corp Statement',    desc: 'Keep the corporation compliant after the EIN.',                                     href: '/si-550-corporation-statement', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/llc-1-form-an-llc', label: 'LLC-1 — Form a California LLC' },
+    { href: '/business', label: 'All California business filings we prepare' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form SS-4 is the IRS application for an Employer Identification Number
+      (EIN) — the nine-digit federal tax ID that identifies your business.
+      Most businesses need one to open a bank account, hire employees, and
+      file federal and state tax returns.
+    </p>
+
+    <h2>Who needs an EIN</h2>
+    <ul>
+      <li>LLCs and corporations (almost always), and partnerships.</li>
+      <li>Sole proprietors who hire employees or want a tax ID separate from their SSN.</li>
+      <li>Businesses opening a bank account or applying for licenses that require an EIN.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Form SS-4</strong> completed from your entity and responsible-party details.</li>
+      <li>Guidance on the information the IRS needs so the application goes through cleanly.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm, accountant, or tax advisor. We prepare the SS-4 from the
+      information you provide, at your direction. We do not give tax advice,
+      choose your tax classification, or act as your responsible party or
+      third-party designee unless you separately authorize it. For advice we
+      maintain referrals to licensed CPAs and attorneys.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> Internal Revenue Code §6109 and IRS Form SS-4
+      instructions (Employer Identification Numbers). Document preparation
+      only — not legal or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SS-4" primaryText="Begin my EIN intake" />
+</BaseLayout>

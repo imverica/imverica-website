@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'ARTS-GS — Incorporate in California (Articles of Incorporation) | Imverica';
+const description = 'California Licensed LDA prepares the Articles of Incorporation (Form ARTS-GS general stock, or public-benefit) to form a California corporation with the Secretary of State, plus SI-550, EIN, and bylaws support. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Incorporation (Articles of Incorporation) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Document preparation to incorporate in California (Articles of Incorporation, Form ARTS-GS), at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/arts-gs-incorporation"
+  slug="/arts-gs-incorporation" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Business · Corp. Code §200 et seq."
+    heading="ARTS-GS — Incorporate in California"
+    sub="The Articles of Incorporation (Form ARTS-GS for a general-stock corporation, or the public-benefit equivalent) create your corporation with the Secretary of State. We prepare the startup packet at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=ARTS-GS', text: 'Start my incorporation' }}
+  />
+
+  <CategoryTiles
+    kicker="Forms in a new-corporation packet"
+    heading="What incorporating involves"
+    intro="A new corporation needs several filings to be set up and compliant. Tap a tile to see what each is for."
+    tiles={[
+      { icon: '📊', title: 'SI-550 — Corp Statement',    desc: 'Statement of Information, due within 90 days, then annually.',                       href: '/si-550-corporation-statement', color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Federal Employer Identification Number for banking and taxes.',                     href: '/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'A fictitious business name if you operate under a different name.',                  href: '/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '🏢', title: 'LLC-1 — Form an LLC',        desc: 'Prefer an LLC instead? Articles of Organization.',                                  href: '/llc-1-form-an-llc',           color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Register a foreign entity to do business in California.',                           href: '/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'The LLC version of the Statement of Information.',                                   href: '/llc-12-statement-of-information', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/business', label: 'All California business filings we prepare' },
+    { href: '/si-550-corporation-statement', label: 'SI-550 — Corporation Statement of Information' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      The Articles of Incorporation are filed with the California Secretary of
+      State to create a corporation. Form ARTS-GS is the standard general-stock
+      version; nonprofits and mission-driven companies use the corresponding
+      public-benefit or nonprofit Articles. Once filed, you finish setup with
+      bylaws, an EIN, and the Statement of Information.
+    </p>
+
+    <h2>What incorporating takes</h2>
+    <ul>
+      <li>A unique corporate name and a California agent for service of process.</li>
+      <li>The number of authorized shares (for a stock corporation).</li>
+      <li>SI-550 Statement of Information within 90 days, then annually.</li>
+      <li>The $800 annual franchise tax owed to the Franchise Tax Board.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>Articles of Incorporation (ARTS-GS</strong> or the public-benefit form) for filing.</li>
+      <li><strong>SI-550</strong> Statement of Information and <strong>EIN (SS-4)</strong> support.</li>
+      <li>Organizational documents (bylaws, initial resolutions) from your instructions.</li>
+    </ul>
+
+    <h2>What we do NOT do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant — not a law
+      firm or tax advisor. We prepare the filings you direct. We do not advise
+      whether to incorporate, choose your entity or share structure, give legal
+      or tax advice, or act as your agent. For advice we maintain referrals to
+      licensed attorneys and CPAs.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> California Corporations Code §200 and §202
+      (Articles of Incorporation); Revenue &amp; Taxation Code §23153 (annual
+      tax). Document preparation only — not legal or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=ARTS-GS" primaryText="Begin my incorporation intake" />
+</BaseLayout>
