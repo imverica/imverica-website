@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'SS-4 — EIN (Employer Identification Number) | Imverica';
+const description = 'California Licensed LDA готовит заявление IRS Form SS-4 на EIN (Employer Identification Number), чтобы ваша LLC, корпорация или sole proprietorship могла открыть счёт, нанимать и платить налоги. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EIN / Form SS-4 Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Подготовка документов для заявления IRS Form SS-4 на EIN, по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/ss-4-ein"
+  slug="/ss-4-ein" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="Federal · IRS Form SS-4"
+    heading="SS-4 — Employer Identification Number (EIN)"
+    sub="EIN — это федеральный налоговый ID вашего бизнеса, нужный для открытия счёта, найма сотрудников и налогов. Готовим заявление SS-4 по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=SS-4', text: 'Начать заявление на EIN' }}
+  />
+
+  <CategoryTiles
+    kicker="EIN вписывается в новый бизнес"
+    heading="С чем работает EIN"
+    intro="EIN — один из первых шагов после создания бизнеса. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Создать LLC',        desc: 'Создать LLC, которой будет принадлежать EIN.',                                      href: '/ru/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '🏛️', title: 'ARTS — Корпорация',         desc: 'Зарегистрировать entity, которому будет принадлежать EIN.',                         href: '/ru/arts-gs-incorporation',       color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Зарегистрировать торговое имя бизнеса с EIN.',                                      href: '/ru/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Поддерживать LLC в соответствии после получения EIN.',                              href: '/ru/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Настроить, как управляется LLC за EIN.',                                            href: '/ru/operating-agreement',         color: 'var(--navy-light)' },
+      { icon: '📊', title: 'SI-550 — Корпорация',        desc: 'Поддерживать корпорацию в соответствии после EIN.',                                 href: '/ru/si-550-corporation-statement', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/llc-1-form-an-llc', label: 'LLC-1 — создание LLC в Калифорнии' },
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SS-4 — это заявление IRS на Employer Identification Number (EIN),
+      девятизначный федеральный налоговый ID вашего бизнеса. Большинству
+      бизнесов он нужен, чтобы открыть банковский счёт, нанимать сотрудников и
+      подавать федеральные и штатные налоговые декларации.
+    </p>
+
+    <h2>Кому нужен EIN</h2>
+    <ul>
+      <li>LLC и корпорациям (почти всегда), а также partnerships.</li>
+      <li>Sole proprietors, которые нанимают сотрудников или хотят налоговый ID отдельно от SSN.</li>
+      <li>Бизнесам, открывающим счёт или подающим на лицензии, требующие EIN.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форму SS-4</strong> по данным вашего entity и responsible party.</li>
+      <li>Подсказки по информации, нужной IRS, чтобы заявление прошло чисто.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма, бухгалтер или налоговый консультант. Мы готовим SS-4 по
+      предоставленной информации, по вашему поручению. Мы не даём налоговых
+      консультаций, не выбираем вашу налоговую классификацию и не выступаем
+      вашим responsible party или third-party designee без отдельного
+      разрешения. Для консультаций — referral к CPA и адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> Internal Revenue Code §6109 и инструкции IRS
+      к Form SS-4 (Employer Identification Numbers). Только подготовка
+      документов — не юридические или налоговые консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SS-4" primaryText="Начать анкету EIN" />
+</BaseLayout>

@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'FBN / DBA — Fictitious Business Name в Калифорнии | Imverica';
+const description = 'California Licensed LDA готовит заявление Fictitious Business Name (FBN / DBA) для подачи у county clerk, с публикацией в газете, которую требует Калифорния. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Fictitious Business Name (DBA) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для калифорнийского fictitious business name (DBA), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/fbn-dba"
+  slug="/fbn-dba" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Bus. &amp; Prof. Code §17900 et seq."
+    heading="FBN / DBA — Fictitious Business Name"
+    sub="Если вы работаете под именем, отличным от вашего юридического (или точного имени вашей LLC/корпорации), Калифорния требует заявление Fictitious Business Name, подаваемое в округе. Готовим его и обязательную публикацию по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=FBN', text: 'Начать FBN / DBA' }}
+  />
+
+  <CategoryTiles
+    kicker="Когда DBA подходит вашей структуре"
+    heading="С чем работает DBA"
+    intro="Fictitious business name сочетается с любым вашим entity. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Создать LLC',        desc: 'Зарегистрировать DBA для LLC, работающей под другим именем.',                       href: '/ru/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '🏛️', title: 'ARTS — Корпорация',         desc: 'Корпорация тоже может подать DBA для торгового имени.',                             href: '/ru/arts-gs-incorporation',       color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральный налоговый ID для бизнеса за этим именем.',                              href: '/ru/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Поддерживайте LLC в соответствии наряду с DBA.',                                    href: '/ru/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '📊', title: 'SI-550 — Корпорация',        desc: 'Поддерживайте корпорацию в соответствии наряду с DBA.',                             href: '/ru/si-550-corporation-statement', color: 'var(--navy-light)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Внутренний документ LLC, если вы также создали LLC.',                               href: '/ru/operating-agreement',         color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии' },
+    { href: '/ru/llc-1-form-an-llc', label: 'LLC-1 — создание LLC в Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Fictitious Business Name (FBN), также называемое DBA («doing business
+      as»), позволяет работать под именем, отличным от вашего юридического
+      личного имени или точного имени зарегистрированного entity. Калифорния
+      требует подать заявление FBN у county clerk по месту бизнеса, затем —
+      публикация в газете.
+    </p>
+
+    <h2>Когда нужен DBA</h2>
+    <ul>
+      <li>Sole proprietor, использующий бизнес-имя, отличное от своей фамилии.</li>
+      <li>LLC или корпорация, ведущая бренд или подразделение под другим именем.</li>
+      <li>Банки часто требуют поданный FBN до открытия счёта под торговым именем.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Заявление Fictitious Business Name</strong> для подачи у нужного county clerk.</li>
+      <li>Координацию обязательной <strong>публикации в газете</strong> (раз в неделю четыре недели, затем подача proof).</li>
+      <li>Renewal-заявления (FBN обычно истекают через пять лет).</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы готовим и подаём FBN по вашему поручению. Мы не
+      проводим trademark-поиск, не советуем, доступно ли или защищаемо ли имя
+      юридически, и не даём юридических консультаций. Для консультаций —
+      referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Business &amp; Professions Code
+      §17900 и далее (Fictitious Business Names), включая требование о
+      публикации в §17917. Только подготовка документов — не юридические
+      консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=FBN" primaryText="Начать анкету FBN / DBA" />
+</BaseLayout>

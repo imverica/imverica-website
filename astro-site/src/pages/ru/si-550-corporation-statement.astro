@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'SI-550 — Statement of Information корпорации Калифорнии | Imverica';
+const description = 'California Licensed LDA готовит форму SI-550, Statement of Information корпорации, подаваемый в течение 90 дней после регистрации и затем ежегодно, чтобы корпорация оставалась в good standing. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Corporation Statement of Information (SI-550) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для Statement of Information корпорации Калифорнии (форма SI-550), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/si-550-corporation-statement"
+  slug="/si-550-corporation-statement" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §1502"
+    heading="SI-550 — Statement of Information корпорации"
+    sub="Калифорнийские корпорации подают форму SI-550 в течение 90 дней после регистрации и затем ежегодно. Готовим аккуратно и в срок по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=SI-550', text: 'Начать SI-550' }}
+  />
+
+  <CategoryTiles
+    kicker="Поддержание корпорации в good standing"
+    heading="С чем работает SI-550"
+    intro="Statement of Information — часть ведения соответствующей требованиям корпорации. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '🏛️', title: 'ARTS — Корпорация',         desc: 'Articles of Incorporation, создавшие компанию.',                                    href: '/ru/arts-gs-incorporation',       color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральный налоговый ID наряду с соответствием штату.',                            href: '/ru/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Зарегистрировать торговое имя корпорации.',                                         href: '/ru/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'LLC-эквивалент этой подачи.',                                                       href: '/ru/llc-12-statement-of-information', color: 'var(--gold)' },
+      { icon: '🏢', title: 'LLC-1 — Создать LLC',        desc: 'Предпочитаете структуру LLC?',                                                      href: '/ru/llc-1-form-an-llc',           color: 'var(--navy-light)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Иностранные entity, зарегистрированные в Калифорнии, тоже подают.',                 href: '/ru/llc-1a-foreign-llc',          color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/arts-gs-incorporation', label: 'ARTS-GS — регистрация корпорации' },
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма SI-550, Statement of Information корпорации, сообщает California
+      Secretary of State, кто officers и directors, где находится корпорация и
+      кто её agent for service of process. Своевременная подача держит
+      корпорацию в good standing; пропуск ведёт к штрафам и возможной
+      приостановке.
+    </p>
+
+    <h2>Когда подают SI-550</h2>
+    <ul>
+      <li>Первичный statement — в течение <strong>90 дней</strong> после регистрации.</li>
+      <li>Далее корпорации подают <strong>ежегодно</strong> (в отличие от LLC, подающих раз в два года).</li>
+      <li>Обновление подаётся при изменении officers, directors, адреса или agent.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форму SI-550</strong> по вашим текущим корпоративным данным.</li>
+      <li>Обновления при изменении officers, directors, адреса или agent.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма и не налоговый консультант. Мы заполняем statement по
+      предоставленной информации, по вашему поручению. Мы не даём
+      юридических/налоговых консультаций и не выступаем вашим agent for service
+      of process. Для консультаций — referral к адвокатам и CPA.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Corporations Code §1502 (Statement
+      of Information корпорации). Только подготовка документов — не юридические
+      или налоговые консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=SI-550" primaryText="Начать анкету SI-550" />
+</BaseLayout>

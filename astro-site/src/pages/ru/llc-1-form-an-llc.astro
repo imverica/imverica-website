@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'LLC-1 — создание LLC в Калифорнии (Articles of Organization) | Imverica';
+const description = 'California Licensed LDA готовит форму LLC-1 (Articles of Organization) для создания калифорнийской LLC через Secretary of State, плюс LLC-12 Statement of Information, EIN и operating agreement. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Formation (LLC-1) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для создания калифорнийской LLC (форма LLC-1, Articles of Organization), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/llc-1-form-an-llc"
+  slug="/llc-1-form-an-llc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17702.01"
+    heading="LLC-1 — создание LLC в Калифорнии"
+    sub="Форма LLC-1 (Articles of Organization) создаёт вашу LLC через California Secretary of State. Готовим полный стартовый пакет по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=LLC-1', text: 'Начать создание LLC' }}
+  />
+
+  <CategoryTiles
+    kicker="Формы в пакете новой LLC"
+    heading="Что включает создание LLC"
+    intro="Новой LLC обычно нужно несколько подач для полной настройки. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Первичный Statement of Information в течение 90 дней, затем раз в 2 года.',          href: '/ru/llc-12-statement-of-information', color: 'var(--terracotta-deep)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Внутренний регламент: доли, управление, прибыль.',                                  href: '/ru/operating-agreement',         color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральный налоговый ID для банка и налогов.',                                     href: '/ru/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Fictitious business name, если работаете под другим именем.',                       href: '/ru/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Регистрация иностранной (не из Калифорнии) LLC для работы здесь.',                   href: '/ru/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Корпорация',         desc: 'Предпочитаете корпорацию? Articles of Incorporation.',                              href: '/ru/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии, которые мы готовим' },
+    { href: '/ru/llc-12-statement-of-information', label: 'LLC-12 — Statement of Information' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма LLC-1, Articles of Organization, — это документ, подаваемый в
+      California Secretary of State для юридического создания limited liability
+      company. После подачи и принятия ваша LLC существует — но ещё несколько
+      шагов (Statement of Information, EIN, operating agreement) завершают
+      правильную настройку.
+    </p>
+
+    <h2>Что нужно для создания LLC</h2>
+    <ul>
+      <li>Уникальное имя LLC по правилам Калифорнии.</li>
+      <li>Калифорнийский agent for service of process (registered agent).</li>
+      <li>Структура управления — member-managed или manager-managed.</li>
+      <li>LLC-12 Statement of Information в течение 90 дней, плюс ежегодный налог $800 в FTB.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форму LLC-1</strong> Articles of Organization для подачи в Secretary of State.</li>
+      <li><strong>LLC-12</strong> первичный Statement of Information.</li>
+      <li>Поддержку <strong>EIN (SS-4)</strong> и <strong>operating agreement</strong> по вашим указаниям.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма и не налоговый консультант. Мы готовим подачи по вашему
+      поручению из предоставленной информации. Мы не советуем, подходит ли вам
+      LLC, не даём юридических или налоговых консультаций и не выступаем вашим
+      registered agent. Для консультаций — referral к лицензированным адвокатам
+      и CPA.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Corporations Code §17702.01
+      (Articles of Organization) и §17701 и далее (Revised Uniform LLC Act);
+      Revenue &amp; Taxation Code §17941 (ежегодный налог $800). Только
+      подготовка документов — не юридические или налоговые консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-1" primaryText="Начать анкету создания LLC" />
+</BaseLayout>

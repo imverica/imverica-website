@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Регистрация иностранной (out-of-state) LLC в Калифорнии (LLC-5) | Imverica';
+const description = 'California Licensed LDA готовит Application to Register a Foreign LLC (форма LLC-5), чтобы LLC из другого штата могла легально вести бизнес в Калифорнии, с Statement of Information и поддержкой EIN. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Foreign LLC Registration (LLC-5) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для регистрации иностранной (out-of-state) LLC в Калифорнии (форма LLC-5), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/llc-1a-foreign-llc"
+  slug="/llc-1a-foreign-llc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17708.02"
+    heading="Регистрация иностранной (out-of-state) LLC"
+    sub="LLC, созданная в другом штате, должна зарегистрироваться в Калифорнии до ведения бизнеса здесь. Готовим Application to Register a Foreign LLC (форма LLC-5) и последующие подачи по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=LLC-5', text: 'Начать регистрацию иностранной LLC' }}
+  />
+
+  <CategoryTiles
+    kicker="Регистрация и соответствие"
+    heading="С чем работает регистрация иностранной LLC"
+    intro="Зарегистрированная иностранная LLC имеет те же обязательства Калифорнии, что и местная. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Иностранные LLC тоже подают Statement of Information.',                              href: '/ru/llc-12-statement-of-information', color: 'var(--terracotta-deep)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральный налоговый ID для бизнеса в Калифорнии.',                                href: '/ru/ss-4-ein',                    color: 'var(--navy)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Калифорнийское торговое имя, если работаете под ним.',                              href: '/ru/fbn-dba',                     color: 'var(--sage)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Ваша LLC сохраняет свой operating agreement.',                                      href: '/ru/operating-agreement',         color: 'var(--gold)' },
+      { icon: '🏢', title: 'LLC-1 — Местная LLC',        desc: 'Создаёте новую калифорнийскую LLC вместо этого?',                                   href: '/ru/llc-1-form-an-llc',           color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Корпорация',         desc: 'Регистрируете иностранную корпорацию? Начните здесь.',                              href: '/ru/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/llc-1-form-an-llc', label: 'LLC-1 — создание LLC в Калифорнии' },
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Если ваша LLC создана в другом штате («иностранная» LLC) и вы хотите вести
+      бизнес в Калифорнии, нужно зарегистрировать её в California Secretary of
+      State через Application to Register a Foreign Limited Liability Company
+      (форма LLC-5). После регистрации у LLC те же обязательства по
+      соответствию и налогам Калифорнии, что и у местной.
+    </p>
+
+    <h2>Что нужно для регистрации иностранной LLC</h2>
+    <ul>
+      <li>Действующий Certificate of Good Standing из домашнего штата LLC.</li>
+      <li>Калифорнийский agent for service of process.</li>
+      <li>LLC-12 Statement of Information после регистрации и ежегодный налог $800.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форму LLC-5</strong> Application to Register a Foreign LLC для подачи в Secretary of State.</li>
+      <li>Последующие <strong>LLC-12</strong> Statement of Information и поддержку <strong>EIN</strong> при необходимости.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма и не налоговый консультант. Мы готовим регистрацию по
+      вашему поручению из предоставленной информации. Мы не советуем, требует ли
+      ваша деятельность регистрации, не даём юридических/налоговых консультаций
+      и не выступаем agent. Для консультаций — referral к адвокатам и CPA.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Corporations Code §17708.02
+      (регистрация иностранных LLC) и §17708.03 (форма LLC-5 / certificate of
+      good standing). Только подготовка документов — не юридические или
+      налоговые консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-5" primaryText="Начать анкету иностранной LLC" />
+</BaseLayout>

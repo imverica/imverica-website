@@ -1,0 +1,86 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'LLC-12 — Statement of Information для LLC Калифорнии | Imverica';
+const description = 'California Licensed LDA готовит форму LLC-12, Statement of Information для LLC, подаваемый в течение 90 дней после создания и затем каждые два года, чтобы LLC оставалась в good standing. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Statement of Information (LLC-12) Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для калифорнийского LLC Statement of Information (форма LLC-12), по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/llc-12-statement-of-information"
+  slug="/llc-12-statement-of-information" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17702.09"
+    heading="LLC-12 — Statement of Information"
+    sub="Каждая калифорнийская LLC подаёт LLC-12 в течение 90 дней после создания и затем каждые два года. Готовим аккуратно и в срок по вашему поручению — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=LLC-12', text: 'Начать LLC-12' }}
+  />
+
+  <CategoryTiles
+    kicker="Поддержание LLC в good standing"
+    heading="С чем работает LLC-12"
+    intro="Statement of Information — часть ведения соответствующей требованиям LLC. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Создать LLC',        desc: 'Articles of Organization, создавшие LLC.',                                          href: '/ru/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '📜', title: 'Operating agreement',        desc: 'Внутренние правила, которые отражает Statement of Information.',                     href: '/ru/operating-agreement',         color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральный налоговый ID наряду с соответствием штату.',                            href: '/ru/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Зарегистрировать торговое имя, если работаете под ним.',                            href: '/ru/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Иностранные LLC, зарегистрированные в Калифорнии, тоже подают это.',                 href: '/ru/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '📊', title: 'SI-550 — Корпорация',        desc: 'Эквивалент этой подачи для корпорации.',                                            href: '/ru/si-550-corporation-statement', color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/llc-1-form-an-llc', label: 'LLC-1 — создание LLC в Калифорнии' },
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма LLC-12, Statement of Information, сообщает California Secretary of
+      State, кто управляет LLC, где она находится и кто её agent for service of
+      process. Её подача держит LLC в good standing; пропуск ведёт к штрафам и
+      приостановке.
+    </p>
+
+    <h2>Когда подают LLC-12</h2>
+    <ul>
+      <li>Первичный Statement of Information — в течение <strong>90 дней</strong> после создания LLC.</li>
+      <li>Далее подаётся каждые <strong>два года</strong> (biennial-период).</li>
+      <li>Обновлённый подаётся при изменении ключевых данных (адрес, менеджеры, agent).</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Форму LLC-12</strong> по вашим текущим данным компании.</li>
+      <li>Обновления при изменении менеджеров, участников, адреса или agent.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма и не налоговый консультант. Мы заполняем statement по
+      предоставленной вами информации, по вашему поручению. Мы не даём
+      юридических или налоговых консультаций и не выступаем вашим agent for
+      service of process. Для консультаций — referral к адвокатам и CPA.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Corporations Code §17702.09 (LLC
+      Statement of Information). Только подготовка документов — не юридические
+      или налоговые консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=LLC-12" primaryText="Начать анкету LLC-12" />
+</BaseLayout>

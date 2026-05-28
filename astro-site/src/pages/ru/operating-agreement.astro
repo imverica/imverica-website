@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'Operating Agreement для LLC (Калифорния) | Imverica';
+const description = 'California Licensed LDA готовит operating agreement вашей LLC — внутренний регламент по долям, управлению, голосованию, распределению прибыли и смене участников — по вашим указаниям. По поручению клиента.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California LLC Operating Agreement Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: 'Подготовка документов для operating agreement калифорнийской LLC, по поручению клиента.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/operating-agreement"
+  slug="/operating-agreement" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="California Business · Corp. Code §17701.10"
+    heading="Operating Agreement для LLC"
+    sub="Operating agreement — внутренний регламент вашей LLC: кто чем владеет, кто управляет, как делится прибыль и что происходит при выходе участника. Собираем его по вашим указаниям — фиксированная цена, многоязычная анкета."
+    ctaPrimary={{ href: '/#get-started?form=OA', text: 'Начать operating agreement' }}
+  />
+
+  <CategoryTiles
+    kicker="Часть настройки LLC"
+    heading="С чем работает operating agreement"
+    intro="Operating agreement завершает правильно настроенную LLC. Нажмите плитку, чтобы увидеть назначение каждой."
+    tiles={[
+      { icon: '🏢', title: 'LLC-1 — Создать LLC',        desc: 'Articles of Organization, создающие LLC.',                                          href: '/ru/llc-1-form-an-llc',           color: 'var(--terracotta-deep)' },
+      { icon: '📋', title: 'LLC-12 — Statement of Info', desc: 'Compliance-подача, которой должен соответствовать agreement.',                       href: '/ru/llc-12-statement-of-information', color: 'var(--navy)' },
+      { icon: '🔢', title: 'SS-4 — EIN',                 desc: 'Федеральный налоговый ID для LLC, которой управляет agreement.',                    href: '/ru/ss-4-ein',                    color: 'var(--sage)' },
+      { icon: '✍️', title: 'FBN / DBA',                  desc: 'Торговое имя, если LLC работает под ним.',                                          href: '/ru/fbn-dba',                     color: 'var(--gold)' },
+      { icon: '🔄', title: 'LLC-1A — Out-of-state',      desc: 'Иностранные LLC, регистрируясь в Калифорнии, тоже держат его.',                     href: '/ru/llc-1a-foreign-llc',          color: 'var(--navy-light)' },
+      { icon: '🏛️', title: 'ARTS — Корпорация',         desc: 'У корпораций вместо operating agreement — bylaws.',                                 href: '/ru/arts-gs-incorporation',       color: 'var(--terracotta)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/llc-1-form-an-llc', label: 'LLC-1 — создание LLC в Калифорнии' },
+    { href: '/ru/business', label: 'Все бизнес-подачи Калифорнии' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Operating agreement LLC — это внутренний договор между участниками,
+      устанавливающий правила работы компании. Калифорния не подаёт его в штат,
+      но он настоятельно рекомендуется (и фактически ожидается) — без него LLC
+      опирается на правила по умолчанию из Corporations Code, которые могут не
+      совпадать с желаниями владельцев.
+    </p>
+
+    <h2>Что охватывает operating agreement</h2>
+    <ul>
+      <li>Доли владения и capital contributions.</li>
+      <li>Управление — member-managed или manager-managed — и права голоса.</li>
+      <li>Как распределяются прибыль, убытки и distributions.</li>
+      <li>Что происходит, когда участник входит, выходит, умирает или продаёт долю.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <ul>
+      <li><strong>Operating agreement</strong>, собранный по указанным вами условиям (single-member или multi-member).</li>
+      <li>Сопутствующие документы — membership certificates и начальные resolutions — по запросу.</li>
+    </ul>
+
+    <h2>Чего мы НЕ делаем</h2>
+    <p>
+      Imverica — зарегистрированный California Legal Document Assistant, а не
+      юридическая фирма. Мы собираем agreement по условиям, которые выбираете
+      <em>вы</em>, по вашему поручению. Мы не советуем, какие условия выбрать,
+      не ведём переговоры между участниками, не даём юридических/налоговых
+      консультаций и не оцениваем, защищают ли вас условия. Для консультаций —
+      referral к адвокатам.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> California Corporations Code §17701.10
+      (operating agreements) и правила по умолчанию Revised Uniform LLC Act.
+      Только подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=OA" primaryText="Начать анкету operating agreement" />
+</BaseLayout>
