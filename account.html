@@ -281,6 +281,37 @@ body.is-auth footer { display: none !important; }
 .auth-card .msg.error { display: block; background: #fde9e9; border-color: #f4c2c2; color: #b3302e; }
 .auth-card .msg.info  { display: block; background: #eef2f7; border-color: #c8d3e0; color: #2c4664; text-align: left; }
 .auth-card .msg.dev   { display: block; background: #fff7e6; border-color: #f0d8a8; color: #8a5a00; font-family: monospace; text-align: left; }
+
+/* ===== Google sign-in block (login) ===== */
+.gauth{margin-bottom:6px;}
+#gbtn-container{display:flex;justify-content:center;min-height:44px;}
+.auth-or{display:flex;align-items:center;text-align:center;color:#9aa3b0;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;margin:18px 0 4px;}
+.auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:#e6e2d9;}
+.auth-or span{padding:0 12px;}
+
+/* ===== Empty-state CTA (no requests yet) ===== */
+.empty-cta{background:#fff;border:1px solid var(--border);border-radius:14px;padding:42px 28px;text-align:center;}
+.empty-cta-icon{width:56px;height:56px;border-radius:14px;background:#eef2f7;color:var(--navy);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.empty-cta-icon svg{width:28px;height:28px;}
+.empty-cta-title{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy-dark);margin-bottom:8px;}
+.empty-cta-sub{font-size:14px;color:#6b7689;line-height:1.6;max-width:430px;margin:0 auto 22px;}
+.empty-cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.ec-btn{font-size:14px;font-weight:600;padding:11px 22px;border-radius:10px;text-decoration:none;border:1px solid var(--border);color:var(--navy);background:#fff;transition:background .15s,border-color .15s,transform .15s;}
+.ec-btn:hover{border-color:var(--navy);background:#f0f4f8;transform:translateY(-1px);}
+.ec-btn.primary{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 8px 20px rgba(26,46,74,0.18);}
+.ec-btn.primary:hover{background:var(--navy-light);}
+
+/* ===== Order status tracker (Received → Ready) ===== */
+.order-track{display:flex;align-items:flex-start;margin:16px 0 6px;}
+.track-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;text-align:center;}
+.track-step::before{content:'';position:absolute;top:7px;left:-50%;width:100%;height:2px;background:#e3e0d8;z-index:0;}
+.track-step:first-child::before{display:none;}
+.track-step.is-done::before,.track-step.is-current::before{background:var(--navy);}
+.track-dot{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid #d6d2c8;position:relative;z-index:1;}
+.track-step.is-done .track-dot{background:var(--navy);border-color:var(--navy);}
+.track-step.is-current .track-dot{background:var(--terracotta-deep);border-color:var(--terracotta-deep);box-shadow:0 0 0 4px rgba(164,91,52,0.15);}
+.track-label{font-size:11px;color:#8a93a3;margin-top:7px;line-height:1.3;}
+.track-step.is-done .track-label,.track-step.is-current .track-label{color:var(--navy-dark);font-weight:600;}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -318,6 +349,10 @@ body.is-auth footer { display: none !important; }
     <div class="auth-kicker" data-i18n="authWelcome">Welcome</div>
     <h1 class="auth-h1" data-i18n="authSignIn">Sign in to your account</h1>
     <p class="auth-sub" data-i18n="authEmailSub">Enter your email below — we'll send a one-time code to sign you in. No password needed.</p>
+    <div class="gauth" id="gauth-block" style="display:none;">
+      <div id="gbtn-container"></div>
+      <div class="auth-or"><span data-i18n="authOr">or</span></div>
+    </div>
     <div class="form-group">
       <label for="email-input" data-i18n="authEmailLabel">Email</label>
       <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email">
@@ -389,7 +424,7 @@ body.is-auth footer { display: none !important; }
       <span id="dash-email" hidden></span>
     </div>
     <div class="dash-actions">
-      <!-- "+ New request" lives in the quick-tiles grid below now; no need to duplicate it here. -->
+      <a class="primary" href="/portal.html" data-i18n="dashNewCase">+ File a new request</a>
       <button onclick="logout()" data-i18n="dashSignOut">Sign out</button>
     </div>
   </div>
@@ -558,6 +593,10 @@ const STRINGS = {
     dashWelcomeBack: 'Welcome back,',
     dashSub: 'Upload documents, message us, and track your requests — all in one place.',
     dashSignOut: 'Sign out',
+    dashNewCase: '+ File a new request',
+    authOr: 'or', authNeed2fa: 'Two-factor is on for this account — sign in with your email code instead.',
+    emptyTitle: 'No requests yet', emptySub: 'Start your first document request, or explore the services we prepare.', emptyFileBtn: 'Start a request', emptyServicesBtn: 'Explore services',
+    trackReceived: 'Received', trackReview: 'In review', trackPrepared: 'Prepared', trackReady: 'Ready',
     tileNewTitle: '+ New request', tileNewSub: 'Start a document package',
     tileUploadTitle: 'Upload documents', tileUploadSub: 'Drop files into a request',
     tileMsgTitle: 'Message us', tileMsgSub: 'Ask about your documents',
@@ -643,6 +682,10 @@ const STRINGS = {
     dashWelcomeBack: 'С возвращением,',
     dashSub: 'Загружайте документы, пишите нам и отслеживайте заявки — всё в одном месте.',
     dashSignOut: 'Выйти',
+    dashNewCase: '+ Новая заявка',
+    authOr: 'или', authNeed2fa: 'На этом аккаунте включена 2FA — войдите по коду из email.',
+    emptyTitle: 'Заявок пока нет', emptySub: 'Создайте первую заявку на подготовку документов или посмотрите наши услуги.', emptyFileBtn: 'Создать заявку', emptyServicesBtn: 'Наши услуги',
+    trackReceived: 'Принято', trackReview: 'В работе', trackPrepared: 'Подготовлено', trackReady: 'Готово',
     tileNewTitle: '+ Новая заявка', tileNewSub: 'Создать пакет документов',
     tileUploadTitle: 'Загрузить документы', tileUploadSub: 'Добавить файлы к заявке',
     tileMsgTitle: 'Сообщения', tileMsgSub: 'Спросить о ваших документах',
@@ -728,6 +771,10 @@ const STRINGS = {
     dashWelcomeBack: 'З поверненням,',
     dashSub: 'Завантажуйте документи, пишіть нам і відстежуйте заявки — все в одному місці.',
     dashSignOut: 'Вийти',
+    dashNewCase: '+ Нова заявка',
+    authOr: 'або', authNeed2fa: 'На цьому акаунті увімкнено 2FA — увійдіть за кодом з email.',
+    emptyTitle: 'Заявок поки немає', emptySub: 'Створіть першу заявку на підготовку документів або перегляньте наші послуги.', emptyFileBtn: 'Створити заявку', emptyServicesBtn: 'Наші послуги',
+    trackReceived: 'Прийнято', trackReview: 'У роботі', trackPrepared: 'Підготовлено', trackReady: 'Готово',
     tileNewTitle: '+ Нова заявка', tileNewSub: 'Створити пакет документів',
     tileUploadTitle: 'Завантажити документи', tileUploadSub: 'Додати файли до заявки',
     tileMsgTitle: 'Повідомлення', tileMsgSub: 'Запитати про ваші документи',
@@ -813,6 +860,10 @@ const STRINGS = {
     dashWelcomeBack: 'Bienvenido,',
     dashSub: 'Suba documentos, mensajéenos y siga sus solicitudes — todo en un solo lugar.',
     dashSignOut: 'Cerrar sesión',
+    dashNewCase: '+ Nueva solicitud',
+    authOr: 'o', authNeed2fa: 'Esta cuenta tiene 2FA — inicie sesión con el código de su email.',
+    emptyTitle: 'Aún no hay solicitudes', emptySub: 'Inicie su primera solicitud de documentos o explore los servicios que preparamos.', emptyFileBtn: 'Iniciar solicitud', emptyServicesBtn: 'Ver servicios',
+    trackReceived: 'Recibido', trackReview: 'En revisión', trackPrepared: 'Preparado', trackReady: 'Listo',
     tileNewTitle: '+ Nueva solicitud', tileNewSub: 'Iniciar un paquete de documentos',
     tileUploadTitle: 'Subir documentos', tileUploadSub: 'Adjuntar archivos a una solicitud',
     tileMsgTitle: 'Mensajes', tileMsgSub: 'Pregunte sobre sus documentos',
@@ -968,8 +1019,15 @@ function badgeFor(status){
 function renderOrders(orders){
   const box=$('orders'); box.textContent='';
   if (!orders.length){
-    const e=document.createElement('div'); e.className='empty';
-    e.innerHTML= T.msgNoRequests + '<br>' + T.msgNoRequestsHint;
+    const e=document.createElement('div'); e.className='empty-cta';
+    e.innerHTML =
+      '<div class="empty-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>' +
+      '<div class="empty-cta-title">' + T.emptyTitle + '</div>' +
+      '<div class="empty-cta-sub">' + T.emptySub + '</div>' +
+      '<div class="empty-cta-actions">' +
+        '<a class="ec-btn primary" href="/portal.html">' + T.emptyFileBtn + '</a>' +
+        '<a class="ec-btn" href="/immigration">' + T.emptyServicesBtn + '</a>' +
+      '</div>';
     box.appendChild(e); return;
   }
   orders.forEach(o=>{
@@ -986,6 +1044,7 @@ function renderOrders(orders){
     date.textContent = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '';
     const sit=document.createElement('div'); sit.className='order-sit'; sit.textContent=o.situation||'';
     card.appendChild(top); card.appendChild(svc); if(date.textContent) card.appendChild(date); if(sit.textContent) card.appendChild(sit);
+    card.appendChild(buildOrderTrack(o.status));
 
     // Documents section
     const docs=document.createElement('div'); docs.className='docs';
@@ -1008,6 +1067,23 @@ function renderOrders(orders){
     box.appendChild(card);
     loadFiles(o.id);
   });
+}
+
+function buildOrderTrack(status){
+  const steps = [T.trackReceived, T.trackReview, T.trackPrepared, T.trackReady];
+  const s = (status||'new').toLowerCase();
+  let idx = 0;
+  if (s.includes('ready')||s.includes('complete')||s.includes('done')||s.includes('resolved')) idx = 3;
+  else if (s.includes('review')||s.includes('progress')||s.includes('prepar')) idx = 1;
+  const wrap = document.createElement('div'); wrap.className='order-track';
+  steps.forEach((label, i) => {
+    const step = document.createElement('div');
+    step.className = 'track-step' + (i < idx ? ' is-done' : '') + (i === idx ? ' is-current' : '');
+    const dot = document.createElement('div'); dot.className='track-dot';
+    const lab = document.createElement('div'); lab.className='track-label'; lab.textContent = label;
+    step.appendChild(dot); step.appendChild(lab); wrap.appendChild(step);
+  });
+  return wrap;
 }
 
 function fmtSize(n){ return n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(n/1024))+' KB'; }
@@ -1430,6 +1506,36 @@ $('code-input').addEventListener('keydown',e=>{ if(e.key==='Enter') verifyCode()
 $('chat-input').addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
 (function(){ var p=$('pf-phone'); if(!p) return; p.addEventListener('input',function(){ var d=p.value.replace(/\D/g,'').slice(0,10); p.value = d.length<=3?(d?'('+d:''):d.length<=6?'('+d.slice(0,3)+') '+d.slice(3):'('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6); }); })();
 $('pf-legal').addEventListener('keydown',e=>{ if(e.key==='Enter') saveProfile(); });
+
+// ===== Google Sign-In (Google Identity Services) =====
+// Paste your Google OAuth Client ID below (…apps.googleusercontent.com).
+// It is PUBLIC (safe to expose) — no client secret is used in this flow.
+// Until it is set, the Google button stays hidden and email-OTP works as usual.
+var GOOGLE_CLIENT_ID = '';
+async function handleGoogleCredential(resp){
+  if (!resp || !resp.credential) return;
+  clearMsg('email-msg');
+  var r = await api('google', { credential: resp.credential });
+  if (!r.ok){ msg('email-msg','error', (r.data && r.data.error) || T.errSendFail); return; }
+  if (r.data && r.data.requireTotp){ msg('email-msg','info', T.authNeed2fa); return; }
+  loadDashboard();
+}
+function initGoogleSignIn(){
+  if (!GOOGLE_CLIENT_ID) return; // not configured yet — email-OTP only
+  var s = document.createElement('script');
+  s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.defer = true;
+  s.onload = function(){
+    try {
+      if (!window.google || !google.accounts || !google.accounts.id) return;
+      google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredential });
+      var c = document.getElementById('gbtn-container');
+      if (c) google.accounts.id.renderButton(c, { theme:'outline', size:'large', text:'continue_with', shape:'pill', width:300 });
+      var block = document.getElementById('gauth-block'); if (block) block.style.display = 'block';
+    } catch(e){}
+  };
+  document.head.appendChild(s);
+}
+initGoogleSignIn();
 
 // On load: if a valid session already exists, jump to dashboard.
 loadDashboard();

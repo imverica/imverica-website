@@ -346,6 +346,48 @@ exports.handler = async function (event) {
     };
   }
 
+  // ===== Google Sign-In — verify the ID token, then issue our session =====
+  // The email comes from the verified Google token, so this is handled before
+  // the body.email validation below (which the other actions rely on).
+  if (action === 'google') {
+    const clientId = process.env.GOOGLE_CLIENT_ID || '';
+    if (!clientId) return json(503, { ok: false, error: 'Google sign-in is not configured on this server.' });
+    const credential = String(body.credential || '');
+    if (!credential) return json(400, { ok: false, error: 'Missing Google credential.' });
+    let payload;
+    try {
+      const r = await fetch('https://oauth2.googleapis.com/tokeninfo?id_token=' + encodeURIComponent(credential));
+      if (!r.ok) return json(401, { ok: false, error: 'Google sign-in failed. Please try again.' });
+      payload = await r.json();
+    } catch (err) {
+      console.error('Google tokeninfo failed:', err);
+      return json(502, { ok: false, error: 'Could not verify Google sign-in right now.' });
+    }
+    const iss = String(payload.iss || '');
+    const emailVerified = payload.email_verified === true || payload.email_verified === 'true';
+    if (String(payload.aud || '') !== clientId) return json(401, { ok: false, error: 'This Google sign-in was not issued for this site.' });
+    if (iss !== 'accounts.google.com' && iss !== 'https://accounts.google.com') return json(401, { ok: false, error: 'Invalid Google token issuer.' });
+    if (!emailVerified) return json(403, { ok: false, error: 'Your Google email is not verified.' });
+    const gEmail = cleanEmail(payload.email);
+    if (!isValidEmail(gEmail)) return json(422, { ok: false, error: 'Google did not return a valid email.' });
+
+    // Same as the email-code path: respect TOTP 2FA when the account has it.
+    const gProfile = (await readProfile(gEmail)) || {};
+    if (gProfile.totpEnabledAt && gProfile.totpSecret) {
+      const bridge = signPre2fa(gEmail, event);
+      if (!bridge) return json(503, { ok: false, error: 'Sign-in is not configured on this server.' });
+      return {
+        statusCode: 200,
+        headers: { ...CORS, 'Content-Type': 'application/json' },
+        multiValueHeaders: { 'Set-Cookie': [pre2faCookie(bridge, event)] },
+        body: JSON.stringify({ ok: true, email: gEmail, requireTotp: true })
+      };
+    }
+    const gToken = signSession(gEmail, event);
+    if (!gToken) return json(503, { ok: false, error: 'Sign-in is not configured on this server.' });
+    return json(200, { ok: true, email: gEmail }, { 'Set-Cookie': sessionCookie(gToken, event) });
+  }
+
   const email = cleanEmail(body.email);
   if (!isValidEmail(email)) return json(422, { ok: false, error: 'Please enter a valid email address.' });
 
