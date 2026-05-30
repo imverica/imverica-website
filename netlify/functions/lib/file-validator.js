@@ -55,8 +55,24 @@ const BANNED_EXT = new Set([
 ]);
 
 const NAME_BANNED_PATTERNS = [
-  /^\./,            // .htaccess / dotfiles
-  /\.lnk$/i
+  /^\./,           // .htaccess / dotfiles
+  /\.lnk$/i,
+  // RTL override + bidi controls. "image‮pdf.exe" renders right-to-
+  // left as "image‮exe.pdf" — user thinks it's a PDF, but the OS
+  // launches the .exe. We refuse any directional control / isolate to
+  // make these spoofs structurally impossible.
+  // U+202A..U+202E = LRE / RLE / PDF / LRO / RLO
+  // U+2066..U+2069 = LRI / RLI / FSI / PDI
+  /[‪-‮⁦-⁩]/,
+  // Zero-width / invisible chars (used to hide pieces of a filename).
+  // U+200B..U+200F = ZWSP, ZWNJ, ZWJ, LRM, RLM
+  // U+FEFF        = ZWNBSP / BOM
+  /[​-‏﻿]/,
+  // Control characters (NUL, BEL, BS, TAB, LF, CR, ESC, DEL, etc.).
+  // Includes the null-byte truncation trick: a server-side path tool
+  // might stop reading at \x00 so "file.pdf\x00.exe" appears as
+  // "file.pdf" while the OS sees ".exe".
+  /[\x00-\x1F\x7F]/
 ];
 
 // Windows reserved device names. Checked against the basename (everything
@@ -105,7 +121,15 @@ function matchesSignature(buf, mime) {
       // raw indexOf on the buffer head is good enough.
       if (mime.includes('wordprocessingml')) {
         // [Content_Types].xml lives near the start of an Office ZIP.
-        return buf.subarray(0, Math.min(buf.length, 4096)).indexOf('[Content_Types].xml') >= 0;
+        // Additionally reject any DOCX that bundles a vbaProject.bin
+        // (the macro container) — that's the .docm wrapper smuggled
+        // inside a .docx extension.
+        const head = buf.subarray(0, Math.min(buf.length, 8192));
+        if (head.indexOf('[Content_Types].xml') < 0) return false;
+        if (head.indexOf('vbaProject.bin') >= 0) return false;
+        // Also reject if the macro relationship is declared.
+        if (head.indexOf('word/vbaProject') >= 0) return false;
+        return true;
       }
       return true;
     }
