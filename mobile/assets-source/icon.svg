@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Imverica app icon — 1024×1024 source.
+  Generates iOS + Android icon sets via @capacitor/assets.
+  Brand palette: navy #1a2e4a, navy-light #2b4264, terracotta #c2603e, cream #f5f0e6.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Navy background with subtle gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2e4a"/>
+      <stop offset="100%" stop-color="#2b4264"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Large serif "I" monogram in cream -->
+  <text x="512" y="700"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="780"
+        font-weight="700"
+        fill="#f5f0e6"
+        text-anchor="middle"
+        font-style="italic">I</text>
+
+  <!-- Terracotta accent — thin underscore representing a document line -->
+  <rect x="392" y="800" width="240" height="14" rx="7" fill="#c2603e"/>
+</svg>
