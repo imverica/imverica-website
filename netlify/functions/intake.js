@@ -3,6 +3,7 @@ const fs = require('fs/promises');
 const os = require('os');
 const path = require('path');
 const { encryptRecord, decryptRecord, emailHash } = require('./lib/crypto');
+const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 
 /**
  * PII fields encrypted at rest. `id`, `status`, `createdAt`, `service`
@@ -275,6 +276,19 @@ exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
 
   if (event.httpMethod === 'POST') {
+    // Abuse guard: reject cross-origin floods + IP-based rate limit.
+    // The intake form is the most exposed surface (no auth required) so
+    // we cap at 6 submissions / 10 min / IP. Legitimate users almost
+    // never need more than 1-2 in that window.
+    const originReject = originGuard(event);
+    if (originReject) return originReject;
+    const throttleReject = await throttleOrReject(event, {
+      action: 'intake-submit',
+      limit: 6,
+      windowSec: 600
+    });
+    if (throttleReject) return throttleReject;
+
     if (Buffer.byteLength(event.body || '', 'utf8') > MAX_BODY_BYTES) {
       return json(413, { ok: false, error: 'Request too large' });
     }

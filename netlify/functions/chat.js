@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 
 const SYSTEM_PROMPT = `You are the AI assistant for Imverica Legal Solutions, a registered Legal Document Assistant (LDA) and Immigration Consultant document-preparation service in Sacramento, California. Respond in the user's language (English, Russian, Ukrainian, or Spanish).
 
@@ -403,6 +404,23 @@ exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
   if (!process.env.ANTHROPIC_API_KEY) return { statusCode: 500, body: JSON.stringify({ error: 'Not configured' }) };
 
+  // Origin guard + persistent IP throttle. Replaces the in-memory Map
+  // below which was effectively useless after function cold-starts.
+  // Anthropic API calls cost money — a tighter cap here directly protects
+  // the bill (15 / 5 min / IP is generous for legitimate chat use).
+  const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
+  const originReject = originGuard(event);
+  if (originReject) return { ...originReject, headers: { ...corsHeaders, ...originReject.headers } };
+  const throttleReject = await throttleOrReject(event, {
+    action: 'chat-message',
+    limit: 15,
+    windowSec: 300
+  });
+  if (throttleReject) {
+    return { ...throttleReject, headers: { ...corsHeaders, ...throttleReject.headers, 'Content-Type': 'application/json' } };
+  }
+  // The original in-memory checkRate() stays untouched below as a
+  // second-layer guard within a single warm function instance.
   const ip = (event.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
   if (!checkRate(ip)) {
     return { statusCode: 429, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ error: 'Too many messages. Please call +1 (916) 399-3992.' }) };

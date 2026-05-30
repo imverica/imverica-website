@@ -21,6 +21,7 @@
 const crypto = require('crypto');
 const { generateSecret, verifyTOTP, otpauthURL, generateRecoveryCodes, hashRecoveryCode } = require('./lib/totp');
 const { readProfile, updateProfile } = require('./lib/profile-store');
+const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 
 // Pre-2FA cookie — short-lived intermediate state after email-OTP passes
 // but before TOTP is verified. Holds only the email so verify-totp knows
@@ -235,9 +236,26 @@ exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
 
+  // First line of defence: reject cross-origin POSTs. Catches scripted
+  // floods that don't bother forging Origin/Referer.
+  const originReject = originGuard(event);
+  if (originReject) return { ...originReject, headers: { ...CORS, ...originReject.headers } };
+
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
   const action = String(body.action || '');
+
+  // Per-IP throttle for the abuse-prone actions (sends email, calls
+  // Google, mutates session). Per-email throttle below still applies on
+  // top — this layer catches email-rotation attacks that flood Resend.
+  if (['request-otp', 'verify-otp', 'google', 'logout'].includes(action)) {
+    const reject = await throttleOrReject(event, {
+      action: 'auth-' + action,
+      limit: action === 'request-otp' ? 8 : 20,
+      windowSec: 300
+    });
+    if (reject) return { ...reject, headers: { ...CORS, ...reject.headers } };
+  }
 
   // ===== push-register — store a device push token for the signed-in user =====
   // Called by the native app after the user grants push permission. The
