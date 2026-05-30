@@ -18,6 +18,25 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- Custom URL scheme: imverica://order/123 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="imverica" />
+            </intent-filter>
+
+            <!-- App Links: open https://imverica.com/* URLs inside the app
+                 when installed. autoVerify=true triggers verification against
+                 /.well-known/assetlinks.json which we publish on the site. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="imverica.com" />
+                <data android:scheme="https" android:host="www.imverica.com" />
+            </intent-filter>
         </activity>
 
         <provider

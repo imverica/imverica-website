@@ -1,0 +1,15 @@
+[
+  {
+    "_comment": "Android App Links — opens imverica.com URLs in the Imverica app when installed. Fill SHA256_FINGERPRINT_HERE with the release-keystore SHA-256 (run: keytool -list -v -keystore release.keystore | grep SHA256) once the Android release keystore is generated. For debug builds, also add the debug keystore's SHA-256.",
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.imverica.app",
+      "sha256_cert_fingerprints": [
+        "SHA256_FINGERPRINT_HERE"
+      ]
+    }
+  }
+]

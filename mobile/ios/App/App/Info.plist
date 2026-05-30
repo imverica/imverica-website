@@ -80,5 +80,21 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<!-- Custom URL scheme for deep linking — imverica://order/123 etc. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.imverica.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>imverica</string>
+			</array>
+		</dict>
+	</array>
+	<!-- Universal Links setup pending Apple Developer Team ID.
+	     The associated-domains entitlement belongs in App.entitlements,
+	     not Info.plist — wire it up via Signing & Capabilities in Xcode
+	     after the Apple Developer account is created. -->
 </dict>
 </plist>

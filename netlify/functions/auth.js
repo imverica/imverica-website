@@ -239,6 +239,33 @@ exports.handler = async function (event) {
   try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
   const action = String(body.action || '');
 
+  // ===== push-register — store a device push token for the signed-in user =====
+  // Called by the native app after the user grants push permission. The
+  // token (APNs for iOS, FCM for Android) is stored per-user so future
+  // case-status updates / new-message events can fan out a push alert.
+  if (action === 'push-register') {
+    const sess = verifyExistingSession(event);
+    if (!sess) return json(401, { ok: false, error: 'Not signed in' });
+    const token = String(body.token || '').trim();
+    const platform = String(body.platform || '').trim();
+    if (!token || !platform) return json(400, { ok: false, error: 'Missing token or platform' });
+    if (!['ios', 'android'].includes(platform)) return json(400, { ok: false, error: 'Invalid platform' });
+    try {
+      // Stored as an array of unique {token, platform, ts} entries on the
+      // profile so a user with multiple devices receives push to each one.
+      const prof = (await readProfile(sess.email)) || {};
+      const existing = Array.isArray(prof.pushTokens) ? prof.pushTokens : [];
+      const filtered = existing.filter((t) => t && t.token !== token);
+      filtered.push({ token, platform, ts: Date.now() });
+      // Cap stored tokens at the 10 most-recent devices.
+      const trimmed = filtered.slice(-10);
+      await updateProfile(sess.email, { pushTokens: trimmed });
+      return json(200, { ok: true, count: trimmed.length });
+    } catch (err) {
+      return json(500, { ok: false, error: 'Could not register token.' });
+    }
+  }
+
   if (action === 'logout') {
     // Clear both session and any leftover pre-2FA cookie. We send two
     // Set-Cookie headers via an array — Netlify Functions supports this.

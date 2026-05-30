@@ -1,0 +1,24 @@
+{
+  "_comment": "iOS Universal Links — opens imverica.com URLs in the Imverica app when installed. Fill TEAMID in <TEAMID>.com.imverica.app once the Apple Developer account is created and an App ID is registered.",
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "TEAMID.com.imverica.app"
+        ],
+        "components": [
+          { "/": "/account*", "comment": "Client cabinet — open in app" },
+          { "/": "/portal*",  "comment": "Intake portal — open in app" },
+          { "/": "/order/*",  "comment": "Specific order deep link" },
+          { "/": "/case/*",   "comment": "Specific case deep link" }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "TEAMID.com.imverica.app"
+    ]
+  }
+}

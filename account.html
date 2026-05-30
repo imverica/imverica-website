@@ -289,6 +289,14 @@ body.is-auth footer { display: none !important; }
 .auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:#e6e2d9;}
 .auth-or span{padding:0 12px;}
 
+/* ===== Biometric unlock (Face ID / Touch ID / fingerprint, in-app only) ===== */
+.biolock{margin-bottom:6px;}
+.btn-bio{display:flex !important;align-items:center;justify-content:center;gap:12px;background:#1a2e4a !important;color:#fff !important;border:none !important;padding:14px 18px !important;border-radius:12px !important;font-size:15px;font-weight:600;cursor:pointer;width:100%;transition:transform .12s,background .15s;-webkit-tap-highlight-color:transparent;}
+.btn-bio:hover{background:#2b4264 !important;}
+.btn-bio:active{transform:scale(0.985);}
+.btn-bio .bio-icon{font-size:22px;line-height:1;}
+.btn-bio .bio-label{font-family:var(--font-system);}
+
 /* ===== Empty-state CTA (no requests yet) ===== */
 .empty-cta{background:#fff;border:1px solid var(--border);border-radius:14px;padding:42px 28px;text-align:center;}
 .empty-cta-icon{width:56px;height:56px;border-radius:14px;background:#eef2f7;color:var(--navy);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;}
@@ -312,8 +320,13 @@ body.is-auth footer { display: none !important; }
 .track-step.is-current .track-dot{background:var(--terracotta-deep);border-color:var(--terracotta-deep);box-shadow:0 0 0 4px rgba(164,91,52,0.15);}
 .track-label{font-size:11px;color:#8a93a3;margin-top:7px;line-height:1.3;}
 .track-step.is-done .track-label,.track-step.is-current .track-label{color:var(--navy-dark);font-weight:600;}
+
+/* In-app: account for iOS safe-area + Android system bars. */
+html.in-app body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="/imverica-native.js"></script>
 </head>
 <body class="is-auth">
 
@@ -351,6 +364,17 @@ body.is-auth footer { display: none !important; }
     <p class="auth-sub" data-i18n="authEmailSub">Enter your email below — we'll send a one-time code to sign you in. No password needed.</p>
     <div class="gauth" id="gauth-block" style="display:none;">
       <div id="gbtn-container"></div>
+      <div class="auth-or"><span data-i18n="authOr">or</span></div>
+    </div>
+    <!-- Biometric unlock — only shown inside the iOS / Android Capacitor app
+         when (a) device has Face ID / Touch ID / fingerprint, and (b) user
+         has previously signed in on this device (we cache the email in
+         localStorage + a "biometric-enabled" flag in Capacitor Preferences). -->
+    <div class="biolock" id="biolock-block" style="display:none;">
+      <button class="btn btn-bio" id="biolock-btn" onclick="bioUnlock()" type="button">
+        <span class="bio-icon" id="bio-icon" aria-hidden="true">🔒</span>
+        <span class="bio-label" id="bio-label" data-i18n="bioUnlock">Sign in with Face ID</span>
+      </button>
       <div class="auth-or"><span data-i18n="authOr">or</span></div>
     </div>
     <div class="form-group">
@@ -1543,8 +1567,84 @@ function initGoogleSignIn(){
 }
 initGoogleSignIn();
 
+// ===== Biometric unlock (in-app only) =====
+// In the iOS / Android Capacitor wrapper app, we offer Face ID / Touch ID
+// / fingerprint sign-in. The flow is:
+//   1. On first successful email-OTP / Google login, we remember the user's
+//      email in localStorage and set a "biometric-enabled" flag.
+//   2. Next launch — if biometric is available on the device and a session
+//      cookie exists OR a remembered email is present — we show a button
+//      "Sign in with Face ID". Tapping it triggers the system prompt; on
+//      success we either reuse the cached session or send a one-time code
+//      to the remembered email and let the existing OTP flow finish.
+function bioRefreshUI(){
+  if (!window.imvNative || !imvNative.isApp) return;
+  imvNative.biometric().then(function(b){
+    var block = document.getElementById('biolock-block');
+    if (!block) return;
+    if (!b.available) { block.style.display='none'; return; }
+    // Update icon + label per type and language.
+    var icon = b.type === 'face' ? '🙂' : '👆';
+    document.getElementById('bio-icon').textContent = icon;
+    var lbl = b.type === 'face'
+      ? (lang === 'ru' ? 'Войти через Face ID' : lang === 'uk' ? 'Увійти через Face ID' : lang === 'es' ? 'Entrar con Face ID' : 'Sign in with Face ID')
+      : (lang === 'ru' ? 'Войти по отпечатку' : lang === 'uk' ? 'Увійти за відбитком' : lang === 'es' ? 'Entrar con huella' : 'Sign in with fingerprint');
+    document.getElementById('bio-label').textContent = lbl;
+    var remembered = localStorage.getItem('imv_bio_email') || '';
+    if (!remembered) { block.style.display='none'; return; }
+    block.style.display = 'block';
+  });
+}
+async function bioUnlock(){
+  if (!window.imvNative || !imvNative.isApp) return;
+  var remembered = localStorage.getItem('imv_bio_email') || '';
+  if (!remembered) { msg('email-msg','error', T.errSendFail); return; }
+  var v = await imvNative.bioVerify('Unlock your Imverica cabinet');
+  if (!v.ok) { return; } // user cancelled — no error, just stay on screen
+  // Biometric OK → send a fresh OTP to the remembered email and jump to code step.
+  $('email-input').value = remembered;
+  await requestCode();
+}
+// Persist the email after any successful sign-in so the biometric button can
+// appear on next launch.
+var __origLoadDashboard = loadDashboard;
+loadDashboard = async function(){
+  var r = await __origLoadDashboard.apply(this, arguments);
+  try {
+    var em = $('dash-email') && $('dash-email').textContent;
+    if (em && em.indexOf('@')>0) localStorage.setItem('imv_bio_email', em);
+  } catch(e){}
+  return r;
+};
+bioRefreshUI();
+
+// Native lifecycle: when the app comes back to the foreground, refresh
+// the dashboard so the user always sees current case status.
+if (window.imvNative && imvNative.onResume) {
+  imvNative.onResume(function(){
+    if (!$('step-dash').classList.contains('hidden')) loadDashboard();
+  });
+}
+
+// Push notifications: register on first dashboard load (after sign-in).
+// Token goes to /api/auth?action=push-register — backend stores it so case
+// updates and new messages fire native push alerts.
+async function registerPushIfNeeded(){
+  if (!window.imvNative || !imvNative.isApp) return;
+  if (localStorage.getItem('imv_push_registered')) return;
+  var p = await imvNative.registerPush();
+  if (!p.granted || !p.token) return;
+  try {
+    await api('push-register', { token: p.token, platform: imvNative.platform });
+    localStorage.setItem('imv_push_registered', '1');
+  } catch(e){}
+}
+
 // On load: if a valid session already exists, jump to dashboard.
-loadDashboard();
+loadDashboard().then(function(){
+  // Defer push permission ask so the cabinet renders first (less jarring).
+  setTimeout(registerPushIfNeeded, 1500);
+});
 </script>
 </body>
 </html>

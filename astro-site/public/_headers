@@ -30,3 +30,15 @@
 # /api/upload responses already set Content-Security-Policy in code
 # (sandbox + default-src 'none') because they serve raw file bytes —
 # Netlify static rules cannot match those function paths anyway.
+
+# Apple Universal Links require application/json with no extension on the
+# AASA file, and the file must not be inside any redirect. Netlify auto-
+# serves /.well-known/* without redirect; this header pins the MIME type.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Android App Links — assetlinks.json already gets application/json from
+# Netlify, but we still pin Cache-Control so changes propagate quickly.
+/.well-known/assetlinks.json
+  Cache-Control: public, max-age=300, must-revalidate
