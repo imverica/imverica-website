@@ -16,10 +16,40 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // Release signing — keystore is NOT in this repo. Generate once with:
+    //   keytool -genkey -v -keystore release.keystore -alias imverica \
+    //     -keyalg RSA -keysize 2048 -validity 10000
+    // Store the keystore + passwords in 1Password (NOT git). Set these env
+    // vars in your shell (or in ~/.gradle/gradle.properties) before
+    // building a release:
+    //   IMVERICA_KEYSTORE_PATH=/Users/you/.android/imverica-release.keystore
+    //   IMVERICA_KEYSTORE_PASSWORD=...
+    //   IMVERICA_KEY_ALIAS=imverica
+    //   IMVERICA_KEY_PASSWORD=...
+    // Then build:  ./gradlew bundleRelease  (produces app-release.aab for Play)
+    signingConfigs {
+        release {
+            def ksPath = System.getenv('IMVERICA_KEYSTORE_PATH') ?: project.findProperty('IMVERICA_KEYSTORE_PATH')
+            def ksPass = System.getenv('IMVERICA_KEYSTORE_PASSWORD') ?: project.findProperty('IMVERICA_KEYSTORE_PASSWORD')
+            def alias  = System.getenv('IMVERICA_KEY_ALIAS') ?: project.findProperty('IMVERICA_KEY_ALIAS') ?: 'imverica'
+            def kPass  = System.getenv('IMVERICA_KEY_PASSWORD') ?: project.findProperty('IMVERICA_KEY_PASSWORD')
+            if (ksPath && ksPass && kPass) {
+                storeFile = file(ksPath)
+                storePassword = ksPass
+                keyAlias = alias
+                keyPassword = kPass
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Only apply signing if env vars are present (so debug builds
+            // by people who don't have the keystore still work).
+            if (System.getenv('IMVERICA_KEYSTORE_PATH') || project.hasProperty('IMVERICA_KEYSTORE_PATH')) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
