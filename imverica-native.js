@@ -176,6 +176,65 @@
 
   w.imvNative = api;
 
+  // ===== Android hardware back button =====
+  // Without this, tapping Android's back button at any in-page state
+  // exits the app (Capacitor default). We instead pop the WebView's
+  // history if there's anywhere to go back to; only exit when at the root.
+  if (hasCapacitor && platform === 'android') {
+    var AppPlugin = plug('App');
+    if (AppPlugin && AppPlugin.addListener) {
+      AppPlugin.addListener('backButton', function (evt) {
+        // If there's web history, go back.
+        if (w.history.length > 1 && document.referrer) {
+          w.history.back();
+          return;
+        }
+        // At the root → confirm exit on second tap within 2s, like
+        // standard Android app pattern.
+        if (w.__imvBackPrompt) {
+          AppPlugin.exitApp();
+          return;
+        }
+        w.__imvBackPrompt = true;
+        setTimeout(function () { w.__imvBackPrompt = false; }, 2000);
+        // Subtle toast via web (since we can't trigger native Toast
+        // cross-platform without another plugin).
+        try {
+          var t = document.createElement('div');
+          t.textContent = 'Press back again to exit';
+          t.style.cssText = 'position:fixed;bottom:50px;left:50%;transform:translateX(-50%);background:rgba(20,20,30,0.92);color:#fff;padding:10px 18px;border-radius:24px;font-size:13px;z-index:99999;pointer-events:none;font-family:system-ui;';
+          document.body.appendChild(t);
+          setTimeout(function () { try { t.remove(); } catch (e) {} }, 1900);
+        } catch (e) {}
+      });
+    }
+  }
+
+  // ===== iOS / Android: handle in-app deep links =====
+  // When a notification or external link triggers `imverica://order/123`
+  // or a Universal Link, Capacitor fires `appUrlOpen`. We translate that
+  // into a same-origin navigation inside the WebView.
+  if (hasCapacitor) {
+    var AppPlugin2 = plug('App');
+    if (AppPlugin2 && AppPlugin2.addListener) {
+      AppPlugin2.addListener('appUrlOpen', function (evt) {
+        if (!evt || !evt.url) return;
+        var url = evt.url;
+        // Translate imverica://path → https://imverica.com/path
+        if (url.indexOf('imverica://') === 0) {
+          url = 'https://imverica.com/' + url.replace('imverica://', '');
+        }
+        // Only follow if same origin (https://imverica.com); otherwise drop.
+        try {
+          var u = new URL(url);
+          if (u.hostname === 'imverica.com' || u.hostname.endsWith('.imverica.com')) {
+            w.location.href = u.pathname + u.search + u.hash;
+          }
+        } catch (e) {}
+      });
+    }
+  }
+
   // Helpful debug log when running inside the app.
   if (hasCapacitor) {
     try {
