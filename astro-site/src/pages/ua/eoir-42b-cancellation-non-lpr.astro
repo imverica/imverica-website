@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'EOIR-42B — Cancellation of Removal для non-LPR | Imverica';
+const description = 'California Licensed LDA готує форму EOIR-42B — Application for Cancellation of Removal для непостійних резидентів за INA §240A(b). 10 років неперервної присутності, good moral character, exceptional and extremely unusual hardship. За дорученням клієнта.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/eoir-42b-cancellation-non-lpr"
+  slug="/eoir-42b-cancellation-non-lpr" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · INA §240A(b) · Non-LPR Cancellation"
+    heading="EOIR-42B — Cancellation of Removal для non-LPR"
+    sub="Для noncitizen в removal proceedings, що відповідають вимогам §240A(b)(1): 10 років неперервної фізичної присутності, good moral character, без disqualifying convictions, exceptional and extremely unusual hardship для кваліфікуючого родича US citizen/LPR. Готуємо заяву та evidence packet за вашим дорученням."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-42B', text: 'Почати пакет EOIR-42B' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/eoir-42a-cancellation-lpr', label: 'EOIR-42A — Cancellation для LPR' },
+    { href: '/ua/eoir-immigration-court', label: 'EOIR overview — документи імміграційного суду' },
+    { href: '/ua/i-589-asylum-help', label: 'I-589 — Притулок і Withholding' },
+    { href: '/ua/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EOIR-42B подається в імміграційному суді noncitizen без
+      LPR-статусу, що опинився в removal proceedings. Якщо IJ задовольняє
+      заяву, respondent стає LPR. Це discretionary relief, вузько доступний
+      (річний ліміт 4 000 grants), що потребує жорстких статутних вимог за
+      INA §240A(b).
+    </p>
+
+    <h2>Статутні вимоги INA §240A(b)(1)</h2>
+    <ul>
+      <li><strong>10 років неперервної фізичної присутності</strong> в США безпосередньо перед заявою (застосовується stop-time rule — вручення NTA зупиняє годинник).</li>
+      <li><strong>Good moral character</strong> протягом цих 10 років (без disqualifying conduct за INA §101(f)).</li>
+      <li><strong>Без convictions</strong> за offenses INA §212(a)(2), §237(a)(2), або §237(a)(3).</li>
+      <li><strong>Exceptional and extremely unusual hardship</strong> для US-citizen або LPR подружжя, батьків або дитини при removal. (Стандарт вищий за "extreme hardship".)</li>
+    </ul>
+    <p>
+      Окремий VAWA-based cancellation за §240A(b)(2) доступний для
+      noncitizen, що зазнали насильства або extreme cruelty від подружжя
+      або батьків громадянина США/LPR, з коротшими термінами та іншими
+      hardship стандартами.
+    </p>
+
+    <h2>Що ми готуємо</h2>
+    <div class="form-list">
+      <strong>Пакет EOIR-42B</strong>
+      <ul>
+        <li><strong>Форма EOIR-42B</strong> з біографічними, сімейними, presence та criminal history даними.</li>
+        <li><strong>Форма EOIR-28</strong> notice of representation, якщо виступає ліцензований адвокат.</li>
+        <li><strong>Форма EOIR-26A</strong> fee waiver, де застосовно; інакше $100 application fee плюс $30 biometrics.</li>
+        <li><strong>Докази continuous presence</strong> — tax returns та W-2 за 10+ років, lease та utility records, employment letters, шкільні записи, медичні записи, датовані фото, sworn declarations свідків.</li>
+        <li><strong>Good-moral-character evidence</strong> — clean record letters, employer letters, community letters, certified disposition для кожного criminal інциденту.</li>
+        <li><strong>Hardship evidence</strong> — документи US-citizen/LPR статусу кваліфікуючого родича, медичні, освітні, country-conditions evidence, financial dependence, mental-health evaluations.</li>
+        <li><strong>Country-conditions packet</strong> — Department of State Country Reports, новини, expert declarations.</li>
+        <li><strong>Witness list</strong> та exhibit index за EOIR Practice Manual chapter 4.</li>
+      </ul>
+    </div>
+
+    <h2>Чого ми не робимо</h2>
+    <p>
+      <strong>Imverica не представляє клієнтів в імміграційному суді.</strong>
+      Non-LPR cancellation включає юридичні аргументи про §240A(b)
+      hardship стандарт, cross-examination свідків і judicial discretion —
+      це practice of law, потребує ліцензованого адвоката або
+      BIA-accredited representative. Як California Legal Document Assistant
+      та Immigration Consultant акуратно готуємо EOIR-42B та evidence packet
+      під керівництвом адвоката, організуємо court-ready indices та tabs,
+      перекладаємо foreign-language документи. Справи без counsel
+      направляємо до нашої мережі каліфорнійських імміграційних адвокатів.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §240A(b)(1), 8 U.S.C. §1229b(b)(1)
+      (cancellation для nonpermanent residents); INA §240A(b)(2) (VAWA);
+      INA §240A(d) (stop-time rule); INA §240A(e) (річний ліміт);
+      EOIR Practice Manual. Представництво в суді потребує ліцензованого
+      адвоката або BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-42B" primaryText="Почати анкету EOIR-42B" />
+</BaseLayout>

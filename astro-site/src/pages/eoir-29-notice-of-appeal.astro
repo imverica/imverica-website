@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'EOIR-29 — Notice of Appeal to the Board of Immigration Appeals | Imverica';
+const description = 'California Licensed LDA prepares Form EOIR-29 for noncitizens appealing certain USCIS decisions to the Board of Immigration Appeals (BIA). 30-day filing deadline. Prepared at your direction — court representation requires an attorney.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EOIR-29 Notice of Appeal Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form EOIR-29 — Notice of Appeal to the Board of Immigration Appeals from a USCIS decision. Court representation requires a licensed attorney or accredited representative.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/eoir-29-notice-of-appeal"
+  slug="/eoir-29-notice-of-appeal" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="EOIR · BIA · 8 C.F.R. §1003.3"
+    heading="EOIR-29 — Notice of Appeal to the BIA"
+    sub="The form a noncitizen files to appeal certain USCIS decisions (e.g. I-130 denial, I-360 denial) to the Board of Immigration Appeals. Strict 30-day filing deadline. We prepare the form and the supporting packet at your direction."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-29', text: 'Start my EOIR-29 appeal' }}
+  />
+
+  <LandingBody related={[
+    { href: '/eoir-immigration-court', label: 'EOIR overview — immigration court documents' },
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form EOIR-29, Notice of Appeal to the Board of Immigration Appeals
+      from a Decision of a DHS Officer, is filed when a noncitizen wants the
+      BIA to review a decision USCIS issued — most commonly a denied I-130
+      family petition, a denied I-360 widow/VAWA self-petition, or a
+      revoked petition. The appeal must be filed within <strong>30 calendar
+      days</strong> of the USCIS decision; the deadline is jurisdictional and
+      missing it generally ends the case.
+    </p>
+
+    <h2>When EOIR-29 applies</h2>
+    <ul>
+      <li>USCIS denied or revoked a petition where the regulations specifically allow appeal to the BIA (most family-based I-130 cases).</li>
+      <li>The petition decision letter expressly states "you may appeal to the BIA on Form EOIR-29."</li>
+      <li>You file within 30 days of the date of the decision (calendar days, not business days — count carefully).</li>
+    </ul>
+
+    <h2>When EOIR-29 does NOT apply</h2>
+    <ul>
+      <li>USCIS decisions that route to the <strong>Administrative Appeals Office (AAO)</strong> — those use Form I-290B, not EOIR-29.</li>
+      <li>Decisions of an immigration judge in removal proceedings — those use Form EOIR-26 (appeal to the BIA from an IJ decision).</li>
+      <li>Asylum denials referred to immigration court — there is no separate appeal; the case continues in court.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>EOIR-29 package preparation</strong>
+      <ul>
+        <li><strong>Form EOIR-29</strong> with the basis for appeal and the briefing-statement box completed correctly (filed within 30 days).</li>
+        <li><strong>Filing-fee package</strong> or fee waiver (Form EOIR-26A) where the appellant qualifies.</li>
+        <li><strong>Copy of the USCIS decision being appealed</strong>.</li>
+        <li><strong>Service of the appeal on the opposing party</strong> (DHS), with Proof of Service.</li>
+        <li><strong>Optional brief organization</strong> — the appellate brief is a legal argument and is best prepared with a licensed attorney; we organize and index supporting exhibits the attorney decides to include.</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      <strong>Imverica does not represent clients in immigration proceedings.</strong>
+      Appeals to the BIA involve legal argument about immigration law,
+      regulations, and case precedent — that is the practice of law and
+      requires a licensed attorney or BIA-accredited representative. As a
+      California Legal Document Assistant and Immigration Consultant, we
+      prepare the form, organize supporting exhibits, and meet the strict
+      30-day deadline at your direction. The substantive legal brief and
+      any oral argument must come from your attorney. We maintain a referral
+      list of California immigration attorneys experienced in BIA appeals.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> 8 C.F.R. §§1003.3, 1003.38 (filing
+      requirements for appeals to the BIA); EOIR Practice Manual (most
+      recent); INA §242 (judicial review). Court representation requires a
+      licensed attorney or BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-29" primaryText="Begin my EOIR-29 intake" />
+</BaseLayout>

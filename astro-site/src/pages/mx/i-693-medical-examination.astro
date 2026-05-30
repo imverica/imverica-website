@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-693 — Examen Médico de Inmigración | Imverica';
+const description = 'California Licensed LDA ayuda a organizar la presentación del I-693 — la forma la completa y sella un civil surgeon designado por USCIS. La empacamos correctamente con su I-485.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-693-medical-examination"
+  slug="/i-693-medical-examination" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §212(a)(1) · 8 C.F.R. §245.5"
+    heading="I-693 — Examen Médico de Inmigración"
+    sub="Examen médico requerido para la mayoría de los ajustes de estatus. La forma la completa y sella un USCIS-designated civil surgeon — organizamos la presentación, confirmamos reglas de tiempo y empacamos correctamente con su I-485."
+    ctaPrimary={{ href: '/#get-started?form=I-693', text: 'Iniciar mi I-693' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/mx/i-130-family-petition', label: 'I-130 — Petición Familiar' },
+    { href: '/mx/i-765-work-permit-help', label: 'I-765 — Permiso de Trabajo (EAD)' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma I-693 documenta que un solicitante de ajuste de estatus no
+      es inadmisible por motivos de salud bajo INA §212(a)(1). La forma
+      debe completarse y sellarse en un sobre por un USCIS-designated
+      <strong>civil surgeon</strong> — Imverica no realiza el examen
+      médico. Ayudamos a identificar al civil surgeon, confirmar qué
+      llevar, organizar el sobre sellado con el resto del paquete I-485 y
+      cumplir los plazos.
+    </p>
+
+    <h2>Lo que cubre I-693</h2>
+    <ul>
+      <li><strong>Historia médica y examen físico</strong> por el civil surgeon.</li>
+      <li><strong>Tamizaje de tuberculosis</strong> según las CDC technical instructions actuales.</li>
+      <li><strong>Tamizaje de sífilis y gonorrea</strong> según CDC.</li>
+      <li><strong>Registro de vacunación</strong> — vacunas requeridas por CDC: MMR, Td/Tdap, varicela, polio, influenza, hepatitis A y B, rotavirus, Hib, neumocócica, meningocócica y COVID-19 donde CDC lo requiera.</li>
+      <li><strong>Evaluación de salud mental y abuso de sustancias</strong> cuando aplique.</li>
+    </ul>
+
+    <h2>Civil surgeon — no cualquier doctor</h2>
+    <p>
+      Solo los médicos designados por USCIS como <strong>civil surgeons</strong>
+      pueden completar la I-693 en EE. UU. Un médico de familia o
+      especialista no puede firmarla. El civil surgeon completa la forma y
+      la sella en un sobre; el solicitante presenta el sobre sellado como
+      parte del paquete I-485.
+    </p>
+
+    <h2>Tiempo — cuándo hacer el examen</h2>
+    <p>
+      Según la guía actual de USCIS, una I-693 firmada es válida por
+      <strong>dos años</strong> desde la fecha del civil surgeon. USCIS
+      prefiere I-693 presentada <em>junto con</em> la I-485 — pero acepta
+      presentación posterior vía Request for Evidence. No haga el examen
+      demasiado temprano — una I-693 expirada significa repetir el examen.
+    </p>
+
+    <h2>Lo que preparamos y organizamos</h2>
+    <div class="form-list">
+      <strong>Paquete I-693</strong>
+      <ul>
+        <li><strong>Lista de civil surgeons cercanos</strong> — apuntamos al USCIS locator oficial; usted elige.</li>
+        <li><strong>Lista de verificación previa</strong> — registro de vacunación, resultados previos de tuberculin/IGRA, X-rays previas, receta de lentes, ID con foto, I-693 previa, lista de medicamentos.</li>
+        <li><strong>Organización de la presentación</strong> — sobre sellado I-693 dentro del paquete I-485; copia sellada para el solicitante.</li>
+        <li><strong>Seguimiento</strong> — registramos la fecha para mostrar la ventana de dos años.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      No realizamos exámenes médicos. No interpretamos resultados médicos.
+      No tenemos relación financiera ni profesional con ningún civil
+      surgeon — usted elige. Si el civil surgeon señala una Class A
+      condition, el solicitante debe consultar a un abogado de inmigración
+      con licencia antes de presentar — esos casos pueden requerir un
+      waiver.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §212(a)(1); 8 C.F.R. §245.5; USCIS Policy
+      Manual Volume 8; CDC technical instructions para civil surgeons. Solo
+      organización de documentos — Imverica no provee servicios médicos ni
+      asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-693" primaryText="Iniciar mi entrevista I-693" />
+</BaseLayout>

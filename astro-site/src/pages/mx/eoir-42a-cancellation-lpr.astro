@@ -1,0 +1,79 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'EOIR-42A — Cancellation of Removal para LPR | Imverica';
+const description = 'California Licensed LDA prepara la forma EOIR-42A — Application for Cancellation of Removal para residentes permanentes bajo INA §240A(a). 7 años de residencia, 5 años LPR, sin aggravated felony. Bajo dirección del cliente.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-42a-cancellation-lpr"
+  slug="/eoir-42a-cancellation-lpr" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · INA §240A(a) · Cancellation para LPR"
+    heading="EOIR-42A — Cancellation of Removal para LPR"
+    sub="Para residentes permanentes en removal proceedings que cumplen los requisitos del §240A(a): al menos 5 años como LPR, 7 años de residencia continua en EE. UU. tras admisión legal en cualquier estatus, y sin aggravated felony. Preparamos la solicitud y el evidence packet bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-42A', text: 'Iniciar mi EOIR-42A' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/eoir-42b-cancellation-non-lpr', label: 'EOIR-42B — Cancellation para non-LPR' },
+    { href: '/mx/eoir-immigration-court', label: 'EOIR overview — documentos de corte' },
+    { href: '/mx/i-90-green-card-renewal', label: 'I-90 — Renovación de Green Card' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma EOIR-42A se presenta en la corte de inmigración por un LPR
+      colocado en removal proceedings. Si el juez aprueba la solicitud, el
+      removal se cancela y se preserva el estatus de green card. Es relief
+      discrecional que requiere los requisitos estatutarios estrictos del
+      INA §240A(a).
+    </p>
+
+    <h2>Requisitos estatutarios INA §240A(a)</h2>
+    <ul>
+      <li><strong>LPR</strong> por al menos 5 años.</li>
+      <li><strong>7 años de residencia continua</strong> en EE. UU. tras admisión legal en cualquier estatus (aplica stop-time rule).</li>
+      <li><strong>Sin condena</strong> por aggravated felony bajo INA §101(a)(43).</li>
+      <li>El juez ejerce favorable discretion considerando vínculos familiares, hardship, equities, criminal history.</li>
+    </ul>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete EOIR-42A</strong>
+      <ul>
+        <li><strong>Forma EOIR-42A</strong> con datos biográficos, familiares, migratorios e historial criminal.</li>
+        <li><strong>Forma EOIR-28</strong> notice of representation si comparece un abogado con licencia.</li>
+        <li><strong>Forma EOIR-26A</strong> fee waiver donde aplique; o $100 application fee + $30 biometrics.</li>
+        <li><strong>Evidence packet</strong> — entry document, todos los I-94, green card, declaraciones de impuestos y W-2/1099 de 10+ años, employment letters, lease y utility records, certificados de matrimonio y nacimiento, registros escolares de hijos US-citizen, registros médicos (hardship), criminal records (court dispositions certificados).</li>
+        <li><strong>Declarations</strong> — del solicitante, familiares, empleador, comunidad.</li>
+        <li><strong>Country-conditions evidence</strong> donde aplique.</li>
+        <li><strong>Witness list</strong> e exhibit index según EOIR Practice Manual chapter 4.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      <strong>Imverica no representa clientes en corte de inmigración.</strong>
+      El cancellation of removal implica argumento legal — eso es la
+      práctica del derecho y requiere un abogado con licencia o
+      BIA-accredited representative. Como California Legal Document
+      Assistant e Immigration Consultant, preparamos EOIR-42A y el
+      evidence packet bajo la dirección de su abogado, organizamos índices
+      y tabs según el EOIR Practice Manual, y traducimos documentos.
+      Casos sin counsel los referimos a nuestra red de abogados de
+      inmigración con licencia en California.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §240A(a), 8 U.S.C. §1229b(a); INA
+      §101(a)(43); INA §240A(d) (stop-time rule); EOIR Practice Manual. La
+      representación en corte requiere abogado con licencia o
+      BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-42A" primaryText="Iniciar mi entrevista EOIR-42A" />
+</BaseLayout>

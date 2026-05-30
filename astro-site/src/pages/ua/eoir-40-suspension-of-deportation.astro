@@ -1,0 +1,84 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'EOIR-40 — Suspension of Deportation (Pre-IIRIRA / NACARA) | Imverica';
+const description = 'California Licensed LDA готує форму EOIR-40 — Application for Suspension of Deportation за pre-IIRIRA framework та NACARA §203. За дорученням клієнта.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/eoir-40-suspension-of-deportation"
+  slug="/eoir-40-suspension-of-deportation" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · Pre-IIRIRA INA §244 · NACARA §203"
+    heading="EOIR-40 — Application for Suspension of Deportation"
+    sub="Використовується вузькою групою заявників, що досі мають право за pre-IIRIRA framework — насамперед NACARA §203 (громадяни Нікарагуа, Куби, Сальвадору, Гватемали та former-Soviet-bloc) і окремі proceedings, розпочаті до 1 квітня 1997. Готуємо заяву за вашим дорученням."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-40', text: 'Почати пакет EOIR-40' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/eoir-42a-cancellation-lpr', label: 'EOIR-42A — Cancellation для LPR' },
+    { href: '/ua/eoir-42b-cancellation-non-lpr', label: 'EOIR-42B — Cancellation для non-LPR' },
+    { href: '/ua/eoir-immigration-court', label: 'EOIR overview — документи імміграційного суду' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EOIR-40 — pre-IIRIRA попередник сьогоднішнього Cancellation of
+      Removal. Після поправок IIRIRA 1996 "suspension of deportation"
+      переважно замінено на "cancellation of removal" (форми EOIR-42A /
+      EOIR-42B). EOIR-40 досі застосовується у вузькій групі справ —
+      найчастіше <strong>NACARA §203</strong> заявники, і особи, чиї
+      proceedings були розпочаті до 1 квітня 1997.
+    </p>
+
+    <h2>Хто досі подає EOIR-40</h2>
+    <ul>
+      <li>NACARA §203 заявники, що відповідають вимогам країни, дати в'їзду та реєстрації.</li>
+      <li>Noncitizen, чиї deportation proceedings розпочаті до 1 квітня 1997.</li>
+      <li>Інші вузькі категорії, збережені статутом або мировими угодами (наприклад, ABC class members).</li>
+    </ul>
+    <p>
+      Більшість сучасних справ подають EOIR-42A (LPR) або EOIR-42B
+      (non-LPR). Якщо не впевнені, яка форма застосовується, спитайте
+      ліцензованого імміграційного адвоката.
+    </p>
+
+    <h2>Що ми готуємо</h2>
+    <div class="form-list">
+      <strong>Пакет EOIR-40</strong>
+      <ul>
+        <li><strong>Форма EOIR-40</strong> з біографічними, сімейними, presence та good moral character даними.</li>
+        <li><strong>Форма EOIR-28</strong> notice of representation, якщо виступає ліцензований адвокат.</li>
+        <li><strong>Filing fee або fee waiver</strong> (форма EOIR-26A), де застосовно.</li>
+        <li><strong>Докази NACARA §203 eligibility</strong> (де застосовно) — країна і дати в'їзду, prior registration.</li>
+        <li><strong>Докази continuous physical presence</strong> (7 років за старим стандартом) — податкові декларації, lease, utility, school, medical, employment records.</li>
+        <li><strong>Good-moral-character evidence</strong> — clean record і certified disposition для будь-якого criminal інциденту.</li>
+        <li><strong>Extreme hardship evidence</strong> — застосовується старий стандарт "extreme hardship", не новіший "exceptional and extremely unusual".</li>
+        <li><strong>Witness list</strong> та exhibit index за EOIR Practice Manual.</li>
+      </ul>
+    </div>
+
+    <h2>Чого ми не робимо</h2>
+    <p>
+      <strong>Imverica не представляє клієнтів в імміграційному суді.</strong>
+      Suspension of deportation потребує ліцензованого адвоката або
+      BIA-accredited representative. Як California Legal Document Assistant
+      та Immigration Consultant акуратно готуємо EOIR-40 та evidence packet
+      під керівництвом адвоката. Справи без counsel направляємо до нашої
+      мережі каліфорнійських імміграційних адвокатів, досвідчених у NACARA
+      та інших pre-IIRIRA справах.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> Pre-IIRIRA INA §244 (suspension of
+      deportation, збережена IIRIRA §309(c) transition rules); NACARA §203,
+      Pub. L. No. 105-100, §203 (1997); EOIR Practice Manual.
+      Представництво в суді потребує ліцензованого адвоката або
+      BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-40" primaryText="Почати анкету EOIR-40" />
+</BaseLayout>

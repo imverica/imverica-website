@@ -1,0 +1,96 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'EOIR-40 — Suspension of Deportation (Pre-IIRIRA / NACARA) | Imverica';
+const description = 'California Licensed LDA prepares Form EOIR-40 — Application for Suspension of Deportation under the pre-IIRIRA framework and NACARA §203. Limited to certain Nicaraguan, Cuban, Salvadoran, Guatemalan, and former-Soviet-bloc applicants. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EOIR-40 Suspension of Deportation Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form EOIR-40 — Suspension of Deportation under the pre-IIRIRA framework, primarily used by NACARA §203 applicants.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/eoir-40-suspension-of-deportation"
+  slug="/eoir-40-suspension-of-deportation" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="EOIR · Pre-IIRIRA INA §244 · NACARA §203"
+    heading="EOIR-40 — Application for Suspension of Deportation"
+    sub="Used by the narrow group of applicants still eligible under the pre-IIRIRA framework — primarily NACARA §203 Nicaraguan, Cuban, Salvadoran, Guatemalan, and former-Soviet-bloc nationals, and certain people in proceedings begun before April 1, 1997. We prepare the application accurately at your direction."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-40', text: 'Start my EOIR-40 packet' }}
+  />
+
+  <LandingBody related={[
+    { href: '/eoir-42a-cancellation-lpr', label: 'EOIR-42A — Cancellation for LPRs' },
+    { href: '/eoir-42b-cancellation-non-lpr', label: 'EOIR-42B — Cancellation for non-LPRs' },
+    { href: '/eoir-immigration-court', label: 'EOIR overview — immigration court documents' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form EOIR-40, Application for Suspension of Deportation, is the
+      pre-IIRIRA precursor to today's Cancellation of Removal. Following
+      the 1996 IIRIRA amendments, "suspension of deportation" was generally
+      replaced by "cancellation of removal" (Forms EOIR-42A / EOIR-42B).
+      EOIR-40 still applies in a narrow group of cases — most commonly
+      <strong>NACARA §203</strong> applicants (certain Nicaraguan, Cuban,
+      Salvadoran, Guatemalan, and former-Soviet-bloc nationals who entered
+      the US by specified dates), and people whose proceedings were begun
+      before April 1, 1997.
+    </p>
+
+    <h2>Who still files EOIR-40</h2>
+    <ul>
+      <li>NACARA §203 applicants who meet the country, entry-date, and registration requirements.</li>
+      <li>Noncitizens whose deportation proceedings (not removal proceedings) were initiated before April 1, 1997, and who continue to seek the older relief.</li>
+      <li>Other narrow categories preserved by statute or settlement (e.g. ABC class members).</li>
+    </ul>
+    <p>
+      Most modern cases instead file Form EOIR-42A (LPRs) or EOIR-42B
+      (non-LPRs) — see those pages. If you are unsure which form applies,
+      ask a licensed immigration attorney; misfiling can prejudice the
+      case.
+    </p>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>EOIR-40 package preparation</strong>
+      <ul>
+        <li><strong>Form EOIR-40</strong> with biographic, family, presence, and good-moral-character data accurately completed.</li>
+        <li><strong>Form EOIR-28</strong> notice of representation if a licensed attorney is appearing.</li>
+        <li><strong>Filing fee or fee waiver</strong> (Form EOIR-26A) where applicable.</li>
+        <li><strong>NACARA §203 eligibility evidence</strong> (when applicable) — country and entry-date evidence, prior registration (e.g. ABC, TPS, asylum application by required date).</li>
+        <li><strong>Continuous physical presence evidence</strong> (7 years under the older standard) — tax returns, lease, utility, school, medical, and employment records.</li>
+        <li><strong>Good-moral-character evidence</strong> — clean record and certified disposition for any criminal incident.</li>
+        <li><strong>Extreme hardship evidence</strong> — note that the old "extreme hardship" standard applies under EOIR-40, not the newer "exceptional and extremely unusual" standard of EOIR-42B.</li>
+        <li><strong>Witness list</strong> and exhibit index per the EOIR Practice Manual.</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      <strong>Imverica does not represent clients in immigration court.</strong>
+      Suspension of deportation involves legal argument about pre-IIRIRA
+      eligibility, NACARA class membership, and judicial discretion — that
+      is the practice of law and requires a licensed attorney or
+      BIA-accredited representative. As a California Legal Document
+      Assistant and Immigration Consultant, we accurately prepare EOIR-40
+      and the evidence packet under your attorney's direction. We refer
+      cases without counsel to our network of California immigration
+      attorneys experienced in NACARA and other pre-IIRIRA matters.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> Pre-IIRIRA INA §244 (suspension
+      of deportation, as preserved by IIRIRA §309(c) transition rules);
+      NACARA §203, Pub. L. No. 105-100, §203 (1997); EOIR Practice Manual.
+      Court representation requires a licensed attorney or BIA-accredited
+      representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-40" primaryText="Begin my EOIR-40 intake" />
+</BaseLayout>

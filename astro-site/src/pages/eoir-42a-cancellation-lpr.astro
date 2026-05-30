@@ -1,0 +1,89 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'EOIR-42A — Cancellation of Removal for LPRs (Form 42A) | Imverica';
+const description = 'California Licensed LDA prepares Form EOIR-42A — Application for Cancellation of Removal for Certain Permanent Residents under INA §240A(a). 7-year residence, 5-year LPR, no aggravated felony. Prepared at your direction — court representation requires an attorney.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'EOIR-42A Cancellation of Removal Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form EOIR-42A — Cancellation of Removal for lawful permanent residents in immigration court proceedings. Court representation requires a licensed attorney.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/eoir-42a-cancellation-lpr"
+  slug="/eoir-42a-cancellation-lpr" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="EOIR · INA §240A(a) · Cancellation for LPRs"
+    heading="EOIR-42A — Cancellation of Removal for Permanent Residents"
+    sub="For lawful permanent residents in removal proceedings who meet the §240A(a) requirements: at least 5 years as an LPR, 7 years of continuous US residence after lawful admission in any status, and no aggravated felony. We prepare the application and evidence packet at your direction."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-42A', text: 'Start my EOIR-42A packet' }}
+  />
+
+  <LandingBody related={[
+    { href: '/eoir-42b-cancellation-non-lpr', label: 'EOIR-42B — Cancellation for non-LPRs' },
+    { href: '/eoir-immigration-court', label: 'EOIR overview — immigration court documents' },
+    { href: '/i-90-green-card-renewal', label: 'I-90 — Green Card Renewal' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form EOIR-42A, Application for Cancellation of Removal for Certain
+      Permanent Residents, is filed in immigration court by a lawful
+      permanent resident who has been placed in removal proceedings. If the
+      immigration judge grants the application, the LPR's removal is
+      cancelled and the green-card status is preserved. The relief is
+      discretionary and requires meeting strict statutory requirements
+      under INA §240A(a).
+    </p>
+
+    <h2>Statutory requirements under INA §240A(a)</h2>
+    <ul>
+      <li><strong>Lawful permanent resident</strong> for at least 5 years.</li>
+      <li><strong>7 years of continuous residence</strong> in the United States after lawful admission in any status (stop-time rule applies — service of NTA or a triggering criminal offense stops the clock).</li>
+      <li><strong>Not been convicted of an aggravated felony</strong> as defined in INA §101(a)(43).</li>
+      <li>The immigration judge exercises favorable discretion considering family ties, hardship, equities, criminal history, and other §240(c)(4) factors.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>EOIR-42A package preparation</strong>
+      <ul>
+        <li><strong>Form EOIR-42A</strong> with biographic, family, immigration, and criminal-history data accurately completed.</li>
+        <li><strong>Form EOIR-28</strong> notice of representation if a licensed attorney is appearing.</li>
+        <li><strong>Form EOIR-26A</strong> fee waiver where applicable; the $100 application fee plus $30 biometrics fee otherwise.</li>
+        <li><strong>Evidence packet</strong> — entry document, all I-94s, green card, tax returns and W-2/1099s for the past 10+ years (continuous residence), employment letters, lease and utility records, marriage and birth certificates, school records of US-citizen children, medical records (hardship), criminal records (certified court dispositions for every criminal incident).</li>
+        <li><strong>Declarations</strong> — applicant's declaration of equities, family-member declarations, employer declarations, community-tie declarations.</li>
+        <li><strong>Country-conditions evidence</strong> where hardship in the country of return is relevant.</li>
+        <li><strong>Witness list</strong> and exhibit index per EOIR Practice Manual chapter 4.</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      <strong>Imverica does not represent clients in immigration court.</strong>
+      Cancellation of removal involves legal argument, cross-examination of
+      witnesses, and exercise of judicial discretion — that is the practice
+      of law and requires a licensed attorney or BIA-accredited
+      representative. As a California Legal Document Assistant and
+      Immigration Consultant, we accurately prepare the EOIR-42A and the
+      evidence packet under your attorney's direction, organize court-ready
+      indices and tabs per the EOIR Practice Manual, and translate foreign-
+      language documents to support the filing. We refer cases without
+      counsel to our network of California immigration attorneys.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> INA §240A(a), 8 U.S.C. §1229b(a)
+      (cancellation of removal for permanent residents); INA §101(a)(43)
+      (aggravated-felony definition); INA §240A(d) (stop-time rule); EOIR
+      Practice Manual (most recent edition). Court representation requires
+      a licensed attorney or BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-42A" primaryText="Begin my EOIR-42A intake" />
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-864 — Affidavit of Support | Imverica';
+const description = 'California Licensed LDA prepara la forma I-864 Affidavit of Support — contrato legalmente exigible del sponsor bajo INA §213A. I-864A, I-864EZ, I-864W. Bajo dirección del cliente.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-864-affidavit-of-support"
+  slug="/i-864-affidavit-of-support" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §213A · 8 C.F.R. §213a"
+    heading="I-864 — Affidavit of Support"
+    sub="Contrato legalmente exigible que el sponsor firma para mantener al inmigrante fuera de la condición de public charge. Preparamos I-864, I-864A (household member), I-864EZ (casos simples) y I-864W (exentos) bajo su dirección — precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=I-864', text: 'Iniciar mi paquete I-864' }}
+  />
+
+  <CategoryTiles
+    kicker="Cuál Affidavit of Support necesita"
+    heading="Familia de formas I-864"
+    intro="Cuatro formas relacionadas — elija la que corresponde."
+    tiles={[
+      { icon: '📑', title: 'I-864 — Affidavit completo',    desc: 'Estándar para la mayoría de green cards basadas en familia.', href: '/#get-started?form=I-864',  color: 'var(--navy)' },
+      { icon: '🤝', title: 'I-864A — Household Member',    desc: 'Cuando el ingreso del cónyuge, padre, hermano o hijo adulto se suma al sponsor.', href: '/#get-started?form=I-864A', color: 'var(--terracotta-deep)' },
+      { icon: '⚡', title: 'I-864EZ — Casos simples',       desc: 'Versión corta — solo cónyuge/hijo del sponsor, ingreso del sponsor (solo W-2) cumple el umbral.', href: '/#get-started?form=I-864EZ', color: 'var(--sage)' },
+      { icon: '🛡️', title: 'I-864W — Exención',            desc: 'Para solicitantes exentos del I-864 (40 trimestres, ciertas viudas, VAWA self-petitioner, etc.).', href: '/#get-started?form=I-864W', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/mx/i-130-family-petition', label: 'I-130 — Petición Familiar' },
+    { href: '/mx/n-400-citizenship-help', label: 'N-400 — Naturalización' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma I-864, Affidavit of Support Under Section 213A — contrato
+      legalmente exigible entre el sponsor y el gobierno de EE. UU. Al
+      firmarlo, el sponsor se compromete a apoyar financieramente al
+      inmigrante en el 125% de las Federal Poverty Guidelines para que el
+      beneficiario no se convierta en public charge. La obligación dura
+      hasta la naturalización, 40 trimestres de trabajo, salida con
+      terminación del LPR o muerte.
+    </p>
+
+    <h2>Quién debe presentar I-864</h2>
+    <ul>
+      <li>Ciudadano o LPR peticionario en la mayoría de peticiones familiares (I-130, I-129F convertida a AOS).</li>
+      <li>Solicitantes basados en empleo donde un ciudadano o LPR familiar es dueño del 5% o más de la entidad peticionaria.</li>
+      <li>Huérfanos y adopciones Hague Convention (a menudo aplica la exención Form I-864W — preparamos la forma correcta).</li>
+    </ul>
+
+    <h2>Umbral de ingreso y formas de cumplir</h2>
+    <p>
+      El sponsor debe mostrar household income al 125% de las Federal
+      Poverty Guidelines (100% para active-duty militar que patrocina
+      cónyuge o hijo). Si el ingreso no alcanza, puede:
+    </p>
+    <ul>
+      <li><strong>Ingreso de household member</strong> — presentar I-864A para sumar el ingreso de un familiar.</li>
+      <li><strong>Activos</strong> — 1/3 (LPR-cónyuge/hijo menor de ciudadano) a 5x (la mayoría) del faltante en activos líquidos.</li>
+      <li><strong>Joint sponsor</strong> — persona separada que cumpla el umbral y firme una I-864 separada.</li>
+    </ul>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete I-864</strong>
+      <ul>
+        <li><strong>Forma I-864</strong> — affidavit principal con datos del sponsor, household size e ingreso.</li>
+        <li><strong>Forma I-864A</strong> — contrato compañero para household members cuyo ingreso se cuenta.</li>
+        <li><strong>Forma I-864EZ</strong> — versión simplificada donde aplique.</li>
+        <li><strong>Forma I-864W</strong> — solicitud de exención.</li>
+        <li><strong>Evidencia de respaldo</strong> — última federal tax return transcript (o 1040 completa con W-2/1099), prueba de empleo, documentación de activos, evidencia de ciudadanía/LPR del sponsor, evidencia de relación household.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant e Immigration
+      Consultant. Preparamos el paquete I-864 bajo su dirección. No damos
+      asesoría legal o fiscal — no podemos decir si los cálculos del
+      sponsor pasarán la revisión USCIS o consular, si los activos serán
+      aceptados, o si un joint sponsor es estratégicamente prudente.
+      Situaciones complejas (self-employment, rental losses, K-1, ajustes
+      fiscales recientes) suelen requerir un abogado de inmigración y CPA.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §213A, 8 U.S.C. §1183a; 8 C.F.R. §213a;
+      USCIS Policy Manual Volume 7. Solo preparación de documentos — no
+      asesoría legal o fiscal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-864" primaryText="Iniciar mi entrevista I-864" />
+</BaseLayout>

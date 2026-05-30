@@ -1,0 +1,106 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-693 — Report of Immigration Medical Examination & Vaccination Record | Imverica';
+const description = 'California Licensed LDA helps organize the I-693 medical exam submittal — the form is completed and sealed by a USCIS-designated civil surgeon, and we package it correctly with the adjustment-of-status filing.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-693 Medical Examination Submittal Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Organizing and submitting Form I-693 (Report of Immigration Medical Examination and Vaccination Record) as part of an adjustment-of-status filing. The form itself is completed and sealed by a USCIS-designated civil surgeon.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-693-medical-examination"
+  slug="/i-693-medical-examination" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §212(a)(1) · 8 C.F.R. §245.5"
+    heading="I-693 — Report of Immigration Medical Examination and Vaccination Record"
+    sub="The required medical exam for most adjustment-of-status filings. The form is completed and sealed by a USCIS-designated civil surgeon — we organize the submittal, confirm timing rules, and package it correctly with your I-485."
+    ctaPrimary={{ href: '/#get-started?form=I-693', text: 'Start my I-693 submittal' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/i-765-work-permit-help', label: 'I-765 — Work Permit (EAD)' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-693, Report of Immigration Medical Examination and Vaccination
+      Record, documents that an adjustment-of-status applicant is not
+      inadmissible to the United States on health-related grounds under INA
+      §212(a)(1). The form itself must be completed and sealed inside a
+      USCIS-designated <strong>civil surgeon's</strong> envelope — Imverica
+      does not perform the medical exam. We help applicants identify a
+      civil surgeon, confirm what to bring, organize the sealed envelope
+      with the rest of the I-485 package, and time the submittal so USCIS
+      accepts it.
+    </p>
+
+    <h2>What I-693 covers</h2>
+    <ul>
+      <li><strong>Medical history and physical examination</strong> by a civil surgeon.</li>
+      <li><strong>Tuberculosis screening</strong> per current CDC technical instructions.</li>
+      <li><strong>Syphilis and gonorrhea screening</strong> per CDC instructions.</li>
+      <li><strong>Vaccination record</strong> — vaccines required by CDC for immigrants: MMR, Td/Tdap, varicella, polio, influenza (seasonal), hepatitis A &amp; B, rotavirus, Hib, pneumococcal, meningococcal, and COVID-19 where currently required by CDC.</li>
+      <li><strong>Mental-health and drug-abuse evaluation</strong> when indicated.</li>
+    </ul>
+
+    <h2>Civil surgeon — not just any doctor</h2>
+    <p>
+      Only doctors specifically designated by USCIS as <strong>civil
+      surgeons</strong> can complete Form I-693 in the United States. A regular
+      family physician or specialist cannot sign the form. (Applicants
+      processing through a US consulate abroad see a panel physician instead
+      and use a different process.) The civil surgeon completes the form and
+      seals it in an envelope; the applicant submits the sealed envelope to
+      USCIS as part of the I-485 package.
+    </p>
+
+    <h2>Timing — when to do the medical</h2>
+    <p>
+      Under current USCIS guidance, a signed Form I-693 is valid for
+      <strong>two years</strong> from the date the civil surgeon signs it,
+      regardless of when it is submitted. USCIS prefers I-693 submitted
+      <em>together</em> with the I-485 — but accepts later submission via
+      Request for Evidence. Do not have the medical done too far in advance
+      of filing; an expired I-693 means a repeat exam.
+    </p>
+
+    <h2>What we prepare and organize</h2>
+    <div class="form-list">
+      <strong>I-693 submittal package</strong>
+      <ul>
+        <li><strong>List of nearby USCIS-designated civil surgeons</strong> — we point you to the official USCIS locator; the civil surgeon you choose is yours.</li>
+        <li><strong>Pre-visit checklist</strong> — vaccine record, prior tuberculin/IGRA results, prior chest X-rays, eyeglasses prescription, government-issued photo ID, any prior I-693 if recently filed, list of medications.</li>
+        <li><strong>Submittal organization</strong> — sealed I-693 envelope placed inside the I-485 package so USCIS does not open it in error; sealed envelope plus the unopened, signed copy received by the applicant.</li>
+        <li><strong>Tracking</strong> — we log the civil-surgeon date so the file shows it is within the two-year window.</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      We do not perform medical exams. We do not interpret medical results.
+      We do not have a financial or professional relationship with any civil
+      surgeon — you choose your own. If the civil surgeon flags a Class A
+      condition (a health-based ground of inadmissibility), the applicant
+      should consult a licensed immigration attorney before filing — those
+      cases can require a waiver and are outside what Imverica prepares.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> Immigration and Nationality Act §212(a)(1)
+      (health-related grounds of inadmissibility); 8 C.F.R. §245.5;
+      USCIS Policy Manual Volume 8 (Admissibility — Health-Related Grounds);
+      CDC technical instructions for civil surgeons. Document organization
+      only — Imverica does not provide medical services or legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-693" primaryText="Begin my I-693 submittal" />
+</BaseLayout>

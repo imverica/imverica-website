@@ -1,0 +1,113 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-751 — Petition to Remove Conditions on Residence | Imverica';
+const description = 'California Licensed LDA prepares Form I-751 to remove the conditions on a 2-year conditional green card based on marriage — joint filings with the US-citizen or LPR spouse, plus waiver requests (good-faith marriage, abuse, extreme hardship). Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-751 Removal of Conditions on Residence Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-751 — joint filings and waiver requests to remove conditions on a conditional permanent resident card based on marriage.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-751-remove-conditions"
+  slug="/i-751-remove-conditions" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §216 · 8 C.F.R. §216"
+    heading="I-751 — Petition to Remove Conditions on Residence"
+    sub="For conditional permanent residents who received a 2-year green card through marriage. File Form I-751 within the 90-day window before the card expires — jointly with your spouse or under a waiver. We prepare the full package at your direction."
+    ctaPrimary={{ href: '/#get-started?form=I-751', text: 'Start my I-751 package' }}
+  />
+
+  <CategoryTiles
+    kicker="Which I-751 path applies"
+    heading="Joint filing or waiver"
+    intro="Form I-751 has two main paths. Tap the tile that matches your situation."
+    tiles={[
+      { icon: '💍', title: 'Joint filing',             desc: 'Both spouses still married and filing together within the 90-day window before the 2-year card expires.', href: '/#get-started?form=I-751', color: 'var(--navy)' },
+      { icon: '💔', title: 'Divorce waiver',           desc: 'Marriage entered in good faith but ended in divorce or annulment — file the waiver any time before the card expires (and sometimes after).', href: '/#get-started?form=I-751', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'Battered-spouse waiver',  desc: 'Marriage entered in good faith but you (or your child) were subjected to battery or extreme cruelty by the US-citizen / LPR spouse.', href: '/#get-started?form=I-751', color: 'var(--gold)' },
+      { icon: '⚖️', title: 'Extreme-hardship waiver', desc: 'Removal from the US would cause extreme hardship — narrow standard, often paired with a divorce or battery waiver.', href: '/#get-started?form=I-751', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/n-400-citizenship-help', label: 'N-400 — Naturalization' },
+    { href: '/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-751, Petition to Remove the Conditions on Residence, is filed by
+      a conditional permanent resident who obtained a 2-year green card
+      through marriage to a U.S. citizen or LPR. Filing successfully converts
+      the conditional 2-year card into a regular 10-year green card and lifts
+      the conditions on residence — meaning, USCIS no longer treats the
+      green card as contingent on the marriage remaining intact.
+    </p>
+
+    <h2>Filing window — 90 days before card expires</h2>
+    <p>
+      For a joint filing, file Form I-751 during the <strong>90-day window
+      immediately before the conditional card expires</strong>. Filing too
+      early (more than 90 days before) results in a rejection. Filing late
+      (after expiration) requires a written explanation and acceptable
+      reasons — late filings without good cause can lead to removal
+      proceedings. Waiver filings (divorce, battery, hardship) do not have
+      the 90-day restriction and can be filed at any time after the card
+      issues.
+    </p>
+
+    <h2>Joint filing — what we prepare</h2>
+    <div class="form-list">
+      <strong>I-751 joint petition package</strong>
+      <ul>
+        <li><strong>Form I-751</strong> jointly signed by the conditional resident and the US-citizen / LPR spouse.</li>
+        <li><strong>Bona-fide-marriage evidence</strong> — joint tax returns, joint bank/credit accounts, joint property or lease, joint utility bills, joint insurance (health, auto, life), birth certificates of children of the marriage, photographs, travel itineraries, affidavits from family/friends.</li>
+        <li><strong>Copy of the front and back of the 2-year green card</strong>.</li>
+        <li><strong>Police certificates or court dispositions</strong> for any criminal incidents since the green card was issued.</li>
+      </ul>
+    </div>
+
+    <h2>Waivers — when joint filing isn't possible</h2>
+    <p>
+      If the marriage has ended, file Form I-751 with a waiver request. There
+      are three main waiver bases:
+    </p>
+    <ul>
+      <li><strong>Good-faith marriage that ended in divorce or annulment</strong> — must show the marriage was real when entered and provide the final divorce decree.</li>
+      <li><strong>Battery or extreme cruelty</strong> — applicant or applicant's child was subjected to battery or extreme cruelty by the US-citizen / LPR spouse. Confidentiality protections under VAWA apply; this waiver does not require disclosure to or signature from the abusive spouse.</li>
+      <li><strong>Extreme hardship</strong> — removal from the United States would cause extreme hardship. This is a narrow standard and often combined with a divorce or battery waiver.</li>
+    </ul>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a California Legal Document Assistant and Immigration
+      Consultant. We prepare the I-751 package accurately at your direction.
+      We do not give legal advice and do not assess which waiver basis is
+      strongest in your case, build legal arguments around extreme hardship,
+      or appear in immigration court. If your conditional residence has
+      already expired, your case is in removal proceedings, your marriage
+      ended under contested circumstances, or USCIS has issued a Notice of
+      Intent to Deny, that is a legal-strategy matter — we refer you to a
+      licensed California immigration attorney before filing.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> INA §216, 8 U.S.C. §1186a
+      (conditional residence based on marriage); 8 C.F.R. §216 (procedure);
+      VAWA confidentiality provisions for battered-spouse waivers; USCIS
+      Policy Manual Volume 6 (Adjustment of Status — Conditional Residence).
+      Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-751" primaryText="Begin my I-751 intake" />
+</BaseLayout>

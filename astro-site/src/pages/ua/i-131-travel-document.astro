@@ -1,0 +1,122 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'I-131 — Заява на travel document (Re-entry Permit, Refugee Travel Document, Advance Parole) | Imverica';
+const description = 'California Licensed LDA готує форму I-131 — Re-entry Permit для LPR, Refugee Travel Document для asylee/refugee, Advance Parole для заявників з pending I-485, та humanitarian parole. За дорученням клієнта.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/i-131-travel-document"
+  slug="/i-131-travel-document" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §223 · 8 C.F.R. §§212.5, 223"
+    heading="I-131 — Заява на travel document"
+    sub="Re-entry Permit для постійних резидентів з тривалою поїздкою за кордон, Refugee Travel Document для asylee та refugee, Advance Parole для заявників з pending I-485, або humanitarian parole — готуємо I-131 акуратно за вашим дорученням. Фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=I-131', text: 'Почати заяву I-131' }}
+  />
+
+  <CategoryTiles
+    kicker="Який I-131 вам потрібен"
+    heading="Чотири призначення форми I-131"
+    intro="Форма I-131 — одна форма з чотирма дуже різними призначеннями. Натисніть плитку під вашу поїздку."
+    tiles={[
+      { icon: '🛂', title: 'Re-entry Permit (LPR)',         desc: 'Постійний резидент планує перебувати поза США рік або більше — зберігає green card.', href: '/#get-started?form=I-131', color: 'var(--navy)' },
+      { icon: '🌍', title: 'Refugee Travel Document',       desc: 'Asylee або refugee, якому потрібно поїхати за кордон — обов\'язково, бо не можна користуватися паспортом країни походження.', href: '/#get-started?form=I-131', color: 'var(--terracotta-deep)' },
+      { icon: '✈️', title: 'Advance Parole (pending I-485)', desc: 'Заявник на adjustment-of-status з pending I-485 — виїзд без Advance Parole означає відмову від I-485.', href: '/#get-started?form=I-131', color: 'var(--sage)' },
+      { icon: '🆘', title: 'Humanitarian Parole',           desc: 'Запросити дозвіл на в\'їзд до США з термінової гуманітарної причини або суспільної користі.', href: '/#get-started?form=I-131', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-485-help', label: 'I-485 — Зміна статусу' },
+    { href: '/ua/i-90-green-card-renewal', label: 'I-90 — Поновлення green card' },
+    { href: '/ua/i-589-asylum-help', label: 'I-589 — Притулок і Withholding' },
+    { href: '/ua/u4u', label: 'U4U — Uniting for Ukraine' }
+  ]}>
+    <p class="lead">
+      Форма I-131, Application for Travel Document — єдина форма USCIS, що
+      покриває чотири різні потреби: Re-entry Permit для постійних
+      резидентів, Refugee Travel Document для asylee та refugee, Advance
+      Parole для заявників на adjustment-of-status, і humanitarian parole.
+      Вимоги, докази та місце подачі відрізняються для кожного — Imverica
+      готує правильний трек I-131 для вашої ситуації за вашим дорученням.
+    </p>
+
+    <h2>Re-entry Permit — для постійних резидентів</h2>
+    <p>
+      Постійний резидент, який планує бути поза США рік або більше (до
+      двох років), подає форму I-131 на Re-entry Permit
+      <strong>до</strong> виїзду. Permit зберігає green card від визнання
+      залишеною. Заявник має фізично бути в США під час біометрії —
+      плануйте заздалегідь. Re-entry Permit зазвичай дійсний два роки і не
+      поновлюється; LPR, яким потрібно більше часу, мають повернутися і
+      подати повторно.
+    </p>
+
+    <h2>Refugee Travel Document — для asylee та refugee</h2>
+    <p>
+      Особа, що отримала політичний притулок, derivative asylee або refugee,
+      може використовувати Refugee Travel Document замість паспорта країни
+      походження. Refugee Travel Document діє до одного року. Поїздка до
+      країни заявленого переслідування дуже не рекомендується і може
+      призвести до припинення статусу — це юридичне-стратегічне питання;
+      перед такою поїздкою проконсультуйтесь з імміграційним адвокатом.
+    </p>
+
+    <h2>Advance Parole — для заявників з pending I-485</h2>
+    <p>
+      Заявник на adjustment-of-status з pending формою I-485 має отримати
+      Advance Parole на формі I-131 <strong>до</strong> виїзду зі США.
+      Виїзд без Advance Parole зазвичай призводить до того, що USCIS
+      вважає I-485 залишеною. Є вузькі винятки. Advance Parole часто
+      подається разом з I-485 та I-765 і може бути затверджений на
+      об'єднаній EAD/AP картці.
+    </p>
+
+    <h2>Humanitarian Parole — ввезення особи до США</h2>
+    <p>
+      Humanitarian parole — дискреційний запит на дозвіл особі, інакше
+      inadmissible, в'їхати до США з термінової гуманітарної причини або
+      суттєвої суспільної користі. Заявник зазвичай подає форму I-131 з
+      формою I-134 (Declaration of Financial Support) та докладними
+      доказами надзвичайної ситуації. Доля схвалень низька — готуємо пакет
+      акуратно, щоб перед USCIS була найсильніша версія справи.
+    </p>
+
+    <h2>Що ми готуємо</h2>
+    <div class="form-list">
+      <strong>Пакет I-131</strong>
+      <ul>
+        <li><strong>Форма I-131</strong> з правильно обраним типом заяви в Part 2 (Re-entry Permit, Refugee Travel Document, Advance Parole або Humanitarian Parole).</li>
+        <li><strong>Підтверджуючі документи</strong> — копія green card, I-94, I-485 receipt, попередні travel documents, свідоцтва про шлюб/народження, asylum grant notice, refugee approval або докази надзвичайної ситуації для humanitarian parole.</li>
+        <li><strong>Форма I-134</strong> — Declaration of Financial Support, коли beneficiary humanitarian parole потрібен спонсор.</li>
+        <li><strong>Форма I-912</strong> — запит fee waiver, якщо заявник підходить за доходом або means-tested benefits.</li>
+      </ul>
+    </div>
+
+    <h2>Чого ми не робимо</h2>
+    <p>
+      Imverica — California Legal Document Assistant та Immigration Consultant.
+      Готуємо документи акуратно за вашим дорученням. Не даємо юридичних
+      консультацій — не можемо сказати, чи поставить поїздка до конкретної
+      країни під загрозу ваше asylum, рекомендувати Advance Parole vs.
+      consular processing або оцінювати силу справи humanitarian parole.
+      Це ваші (або вашого адвоката) рішення. У питаннях поїздок у removal
+      proceedings або складних inadmissibility issues направляємо до
+      ліцензованого каліфорнійського імміграційного адвоката.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §223 (refugee travel documents); INA
+      §212(d)(5) (parole); 8 C.F.R. §§212.5, 223 (процедура); USCIS Policy
+      Manual Volume 11 (Travel Documents). Лише підготовка документів — не
+      юридичні консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-131" primaryText="Почати анкету I-131" />
+</BaseLayout>

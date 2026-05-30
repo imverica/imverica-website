@@ -1,0 +1,98 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-751 — Petición para Eliminar las Condiciones sobre la Residencia | Imverica';
+const description = 'California Licensed LDA prepara la forma I-751 para eliminar las condiciones de la green card condicional de 2 años basada en matrimonio — presentación conjunta con cónyuge ciudadano/LPR, más waivers (matrimonio de buena fe, abuso, extreme hardship). Bajo dirección del cliente.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-751-remove-conditions"
+  slug="/i-751-remove-conditions" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §216 · 8 C.F.R. §216"
+    heading="I-751 — Petición para Eliminar las Condiciones sobre la Residencia"
+    sub="Para residentes permanentes condicionales que recibieron green card de 2 años por matrimonio. Presente I-751 dentro de la ventana de 90 días antes de que expire la tarjeta — junto con su cónyuge o bajo waiver. Preparamos el paquete completo bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=I-751', text: 'Iniciar mi paquete I-751' }}
+  />
+
+  <CategoryTiles
+    kicker="Cuál ruta I-751 aplica"
+    heading="Presentación conjunta o waiver"
+    intro="La forma I-751 tiene dos rutas principales. Toque el tile que coincide con su situación."
+    tiles={[
+      { icon: '💍', title: 'Presentación conjunta',     desc: 'Ambos cónyuges siguen casados, presentan juntos en la ventana de 90 días.', href: '/#get-started?form=I-751', color: 'var(--navy)' },
+      { icon: '💔', title: 'Divorcio (waiver)',         desc: 'Matrimonio de buena fe terminado en divorcio o anulación.', href: '/#get-started?form=I-751', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'Waiver por abuso',         desc: 'Matrimonio de buena fe donde usted (o su hijo) sufrió abuso o extreme cruelty del cónyuge ciudadano/LPR.', href: '/#get-started?form=I-751', color: 'var(--gold)' },
+      { icon: '⚖️', title: 'Waiver por extreme hardship', desc: 'La remoción de EE. UU. causaría extreme hardship — estándar estrecho.', href: '/#get-started?form=I-751', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/mx/i-130-family-petition', label: 'I-130 — Petición Familiar' },
+    { href: '/mx/n-400-citizenship-help', label: 'N-400 — Naturalización' },
+    { href: '/mx/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma I-751 se presenta por un residente permanente condicional
+      que obtuvo green card de 2 años por matrimonio con ciudadano de EE.
+      UU. o LPR. La presentación exitosa convierte la tarjeta condicional
+      de 2 años en green card normal de 10 años.
+    </p>
+
+    <h2>Ventana de presentación — 90 días antes de expirar</h2>
+    <p>
+      Para presentación conjunta, presente I-751 en la <strong>ventana de
+      90 días inmediatamente antes de que expire la tarjeta
+      condicional</strong>. Presentar muy temprano (más de 90 días antes)
+      resulta en rechazo. Presentar tarde requiere explicación con buenas
+      razones — presentaciones tardías sin good cause pueden conducir a
+      removal proceedings. Las presentaciones de waiver (divorcio, abuso,
+      hardship) no tienen la restricción de 90 días.
+    </p>
+
+    <h2>Presentación conjunta — lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete de petición conjunta I-751</strong>
+      <ul>
+        <li><strong>Forma I-751</strong> firmada conjuntamente por el residente condicional y el cónyuge ciudadano/LPR.</li>
+        <li><strong>Evidencia de bona-fide marriage</strong> — declaraciones de impuestos conjuntas, cuentas bancarias/crédito, propiedad o lease, utility bills, seguros (salud, auto, vida), certificados de nacimiento de hijos del matrimonio, fotos, itinerarios de viaje, afidávits de familiares y amigos.</li>
+        <li><strong>Copia del frente y reverso de la green card de 2 años</strong>.</li>
+        <li><strong>Police certificates o court dispositions</strong> para cualquier incidente criminal desde la emisión de la green card.</li>
+      </ul>
+    </div>
+
+    <h2>Waivers — cuando la presentación conjunta no es posible</h2>
+    <ul>
+      <li><strong>Matrimonio de buena fe terminado en divorcio o anulación</strong> — debe mostrar que el matrimonio fue real al entrar y proveer el final divorce decree.</li>
+      <li><strong>Battery o extreme cruelty</strong> — solicitante o hijo sufrió abuso del cónyuge ciudadano/LPR. Aplican VAWA confidentiality protections.</li>
+      <li><strong>Extreme hardship</strong> — remoción de EE. UU. causaría extreme hardship. Estándar estrecho.</li>
+    </ul>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant e Immigration
+      Consultant. Preparamos el paquete I-751 bajo su dirección. No damos
+      asesoría legal y no evaluamos cuál base de waiver es más fuerte en
+      su caso, ni construimos argumentos legales sobre extreme hardship.
+      Si su residencia condicional ya expiró, su caso está en removal
+      proceedings, el matrimonio terminó en circunstancias controvertidas o
+      USCIS emitió Notice of Intent to Deny — es estrategia legal; lo
+      referimos a un abogado de inmigración con licencia en California
+      antes de presentar.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §216, 8 U.S.C. §1186a; 8 C.F.R. §216;
+      VAWA confidentiality para waivers por abuso; USCIS Policy Manual
+      Volume 6. Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-751" primaryText="Iniciar mi entrevista I-751" />
+</BaseLayout>

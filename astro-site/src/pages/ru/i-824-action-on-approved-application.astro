@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'I-824 — Action on Approved Application or Petition | Imverica';
+const description = 'California Licensed LDA готовит форму I-824 для запроса дубликата USCIS approval notice или для уведомления консульства США о follow-to-join derivative beneficiaries. По поручению клиента.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/i-824-action-on-approved-application"
+  slug="/i-824-action-on-approved-application" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · 8 C.F.R. §103.7"
+    heading="I-824 — Action on Approved Application or Petition"
+    sub="Запросить дубликат USCIS approval notice (замена I-797) или попросить USCIS уведомить посольство США, чтобы derivative-родственники могли follow-to-join одобренную петицию. Готовим запрос аккуратно по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=I-824', text: 'Начать запрос I-824' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-130-family-petition', label: 'I-130 — Семейная петиция' },
+    { href: '/ru/i-485-help', label: 'I-485 — Изменение статуса' },
+    { href: '/ru/i-589-asylum-help', label: 'I-589 — Убежище и Withholding' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-824, Application for Action on an Approved Application or
+      Petition, подаётся в USCIS после того, как предыдущая петиция или
+      заявление уже одобрены — обычно по одной из двух причин: запросить
+      дубликат approval notice (замена I-797) или попросить USCIS направить
+      уведомление в посольство/консульство США, чтобы derivative
+      family members могли подать "follow-to-join" principal beneficiary.
+    </p>
+
+    <h2>Когда подавать I-824</h2>
+    <ul>
+      <li><strong>Утерянное или уничтоженное approval notice</strong> — запрос дубликата I-797 для одобренной петиции или заявления (I-130, I-140, I-360, I-589, N-400 и т. д.).</li>
+      <li><strong>Follow-to-join derivative beneficiaries</strong> — петиция principal одобрена (например, I-130, I-140 с derivative или I-589 asylum grant), principal в США, и супруг и/или неженатые дети за границей теперь должны подать на immigrant visa или follow-to-join в консульстве США.</li>
+      <li><strong>Asylum follow-to-join</strong> — Внимание: asylee обычно подают <strong>форму I-730</strong> (Refugee/Asylee Relative Petition) для follow-to-join, а не I-824. Помогаем подтвердить, какая форма подходит.</li>
+      <li><strong>Другие пост-approval действия USCIS</strong>, разрешённые самим approval notice.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакет I-824</strong>
+      <ul>
+        <li><strong>Форма I-824</strong> с правильным основанием и биографическими данными.</li>
+        <li><strong>Копия approval notice</strong> (I-797 receipt) или доказательство одобрения, если оригинал утерян.</li>
+        <li><strong>Документы личности и родства</strong> для follow-to-join beneficiary — страницы паспорта, свидетельство о браке, свидетельства о рождении детей.</li>
+        <li><strong>Детали назначения консульства</strong> — название и адрес посольства/консульства США для уведомления USCIS.</li>
+        <li><strong>Запрос fee waiver (форма I-912)</strong>, где заявитель квалифицируется по доходу.</li>
+      </ul>
+    </div>
+
+    <h2>Чего I-824 НЕ делает</h2>
+    <p>
+      I-824 не может оживить истёкшую или брошенную петицию. Не заменяет
+      свежую подачу, где базовая петиция отозвана или revoked. Для
+      asylee/refugee follow-to-join USCIS обычно ожидает форму I-730 —
+      подтверждаем правильный путь до начала подготовки. Для сохранения
+      статуса widow(er) под INA §201(b)(2)(A)(i) и конверсии формы I-360
+      используется другой трек.
+    </p>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Imverica — California Legal Document Assistant и Immigration Consultant.
+      Готовим I-824 аккуратно по вашему поручению. Не даём юридических
+      консультаций и не можем сказать, I-824 или I-730 — правильный путь для
+      follow-to-join, делает ли visa bulletin timing запрос продуктивным или
+      как оспаривать отозванную петицию. Это юридические решения — такие
+      дела направляем к лицензированному калифорнийскому иммиграционному
+      адвокату.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> 8 C.F.R. §103.7 (сборы); USCIS Policy Manual
+      и инструкции формы I-824. Только подготовка документов — не
+      юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-824" primaryText="Начать анкету I-824" />
+</BaseLayout>

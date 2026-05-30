@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-824 — Application for Action on Approved Application or Petition | Imverica';
+const description = 'California Licensed LDA prepares Form I-824 to request a duplicate USCIS approval notice or to ask USCIS to notify a US consulate for follow-to-join derivative beneficiaries. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-824 Action on Approved Application Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-824 — duplicate USCIS approval notices and follow-to-join derivative beneficiary requests.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-824-action-on-approved-application"
+  slug="/i-824-action-on-approved-application" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · 8 C.F.R. §103.7"
+    heading="I-824 — Application for Action on Approved Application or Petition"
+    sub="Request a duplicate USCIS approval notice (replacement I-797) or ask USCIS to notify a U.S. consulate so derivative family members can follow-to-join an approved petition. We prepare the request accurately at your direction."
+    ctaPrimary={{ href: '/#get-started?form=I-824', text: 'Start my I-824 request' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/i-589-asylum-help', label: 'I-589 — Asylum & Withholding' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-824, Application for Action on an Approved Application or
+      Petition, is filed with USCIS after a prior application or petition has
+      already been approved — typically for one of two reasons: to request a
+      duplicate approval notice (a replacement Form I-797), or to ask USCIS
+      to send notification to a U.S. embassy or consulate abroad so derivative
+      family members can apply to "follow-to-join" the principal beneficiary.
+    </p>
+
+    <h2>When to file I-824</h2>
+    <ul>
+      <li><strong>Lost or destroyed approval notice</strong> — request a duplicate I-797 for the approved petition or application (I-130, I-140, I-360, I-589, N-400, etc.).</li>
+      <li><strong>Follow-to-join derivative beneficiaries</strong> — the principal beneficiary's petition has been approved (e.g. I-130, I-140 with derivatives, or I-589 asylum grant), the principal is in the U.S., and the spouse and/or unmarried children abroad now need to apply for immigrant visas or follow-to-join at a U.S. consulate.</li>
+      <li><strong>Asylum follow-to-join</strong> — Note: asylees should typically file <strong>Form I-730</strong> (Refugee/Asylee Relative Petition) for follow-to-join family members, not I-824. We help confirm which form fits your case.</li>
+      <li><strong>Other USCIS post-approval actions</strong> permitted by the approval notice itself.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>I-824 package preparation</strong>
+      <ul>
+        <li><strong>Form I-824</strong> with the correct basis and supporting biographic data.</li>
+        <li><strong>Copy of the underlying approval notice</strong> (I-797 receipt) or evidence of approval if the original was lost.</li>
+        <li><strong>Identity and relationship evidence</strong> for follow-to-join beneficiaries — passport biographic pages, marriage certificate, birth certificates of children.</li>
+        <li><strong>Consular destination details</strong> — name and address of the US embassy/consulate USCIS should notify.</li>
+        <li><strong>Fee waiver (Form I-912)</strong> where the applicant qualifies based on income or means-tested benefits.</li>
+      </ul>
+    </div>
+
+    <h2>What I-824 does NOT do</h2>
+    <p>
+      I-824 cannot revive an expired or abandoned petition. It cannot
+      substitute for a fresh filing where the underlying petition has been
+      revoked or withdrawn. For asylee/refugee follow-to-join, USCIS
+      typically expects Form I-730 — we confirm the correct vehicle before
+      preparation begins. For widow(er) status preservation under INA
+      §201(b)(2)(A)(i) and Form I-360 conversion, that is a different track.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a California Legal Document Assistant and Immigration
+      Consultant. We prepare the I-824 accurately at your direction. We do
+      not give legal advice and cannot tell you whether I-824 vs. I-730 is
+      the right vehicle for a follow-to-join case, whether visa-bulletin
+      timing makes the request productive, or how to litigate a revoked
+      petition. Those decisions are legal — we refer those cases to a
+      licensed California immigration attorney.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> 8 C.F.R. §103.7 (fees); USCIS Policy Manual
+      and Form I-824 instructions. Document preparation only — not legal
+      advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-824" primaryText="Begin my I-824 intake" />
+</BaseLayout>

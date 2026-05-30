@@ -1,0 +1,120 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-131 — Solicitud de Documento de Viaje (Re-entry Permit, Refugee Travel Document, Advance Parole) | Imverica';
+const description = 'California Licensed LDA prepara la forma I-131 — Re-entry Permit para LPR, Refugee Travel Document para asylee/refugee, Advance Parole para solicitantes I-485 pendientes, y humanitarian parole. Bajo dirección del cliente.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-131-travel-document"
+  slug="/i-131-travel-document" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §223 · 8 C.F.R. §§212.5, 223"
+    heading="I-131 — Solicitud de Documento de Viaje"
+    sub="Re-entry Permit para residentes permanentes con viaje largo, Refugee Travel Document para asylee y refugee, Advance Parole para solicitantes I-485 pendientes, o humanitarian parole — preparamos I-131 bajo su dirección. Precio fijo, entrevista multilingüe."
+    ctaPrimary={{ href: '/#get-started?form=I-131', text: 'Iniciar mi I-131' }}
+  />
+
+  <CategoryTiles
+    kicker="Cuál I-131 necesita"
+    heading="Cuatro usos de la forma I-131"
+    intro="La forma I-131 es una sola forma con cuatro usos muy distintos. Toque el tile que coincide con su viaje."
+    tiles={[
+      { icon: '🛂', title: 'Re-entry Permit (LPR)',         desc: 'Residente permanente que planea permanecer fuera de EE. UU. un año o más — preserva la green card.', href: '/#get-started?form=I-131', color: 'var(--navy)' },
+      { icon: '🌍', title: 'Refugee Travel Document',       desc: 'Asylee o refugee que necesita viajar internacionalmente — requerido porque no se puede usar el pasaporte del país de origen.', href: '/#get-started?form=I-131', color: 'var(--terracotta-deep)' },
+      { icon: '✈️', title: 'Advance Parole (pending I-485)', desc: 'Solicitante de ajuste con I-485 pendiente — salir sin Advance Parole abandona la I-485.', href: '/#get-started?form=I-131', color: 'var(--sage)' },
+      { icon: '🆘', title: 'Humanitarian Parole',           desc: 'Solicitar parole para que una persona entre a EE. UU. por una razón humanitaria urgente o beneficio público.', href: '/#get-started?form=I-131', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/mx/i-90-green-card-renewal', label: 'I-90 — Renovación de Green Card' },
+    { href: '/mx/i-589-asylum-help', label: 'I-589 — Asilo y Withholding' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma I-131, Application for Travel Document, es la única forma de
+      USCIS que cubre cuatro necesidades de viaje distintas: Re-entry Permit
+      para residentes permanentes, Refugee Travel Document para asylees y
+      refugees, Advance Parole para solicitantes de ajuste de estatus, y
+      humanitarian parole. Los requisitos, evidencia y lugar de presentación
+      difieren — Imverica prepara el track correcto para su situación bajo
+      su dirección.
+    </p>
+
+    <h2>Re-entry Permit — para residentes permanentes</h2>
+    <p>
+      Un LPR que espera permanecer fuera de EE. UU. un año o más (hasta dos
+      años) presenta I-131 para un Re-entry Permit <strong>antes</strong> de
+      salir. El permit preserva la green card de considerarse abandonada. El
+      solicitante debe estar físicamente en EE. UU. cuando se tome la
+      biometría. El Re-entry Permit suele ser válido dos años y no se
+      renueva.
+    </p>
+
+    <h2>Refugee Travel Document — para asylees y refugees</h2>
+    <p>
+      Una persona con asilo concedido, asylee derivativo o refugee puede
+      usar Refugee Travel Document en lugar del pasaporte del país de
+      origen. Válido hasta un año. Viajar al país de persecución reclamada
+      es altamente desaconsejado y puede terminar el estatus — consulte a
+      un abogado de inmigración antes de ese viaje.
+    </p>
+
+    <h2>Advance Parole — para solicitantes I-485 pendientes</h2>
+    <p>
+      Un solicitante de ajuste con I-485 pendiente debe obtener Advance
+      Parole en la forma I-131 <strong>antes</strong> de salir de EE. UU.
+      Salir sin Advance Parole generalmente resulta en USCIS tratando la
+      I-485 como abandonada. A menudo se presenta junto con I-485 e I-765 y
+      puede aprobarse en una tarjeta EAD/AP combinada.
+    </p>
+
+    <h2>Humanitarian Parole — traer a alguien a EE. UU.</h2>
+    <p>
+      Humanitarian parole es una solicitud discrecional para permitir que
+      una persona, de otro modo inadmisible, entre a EE. UU. por una razón
+      humanitaria urgente. El peticionario suele presentar I-131 con
+      Form I-134 (Declaration of Financial Support) y evidencia detallada
+      de la emergencia. La tasa de aprobación es baja — preparamos el
+      paquete con cuidado.
+    </p>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete I-131</strong>
+      <ul>
+        <li><strong>Forma I-131</strong> con el tipo de aplicación correcto en Part 2.</li>
+        <li><strong>Evidencia de respaldo</strong> — copia de green card, I-94, I-485 receipt, travel documents previos, certificados de matrimonio/nacimiento, asylum grant notice, refugee approval o evidencia de la emergencia.</li>
+        <li><strong>Forma I-134</strong> — Declaration of Financial Support cuando humanitarian parole necesita un sponsor.</li>
+        <li><strong>Forma I-912</strong> — fee waiver cuando el solicitante califica por ingreso o means-tested benefits.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant e Immigration
+      Consultant. Preparamos los documentos bajo su dirección. No damos
+      asesoría legal — no podemos decirle si viajar a un país específico
+      pondrá en riesgo su asilo, recomendar Advance Parole vs. consular
+      processing o evaluar la fuerza de un caso de humanitarian parole.
+      Esas decisiones son suyas o de su abogado. Para viajes en removal
+      proceedings o inadmisibilidades complejas, lo referimos a un abogado
+      de inmigración con licencia en California.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §223 (refugee travel documents); INA
+      §212(d)(5) (parole); 8 C.F.R. §§212.5, 223 (procedimiento); USCIS
+      Policy Manual Volume 11. Solo preparación de documentos — no
+      asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-131" primaryText="Iniciar mi entrevista I-131" />
+</BaseLayout>

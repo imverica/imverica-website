@@ -1,0 +1,81 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'EOIR-29 — Notice of Appeal al Board of Immigration Appeals | Imverica';
+const description = 'California Licensed LDA prepara la forma EOIR-29 para apelar ciertas decisiones de USCIS ante el Board of Immigration Appeals (BIA). Plazo de 30 días. Bajo dirección del cliente — la representación en corte requiere abogado.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-29-notice-of-appeal"
+  slug="/eoir-29-notice-of-appeal" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · BIA · 8 C.F.R. §1003.3"
+    heading="EOIR-29 — Notice of Appeal al BIA"
+    sub="Forma para apelar ciertas decisiones de USCIS (p. ej. denegación de I-130, denegación de I-360) al Board of Immigration Appeals. Plazo estricto de 30 días. Preparamos la forma y el paquete bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-29', text: 'Iniciar mi EOIR-29' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/eoir-immigration-court', label: 'EOIR overview — documentos de corte de inmigración' },
+    { href: '/mx/i-130-family-petition', label: 'I-130 — Petición Familiar' },
+    { href: '/mx/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma EOIR-29 se presenta cuando un noncitizen quiere que el BIA
+      revise una decisión emitida por USCIS — más comúnmente una I-130
+      familiar denegada, una I-360 widow/VAWA denegada, o una petición
+      revocada. La apelación debe presentarse dentro de <strong>30 días
+      calendario</strong> de la decisión; el plazo es jurisdiccional y
+      perderlo generalmente termina el caso.
+    </p>
+
+    <h2>Cuándo aplica EOIR-29</h2>
+    <ul>
+      <li>USCIS denegó o revocó una petición donde el reglamento específicamente permite apelación al BIA (la mayoría de I-130 familiares).</li>
+      <li>La carta de decisión expresamente dice "you may appeal to the BIA on Form EOIR-29".</li>
+      <li>Presenta dentro de 30 días de la fecha de la decisión (calendario, no días hábiles).</li>
+    </ul>
+
+    <h2>Cuándo NO aplica EOIR-29</h2>
+    <ul>
+      <li>Decisiones de USCIS que van a <strong>Administrative Appeals Office (AAO)</strong> — usa Form I-290B, no EOIR-29.</li>
+      <li>Decisiones de un juez de inmigración en removal proceedings — usa Form EOIR-26.</li>
+      <li>Denegaciones de asilo referidas a corte — no hay apelación separada; el caso continúa en corte.</li>
+    </ul>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete EOIR-29</strong>
+      <ul>
+        <li><strong>Forma EOIR-29</strong> con la base de la apelación y el briefing statement.</li>
+        <li><strong>Pago del fee</strong> o fee waiver (Form EOIR-26A).</li>
+        <li><strong>Copia de la decisión de USCIS</strong>.</li>
+        <li><strong>Service de la apelación sobre la parte contraria</strong> (DHS), con Proof of Service.</li>
+        <li><strong>Organización opcional del brief</strong> — el brief apelativo es argumento legal, mejor preparado con un abogado con licencia.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      <strong>Imverica no representa clientes en procedimientos de inmigración.</strong>
+      Las apelaciones al BIA implican argumento legal — eso es la práctica
+      del derecho y requiere un abogado con licencia o un BIA-accredited
+      representative. Como California Legal Document Assistant e
+      Immigration Consultant, preparamos la forma, organizamos exhibits y
+      cumplimos el plazo de 30 días bajo su dirección. El brief sustantivo
+      y argumento oral deben venir de su abogado.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> 8 C.F.R. §§1003.3, 1003.38; EOIR Practice
+      Manual; INA §242. La representación en corte requiere un abogado con
+      licencia o BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-29" primaryText="Iniciar mi entrevista EOIR-29" />
+</BaseLayout>

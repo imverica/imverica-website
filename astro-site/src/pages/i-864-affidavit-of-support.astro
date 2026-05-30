@@ -1,0 +1,113 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-864 — Affidavit of Support Document Preparation | Imverica';
+const description = 'California Licensed LDA prepares Form I-864 Affidavit of Support — sponsor financial obligation under INA §213A for family-based and some employment-based green-card cases. I-864A, I-864EZ, and I-864W variants prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-864 Affidavit of Support Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-864 (Affidavit of Support) and the I-864A, I-864EZ, and I-864W variants — at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-864-affidavit-of-support"
+  slug="/i-864-affidavit-of-support" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §213A · 8 C.F.R. §213a"
+    heading="I-864 — Affidavit of Support"
+    sub="The legally enforceable contract a sponsor signs to keep an intending immigrant from becoming a public charge. We prepare I-864, I-864A (household member), I-864EZ (simple cases), and I-864W (exempt cases) accurately at your direction — fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=I-864', text: 'Start my I-864 package' }}
+  />
+
+  <CategoryTiles
+    kicker="Which Affidavit of Support do you need"
+    heading="I-864 family of forms"
+    intro="Four related forms — pick the one that matches your case."
+    tiles={[
+      { icon: '📑', title: 'I-864 — Full Affidavit',         desc: 'The standard Affidavit of Support filed by the sponsoring petitioner for most family-based green cards.', href: '/#get-started?form=I-864',  color: 'var(--navy)' },
+      { icon: '🤝', title: 'I-864A — Household Member',      desc: 'Used when household income from a spouse, parent, sibling, or adult child is added to meet the threshold.', href: '/#get-started?form=I-864A', color: 'var(--terracotta-deep)' },
+      { icon: '⚡', title: 'I-864EZ — Simple Cases',          desc: 'Shorter version where the only beneficiary is the spouse / child of the sponsor and sponsor income alone meets the threshold (W-2 only).', href: '/#get-started?form=I-864EZ', color: 'var(--sage)' },
+      { icon: '🛡️', title: 'I-864W — Exemption Request',     desc: 'For applicants exempt from the I-864 requirement (40 qualifying quarters of work, certain widows, VAWA self-petitioners, etc.).', href: '/#get-started?form=I-864W', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/n-400-citizenship-help', label: 'N-400 — Naturalization' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-864, Affidavit of Support Under Section 213A of the Immigration
+      and Nationality Act, is a legally enforceable contract between the
+      sponsor and the U.S. Government. By signing it, the sponsor agrees to
+      financially support the intending immigrant at 125% of the Federal
+      Poverty Guidelines so the beneficiary does not become a public charge.
+      The obligation continues until the beneficiary naturalizes, accrues
+      40 qualifying quarters of work under the Social Security Act, leaves
+      the US and permanently terminates LPR status, or dies.
+    </p>
+
+    <h2>Who must file I-864</h2>
+    <ul>
+      <li>The U.S. citizen or LPR petitioner on most family-based immigrant petitions (I-130, I-129F that converts to AOS).</li>
+      <li>Employment-based applicants where a U.S.-citizen or LPR relative owns 5% or more of the petitioning entity.</li>
+      <li>Orphans and Hague Convention adoption cases (Form I-864W exemption commonly applies — we'll prepare the right form).</li>
+    </ul>
+
+    <h2>Income threshold and ways to meet it</h2>
+    <p>
+      The sponsor must show household income at or above <strong>125% of the
+      current Federal Poverty Guidelines</strong> (100% for active-duty US
+      armed forces sponsoring a spouse or child). The "household" includes
+      the sponsor, dependents, the intending immigrant, and any prior
+      beneficiaries the sponsor is still obligated to. If income alone is
+      short, you can use:
+    </p>
+    <ul>
+      <li><strong>Household member income</strong> — file Form I-864A to add a relative's income to the sponsor's.</li>
+      <li><strong>Assets</strong> — 1/3 (LPR spouse/minor child of US citizen) to 5x (most others) of the shortfall, in liquid assets.</li>
+      <li><strong>Joint sponsor</strong> — a separate person who meets the threshold on their own and signs a separate I-864.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>I-864 package preparation</strong>
+      <ul>
+        <li><strong>Form I-864</strong> — main affidavit with sponsor biographic, household-size, and income data.</li>
+        <li><strong>Form I-864A</strong> — companion contract for household members whose income is being counted.</li>
+        <li><strong>Form I-864EZ</strong> — the simpler version where it applies.</li>
+        <li><strong>Form I-864W</strong> — exemption request for the beneficiaries who don't need an I-864.</li>
+        <li><strong>Supporting evidence</strong> — most recent federal tax return transcript (or full 1040 with W-2 / 1099), proof of current employment, asset documentation if used, sponsor's evidence of US citizenship or LPR status, household-member evidence of relationship and residence.</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a California Legal Document Assistant and Immigration
+      Consultant. We prepare the I-864 package accurately at your direction.
+      We do not give legal or tax advice — we cannot tell you whether the
+      sponsor's income calculations will survive USCIS or consular review,
+      whether assets you propose will be accepted, or whether a joint
+      sponsor is strategically wise. Those determinations involve immigration
+      and tax law; complex income situations (self-employment, rental
+      losses, business income flowing through K-1s, recent tax-debt
+      adjustments) often need an immigration attorney and a CPA.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> Immigration and Nationality Act
+      §213A, 8 U.S.C. §1183a (Affidavit of Support obligations); 8 C.F.R.
+      §213a (procedure); USCIS Policy Manual Volume 7 (Affidavit of Support).
+      Document preparation only — not legal or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-864" primaryText="Begin my I-864 intake" />
+</BaseLayout>

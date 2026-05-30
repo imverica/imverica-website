@@ -1,0 +1,100 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'I-864 — Affidavit of Support | Imverica';
+const description = 'California Licensed LDA готує форму I-864 Affidavit of Support — юридично зобов\'язуючий контракт спонсора за INA §213A. I-864A, I-864EZ, I-864W. За дорученням клієнта.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/i-864-affidavit-of-support"
+  slug="/i-864-affidavit-of-support" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §213A · 8 C.F.R. §213a"
+    heading="I-864 — Affidavit of Support"
+    sub="Юридично зобов'язуючий контракт спонсора, що утримує immigrant від status public charge. Готуємо I-864, I-864A (household member), I-864EZ (прості випадки) та I-864W (exempt) акуратно за вашим дорученням — фіксована ціна, багатомовна анкета."
+    ctaPrimary={{ href: '/#get-started?form=I-864', text: 'Почати пакет I-864' }}
+  />
+
+  <CategoryTiles
+    kicker="Який Affidavit of Support вам потрібен"
+    heading="Родина форм I-864"
+    intro="Чотири пов'язані форми — оберіть відповідну."
+    tiles={[
+      { icon: '📑', title: 'I-864 — Повний Affidavit',     desc: 'Стандартний Affidavit of Support від спонсора-петиційника для більшості family-based green card.', href: '/#get-started?form=I-864',  color: 'var(--navy)' },
+      { icon: '🤝', title: 'I-864A — Household Member',    desc: 'Коли дохід дружини/чоловіка, батьків, брата/сестри чи дорослої дитини додається до спонсорського.', href: '/#get-started?form=I-864A', color: 'var(--terracotta-deep)' },
+      { icon: '⚡', title: 'I-864EZ — Прості випадки',      desc: 'Коротка версія — лише чоловік/дружина/дитина спонсора, дохід спонсора (W-2) сам відповідає порогу.', href: '/#get-started?form=I-864EZ', color: 'var(--sage)' },
+      { icon: '🛡️', title: 'I-864W — Звільнення',          desc: 'Для заявників, звільнених від I-864 (40 кварталів роботи, certain widows, VAWA self-petitioner тощо).', href: '/#get-started?form=I-864W', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-485-help', label: 'I-485 — Зміна статусу' },
+    { href: '/ua/i-130-family-petition', label: 'I-130 — Сімейна петиція' },
+    { href: '/ua/n-400-citizenship-help', label: 'N-400 — Натуралізація' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-864, Affidavit of Support Under Section 213A — юридично
+      зобов'язуючий контракт між спонсором та урядом США. Підписуючи його,
+      спонсор зобов'язується фінансово підтримувати immigrant на рівні
+      125% Federal Poverty Guidelines, щоб beneficiary не став public
+      charge. Обов'язок діє до натуралізації, 40 кварталів роботи, виїзду
+      зі США з припиненням LPR-статусу або смерті.
+    </p>
+
+    <h2>Хто зобов'язаний подавати I-864</h2>
+    <ul>
+      <li>Громадяни США або LPR-петиційники для більшості family-based петицій (I-130, I-129F, що конвертується в AOS).</li>
+      <li>Employment-based заявники, де громадянин США або LPR-родич володіє 5% або більше петиціонуючої сутності.</li>
+      <li>Сироти та Hague Convention adoption (часто застосовне звільнення Form I-864W — підготуємо правильну форму).</li>
+    </ul>
+
+    <h2>Поріг доходу і способи відповідати</h2>
+    <p>
+      Спонсор має показати household income на рівні або вище
+      <strong>125% Federal Poverty Guidelines</strong> (100% для active-duty
+      військовослужбовців, що спонсорують подружжя або дитину). Якщо доходу
+      не вистачає, можна:
+    </p>
+    <ul>
+      <li><strong>Дохід household member</strong> — подати форму I-864A, щоб додати дохід родича.</li>
+      <li><strong>Активи</strong> — 1/3 (LPR-подружжя/неповнолітня дитина громадянина США) — 5x (більшість інших) суми нестачі в ліквідних активах.</li>
+      <li><strong>Joint sponsor</strong> — окрема особа, що сама відповідає порогу, що підписує окрему I-864.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <div class="form-list">
+      <strong>Пакет I-864</strong>
+      <ul>
+        <li><strong>Форма I-864</strong> — основний affidavit з біографічними даними, household size та доходом.</li>
+        <li><strong>Форма I-864A</strong> — companion contract для household members, чий дохід враховується.</li>
+        <li><strong>Форма I-864EZ</strong> — спрощена версія, де застосовно.</li>
+        <li><strong>Форма I-864W</strong> — запит звільнення для beneficiary, яким I-864 не потрібен.</li>
+        <li><strong>Підтверджуючі документи</strong> — остання federal tax return transcript (або повна 1040 з W-2/1099), підтвердження роботи, документи з активів, докази US citizenship чи LPR спонсора, household-member evidence відносин та проживання.</li>
+      </ul>
+    </div>
+
+    <h2>Чого ми не робимо</h2>
+    <p>
+      Imverica — California Legal Document Assistant та Immigration Consultant.
+      Готуємо пакет I-864 акуратно за вашим дорученням. Не даємо юридичних
+      або податкових консультацій — не можемо сказати, чи витримають
+      розрахунки доходу спонсора перевірку USCIS, чи будуть прийняті активи
+      або чи стратегічно розумний joint sponsor. Складні ситуації з доходом
+      (self-employment, rental losses, K-1, нещодавні податкові коригування)
+      часто потребують імміграційного адвоката та CPA.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §213A, 8 U.S.C. §1183a (Affidavit of
+      Support); 8 C.F.R. §213a; USCIS Policy Manual Volume 7. Лише
+      підготовка документів — не юридичні або податкові консультації.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-864" primaryText="Почати анкету I-864" />
+</BaseLayout>

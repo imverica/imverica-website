@@ -1,0 +1,106 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'I-751 — Снятие условий с резидентуры | Imverica';
+const description = 'California Licensed LDA готовит форму I-751 для снятия условий с 2-летней условной green card на основе брака — совместные подачи с гражданином США или LPR-супругом, плюс waiver (добросовестный брак, насилие, extreme hardship). По поручению клиента.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/i-751-remove-conditions"
+  slug="/i-751-remove-conditions" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §216 · 8 C.F.R. §216"
+    heading="I-751 — Снятие условий с резидентуры"
+    sub="Для условных постоянных резидентов, получивших 2-летнюю green card через брак. Подайте I-751 в 90-дневное окно до истечения карты — совместно с супругом или по waiver. Готовим полный пакет по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=I-751', text: 'Начать пакет I-751' }}
+  />
+
+  <CategoryTiles
+    kicker="Какой путь I-751 применим"
+    heading="Совместная подача или waiver"
+    intro="У формы I-751 два основных пути. Нажмите плитку под вашу ситуацию."
+    tiles={[
+      { icon: '💍', title: 'Совместная подача',          desc: 'Оба супруга всё ещё в браке, подают вместе в 90-дневное окно до истечения 2-летней карты.', href: '/#get-started?form=I-751', color: 'var(--navy)' },
+      { icon: '💔', title: 'Развод (waiver)',           desc: 'Брак был добросовестным, но закончился разводом или аннулированием — waiver можно подать в любое время до истечения карты (иногда после).', href: '/#get-started?form=I-751', color: 'var(--terracotta-deep)' },
+      { icon: '🛡️', title: 'Battered-spouse waiver',   desc: 'Брак был добросовестным, но вы (или ваш ребёнок) подверглись насилию или extreme cruelty со стороны супруга-гражданина США или LPR.', href: '/#get-started?form=I-751', color: 'var(--gold)' },
+      { icon: '⚖️', title: 'Extreme-hardship waiver',  desc: 'Удаление из США вызовет extreme hardship — узкий стандарт, часто сочетается с divorce или battery waiver.', href: '/#get-started?form=I-751', color: 'var(--sage)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-485-help', label: 'I-485 — Изменение статуса' },
+    { href: '/ru/i-130-family-petition', label: 'I-130 — Семейная петиция' },
+    { href: '/ru/n-400-citizenship-help', label: 'N-400 — Натурализация' },
+    { href: '/ru/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-751, Petition to Remove the Conditions on Residence, подаётся
+      условным постоянным резидентом, получившим 2-летнюю green card через
+      брак с гражданином США или LPR. Успешная подача конвертирует условную
+      2-летнюю карту в обычную 10-летнюю green card и снимает условия —
+      USCIS больше не считает green card зависящей от сохранения брака.
+    </p>
+
+    <h2>Окно подачи — 90 дней до истечения</h2>
+    <p>
+      Для совместной подачи I-751 подаётся в <strong>90-дневное окно
+      непосредственно перед истечением условной карты</strong>. Подача
+      слишком рано (более чем за 90 дней) приводит к отказу. Поздняя подача
+      (после истечения) требует письменного объяснения с уважительной
+      причиной — поздние подачи без good cause могут привести к removal
+      proceedings. Waiver-подачи (развод, насилие, hardship) не имеют
+      90-дневного ограничения и могут быть поданы в любое время после
+      выдачи карты.
+    </p>
+
+    <h2>Совместная подача — что мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакет совместной петиции I-751</strong>
+      <ul>
+        <li><strong>Форма I-751</strong> совместно подписана условным резидентом и супругом-гражданином США / LPR.</li>
+        <li><strong>Доказательства bona-fide marriage</strong> — совместные налоговые декларации, банковские/кредитные счета, собственность или аренда, utility bills, страховки (здоровье, авто, жизнь), свидетельства о рождении детей от брака, фото, маршруты поездок, аффидевиты родственников и друзей.</li>
+        <li><strong>Копия лицевой и оборотной сторон 2-летней green card</strong>.</li>
+        <li><strong>Police certificates или court dispositions</strong> для любых криминальных инцидентов с выдачи green card.</li>
+      </ul>
+    </div>
+
+    <h2>Waivers — когда совместная подача невозможна</h2>
+    <p>
+      Если брак прекратился, I-751 подаётся с запросом waiver. Три основных
+      основания:
+    </p>
+    <ul>
+      <li><strong>Добросовестный брак, закончившийся разводом или аннулированием</strong> — нужно показать, что брак был реальным в момент заключения, и предоставить final divorce decree.</li>
+      <li><strong>Battery или extreme cruelty</strong> — заявитель или его ребёнок подверглись насилию или extreme cruelty со стороны супруга-гражданина США/LPR. Применяются VAWA confidentiality protections; этот waiver не требует раскрытия или подписи насильника.</li>
+      <li><strong>Extreme hardship</strong> — удаление из США вызовет extreme hardship. Узкий стандарт, часто сочетается с divorce или battery waiver.</li>
+    </ul>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Imverica — California Legal Document Assistant и Immigration Consultant.
+      Готовим пакет I-751 аккуратно по вашему поручению. Не даём юридических
+      консультаций и не оцениваем, какое waiver-основание сильнее в вашем
+      деле, не строим юридические аргументы вокруг extreme hardship и не
+      представляем в иммиграционном суде. Если ваша условная резидентура
+      уже истекла, дело в removal proceedings, брак закончился при спорных
+      обстоятельствах или USCIS выдал Notice of Intent to Deny — это
+      юридическая стратегия; направляем к лицензированному калифорнийскому
+      иммиграционному адвокату до подачи.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §216, 8 U.S.C. §1186a (conditional
+      residence на основе брака); 8 C.F.R. §216 (процедура); VAWA
+      confidentiality для battered-spouse waiver; USCIS Policy Manual
+      Volume 6 (Adjustment of Status — Conditional Residence). Только
+      подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-751" primaryText="Начать анкету I-751" />
+</BaseLayout>

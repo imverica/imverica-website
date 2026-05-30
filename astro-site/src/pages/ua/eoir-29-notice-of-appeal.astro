@@ -1,0 +1,81 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'EOIR-29 — Notice of Appeal до Board of Immigration Appeals | Imverica';
+const description = 'California Licensed LDA готує форму EOIR-29 для апеляції на окремі рішення USCIS до Board of Immigration Appeals (BIA). Термін 30 днів. За дорученням клієнта — представництво в суді потребує адвоката.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/eoir-29-notice-of-appeal"
+  slug="/eoir-29-notice-of-appeal" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · BIA · 8 C.F.R. §1003.3"
+    heading="EOIR-29 — Notice of Appeal до BIA"
+    sub="Форма для апеляції на окремі рішення USCIS (наприклад, відмова I-130, відмова I-360) до Board of Immigration Appeals. Жорсткий термін подачі 30 днів. Готуємо форму та супровідний пакет за вашим дорученням."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-29', text: 'Почати апеляцію EOIR-29' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/eoir-immigration-court', label: 'EOIR overview — документи імміграційного суду' },
+    { href: '/ua/i-130-family-petition', label: 'I-130 — Сімейна петиція' },
+    { href: '/ua/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EOIR-29 подається, коли noncitizen хоче, щоб BIA переглянув
+      рішення USCIS — найчастіше відмову сімейної I-130, відмову I-360
+      widow/VAWA або revoked петицію. Апеляція має бути подана протягом
+      <strong>30 календарних днів</strong> з дати рішення USCIS; термін
+      jurisdictional, його пропуск зазвичай завершує справу.
+    </p>
+
+    <h2>Коли застосовується EOIR-29</h2>
+    <ul>
+      <li>USCIS відмовив або revoked петицію, де регулювання прямо дозволяють апеляцію до BIA (більшість family-based I-130).</li>
+      <li>Decision letter петиції прямо вказує "you may appeal to the BIA on Form EOIR-29".</li>
+      <li>Подача протягом 30 днів з дати рішення (календарних, не робочих).</li>
+    </ul>
+
+    <h2>Коли EOIR-29 НЕ застосовується</h2>
+    <ul>
+      <li>Рішення USCIS, що направляються до <strong>Administrative Appeals Office (AAO)</strong> — використовується форма I-290B, не EOIR-29.</li>
+      <li>Рішення імміграційного судді в removal proceedings — використовується форма EOIR-26.</li>
+      <li>Відмови asylum, направлені до імміграційного суду — окремої апеляції немає.</li>
+    </ul>
+
+    <h2>Що ми готуємо</h2>
+    <div class="form-list">
+      <strong>Пакет EOIR-29</strong>
+      <ul>
+        <li><strong>Форма EOIR-29</strong> з правильною підставою апеляції та заповненим briefing statement.</li>
+        <li><strong>Оплата збору</strong> або fee waiver (форма EOIR-26A), де апелянт кваліфікується.</li>
+        <li><strong>Копія оскаржуваного рішення USCIS</strong>.</li>
+        <li><strong>Service апеляції на opposing party</strong> (DHS) з Proof of Service.</li>
+        <li><strong>Опційна організація brief</strong> — апеляційний brief — це юридичний аргумент, краще готується з ліцензованим адвокатом.</li>
+      </ul>
+    </div>
+
+    <h2>Чого ми не робимо</h2>
+    <p>
+      <strong>Imverica не представляє клієнтів в імміграційних справах.</strong>
+      Апеляції до BIA включають юридичні аргументи про імміграційне право,
+      регулювання та прецеденти — це practice of law, потребує
+      ліцензованого адвоката або BIA-accredited representative. Як
+      California Legal Document Assistant та Immigration Consultant ми
+      готуємо форму, організуємо supporting exhibits і дотримуємо
+      30-денного терміну за вашим дорученням. Суттєвий юридичний brief і
+      усний аргумент мають надійти від вашого адвоката.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> 8 C.F.R. §§1003.3, 1003.38 (вимоги подачі
+      апеляцій до BIA); EOIR Practice Manual; INA §242. Представництво в
+      суді потребує ліцензованого адвоката або BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-29" primaryText="Почати анкету EOIR-29" />
+</BaseLayout>

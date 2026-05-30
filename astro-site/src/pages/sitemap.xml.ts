@@ -56,7 +56,20 @@ const URLS: SitemapEntry[] = [
   { slug: '/ss-4-ein', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/operating-agreement', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/llc-1a-foreign-llc', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/si-550-corporation-statement', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
+  { slug: '/si-550-corporation-statement', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  // USCIS form-level pages (each chip on /immigration links here)
+  { slug: '/i-131-travel-document', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-131a-returning-resident', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-864-affidavit-of-support', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-864a-household-member', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-693-medical-examination', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-751-remove-conditions', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-824-action-on-approved-application', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  // EOIR form-level pages
+  { slug: '/eoir-29-notice-of-appeal', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/eoir-42a-cancellation-lpr', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/eoir-42b-cancellation-non-lpr', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/eoir-40-suspension-of-deportation', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
 ];
 
 function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {

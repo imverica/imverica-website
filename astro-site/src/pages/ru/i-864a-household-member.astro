@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'I-864A — Contract Between Sponsor and Household Member | Imverica';
+const description = 'California Licensed LDA готовит форму I-864A — контракт household member для объединения дохода со спонсором по I-864 Affidavit of Support. По поручению клиента.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/i-864a-household-member"
+  slug="/i-864a-household-member" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §213A · Контракт household member"
+    heading="I-864A — Contract Between Sponsor and Household Member"
+    sub="Используется, когда I-864 спонсору нужно добавить доход household member (супруг, родитель, брат/сестра или взрослый ребёнок), чтобы достичь порога 125%. Household member подписывает форму I-864A как обязывающий контракт. Готовим по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=I-864A', text: 'Начать I-864A' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-864-affidavit-of-support', label: 'I-864 — Affidavit of Support (основная форма)' },
+    { href: '/ru/i-485-help', label: 'I-485 — Изменение статуса' },
+    { href: '/ru/i-130-family-petition', label: 'I-130 — Семейная петиция' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-864A, Contract Between Sponsor and Household Member —
+      companion к форме I-864. Спонсор использует её, когда собственного
+      дохода ниже 125% Federal Poverty Guidelines и нужно добавить доход
+      квалифицирующего household member. Household member подписывает
+      контракт и становится <strong>солидарно ответственным</strong> со
+      спонсором за поддержку immigrant.
+    </p>
+
+    <h2>Кто может быть household member</h2>
+    <ul>
+      <li>Супруг спонсора.</li>
+      <li>Родитель, взрослый ребёнок, брат/сестра или другой родственник — если проживает с спонсором последние 6 месяцев <em>или</em> заявлен как dependent в последней federal tax return.</li>
+      <li>Сам immigrant — только когда доход будет продолжаться из того же US source после въезда и immigrant проживает с спонсором.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакет I-864A</strong>
+      <ul>
+        <li><strong>Форма I-864A</strong> — подписанная спонсором и household member.</li>
+        <li><strong>Налоговые документы household member</strong> — последняя federal tax return transcript (или полная 1040 с W-2/1099) и подтверждение текущей работы.</li>
+        <li><strong>Доказательства household relationship</strong> — свидетельство о браке, рождении, школьные записи, lease, utility bills, или иное доказательство совместного проживания или статуса dependent.</li>
+        <li><strong>Подаётся вместе с I-864 спонсора</strong> — упаковываем объединённый affidavit, чтобы USCIS рассматривал их как одно целое.</li>
+      </ul>
+    </div>
+
+    <h2>Связывающее обязательство</h2>
+    <p>
+      Подписание I-864A означает, что доход household member больше не "просто
+      доход в форме". Household member лично обещает правительству США
+      поддерживать immigrant, если спонсор не сможет — и государственное
+      агентство, предоставляющее means-tested benefits immigrant, может
+      судить household member, как и спонсора. Обязательство действует до
+      тех же событий прекращения (натурализация, 40 кварталов, выезд из США
+      с прекращением LPR, смерть).
+    </p>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Imverica — California Legal Document Assistant и Immigration Consultant.
+      Готовим I-864A по вашему поручению. Не даём юридических или налоговых
+      консультаций; не можем сказать, использовать household member или joint
+      sponsor стратегически лучше, выдержит ли расчёт дохода проверку USCIS
+      или каков практический риск joint-and-several обязательства в вашей
+      семейной ситуации. Это юридические и финансовые определения — сложные
+      случаи направляем к калифорнийскому иммиграционному адвокату и CPA.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §213A; 8 C.F.R. §213a.1 (определение
+      household member и combined income); USCIS Policy Manual Volume 7.
+      Только подготовка документов — не юридические или налоговые
+      консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-864A" primaryText="Начать анкету I-864A" />
+</BaseLayout>

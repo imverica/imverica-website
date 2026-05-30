@@ -1,0 +1,80 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-131A — Carrier Documentation para LPR que regresan | Imverica';
+const description = 'California Licensed LDA prepara la forma I-131A para residentes permanentes varados en el extranjero con green card o Re-entry Permit expirado, para que la aerolínea pueda embarcarlos de vuelta a EE. UU.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-131a-returning-resident"
+  slug="/i-131a-returning-resident" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · 8 C.F.R. §211.1 · Carrier Documentation"
+    heading="I-131A — Carrier Documentation para LPR que regresan"
+    sub="Para residentes permanentes varados fuera de EE. UU. con green card o Re-entry Permit expirado. El boarding foil de la I-131A permite que la aerolínea los embarque de vuelta a EE. UU. Preparamos la solicitud bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=I-131A', text: 'Iniciar mi I-131A' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-131-travel-document', label: 'I-131 — Travel Document / Advance Parole' },
+    { href: '/mx/i-90-green-card-renewal', label: 'I-90 — Renovación de Green Card' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma I-131A, Application for Travel Document (Carrier
+      Documentation), se presenta en una embajada o consulado de EE. UU. en
+      el extranjero por un LPR cuya green card (Form I-551) ha expirado
+      mientras estaba fuera de EE. UU., o cuyo Re-entry Permit ha expirado.
+      USCIS emite un boarding foil que satisface los requisitos del
+      transportista para que el LPR pueda volar a casa.
+    </p>
+
+    <h2>Quién puede presentar I-131A</h2>
+    <ul>
+      <li>Un LPR cuya ausencia ha sido menor a un año y cuya green card expiró en el extranjero.</li>
+      <li>Un LPR cuya ausencia ha sido menor a dos años y cuyo Re-entry Permit expiró.</li>
+      <li>El LPR sigue siendo considerado returning resident — no ha abandonado la residencia por la duración del viaje, vínculos con el extranjero, o presentación de impuestos como no-residente.</li>
+    </ul>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete I-131A</strong>
+      <ul>
+        <li><strong>Forma I-131A</strong> con la base correcta y datos biográficos precisos.</li>
+        <li><strong>Evidencia de respaldo</strong> — copia de green card expirada o Re-entry Permit, evidencia de residencia continua (impuestos, empleo, dirección), razón de la ausencia prolongada, fotos según especificaciones del consulado.</li>
+        <li><strong>Pago del fee</strong> — se paga en línea directamente a USCIS antes de la cita consular; lo guiamos en ese paso.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que I-131A NO reemplaza</h2>
+    <p>
+      I-131A es solo un boarding foil; lo sube al avión a casa. Al regresar
+      a EE. UU. aún necesita renovar o reemplazar la green card (Form I-90)
+      y abordar cualquier cuestión de abandono de residencia que surja en
+      el puerto de entrada o en interacciones futuras con USCIS. Un LPR que
+      claramente ha abandonado la residencia no debe asumir que I-131A lo
+      traerá de vuelta — CBP puede aún cuestionar la admisión.
+    </p>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant e Immigration
+      Consultant. Preparamos documentos bajo su dirección. No damos
+      asesoría legal y no evaluamos si ha abandonado el estatus LPR — es
+      una determinación legal. Para casos con ausencia muy larga,
+      presentación de impuestos como no-residente u otras cuestiones de
+      abandono, lo referimos a un abogado de inmigración con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> INA §211(a); 8 C.F.R. §211.1 (carrier
+      documentation para returning residents); USCIS Policy Manual Volume
+      11. Solo preparación de documentos — no asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-131A" primaryText="Iniciar mi entrevista I-131A" />
+</BaseLayout>

@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'EOIR-42B — Cancellation of Removal для non-LPR | Imverica';
+const description = 'California Licensed LDA готовит форму EOIR-42B — Application for Cancellation of Removal for Certain Nonpermanent Residents под INA §240A(b). 10 лет непрерывного присутствия, good moral character, exceptional and extremely unusual hardship. По поручению клиента — представительство требует адвоката.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-42b-cancellation-non-lpr"
+  slug="/eoir-42b-cancellation-non-lpr" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · INA §240A(b) · Non-LPR Cancellation"
+    heading="EOIR-42B — Cancellation of Removal для non-LPR"
+    sub="Для noncitizen в removal proceedings, отвечающих требованиям §240A(b)(1): 10 лет непрерывного физического присутствия, good moral character, без disqualifying convictions, exceptional and extremely unusual hardship для квалифицирующего родственника US citizen/LPR. Готовим заявление и evidence packet по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-42B', text: 'Начать пакет EOIR-42B' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/eoir-42a-cancellation-lpr', label: 'EOIR-42A — Cancellation для LPR' },
+    { href: '/ru/eoir-immigration-court', label: 'EOIR overview — документы иммиграционного суда' },
+    { href: '/ru/i-589-asylum-help', label: 'I-589 — Убежище и Withholding' },
+    { href: '/ru/vawa-self-petition', label: 'VAWA — I-360 self-petition' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EOIR-42B, Application for Cancellation of Removal and Adjustment
+      of Status for Certain Nonpermanent Residents, подаётся в иммиграционном
+      суде noncitizen без LPR-статуса, оказавшимся в removal proceedings.
+      Если IJ удовлетворяет заявление, respondent становится LPR. Это
+      discretionary relief, узко доступный (годовой лимит 4 000 grants),
+      требующий жёстких статутных требований по INA §240A(b).
+    </p>
+
+    <h2>Статутные требования INA §240A(b)(1)</h2>
+    <ul>
+      <li><strong>10 лет непрерывного физического присутствия</strong> в США непосредственно перед заявлением (применяется stop-time rule — вручение NTA останавливает часы; brief, casual, and innocent absences могут быть приемлемыми).</li>
+      <li><strong>Good moral character</strong> в течение этих 10 лет (без disqualifying conduct под INA §101(f)).</li>
+      <li><strong>Без convictions</strong> по offenses INA §212(a)(2), §237(a)(2), или §237(a)(3).</li>
+      <li><strong>Exceptional and extremely unusual hardship</strong> для US-citizen или LPR супруга, родителя или ребёнка при removal. (Это стандарт выше "extreme hardship" — требует hardship существенно за пределами обычного результата removal.)</li>
+    </ul>
+    <p>
+      Отдельный VAWA-based cancellation по §240A(b)(2) доступен для
+      noncitizen, подвергшихся насилию или extreme cruelty со стороны
+      супруга или родителя гражданина США/LPR, с более короткими сроками
+      и другими hardship стандартами.
+    </p>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакет EOIR-42B</strong>
+      <ul>
+        <li><strong>Форма EOIR-42B</strong> с биографическими, семейными, presence и criminal history данными.</li>
+        <li><strong>Форма EOIR-28</strong> notice of representation, если выступает лицензированный адвокат.</li>
+        <li><strong>Форма EOIR-26A</strong> fee waiver, где применимо; иначе $100 application fee плюс $30 biometrics.</li>
+        <li><strong>Доказательства continuous presence</strong> — tax returns и W-2 за 10+ лет, lease и utility records, employment letters, школьные записи, медицинские записи, датированные фото, sworn declarations свидетелей.</li>
+        <li><strong>Good-moral-character evidence</strong> — clean record letters, employer letters, community letters, certified disposition для каждого criminal инцидента.</li>
+        <li><strong>Hardship evidence</strong> — документы US-citizen/LPR статуса квалифицирующего родственника, медицинские записи, образовательные, country-conditions evidence, financial dependence, mental-health evaluations.</li>
+        <li><strong>Country-conditions packet</strong> — Department of State Country Reports, новости, expert declarations об условиях, влияющих на родственника.</li>
+        <li><strong>Witness list</strong> и exhibit index по EOIR Practice Manual chapter 4.</li>
+      </ul>
+    </div>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      <strong>Imverica не представляет клиентов в иммиграционном суде.</strong>
+      Non-LPR cancellation включает юридические аргументы о §240A(b)
+      hardship стандарте, cross-examination свидетелей и judicial discretion —
+      это practice of law, требует лицензированного адвоката или
+      BIA-accredited representative. Как California Legal Document Assistant
+      и Immigration Consultant аккуратно готовим EOIR-42B и evidence packet
+      под руководством адвоката, организуем court-ready indices и tabs по
+      EOIR Practice Manual, переводим foreign-language документы. Дела без
+      counsel направляем в нашу сеть калифорнийских иммиграционных
+      адвокатов.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §240A(b)(1), 8 U.S.C. §1229b(b)(1)
+      (cancellation для nonpermanent residents); INA §240A(b)(2) (VAWA
+      cancellation); INA §240A(d) (stop-time rule); INA §240A(e) (годовой
+      лимит 4 000 grants); EOIR Practice Manual. Представительство в суде
+      требует лицензированного адвоката или BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-42B" primaryText="Начать анкету EOIR-42B" />
+</BaseLayout>

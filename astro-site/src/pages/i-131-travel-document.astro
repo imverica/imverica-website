@@ -1,0 +1,134 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-131 — Application for Travel Document (Re-entry Permit, Refugee Travel Document, Advance Parole) | Imverica';
+const description = 'California Licensed LDA prepares Form I-131 — Re-entry Permit for LPRs, Refugee Travel Document for asylees/refugees, Advance Parole for pending I-485 applicants, and humanitarian parole requests. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-131 Application for Travel Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-131 — re-entry permits, refugee travel documents, advance parole, and humanitarian parole, at the client direction.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-131-travel-document"
+  slug="/i-131-travel-document" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §223 · 8 C.F.R. §§212.5, 223"
+    heading="I-131 — Application for Travel Document"
+    sub="Re-entry Permit for permanent residents traveling abroad long-term, Refugee Travel Document for asylees and refugees, Advance Parole for pending I-485 applicants, or humanitarian parole — we prepare Form I-131 accurately at your direction. Fixed fee, multilingual intake."
+    ctaPrimary={{ href: '/#get-started?form=I-131', text: 'Start my I-131 application' }}
+  />
+
+  <CategoryTiles
+    kicker="Which I-131 do you need"
+    heading="Four uses of Form I-131"
+    intro="Form I-131 is one form with four very different uses. Tap the tile that matches your trip."
+    tiles={[
+      { icon: '🛂', title: 'Re-entry Permit (LPR)',         desc: 'Lawful permanent resident planning to stay outside the US for one year or more — preserves your green card.', href: '/#get-started?form=I-131', color: 'var(--navy)' },
+      { icon: '🌍', title: 'Refugee Travel Document',       desc: 'Asylee or refugee who needs to travel internationally — required because asylees/refugees cannot use their home-country passport.', href: '/#get-started?form=I-131', color: 'var(--terracotta-deep)' },
+      { icon: '✈️', title: 'Advance Parole (pending I-485)', desc: 'Adjustment-of-status applicant with a pending I-485 — leaving without Advance Parole abandons the I-485.', href: '/#get-started?form=I-131', color: 'var(--sage)' },
+      { icon: '🆘', title: 'Humanitarian Parole',           desc: 'Request paroling a person into the US for an urgent humanitarian reason or significant public benefit.', href: '/#get-started?form=I-131', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/i-90-green-card-renewal', label: 'I-90 — Green Card Renewal' },
+    { href: '/i-589-asylum-help', label: 'I-589 — Asylum and Withholding' },
+    { href: '/u4u', label: 'U4U — Uniting for Ukraine parole' }
+  ]}>
+    <p class="lead">
+      Form I-131, Application for Travel Document, is the single USCIS form that
+      covers four different travel needs: a Re-entry Permit for permanent
+      residents, a Refugee Travel Document for asylees and refugees, Advance
+      Parole for adjustment-of-status applicants, and humanitarian parole. The
+      eligibility rules, required evidence, filing location, and biometrics
+      requirements are different for each — Imverica prepares the correct I-131
+      track for your situation at your direction.
+    </p>
+
+    <h2>Re-entry Permit — for permanent residents</h2>
+    <p>
+      A lawful permanent resident who expects to stay outside the United States
+      for one year or more (and up to two years) files Form I-131 for a
+      Re-entry Permit <strong>before</strong> leaving the US. The permit
+      preserves the green card from being treated as abandoned. The applicant
+      must be physically present in the US when biometrics are taken — plan
+      ahead. Re-entry Permits are typically valid for two years and cannot be
+      renewed; LPRs who need more time must return to the US and apply again.
+    </p>
+
+    <h2>Refugee Travel Document — for asylees and refugees</h2>
+    <p>
+      A person granted asylum, an asylee derivative, or a refugee can use a
+      Refugee Travel Document to travel internationally instead of a
+      home-country passport (using the home-country passport may raise
+      questions about the well-founded fear of persecution). Refugee Travel
+      Documents are valid for up to one year. Travel to the country of claimed
+      persecution is highly cautioned and may result in termination of
+      asylum or refugee status — this is a legal-strategy decision; consult
+      an immigration attorney before traveling there.
+    </p>
+
+    <h2>Advance Parole — for pending I-485 applicants</h2>
+    <p>
+      An adjustment-of-status applicant with a pending Form I-485 must obtain
+      Advance Parole on Form I-131 <strong>before</strong> leaving the United
+      States. Departing without Advance Parole generally results in USCIS
+      treating the I-485 as abandoned. There are narrow exceptions (e.g.
+      certain H-1B / L-1 applicants who maintain that nonimmigrant status).
+      Advance Parole is often filed concurrently with the I-485 and I-765 and
+      may be approved on a combined EAD/AP card.
+    </p>
+
+    <h2>Humanitarian Parole — bringing someone into the US</h2>
+    <p>
+      Humanitarian parole is a discretionary request to allow a person who is
+      otherwise inadmissible into the United States for an urgent humanitarian
+      reason or significant public benefit. The petitioner usually files
+      Form I-131 with a Form I-134 (Declaration of Financial Support) and
+      detailed evidence of the emergency and the inability to wait for normal
+      visa processing. Approval rates are low and the standard is high — we
+      prepare the package accurately so the strongest case is in front of
+      USCIS.
+    </p>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>I-131 package preparation</strong>
+      <ul>
+        <li><strong>Form I-131</strong> with the correct Part 2 application type selected (Re-entry Permit, Refugee Travel Document, Advance Parole, or Humanitarian Parole)</li>
+        <li><strong>Supporting evidence</strong> — copy of green card, I-94, I-485 receipt, prior travel documents, marriage/birth certificates, asylum grant notice, refugee approval, or evidence of the emergency for humanitarian parole</li>
+        <li><strong>Form I-134</strong> — Declaration of Financial Support, when a humanitarian-parole beneficiary needs a sponsor</li>
+        <li><strong>Form I-912</strong> — Request for Fee Waiver, when the applicant qualifies based on income or means-tested benefits</li>
+      </ul>
+    </div>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a California Legal Document Assistant and Immigration
+      Consultant. We prepare documents accurately at your direction. We do
+      not give legal advice — we cannot tell you whether traveling to a
+      specific country will jeopardize your asylum, recommend whether to seek
+      Advance Parole vs. consular processing, or assess the strength of a
+      humanitarian-parole case. Those decisions are yours (or your attorney's).
+      For removal-proceedings travel or complex inadmissibility issues we
+      refer you to a licensed California immigration attorney.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> INA §223 (refugee travel
+      documents); INA §212(d)(5) (parole); 8 C.F.R. §§212.5, 223 (procedure);
+      USCIS Policy Manual Volume 11 (Travel Documents). Document preparation
+      only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-131" primaryText="Begin my I-131 intake" />
+</BaseLayout>

@@ -1,0 +1,83 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'I-824 — Action on Approved Application or Petition | Imverica';
+const description = 'California Licensed LDA prepara la forma I-824 para solicitar duplicado del approval notice de USCIS o pedir a USCIS notificar a un consulado de EE. UU. para follow-to-join. Bajo dirección del cliente.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/i-824-action-on-approved-application"
+  slug="/i-824-action-on-approved-application" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · 8 C.F.R. §103.7"
+    heading="I-824 — Action on Approved Application or Petition"
+    sub="Solicitar un duplicado del USCIS approval notice (reemplazo de I-797) o pedir a USCIS notificar a la embajada de EE. UU. para que familiares derivativos puedan follow-to-join una petición aprobada. Preparamos bajo su dirección."
+    ctaPrimary={{ href: '/#get-started?form=I-824', text: 'Iniciar mi I-824' }}
+  />
+
+  <LandingBody related={[
+    { href: '/mx/i-130-family-petition', label: 'I-130 — Petición Familiar' },
+    { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus' },
+    { href: '/mx/i-589-asylum-help', label: 'I-589 — Asilo y Withholding' },
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      La forma I-824 se presenta a USCIS después de que una solicitud o
+      petición haya sido aprobada — generalmente por una de dos razones:
+      solicitar un duplicado del approval notice (reemplazo del I-797), o
+      pedir a USCIS enviar notificación a una embajada/consulado de EE. UU.
+      para que familiares derivativos puedan solicitar "follow-to-join" al
+      beneficiario principal.
+    </p>
+
+    <h2>Cuándo presentar I-824</h2>
+    <ul>
+      <li><strong>Approval notice perdido o destruido</strong> — solicitar duplicado del I-797 (I-130, I-140, I-360, I-589, N-400, etc.).</li>
+      <li><strong>Follow-to-join derivative beneficiaries</strong> — petición del principal aprobada, principal en EE. UU., y cónyuge/hijos solteros en el extranjero ahora necesitan solicitar visa de inmigrante o follow-to-join en un consulado.</li>
+      <li><strong>Asylum follow-to-join</strong> — Nota: los asylees suelen presentar <strong>Form I-730</strong>, no I-824. Ayudamos a confirmar la forma correcta.</li>
+      <li><strong>Otras acciones post-aprobación de USCIS</strong> permitidas por el approval notice.</li>
+    </ul>
+
+    <h2>Lo que preparamos</h2>
+    <div class="form-list">
+      <strong>Paquete I-824</strong>
+      <ul>
+        <li><strong>Forma I-824</strong> con la base correcta y datos biográficos.</li>
+        <li><strong>Copia del approval notice</strong> (I-797 receipt) o evidencia de aprobación si el original se perdió.</li>
+        <li><strong>Evidencia de identidad y relación</strong> para follow-to-join — páginas biográficas del pasaporte, certificado de matrimonio, certificados de nacimiento.</li>
+        <li><strong>Detalles del destino consular</strong> — nombre y dirección de la embajada/consulado de EE. UU.</li>
+        <li><strong>Solicitud de fee waiver (Form I-912)</strong> donde aplique.</li>
+      </ul>
+    </div>
+
+    <h2>Lo que I-824 NO hace</h2>
+    <p>
+      I-824 no puede revivir una petición expirada o abandonada. No
+      sustituye una presentación nueva donde la petición subyacente fue
+      revocada. Para asylee/refugee follow-to-join USCIS suele esperar
+      Form I-730 — confirmamos la ruta correcta antes de empezar la
+      preparación.
+    </p>
+
+    <h2>Lo que no hacemos</h2>
+    <p>
+      Imverica es un California Legal Document Assistant e Immigration
+      Consultant. Preparamos la I-824 bajo su dirección. No damos
+      asesoría legal y no podemos decir si I-824 vs. I-730 es la vía
+      correcta para un follow-to-join, si el visa bulletin timing hace la
+      solicitud productiva, o cómo litigar una petición revocada. Esos
+      casos los referimos a un abogado de inmigración con licencia.
+    </p>
+
+    <cite>
+      <strong>Fuente:</strong> 8 C.F.R. §103.7 (fees); USCIS Policy Manual e
+      instrucciones de la Form I-824. Solo preparación de documentos — no
+      asesoría legal.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-824" primaryText="Iniciar mi entrevista I-824" />
+</BaseLayout>

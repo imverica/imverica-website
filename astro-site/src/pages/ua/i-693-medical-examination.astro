@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'I-693 — Медичний огляд для імміграції | Imverica';
+const description = 'California Licensed LDA допомагає організувати подачу медичного огляду I-693 — форма заповнюється і опечатується USCIS-designated civil surgeon. Правильно пакуємо з пакетом adjustment-of-status.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/i-693-medical-examination"
+  slug="/i-693-medical-examination" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · INA §212(a)(1) · 8 C.F.R. §245.5"
+    heading="I-693 — Медичний огляд для імміграції"
+    sub="Обов'язковий медичний огляд для більшості подач на adjustment-of-status. Форма заповнюється і опечатується USCIS-designated civil surgeon — ми організовуємо подачу, підтверджуємо правила термінів і правильно пакуємо з вашою I-485."
+    ctaPrimary={{ href: '/#get-started?form=I-693', text: 'Почати подачу I-693' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ua/i-485-help', label: 'I-485 — Зміна статусу' },
+    { href: '/ua/i-130-family-petition', label: 'I-130 — Сімейна петиція' },
+    { href: '/ua/i-765-work-permit-help', label: 'I-765 — Дозвіл на роботу (EAD)' },
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-693 документує, що заявник на adjustment-of-status не
+      inadmissible за health-related grounds під INA §212(a)(1). Сама форма
+      має бути заповнена і опечатана в конверті USCIS-designated
+      <strong>civil surgeon</strong> — Imverica не проводить медичний
+      огляд. Допомагаємо знайти civil surgeon, підтверджуємо що взяти,
+      організуємо опечатаний конверт з рештою пакета I-485 і дотримуємо
+      термінів подачі.
+    </p>
+
+    <h2>Що покриває I-693</h2>
+    <ul>
+      <li><strong>Медична історія і фізичний огляд</strong> civil surgeon.</li>
+      <li><strong>Скринінг на туберкульоз</strong> за CDC technical instructions.</li>
+      <li><strong>Скринінг на сифіліс і гонорею</strong> за CDC.</li>
+      <li><strong>Запис вакцинації</strong> — обов'язкові CDC вакцини: MMR, Td/Tdap, varicella, polio, influenza, hepatitis A та B, rotavirus, Hib, pneumococcal, meningococcal та COVID-19 де вимагається CDC.</li>
+      <li><strong>Оцінка психічного здоров'я і вживання речовин</strong> за необхідності.</li>
+    </ul>
+
+    <h2>Civil surgeon — не будь-який лікар</h2>
+    <p>
+      Лише лікарі, спеціально призначені USCIS як <strong>civil surgeons</strong>,
+      можуть заповнити форму I-693 у США. Звичайний сімейний лікар не може
+      підписати форму. Civil surgeon заповнює форму і опечатує її в
+      конверті; заявник подає опечатаний конверт у USCIS як частину
+      пакета I-485.
+    </p>
+
+    <h2>Терміни — коли робити медогляд</h2>
+    <p>
+      За поточним керівництвом USCIS, підписана форма I-693 дійсна
+      <strong>два роки</strong> з дати підпису civil surgeon. USCIS надає
+      перевагу подачі I-693 <em>разом</em> з I-485 — але приймає пізню
+      подачу за Request for Evidence. Не робіть медогляд занадто
+      заздалегідь — прострочена I-693 означає повторний огляд.
+    </p>
+
+    <h2>Що ми готуємо і організуємо</h2>
+    <div class="form-list">
+      <strong>Пакет подачі I-693</strong>
+      <ul>
+        <li><strong>Список найближчих USCIS-designated civil surgeons</strong> — вказуємо на офіційний USCIS locator; вибір ваш.</li>
+        <li><strong>Чек-лист перед візитом</strong> — запис вакцинації, попередні результати tuberculin/IGRA, попередні X-rays, рецепт на окуляри, ID з фото, попередня I-693, список ліків.</li>
+        <li><strong>Організація подачі</strong> — опечатаний конверт I-693 усередині пакета I-485, щоб USCIS випадково не відкрив; конверт плюс невідкрита підписана копія для заявника.</li>
+        <li><strong>Трекінг</strong> — фіксуємо дату civil surgeon, щоб файл показував дворічне вікно дії.</li>
+      </ul>
+    </div>
+
+    <h2>Чого ми не робимо</h2>
+    <p>
+      Не проводимо медичні огляди. Не інтерпретуємо медичні результати. У
+      нас немає фінансових чи професійних відносин з civil surgeon — ви
+      обираєте самі. Якщо civil surgeon виявив Class A condition
+      (health-based ground inadmissibility), перед подачею потрібно
+      звернутися до ліцензованого імміграційного адвоката — такі справи
+      потребують waiver.
+    </p>
+
+    <cite>
+      <strong>Джерело:</strong> INA §212(a)(1) (health-related grounds);
+      8 C.F.R. §245.5; USCIS Policy Manual Volume 8; CDC technical
+      instructions для civil surgeons. Лише організація документів —
+      Imverica не надає медичних послуг і не дає юридичних консультацій.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-693" primaryText="Почати подачу I-693" />
+</BaseLayout>

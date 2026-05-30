@@ -1,0 +1,90 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-131A — Carrier Documentation for Returning Lawful Permanent Residents | Imverica';
+const description = 'California Licensed LDA prepares Form I-131A for permanent residents stranded abroad with an expired green card or expired Re-entry Permit so a transportation carrier can board them back to the US. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-131A Carrier Documentation Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-131A — Application for Travel Document (Carrier Documentation) for returning lawful permanent residents.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-131a-returning-resident"
+  slug="/i-131a-returning-resident" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · 8 C.F.R. §211.1 · Carrier Documentation"
+    heading="I-131A — Carrier Documentation for Returning LPRs"
+    sub="For lawful permanent residents stranded outside the United States with an expired green card or expired Re-entry Permit. The Form I-131A boarding foil lets a transportation carrier board you back to the US. We prepare the application at your direction."
+    ctaPrimary={{ href: '/#get-started?form=I-131A', text: 'Start my I-131A application' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-131-travel-document', label: 'I-131 — Travel Document / Advance Parole' },
+    { href: '/i-90-green-card-renewal', label: 'I-90 — Green Card Renewal' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-131A, Application for Travel Document (Carrier Documentation), is
+      filed at a U.S. embassy or consulate abroad by a lawful permanent
+      resident whose green card (Form I-551) has expired while outside the
+      United States, or whose Re-entry Permit has expired, when the LPR is
+      otherwise eligible to return to the US. USCIS issues a boarding foil
+      that satisfies the transportation carrier's documentation
+      requirements so the LPR can fly home.
+    </p>
+
+    <h2>Who can file I-131A</h2>
+    <ul>
+      <li>An LPR whose absence from the US has been less than one year and whose green card has expired while abroad.</li>
+      <li>An LPR whose absence has been less than two years and whose Re-entry Permit has expired.</li>
+      <li>The LPR is still considered a returning resident — i.e. has not abandoned permanent residence by virtue of the trip's length, ties to a foreign country, or filing as a non-resident on US taxes.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>I-131A package preparation</strong>
+      <ul>
+        <li><strong>Form I-131A</strong> with the correct basis selected and biographic data filled accurately.</li>
+        <li><strong>Supporting evidence</strong> — copy of expired green card or Re-entry Permit, evidence of unbroken US residence (US tax returns, employment, US address), evidence of the reason for the extended absence, photographs to current US embassy spec.</li>
+        <li><strong>Filing-fee note</strong> — the fee is paid online directly to USCIS before the consular appointment; we walk you through that step.</li>
+      </ul>
+    </div>
+
+    <h2>What I-131A does NOT replace</h2>
+    <p>
+      I-131A is a boarding foil only — it gets you on a plane home. Once
+      you return to the US you still need to renew or replace your green
+      card (Form I-90) and address any abandonment-of-residence issues if
+      they arise at the port of entry or in subsequent USCIS interactions.
+      An LPR who has clearly abandoned residence (very long absence, foreign
+      employment with no plan to return, etc.) should not assume I-131A will
+      bring them home — Customs and Border Protection may still question
+      admission, and the case may need a licensed immigration attorney.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a California Legal Document Assistant and Immigration
+      Consultant. We prepare documents accurately at your direction. We do
+      not give legal advice and do not assess whether you have abandoned
+      lawful permanent resident status — that is a legal determination. If
+      your case involves a long absence, foreign tax filing as a
+      non-resident, or other abandonment-of-residence questions, we refer
+      you to a licensed California immigration attorney before filing.
+    </p>
+
+    <cite>
+      <strong>Authority:</strong> INA §211(a); 8 C.F.R. §211.1 (carrier
+      documentation for returning residents); USCIS Policy Manual Volume 11.
+      Document preparation only — not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-131A" primaryText="Begin my I-131A intake" />
+</BaseLayout>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'I-864A — Contract Between Sponsor and Household Member | Imverica';
+const description = 'California Licensed LDA prepares Form I-864A, the contract a household member signs to combine income with the sponsor for I-864 Affidavit of Support purposes. Prepared at your direction.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'I-864A Contract Between Sponsor and Household Member Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: 'Document preparation for Form I-864A — used by household members combining income with the I-864 sponsor.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/i-864a-household-member"
+  slug="/i-864a-household-member" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="USCIS · INA §213A · Household-Member Contract"
+    heading="I-864A — Contract Between Sponsor and Household Member"
+    sub="Used when the I-864 sponsor needs to add a household member's income (spouse, parent, sibling, or adult child) to meet the 125% poverty threshold. The household member signs Form I-864A as a binding contract. We prepare it accurately at your direction."
+    ctaPrimary={{ href: '/#get-started?form=I-864A', text: 'Start my I-864A' }}
+  />
+
+  <LandingBody related={[
+    { href: '/i-864-affidavit-of-support', label: 'I-864 — Affidavit of Support (main form)' },
+    { href: '/i-485-help', label: 'I-485 — Adjustment of Status' },
+    { href: '/i-130-family-petition', label: 'I-130 — Family-based petition' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Form I-864A, Contract Between Sponsor and Household Member, is the
+      companion to Form I-864. The sponsor uses it when their own income is
+      below 125% of the Federal Poverty Guidelines and they need to add a
+      qualifying household member's income to qualify. The household member
+      signs the contract and becomes <strong>jointly and severally liable</strong>
+      with the sponsor for supporting the intending immigrant.
+    </p>
+
+    <h2>Who can be a household member</h2>
+    <ul>
+      <li>The sponsor's spouse.</li>
+      <li>The sponsor's parent, adult child, sibling, or other relative — if they have lived in the sponsor's residence for the last six months <em>or</em> are claimed as a dependent on the sponsor's most recent federal tax return.</li>
+      <li>The intending immigrant themselves — only when their income will continue from the same US source after admission and they live in the sponsor's household.</li>
+    </ul>
+
+    <h2>What we prepare</h2>
+    <div class="form-list">
+      <strong>I-864A package preparation</strong>
+      <ul>
+        <li><strong>Form I-864A</strong> — signed by both the sponsor and the household member.</li>
+        <li><strong>Household-member tax evidence</strong> — most recent federal tax return transcript (or full 1040 with W-2 / 1099) and proof of current employment.</li>
+        <li><strong>Evidence of household relationship</strong> — marriage certificate, birth certificate, school records, lease, utility bills, or other proof that the household member lives with the sponsor or is a tax dependent.</li>
+        <li><strong>Filed together with the sponsor's I-864</strong> — we package the combined affidavit so USCIS reviews them as one.</li>
+      </ul>
+    </div>
+
+    <h2>Binding obligation</h2>
+    <p>
+      Signing Form I-864A means the household member's income is no longer
+      "just income shown on a form." The household member personally
+      promises to the U.S. Government to support the intending immigrant if
+      the sponsor cannot — and a government agency providing means-tested
+      benefits to the immigrant can sue the household member as well as the
+      sponsor. The obligation continues until the same termination events
+      that end the sponsor's obligation (naturalization, 40 quarters, exit
+      and termination of LPR status, or death).
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a California Legal Document Assistant and Immigration
+      Consultant. We prepare the I-864A accurately at your direction. We do
+      not give legal or tax advice; we cannot tell you whether using a
+      household member vs. a joint sponsor is the better strategy, whether
+      the income calculation will survive USCIS review, or what the
+      practical risk of the joint-and-several obligation will be in your
+      family situation. Those are legal and financial determinations — we
+      refer complex cases to a California immigration attorney and CPA.
+    </p>
+
+    <cite>
+      <strong>Statutory authority:</strong> INA §213A; 8 C.F.R. §213a.1
+      (household-member definition and combined income); USCIS Policy Manual
+      Volume 7 (Affidavit of Support). Document preparation only — not legal
+      or tax advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-864A" primaryText="Begin my I-864A intake" />
+</BaseLayout>

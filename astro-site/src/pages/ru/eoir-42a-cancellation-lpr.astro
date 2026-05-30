@@ -1,0 +1,81 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'EOIR-42A — Cancellation of Removal для LPR | Imverica';
+const description = 'California Licensed LDA готовит форму EOIR-42A — Application for Cancellation of Removal для постоянных резидентов под INA §240A(a). 7 лет резидентуры, 5 лет LPR, нет aggravated felony. По поручению клиента — представительство требует адвоката.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-42a-cancellation-lpr"
+  slug="/eoir-42a-cancellation-lpr" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="EOIR · INA §240A(a) · Cancellation для LPR"
+    heading="EOIR-42A — Cancellation of Removal для постоянных резидентов"
+    sub="Для LPR в removal proceedings, отвечающих требованиям §240A(a): не менее 5 лет как LPR, 7 лет непрерывной резидентуры в США после законного въезда в любом статусе, без aggravated felony. Готовим заявление и evidence packet по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=EOIR-42A', text: 'Начать пакет EOIR-42A' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/eoir-42b-cancellation-non-lpr', label: 'EOIR-42B — Cancellation для non-LPR' },
+    { href: '/ru/eoir-immigration-court', label: 'EOIR overview — документы иммиграционного суда' },
+    { href: '/ru/i-90-green-card-renewal', label: 'I-90 — Обновление green card' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма EOIR-42A, Application for Cancellation of Removal for Certain
+      Permanent Residents, подаётся в иммиграционном суде LPR, оказавшимся
+      в removal proceedings. Если IJ удовлетворяет заявление, removal
+      отменяется и green-card статус сохраняется. Это discretionary relief,
+      требующий жёстких статутных требований по INA §240A(a).
+    </p>
+
+    <h2>Статутные требования INA §240A(a)</h2>
+    <ul>
+      <li><strong>LPR</strong> не менее 5 лет.</li>
+      <li><strong>7 лет непрерывной резидентуры</strong> в США после законного въезда в любом статусе (применяется stop-time rule — вручение NTA или triggering criminal offense останавливают часы).</li>
+      <li><strong>Не осуждён за aggravated felony</strong> по определению INA §101(a)(43).</li>
+      <li>IJ применяет favorable discretion с учётом семейных связей, hardship, equities, criminal history и других факторов §240(c)(4).</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакет EOIR-42A</strong>
+      <ul>
+        <li><strong>Форма EOIR-42A</strong> с биографическими, семейными, иммиграционными и criminal history данными.</li>
+        <li><strong>Форма EOIR-28</strong> notice of representation, если выступает лицензированный адвокат.</li>
+        <li><strong>Форма EOIR-26A</strong> fee waiver, где применимо; иначе $100 application fee плюс $30 biometrics.</li>
+        <li><strong>Evidence packet</strong> — entry document, все I-94, green card, налоговые декларации и W-2/1099 за 10+ лет (continuous residence), employment letters, lease и utility records, marriage и birth certificates, школьные записи US-citizen детей, медицинские записи (hardship), criminal records (certified court dispositions для каждого инцидента).</li>
+        <li><strong>Declarations</strong> — заявителя о equities, members семьи, employer, community.</li>
+        <li><strong>Country-conditions evidence</strong>, где hardship в стране возвращения релевантен.</li>
+        <li><strong>Witness list</strong> и exhibit index по EOIR Practice Manual chapter 4.</li>
+      </ul>
+    </div>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      <strong>Imverica не представляет клиентов в иммиграционном суде.</strong>
+      Cancellation of removal включает юридические аргументы,
+      cross-examination свидетелей и применение judicial discretion — это
+      practice of law, требует лицензированного адвоката или
+      BIA-accredited representative. Как California Legal Document Assistant
+      и Immigration Consultant аккуратно готовим EOIR-42A и evidence packet
+      под руководством вашего адвоката, организуем court-ready indices и
+      tabs по EOIR Practice Manual, переводим foreign-language документы.
+      Дела без counsel направляем в нашу сеть калифорнийских иммиграционных
+      адвокатов.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §240A(a), 8 U.S.C. §1229b(a)
+      (cancellation для постоянных резидентов); INA §101(a)(43)
+      (определение aggravated felony); INA §240A(d) (stop-time rule); EOIR
+      Practice Manual (последнее издание). Представительство в суде требует
+      лицензированного адвоката или BIA-accredited representative.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=EOIR-42A" primaryText="Начать анкету EOIR-42A" />
+</BaseLayout>

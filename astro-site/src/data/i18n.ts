@@ -74,7 +74,20 @@ const translatedSlugs = new Set<string>([
   '/ss-4-ein',
   '/operating-agreement',
   '/llc-1a-foreign-llc',
-  '/si-550-corporation-statement'
+  '/si-550-corporation-statement',
+  // USCIS form-level dedicated pages
+  '/i-131-travel-document',
+  '/i-131a-returning-resident',
+  '/i-864-affidavit-of-support',
+  '/i-864a-household-member',
+  '/i-693-medical-examination',
+  '/i-751-remove-conditions',
+  '/i-824-action-on-approved-application',
+  // EOIR form-level dedicated pages
+  '/eoir-29-notice-of-appeal',
+  '/eoir-42a-cancellation-lpr',
+  '/eoir-42b-cancellation-non-lpr',
+  '/eoir-40-suspension-of-deportation'
 ]);
 
 /** Build a per-locale URL from a slug. Uses the prefix in LOCALES, so URLs

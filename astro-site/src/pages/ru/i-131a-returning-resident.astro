@@ -1,0 +1,83 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'ru' as const;
+const title = 'I-131A — Carrier Documentation для возвращающихся LPR | Imverica';
+const description = 'California Licensed LDA готовит форму I-131A для постоянных резидентов, оказавшихся за границей с истекшей green card или Re-entry Permit, чтобы перевозчик мог посадить их обратно в США. По поручению клиента.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ru/i-131a-returning-resident"
+  slug="/i-131a-returning-resident" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · 8 C.F.R. §211.1 · Carrier Documentation"
+    heading="I-131A — Carrier Documentation для возвращающихся LPR"
+    sub="Для постоянных резидентов, оказавшихся вне США с истекшей green card или истекшим Re-entry Permit. Boarding foil по форме I-131A позволяет перевозчику посадить вас обратно в США. Готовим заявление по вашему поручению."
+    ctaPrimary={{ href: '/#get-started?form=I-131A', text: 'Начать заявление I-131A' }}
+  />
+
+  <LandingBody related={[
+    { href: '/ru/i-131-travel-document', label: 'I-131 — Travel Document / Advance Parole' },
+    { href: '/ru/i-90-green-card-renewal', label: 'I-90 — Обновление green card' },
+    { href: '/ru/lda', label: 'Кто такой California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Форма I-131A, Application for Travel Document (Carrier Documentation),
+      подаётся в посольстве или консульстве США за границей постоянным
+      резидентом, чья green card (форма I-551) истекла за пределами США или
+      чей Re-entry Permit истёк, при условии что LPR имеет право вернуться в
+      США. USCIS выдаёт boarding foil, который удовлетворяет требованиям
+      перевозчика, чтобы LPR мог улететь домой.
+    </p>
+
+    <h2>Кто может подавать I-131A</h2>
+    <ul>
+      <li>LPR, чьё отсутствие в США было менее одного года и чья green card истекла за границей.</li>
+      <li>LPR, чьё отсутствие было менее двух лет и чей Re-entry Permit истёк.</li>
+      <li>LPR всё ещё считается returning resident — то есть не отказался от постоянной резидентуры по продолжительности поездки, связям с другой страной или подаче налогов как non-resident.</li>
+    </ul>
+
+    <h2>Что мы готовим</h2>
+    <div class="form-list">
+      <strong>Пакет I-131A</strong>
+      <ul>
+        <li><strong>Форма I-131A</strong> с правильным основанием и точными биографическими данными.</li>
+        <li><strong>Подтверждающие документы</strong> — копия истёкшей green card или Re-entry Permit, доказательства непрерывной резидентуры в США (налоговые декларации, работа, адрес), причина длительного отсутствия, фото по текущим требованиям посольства.</li>
+        <li><strong>Оплата сбора</strong> — оплачивается онлайн напрямую USCIS до консульской встречи; проведём вас через этот шаг.</li>
+      </ul>
+    </div>
+
+    <h2>Чего I-131A НЕ заменяет</h2>
+    <p>
+      I-131A — только boarding foil; он сажает вас в самолёт домой. После
+      возвращения в США вам всё равно нужно обновить или заменить green card
+      (форма I-90) и решить вопросы об оставлении резидентуры, если они
+      возникнут на въезде или в дальнейшем взаимодействии с USCIS. LPR,
+      явно отказавшийся от резидентуры (очень долгое отсутствие, работа за
+      границей без планов возвращения и т. п.), не должен предполагать, что
+      I-131A вернёт его домой — CBP может всё равно отказать во въезде, и
+      дело может потребовать иммиграционного адвоката.
+    </p>
+
+    <h2>Чего мы не делаем</h2>
+    <p>
+      Imverica — California Legal Document Assistant и Immigration Consultant.
+      Мы готовим документы по вашему поручению. Мы не даём юридических
+      консультаций и не оцениваем, отказались ли вы от LPR — это юридическое
+      определение. Если ваше дело связано с долгим отсутствием, подачей
+      зарубежных налогов как non-resident или другими вопросами оставления
+      резидентуры, направляем к лицензированному калифорнийскому
+      иммиграционному адвокату до подачи.
+    </p>
+
+    <cite>
+      <strong>Источник:</strong> INA §211(a); 8 C.F.R. §211.1 (carrier
+      documentation для возвращающихся резидентов); USCIS Policy Manual
+      Volume 11. Только подготовка документов — не юридические консультации.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=I-131A" primaryText="Начать анкету I-131A" />
+</BaseLayout>

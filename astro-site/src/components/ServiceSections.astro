@@ -148,21 +148,24 @@ const FORM_LINKS: Record<string, string> = {
   // USCIS forms with their own dedicated explainer page.
   'I-90': '/i-90-green-card-renewal',
   'I-539': '/i-539-change-of-status',
-  // USCIS forms without a dedicated page yet — open the intake wizard
-  // preset to that form so the click starts a real request.
-  'I-131': '/#get-started?form=I-131',
-  'I-131A': '/#get-started?form=I-131A',
-  'I-864': '/#get-started?form=I-864',
-  'I-864A': '/#get-started?form=I-864A',
-  'I-693': '/#get-started?form=I-693',
-  'I-751': '/#get-started?form=I-751',
-  'I-824': '/#get-started?form=I-824',
-  // EOIR series — route to the dedicated EOIR immigration-court page.
+  // USCIS forms — each now has a dedicated explainer page (matching the
+  // /i-485-help, /i-130-family-petition pattern). Clicking a chip goes
+  // to the page with the form's purpose, requirements, package contents,
+  // and a Start button — never directly into the intake wizard.
+  'I-131': '/i-131-travel-document',
+  'I-131A': '/i-131a-returning-resident',
+  'I-864': '/i-864-affidavit-of-support',
+  'I-864A': '/i-864a-household-member',
+  'I-693': '/i-693-medical-examination',
+  'I-751': '/i-751-remove-conditions',
+  'I-824': '/i-824-action-on-approved-application',
+  // EOIR series — each major form has its own dedicated page. EOIR-28
+  // (notice of appearance) is generic and routes to the EOIR overview.
   'EOIR-28': '/eoir-immigration-court',
-  'EOIR-29': '/eoir-immigration-court',
-  'EOIR-42A': '/eoir-immigration-court',
-  'EOIR-42B': '/eoir-immigration-court',
-  'EOIR-40': '/eoir-immigration-court',
+  'EOIR-29': '/eoir-29-notice-of-appeal',
+  'EOIR-42A': '/eoir-42a-cancellation-lpr',
+  'EOIR-42B': '/eoir-42b-cancellation-non-lpr',
+  'EOIR-40': '/eoir-40-suspension-of-deportation',
   // California court / family / civil — dedicated pages
   'FL-100': '/fl',
   'FL-110': '/fl',
