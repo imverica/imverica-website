@@ -411,6 +411,9 @@ body.is-auth footer { display: none !important; }
     <div class="form-group"><label for="pf-legal" data-i18n="profLegal">Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" data-i18n-placeholder="profLegalPh" placeholder="Legal name as printed on your documents"></div>
     <button class="btn" id="pf-save" onclick="saveProfile()" data-i18n="profSave">Save and continue</button>
     <div class="msg" id="profile-msg"></div>
+    <div class="auth-aside">
+      <button class="btn-link" onclick="logout()" data-i18n="profSignOut">Use a different account</button>
+    </div>
   </div>
 </div>
 
@@ -588,7 +591,7 @@ const STRINGS = {
     profLast: 'Last name *', profLastPh: 'Last name',
     profPhone: 'Phone *',
     profLegal: 'Full legal name (optional, as on your ID)', profLegalPh: 'Legal name as printed on your documents',
-    profSave: 'Save and continue', profSaving: 'Saving…',
+    profSave: 'Save and continue', profSaving: 'Saving…', profSignOut: 'Use a different account',
     dashKicker: 'Imverica · Personal account',
     dashWelcomeBack: 'Welcome back,',
     dashSub: 'Upload documents, message us, and track your requests — all in one place.',
@@ -677,7 +680,7 @@ const STRINGS = {
     profLast: 'Фамилия *', profLastPh: 'Фамилия',
     profPhone: 'Телефон *',
     profLegal: 'Полное имя как в ID (необязательно)', profLegalPh: 'Имя как в документах',
-    profSave: 'Сохранить и продолжить', profSaving: 'Сохраняем…',
+    profSave: 'Сохранить и продолжить', profSaving: 'Сохраняем…', profSignOut: 'Использовать другой аккаунт',
     dashKicker: 'Imverica · Личный кабинет',
     dashWelcomeBack: 'С возвращением,',
     dashSub: 'Загружайте документы, пишите нам и отслеживайте заявки — всё в одном месте.',
@@ -766,7 +769,7 @@ const STRINGS = {
     profLast: 'Прізвище *', profLastPh: 'Прізвище',
     profPhone: 'Телефон *',
     profLegal: 'Повне ім\'я як в ID (необов\'язково)', profLegalPh: 'Ім\'я як у документах',
-    profSave: 'Зберегти і продовжити', profSaving: 'Зберігаємо…',
+    profSave: 'Зберегти і продовжити', profSaving: 'Зберігаємо…', profSignOut: 'Використати інший акаунт',
     dashKicker: 'Imverica · Особистий кабінет',
     dashWelcomeBack: 'З поверненням,',
     dashSub: 'Завантажуйте документи, пишіть нам і відстежуйте заявки — все в одному місці.',
@@ -855,7 +858,7 @@ const STRINGS = {
     profLast: 'Apellido *', profLastPh: 'Apellido',
     profPhone: 'Teléfono *',
     profLegal: 'Nombre legal completo (opcional, como en su ID)', profLegalPh: 'Nombre legal como aparece en sus documentos',
-    profSave: 'Guardar y continuar', profSaving: 'Guardando…',
+    profSave: 'Guardar y continuar', profSaving: 'Guardando…', profSignOut: 'Usar otra cuenta',
     dashKicker: 'Imverica · Cuenta personal',
     dashWelcomeBack: 'Bienvenido,',
     dashSub: 'Suba documentos, mensajéenos y siga sus solicitudes — todo en un solo lugar.',
@@ -1006,6 +1009,9 @@ function backToEmail(){ clearMsg('code-msg'); $('code-input').value=''; show('st
 
 async function logout(){
   await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({action:'logout'})});
+  // Stop Google's auto-pick so the next "Continue with Google" click opens
+  // the account picker instead of silently signing the same person back in.
+  try { if (window.google && google.accounts && google.accounts.id) { google.accounts.id.disableAutoSelect(); google.accounts.id.cancel(); } } catch(e){}
   currentEmail=''; $('email-input').value=''; stopChat(); show('step-email');
 }
 
