@@ -3,6 +3,13 @@
   command = "npm --prefix astro-site ci && npm --prefix astro-site run build"
   functions = "netlify/functions"
 
+[build.environment]
+  # Google OAuth Client IDs are PUBLIC by design — they ship in every
+  # browser-side Google Sign-In integration. Only the Client *Secret* is
+  # sensitive, and we don't use one (we verify ID tokens via the public
+  # tokeninfo endpoint). Tell Netlify's secret scanner to skip this key.
+  SECRETS_SCAN_OMIT_KEYS = "GOOGLE_CLIENT_ID"
+
 [functions]
 node_bundler = "esbuild"
 # Small shared libs are fine on every function. Heavy PDF templates (92 MB) and
