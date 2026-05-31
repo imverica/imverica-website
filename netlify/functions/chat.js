@@ -438,11 +438,23 @@ exports.handler = async function (event) {
     const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251022', max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
 
 ${buildRoutingContext(messages)}`, messages })
     });
-    if (!apiRes.ok) { const t = await apiRes.text(); console.error(apiRes.status, t); return { statusCode: 502, body: JSON.stringify({ error: 'Upstream error' }) }; }
+    if (!apiRes.ok) {
+      const t = await apiRes.text();
+      console.error('chat:anthropic', apiRes.status, t);
+      // Surface the upstream error text so the homepage's "Continue" button
+      // still works even when the AI router can't reply — we route to the
+      // catalog-based fallback (/api/route) for the same query in the
+      // browser. Returning 200 with reply='' lets the client decide.
+      return {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ reply: '', upstreamStatus: apiRes.status })
+      };
+    }
     const data = await apiRes.json();
     const reply = data.content?.[0]?.text || '';
     return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ reply }) };

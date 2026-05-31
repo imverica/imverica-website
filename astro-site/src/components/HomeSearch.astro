@@ -151,6 +151,72 @@ const t = STRINGS[lang] || STRINGS.en;
     return isLocal ? 'https://imverica.com/.netlify/functions/chat' : '/.netlify/functions/chat';
   }
 
+  function routeEndpoint(query: string) {
+    const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
+    const base = isLocal ? 'https://imverica.com' : '';
+    return base + '/.netlify/functions/route?q=' + encodeURIComponent(query);
+  }
+
+  // Human-friendly form name lookup for the answer card. Keeps the wizard
+  // independent of the network — when the AI chat is slow / down / over
+  // quota, we still tell the user which form we'll prepare.
+  const FORM_NAMES: Record<string, { en: string; ru: string; uk: string; es: string }> = {
+    'I-485': { en: 'Adjustment of Status', ru: 'Изменение статуса (грин-карта)', uk: 'Зміна статусу (грін-карта)', es: 'Ajuste de Estatus' },
+    'I-130': { en: 'Family-based petition', ru: 'Семейная петиция', uk: 'Сімейна петиція', es: 'Petición Familiar' },
+    'I-765': { en: 'Work Permit (EAD)', ru: 'Разрешение на работу (EAD)', uk: 'Дозвіл на роботу (EAD)', es: 'Permiso de Trabajo (EAD)' },
+    'I-589': { en: 'Asylum & Withholding of Removal', ru: 'Политическое убежище', uk: 'Політичний притулок', es: 'Asilo Político' },
+    'I-90':  { en: 'Green Card Renewal / Replacement', ru: 'Обновление green card', uk: 'Поновлення green card', es: 'Renovación de Green Card' },
+    'I-131': { en: 'Travel Document / Advance Parole', ru: 'Travel Document / Advance Parole', uk: 'Travel Document / Advance Parole', es: 'Documento de Viaje' },
+    'I-751': { en: 'Remove Conditions on Residence', ru: 'Снятие условий с резидентуры', uk: 'Зняття умов з резидентури', es: 'Eliminar Condiciones de Residencia' },
+    'I-864': { en: 'Affidavit of Support', ru: 'Affidavit of Support (спонсорство)', uk: 'Affidavit of Support (спонсорство)', es: 'Declaración Jurada de Apoyo' },
+    'I-539': { en: 'Change / Extend Status', ru: 'Смена / продление статуса', uk: 'Зміна / продовження статусу', es: 'Cambio / Extensión de Estatus' },
+    'I-693': { en: 'Medical Examination', ru: 'Медицинский осмотр', uk: 'Медичний огляд', es: 'Examen Médico' },
+    'I-918': { en: 'U-Visa (Crime Victim)', ru: 'U-виза (жертва преступления)', uk: 'U-віза (жертва злочину)', es: 'Visa U (Víctima de Delito)' },
+    'I-360': { en: 'VAWA Self-Petition', ru: 'VAWA — самостоятельная петиция', uk: 'VAWA — самостійна петиція', es: 'Auto-petición VAWA' },
+    'I-821': { en: 'Temporary Protected Status (TPS)', ru: 'Временный защищённый статус (TPS)', uk: 'Тимчасовий захищений статус (TPS)', es: 'Estatus Protegido Temporal (TPS)' },
+    'I-821D': { en: 'DACA', ru: 'DACA', uk: 'DACA', es: 'DACA' },
+    'I-134A': { en: 'Uniting for Ukraine (U4U)', ru: 'Uniting for Ukraine (U4U)', uk: 'Uniting for Ukraine (U4U)', es: 'Uniting for Ukraine (U4U)' },
+    'N-400': { en: 'Naturalization (Citizenship)', ru: 'Натурализация (гражданство)', uk: 'Натуралізація (громадянство)', es: 'Naturalización (Ciudadanía)' },
+    'FL-100': { en: 'Divorce / Dissolution', ru: 'Расторжение брака', uk: 'Розлучення', es: 'Divorcio / Disolución' },
+    'FL-120': { en: 'Response to Divorce', ru: 'Ответ на иск о разводе', uk: 'Відповідь на позов про розлучення', es: 'Respuesta al Divorcio' },
+    'FL-150': { en: 'Income & Expense Declaration', ru: 'Декларация доходов и расходов', uk: 'Декларація доходів і витрат', es: 'Declaración de Ingresos y Gastos' },
+    'FL-160': { en: 'Property Declaration', ru: 'Раздел имущества', uk: 'Поділ майна', es: 'Declaración de Bienes' },
+    'FL-300': { en: 'Request for Order (custody / support)', ru: 'Запрос суда (опека / алименты)', uk: 'Запит до суду (опіка / аліменти)', es: 'Solicitud al Tribunal (custodia / pensión)' },
+    'FL-105': { en: 'UCCJEA (child custody jurisdiction)', ru: 'UCCJEA — юрисдикция по опеке', uk: 'UCCJEA — юрисдикція з опіки', es: 'UCCJEA' },
+    'SC-100': { en: 'Small Claims Plaintiff', ru: 'Малые иски (истец)', uk: 'Малі позови (позивач)', es: 'Reclamos Menores (Demandante)' },
+    'SC-120': { en: 'Small Claims — Defendant', ru: 'Малые иски — встречный иск', uk: 'Малі позови — зустрічний позов', es: 'Reclamos Menores — Demandado' },
+    'SC-104': { en: 'Proof of Service (Small Claims)', ru: 'Подтверждение вручения (малые иски)', uk: 'Підтвердження вручення (малі позови)', es: 'Prueba de Entrega' },
+    'UD-100': { en: 'Eviction / Unlawful Detainer', ru: 'Выселение (unlawful detainer)', uk: 'Виселення (unlawful detainer)', es: 'Desalojo' },
+    'DV-100': { en: 'Domestic Violence Restraining Order', ru: 'Защитный ордер (домашнее насилие)', uk: 'Захисний ордер (домашнє насильство)', es: 'Orden de Restricción' },
+    'DE-111': { en: 'Probate / Estate', ru: 'Наследство (probate)', uk: 'Спадщина (probate)', es: 'Sucesión / Probate' },
+    'FW-001': { en: 'Court Fee Waiver', ru: 'Освобождение от пошлины', uk: 'Звільнення від мита', es: 'Exención de Cuota Judicial' },
+    'LLC-1': { en: 'Form a California LLC', ru: 'Открыть LLC в Калифорнии', uk: 'Відкрити LLC у Каліфорнії', es: 'Formar LLC en California' },
+    'LLC-12': { en: 'Statement of Information (LLC)', ru: 'Statement of Information (LLC)', uk: 'Statement of Information (LLC)', es: 'Declaración de Información (LLC)' },
+    'ARTS-GS': { en: 'Articles of Incorporation', ru: 'Открыть корпорацию', uk: 'Відкрити корпорацію', es: 'Articles of Incorporation' },
+    'FBN': { en: 'Fictitious Business Name (DBA)', ru: 'DBA — вымышленное название', uk: 'DBA — фіктивна назва', es: 'Nombre Ficticio (DBA)' },
+    'SS-4': { en: 'EIN (Employer Identification Number)', ru: 'EIN — налоговый номер бизнеса', uk: 'EIN — податковий номер бізнесу', es: 'EIN' },
+    'OPERATING-AGREEMENT': { en: 'LLC Operating Agreement', ru: 'LLC operating agreement (устав)', uk: 'LLC operating agreement', es: 'Acuerdo Operativo LLC' },
+    'DEMAND-LETTER': { en: 'Pre-suit Demand Letter', ru: 'Досудебная претензия', uk: 'Досудова претензія', es: 'Carta de Demanda Previa' },
+    'EOIR-29': { en: 'Notice of Appeal to BIA', ru: 'Апелляция в BIA', uk: 'Апеляція до BIA', es: 'Apelación al BIA' },
+    'EOIR-42A': { en: 'Cancellation of Removal (LPR)', ru: 'Cancellation of Removal для LPR', uk: 'Cancellation of Removal для LPR', es: 'Cancelación de Remoción (LPR)' },
+    'EOIR-42B': { en: 'Cancellation of Removal (non-LPR)', ru: 'Cancellation of Removal для non-LPR', uk: 'Cancellation of Removal для non-LPR', es: 'Cancelación de Remoción (no-LPR)' }
+  };
+
+  // Per-language sentence templates so the answer feels native, not
+  // machine-translated. Plain text — no HTML — the page renders them.
+  const ANSWER_TEMPLATE: Record<string, string> = {
+    en: 'It sounds like you need <strong>{form}</strong> — {name}. We can prepare it under your direction. Tap Continue to start.',
+    ru: 'Похоже, вам нужна форма <strong>{form}</strong> — {name}. Мы подготовим её по вашему поручению. Жмите «Продолжить», чтобы начать.',
+    uk: 'Схоже, вам потрібна форма <strong>{form}</strong> — {name}. Підготуємо її за вашим дорученням. Натисніть «Продовжити», щоб почати.',
+    es: 'Parece que necesita el formulario <strong>{form}</strong> — {name}. Lo preparamos bajo su dirección. Pulse Continuar para comenzar.'
+  };
+  const LOW_CONFIDENCE_TEMPLATE: Record<string, string> = {
+    en: 'We are not 100% sure which form you need — possibly <strong>{form}</strong> ({name}). Tap Continue to refine, or call us.',
+    ru: 'Не уверены на 100%, какая форма вам нужна — возможно <strong>{form}</strong> ({name}). Жмите «Продолжить», чтобы уточнить, или позвоните.',
+    uk: 'Не впевнені на 100%, яка форма вам потрібна — можливо <strong>{form}</strong> ({name}). Натисніть «Продовжити» або зателефонуйте.',
+    es: 'No estamos seguros 100% de qué formulario necesita — posiblemente <strong>{form}</strong> ({name}). Pulse Continuar para refinar o llámenos.'
+  };
+
   function setResult(html: string, open = true) {
     if (!result) return;
     result.innerHTML = html;
@@ -171,24 +237,39 @@ const t = STRINGS[lang] || STRINGS.en;
     const t = labels[lang] || labels.en;
     setResult(`<p>${t.checking}</p>`);
 
-    try {
-      const response = await fetch(chatEndpoint(), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [
-            {
-              role: 'user',
-              content: query
-            }
-          ]
-        })
-      });
-      if (!response.ok) throw new Error(`chat failed ${response.status}`);
-      const data = await response.json();
-      const answer = data.reply || data.answer || data.message || data.content || t.error;
+    // Primary: our deterministic catalog router (/api/route). 35 multilang
+    // rules cover all major USCIS / EOIR / family / civil / business /
+    // probate forms — runs in <100ms, no AI cost, never times out. We
+    // ALSO kick off the chat call in parallel so we can append an AI
+    // explanation paragraph when it succeeds, but if chat 502s the user
+    // still gets a working answer.
+    const routePromise = fetch(routeEndpoint(query), {
+      headers: { 'Accept': 'application/json' }
+    }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+
+    const chatPromise = fetch(chatEndpoint(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: [{ role: 'user', content: query }] })
+    }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+
+    const routeData = await routePromise;
+    const formCode = String(routeData?.route?.formCode || '').toUpperCase();
+    const confidence = Number(routeData?.route?.confidence || 0);
+    const matched = FORM_NAMES[formCode];
+
+    if (formCode && matched) {
+      const tmpl = confidence >= 0.7 ? ANSWER_TEMPLATE[lang] : LOW_CONFIDENCE_TEMPLATE[lang];
+      const name = matched[lang as 'en' | 'ru' | 'uk' | 'es'] || matched.en;
+      const headline = (tmpl || ANSWER_TEMPLATE.en)
+        .replace('{form}', formCode)
+        .replace('{name}', name);
+
+      // Render the catalog answer immediately, then asynchronously append
+      // the AI elaboration once chat finishes (if it ever does).
       setResult(`
-        <p>${String(answer).replace(/\n/g, '<br>')}</p>
+        <p>${headline}</p>
+        <p id="aiExtra" class="ai-result-extra"></p>
         <div class="ai-result-actions">
           <button type="button" class="dark" data-ai-continue>${t.continue}</button>
           <a href="https://t.me/imverica" target="_blank" rel="noopener">${t.telegram}</a>
@@ -196,9 +277,32 @@ const t = STRINGS[lang] || STRINGS.en;
         </div>
       `);
       result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(query));
-    } catch (_error) {
-      setResult(`<p>${t.error}</p>`);
+
+      const chatData = await chatPromise;
+      const reply = String(chatData?.reply || '').trim();
+      const extra = document.getElementById('aiExtra');
+      if (reply && extra) extra.innerHTML = reply.replace(/\n/g, '<br>');
+      return;
     }
+
+    // Catalog router couldn't identify the form — fall back to chat-only.
+    const chatData = await chatPromise;
+    const answer = String(chatData?.reply || chatData?.answer || '').trim();
+    if (answer) {
+      setResult(`
+        <p>${answer.replace(/\n/g, '<br>')}</p>
+        <div class="ai-result-actions">
+          <button type="button" class="dark" data-ai-continue>${t.continue}</button>
+          <a href="https://t.me/imverica" target="_blank" rel="noopener">${t.telegram}</a>
+          <a href="tel:+19163993992">${t.call}</a>
+        </div>
+      `);
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(query));
+      return;
+    }
+
+    // Both router and chat returned nothing usable — last-resort error.
+    setResult(`<p>${t.error}</p>`);
   }
 
   form?.addEventListener('submit', (event) => {
