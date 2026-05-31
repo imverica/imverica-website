@@ -434,17 +434,37 @@ exports.handler = async function (event) {
     if (messages.length > 40) messages = messages.slice(-40);
   } catch { return { statusCode: 400, body: JSON.stringify({ error: 'Bad request' }) }; }
 
+  // Tries each model in order until Anthropic accepts the request. Lets us
+  // ride out individual model deprecations / typos (e.g. when a dated
+  // suffix moves) without a code change. First entry is the preferred
+  // newest cheap model; the rest are progressively more stable fallbacks.
+  const MODEL_CHAIN = [
+    'claude-haiku-4-5',
+    'claude-3-5-haiku-latest',
+    'claude-3-5-haiku-20241022'
+  ];
+
+  let apiRes = null;
+  let lastErr = '';
+  let usedModel = '';
   try {
-    const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5-20251022', max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
+    for (const model of MODEL_CHAIN) {
+      apiRes = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+        body: JSON.stringify({ model, max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
 
 ${buildRoutingContext(messages)}`, messages })
-    });
-    if (!apiRes.ok) {
-      const t = await apiRes.text();
-      console.error('chat:anthropic', apiRes.status, t);
+      });
+      if (apiRes.ok) { usedModel = model; break; }
+      lastErr = await apiRes.text().catch(() => '');
+      console.warn('chat:anthropic model rejected', model, apiRes.status, lastErr.slice(0, 200));
+      // Only retry on 404 (unknown model) or 400 (bad model). On 401 / 429
+      // / 5xx the issue is unrelated to model name — fail fast.
+      if (![400, 404].includes(apiRes.status)) break;
+    }
+    if (!apiRes || !apiRes.ok) {
+      console.error('chat:anthropic', apiRes && apiRes.status, lastErr);
       // Surface the upstream error text so the homepage's "Continue" button
       // still works even when the AI router can't reply — we route to the
       // catalog-based fallback (/api/route) for the same query in the
@@ -452,7 +472,7 @@ ${buildRoutingContext(messages)}`, messages })
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ reply: '', upstreamStatus: apiRes.status })
+        body: JSON.stringify({ reply: '', upstreamStatus: apiRes ? apiRes.status : 0 })
       };
     }
     const data = await apiRes.json();
