@@ -142,22 +142,47 @@ async function sendOtpEmail(email, code) {
   const key = process.env.RESEND_API_KEY;
   const from = process.env.OTP_FROM_EMAIL || 'Imverica Legal Solutions <login@imverica.com>';
   if (!key) {
-    // No provider configured — caller decides whether to surface the code
-    // (local only) or treat it as a misconfiguration (deployed host).
-    console.log(`[auth] DEV OTP for ${email}: ${code}`);
-    return { sent: false, dev: true };
+    // SECURITY: never log the OTP code to function logs. It used to be
+    // logged in dev mode to help local sign-in without an SMTP relay,
+    // but the same code path could fire on a misconfigured deploy and
+    // expose every sign-in code through Netlify's log dashboard.
+    // Netlify-dev users should set RESEND_API_KEY locally (free tier
+    // is fine) or rely on the OTP they manually craft in the wizard.
+    // Surface the configuration error to the caller; verify-otp path
+    // remains the only place that can confirm a code.
+    console.warn('[auth] sendOtpEmail: RESEND_API_KEY not set — email NOT delivered');
+    return { sent: false, dev: true, error: 'mail-disabled' };
   }
+  // SECURITY: never put the OTP in the subject line. The subject is shown
+  // in every mail-provider dashboard (Resend, gateway logs, ISP relays,
+  // recipient's inbox preview, push notifications on lock screens). The
+  // code MUST live only in the rendered body, where it is gone after the
+  // user reads / deletes it. We also avoid logging the body anywhere.
+  const html =
+    `<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;font-size:15px;color:#1c2c40;max-width:480px;">` +
+    `<p style="margin:0 0 12px;">Use this one-time code to sign in to your Imverica client portal:</p>` +
+    `<div style="font-size:34px;font-weight:700;letter-spacing:8px;color:#0f1c2f;background:#f1f5f9;padding:18px 24px;border-radius:10px;text-align:center;margin:14px 0;font-family:ui-monospace,SFMono-Regular,monospace;">${code}</div>` +
+    `<p style="margin:14px 0;font-size:13px;color:#4a5a6e;">The code expires in 10 minutes and can be used once. If you did not request this, you can ignore this email.</p>` +
+    `<p style="margin:14px 0;font-size:12px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:12px;">Imverica Legal Solutions — California Licensed LDA &amp; Immigration Consultant. Not a law firm; document preparation only.</p>` +
+    `</div>`;
+  const text =
+    `Use this one-time code to sign in to your Imverica client portal:\n\n` +
+    `   ${code}\n\n` +
+    `It expires in 10 minutes and can be used once. If you did not request this, you can ignore this email.\n\n` +
+    `Imverica Legal Solutions — California Licensed LDA & Immigration Consultant. Not a law firm; document preparation only.`;
+
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from,
       to: [email],
-      subject: `${code} is your Imverica sign-in code`,
-      text:
-        `Your Imverica client portal sign-in code is: ${code}\n\n` +
-        `It expires in 10 minutes. If you did not request this, you can ignore this email.\n\n` +
-        `Imverica Legal Solutions — not a law firm; document preparation only.`
+      // Generic subject — does NOT contain the code. Same wording whether
+      // you have 1 or 100 codes in your inbox; only the body reveals the
+      // value.
+      subject: 'Your Imverica sign-in code',
+      html,
+      text
     })
   });
   if (!res.ok) throw new Error(`Resend failed: ${res.status}`);
