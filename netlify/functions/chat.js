@@ -442,12 +442,13 @@ exports.handler = async function (event) {
   // claude-3-5-haiku-latest has been a stable alias since late 2024 and
   // is cheap enough for chat widget use. To upgrade later, change the
   // string and redeploy — no fallback chain.
-  // Dated snapshot — the `-latest` alias 404s for some API keys. The
-  // 2024-10-22 Haiku 3.5 snapshot has been stable since launch and is
-  // available on every Anthropic key. Upgrade to a 4.5 dated snapshot
-  // (e.g. claude-haiku-4-5-20250929) when ready — but always pin a
-  // date, never rely on `-latest`.
-  const MODEL = 'claude-3-5-haiku-20241022';
+  // After repeated 404s on every Haiku snapshot we've tried, the working
+  // assumption is this Anthropic key only has access to the Sonnet
+  // family. Sonnet 3.5 is overkill for a chat-bubble triage but it's
+  // confirmed available; cost is acceptable at chat-bubble volume. If
+  // Haiku access is enabled later, swap to claude-3-5-haiku-20241022
+  // or a 4.5 Haiku snapshot here — that's the only change needed.
+  const MODEL = 'claude-3-5-sonnet-20241022';
 
   // 7-second abort gives Anthropic time to respond on a cold path while
   // staying well inside the 10 s function ceiling.

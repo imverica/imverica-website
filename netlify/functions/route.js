@@ -397,6 +397,91 @@ const PACKAGE_RULES = [
     patterns: [/demand\s+letter|pre-?suit\s+demand|претензи[\wа-яёіїєґА-ЯЁІЇЄҐ]*|досудебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+претензи|досудов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+претенз|carta\s+de\s+demanda|requerimiento\s+previo/i],
     reason: 'Pre-suit demand letter language maps to the demand-letter package.'
   },
+  // ===== High-value scenarios that need routing even without a CA-court
+  //       form code — translations, notary, FOIA, security deposit, breach
+  //       of contract. These resolve to SC-100 (small claims) or a
+  //       service-product code so the wizard still routes the visitor.
+  {
+    id: 'security_deposit',
+    formCode: 'SC-100',
+    service: 'civil',
+    packageForms: ['SC-100', 'DEMAND-LETTER'],
+    confidence: 0.92,
+    patterns: [/security\s+deposit|landlord\s+(kept|didn'?t\s+return|wouldn'?t\s+return)\s+(my\s+)?deposit|deposit\s+(not\s+)?return|вернул\s+депозит|депозит\s+не\s+вернул|dep[oó]sito\s+(de\s+seguridad|no\s+devolvi)/i],
+    reason: 'Unreturned security deposit maps to a demand letter + SC-100 if no response.'
+  },
+  {
+    id: 'breach_of_contract',
+    formCode: 'SC-100',
+    service: 'civil',
+    packageForms: ['SC-100', 'DEMAND-LETTER'],
+    confidence: 0.88,
+    patterns: [/breach\s+of\s+contract|broke\s+(the\s+)?contract|contractor\s+(took|stole|kept|won'?t\s+(finish|complete|return))|paid.*never\s+(finished|delivered|did\s+the\s+work)|нарушени[ея]\s+контракт|нарушени[ея]\s+договор|подрядчик\s+(не\s+(закончил|вернул|сделал))|incumplimiento\s+de\s+contrato/i],
+    reason: 'Breach of contract / contractor dispute → demand letter then SC-100.'
+  },
+  {
+    id: 'translation',
+    formCode: 'TRANSLATION',
+    service: 'translation',
+    packageForms: ['TRANSLATION'],
+    confidence: 0.94,
+    patterns: [/(translat\w+|translation\s+(service|certified|notari[zs]ed))|certifi(ed|cate(d)?)\s+translat|translate\s+(my\s+)?(birth|marriage|divorce|diploma|degree|certificate|passport)|перевод\s+(документ|свидетельств|паспорт|диплом)|нотариальн\w*\s+перевод|переклад\s+(документ|свідоцт|паспорт)|traducci[oó]n\s+(certificada|jurada|de\s+documentos)/i],
+    reason: 'Document translation → translation package.'
+  },
+  {
+    id: 'notary',
+    formCode: 'NOTARY',
+    service: 'notary',
+    packageForms: ['NOTARY'],
+    confidence: 0.92,
+    patterns: [/notar(y|ize|ization|ized)|need\s+(it\s+|to\s+be\s+)?notari[zs]ed|notary\s+(public|service)|нотариально\s+заверить|нотариальн\w*\s+(заверени|услуг)|у\s+нотариус|нотаріальн\w*|notar(io|izar|izaci[oó]n)/i],
+    reason: 'Notary request → notary service package.'
+  },
+  {
+    id: 'foia',
+    formCode: 'G-639',
+    service: 'immigration',
+    packageForms: ['G-639'],
+    confidence: 0.93,
+    patterns: [/foia|g-?639|freedom\s+of\s+information|uscis\s+(file|records|a-?file|alien\s+file)|copy\s+of\s+(my\s+)?(uscis|immigration)\s+(file|records)|мой\s+иммиграционн\w*\s+файл|записи\s+(uscis|иммиграц)|solicitar\s+(mi\s+)?archivo\s+uscis/i],
+    reason: 'FOIA / USCIS records request → Form G-639.'
+  },
+  {
+    id: 'name_change_court',
+    formCode: 'NC-100',
+    service: 'civil',
+    packageForms: ['NC-100', 'NC-110', 'NC-120', 'NC-130'],
+    confidence: 0.93,
+    patterns: [/name\s+chang|change\s+my\s+(legal\s+)?name|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили)|cambio\s+de\s+nombre|cambiar\s+(mi\s+)?nombre/i],
+    reason: 'Legal name change → NC-100 series (CA).'
+  },
+  {
+    id: 'name_change_after_marriage',
+    formCode: 'FL-100',
+    service: 'family',
+    packageForms: ['FL-100'],
+    confidence: 0.7,
+    patterns: [/(got|after)\s+(married|marriage).*change\s+(my\s+)?(last\s+)?name|change\s+(my\s+)?(last\s+)?name\s+after\s+(marriage|wedding)|сменить\s+фамили\w*\s+после\s+(брак|свадьб)|cambiar\s+(mi\s+)?apellido\s+(despu[eé]s\s+del?\s+)?matrimonio/i],
+    reason: 'Surname change after marriage usually happens through the marriage certificate; only flag here if explicit court order needed.'
+  },
+  {
+    id: 'dmv',
+    formCode: 'DMV',
+    service: 'dmv',
+    packageForms: ['DMV'],
+    confidence: 0.93,
+    patterns: [/dmv|driver(\'?s)?\s+licen[cs]e|lost\s+(my\s+)?licen[cs]e|car\s+title|vehicle\s+title|transfer\s+(the\s+)?title|smog\s+check|registration\s+(of\s+)?(car|vehicle)|водительск\w*\s+(удостоверени|прав)|потер\w*\s+прав|техосмотр|регистраци\w*\s+автомобил|licencia\s+de\s+conducir|registro\s+vehicular/i],
+    reason: 'DMV-related (license / title) → CA DMV form packet.'
+  },
+  {
+    id: 'passport',
+    formCode: 'DS-11',
+    service: 'passport',
+    packageForms: ['DS-11', 'DS-82'],
+    confidence: 0.94,
+    patterns: [/passport|ds-?11|ds-?82|u\.?\s?s\.?\s+passport|renew\s+(my\s+)?passport|expired\s+passport|passport\s+for\s+(my\s+)?child|загранпаспорт|паспорт\s+сша|обновить\s+паспорт|renovar\s+(mi\s+)?pasaporte|pasaporte\s+(americano|de\s+ee)/i],
+    reason: 'US Passport request → DS-11 (new) or DS-82 (renewal).'
+  },
   {
     id: 'wage_garnishment',
     formCode: 'WG-001',
