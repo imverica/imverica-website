@@ -442,7 +442,12 @@ exports.handler = async function (event) {
   // claude-3-5-haiku-latest has been a stable alias since late 2024 and
   // is cheap enough for chat widget use. To upgrade later, change the
   // string and redeploy — no fallback chain.
-  const MODEL = 'claude-3-5-haiku-latest';
+  // Dated snapshot — the `-latest` alias 404s for some API keys. The
+  // 2024-10-22 Haiku 3.5 snapshot has been stable since launch and is
+  // available on every Anthropic key. Upgrade to a 4.5 dated snapshot
+  // (e.g. claude-haiku-4-5-20250929) when ready — but always pin a
+  // date, never rely on `-latest`.
+  const MODEL = 'claude-3-5-haiku-20241022';
 
   // 7-second abort gives Anthropic time to respond on a cold path while
   // staying well inside the 10 s function ceiling.
