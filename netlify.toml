@@ -93,6 +93,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/intake-progress"
+  to = "/.netlify/functions/intake-progress"
+  status = 200
+
+[[redirects]]
   from = "/api/address-suggest"
   to = "/.netlify/functions/address-suggest"
   status = 200

@@ -198,6 +198,35 @@ exports.handler = async function (event) {
     return json(200, { ok: true, orderId: 'silent' });
   }
 
+  // Cloudflare Turnstile — optional, only enforced when the operator has
+  // configured both keys in Netlify env. To enable:
+  //   1. Create a Turnstile site at https://dash.cloudflare.com/?to=/:account/turnstile
+  //   2. Add the site key to PUBLIC_TURNSTILE_SITE_KEY (rendered into the
+  //      modal at build time) and the secret to TURNSTILE_SECRET_KEY here.
+  //   3. Redeploy. From that point we reject submissions without a valid
+  //      Turnstile token.
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    const token = String(body.turnstileToken || '').trim();
+    if (!token) return json(400, { ok: false, error: 'CAPTCHA required.' });
+    try {
+      const verify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `secret=${encodeURIComponent(process.env.TURNSTILE_SECRET_KEY)}&response=${encodeURIComponent(token)}`
+      });
+      const result = await verify.json();
+      if (!result || !result.success) {
+        console.warn('[quick-intake] turnstile rejected', result && result['error-codes']);
+        return json(400, { ok: false, error: 'CAPTCHA verification failed. Please try again.' });
+      }
+    } catch (e) {
+      console.warn('[quick-intake] turnstile verify error', e);
+      // Fail-open here: rather than block a legitimate user because
+      // Cloudflare is unreachable, let the request through. Origin
+      // guard + IP throttle + honeypot still apply.
+    }
+  }
+
   // Required field validation.
   const name = clean(body.name, MAX_NAME);
   const email = clean(body.email, 180).toLowerCase();

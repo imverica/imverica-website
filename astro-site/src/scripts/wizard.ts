@@ -69,26 +69,106 @@ export function initIntakeWizard(): void {
   var INTAKE_PROGRESS_KEY = 'imvericaIntakeProgressV1';
   var addressSuggestTimer = null;
 
+  // Server-side auto-save state. Once the wizard knows which orderId it
+  // belongs to (set after the first submit creates the order in the
+  // cabinet), every progress change debounces a POST to the server so
+  // the client can resume from any device after any timeout / sign-out.
+  // localStorage is still the first-line buffer for unauthenticated
+  // visitors and offline edits — the two layers complement each other.
+  var serverSaveTimer: ReturnType<typeof setTimeout> | null = null;
+  var lastServerVersion = 0;
+  var serverSaveInflight = false;
+
+  function buildProgressSnapshot() {
+    return {
+      updatedAt: new Date().toISOString(),
+      lang: state.lang,
+      langManual: state.langManual,
+      step: state.step,
+      service: state.service,
+      formCode: state.formCode,
+      situation: state.situation,
+      routeResult: state.routeResult,
+      flowSchema: state.flowSchema,
+      formAnswers: state.formAnswers,
+      officialForm: state.officialForm,
+      i765: state.i765,
+      contact: state.contact,
+      accountMode: state.accountMode
+    };
+  }
+
+  async function pushProgressToServer() {
+    if (!state.orderId) return;          // no order yet — local only
+    if (state.completed) return;          // finished, don't bother saving more
+    if (serverSaveInflight) return;       // back-pressure — last write still going
+    serverSaveInflight = true;
+    try {
+      var snapshot = buildProgressSnapshot();
+      var res = await fetch('/.netlify/functions/intake-progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ orderId: state.orderId, state: snapshot, version: lastServerVersion })
+      });
+      if (res.ok) {
+        var data = await res.json().catch(function () { return {}; });
+        if (data && data.version) lastServerVersion = data.version;
+      }
+    } catch (e) {
+      // Network failure → next debounced tick retries.
+    } finally {
+      serverSaveInflight = false;
+    }
+  }
+
+  function scheduleServerSave() {
+    if (!state.orderId) return;
+    if (serverSaveTimer) clearTimeout(serverSaveTimer);
+    serverSaveTimer = setTimeout(pushProgressToServer, 2500);
+  }
+
+  // Restore wizard state from the server for an existing order. Called
+  // when the cabinet opens the wizard with ?orderId=… or via the global
+  // window.openIntakeWizardForOrder(orderId) hook.
+  async function loadProgressFromServer(orderId: string) {
+    if (!orderId) return false;
+    try {
+      var res = await fetch('/.netlify/functions/intake-progress?orderId=' + encodeURIComponent(orderId), {
+        credentials: 'include',
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) return false;
+      var data = await res.json();
+      if (!data || !data.ok || !data.progress || !data.progress.state) return false;
+      var saved = data.progress.state;
+      state.orderId = orderId;
+      lastServerVersion = data.progress.version || 0;
+      state.lang = saved.lang || state.lang;
+      state.langManual = Boolean(saved.langManual);
+      state.step = Number.isFinite(Number(saved.step)) ? Number(saved.step) : state.step;
+      state.service = saved.service || '';
+      state.formCode = saved.formCode || '';
+      state.situation = saved.situation || '';
+      state.routeResult = saved.routeResult || null;
+      state.flowSchema = saved.flowSchema || null;
+      state.formAnswers = saved.formAnswers || {};
+      state.officialForm = saved.officialForm || null;
+      state.i765 = saved.i765 || state.i765;
+      state.contact = saved.contact || state.contact;
+      state.accountMode = saved.accountMode || 'authenticated';
+      return true;
+    } catch (e) { return false; }
+  }
+
   function persistIntakeProgress() {
     if (!modal.classList.contains('open') || state.completed) return;
     try {
-      localStorage.setItem(INTAKE_PROGRESS_KEY, JSON.stringify({
-        updatedAt: new Date().toISOString(),
-        lang: state.lang,
-        langManual: state.langManual,
-        step: state.step,
-        service: state.service,
-        formCode: state.formCode,
-        situation: state.situation,
-        routeResult: state.routeResult,
-        flowSchema: state.flowSchema,
-        formAnswers: state.formAnswers,
-        officialForm: state.officialForm,
-        i765: state.i765,
-        contact: state.contact,
-        accountMode: state.accountMode
-      }));
+      localStorage.setItem(INTAKE_PROGRESS_KEY, JSON.stringify(buildProgressSnapshot()));
     } catch (err) {}
+    // Server-side sync runs in parallel; the debounce keeps us under the
+    // /api/intake-progress per-IP throttle (60/min) even during fast typing.
+    scheduleServerSave();
   }
 
   function restoreIntakeProgress() {
@@ -2426,6 +2506,26 @@ export function initIntakeWizard(): void {
         render();
       })();
     }
+  };
+
+  // Cabinet entrypoint — opens the long wizard pointing at a specific
+  // existing order. Pulls the server-side progress (state, current step,
+  // answers) so the client can resume exactly where they left off, even
+  // after sign-out, browser change, or 24-hour timeout.
+  (window as Window & { openIntakeWizardForOrder?: (orderId: string) => Promise<boolean> }).openIntakeWizardForOrder = async function (orderId: string) {
+    var ok = await loadProgressFromServer(orderId);
+    if (!ok) {
+      // No prior progress — open a fresh wizard tied to this orderId so
+      // future edits sync back to /api/intake-progress.
+      window.openIntakeModal();
+      state.orderId = orderId;
+      state.accountMode = 'authenticated';
+    } else {
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      render();
+    }
+    return true;
   };
 
   window.closeIntakeModal = function () {

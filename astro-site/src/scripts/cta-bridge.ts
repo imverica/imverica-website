@@ -77,6 +77,28 @@ export function installCtaBridge(): void {
     const { prefill, mode } = resolveCta(window.location.hash);
     tryOpenWithRetry(prefill, mode);
   }
+
+  // Cabinet "Continue intake" CTA passes the order id via ?continue=…
+  // when the long wizard bundle isn't loaded on /account.html. We pick
+  // it up on the homepage, open the wizard pre-loaded with that order's
+  // server-saved progress, and clean the query string so a refresh does
+  // not re-trigger the popup.
+  const params = new URLSearchParams(window.location.search);
+  const continueOrder = params.get('continue');
+  if (continueOrder) {
+    const interval = setInterval(() => {
+      const w = window as Window & { openIntakeWizardForOrder?: (id: string) => Promise<boolean> };
+      if (typeof w.openIntakeWizardForOrder === 'function') {
+        clearInterval(interval);
+        w.openIntakeWizardForOrder(continueOrder);
+        // Strip the param so reload doesn't re-trigger.
+        params.delete('continue');
+        const clean = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+        window.history.replaceState({}, '', clean);
+      }
+    }, 120);
+    setTimeout(() => clearInterval(interval), 6000);
+  }
 }
 
 if (typeof document !== 'undefined') {

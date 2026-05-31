@@ -154,6 +154,10 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .doc-file .rm:hover{color:#c0392b;}
 .doc-add{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--navy);cursor:pointer;font-weight:500;border:1px dashed var(--border);border-radius:3px;padding:9px 14px;background:#fff;}
 .doc-add:hover{border-color:var(--navy);background:#f0f4f8;}
+.order-actions{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
+.btn-continue{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#fff;background:var(--navy);border:none;border-radius:7px;padding:10px 16px;cursor:pointer;transition:background .15s;}
+.btn-continue:hover{background:var(--navy-light);}
+.btn-continue::before{content:'▶';font-size:11px;}
 .doc-msg{font-size:12px;margin-top:6px;}
 .doc-msg.err{color:#c0392b;}
 .doc-msg.ok{color:#1a5a3a;}
@@ -676,6 +680,7 @@ const STRINGS = {
     docsYourLabel: 'Your documents',
     docAttach: '+ Attach a document',
     docRemove: 'Remove',
+    continueIntake: 'Continue intake (auto-saved)',
     defaultService: 'Document preparation request',
     nudgeNoFiles: 'Start a New request first — files attach to an active request.',
     relJustNow: 'just now', relMin: 'min ago', relHour: 'hour', relHours: 'hours', relAgo: 'ago', relDay: 'day', relDays: 'days'
@@ -765,6 +770,7 @@ const STRINGS = {
     docsYourLabel: 'Ваши документы',
     docAttach: '+ Прикрепить документ',
     docRemove: 'Удалить',
+    continueIntake: 'Продолжить заполнение (автосохранение)',
     defaultService: 'Запрос на подготовку документов',
     nudgeNoFiles: 'Сначала создайте новую заявку — файлы прикрепляются к активной заявке.',
     relJustNow: 'только что', relMin: 'мин назад', relHour: 'час', relHours: 'час.', relAgo: 'назад', relDay: 'день', relDays: 'дн.'
@@ -854,6 +860,7 @@ const STRINGS = {
     docsYourLabel: 'Ваші документи',
     docAttach: '+ Прикріпити документ',
     docRemove: 'Видалити',
+    continueIntake: 'Продовжити заповнення (автозбереження)',
     defaultService: 'Запит на підготовку документів',
     nudgeNoFiles: 'Спершу створіть нову заявку — файли прикріплюються до активної заявки.',
     relJustNow: 'щойно', relMin: 'хв тому', relHour: 'год', relHours: 'год', relAgo: 'тому', relDay: 'день', relDays: 'дн.'
@@ -943,6 +950,7 @@ const STRINGS = {
     docsYourLabel: 'Sus documentos',
     docAttach: '+ Adjuntar un documento',
     docRemove: 'Eliminar',
+    continueIntake: 'Continuar (guardado automático)',
     defaultService: 'Solicitud de preparación de documentos',
     nudgeNoFiles: 'Inicie una Nueva solicitud primero — los archivos se adjuntan a una solicitud activa.',
     relJustNow: 'ahora', relMin: 'min atrás', relHour: 'hora', relHours: 'horas', relAgo: 'atrás', relDay: 'día', relDays: 'días'
@@ -1094,6 +1102,34 @@ function renderOrders(orders){
     const dmsg=document.createElement('div'); dmsg.className='doc-msg';
     docs.appendChild(pwrap); docs.appendChild(dlabel); docs.appendChild(dlist); docs.appendChild(add); docs.appendChild(input); docs.appendChild(dmsg);
     card.appendChild(docs);
+
+    // "Continue intake" — opens the long wizard pre-loaded with whatever
+    // server-saved progress exists for this order. Auto-save kicks in
+    // every 2.5s of inactivity from there, so the client can step away
+    // without losing answers. The button is hidden if the order is
+    // already 'prepared' or 'ready' (no point in continuing intake then).
+    if (['received','new','in_review','intake','draft'].includes(String(o.status||'').toLowerCase()) ||
+        !['prepared','ready','delivered','closed'].includes(String(o.status||'').toLowerCase())) {
+      const cont=document.createElement('div'); cont.className='order-actions';
+      const cbtn=document.createElement('button'); cbtn.className='btn-continue'; cbtn.type='button';
+      cbtn.textContent = T.continueIntake || 'Continue intake (auto-saved)';
+      cbtn.onclick = () => {
+        const opener = (window).openIntakeWizardForOrder;
+        if (typeof opener === 'function') {
+          opener(o.id);
+        } else if (typeof (window).openIntakeModal === 'function') {
+          // Fallback: long wizard bundle isn't loaded on /account.html (it
+          // lives in the Astro bundle). Send the client to the homepage
+          // with the orderId so the wizard there picks it up.
+          location.href = '/?continue=' + encodeURIComponent(o.id);
+        } else {
+          location.href = '/?continue=' + encodeURIComponent(o.id);
+        }
+      };
+      cont.appendChild(cbtn);
+      card.appendChild(cont);
+    }
+
     box.appendChild(card);
     loadFiles(o.id);
   });

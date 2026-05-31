@@ -8,16 +8,25 @@
  * auto-save against the order record.
  *
  * Fields: name, email, phone (optional), what-do-you-need, attach up to
- * 5 files (PDF/JPG/PNG/DOCX, ≤4 MB each, ≤22 MB total), submit. POSTs
- * JSON with base64-encoded files to /api/quick-intake. Backend emails
+ * 5 files (PDF/JPG/PNG/DOCX, ≤4 MB total), submit. POSTs JSON with
+ * base64-encoded files to /api/quick-intake. Backend emails
  * info@imverica.com + imverica@gmail.com immediately and stores the
  * order in the same blob store the admin console reads.
  *
- * Anti-abuse: honeypot field (hidden via CSS); IP throttle on the
- * backend (3 / 10 min / IP). CAPTCHA can be layered on later via
- * Cloudflare Turnstile.
+ * Anti-abuse layers:
+ *   - Honeypot (always on) — visible field name "website" hidden by CSS;
+ *     fills are silently dropped.
+ *   - Cloudflare Turnstile (optional) — when PUBLIC_TURNSTILE_SITE_KEY
+ *     is set at build time AND TURNSTILE_SECRET_KEY is set on the
+ *     backend, the widget renders and the backend verifies tokens.
+ *   - Backend IP throttle (always on, 3 / 10 min / IP).
  */
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 ---
+
+{TURNSTILE_SITE_KEY && (
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+)}
 
 <div id="quickIntakeBackdrop" class="qi-backdrop" hidden role="presentation"></div>
 <div id="quickIntakeModal" class="qi-modal" hidden role="dialog" aria-modal="true" aria-labelledby="qiTitle">
@@ -75,6 +84,13 @@
          so the owner sees what we predicted on the original screen. -->
     <input type="hidden" id="qiFormCode" name="formCode" />
     <input type="hidden" id="qiLanguage" name="language" />
+
+    {TURNSTILE_SITE_KEY && (
+      <div class="qi-row">
+        <div class="cf-turnstile" id="qiTurnstile" data-sitekey={TURNSTILE_SITE_KEY} data-callback="onTurnstileToken" data-theme="light" data-size="normal"></div>
+        <input type="hidden" id="qiTurnstileToken" name="turnstileToken" />
+      </div>
+    )}
 
     <div class="qi-msg" id="qiMsg" hidden></div>
 
@@ -435,6 +451,14 @@
   // having to import this script.
   (window as Window & { openIntakeModal?: (q?: string, hints?: { formCode?: string }) => void }).openIntakeModal = openModal;
 
+  // Cloudflare Turnstile callback — when the widget verifies the user it
+  // calls this global hook with the token. We stash it in the hidden
+  // input so the submit handler can include it.
+  (window as Window & { onTurnstileToken?: (token: string) => void }).onTurnstileToken = (token: string) => {
+    const el = document.getElementById('qiTurnstileToken') as HTMLInputElement | null;
+    if (el) el.value = token;
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     const close = () => closeModal();
     document.getElementById('qiClose')?.addEventListener('click', close);
@@ -492,13 +516,18 @@
         return;
       }
 
+      // Cloudflare Turnstile token (only present when the operator has
+      // configured PUBLIC_TURNSTILE_SITE_KEY at build time).
+      const turnstileTokenEl = document.getElementById('qiTurnstileToken') as HTMLInputElement | null;
+      const turnstileToken = turnstileTokenEl ? turnstileTokenEl.value : '';
+
       try {
         const res = await fetch('/.netlify/functions/quick-intake', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name, email, phone, situation, formCode, language, files,
-            website
+            website, turnstileToken
           })
         });
         const data = await res.json().catch(() => ({ ok: false }));
