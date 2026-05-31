@@ -434,49 +434,57 @@ exports.handler = async function (event) {
     if (messages.length > 40) messages = messages.slice(-40);
   } catch { return { statusCode: 400, body: JSON.stringify({ error: 'Bad request' }) }; }
 
-  // Tries each model in order until Anthropic accepts the request. Lets us
-  // ride out individual model deprecations / typos (e.g. when a dated
-  // suffix moves) without a code change. First entry is the preferred
-  // newest cheap model; the rest are progressively more stable fallbacks.
-  const MODEL_CHAIN = [
-    'claude-haiku-4-5',
-    'claude-3-5-haiku-latest',
-    'claude-3-5-haiku-20241022'
-  ];
+  // Use a single, known-stable model. The previous "try a chain of names"
+  // approach could rack up 20+ seconds across three sequential Anthropic
+  // calls and trip Netlify's 10 s function timeout — manifesting to the
+  // client as a Cloudflare 502.
+  //
+  // claude-3-5-haiku-latest has been a stable alias since late 2024 and
+  // is cheap enough for chat widget use. To upgrade later, change the
+  // string and redeploy — no fallback chain.
+  const MODEL = 'claude-3-5-haiku-latest';
+
+  // 7-second abort gives Anthropic time to respond on a cold path while
+  // staying well inside the 10 s function ceiling.
+  const ac = new AbortController();
+  const timeoutId = setTimeout(() => ac.abort(), 7000);
 
   let apiRes = null;
-  let lastErr = '';
-  let usedModel = '';
   try {
-    for (const model of MODEL_CHAIN) {
-      apiRes = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model, max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
+    apiRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+      signal: ac.signal,
+      body: JSON.stringify({ model: MODEL, max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
 
 ${buildRoutingContext(messages)}`, messages })
-      });
-      if (apiRes.ok) { usedModel = model; break; }
-      lastErr = await apiRes.text().catch(() => '');
-      console.warn('chat:anthropic model rejected', model, apiRes.status, lastErr.slice(0, 200));
-      // Only retry on 404 (unknown model) or 400 (bad model). On 401 / 429
-      // / 5xx the issue is unrelated to model name — fail fast.
-      if (![400, 404].includes(apiRes.status)) break;
-    }
-    if (!apiRes || !apiRes.ok) {
-      console.error('chat:anthropic', apiRes && apiRes.status, lastErr);
-      // Surface the upstream error text so the homepage's "Continue" button
-      // still works even when the AI router can't reply — we route to the
-      // catalog-based fallback (/api/route) for the same query in the
-      // browser. Returning 200 with reply='' lets the client decide.
+    });
+    clearTimeout(timeoutId);
+    if (!apiRes.ok) {
+      const t = await apiRes.text().catch(() => '');
+      console.error('chat:anthropic', apiRes.status, t.slice(0, 300));
+      // Soft-fail: return 200 with empty reply so the homepage falls
+      // back to the catalog router answer and the chat bubble can show
+      // a friendly "try again or call us" message instead of breaking.
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ reply: '', upstreamStatus: apiRes ? apiRes.status : 0 })
+        body: JSON.stringify({ reply: '', upstreamStatus: apiRes.status })
       };
     }
     const data = await apiRes.json();
     const reply = data.content?.[0]?.text || '';
     return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ reply }) };
-  } catch (err) { console.error(err); return { statusCode: 500, body: JSON.stringify({ error: 'Internal error' }) }; }
+  } catch (err) {
+    // AbortError when our 7s timeout fires; ENETUNREACH / DNS issues if
+    // Anthropic is unreachable. Either way — soft-fail to 200 so the chat
+    // widget shows a friendly fallback instead of Cloudflare's raw 502.
+    try { clearTimeout(timeoutId); } catch (e) {}
+    console.error('chat:fetch-error', err && (err.name + ': ' + (err.message || '')));
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ reply: '', upstreamStatus: 0, error: err && err.name === 'AbortError' ? 'timeout' : 'network' })
+    };
+  }
 };
