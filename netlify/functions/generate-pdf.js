@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const { incrementalFillPdf } = require("./lib/pdf-incremental-fill");
+const { originGuard, throttleOrReject } = require("./lib/abuse-guard");
 
 function normalizeFormCode(value) {
   return String(value || "")
@@ -97,6 +98,17 @@ exports.handler = async function(event) {
         body: "Method Not Allowed"
       };
     }
+
+    // PDF rendering = expensive (CPU + memory + compute minutes burn).
+    // Public endpoint, same abuse-guard pattern as /api/pdf-draft.
+    const originReject = originGuard(event);
+    if (originReject) return originReject;
+    const throttleReject = await throttleOrReject(event, {
+      action: 'generate-pdf',
+      limit: 25,
+      windowSec: 300
+    });
+    if (throttleReject) return throttleReject;
 
     const payload = JSON.parse(event.body || "{}");
     const formCode = normalizeFormCode(payload.formType || payload.formCode || payload.code);

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { cachedFallbackBody, refreshCachedFormIfNeeded } = require('./lib/form-cache');
+const { throttleOrReject } = require('./lib/abuse-guard');
 
 const COURTS_BASE = 'https://www.courts.ca.gov';
 const SELF_HELP_BASE = 'https://selfhelp.courts.ca.gov';
@@ -189,6 +190,17 @@ async function directPdfUrl(code) {
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
   if (event.httpMethod !== 'GET') return json(405, { error: 'Method not allowed' });
+
+  // This endpoint proxies courts.ca.gov / selfhelp.courts.ca.gov — if
+  // flooded, we'd get our Netlify IP rate-limited by them (locking out
+  // legitimate users). Per-IP throttle stops a single attacker from
+  // chewing through our quota. 40 / 5min is generous for normal use.
+  const throttleReject = await throttleOrReject(event, {
+    action: 'ca-form-proxy',
+    limit: 40,
+    windowSec: 300
+  });
+  if (throttleReject) return { ...throttleReject, headers: { ...CORS_HEADERS, ...throttleReject.headers } };
 
   const code = normalizeCode(event.queryStringParameters?.code);
   if (!/^[A-Z]{1,5}(?:-[A-Z0-9]{1,5}){1,3}(?:\([A-Z0-9]{1,4}\))?$/.test(code)) {

@@ -173,7 +173,7 @@ function sessionCookie(token, event, { clear = false } = {}) {
   const secure = isLocalHost(event) ? '' : ' Secure;';
   const maxAge = clear ? 0 : Math.floor(SESSION_TTL_MS / 1000);
   const value = clear ? '' : token;
-  return `imv_session=${value}; HttpOnly;${secure} SameSite=Lax; Path=/; Max-Age=${maxAge}`;
+  return `imv_session=${value}; HttpOnly;${secure} SameSite=Strict; Path=/; Max-Age=${maxAge}`;
 }
 
 // ----- pre-2FA bridge cookie -----
@@ -206,7 +206,7 @@ function pre2faCookie(token, event, { clear = false } = {}) {
   const secure = isLocalHost(event) ? '' : ' Secure;';
   const maxAge = clear ? 0 : Math.floor(PRE2FA_TTL_MS / 1000);
   const value = clear ? '' : token;
-  return `imv_pre2fa=${value}; HttpOnly;${secure} SameSite=Lax; Path=/; Max-Age=${maxAge}`;
+  return `imv_pre2fa=${value}; HttpOnly;${secure} SameSite=Strict; Path=/; Max-Age=${maxAge}`;
 }
 function parseCookieHeader(header, name) {
   for (const part of String(header || '').split(';')) {

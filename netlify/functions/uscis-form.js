@@ -1,4 +1,5 @@
 const { cachedFallbackBody, refreshCachedFormIfNeeded } = require('./lib/form-cache');
+const { throttleOrReject } = require('./lib/abuse-guard');
 
 const USCIS_BASE = 'https://www.uscis.gov';
 
@@ -175,6 +176,14 @@ function extractTitle(html, code) {
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
   if (event.httpMethod !== 'GET') return json(405, { error: 'Method not allowed' });
+
+  // Proxies uscis.gov — same IP-throttle reasoning as ca-form.js.
+  const throttleReject = await throttleOrReject(event, {
+    action: 'uscis-form-proxy',
+    limit: 40,
+    windowSec: 300
+  });
+  if (throttleReject) return { ...throttleReject, headers: { ...CORS_HEADERS, ...throttleReject.headers } };
 
   const code = normalizeCode(event.queryStringParameters?.code);
   if (!/^[A-Z]{1,4}-[0-9A-Z]+(?: SUPPLEMENT(?: [A-Z])?)?$/.test(code)) {

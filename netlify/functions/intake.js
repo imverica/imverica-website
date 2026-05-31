@@ -107,7 +107,12 @@ function isValidEmail(value) {
 
 function makeOrderId() {
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const suffix = crypto.randomBytes(4).toString('hex').toUpperCase();
+  // 128 bits of randomness (16 bytes → 32 hex chars). Previously 32 bits
+  // (8 hex). The orderId is paired with an ownsOrder() check on every
+  // access, so enumeration was already a dead end — but bumping entropy
+  // closes the theoretical guessing window AND makes IDs more durable
+  // when one day used as URL slugs / share links.
+  const suffix = crypto.randomBytes(16).toString('hex').toUpperCase();
   return `IMV-${date}-${suffix}`;
 }
 

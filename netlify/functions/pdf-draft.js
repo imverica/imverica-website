@@ -4,6 +4,7 @@ const path = require('path');
 const { incrementalFillPdf } = require('./lib/pdf-incremental-fill');
 const { i765FieldValues } = require('./lib/i765-pdf-map');
 const { i485FieldValues } = require('./lib/i485-pdf-map');
+const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 
 // Auto-generated maps — use require() and pick the single exported function
 function req(file) {
@@ -168,6 +169,20 @@ function validateMinimumPayload(body) {
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
+
+  // PDF rendering is expensive (CPU + compute minutes). The endpoint is
+  // public (no session required — intake wizard uses it before signup).
+  // Two-layer guard: origin (catches scripted floods that don't forge
+  // headers) + per-IP throttle (catches the rest). 25 / 5min / IP is
+  // enough for a normal user iterating on a draft across 3-4 forms.
+  const originReject = originGuard(event);
+  if (originReject) return { ...originReject, headers: { ...CORS_HEADERS, ...originReject.headers } };
+  const throttleReject = await throttleOrReject(event, {
+    action: 'pdf-draft',
+    limit: 25,
+    windowSec: 300
+  });
+  if (throttleReject) return { ...throttleReject, headers: { ...CORS_HEADERS, ...throttleReject.headers } };
 
   if (Buffer.byteLength(event.body || '', 'utf8') > MAX_BODY_BYTES) {
     return json(413, { ok: false, error: 'Request too large' });
