@@ -34,7 +34,7 @@
 const crypto = require('crypto');
 const { encryptRecord, emailHash } = require('./lib/crypto');
 const { validateUpload } = require('./lib/file-validator');
-const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
+const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 const { getStore } = require('@netlify/blobs');
 
 const CORS = {
@@ -166,6 +166,7 @@ function intakesStore() {
 }
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
 

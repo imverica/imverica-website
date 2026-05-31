@@ -17,7 +17,13 @@
  * fail closed (returning a 429/403) and surface clear error messages.
  */
 
-const { getStore } = require('@netlify/blobs');
+const blobsPkg = require('@netlify/blobs');
+const { getStore } = blobsPkg;
+// connectLambda was introduced in @netlify/blobs v6 and is REQUIRED in v8+
+// for any function-context blob access. Without it, getStore throws
+// MissingBlobsEnvironmentError on every call. Call this at the start of
+// any throttle / blob operation; it's idempotent across invocations.
+const connectLambda = blobsPkg.connectLambda || (() => {});
 
 // ---------- Origin / Referer check ----------
 
@@ -143,6 +149,11 @@ async function ipThrottle(event, opts) {
     return { allowed: true, retryAfter: 0 };
   }
 
+  // Wire up @netlify/blobs to the Lambda context. Without this, getStore
+  // throws MissingBlobsEnvironmentError on every invocation. Safe to
+  // call repeatedly; the package handles the no-op.
+  try { connectLambda(event); } catch (e) { /* package handles or absent */ }
+
   const store = throttleStore();
   const key = bucketKey(action, ip);
   const now = Date.now();
@@ -197,4 +208,14 @@ async function throttleOrReject(event, opts) {
   };
 }
 
-module.exports = { originGuard, ipThrottle, throttleOrReject, clientIp };
+/**
+ * Wire up @netlify/blobs for the current Lambda invocation. Functions that
+ * call getStore() directly (not through this module's throttle helpers)
+ * MUST call this once at the top of their handler, before any blob op,
+ * or they'll get MissingBlobsEnvironmentError on every request.
+ */
+function ensureBlobs(event) {
+  try { connectLambda(event); } catch (e) { /* no-op when absent */ }
+}
+
+module.exports = { originGuard, ipThrottle, throttleOrReject, clientIp, ensureBlobs };

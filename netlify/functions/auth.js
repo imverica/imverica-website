@@ -21,7 +21,7 @@
 const crypto = require('crypto');
 const { generateSecret, verifyTOTP, otpauthURL, generateRecoveryCodes, hashRecoveryCode } = require('./lib/totp');
 const { readProfile, updateProfile } = require('./lib/profile-store');
-const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
+const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 
 // Pre-2FA cookie — short-lived intermediate state after email-OTP passes
 // but before TOTP is verified. Holds only the email so verify-totp knows
@@ -258,6 +258,7 @@ function verifyExistingSession(event) {
 }
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
 

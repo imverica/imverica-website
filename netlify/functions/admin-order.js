@@ -10,6 +10,7 @@
  */
 
 const os = require('os');
+const { ensureBlobs } = require('./lib/abuse-guard');
 const path = require('path');
 const fs = require('fs/promises');
 
@@ -50,6 +51,7 @@ async function writeOrder(store, id, record) {
 }
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
   if (!isAdmin(event)) return json(401, { ok: false, error: 'Unauthorized' });

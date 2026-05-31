@@ -22,7 +22,7 @@
 
 const crypto = require('crypto');
 const { getStore } = require('@netlify/blobs');
-const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
+const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 const { encryptString, decryptString, emailHash } = require('./lib/crypto');
 
 const CORS = {
@@ -105,6 +105,7 @@ async function sessionOwnsOrder(session, orderId, event) {
 }
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
 
   // Origin guard for state-changing verbs only (GET is safe).

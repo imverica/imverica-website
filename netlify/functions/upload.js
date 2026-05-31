@@ -17,6 +17,7 @@
  */
 
 const crypto = require('crypto');
+const { ensureBlobs } = require('./lib/abuse-guard');
 const os = require('os');
 const path = require('path');
 const fs = require('fs/promises');
@@ -257,6 +258,7 @@ async function loadOrderRecord(orderId, event) {
 function extOf(name) { return (String(name).split('.').pop() || '').toLowerCase(); }
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
 
   const session = verifySession(parseCookie(event.headers?.cookie || event.headers?.Cookie, 'imv_session'), event);

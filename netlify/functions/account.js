@@ -11,6 +11,7 @@
  */
 
 const crypto = require('crypto');
+const { ensureBlobs } = require('./lib/abuse-guard');
 const os = require('os');
 const path = require('path');
 const fs = require('fs/promises');
@@ -134,6 +135,7 @@ function summarize(record) {
 }
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
   if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
 

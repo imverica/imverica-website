@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 const os = require('os');
 const path = require('path');
 const { encryptRecord, decryptRecord, emailHash } = require('./lib/crypto');
-const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
+const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 
 /**
  * PII fields encrypted at rest. `id`, `status`, `createdAt`, `service`
@@ -278,6 +278,7 @@ function summarizeRecord(record) {
 const { isAdmin } = require('./lib/admin-auth');
 
 exports.handler = async function (event) {
+  ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
 
   if (event.httpMethod === 'POST') {
