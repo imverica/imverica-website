@@ -442,13 +442,12 @@ exports.handler = async function (event) {
   // claude-3-5-haiku-latest has been a stable alias since late 2024 and
   // is cheap enough for chat widget use. To upgrade later, change the
   // string and redeploy — no fallback chain.
-  // After repeated 404s on every Haiku snapshot we've tried, the working
-  // assumption is this Anthropic key only has access to the Sonnet
-  // family. Sonnet 3.5 is overkill for a chat-bubble triage but it's
-  // confirmed available; cost is acceptable at chat-bubble volume. If
-  // Haiku access is enabled later, swap to claude-3-5-haiku-20241022
-  // or a 4.5 Haiku snapshot here — that's the only change needed.
-  const MODEL = 'claude-3-5-sonnet-20241022';
+  // The previous model name `claude-haiku-4-5` worked on this key when
+  // the project was first set up, then started 404-ing. Going back to
+  // the bare alias plus appending the upstream error body to the
+  // response (admin-only via ?debug=1 query) so we can finally see
+  // what Anthropic is rejecting.
+  const MODEL = 'claude-haiku-4-5';
 
   // 7-second abort gives Anthropic time to respond on a cold path while
   // staying well inside the 10 s function ceiling.
@@ -469,13 +468,19 @@ ${buildRoutingContext(messages)}`, messages })
     if (!apiRes.ok) {
       const t = await apiRes.text().catch(() => '');
       console.error('chat:anthropic', apiRes.status, t.slice(0, 300));
-      // Soft-fail: return 200 with empty reply so the homepage falls
-      // back to the catalog router answer and the chat bubble can show
-      // a friendly "try again or call us" message instead of breaking.
+      // Debug parameter ?debug=1 surfaces the raw Anthropic body so the
+      // admin can curl/inspect the actual error during outages. Public
+      // callers (homepage / chat widget) still see the safe empty-reply
+      // shape with just a numeric status code.
+      const showDebug = (event.queryStringParameters || {}).debug === '1';
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ reply: '', upstreamStatus: apiRes.status })
+        body: JSON.stringify({
+          reply: '',
+          upstreamStatus: apiRes.status,
+          ...(showDebug ? { upstreamBody: t.slice(0, 500), model: MODEL } : {})
+        })
       };
     }
     const data = await apiRes.json();
