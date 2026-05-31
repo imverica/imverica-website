@@ -3,6 +3,7 @@ import '~/styles/site.css';
 import SiteHeader from '~/components/SiteHeader.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
 import IntakeWizard from '~/components/IntakeWizard.astro';
+import QuickIntakeModal from '~/components/QuickIntakeModal.astro';
 import ChatWidget from '~/components/ChatWidget.astro';
 import { LOCALES, localizedPath, type Locale } from '~/data/i18n';
 
@@ -88,7 +89,14 @@ const alternates = slug && availableLocales.length > 1
     <slot />
   </main>
   <SiteFooter lang={lang} />
+  <!-- IntakeWizard runs first and registers window.openIntakeModal for
+       the long Q&A. QuickIntakeModal loads AFTER it and re-assigns the
+       same global to the new one-screen form — this wins for every
+       homepage / landing-page CTA. The long wizard is still reachable
+       from the cabinet via window.openIntakeWizard (or a direct call to
+       the legacy modal when the user is mid-flow on an existing order). -->
   <IntakeWizard />
+  <QuickIntakeModal />
   <ChatWidget />
 
   <style is:global>

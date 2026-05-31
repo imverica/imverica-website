@@ -1,0 +1,525 @@
+---
+/**
+ * Quick intake modal — homepage one-screen contact form.
+ *
+ * Replaces the multi-step wizard at the entry point. Goal: turn a
+ * visitor into a lead in under 30 seconds. Long-form questionnaires
+ * (USCIS / California court) live in the client cabinet now, with
+ * auto-save against the order record.
+ *
+ * Fields: name, email, phone (optional), what-do-you-need, attach up to
+ * 5 files (PDF/JPG/PNG/DOCX, ≤4 MB each, ≤22 MB total), submit. POSTs
+ * JSON with base64-encoded files to /api/quick-intake. Backend emails
+ * info@imverica.com + imverica@gmail.com immediately and stores the
+ * order in the same blob store the admin console reads.
+ *
+ * Anti-abuse: honeypot field (hidden via CSS); IP throttle on the
+ * backend (3 / 10 min / IP). CAPTCHA can be layered on later via
+ * Cloudflare Turnstile.
+ */
+---
+
+<div id="quickIntakeBackdrop" class="qi-backdrop" hidden role="presentation"></div>
+<div id="quickIntakeModal" class="qi-modal" hidden role="dialog" aria-modal="true" aria-labelledby="qiTitle">
+  <button type="button" class="qi-close" id="qiClose" aria-label="Close">&times;</button>
+
+  <div class="qi-head">
+    <h2 id="qiTitle" data-i18n="title">Tell us what you need</h2>
+    <p class="qi-sub" data-i18n="sub">We'll reply within one business day. Document preparation only — not legal advice.</p>
+  </div>
+
+  <form id="quickIntakeForm" class="qi-form" novalidate>
+    <div class="qi-row">
+      <label for="qiName" data-i18n="lblName">Your name *</label>
+      <input id="qiName" name="name" type="text" autocomplete="name" required maxlength="120" />
+    </div>
+
+    <div class="qi-grid">
+      <div class="qi-row">
+        <label for="qiEmail" data-i18n="lblEmail">Email *</label>
+        <input id="qiEmail" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="180" />
+      </div>
+      <div class="qi-row">
+        <label for="qiPhone" data-i18n="lblPhone">Phone</label>
+        <input id="qiPhone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+      </div>
+    </div>
+
+    <div class="qi-row">
+      <label for="qiSituation" data-i18n="lblSituation">How can we help? *</label>
+      <textarea id="qiSituation" name="situation" rows="5" required minlength="5" maxlength="4000"></textarea>
+      <div class="qi-hint" data-i18n="situationHint">Describe your situation, mention any deadline or USCIS / court notice.</div>
+    </div>
+
+    <div class="qi-row">
+      <label for="qiFiles" data-i18n="lblFiles">Attach documents (optional, up to 5)</label>
+      <div class="qi-files">
+        <input id="qiFiles" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.docx,application/pdf,image/jpeg,image/png,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        <label for="qiFiles" class="qi-files-cta">
+          <span aria-hidden="true">📎</span>
+          <span data-i18n="filesCta">Choose files (PDF, JPG, PNG, DOCX — 4 MB each)</span>
+        </label>
+        <ul id="qiFileList" class="qi-file-list" aria-live="polite"></ul>
+      </div>
+    </div>
+
+    <!-- Honeypot — bots tend to fill every field. Hidden via CSS; real
+         users never see it. If filled, the backend silently 200s without
+         emailing. -->
+    <div class="qi-pot" aria-hidden="true">
+      <label for="qiWebsite">Website</label>
+      <input id="qiWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <!-- Hidden hints from the AI/router on the homepage (formCode, language)
+         so the owner sees what we predicted on the original screen. -->
+    <input type="hidden" id="qiFormCode" name="formCode" />
+    <input type="hidden" id="qiLanguage" name="language" />
+
+    <div class="qi-msg" id="qiMsg" hidden></div>
+
+    <button type="submit" class="qi-submit" id="qiSubmit">
+      <span class="qi-submit-label" data-i18n="submit">Send request</span>
+      <span class="qi-submit-spinner" hidden>…</span>
+    </button>
+
+    <p class="qi-fineprint">
+      <span data-i18n="finePre">By submitting you agree to be contacted at the email or phone above. We do not share your data with third parties. </span>
+      <a href="/terms.html" data-i18n="fineTerms">Terms</a>.
+    </p>
+  </form>
+</div>
+
+<style>
+  .qi-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15, 28, 47, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9000;
+    opacity: 0; transition: opacity 0.18s ease;
+  }
+  .qi-backdrop.show { opacity: 1; }
+  .qi-modal {
+    position: fixed;
+    z-index: 9001;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%) scale(0.98);
+    width: min(560px, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
+    overflow: auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 32px 64px rgba(15,28,47,0.28);
+    padding: 28px 28px 22px;
+    font-family: var(--font-system, system-ui, -apple-system, 'Segoe UI', sans-serif);
+    color: #1c2c40;
+    opacity: 0; transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .qi-modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .qi-close {
+    position: absolute; top: 12px; right: 14px;
+    width: 36px; height: 36px;
+    border: none; background: transparent;
+    color: #6b7280; font-size: 26px; line-height: 1;
+    cursor: pointer; border-radius: 50%;
+  }
+  .qi-close:hover { background: #f0f2f5; color: #1c2c40; }
+  .qi-head { margin-bottom: 18px; padding-right: 28px; }
+  .qi-head h2 {
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 24px; font-weight: 700;
+    color: var(--navy-dark, #0f1c2f);
+    margin: 0 0 6px;
+  }
+  .qi-sub { margin: 0; font-size: 14px; color: #4a5a6e; line-height: 1.55; }
+  .qi-form { display: flex; flex-direction: column; gap: 14px; }
+  .qi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .qi-grid { grid-template-columns: 1fr; } }
+  .qi-row { display: flex; flex-direction: column; gap: 6px; }
+  .qi-row label {
+    font-size: 13px; font-weight: 600;
+    color: #1c2c40; letter-spacing: 0.1px;
+  }
+  .qi-row input,
+  .qi-row textarea {
+    width: 100%;
+    border: 1px solid #d6dce4;
+    border-radius: 9px;
+    padding: 11px 12px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #0f1c2f;
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .qi-row textarea { resize: vertical; min-height: 110px; }
+  .qi-row input:focus,
+  .qi-row textarea:focus {
+    outline: none;
+    border-color: var(--navy, #1a2e4a);
+    box-shadow: 0 0 0 3px rgba(26,46,74,0.12);
+  }
+  .qi-hint { font-size: 12px; color: #6b7280; line-height: 1.5; }
+  .qi-files input[type="file"] {
+    position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px;
+  }
+  .qi-files-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    border: 1px dashed #b6c0d0;
+    border-radius: 9px;
+    background: #f6f8fb;
+    color: #1c2c40;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .qi-files-cta:hover { border-color: var(--navy, #1a2e4a); background: #eef2f7; }
+  .qi-file-list {
+    list-style: none; padding: 0; margin: 8px 0 0;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .qi-file-list li {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 8px; font-size: 13px; color: #3a4a5e;
+    padding: 6px 10px; background: #f6f8fb; border-radius: 6px;
+  }
+  .qi-file-list .qi-remove {
+    border: none; background: transparent; color: #9aa3b2;
+    cursor: pointer; font-size: 18px; line-height: 1;
+  }
+  .qi-file-list .qi-remove:hover { color: #cc3344; }
+  .qi-file-list .qi-bad { color: #cc3344; }
+  /* Honeypot hidden everywhere a real user could see it. */
+  .qi-pot { position: absolute; left: -9999px; top: -9999px; height: 0; width: 0; overflow: hidden; }
+  .qi-msg {
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .qi-msg.qi-msg-error { background: #fbe4e4; color: #8a1f1f; }
+  .qi-msg.qi-msg-success { background: #e3f4ea; color: #1d5b34; }
+  .qi-submit {
+    margin-top: 4px;
+    width: 100%;
+    background: var(--navy, #1a2e4a); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 15px; font-weight: 600; font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .qi-submit:hover { background: #2b4264; }
+  .qi-submit:active { transform: scale(0.985); }
+  .qi-submit:disabled { background: #94a3b8; cursor: wait; }
+  .qi-fineprint {
+    margin: 6px 0 0; font-size: 11.5px; line-height: 1.55; color: #6b7280;
+  }
+  .qi-fineprint a { color: var(--navy, #1a2e4a); }
+  body.qi-open { overflow: hidden; }
+</style>
+
+<script>
+  type FilePayload = { name: string; type: string; dataBase64: string };
+
+  const i18n: Record<string, Record<string, string>> = {
+    en: {
+      title: 'Tell us what you need',
+      sub: "We'll reply within one business day. Document preparation only — not legal advice.",
+      lblName: 'Your name *',
+      lblEmail: 'Email *',
+      lblPhone: 'Phone',
+      lblSituation: 'How can we help? *',
+      situationHint: 'Describe your situation, mention any deadline or USCIS / court notice.',
+      lblFiles: 'Attach documents (optional, up to 5)',
+      filesCta: 'Choose files (PDF / JPG / PNG / DOCX — up to 4 MB total)',
+      submit: 'Send request',
+      sending: 'Sending…',
+      success: 'Got it! Your request was sent. We will reply at the email above within one business day.',
+      errFields: 'Please fill all required fields.',
+      errNetwork: 'Could not reach the server. Please check your connection or call +1 (916) 399-3992.',
+      errTooMany: 'You can attach up to 5 files.',
+      errFileSize: 'Each file must be 4 MB or smaller.',
+      errFileType: 'Only PDF, JPG, PNG, and DOCX files are accepted.',
+      finePre: 'By submitting you agree to be contacted at the email or phone above. We do not share your data with third parties. ',
+      fineTerms: 'Terms'
+    },
+    ru: {
+      title: 'Расскажите что вам нужно',
+      sub: 'Ответим в течение одного рабочего дня. Только подготовка документов — не юридическая консультация.',
+      lblName: 'Ваше имя *',
+      lblEmail: 'Email *',
+      lblPhone: 'Телефон',
+      lblSituation: 'Чем мы можем помочь? *',
+      situationHint: 'Опишите ситуацию, укажите крайний срок или уведомление от USCIS / суда.',
+      lblFiles: 'Прикрепить документы (по желанию, до 5 файлов)',
+      filesCta: 'Выбрать файлы (PDF / JPG / PNG / DOCX — до 4 МБ суммарно)',
+      submit: 'Отправить запрос',
+      sending: 'Отправляем…',
+      success: 'Готово! Запрос отправлен. Мы ответим на указанный email в течение одного рабочего дня.',
+      errFields: 'Заполните, пожалуйста, обязательные поля.',
+      errNetwork: 'Не удалось связаться с сервером. Проверьте интернет или позвоните +1 (916) 399-3992.',
+      errTooMany: 'Можно прикрепить максимум 5 файлов.',
+      errFileSize: 'Каждый файл должен быть до 4 МБ.',
+      errFileType: 'Принимаем только PDF, JPG, PNG и DOCX.',
+      finePre: 'Отправляя форму, вы соглашаетесь на связь по указанным email / телефону. Мы не передаём данные третьим сторонам. ',
+      fineTerms: 'Условия'
+    },
+    uk: {
+      title: 'Розкажіть, що вам потрібно',
+      sub: 'Відповімо протягом одного робочого дня. Лише підготовка документів — не юридична консультація.',
+      lblName: "Ваше ім'я *",
+      lblEmail: 'Email *',
+      lblPhone: 'Телефон',
+      lblSituation: 'Чим ми можемо допомогти? *',
+      situationHint: 'Опишіть ситуацію, вкажіть кінцевий термін або повідомлення від USCIS / суду.',
+      lblFiles: 'Прикріпити документи (за бажанням, до 5 файлів)',
+      filesCta: 'Обрати файли (PDF / JPG / PNG / DOCX — до 4 МБ загалом)',
+      submit: 'Надіслати запит',
+      sending: 'Надсилаємо…',
+      success: 'Готово! Запит надіслано. Ми відповімо на вказаний email протягом одного робочого дня.',
+      errFields: "Будь ласка, заповніть обов'язкові поля.",
+      errNetwork: "Не вдалося зв'язатися із сервером. Перевірте інтернет або зателефонуйте +1 (916) 399-3992.",
+      errTooMany: 'Можна прикріпити максимум 5 файлів.',
+      errFileSize: 'Кожен файл має бути до 4 МБ.',
+      errFileType: 'Приймаємо лише PDF, JPG, PNG і DOCX.',
+      finePre: "Надсилаючи форму, ви погоджуєтеся на зв'язок за вказаним email / телефоном. Ми не передаємо ваші дані третім сторонам. ",
+      fineTerms: 'Умови'
+    },
+    es: {
+      title: 'Cuéntenos qué necesita',
+      sub: 'Responderemos en un día laborable. Solo preparación de documentos — no asesoría legal.',
+      lblName: 'Su nombre *',
+      lblEmail: 'Email *',
+      lblPhone: 'Teléfono',
+      lblSituation: '¿Cómo podemos ayudar? *',
+      situationHint: 'Describa su situación, mencione cualquier plazo o aviso de USCIS / tribunal.',
+      lblFiles: 'Adjuntar documentos (opcional, hasta 5)',
+      filesCta: 'Elegir archivos (PDF / JPG / PNG / DOCX — hasta 4 MB en total)',
+      submit: 'Enviar solicitud',
+      sending: 'Enviando…',
+      success: '¡Listo! Solicitud enviada. Le responderemos al email indicado en un día laborable.',
+      errFields: 'Complete los campos obligatorios.',
+      errNetwork: 'No pudimos conectar con el servidor. Revise su conexión o llame al +1 (916) 399-3992.',
+      errTooMany: 'Puede adjuntar hasta 5 archivos.',
+      errFileSize: 'Cada archivo debe ser de 4 MB o menos.',
+      errFileType: 'Aceptamos solo PDF, JPG, PNG y DOCX.',
+      finePre: 'Al enviar acepta ser contactado en el email / teléfono indicados. No compartimos sus datos con terceros. ',
+      fineTerms: 'Términos'
+    }
+  };
+
+  const MAX_FILE_BYTES = 4 * 1024 * 1024;
+  const MAX_FILES = 5;
+  const ALLOWED_MIMES = [
+    'application/pdf',
+    'image/jpeg', 'image/jpg',
+    'image/png',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ];
+
+  function detectLang(): keyof typeof i18n {
+    const html = document.documentElement.getAttribute('lang') || '';
+    if (html.startsWith('ru')) return 'ru';
+    if (html.startsWith('uk')) return 'uk';
+    if (html.startsWith('es')) return 'es';
+    const path = location.pathname;
+    if (path.startsWith('/ru')) return 'ru';
+    if (path.startsWith('/ua')) return 'uk';
+    if (path.startsWith('/mx')) return 'es';
+    return 'en';
+  }
+
+  function applyI18n() {
+    const lang = detectLang();
+    const dict = i18n[lang] || i18n.en;
+    document.querySelectorAll<HTMLElement>('#quickIntakeModal [data-i18n]').forEach((el) => {
+      const k = el.getAttribute('data-i18n');
+      if (k && dict[k]) el.textContent = dict[k];
+    });
+    const langInput = document.getElementById('qiLanguage') as HTMLInputElement | null;
+    if (langInput) langInput.value = lang;
+    return dict;
+  }
+
+  function showMsg(kind: 'error' | 'success' | 'hide', text?: string) {
+    const m = document.getElementById('qiMsg') as HTMLElement | null;
+    if (!m) return;
+    if (kind === 'hide') { m.hidden = true; m.textContent = ''; m.className = 'qi-msg'; return; }
+    m.hidden = false;
+    m.className = `qi-msg qi-msg-${kind}`;
+    m.textContent = text || '';
+  }
+
+  // File queue lives outside the form input so we can add / remove
+  // individual files without re-uploading the whole list.
+  const fileQueue: File[] = [];
+
+  function renderFileList() {
+    const dict = i18n[detectLang()] || i18n.en;
+    const ul = document.getElementById('qiFileList');
+    if (!ul) return;
+    ul.innerHTML = '';
+    fileQueue.forEach((f, i) => {
+      const ok = ALLOWED_MIMES.includes(f.type) && f.size <= MAX_FILE_BYTES;
+      const li = document.createElement('li');
+      const left = document.createElement('span');
+      left.className = ok ? '' : 'qi-bad';
+      const kb = Math.max(1, Math.round(f.size / 1024));
+      left.textContent = `${ok ? '📄' : '⚠️'} ${f.name} · ${kb < 1024 ? kb + ' KB' : (kb / 1024).toFixed(1) + ' MB'}`;
+      const rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'qi-remove';
+      rm.setAttribute('aria-label', 'Remove');
+      rm.textContent = '×';
+      rm.addEventListener('click', () => { fileQueue.splice(i, 1); renderFileList(); });
+      li.appendChild(left); li.appendChild(rm);
+      ul.appendChild(li);
+    });
+  }
+
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => {
+        const result = String(r.result || '');
+        const i = result.indexOf(',');
+        resolve(i >= 0 ? result.slice(i + 1) : result);
+      };
+      r.onerror = () => reject(new Error('read-failed'));
+      r.readAsDataURL(file);
+    });
+  }
+
+  // Public opener — called by the homepage AI search and any other CTA.
+  // Accepts an optional prefill string (the search query) so the modal
+  // opens with the situation field already filled in.
+  function openModal(prefill?: string, hints?: { formCode?: string }) {
+    const dict = applyI18n();
+    const bd = document.getElementById('quickIntakeBackdrop');
+    const md = document.getElementById('quickIntakeModal');
+    if (!bd || !md) return;
+    bd.hidden = false; md.hidden = false;
+    requestAnimationFrame(() => {
+      bd.classList.add('show'); md.classList.add('show');
+    });
+    document.body.classList.add('qi-open');
+    showMsg('hide');
+    if (typeof prefill === 'string' && prefill.trim()) {
+      const sit = document.getElementById('qiSituation') as HTMLTextAreaElement | null;
+      if (sit && !sit.value.trim()) sit.value = prefill.trim();
+    }
+    if (hints && hints.formCode) {
+      const fc = document.getElementById('qiFormCode') as HTMLInputElement | null;
+      if (fc) fc.value = hints.formCode;
+    }
+    // Focus name (or situation if it was prefilled).
+    const nm = document.getElementById('qiName') as HTMLInputElement | null;
+    if (nm && !nm.value) nm.focus();
+  }
+
+  function closeModal() {
+    const bd = document.getElementById('quickIntakeBackdrop');
+    const md = document.getElementById('quickIntakeModal');
+    if (!bd || !md) return;
+    bd.classList.remove('show'); md.classList.remove('show');
+    document.body.classList.remove('qi-open');
+    setTimeout(() => { bd.hidden = true; md.hidden = true; }, 200);
+  }
+
+  // Expose globally so other components (HomeSearch, ServiceSections,
+  // landing-page CTAs) can call window.openIntakeModal(query) without
+  // having to import this script.
+  (window as Window & { openIntakeModal?: (q?: string, hints?: { formCode?: string }) => void }).openIntakeModal = openModal;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const close = () => closeModal();
+    document.getElementById('qiClose')?.addEventListener('click', close);
+    document.getElementById('quickIntakeBackdrop')?.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    document.getElementById('qiFiles')?.addEventListener('change', (e) => {
+      const dict = i18n[detectLang()] || i18n.en;
+      const input = e.target as HTMLInputElement;
+      const list = Array.from(input.files || []);
+      for (const f of list) {
+        if (fileQueue.length >= MAX_FILES) { showMsg('error', dict.errTooMany); break; }
+        if (f.size > MAX_FILE_BYTES) { showMsg('error', dict.errFileSize); continue; }
+        if (!ALLOWED_MIMES.includes(f.type)) { showMsg('error', dict.errFileType); continue; }
+        fileQueue.push(f);
+      }
+      input.value = ''; // allow re-selecting the same file
+      renderFileList();
+    });
+
+    document.getElementById('quickIntakeForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const dict = i18n[detectLang()] || i18n.en;
+      const submit = document.getElementById('qiSubmit') as HTMLButtonElement | null;
+      const label = submit?.querySelector('.qi-submit-label') as HTMLElement | null;
+      const name = (document.getElementById('qiName') as HTMLInputElement).value.trim();
+      const email = (document.getElementById('qiEmail') as HTMLInputElement).value.trim();
+      const phone = (document.getElementById('qiPhone') as HTMLInputElement).value.trim();
+      const situation = (document.getElementById('qiSituation') as HTMLTextAreaElement).value.trim();
+      const formCode = (document.getElementById('qiFormCode') as HTMLInputElement).value;
+      const language = (document.getElementById('qiLanguage') as HTMLInputElement).value;
+      const website = (document.getElementById('qiWebsite') as HTMLInputElement).value;
+      if (!name || !email || !situation || situation.length < 5) {
+        showMsg('error', dict.errFields);
+        return;
+      }
+
+      submit && (submit.disabled = true);
+      if (label) label.textContent = dict.sending;
+      showMsg('hide');
+
+      // Convert each file to base64 (chunked through the file reader).
+      const files: FilePayload[] = [];
+      try {
+        for (const f of fileQueue) {
+          files.push({
+            name: f.name,
+            type: f.type,
+            dataBase64: await fileToBase64(f)
+          });
+        }
+      } catch (err) {
+        showMsg('error', dict.errNetwork);
+        if (submit) { submit.disabled = false; if (label) label.textContent = dict.submit; }
+        return;
+      }
+
+      try {
+        const res = await fetch('/.netlify/functions/quick-intake', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name, email, phone, situation, formCode, language, files,
+            website
+          })
+        });
+        const data = await res.json().catch(() => ({ ok: false }));
+        if (!res.ok || !data.ok) {
+          showMsg('error', data.error || dict.errNetwork);
+          if (submit) { submit.disabled = false; if (label) label.textContent = dict.submit; }
+          return;
+        }
+        showMsg('success', dict.success);
+        // Clear the form for a fresh submit later.
+        (document.getElementById('quickIntakeForm') as HTMLFormElement)?.reset();
+        fileQueue.length = 0;
+        renderFileList();
+        if (label) label.textContent = dict.submit;
+        if (submit) submit.disabled = false;
+        // Auto-close after 4 seconds so the user can see the confirmation.
+        setTimeout(closeModal, 4000);
+      } catch (err) {
+        showMsg('error', dict.errNetwork);
+        if (submit) { submit.disabled = false; if (label) label.textContent = dict.submit; }
+      }
+    });
+  });
+</script>
