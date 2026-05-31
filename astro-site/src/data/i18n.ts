@@ -126,6 +126,7 @@ export const NAV: Record<Locale, {
   family: string;
   civil: string;
   business: string;
+  forAttorneys: string;
   about: string;
   portal: string;
   quote: string;
@@ -137,6 +138,7 @@ export const NAV: Record<Locale, {
     family: 'Family Law',
     civil: 'Small Claims & Civil',
     business: 'Business',
+    forAttorneys: 'For Attorneys',
     about: 'About Us',
     portal: 'Client Portal',
     quote: 'Start Your Case',
@@ -148,6 +150,7 @@ export const NAV: Record<Locale, {
     family: 'Семейное право',
     civil: 'Малые иски и гражданские дела',
     business: 'Бизнес',
+    forAttorneys: 'Для адвокатов',
     about: 'О нас',
     portal: 'Кабинет',
     quote: 'Начать кейс',
@@ -159,6 +162,7 @@ export const NAV: Record<Locale, {
     family: 'Сімейне право',
     civil: 'Малі позови та цивільні справи',
     business: 'Бізнес',
+    forAttorneys: 'Для адвокатів',
     about: 'Про нас',
     portal: 'Кабінет',
     quote: 'Почати кейс',
@@ -170,6 +174,7 @@ export const NAV: Record<Locale, {
     family: 'Familia',
     civil: 'Reclamos menores',
     business: 'Negocios',
+    forAttorneys: 'Para Abogados',
     about: 'Acerca',
     portal: 'Mi portal',
     quote: 'Iniciar su caso',

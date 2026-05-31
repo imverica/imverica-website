@@ -23,17 +23,6 @@ interface Props {
 }
 const { kicker, heading, intro, tiles } = Astro.props as Props;
 
-// Locale derived from the URL prefix (/ru, /ua, /mx) so the source / UPL
-// footnote is localized without every page having to pass it explicitly.
-const path = Astro.url.pathname;
-const loc = path.startsWith('/ru') ? 'ru' : path.startsWith('/ua') ? 'uk' : path.startsWith('/mx') ? 'es' : 'en';
-const SOURCE_NOTE: Record<string, string> = {
-  en: 'Form names, numbers, and requirements shown here are general information from official government sources (USCIS, EOIR, California Courts, CA Secretary of State, IRS), provided for informational purposes only — not legal advice. You choose the forms; Imverica prepares them at your direction.',
-  ru: 'Названия, номера и требования форм здесь — общая информация из официальных источников (USCIS, EOIR, суды Калифорнии, Secretary of State Калифорнии, IRS), только для ознакомления, не юридическая консультация. Формы выбираете вы; Imverica готовит их по вашему поручению.',
-  uk: 'Назви, номери та вимоги форм тут — загальна інформація з офіційних джерел (USCIS, EOIR, суди Каліфорнії, Secretary of State Каліфорнії, IRS), лише для ознайомлення, не юридична консультація. Форми обираєте ви; Imverica готує їх за вашим дорученням.',
-  es: 'Los nombres, números y requisitos de los formularios aquí son información general de fuentes oficiales (USCIS, EOIR, Cortes de California, Secretario de Estado de California, IRS), solo con fines informativos — no asesoría legal. Usted elige los formularios; Imverica los prepara bajo su dirección.'
-};
-const sourceNote = SOURCE_NOTE[loc];
 ---
 <section class="cat-tiles-section">
   <div class="cat-tiles-inner">
@@ -51,7 +40,6 @@ const sourceNote = SOURCE_NOTE[loc];
         </a>
       ))}
     </div>
-    <p class="cat-tiles-note">{sourceNote}</p>
   </div>
 </section>
 

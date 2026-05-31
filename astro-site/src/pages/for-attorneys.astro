@@ -1,0 +1,251 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'For Attorneys — Affordable Paralegal Support in California | Imverica';
+const description = 'Imverica works with California attorneys as an independent paralegal — preparing USCIS, EOIR, family law, small claims, unlawful detainer, probate and business filings under your direction. Affordable pay-by-project, hourly, and retainer fee structures.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Independent Paralegal Services for California Attorneys',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: "Independent paralegal services for California attorneys — document preparation across USCIS, EOIR, family law, small claims, unlawful detainer, probate, and business filings under the attorney's direction."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/for-attorneys"
+  slug="/for-attorneys" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="For California attorneys"
+    heading="Affordable paralegal support — under your direction"
+    sub="Imverica works as an independent paralegal for California attorneys across USCIS petitions, EOIR filings, family law, small claims, unlawful detainer, probate, and business documents. You stay counsel of record; we prepare the paperwork — accurately, on time, at affordable rates that scale with how you bill."
+    ctaPrimary={{ href: '#fees', text: 'See fee structures' }}
+  />
+
+  <CategoryTiles
+    kicker="What we handle for your firm"
+    heading="Practice areas we support"
+    intro="Pick a category. We have the form mastery, templates, and California court / USCIS familiarity to pick up where your associate's plate stops."
+    tiles={[
+      { icon: '🛂', title: 'USCIS petitions',     desc: 'I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864 packages, RFE responses, evidence indexes.', href: '/immigration', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'EOIR filings',         desc: 'EOIR-29 / 42A / 42B / 40, motions to reopen/reconsider, evidence packets, country-conditions exhibits, witness declarations.', href: '/eoir-immigration-court', color: 'var(--navy-dark)' },
+      { icon: '👨‍👩‍👧', title: 'Family law',         desc: 'FL-100/110/120/150/160/300, custody packets, UCCJEA, judgment papers, post-judgment modifications.', href: '/fl', color: 'var(--terracotta)' },
+      { icon: '📃', title: 'Small claims & civil', desc: 'SC-100/120/104/133/140, demand letters, wage garnishment, abstract of judgment, civil cover sheets, POS.', href: '/sc', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Unlawful detainer',    desc: 'UD-100/105/110, three-day notices, default packets, post-judgment writs.', href: '/california-unlawful-detainer', color: 'var(--gold)' },
+      { icon: '🏛️', title: 'Probate',              desc: 'DE-111/121/160/221 series, small estate affidavits, probate notice & inventory packets.', href: '/california-probate', color: 'var(--navy-light)' },
+      { icon: '🏢', title: 'Business filings',     desc: 'LLC-1 / LLC-12, ARTS-GS, SI-550, FBN/DBA, SS-4 EIN support, operating agreements, foreign-LLC registration.', href: '/business', color: 'var(--terracotta-deep)' },
+      { icon: '🌐', title: 'Translation & notary',  desc: 'Russian / Ukrainian / Spanish certified translations, apostille coordination, mobile notary referrals.', href: '/#document-translation-california', color: 'var(--navy)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' },
+    { href: '/immigration', label: 'USCIS & EOIR documents we prepare' },
+    { href: '/fl', label: 'Family law forms (FL-)' },
+    { href: '/sc', label: 'Small claims & civil (SC-)' },
+    { href: '/business', label: 'Business filings (LLC-, ARTS-, FBN)' }
+  ]}>
+    <p class="lead">
+      You're an attorney with a full calendar. Imverica is the steady hand
+      that prepares the paperwork — accurately, on time, in your client's
+      voice. We work under your direction as an independent paralegal:
+      drafting forms, assembling exhibit binders, building evidence indexes,
+      and turning your strategy notes into a court-ready package. You stay
+      counsel of record. We stay invisible to the client unless you want us
+      visible.
+    </p>
+
+    <h2 id="who-we-help">Who we work with</h2>
+    <ul>
+      <li><strong>Solo and small-firm immigration attorneys</strong> handling adjustment, asylum, family-petition, removal-defense, and humanitarian dockets — typically referring us 30-80 hours of paralegal time per month.</li>
+      <li><strong>Family law attorneys</strong> drowning in form-heavy filings (FL-150 income-and-expense, FL-160 property declarations, FL-300 RFOs, FL-105 UCCJEA).</li>
+      <li><strong>Litigation attorneys</strong> who need small-claims and civil packets prepared cleanly to free up associate time for actual lawyering.</li>
+      <li><strong>Estate-planning attorneys</strong> with probate and small-estate work.</li>
+      <li><strong>Business attorneys</strong> wanting California entity formation and post-formation compliance outsourced.</li>
+    </ul>
+
+    <h2 id="how-we-work">How we work with your firm</h2>
+    <p>
+      Engagement is simple. You send us the matter (intake notes, client
+      info, strategy decisions you've already made). We confirm scope and
+      timeline in writing. We prepare the documents in your firm's
+      preferred template style — your letterhead, your formatting
+      conventions, your exhibit numbering. You review and sign. We never
+      hold your client file outside what's needed for the immediate task,
+      and everything we touch is encrypted at rest and in transit.
+    </p>
+    <p>
+      We don't give legal advice — that's your job. We don't sign anything
+      that requires a member of the State Bar — that's also your job. We
+      handle the form mastery, the data entry, the cross-referencing,
+      and the proofreading. You handle the law and the client relationship.
+    </p>
+
+    <h2 id="fees">Fee structures — pick what fits how you bill</h2>
+
+    <div class="fee-grid">
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">📐</div>
+        <h3>Pay by project</h3>
+        <p class="fee-card-lead">A fixed quote for each defined matter.</p>
+        <p>
+          Best when the scope is clear up front (I-485 adjustment package,
+          FL-100 petition + summons + UCCJEA, SC-100 + service, etc.).
+          We send a written quote after a short intake call — usually
+          within the same business day. You approve, we deliver. No
+          surprises and no hourly creep.
+        </p>
+      </div>
+
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">⏱️</div>
+        <h3>Pay as you go</h3>
+        <p class="fee-card-lead">Hourly billing — no monthly commitment.</p>
+        <p>
+          For attorneys with unpredictable volume or quick one-off
+          requests. Flat hourly rate, billed in tenth-of-an-hour
+          increments, invoiced monthly. Great for firms that just want
+          paralegal capacity on tap without signing up for retainer hours
+          they may not use.
+        </p>
+      </div>
+
+      <div class="fee-card fee-card-highlight">
+        <div class="fee-card-icon" aria-hidden="true">⭐</div>
+        <h3>Monthly retainer</h3>
+        <p class="fee-card-lead">10+ hours/month at a discounted rate.</p>
+        <p>
+          For firms that consistently use 10 or more paralegal hours each
+          month. Pay in advance, lock in a lower hourly rate, and reserve
+          priority turnaround. Any hours beyond the committed minimum
+          also bill at the discounted rate. Most attorney-clients pick
+          this option once they've worked with us for a quarter.
+        </p>
+      </div>
+
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">🤝</div>
+        <h3>Discounts &amp; referrals</h3>
+        <p class="fee-card-lead">New-client and referral pricing.</p>
+        <p>
+          New attorney clients get a discounted introductory rate on the
+          first matter. Referring another attorney to Imverica earns both
+          firms a credit on the next invoice. Long-term partners (12+
+          months of continuous engagement) move to our top-tier rate
+          automatically.
+        </p>
+      </div>
+    </div>
+
+    <p class="affordable-note">
+      <strong>All rates are affordable and negotiable.</strong> We're a
+      California-registered Legal Document Assistant and Immigration
+      Consultant — not a law firm — and we price accordingly. Send us a
+      sample matter or your current paralegal cost structure; we'll come
+      back with a quote that's typically 30–50% below in-house associate
+      time for equivalent work.
+    </p>
+
+    <h2 id="what-we-do-not-do">What we do not do</h2>
+    <p>
+      We do not give legal advice. We do not appear in court. We do not
+      sign pleadings. We do not negotiate with opposing counsel. We do
+      not advise your client directly without your written authorization
+      to communicate. All work product is yours, prepared under your
+      direction, billed transparently, with confidentiality terms that
+      match what you'd expect from in-house staff.
+    </p>
+
+    <h2 id="next-step">Next step</h2>
+    <p>
+      Easiest first contact: send a sample matter or your typical
+      attorney-paralegal workload to <strong>+1 (916) 399-3992</strong>
+      (call or text) or use the contact form below. We'll respond same
+      business day with either a fixed-fee quote, an hourly estimate, or
+      a retainer proposal — whichever fits the matter.
+    </p>
+
+    <cite>
+      <strong>California regulatory note:</strong> Imverica Legal Solutions
+      is a California-registered Legal Document Assistant (Cal. Bus. &amp;
+      Prof. Code §§6400–6415) and Immigration Consultant (§§22440–22448).
+      All paralegal work performed for an attorney is by definition done
+      under the attorney's supervision and direction — California's LDA
+      restrictions on giving legal advice do not apply to work done as
+      directed paralegal support for a licensed attorney. References
+      available on request.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Outsource the paperwork. Keep the practice."
+    sub="Affordable, accurate, on time. Pay-by-project, hourly, or retainer."
+    primaryHref="/#get-started?topic=for-attorneys"
+    primaryText="Send a sample matter"
+  />
+
+  <style>
+    .fee-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 28px 0 8px;
+    }
+    @media (max-width: 760px) {
+      .fee-grid { grid-template-columns: 1fr; }
+    }
+    .fee-card {
+      background: #fff;
+      border: 1px solid rgba(40,30,20,0.10);
+      border-radius: 14px;
+      padding: 22px 22px 18px;
+      box-shadow: 0 6px 18px rgba(40,30,20,0.04);
+    }
+    .fee-card-highlight {
+      border-color: var(--terracotta-deep);
+      box-shadow: 0 10px 26px rgba(164,91,52,0.12);
+      position: relative;
+    }
+    .fee-card-highlight::before {
+      content: 'Most popular';
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      background: var(--terracotta-deep);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+    .fee-card-icon { font-size: 26px; margin-bottom: 8px; }
+    .fee-card h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin: 0 0 6px;
+    }
+    .fee-card-lead {
+      color: var(--terracotta-deep);
+      font-weight: 600;
+      font-size: 13px;
+      margin: 0 0 10px;
+    }
+    .fee-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.65; color: #3a4a5e; }
+    .affordable-note {
+      background: #fffaf2;
+      border-left: 4px solid var(--terracotta-deep);
+      padding: 14px 18px;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.65;
+      margin: 24px 0 8px;
+    }
+  </style>
+</BaseLayout>
