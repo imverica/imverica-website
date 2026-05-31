@@ -51,6 +51,56 @@ const JURISDICTION_BY_CATALOG = {
 // When extending: add the form code to the right catalog JSON so the
 // `findByCode` lookup at the end of routing returns a real row.
 const PACKAGE_RULES = [
+  // ===== Top-of-list priority overrides for ambiguous phrases =====
+  // These three rules sit ABOVE the broader matchers below because the
+  // phrasing they catch (e.g. "translation of marriage certificate")
+  // otherwise gets hijacked by the marriage / unlawful-detainer rules.
+  {
+    id: 'translation_priority',
+    formCode: 'TRANSLATION',
+    service: 'translation',
+    packageForms: ['TRANSLATION'],
+    confidence: 0.96,
+    patterns: [/(translat\w+\s+(of\s+|my\s+)?(birth|marriage|divorce|diploma|degree|certificate|passport|document|record|paper)|certified\s+translat|translation\s+(service|certified|notari[zs]ed))/i],
+    reason: 'Document translation phrasing → translation package (priority).'
+  },
+  {
+    id: 'passport_renewal',
+    formCode: 'DS-82',
+    service: 'passport',
+    packageForms: ['DS-82'],
+    confidence: 0.95,
+    patterns: [/(renew\s+(my\s+)?passport|passport\s+(expired|renewal|expires?)|expired\s+passport|обновить\s+(загран)?паспорт|поновити\s+паспорт|renovar\s+(mi\s+)?pasaporte)/i],
+    reason: 'Passport renewal phrasing → DS-82 (priority over the general DS-11 passport rule).'
+  },
+  {
+    id: 'security_deposit_priority',
+    formCode: 'SC-100',
+    service: 'civil',
+    packageForms: ['SC-100', 'DEMAND-LETTER'],
+    confidence: 0.94,
+    patterns: [/(landlord\s+(never|didn'?t|wouldn'?t|hasn'?t|has\s+not|will\s+not)\s+return(ed)?.*deposit|security\s+deposit\s+(not\s+)?return|never\s+returned.*(security\s+)?deposit|landlord\s+kept\s+(my\s+)?deposit)/i],
+    reason: 'Landlord-kept-deposit → SC-100 (priority over the broader unlawful-detainer rule).'
+  },
+  {
+    id: 'lawsuit_response',
+    formCode: 'SC-120',
+    service: 'civil',
+    packageForms: ['SC-120'],
+    confidence: 0.85,
+    patterns: [/(i\s+was\s+sued|got\s+sued|served\s+with\s+(a\s+)?(lawsuit|small\s+claims)|need\s+to\s+(file\s+a\s+)?respon(d|se)\s+(to\s+)?(small\s+claims|lawsuit|claim)|меня\s+подали\s+в\s+суд|против\s+меня\s+иск|подали\s+иск\s+против)/i],
+    reason: 'Generic "I was sued / file a response" → SC-120 defendant counter.'
+  },
+  {
+    id: 'name_change_after_marriage_priority',
+    formCode: 'NC-100',
+    service: 'civil',
+    packageForms: ['NC-100'],
+    confidence: 0.85,
+    patterns: [/(got|after)\s+(married|marriage).*(change\s+(my\s+)?(last\s+)?name)|(change\s+(my\s+)?(last\s+)?name\s+after\s+(getting\s+)?(married|marriage|wedding))/i],
+    reason: 'Name change after marriage → NC-100 (priority over the marriage / FL-100 rule).'
+  },
+
   // ===== EOIR (immigration court) — most specific first =====
   {
     id: 'bia_appeal',
