@@ -98,6 +98,16 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/telegram-webhook"
+  to = "/.netlify/functions/telegram-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/telegram-setup"
+  to = "/.netlify/functions/telegram-setup"
+  status = 200
+
+[[redirects]]
   from = "/api/address-suggest"
   to = "/.netlify/functions/address-suggest"
   status = 200
