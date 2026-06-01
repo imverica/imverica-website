@@ -768,8 +768,15 @@ exports.handler = async function (event) {
   try { update = JSON.parse(event.body || '{}'); }
   catch { return { statusCode: 400, body: 'Bad JSON' }; }
 
-  // Fire-and-forget the heavy work so Telegram doesn't time out on us.
-  handleUpdate(update).catch((err) => console.error('[tg-update]', err));
+  // Must AWAIT — Netlify Lambda freezes the container immediately after the
+  // handler returns, killing any in-flight promises. Telegram tolerates up
+  // to 60s of webhook latency, and our sendMessage calls finish in <1s, so
+  // awaiting here is safe.
+  try {
+    await handleUpdate(update);
+  } catch (err) {
+    console.error('[tg-update]', err && (err.stack || err.message || err));
+  }
 
   return ok();
 };
