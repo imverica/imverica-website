@@ -138,24 +138,25 @@ img { max-width: 100%; height: auto; }
 }
 .site-nav {
   display: flex;
-  gap: clamp(2px, 0.4vw, 8px);
+  gap: clamp(2px, 0.3vw, 6px);
   align-items: center;
   justify-content: center;
   flex: 1 1 auto;
   min-width: 0;
-  /* Bumped 13→15px and 500→600 weight: at 13/500 these were reading as
-     body text, not navigation. Letter-spacing + uppercase variant on
-     larger screens helps them land as proper menu items. */
-  font-size: 15px;
+  /* Responsive font-size — scales gracefully between 1280px (burger
+     threshold) and the 1440px+ desktop. We tried a flat 15px and it
+     overflowed the header at mid-range desktop widths, colliding with
+     the logo and language switcher. clamp keeps the readability win
+     without breaking layout. */
+  font-size: clamp(12.5px, 0.95vw, 14px);
 }
 .site-nav a {
   position: relative;
   color: var(--navy-dark);
   font-weight: 600;
-  letter-spacing: 0.01em;
   white-space: nowrap;
-  padding: 9px 12px;
-  border-radius: 8px;
+  padding: 7px 9px;
+  border-radius: 7px;
   text-decoration: none;
   transition: color 0.18s ease, background 0.18s ease;
 }
@@ -168,21 +169,19 @@ img { max-width: 100%; height: auto; }
 .site-nav a[data-nav="for-attorneys"]:hover { background: rgba(164,91,52,0.16); color: var(--terracotta-deep); }
 .site-nav a[data-nav="about"]:hover    { background: rgba(26,46,74,0.08);   color: var(--navy); }
 
-/* "For Attorneys" — B2B differentiator. Always carries a terracotta
-   accent so it stands out from the consumer-facing nav items even
-   without hover. */
+/* "For Attorneys" — B2B differentiator. Subtle terracotta tint (no
+   border so we don't add box width that breaks the layout at mid-
+   range viewports) plus accent text color. */
 .site-nav a.site-nav-accent {
   color: var(--terracotta-deep);
-  background: rgba(164,91,52,0.06);
-  border: 1px solid rgba(164,91,52,0.18);
+  background: rgba(164,91,52,0.08);
 }
 .site-nav a.site-nav-accent:hover {
   background: var(--terracotta-deep);
   color: #fff;
-  border-color: var(--terracotta-deep);
 }
 
-/* Active page — bold underline pill in the matching brand color so
+/* Active page — underline pill in the matching brand color so
    visitors always know where they are. aria-current="page" is set by
    SiteHeader.astro based on the current slug. */
 .site-nav a[aria-current="page"] {
@@ -191,10 +190,10 @@ img { max-width: 100%; height: auto; }
 .site-nav a[aria-current="page"]::after {
   content: "";
   position: absolute;
-  left: 12px;
-  right: 12px;
+  left: 9px;
+  right: 9px;
   bottom: 2px;
-  height: 2.5px;
+  height: 2px;
   border-radius: 2px;
   background: var(--navy-dark);
 }
@@ -925,12 +924,14 @@ img { max-width: 100%; height: auto; }
     padding-right: 16px;
   }
 }
-@media (max-width: 1280px) {
+@media (max-width: 1340px) {
   /* Mobile/tablet/small-desktop header: logo + compact flag-only language
      pills + hamburger, all on one row. Nav links and the Quote button move
-     into the menu. 1280 chosen so longer non-English labels (RU/UA/ES
-     "Получить цену", "Portal del cliente", "Семейное право") never collide
-     with the logo or language switcher at any locale. */
+     into the menu. Raised 1280 → 1340 because the 6-item English nav at
+     readable size (≥13px / weight 600) was colliding with the logo and
+     language switcher around 1280-1400px windows — common MacBook Air
+     viewport (1440 useable ≈ 1380). Burger kicks in earlier; full nav
+     only shows when there's real room. */
   .site-nav { display: none; }
   .site-burger { display: flex; }
   .site-quote { display: none; }
