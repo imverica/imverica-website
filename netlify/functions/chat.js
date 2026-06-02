@@ -434,25 +434,30 @@ exports.handler = async function (event) {
     if (messages.length > 40) messages = messages.slice(-40);
   } catch { return { statusCode: 400, body: JSON.stringify({ error: 'Bad request' }) }; }
 
-  // Use a single, known-stable model. The previous "try a chain of names"
-  // approach could rack up 20+ seconds across three sequential Anthropic
-  // calls and trip Netlify's 10 s function timeout — manifesting to the
-  // client as a Cloudflare 502.
+  // Upgraded haiku-4-5 → opus-4-7 for nuanced query understanding (smarter
+  // routing, better multilingual nuance on USCIS/EOIR/CA-court questions).
   //
-  // claude-3-5-haiku-latest has been a stable alias since late 2024 and
-  // is cheap enough for chat widget use. To upgrade later, change the
-  // string and redeploy — no fallback chain.
-  // The previous model name `claude-haiku-4-5` worked on this key when
-  // the project was first set up, then started 404-ing. Going back to
-  // the bare alias plus appending the upstream error body to the
-  // response (admin-only via ?debug=1 query) so we can finally see
-  // what Anthropic is rejecting.
-  const MODEL = 'claude-haiku-4-5';
+  // Opus 4.7 breaking-change checklist applied:
+  //   - No `temperature`/`top_p`/`top_k` (removed on 4.7 → would 400)
+  //   - No `budget_tokens` (removed on 4.7 → would 400)
+  //   - No assistant-turn prefills (removed on 4.7 → would 400)
+  //   - Adaptive thinking left OFF (default on 4.7); the widget needs
+  //     sub-10s round-trips, so we trade thinking quality for latency.
+  //   - max_tokens bumped 420 → 1024: 4.7 counts tokens differently and
+  //     short answers need more headroom than haiku
+  //   - timeout bumped 7s → 9s: opus is slower than haiku end-to-end
+  //
+  // Prompt caching: system is now an array so we can cache_control the
+  // stable SYSTEM_WITH_FORMS prefix. After the first call, the cached
+  // portion replays at ~10% input cost. buildRoutingContext varies per
+  // request so it sits AFTER the breakpoint and stays uncached.
+  // Min cacheable prefix on Opus 4.7 is 4096 tokens — if SYSTEM_WITH_FORMS
+  // is smaller than that, caching silently no-ops (no error, just zero
+  // cache_read_input_tokens). Audit via response.usage if needed.
+  const MODEL = 'claude-opus-4-7';
 
-  // 7-second abort gives Anthropic time to respond on a cold path while
-  // staying well inside the 10 s function ceiling.
   const ac = new AbortController();
-  const timeoutId = setTimeout(() => ac.abort(), 7000);
+  const timeoutId = setTimeout(() => ac.abort(), 9000);
 
   let apiRes = null;
   try {
@@ -460,9 +465,15 @@ exports.handler = async function (event) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
       signal: ac.signal,
-      body: JSON.stringify({ model: MODEL, max_tokens: 420, system: `${SYSTEM_WITH_FORMS}
-
-${buildRoutingContext(messages)}`, messages })
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1024,
+        system: [
+          { type: 'text', text: SYSTEM_WITH_FORMS, cache_control: { type: 'ephemeral' } },
+          { type: 'text', text: buildRoutingContext(messages) }
+        ],
+        messages
+      })
     });
     clearTimeout(timeoutId);
     if (!apiRes.ok) {
@@ -487,7 +498,7 @@ ${buildRoutingContext(messages)}`, messages })
     const reply = data.content?.[0]?.text || '';
     return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ reply }) };
   } catch (err) {
-    // AbortError when our 7s timeout fires; ENETUNREACH / DNS issues if
+    // AbortError when our 9s timeout fires; ENETUNREACH / DNS issues if
     // Anthropic is unreachable. Either way — soft-fail to 200 so the chat
     // widget shows a friendly fallback instead of Cloudflare's raw 502.
     try { clearTimeout(timeoutId); } catch (e) {}
