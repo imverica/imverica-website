@@ -88,10 +88,12 @@ const translatedSlugs = new Set<string>([
   '/eoir-42a-cancellation-lpr',
   '/eoir-42b-cancellation-non-lpr',
   '/eoir-40-suspension-of-deportation',
-  // Company-level pages (About + B2B paralegal-for-attorneys + Pricing)
+  // Company-level pages (About + B2B paralegal-for-attorneys)
+  // NOTE: /pricing is EN-only for now; intentionally NOT in translatedSlugs
+  // so RU/UA/MX nav clicks fall back to /pricing (EN) instead of 404.
+  // Localised versions are queued as a follow-up.
   '/about',
-  '/for-attorneys',
-  '/pricing'
+  '/for-attorneys'
 ]);
 
 /** Build a per-locale URL from a slug. Uses the prefix in LOCALES, so URLs
