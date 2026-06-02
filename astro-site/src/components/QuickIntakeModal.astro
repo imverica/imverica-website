@@ -104,6 +104,30 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       <a href="/terms.html" data-i18n="fineTerms">Terms</a>.
     </p>
   </form>
+
+  <!-- Success pane — replaces the form after a successful intake submit.
+       Gives the user two paths: passive (wait for our call) or DIY
+       (open the client portal, sign in, fill the long wizard for a
+       1-2-day faster turnaround). Lets us keep the long wizard's
+       conversion value without forcing it on every visitor. -->
+  <div id="qiSuccessPane" class="qi-success-pane" hidden>
+    <div class="qi-success-icon" aria-hidden="true">✓</div>
+    <h3 class="qi-success-title" data-i18n="successTitle">Got it — your request is in.</h3>
+    <p class="qi-success-order" data-i18n="successOrder">
+      Order <strong id="qiOrderIdShown">—</strong> queued. We'll reply at the email above within one business day.
+    </p>
+    <p class="qi-success-prompt" data-i18n="successPrompt">
+      Want to save us 1–2 days? Sign in to your client portal with the same email and fill in the rest of the details yourself. Otherwise we'll call and do it together — your choice.
+    </p>
+    <div class="qi-success-actions">
+      <a class="qi-success-cta" id="qiOpenPortal" href="/account.html" data-i18n="successOpenPortal">
+        Open client portal · save 1–2 days
+      </a>
+      <button type="button" class="qi-success-skip" id="qiSuccessClose" data-i18n="successSkip">
+        OK, wait for the call
+      </button>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -236,6 +260,96 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
   }
   .qi-fineprint a { color: var(--navy, #1a2e4a); }
   body.qi-open { overflow: hidden; }
+
+  /* Success pane — shown after a successful intake submit. Gives the user
+     a friendly confirmation + a clear DIY path (open client portal, fill
+     the long wizard) without forcing it. */
+  .qi-success-pane {
+    text-align: center;
+    padding: 8px 4px 4px;
+    animation: qiFadeUp 0.35s ease both;
+  }
+  @keyframes qiFadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .qi-success-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #d8f0e1;
+    color: #1d5b34;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 64px;
+    margin: 4px auto 18px;
+    box-shadow: 0 8px 22px rgba(29, 91, 52, 0.18);
+  }
+  .qi-success-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy-dark, #0f1c2f);
+    margin: 0 0 8px;
+  }
+  .qi-success-order {
+    color: #3a4a5e;
+    font-size: 14.5px;
+    margin: 0 auto 16px;
+    max-width: 420px;
+    line-height: 1.55;
+  }
+  .qi-success-order strong {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--navy, #1a2e4a);
+    background: rgba(26,46,74,0.06);
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .qi-success-prompt {
+    color: #3a4a5e;
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0 auto 22px;
+    max-width: 460px;
+    text-wrap: balance;
+  }
+  .qi-success-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .qi-success-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 360px;
+    padding: 13px 22px;
+    background: var(--navy, #1a2e4a);
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14.5px;
+    text-decoration: none;
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+  .qi-success-cta:hover { background: #2b4264; }
+  .qi-success-cta:active { transform: scale(0.985); }
+  .qi-success-skip {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: #6b7280;
+    font-size: 13px;
+    padding: 8px 14px;
+    font-family: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .qi-success-skip:hover { color: var(--navy-dark, #0f1c2f); }
 </style>
 
 <script>
@@ -255,6 +369,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       submit: 'Send request',
       sending: 'Sending…',
       success: 'Got it! Your request was sent. We will reply at the email above within one business day.',
+      successTitle: 'Got it — your request is in.',
+      successOrder: 'Order <strong>{id}</strong> queued. We will reply at the email above within one business day.',
+      successPrompt: 'Want to save us 1–2 days? Sign in to your client portal with the same email and fill in the rest of the details yourself. Otherwise we will call and do it together — your choice.',
+      successOpenPortal: 'Open client portal · save 1–2 days',
+      successSkip: 'OK, wait for the call',
       errFields: 'Please fill all required fields.',
       errNetwork: 'Could not reach the server. Please check your connection or call +1 (916) 399-3992.',
       errTooMany: 'You can attach up to 5 files.',
@@ -276,6 +395,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       submit: 'Отправить запрос',
       sending: 'Отправляем…',
       success: 'Готово! Запрос отправлен. Мы ответим на указанный email в течение одного рабочего дня.',
+      successTitle: 'Готово — заявка принята.',
+      successOrder: 'Заказ <strong>{id}</strong> в очереди. Мы ответим на указанный email в течение одного рабочего дня.',
+      successPrompt: 'Хотите сэкономить 1–2 дня? Войдите в личный кабинет с тем же email и заполните оставшиеся данные сами. Иначе мы перезвоним и заполним вместе — как удобнее.',
+      successOpenPortal: 'Открыть кабинет · сэкономить 1–2 дня',
+      successSkip: 'Хорошо, жду звонка',
       errFields: 'Заполните, пожалуйста, обязательные поля.',
       errNetwork: 'Не удалось связаться с сервером. Проверьте интернет или позвоните +1 (916) 399-3992.',
       errTooMany: 'Можно прикрепить максимум 5 файлов.',
@@ -297,6 +421,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       submit: 'Надіслати запит',
       sending: 'Надсилаємо…',
       success: 'Готово! Запит надіслано. Ми відповімо на вказаний email протягом одного робочого дня.',
+      successTitle: 'Готово — заявку прийнято.',
+      successOrder: 'Замовлення <strong>{id}</strong> у черзі. Ми відповімо на вказаний email протягом одного робочого дня.',
+      successPrompt: 'Хочете заощадити 1–2 дні? Увійдіть до особистого кабінету з тим самим email і заповніть решту даних самостійно. Інакше ми зателефонуємо й заповнимо разом — як зручніше.',
+      successOpenPortal: 'Відкрити кабінет · заощадити 1–2 дні',
+      successSkip: 'Гаразд, чекаю дзвінка',
       errFields: "Будь ласка, заповніть обов'язкові поля.",
       errNetwork: "Не вдалося зв'язатися із сервером. Перевірте інтернет або зателефонуйте +1 (916) 399-3992.",
       errTooMany: 'Можна прикріпити максимум 5 файлів.',
@@ -318,6 +447,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       submit: 'Enviar solicitud',
       sending: 'Enviando…',
       success: '¡Listo! Solicitud enviada. Le responderemos al email indicado en un día laborable.',
+      successTitle: 'Listo — su solicitud fue recibida.',
+      successOrder: 'Pedido <strong>{id}</strong> en cola. Le responderemos al email indicado en un día laborable.',
+      successPrompt: '¿Quiere ahorrar 1–2 días? Inicie sesión en su portal con el mismo email y complete los demás datos usted mismo. De lo contrario lo llamaremos y lo haremos juntos — usted decide.',
+      successOpenPortal: 'Abrir portal · ahorrar 1–2 días',
+      successSkip: 'Está bien, espero la llamada',
       errFields: 'Complete los campos obligatorios.',
       errNetwork: 'No pudimos conectar con el servidor. Revise su conexión o llame al +1 (916) 399-3992.',
       errTooMany: 'Puede adjuntar hasta 5 archivos.',
@@ -424,6 +558,14 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     });
     document.body.classList.add('qi-open');
     showMsg('hide');
+    // Reset success state — re-opening the modal after a previous submit
+    // should show the form again, not the leftover success pane.
+    const form = document.getElementById('quickIntakeForm') as HTMLFormElement | null;
+    const successPane = document.getElementById('qiSuccessPane') as HTMLElement | null;
+    if (successPane) successPane.hidden = true;
+    if (form) { form.hidden = false; form.reset(); }
+    fileQueue.length = 0;
+    renderFileList();
     if (typeof prefill === 'string' && prefill.trim()) {
       const sit = document.getElementById('qiSituation') as HTMLTextAreaElement | null;
       if (sit && !sit.value.trim()) sit.value = prefill.trim();
@@ -463,6 +605,8 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     const close = () => closeModal();
     document.getElementById('qiClose')?.addEventListener('click', close);
     document.getElementById('quickIntakeBackdrop')?.addEventListener('click', close);
+    // Secondary CTA on the success pane — "wait for the call" just closes.
+    document.getElementById('qiSuccessClose')?.addEventListener('click', close);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
     document.getElementById('qiFiles')?.addEventListener('change', (e) => {
@@ -536,15 +680,29 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
           if (submit) { submit.disabled = false; if (label) label.textContent = dict.submit; }
           return;
         }
-        showMsg('success', dict.success);
-        // Clear the form for a fresh submit later.
-        (document.getElementById('quickIntakeForm') as HTMLFormElement)?.reset();
+        // Switch to the success pane (don't auto-close) so the visitor
+        // sees their order id and a clear path to the long wizard in
+        // the cabinet — hybrid flow per /for-attorneys homepage spec.
+        // The user picks: wait passively, or sign in and DIY for faster
+        // turnaround. We never force them into the 60-step questionnaire.
+        const form = document.getElementById('quickIntakeForm') as HTMLFormElement | null;
+        const successPane = document.getElementById('qiSuccessPane') as HTMLElement | null;
+        const orderEl = document.getElementById('qiOrderIdShown');
+        if (orderEl) orderEl.textContent = data.orderId || '—';
+        // Render i18n strings into the success pane (Order line carries
+        // {id} placeholder so we re-substitute on every render).
+        if (successPane) {
+          const orderLine = successPane.querySelector('[data-i18n="successOrder"]');
+          if (orderLine) {
+            orderLine.innerHTML = (dict.successOrder || '').replace('{id}', '<strong id="qiOrderIdShown">' + (data.orderId || '—') + '</strong>');
+          }
+        }
+        if (form) form.hidden = true;
+        if (successPane) successPane.hidden = false;
         fileQueue.length = 0;
         renderFileList();
         if (label) label.textContent = dict.submit;
         if (submit) submit.disabled = false;
-        // Auto-close after 4 seconds so the user can see the confirmation.
-        setTimeout(closeModal, 4000);
       } catch (err) {
         showMsg('error', dict.errNetwork);
         if (submit) { submit.disabled = false; if (label) label.textContent = dict.submit; }

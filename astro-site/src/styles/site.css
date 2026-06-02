@@ -104,10 +104,12 @@ img { max-width: 100%; height: auto; }
   align-items: center;
   justify-content: space-between;
   gap: clamp(0.4rem, 0.9vw, 0.8rem);
-  /* Logo flush-left: drop the left padding so the brand mark sits at the
-     viewport edge (still pinned to 1280-px max-width above). */
-  padding: 14px 0.5rem 14px 0;
-  max-width: 1320px;
+  /* Logo flush to the LEFT, right-group flush to the RIGHT — wider
+     max-width so the brand mark sits closer to the viewport edge on
+     large displays and the language pills + portal + CTA get a real
+     break from the nav links. */
+  padding: 14px 0.75rem 14px 0;
+  max-width: 1480px;
   margin: 0 auto;
 }
 .site-brand {
@@ -160,34 +162,12 @@ img { max-width: 100%; height: auto; }
   text-decoration: none;
   transition: color 0.18s ease, background 0.18s ease;
 }
-/* Brand-tinted hover backgrounds per nav item — uses the palette from
-   --navy, --terracotta, --sage, --gold so each section has its own accent. */
-.site-nav a[data-nav="uscis"]:hover    { background: rgba(26,46,74,0.10);   color: var(--navy-dark); }
-.site-nav a[data-nav="family"]:hover   { background: rgba(224,138,93,0.14); color: var(--terracotta-deep); }
-.site-nav a[data-nav="civil"]:hover    { background: rgba(125,156,122,0.18); color: #3a5a44; }
-.site-nav a[data-nav="business"]:hover { background: rgba(212,175,86,0.20); color: #7a5a18; }
-.site-nav a[data-nav="for-attorneys"]:hover { background: rgba(164,91,52,0.16); color: var(--terracotta-deep); }
-.site-nav a[data-nav="about"]:hover    { background: rgba(26,46,74,0.08);   color: var(--navy); }
 
-/* "For Attorneys" — B2B differentiator. Subtle terracotta tint (no
-   border so we don't add box width that breaks the layout at mid-
-   range viewports) plus accent text color. */
-.site-nav a.site-nav-accent {
-  color: var(--terracotta-deep);
-  background: rgba(164,91,52,0.08);
-}
-.site-nav a.site-nav-accent:hover {
-  background: var(--terracotta-deep);
-  color: #fff;
-}
-
-/* Active page — underline pill in the matching brand color so
-   visitors always know where they are. aria-current="page" is set by
-   SiteHeader.astro based on the current slug. */
-.site-nav a[aria-current="page"] {
-  font-weight: 700;
-}
-.site-nav a[aria-current="page"]::after {
+/* Every nav link carries a hidden underline pill in ::after. On hover
+   the pill fades to a semi-opaque category color (~55%); on the active
+   page (aria-current="page") it sits at full opacity and slightly
+   thicker. One layer of styling, two states: hover preview + you-are-here. */
+.site-nav a::after {
   content: "";
   position: absolute;
   left: 9px;
@@ -195,18 +175,53 @@ img { max-width: 100%; height: auto; }
   bottom: 2px;
   height: 2px;
   border-radius: 2px;
+  background: transparent;
+  transition: background 0.18s ease, height 0.18s ease, bottom 0.18s ease;
+}
+
+/* Brand-tinted hover: background tint + matching underline color.
+   Each nav item has its own brand accent so the section is recognisable
+   on rollover. */
+.site-nav a[data-nav="uscis"]:hover         { background: rgba(26,46,74,0.10);   color: var(--navy-dark); }
+.site-nav a[data-nav="family"]:hover        { background: rgba(224,138,93,0.14); color: var(--terracotta-deep); }
+.site-nav a[data-nav="civil"]:hover         { background: rgba(125,156,122,0.18); color: #3a5a44; }
+.site-nav a[data-nav="business"]:hover      { background: rgba(212,175,86,0.20); color: #7a5a18; }
+.site-nav a[data-nav="for-attorneys"]:hover { background: rgba(164,91,52,0.12);  color: var(--terracotta-deep); }
+.site-nav a[data-nav="about"]:hover         { background: rgba(26,46,74,0.08);   color: var(--navy); }
+
+.site-nav a[data-nav="uscis"]:hover::after         { background: rgba(26,46,74,0.55); }
+.site-nav a[data-nav="family"]:hover::after        { background: rgba(164,91,52,0.65); }
+.site-nav a[data-nav="civil"]:hover::after         { background: rgba(58,90,68,0.65); }
+.site-nav a[data-nav="business"]:hover::after      { background: rgba(122,90,24,0.65); }
+.site-nav a[data-nav="for-attorneys"]:hover::after { background: rgba(164,91,52,0.65); }
+.site-nav a[data-nav="about"]:hover::after         { background: rgba(26,46,74,0.55); }
+
+/* Active page — full opacity underline (thicker) + bold weight.
+   aria-current="page" is set by SiteHeader.astro from the current slug. */
+.site-nav a[aria-current="page"] {
+  font-weight: 700;
+}
+.site-nav a[aria-current="page"]::after {
+  height: 2.5px;
+  bottom: 1px;
   background: var(--navy-dark);
 }
-.site-nav a[aria-current="page"][data-nav="family"]::after    { background: var(--terracotta-deep); }
-.site-nav a[aria-current="page"][data-nav="civil"]::after     { background: #3a5a44; }
-.site-nav a[aria-current="page"][data-nav="business"]::after  { background: #7a5a18; }
-.site-nav a[aria-current="page"][data-nav="for-attorneys"]::after { background: var(--terracotta-deep); }
+.site-nav a[aria-current="page"][data-nav="family"]::after         { background: var(--terracotta-deep); }
+.site-nav a[aria-current="page"][data-nav="civil"]::after          { background: #3a5a44; }
+.site-nav a[aria-current="page"][data-nav="business"]::after       { background: #7a5a18; }
+.site-nav a[aria-current="page"][data-nav="for-attorneys"]::after  { background: var(--terracotta-deep); }
 .site-lang {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   flex: 0 0 auto;
+  /* Visual break between the nav links and the lang-pills+CTA cluster.
+     Faint vertical divider + extra left margin so the right-hand group
+     reads as a distinct utility area (controls, not navigation). */
+  margin-left: clamp(8px, 1.4vw, 22px);
+  padding-left: clamp(10px, 1.2vw, 18px);
+  border-left: 1px solid rgba(40,30,20,0.10);
 }
 .site-lang a {
   width: 44px;
@@ -936,7 +951,8 @@ img { max-width: 100%; height: auto; }
   .site-burger { display: flex; }
   .site-quote { display: none; }
   .site-header-inner { flex-wrap: nowrap; gap: 8px; }
-  .site-lang { flex: 0 1 auto; gap: 4px; min-width: 0; }
+  /* No nav visible → no divider needed between nav and lang group. */
+  .site-lang { flex: 0 1 auto; gap: 4px; min-width: 0; margin-left: 0; padding-left: 0; border-left: 0; }
   .site-lang a { width: 34px; height: 34px; border-radius: 50%; }
   .site-lang-label { display: none; }
   .site-lang-flag { font-size: 16px; }

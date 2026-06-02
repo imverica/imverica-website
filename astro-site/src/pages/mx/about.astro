@@ -1,0 +1,273 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Sobre Imverica — California LDA y Consultor de Inmigración | Imverica Legal Solutions';
+const description = 'Imverica Legal Solutions es un Legal Document Assistant y Consultor de Inmigración multilingüe (inglés, ruso, ucraniano, español) con sede en Sacramento. Preparamos documentos de USCIS, EOIR y cortes del estado de California en todo el país y en todo el estado — a tarifas accesibles y transparentes. No somos un bufete de abogados y no damos asesoría legal.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Imverica Legal Solutions',
+  legalName: 'Imverica LLC',
+  alternateName: ['Imverica', 'Imverica LLC'],
+  url: 'https://imverica.com/mx/about',
+  telephone: '+1-916-399-3992',
+  email: 'info@imverica.com',
+  areaServed: [
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'State', name: 'California' }
+  ],
+  knowsLanguage: ['en', 'ru', 'uk', 'es'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Sacramento',
+    addressRegion: 'CA',
+    addressCountry: 'US'
+  },
+  sameAs: [
+    'https://www.instagram.com/imverica',
+    'https://www.facebook.com/imverica/',
+    'https://t.me/imverica'
+  ],
+  description: 'Imverica Legal Solutions es la marca comercial de Imverica LLC, una sociedad de responsabilidad limitada de California. California Legal Document Assistant y Consultor de Inmigración registrado. Preparación de documentos multilingüe (EN/RU/UK/ES) y accesible para USCIS, EOIR y cortes del estado de California.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/about"
+  slug="/about" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    lang={lang}
+    eyebrow="Sobre Imverica Legal Solutions"
+    heading="Preparación de documentos accesible y multilingüe — adaptada a su situación"
+    sub="Con sede en Sacramento. Todo el estado de California para cortes estatales; toda la nación para inmigración federal. Hablamos inglés, ruso, ucraniano y español. Preparamos documentos bajo su dirección — no somos un bufete de abogados y no damos asesoría legal."
+    ctaPrimary={{ href: '/mx/#get-started', text: 'Iniciar su caso' }}
+    ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' },
+    { href: '/mx/for-attorneys', label: 'Para abogados — colaboración paralegal' },
+    { href: '/mx/immigration', label: 'Documentos de USCIS y EOIR que preparamos' },
+    { href: '/mx/fl', label: 'Derecho familiar de California' }
+  ]}>
+    <p class="lead">
+      Imverica Legal Solutions nació en <strong>Sacramento, California</strong> —
+      consistentemente clasificada como una de las ciudades más étnica y
+      lingüísticamente diversas de los Estados Unidos. Esa ubicación no es
+      decoración; es la razón por la que existimos. Cada cuadra de esta ciudad
+      es el primer hogar de alguien en América, el pequeño negocio de alguien,
+      el archivo familiar de alguien, el sobre con I-485 que alguien dejó sin
+      abrir porque la carta de presentación está en un idioma que no lee.
+      Construimos Imverica para ser la oficina a la que esos vecinos
+      realmente pueden entrar — accesible, multilingüe, honesta y diseñada
+      alrededor de lo que una familia trabajadora necesita de un profesional
+      de preparación de documentos.
+    </p>
+
+    <h2 id="story">Quiénes somos</h2>
+    <p>
+      <strong>Imverica Legal Solutions</strong> es la marca de cara al
+      consumidor de <strong>Imverica LLC</strong>, una sociedad de
+      responsabilidad limitada de California. Somos un equipo de
+      <strong>Legal Document Assistants</strong> registrados en California
+      (Cal. Bus. & Prof. Code §§6400–6415) y <strong>Consultores de
+      Inmigración</strong> (§§22440–22448) con años de experiencia paralegal
+      en peticiones de USCIS, procesos en la corte de inmigración EOIR,
+      derecho familiar de California, reclamos menores, desalojos, sucesiones
+      (probate) y trámites empresariales. Nuestro trabajo se realiza
+      <strong>bajo la supervisión de abogados con licencia</strong> — tanto
+      como socios paralegales independientes para bufetes de abogados en
+      California como, para nuestros clientes minoristas directos, mediante
+      un panel de abogados supervisores a quienes consultamos cuando un caso
+      requiere un juicio legal más allá de lo que un LDA puede proveer. Esa
+      colaboración nos mantiene dentro de nuestro alcance, protege al cliente
+      y mantiene el trabajo arraigado en la práctica legal real en lugar de
+      en simple captura de datos.
+    </p>
+    <p>
+      Nos construimos sobre tres compromisos, y preferimos perder un caso
+      antes que romperlos:
+    </p>
+    <ul>
+      <li><strong>Honestidad sobre el alcance.</strong> Si su caso necesita un abogado, lo decimos en la primera llamada y lo referimos. No cobramos «consultas» para averiguar si llegó al lugar correcto — eso es gratis.</li>
+      <li><strong>Honestidad sobre el precio.</strong> Tarifas fijas publicadas antes de comprometerse. Sin escalamiento por hora. Sin cargos sorpresa en la segunda factura.</li>
+      <li><strong>Honestidad sobre los resultados.</strong> Preparamos documentos bajo su dirección. No le decimos si califica, no predecimos si USCIS o un juez dirán «sí», y nunca garantizamos un resultado. Quien lo garantiza es un abogado o alguien en quien no debería confiar.</li>
+    </ul>
+
+    <h2 id="why-we-exist">Por qué existimos</h2>
+    <p>
+      La mayoría de las personas que necesitan papeleo legal no necesitan
+      un abogado. Necesitan el formulario correcto, llenado correctamente,
+      presentado a tiempo, en su propio idioma. Necesitan a alguien que
+      conteste el teléfono, escuche y no cobre $400 por hora por capturar
+      datos. Ese es el espacio que el programa California Legal Document
+      Assistant fue diseñado para llenar — y nosotros lo llenamos de manera
+      transparente, accesible y en el idioma que nuestros clientes
+      realmente hablan en casa.
+    </p>
+    <p>
+      Ajuste de estatus, renovación de la green card, naturalización,
+      asilo, divorcio, reclamos menores, defensa contra desalojo, formación
+      de empresa — la mayoría de estos casos necesitan un par de manos
+      cuidadosas y a alguien que explique lo que está pasando en su propio
+      idioma, no un litigante de tribunal. Cuando un caso realmente
+      necesita un abogado, lo decimos y trabajamos con él a través de
+      nuestro panel de abogados supervisores. Esa es la línea sobre la
+      que se construyó el marco LDA de California, y la respetamos.
+    </p>
+
+    <h2 id="languages">Cuatro idiomas, gente real</h2>
+    <p>
+      Cada intake, cada documento, cada correo de seguimiento — trabajamos
+      de forma nativa en <strong>inglés, ruso, ucraniano y español</strong>.
+      No usamos Google Translate. No usamos chatbots que leen guiones.
+      Personas reales que crecieron hablando estos idiomas, que entienden
+      el contexto cultural detrás de su pregunta y que no le harán
+      reexplicar un término que ya usó. Cuando el formulario está en
+      inglés, lo guiamos por cada casilla; cuando la situación se cuenta
+      en español, escuchamos en español.
+    </p>
+
+    <h2 id="what-makes-us-different">Qué nos hace diferentes</h2>
+    <ul>
+      <li><strong>Precios transparentes.</strong> Tarifas fijas por documento o caso, publicadas antes de comprometerse. Sin cargo de «consulta» para averiguar cuánto cuesta algo. Le decimos el precio primero; usted decide si vale la pena.</li>
+      <li><strong>Disciplina UPL.</strong> Preparamos documentos bajo su dirección — no recomendamos qué formulario presentar, no predecimos resultados, no le decimos si califica. Ese es el trabajo de un abogado, y referimos a abogados cuando un caso realmente lo necesita. No es marketing; así funciona el programa LDA de California y eso lo protege.</li>
+      <li><strong>Rapidez.</strong> La mayoría de las cotizaciones se devuelven el mismo día hábil. La mayoría de los documentos se preparan dentro de 48 horas tras el intake. No lo haremos esperar dos semanas por un formulario de USCIS que podría haber enviado hoy.</li>
+      <li><strong>Soporte multilingüe de principio a fin.</strong> Intake, preparación de documentos y comunicación posterior a la presentación — todo sucede en su idioma. Hay pocos abogados que hablen español con fluidez profesional; nosotros sí.</li>
+      <li><strong>Remoto primero, todo California, toda la nación para inmigración federal.</strong> No necesita manejar a Sacramento. Trabajamos por teléfono, correo, Telegram y un portal de cliente seguro — firmamos documentos electrónicamente cuando se permite, enviamos originales por correo cuando es requerido.</li>
+      <li><strong>Construido tanto para clientes como para abogados.</strong> Trabajamos directamente con personas auto-representadas Y con abogados con licencia como su paralegal independiente. <a href="/mx/for-attorneys">Ver opciones de colaboración para abogados</a>.</li>
+    </ul>
+
+    <h2 id="scope">Lo que hacemos — y lo que no hacemos</h2>
+    <p>
+      <strong>Lo que preparamos:</strong>
+    </p>
+    <ul>
+      <li>Cualquier formulario de USCIS para cualquier estado — la inmigración federal es federal, su estado de residencia no importa (I-485 ajuste, I-130 petición familiar, I-765 permiso de trabajo, I-589 asilo, N-400 naturalización, I-90 renovación de green card, I-131 documento de viaje, I-864 affidavit of support, respuestas a RFE, paquetes completos de evidencia).</li>
+      <li>Procesos en cortes de inmigración EOIR en todo el país (EOIR-29, 42A, 42B, mociones, paquetes de condiciones del país, declaraciones de testigos).</li>
+      <li>Derecho familiar de California (FL-100/110/120 divorcio, FL-150/160 declaraciones financieras, FL-300 RFOs, custodia, manutención, paquetes de juicio).</li>
+      <li>Reclamos menores y casos civiles de California (SC-100 a SC-140, demand letters, embargo de salario, abstract of judgment).</li>
+      <li>Desalojo en California (UD-100/105/110, three-day notices, paquetes por incumplimiento).</li>
+      <li>Sucesiones de California (DE-111/121/160/221, small estate affidavits, inventario).</li>
+      <li>Formación de empresas en California (LLC-1, LLC-12, ARTS-GS, FBN, EIN).</li>
+      <li>Traducción certificada de documentos (ruso, ucraniano, español ↔ inglés) y coordinación de apostilla.</li>
+    </ul>
+    <p>
+      <strong>Lo que no hacemos — por diseño y por ley:</strong> no damos
+      asesoría legal, no lo representamos en la corte, no firmamos
+      escritos procesales, no negociamos con la parte contraria, y no
+      recomendamos qué formulario debe presentar. Si su situación
+      realmente necesita un abogado (litigio, estrategia, comparecencias
+      en corte), lo diremos en la primera llamada y le ayudaremos a
+      encontrar uno. Preferimos perder el caso y conservar su confianza
+      antes que sobrevender lo que un LDA puede hacer.
+    </p>
+
+    <h2 id="compliance">Registro y protección al consumidor</h2>
+    <p>
+      Imverica Legal Solutions está registrada bajo el estatuto Legal
+      Document Assistant de California (Cal. Bus. & Prof. Code
+      §§6400–6415) y el estatuto de Consultor de Inmigración
+      (§§22440–22448). California requiere que los LDA se registren con
+      el secretario del condado, depositen una fianza de $25,000,
+      completen capacitación y renueven anualmente — protecciones que el
+      estado construyó para que los consumidores sepan quién prepara sus
+      documentos. Los números de registro actuales y la información de
+      fianza están en cada acuerdo de intake; cartas de referencia y
+      verificación disponibles a solicitud.
+    </p>
+    <p>
+      Para trabajo de inmigración federal (peticiones de USCIS,
+      presentaciones EOIR), la autoridad aplicable es el Immigration
+      Consultant Act de California y la regulación federal 8 CFR §1.2 /
+      §292.1 — la preparación de documentos estilo paralegal bajo
+      dirección del cliente está permitida en todo el país siempre que
+      nunca demos asesoría legal, nunca comparezcamos ante USCIS o EOIR
+      como su representante, y revelemos en cada paso que no somos
+      abogados ni representantes acreditados.
+    </p>
+
+    <h2 id="contact">Cómo contactarnos</h2>
+    <p>
+      El primer contacto más fácil es el teléfono o el formulario de
+      contacto en este sitio. Respondemos el mismo día hábil, en su idioma.
+    </p>
+    <ul class="contact-list">
+      <li><strong>Teléfono y SMS:</strong> <a href="tel:+19163993992">+1 (916) 399-3992</a></li>
+      <li><strong>Email:</strong> <a href="mailto:info@imverica.com">info@imverica.com</a></li>
+      <li><strong>Telegram:</strong> <a href="https://t.me/imverica" target="_blank" rel="noopener">t.me/imverica</a> (o escriba a nuestro bot <a href="https://t.me/imverica_bot" target="_blank" rel="noopener">@imverica_bot</a> para un intake guiado)</li>
+      <li><strong>Solicitud web:</strong> <a href="/mx/#get-started">Iniciar un caso aquí</a> — formulario de cinco minutos, hasta cinco documentos adjuntos.</li>
+      <li><strong>Portal del cliente:</strong> <a href="/account.html">imverica.com/account</a> — inicie sesión para dar seguimiento a casos abiertos, intercambiar documentos y comunicarse con el equipo.</li>
+    </ul>
+    <p>
+      Con sede en Sacramento, California. Servimos a California en
+      asuntos de cortes estatales y a todos los Estados Unidos en
+      inmigración federal.
+    </p>
+
+    <cite>
+      <strong>Aviso importante.</strong> Imverica Legal Solutions es la
+      marca comercial de <strong>Imverica LLC</strong>, una sociedad de
+      responsabilidad limitada de California. Es un California Legal
+      Document Assistant y Consultor de Inmigración registrado — no un
+      bufete de abogados. No damos asesoría legal, no establecemos una
+      relación abogado-cliente, y no representamos clientes en la corte
+      ni ante USCIS / EOIR como representantes acreditados. Todo el
+      trabajo se realiza bajo la dirección de la parte auto-representada
+      conforme al Cal. Bus. & Prof. Code §§6400–6415 y §§22440–22448.
+    </cite>
+  </LandingBody>
+
+  <CategoryTiles
+    kicker="Adónde ir"
+    heading="Elija un área de servicio"
+    intro="Si ya sabe lo que necesita, vaya directo:"
+    tiles={[
+      { icon: '🛂', title: 'USCIS y EOIR',           desc: 'I-485, I-130, I-765, asilo, defensa contra deportación — cualquier estado.', href: '/mx/immigration', color: 'var(--navy)' },
+      { icon: '👨‍👩‍👧', title: 'Familia (CA)',         desc: 'Divorcio, custodia, manutención, modificaciones post-juicio.', href: '/mx/fl', color: 'var(--terracotta)' },
+      { icon: '📃', title: 'Reclamos menores',       desc: 'SC-100, demand letters, cobro de juicio.', href: '/mx/sc', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Desalojo',               desc: 'UD-100, three-day notices, paquetes por incumplimiento.', href: '/mx/california-unlawful-detainer', color: 'var(--gold)' },
+      { icon: '🏛️', title: 'Sucesiones',             desc: 'Serie DE-111, small estate affidavits.', href: '/mx/california-probate', color: 'var(--navy-light)' },
+      { icon: '🏢', title: 'Trámites empresariales', desc: 'LLC-1, ARTS-GS, FBN/DBA, EIN, foreign-LLC.', href: '/mx/business', color: 'var(--terracotta-deep)' },
+      { icon: '🤝', title: 'Para abogados',          desc: 'Paralegal independiente — USCIS nacional, cortes CA.', href: '/mx/for-attorneys', color: 'var(--terracotta)' },
+      { icon: '📚', title: '¿Qué es un LDA?',        desc: 'Cal. Bus. & Prof. Code §§6400–6415 en lenguaje sencillo.', href: '/mx/lda', color: 'var(--navy)' }
+    ]}
+  />
+
+  <CTAStrip
+    heading="Listos cuando usted lo esté."
+    sub="Respuesta el mismo día. Documentos preparados en 48 horas. Cuatro idiomas. Tarifas accesibles y transparentes."
+    primaryHref="/mx/#get-started"
+    primaryText="Iniciar su caso"
+  />
+
+  <style>
+    .contact-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 18px 0;
+    }
+    .contact-list li {
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      background: rgba(26,46,74,0.04);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 6px 6px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .contact-list a {
+      color: var(--navy);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .contact-list a:hover {
+      color: var(--terracotta-deep);
+    }
+  </style>
+</BaseLayout>

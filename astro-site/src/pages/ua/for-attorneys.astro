@@ -1,0 +1,258 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'uk' as const;
+const title = 'Для адвокатів — Доступна paralegal-підтримка, USCIS та EOIR по всіх США | Imverica';
+const description = 'Imverica — ваш незалежний paralegal-партнер. Готуємо петиції USCIS та справи EOIR для адвокатів по всій країні, а також документи судів штату Каліфорнія (сімейне право, малі позови, виселення, спадкові справи, бізнес) для каліфорнійських адвокатів. Готові співпрацювати. Pay-by-project, погодинна або retainer.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Independent Paralegal Services for Attorneys',
+  areaServed: [
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'State', name: 'California' }
+  ],
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: "Незалежні paralegal-послуги для адвокатів. Петиції USCIS та справи в імміграційних судах EOIR — для адвокатів будь-якого штату США (федеральні форми, без обмежень за штатною ліцензією). Справи в судах штату Каліфорнія (сімейне право, малі позови, виселення, спадкові справи, бізнес) — для каліфорнійських адвокатів. Підготовка документів під керівництвом адвоката."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/ua/for-attorneys"
+  slug="/for-attorneys" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <div class="for-attorneys-hero">
+    <Hero
+      lang={lang}
+      eyebrow="Для адвокатів · USCIS і EOIR по всіх США · Суди штату Каліфорнія"
+      heading="Доступна paralegal-підтримка — під вашим керівництвом"
+      sub="Ваш paralegal-партнер повного циклу. Беремо на себе петиції USCIS і роботу в імміграційних судах EOIR для адвокатів будь-якого штату, а також справи в судах штату Каліфорнія (сімейне право, малі позови, виселення, спадкові справи, бізнес) для каліфорнійських адвокатів. Ви залишаєтесь counsel of record. Ми готуємо документи — точно, у строк, за шаблонами вашої фірми. Готові співпрацювати на одну справу або на регулярний потік."
+      ctaPrimary={{ href: '#fees', text: 'Тарифи та умови' }}
+    />
+  </div>
+
+  <CategoryTiles
+    kicker="Що ми беремо на себе"
+    heading="Напрямки, з якими ми працюємо"
+    intro="USCIS і EOIR — федеральні, працюємо з адвокатами будь-якого штату США. Каліфорнійські справи штату (сімейне право, малі позови, виселення, спадкові справи, бізнес) — для адвокатів, ліцензованих у Каліфорнії. Оберіть категорію — ми покажемо структури тарифів та зрозумілий шлях до співпраці. Ці плитки ведуть до нашого прайсингу та контактів, а не до клієнтського intake. Ви — адвокат; це ваш B2B-вид."
+    tiles={[
+      { icon: '🛂', title: 'Петиції USCIS · по всіх США', desc: 'I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864 пакети, відповіді на RFE, індекси доказів. Федеральні форми — будь-який штат.', href: '#fees', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'Справи EOIR · по всіх США',  desc: 'EOIR-29 / 42A / 42B / 40, motions to reopen/reconsider, пакети доказів, країнові матеріали, declarations свідків. Федеральний імміграційний суд — будь-який штат.', href: '#fees', color: 'var(--navy-dark)' },
+      { icon: '👨‍👩‍👧', title: 'Сімейне право · CA',       desc: 'FL-100/110/120/150/160/300, пакети з опіки, UCCJEA, judgment-документи, post-judgment modifications.', href: '#fees', color: 'var(--terracotta)' },
+      { icon: '📃', title: 'Малі позови та civil · CA',  desc: 'SC-100/120/104/133/140, demand letters, утримання із заробітної плати, abstract of judgment, civil cover sheets, POS.', href: '#fees', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Виселення · CA',              desc: 'UD-100/105/110, three-day notices, default-пакети, post-judgment writs.', href: '#fees', color: 'var(--gold)' },
+      { icon: '🏛️', title: 'Спадкові справи · CA',        desc: 'Серія DE-111/121/160/221, small estate affidavits, probate notice та inventory-пакети.', href: '#fees', color: 'var(--navy-light)' },
+      { icon: '🏢', title: 'Реєстрація бізнесу · CA',     desc: 'LLC-1 / LLC-12, ARTS-GS, SI-550, FBN/DBA, підтримка SS-4 EIN, operating agreements, foreign-LLC.', href: '#fees', color: 'var(--terracotta-deep)' },
+      { icon: '🌐', title: 'Переклад і нотаріат',         desc: 'Сертифікований переклад російська / українська / іспанська, координація апостилювання, виїзний нотаріус. По всіх США.', href: '#fees', color: 'var(--navy)' }
+    ]}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' },
+    { href: '/ua/immigration', label: 'USCIS і EOIR документи, які ми готуємо' },
+    { href: '/ua/fl', label: 'Форми сімейного права (FL-)' },
+    { href: '/ua/sc', label: 'Малі позови та civil (SC-)' },
+    { href: '/ua/business', label: 'Реєстрація бізнесу (LLC-, ARTS-, FBN)' }
+  ]}>
+    <p class="lead">
+      <strong>Готові співпрацювати з вашою фірмою.</strong> Ви — адвокат
+      з завантаженим календарем, ми — надійна пара рук, яка готує папери
+      акуратно, у строк, голосом вашого клієнта. Чи ви соло-імміграційний
+      адвокат у Нью-Йорку, що подає одну справу I-589, чи каліфорнійська
+      фірма зі стабільним потоком сімейних кейсів — ми вбудовуємось як
+      ваш незалежний paralegal: складаємо форми, збираємо exhibit-папки,
+      будуємо індекси доказів, перетворюємо ваші strategy notes у готовий
+      до подання пакет. Ви залишаєтесь counsel of record. Ми залишаємось
+      невидимими клієнту, якщо ви не захочете іншого. <strong>Одна справа,
+      десять справ або постійна підтримка — будемо раді працювати з вами.</strong>
+    </p>
+
+    <h2 id="who-we-help">З ким ми працюємо</h2>
+    <p>
+      Ми співпрацюємо з адвокатами по всій країні з федеральних
+      імміграційних справ і з каліфорнійськими адвокатами зі справ штату:
+    </p>
+    <ul>
+      <li><strong>Імміграційні адвокати в будь-якому штаті США</strong> — соло та невеликі фірми, що ведуть adjustment, asylum, family-petition, removal-defense, naturalization та гуманітарні справи. USCIS і EOIR — федеральні, тож обмежень за штатною ліцензією для нашої paralegal-роботи немає — співпрацюємо з адвокатами від Нью-Йорка до Техасу і Флориди, і всюди між ними.</li>
+      <li><strong>Каліфорнійські адвокати сімейного права</strong>, що тонуть у форменно-важких поданнях (FL-150 income-and-expense, FL-160 property declarations, FL-300 RFOs, FL-105 UCCJEA, judgment-пакети, post-judgment modifications).</li>
+      <li><strong>Каліфорнійські litigation-адвокати</strong>, яким потрібні чисто підготовлені пакети з малих позовів та civil-справ, щоб звільнити асоціатів для реальної юридичної роботи.</li>
+      <li><strong>Каліфорнійські estate-planning адвокати</strong> з probate, small-estate і пост-спадковою адміністративною роботою.</li>
+      <li><strong>Каліфорнійські business-адвокати</strong>, яким потрібно винести зовні формування організацій, реєстрацію foreign-LLC і пост-реєстраційний compliance.</li>
+      <li><strong>Мультиштатні фірми</strong>, яким потрібен один paralegal-партнер і для федеральної імміграційної практики, і для каліфорнійського desk.</li>
+    </ul>
+
+    <h2 id="how-we-work">Як ми працюємо з вашою фірмою</h2>
+    <p>
+      <strong>Старт — швидкий і неформальний; ми хочемо, щоб вам було
+      легко сказати «так».</strong> Надсилаєте справу (intake-замітки,
+      дані клієнта, стратегічні рішення, які ви вже прийняли). Ми
+      підтверджуємо scope і строки письмово у той самий робочий день.
+      Готуємо документи в улюбленому стильовому шаблоні вашої фірми —
+      ваш letterhead, ваші форматні конвенції, ваша нумерація exhibits.
+      Ви перевіряєте й підписуєте. Ми ніколи не тримаємо клієнтську
+      справу довше, ніж потрібно для поточного завдання; усе, чого ми
+      торкаємось, шифрується у спокої і при передачі. Conflict checks,
+      конфіденційність, протоколи supervisorship за ABA Model Rule 5.3 —
+      усе закриємо до вашого задоволення до першої справи.
+    </p>
+    <p>
+      Ми не надаємо юридичних консультацій — це ваша робота. Ми не
+      підписуємо те, що вимагає члена колегії адвокатів — це теж ваша
+      робота. Ми беремо на себе володіння формами, введення даних,
+      cross-referencing, цитування і proofreading. Ви тримаєте право і
+      відносини з клієнтом. Ми працюємо з адвокатами вже роки і знаємо,
+      як бути корисними, не виходячи за свою лінію.
+    </p>
+
+    <h2 id="fees">Тарифні моделі — оберіть ту, що підходить вашому білінгу</h2>
+
+    <div class="fee-grid">
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">📐</div>
+        <h3>Pay by project (за проєкт)</h3>
+        <p class="fee-card-lead">Фіксована ціна за конкретну справу.</p>
+        <p>
+          Найкраще, коли scope зрозумілий одразу (пакет I-485 adjustment,
+          FL-100 petition + summons + UCCJEA, SC-100 + service тощо).
+          Надсилаємо письмову котировку після короткого intake-дзвінка —
+          зазвичай у той самий робочий день. Ви схвалюєте, ми робимо.
+          Без сюрпризів і без погодинної накрутки.
+        </p>
+      </div>
+
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">⏱️</div>
+        <h3>Pay as you go (погодинна)</h3>
+        <p class="fee-card-lead">Погодинний білінг — без місячних зобов'язань.</p>
+        <p>
+          Для адвокатів з непередбачуваним обсягом або швидкими разовими
+          завданнями. Фіксована ставка за годину, білінг із кроком у
+          десяту частину години, інвойс раз на місяць. Добре для фірм,
+          яким просто потрібна paralegal-потужність «на вимогу» без
+          підписки на retainer-години, які можуть не знадобитись.
+        </p>
+      </div>
+
+      <div class="fee-card fee-card-highlight">
+        <div class="fee-card-icon" aria-hidden="true">⭐</div>
+        <h3>Monthly retainer (щомісячний)</h3>
+        <p class="fee-card-lead">10+ годин на місяць за зниженою ставкою.</p>
+        <p>
+          Для фірм, які стабільно використовують 10+ paralegal-годин на
+          місяць. Оплата наперед, фіксуєте знижену погодинну ставку і
+          отримуєте пріоритетний turnaround. Будь-які години понад
+          мінімум — за тією самою зниженою ставкою. Більшість
+          адвокатів-клієнтів переходять на цей варіант після кварталу
+          роботи з нами.
+        </p>
+      </div>
+
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">🤝</div>
+        <h3>Знижки та реферальні</h3>
+        <p class="fee-card-lead">Ціни для нових клієнтів та за рефералів.</p>
+        <p>
+          Нові адвокати-клієнти отримують знижений вступний тариф на
+          першу справу. Реферал іншого адвоката в Imverica приносить
+          обом фірмам кредит на наступний інвойс. Довгострокові партнери
+          (12+ місяців безперервної співпраці) автоматично переводяться
+          на наш топ-тариф.
+        </p>
+      </div>
+    </div>
+
+    <p class="affordable-note">
+      <strong>Усі ставки доступні й обговорювані — нам потрібен ваш
+      бізнес, і ми готові оцінити так, щоб його заслужити.</strong>
+      Надішліть sample-справу або поточну paralegal-вартість; повернемось
+      із котировкою зазвичай на 30–50% нижче еквівалентного часу
+      in-house асоціата. Перша справа у нових адвокатів-клієнтів —
+      завжди за вступним тарифом: спробуйте нас із мінімальним ризиком.
+    </p>
+
+    <h2 id="what-we-do-not-do">Чого ми не робимо</h2>
+    <p>
+      Ми не надаємо юридичних консультацій. Ми не виступаємо в суді.
+      Ми не підписуємо процесуальні документи. Ми не ведемо переговорів
+      із протилежною стороною. Ми не консультуємо вашого клієнта
+      безпосередньо без вашого письмового дозволу на комунікацію. Увесь
+      work product — ваш, готується під вашим керівництвом, білиться
+      прозоро, з умовами конфіденційності, що відповідають тому, що ви
+      очікуєте від власного штатного співробітника.
+    </p>
+
+    <h2 id="next-step">Давайте поговоримо</h2>
+    <p>
+      Найпростіший перший крок: <strong>зателефонуйте або напишіть SMS
+      на +1 (916) 399-3992</strong>, або надішліть sample-справу через
+      контактну форму нижче. Відповімо в той самий робочий день —
+      фіксованою котировкою, погодинною оцінкою або retainer-пропозицією,
+      залежно від того, що підходить. Жодних зобов'язань для початку.
+      Якщо ми не підходящий варіант — скажемо це на першому дзвінку;
+      якщо підходимо — зазвичай підписана engagement-угода і перша
+      deliverable у межах 48 годин.
+    </p>
+    <p>
+      <strong>Ми щиро раді можливості співпрацювати з адвокатами</strong> —
+      чи ви соло-імміграційний практик в іншому штаті, що шукає надійну
+      USCIS-підтримку, чи каліфорнійська фірма, що будує довгострокові
+      paralegal-відносини. Зв'яжіться — подивимось, як можемо допомогти.
+    </p>
+
+    <cite>
+      <strong>Регуляторна довідка.</strong> Imverica Legal Solutions —
+      це зареєстрований у Каліфорнії Legal Document Assistant
+      (Cal. Bus. & Prof. Code §§6400–6415) та Immigration Consultant
+      (§§22440–22448). <strong>Для петицій USCIS та роботи в імміграційних
+      судах EOIR Imverica може бути залучена адвокатом, ліцензованим у
+      будь-якому штаті США</strong> — це федеральні процедури, і
+      обмеження за штатною ліцензією адвоката не поширюються на
+      paralegal-підтримку. Уся paralegal-робота, що виконується для
+      адвоката, за визначенням ведеться під його супервізією та
+      керівництвом — згідно з ABA Model Rule 5.3 та аналогічними
+      правилами штатів — тож LDA-обмеження на надання юридичних
+      консультацій не застосовуються до paralegal-підтримки під
+      керівництвом ліцензованого адвоката. Рекомендації надаються на запит.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Папери — нам. Практика — вам."
+    sub="Федеральна імміграція по всіх США · Суди штату Каліфорнія. Pay-by-project, погодинна або retainer — працюємо на ваших умовах."
+    primaryHref="/ua/#get-started?topic=for-attorneys"
+    primaryText="Надіслати sample-справу"
+  />
+
+  <style is:global>
+    .for-attorneys-hero .hero-wrap .hero { max-width: 1240px; }
+    .for-attorneys-hero .hero-wrap .hero h1 {
+      max-width: none;
+      font-size: clamp(22px, 3.6vw, 44px);
+      text-wrap: balance;
+    }
+    @media (min-width: 1100px) {
+      .for-attorneys-hero .hero-wrap .hero h1 { white-space: nowrap; }
+    }
+  </style>
+
+  <style>
+    .fee-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 28px 0 8px; }
+    @media (max-width: 760px) { .fee-grid { grid-template-columns: 1fr; } }
+    .fee-card { background: #fff; border: 1px solid rgba(40,30,20,0.10); border-radius: 14px; padding: 22px 22px 18px; box-shadow: 0 6px 18px rgba(40,30,20,0.04); }
+    .fee-card-highlight { border-color: var(--terracotta-deep); box-shadow: 0 10px 26px rgba(164,91,52,0.12); position: relative; }
+    .fee-card-highlight::before {
+      content: 'Найпопулярніший';
+      position: absolute; top: -10px; right: 16px;
+      background: var(--terracotta-deep); color: #fff;
+      font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+      font-weight: 700; padding: 5px 10px; border-radius: 999px;
+    }
+    .fee-card-icon { font-size: 26px; margin-bottom: 8px; }
+    .fee-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy-dark); margin: 0 0 6px; }
+    .fee-card-lead { color: var(--terracotta-deep); font-weight: 600; font-size: 13px; margin: 0 0 10px; }
+    .fee-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.65; color: #3a4a5e; }
+    .affordable-note { background: #fffaf2; border-left: 4px solid var(--terracotta-deep); padding: 14px 18px; border-radius: 4px; font-size: 14px; line-height: 1.65; margin: 24px 0 8px; }
+  </style>
+</BaseLayout>

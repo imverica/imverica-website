@@ -87,7 +87,11 @@ const translatedSlugs = new Set<string>([
   '/eoir-29-notice-of-appeal',
   '/eoir-42a-cancellation-lpr',
   '/eoir-42b-cancellation-non-lpr',
-  '/eoir-40-suspension-of-deportation'
+  '/eoir-40-suspension-of-deportation',
+  // Company-level pages (About + B2B paralegal-for-attorneys + Pricing)
+  '/about',
+  '/for-attorneys',
+  '/pricing'
 ]);
 
 /** Build a per-locale URL from a slug. Uses the prefix in LOCALES, so URLs
@@ -126,6 +130,7 @@ export const NAV: Record<Locale, {
   family: string;
   civil: string;
   business: string;
+  pricing: string;
   forAttorneys: string;
   about: string;
   portal: string;
@@ -138,6 +143,7 @@ export const NAV: Record<Locale, {
     family: 'Family Law',
     civil: 'Small Claims & Civil',
     business: 'Business',
+    pricing: 'Pricing',
     forAttorneys: 'For Attorneys',
     about: 'About Us',
     portal: 'Client Portal',
@@ -150,6 +156,7 @@ export const NAV: Record<Locale, {
     family: 'Семейное право',
     civil: 'Малые иски и гражданские дела',
     business: 'Бизнес',
+    pricing: 'Цены',
     forAttorneys: 'Для адвокатов',
     about: 'О нас',
     portal: 'Кабинет',
@@ -162,6 +169,7 @@ export const NAV: Record<Locale, {
     family: 'Сімейне право',
     civil: 'Малі позови та цивільні справи',
     business: 'Бізнес',
+    pricing: 'Ціни',
     forAttorneys: 'Для адвокатів',
     about: 'Про нас',
     portal: 'Кабінет',
@@ -174,6 +182,7 @@ export const NAV: Record<Locale, {
     family: 'Familia',
     civil: 'Reclamos menores',
     business: 'Negocios',
+    pricing: 'Precios',
     forAttorneys: 'Para Abogados',
     about: 'Acerca',
     portal: 'Mi portal',
@@ -199,28 +208,28 @@ export const FOOTER: Record<Locale, {
     servicesCivil: 'California Court',
     about: 'About',
     brandLine: 'Legal Document Assistant · Immigration Consultant · California',
-    disclaimer: '© {year} Imverica Legal Solutions — a registered & bonded California Legal Document Assistant and Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 and §§22440-22448).||Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice, and no attorney-client relationship is created by use of this site. Documents are prepared solely at the client\'s direction. If you need legal advice, consult a licensed attorney.'
+    disclaimer: '© {year} Imverica LLC, dba Imverica Legal Solutions — a California limited liability company; a registered & bonded California Legal Document Assistant and Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 and §§22440-22448).||Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice, and no attorney-client relationship is created by use of this site. Documents are prepared solely at the client\'s direction. If you need legal advice, consult a licensed attorney.'
   },
   ru: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Калифорнийский суд',
     about: 'О нас',
     brandLine: 'Помощник по юридическим документам · Иммиграционный консультант · Калифорния',
-    disclaimer: '© {year} Imverica Legal Solutions — зарегистрированный и застрахованный California Legal Document Assistant и Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 и §§22440-22448).||Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций; отношения «адвокат-клиент» не возникают при использовании этого сайта. Документы готовятся исключительно по поручению клиента. Если вам нужна юридическая консультация — обратитесь к лицензированному адвокату.'
+    disclaimer: '© {year} Imverica LLC, под брендом Imverica Legal Solutions — компания с ограниченной ответственностью в штате Калифорния; зарегистрированный и застрахованный California Legal Document Assistant и Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 и §§22440-22448).||Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций; отношения «адвокат-клиент» не возникают при использовании этого сайта. Документы готовятся исключительно по поручению клиента. Если вам нужна юридическая консультация — обратитесь к лицензированному адвокату.'
   },
   uk: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Каліфорнійський суд',
     about: 'Про нас',
     brandLine: 'Помічник з юридичних документів · Імміграційний консультант · Каліфорнія',
-    disclaimer: '© {year} Imverica Legal Solutions — зареєстрований і застрахований California Legal Document Assistant та Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 та §§22440-22448).||Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій; відносини «адвокат-клієнт» не виникають при використанні цього сайту. Документи готуються виключно за дорученням клієнта. Якщо вам потрібна юридична консультація — зверніться до ліцензованого адвоката.'
+    disclaimer: '© {year} Imverica LLC, під брендом Imverica Legal Solutions — компанія з обмеженою відповідальністю штату Каліфорнія; зареєстрований і застрахований California Legal Document Assistant та Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 та §§22440-22448).||Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій; відносини «адвокат-клієнт» не виникають при використанні цього сайту. Документи готуються виключно за дорученням клієнта. Якщо вам потрібна юридична консультація — зверніться до ліцензованого адвоката.'
   },
   es: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Corte de California',
     about: 'Sobre nosotros',
     brandLine: 'Asistente de Documentos Legales · Consultor de Inmigración · California',
-    disclaimer: '© {year} Imverica Legal Solutions — California Legal Document Assistant e Immigration Consultant registrado y afianzado (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal; no se crea relación abogado-cliente por el uso de este sitio. Los documentos se preparan únicamente bajo la dirección del cliente. Si necesita asesoría legal, consulte a un abogado con licencia.'
+    disclaimer: '© {year} Imverica LLC, operando como Imverica Legal Solutions — sociedad de responsabilidad limitada de California; California Legal Document Assistant e Immigration Consultant registrado y afianzado (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal; no se crea relación abogado-cliente por el uso de este sitio. Los documentos se preparan únicamente bajo la dirección del cliente. Si necesita asesoría legal, consulte a un abogado con licencia.'
   }
 };
 

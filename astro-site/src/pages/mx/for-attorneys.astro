@@ -1,0 +1,267 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const lang = 'es' as const;
+const title = 'Para Abogados — Apoyo paralegal accesible, USCIS y EOIR a nivel nacional | Imverica';
+const description = 'Imverica es su socio paralegal independiente. Preparamos peticiones de USCIS y presentaciones EOIR para abogados en todo el país, y documentos de cortes del estado de California (derecho familiar, reclamos menores, desalojo, sucesiones, empresas) para abogados de California. Listos para colaborar. Por proyecto, por hora o retainer.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Independent Paralegal Services for Attorneys',
+  areaServed: [
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'State', name: 'California' }
+  ],
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  description: "Servicios paralegales independientes para abogados. Peticiones USCIS y presentaciones en cortes de inmigración EOIR — para abogados de cualquier estado de EE.UU. (formularios federales, sin restricción de barra estatal). Asuntos en cortes del estado de California (derecho familiar, reclamos menores, desalojo, sucesiones, empresas) — para abogados de California. Preparación de documentos bajo la dirección del abogado."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/for-attorneys"
+  slug="/for-attorneys" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <div class="for-attorneys-hero">
+    <Hero
+      lang={lang}
+      eyebrow="Para abogados · USCIS y EOIR nacional · Corte estatal de California"
+      heading="Apoyo paralegal accesible — bajo su dirección"
+      sub="Su socio paralegal de servicio completo. Manejamos peticiones USCIS y trabajo en cortes de inmigración EOIR para abogados de cualquier estado, y asuntos de corte estatal de California (derecho familiar, reclamos menores, desalojo, sucesiones, empresas) para abogados de California. Usted permanece counsel of record. Nosotros preparamos los papeles — con precisión, a tiempo, en las plantillas de su firma. Listos para colaborar en un solo asunto o en un flujo constante de trabajo."
+      ctaPrimary={{ href: '#fees', text: 'Ver estructuras de tarifas' }}
+    />
+  </div>
+
+  <CategoryTiles
+    kicker="Lo que manejamos para su firma"
+    heading="Áreas de práctica que apoyamos"
+    intro="USCIS y EOIR son federales — trabajamos con abogados de cualquier estado. Los asuntos específicos de California (derecho familiar, reclamos menores, desalojo, sucesiones, empresas) los manejamos para abogados de California. Elija una categoría y le mostraremos nuestras estructuras de tarifas y un camino claro para contratarnos — estas piezas llevan a nuestra sección de precios y contacto, no a un intake de cliente. Usted es el abogado; esta es su vista B2B."
+    tiles={[
+      { icon: '🛂', title: 'Peticiones USCIS · nacional', desc: 'I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864 paquetes, respuestas a RFE, índices de evidencia. Formularios federales — cualquier estado.', href: '#fees', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'Presentaciones EOIR · nacional', desc: 'EOIR-29 / 42A / 42B / 40, motions to reopen/reconsider, paquetes de evidencia, condiciones del país, declarations de testigos. Corte federal de inmigración — cualquier estado.', href: '#fees', color: 'var(--navy-dark)' },
+      { icon: '👨‍👩‍👧', title: 'Derecho familiar · CA',     desc: 'FL-100/110/120/150/160/300, paquetes de custodia, UCCJEA, documentos de juicio, modificaciones post-juicio.', href: '#fees', color: 'var(--terracotta)' },
+      { icon: '📃', title: 'Reclamos menores · CA',       desc: 'SC-100/120/104/133/140, demand letters, embargo de salario, abstract of judgment, civil cover sheets, POS.', href: '#fees', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Desalojo · CA',                desc: 'UD-100/105/110, three-day notices, paquetes por incumplimiento, post-judgment writs.', href: '#fees', color: 'var(--gold)' },
+      { icon: '🏛️', title: 'Sucesiones · CA',              desc: 'Serie DE-111/121/160/221, small estate affidavits, notice de probate y paquetes de inventario.', href: '#fees', color: 'var(--navy-light)' },
+      { icon: '🏢', title: 'Formación de empresas · CA',   desc: 'LLC-1 / LLC-12, ARTS-GS, SI-550, FBN/DBA, soporte SS-4 EIN, operating agreements, foreign-LLC.', href: '#fees', color: 'var(--terracotta-deep)' },
+      { icon: '🌐', title: 'Traducción y notaría',         desc: 'Traducciones certificadas ruso / ucraniano / español, coordinación de apostilla, notario móvil. A nivel nacional.', href: '#fees', color: 'var(--navy)' }
+    ]}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' },
+    { href: '/mx/immigration', label: 'Documentos de USCIS y EOIR que preparamos' },
+    { href: '/mx/fl', label: 'Formularios de derecho familiar (FL-)' },
+    { href: '/mx/sc', label: 'Reclamos menores y civil (SC-)' },
+    { href: '/mx/business', label: 'Formación de empresas (LLC-, ARTS-, FBN)' }
+  ]}>
+    <p class="lead">
+      <strong>Listos para colaborar con su firma.</strong> Usted es un
+      abogado con un calendario lleno; nosotros somos el par de manos
+      confiable que prepara los papeles con precisión, a tiempo, en la
+      voz de su cliente. Ya sea que sea un abogado de inmigración solo
+      en Nueva York presentando un solo I-589, o una firma de California
+      con un flujo constante de asuntos de derecho familiar — nos
+      integramos como su paralegal independiente: redactamos formularios,
+      armamos exhibit binders, construimos índices de evidencia y
+      convertimos sus notas de estrategia en un paquete listo para
+      presentar. Usted permanece counsel of record. Nosotros permanecemos
+      invisibles al cliente, a menos que usted quiera lo contrario.
+      <strong>Un asunto, diez asuntos o apoyo continuo — nos encantaría
+      trabajar con usted.</strong>
+    </p>
+
+    <h2 id="who-we-help">Con quién trabajamos</h2>
+    <p>
+      Colaboramos con abogados de todo el país en asuntos federales de
+      inmigración, y con abogados con licencia de California en trabajo
+      de corte estatal:
+    </p>
+    <ul>
+      <li><strong>Abogados de inmigración en cualquier estado de EE.UU.</strong> — abogados solos y firmas pequeñas que manejan adjustment, asylum, family-petition, removal-defense, naturalization y trámites humanitarios. USCIS y EOIR son federales, así que no aplica la restricción de barra estatal a nuestro trabajo paralegal — colaboramos con abogados desde Nueva York hasta Texas y Florida y todos los puntos intermedios.</li>
+      <li><strong>Abogados de derecho familiar de California</strong> que se ahogan en presentaciones cargadas de formularios (FL-150 income-and-expense, FL-160 property declarations, FL-300 RFOs, FL-105 UCCJEA, paquetes de juicio, modificaciones post-juicio).</li>
+      <li><strong>Abogados litigantes de California</strong> que necesitan paquetes de reclamos menores y civiles preparados con limpieza para liberar tiempo de asociados para verdadera abogacía.</li>
+      <li><strong>Abogados de planificación patrimonial de California</strong> con probate, small-estate y trabajo administrativo post-decedente.</li>
+      <li><strong>Abogados empresariales de California</strong> que desean externalizar formación de entidades, registro de foreign-LLC y compliance post-formación.</li>
+      <li><strong>Firmas multi-estatales</strong> que quieren un solo socio paralegal para su práctica de inmigración federal y cualquier desk de California que operen.</li>
+    </ul>
+
+    <h2 id="how-we-work">Cómo trabajamos con su firma</h2>
+    <p>
+      <strong>El compromiso es rápido e informal — queremos hacer que
+      sea fácil decir «sí».</strong> Envíenos el asunto (notas de
+      intake, información del cliente, decisiones estratégicas que
+      usted ya tomó). Confirmamos scope y cronograma por escrito el
+      mismo día hábil. Preparamos los documentos en el estilo preferido
+      de su firma — su letterhead, sus convenciones de formato, su
+      numeración de exhibits. Usted revisa y firma. Nunca retenemos el
+      archivo de su cliente más allá de lo necesario para la tarea
+      inmediata; todo lo que tocamos está cifrado en reposo y en
+      tránsito. Conflict checks, términos de confidencialidad, protocolos
+      de supervisión bajo ABA Model Rule 5.3 — todo manejado a su
+      satisfacción antes de comenzar el primer asunto.
+    </p>
+    <p>
+      No damos asesoría legal — ese es su trabajo. No firmamos nada que
+      requiera un miembro del Colegio Estatal — ese también es su
+      trabajo. Manejamos el dominio de los formularios, la captura de
+      datos, el cross-referencing, las citas y la corrección. Usted
+      maneja la ley y la relación con el cliente. Hemos trabajado con
+      abogados durante años y sabemos cómo ser útiles sin salirnos
+      nunca de nuestro carril.
+    </p>
+
+    <h2 id="fees">Estructuras de tarifas — elija la que se ajuste a cómo factura</h2>
+
+    <div class="fee-grid">
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">📐</div>
+        <h3>Por proyecto</h3>
+        <p class="fee-card-lead">Cotización fija por cada asunto definido.</p>
+        <p>
+          Mejor cuando el scope está claro desde el inicio (paquete I-485
+          adjustment, FL-100 petition + summons + UCCJEA, SC-100 + service,
+          etc.). Enviamos una cotización por escrito después de una
+          breve llamada de intake — usualmente el mismo día hábil.
+          Usted aprueba, nosotros entregamos. Sin sorpresas y sin
+          escalamiento por hora.
+        </p>
+      </div>
+
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">⏱️</div>
+        <h3>Pagar conforme se usa</h3>
+        <p class="fee-card-lead">Facturación por hora — sin compromiso mensual.</p>
+        <p>
+          Para abogados con volumen impredecible o solicitudes rápidas
+          ocasionales. Tarifa fija por hora, facturada en incrementos
+          de un décimo de hora, factura mensual. Genial para firmas que
+          solo quieren capacidad paralegal disponible sin comprometerse
+          a horas de retainer que quizá no usen.
+        </p>
+      </div>
+
+      <div class="fee-card fee-card-highlight">
+        <div class="fee-card-icon" aria-hidden="true">⭐</div>
+        <h3>Retainer mensual</h3>
+        <p class="fee-card-lead">10+ horas/mes a tarifa con descuento.</p>
+        <p>
+          Para firmas que usan consistentemente 10 o más horas paralegal
+          al mes. Paga por adelantado, asegura una tarifa por hora
+          reducida y reserva turnaround prioritario. Cualquier hora más
+          allá del mínimo comprometido también se factura a la tarifa
+          reducida. La mayoría de abogados-clientes eligen esta opción
+          después de un trimestre trabajando con nosotros.
+        </p>
+      </div>
+
+      <div class="fee-card">
+        <div class="fee-card-icon" aria-hidden="true">🤝</div>
+        <h3>Descuentos y referidos</h3>
+        <p class="fee-card-lead">Precios para nuevos clientes y referidos.</p>
+        <p>
+          Los nuevos clientes-abogados obtienen una tarifa introductoria
+          con descuento en el primer asunto. Referir a otro abogado a
+          Imverica da a ambas firmas un crédito en la siguiente factura.
+          Los socios a largo plazo (12+ meses de compromiso continuo)
+          se mueven automáticamente a nuestra tarifa de nivel superior.
+        </p>
+      </div>
+    </div>
+
+    <p class="affordable-note">
+      <strong>Todas las tarifas son accesibles y negociables —
+      queremos su negocio y fijaremos el precio para ganárnoslo.</strong>
+      Envíenos un asunto de muestra o su estructura actual de costos
+      paralegal; le devolveremos una cotización típicamente 30–50%
+      por debajo del tiempo equivalente de asociado in-house para el
+      mismo trabajo. Los nuevos clientes-abogados siempre obtienen una
+      tarifa introductoria en su primer asunto — pruébenos con bajo riesgo.
+    </p>
+
+    <h2 id="what-we-do-not-do">Lo que no hacemos</h2>
+    <p>
+      No damos asesoría legal. No comparecemos en corte. No firmamos
+      escritos procesales. No negociamos con la parte contraria. No
+      asesoramos a su cliente directamente sin su autorización escrita
+      para comunicarnos. Todo el work product es suyo, preparado bajo
+      su dirección, facturado de manera transparente, con términos de
+      confidencialidad equivalentes a los que esperaría de personal
+      interno.
+    </p>
+
+    <h2 id="next-step">Empecemos una conversación</h2>
+    <p>
+      El primer paso más fácil: <strong>llame o envíe SMS al
+      +1 (916) 399-3992</strong> o envíe un asunto de muestra a través
+      del formulario de contacto abajo. Responderemos el mismo día hábil
+      con una cotización fija, un estimado por hora o una propuesta de
+      retainer — lo que se ajuste al asunto. Sin compromiso para
+      comenzar. Si no somos el ajuste correcto, lo diremos en la
+      primera llamada; si lo somos, usualmente podemos tener un
+      engagement firmado y un primer deliverable en menos de 48 horas.
+    </p>
+    <p>
+      <strong>Estamos genuinamente emocionados de colaborar con
+      abogados</strong> — ya sea un practicante solo de inmigración en
+      otro estado buscando apoyo confiable de USCIS, o una firma de
+      California construyendo una relación paralegal a largo plazo.
+      Contáctenos y veamos cómo podemos ayudar.
+    </p>
+
+    <cite>
+      <strong>Nota regulatoria.</strong> Imverica Legal Solutions es un
+      California Legal Document Assistant registrado (Cal. Bus. & Prof.
+      Code §§6400–6415) y Consultor de Inmigración (§§22440–22448).
+      <strong>Para peticiones USCIS y trabajo en cortes de inmigración
+      EOIR, Imverica puede ser contratada por cualquier abogado con
+      licencia en cualquier estado de EE.UU.</strong> — son procedimientos
+      federales y no aplica el límite de licencia estatal al apoyo
+      paralegal. Todo el trabajo paralegal realizado para un abogado se
+      hace por definición bajo su supervisión y dirección, conforme a
+      ABA Model Rule 5.3 y reglas estatales análogas — por lo que las
+      restricciones LDA sobre dar asesoría legal no aplican al apoyo
+      paralegal dirigido por un abogado con licencia. Referencias
+      disponibles a solicitud.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    heading="Externalice los papeles. Conserve la práctica."
+    sub="Inmigración federal nacional · Corte estatal de California. Por proyecto, por hora o retainer — trabajamos en sus términos."
+    primaryHref="/mx/#get-started?topic=for-attorneys"
+    primaryText="Enviar un asunto de muestra"
+  />
+
+  <style is:global>
+    .for-attorneys-hero .hero-wrap .hero { max-width: 1240px; }
+    .for-attorneys-hero .hero-wrap .hero h1 {
+      max-width: none;
+      font-size: clamp(22px, 3.6vw, 44px);
+      text-wrap: balance;
+    }
+    @media (min-width: 1100px) {
+      .for-attorneys-hero .hero-wrap .hero h1 { white-space: nowrap; }
+    }
+  </style>
+
+  <style>
+    .fee-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 28px 0 8px; }
+    @media (max-width: 760px) { .fee-grid { grid-template-columns: 1fr; } }
+    .fee-card { background: #fff; border: 1px solid rgba(40,30,20,0.10); border-radius: 14px; padding: 22px 22px 18px; box-shadow: 0 6px 18px rgba(40,30,20,0.04); }
+    .fee-card-highlight { border-color: var(--terracotta-deep); box-shadow: 0 10px 26px rgba(164,91,52,0.12); position: relative; }
+    .fee-card-highlight::before {
+      content: 'Más popular';
+      position: absolute; top: -10px; right: 16px;
+      background: var(--terracotta-deep); color: #fff;
+      font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+      font-weight: 700; padding: 5px 10px; border-radius: 999px;
+    }
+    .fee-card-icon { font-size: 26px; margin-bottom: 8px; }
+    .fee-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy-dark); margin: 0 0 6px; }
+    .fee-card-lead { color: var(--terracotta-deep); font-weight: 600; font-size: 13px; margin: 0 0 10px; }
+    .fee-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.65; color: #3a4a5e; }
+    .affordable-note { background: #fffaf2; border-left: 4px solid var(--terracotta-deep); padding: 14px 18px; border-radius: 4px; font-size: 14px; line-height: 1.65; margin: 24px 0 8px; }
+  </style>
+</BaseLayout>

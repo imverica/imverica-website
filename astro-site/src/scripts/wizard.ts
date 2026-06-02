@@ -169,6 +169,9 @@ export function initIntakeWizard(): void {
     // Server-side sync runs in parallel; the debounce keeps us under the
     // /api/intake-progress per-IP throttle (60/min) even during fast typing.
     scheduleServerSave();
+    // Surface the save to any UI chip listening for it. Decoupled via
+    // CustomEvent so the wizard internals stay schema-pure.
+    try { window.dispatchEvent(new CustomEvent('imv:intake-saved', { detail: { at: Date.now() } })); } catch (e) {}
   }
 
   function restoreIntakeProgress() {

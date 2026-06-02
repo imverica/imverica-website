@@ -14,11 +14,16 @@ const prefix = LOCALES[lang].prefix;
 // Map currentSlug → nav key so we can mark the active link with
 // aria-current="page" and a visible underline pill. We match by prefix
 // (e.g. /fl-100-divorce → 'family', /i-485-help → 'uscis') so detail
-// pages still light up their parent category. /lda is the About link.
+// pages still light up their parent category.
+//   /about → main About-the-company page (nav link target)
+//   /lda   → educational LDA explainer (also under "About" in the nav
+//            so the indicator stays consistent if a visitor lands there)
+//   /pricing → standalone pricing page
 const slug = String(currentSlug || '/').toLowerCase();
 function activeNav() {
+  if (slug.startsWith('/pricing')) return 'pricing';
   if (slug.startsWith('/for-attorneys')) return 'for-attorneys';
-  if (slug.startsWith('/lda') || slug.startsWith('/about')) return 'about';
+  if (slug.startsWith('/about') || slug.startsWith('/lda')) return 'about';
   if (slug.startsWith('/business') || slug.startsWith('/llc') || slug.startsWith('/fbn')) return 'business';
   if (slug.startsWith('/sc') || slug.startsWith('/civil')) return 'civil';
   if (slug.startsWith('/fl') || slug.startsWith('/family') || slug.startsWith('/california-divorce')) return 'family';
@@ -43,8 +48,9 @@ const active = activeNav();
       <a href={localizedPathSafe(lang, '/fl')} data-nav="family" aria-current={active === 'family' ? 'page' : undefined}>{t.family}</a>
       <a href={localizedPathSafe(lang, '/sc')} data-nav="civil" aria-current={active === 'civil' ? 'page' : undefined}>{t.civil}</a>
       <a href={localizedPathSafe(lang, '/business')} data-nav="business" aria-current={active === 'business' ? 'page' : undefined}>{t.business}</a>
+      <a href={localizedPathSafe(lang, '/pricing')} data-nav="pricing" aria-current={active === 'pricing' ? 'page' : undefined}>{t.pricing}</a>
       <a href={localizedPathSafe(lang, '/for-attorneys')} data-nav="for-attorneys" class="site-nav-accent" aria-current={active === 'for-attorneys' ? 'page' : undefined}>{t.forAttorneys}</a>
-      <a href={localizedPathSafe(lang, '/lda')} data-nav="about" aria-current={active === 'about' ? 'page' : undefined}>{t.about}</a>
+      <a href={localizedPathSafe(lang, '/about')} data-nav="about" aria-current={active === 'about' ? 'page' : undefined}>{t.about}</a>
     </nav>
     <div class="site-lang" aria-label="Language">
       {SUPPORTED_LOCALES.map((locale) => (
@@ -71,8 +77,9 @@ const active = activeNav();
     <a href={localizedPathSafe(lang, '/fl')}>{t.family}</a>
     <a href={localizedPathSafe(lang, '/sc')}>{t.civil}</a>
     <a href={localizedPathSafe(lang, '/business')}>{t.business}</a>
+    <a href={localizedPathSafe(lang, '/pricing')}>{t.pricing}</a>
     <a href={localizedPathSafe(lang, '/for-attorneys')}>{t.forAttorneys}</a>
-    <a href={localizedPathSafe(lang, '/lda')}>{t.about}</a>
+    <a href={localizedPathSafe(lang, '/about')}>{t.about}</a>
     <a href="/account.html">👤 {t.portal}</a>
     <a class="btn btn-accent" href={prefix + '/#get-started'}>{t.quote}</a>
   </nav>

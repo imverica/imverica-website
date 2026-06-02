@@ -71,12 +71,25 @@ const { related = [] } = Astro.props;
     box-shadow: 0 10px 30px rgba(40,30,20,0.05);
     line-height: 1.75;
     color: #2a3140;
+    /* Justified body copy — Word's "Justify" alignment so paragraph
+       edges line up on both sides. Pair with hyphens: auto so the
+       browser breaks long words and avoids the big inter-word gaps
+       ("rivers") that ruin justification without hyphenation. Mobile
+       gets text-align: left via the safety-net rule in site.css at
+       ≤720px (justification on narrow columns looks bad even with
+       hyphenation). */
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
   }
   @media (max-width: 600px) {
     .lb-article { padding: 28px 22px; }
   }
 
-  .lb-article h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 18px; }
+  /* Headings stay left-aligned + no auto-hyphenation — justification on
+     short single-line headings produces awful spacing. */
+  .lb-article h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 18px; text-align: left; hyphens: manual; }
   .lb-article h2 {
     font-family: var(--font-display);
     font-size: 28px;
@@ -86,9 +99,11 @@ const { related = [] } = Astro.props;
     padding-top: 30px;
     border-top: 1px solid var(--border);
     letter-spacing: -0.005em;
+    text-align: left;
+    hyphens: manual;
   }
   .lb-article h2:first-of-type { border-top: none; padding-top: 0; }
-  .lb-article h3 { font-size: 18px; margin: 24px 0 8px; }
+  .lb-article h3 { font-size: 18px; margin: 24px 0 8px; text-align: left; hyphens: manual; }
   .lb-article p { margin: 0 0 14px; }
   .lb-article ul, .lb-article ol { margin: 0 0 16px 22px; padding: 0; }
   .lb-article li { margin-bottom: 7px; }

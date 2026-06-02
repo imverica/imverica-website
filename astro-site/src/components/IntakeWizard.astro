@@ -15,7 +15,9 @@
 import '~/styles/wizard.css';
 ---
 <!-- Intake modal — markup copied 1:1 from legacy index.html so the
-     ported wizard JS still finds every element by id. -->
+     ported wizard JS still finds every element by id. The "Saved" chip
+     + "Call me" sticky button are new UX layers stitched on top — they
+     don't touch the wizard's internal state model. -->
 <div id="intakeModal" class="intake-modal">
   <div class="intake-shell" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
     <button class="intake-close" type="button" onclick="window.closeIntakeModal && window.closeIntakeModal()" aria-label="Close intake">×</button>
@@ -30,6 +32,8 @@ import '~/styles/wizard.css';
         <div class="intake-progress-row">
           <span class="intake-progress-label" id="intakeProgressLabel">Progress</span>
           <span class="intake-progress-processing" id="intakeProcessing"></span>
+          <span class="intake-progress-eta" id="intakeProgressEta" hidden></span>
+          <span class="intake-progress-saved" id="intakeProgressSaved" hidden>✓ Saved</span>
           <span class="intake-progress-percent" id="intakeProgressPercent">0%</span>
         </div>
         <div class="intake-progress" aria-hidden="true"><span id="intakeProgress"></span></div>
@@ -43,8 +47,107 @@ import '~/styles/wizard.css';
         <div class="intake-steps" id="intakeSteps" style="display:none"></div>
       </main>
     </div>
+
+    <!-- Sticky help bar — always visible while the wizard is open. The
+         long questionnaire feels less like a maze when "talk to a human"
+         is one click away on every step. -->
+    <div class="intake-help-bar" role="complementary" aria-label="Get help with this case">
+      <span class="intake-help-text" id="intakeHelpText">Stuck on a question? Save progress and finish later — or have us call you.</span>
+      <div class="intake-help-actions">
+        <a class="intake-help-btn" id="intakeHelpCall" href="tel:+19163993992" aria-label="Call Imverica">
+          <span aria-hidden="true">📞</span>
+          <span>+1 (916) 399-3992</span>
+        </a>
+        <button class="intake-help-btn intake-help-btn-secondary" type="button" id="intakeHelpCallback">
+          Have us call you
+        </button>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- Saved-chip + help-bar wiring. Tiny inline IIFE so it works without
+     modifying the wizard's main IIFE. Listens for `imv:intake-saved`
+     events fired by persistIntakeProgress() inside wizard.ts. -->
+<script is:inline>
+  (function () {
+    var saved = document.getElementById('intakeProgressSaved');
+    var pct = document.getElementById('intakeProgressPercent');
+    var eta = document.getElementById('intakeProgressEta');
+    var callbackBtn = document.getElementById('intakeHelpCallback');
+    var helpBar = document.querySelector('.intake-help-bar');
+    var saveHideTimer = null;
+
+    // Auto-detect language from <html lang> so chips and help text speak
+    // the user's language. Falls back to English.
+    function lang() {
+      var html = document.documentElement.getAttribute('lang') || 'en';
+      if (html.indexOf('ru') === 0) return 'ru';
+      if (html.indexOf('uk') === 0 || html.indexOf('ua') === 0) return 'uk';
+      if (html.indexOf('es') === 0) return 'es';
+      return 'en';
+    }
+
+    var T = {
+      en: { saved: '✓ Saved', etaPrefix: '~', etaMin: 'min left', stuck: 'Stuck on a question? Save progress and finish later — or have us call you.', callMe: 'Have us call you' },
+      ru: { saved: '✓ Сохранено', etaPrefix: '~', etaMin: 'мин осталось', stuck: 'Застряли? Прогресс сохраняется автоматически — или попросите нас перезвонить.', callMe: 'Перезвоните мне' },
+      uk: { saved: '✓ Збережено', etaPrefix: '~', etaMin: 'хв залишилось', stuck: 'Застрягли? Прогрес зберігається автоматично — або попросіть нас передзвонити.', callMe: 'Передзвоніть мені' },
+      es: { saved: '✓ Guardado', etaPrefix: '~', etaMin: 'min restantes', stuck: '¿Atascado? El progreso se guarda automáticamente — o pídanos que lo llamemos.', callMe: 'Llámenme' }
+    };
+    var t = T[lang()] || T.en;
+
+    // Localise the help-bar text + button.
+    if (callbackBtn) callbackBtn.textContent = t.callMe;
+    var helpTextEl = document.getElementById('intakeHelpText');
+    if (helpTextEl) helpTextEl.textContent = t.stuck;
+    if (saved) saved.textContent = t.saved;
+
+    // Flash the "Saved" chip when the wizard persists. Auto-hides after
+    // 1.5s so it doesn't crowd the progress line.
+    window.addEventListener('imv:intake-saved', function () {
+      if (!saved) return;
+      saved.hidden = false;
+      saved.classList.add('show');
+      if (saveHideTimer) clearTimeout(saveHideTimer);
+      saveHideTimer = setTimeout(function () {
+        saved.classList.remove('show');
+        // Use a second timeout so opacity-fade finishes before hide.
+        setTimeout(function () { if (saved) saved.hidden = true; }, 350);
+      }, 1500);
+    });
+
+    // ETA calculation — assume ~12 minutes for a full-pass at 100%.
+    // Tracks the latest pct read from the existing element and derives
+    // remaining minutes. Updates on a MutationObserver so we don't poll.
+    function updateEta() {
+      if (!pct || !eta) return;
+      var raw = parseFloat((pct.textContent || '0').replace(/[^0-9.]/g, ''));
+      if (!isFinite(raw) || raw < 1) { eta.hidden = true; return; }
+      var remaining = Math.max(1, Math.round(12 * (100 - raw) / 100));
+      eta.hidden = false;
+      eta.textContent = t.etaPrefix + remaining + ' ' + t.etaMin;
+    }
+    if (pct && eta && window.MutationObserver) {
+      new MutationObserver(updateEta).observe(pct, { childList: true, characterData: true, subtree: true });
+      updateEta();
+    }
+
+    // "Have us call you" closes the long wizard and re-opens the quick
+    // intake (which sends the situation to staff for a call-back). Same
+    // visitor, less friction.
+    if (callbackBtn) {
+      callbackBtn.addEventListener('click', function () {
+        if (typeof window.closeIntakeModal === 'function') window.closeIntakeModal();
+        if (typeof window.openIntakeModal === 'function') {
+          // openIntakeModal is the QuickIntakeModal opener — the long
+          // wizard exposes its own internal opener too, but at this
+          // point in the page lifecycle QuickIntake has overridden it.
+          window.openIntakeModal();
+        }
+      });
+    }
+  })();
+</script>
 
 <!-- Wizard module + CTA bridge. Both are deferred ES modules.
      wizard.ts installs window.openIntakeModal; cta-bridge.ts intercepts
