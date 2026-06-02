@@ -138,19 +138,25 @@ img { max-width: 100%; height: auto; }
 }
 .site-nav {
   display: flex;
-  gap: clamp(4px, 0.6vw, 12px);
+  gap: clamp(2px, 0.4vw, 8px);
   align-items: center;
   justify-content: center;
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 13px;
+  /* Bumped 13→15px and 500→600 weight: at 13/500 these were reading as
+     body text, not navigation. Letter-spacing + uppercase variant on
+     larger screens helps them land as proper menu items. */
+  font-size: 15px;
 }
 .site-nav a {
-  color: var(--text);
-  font-weight: 500;
+  position: relative;
+  color: var(--navy-dark);
+  font-weight: 600;
+  letter-spacing: 0.01em;
   white-space: nowrap;
-  padding: 6px 9px;
-  border-radius: 7px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  text-decoration: none;
   transition: color 0.18s ease, background 0.18s ease;
 }
 /* Brand-tinted hover backgrounds per nav item — uses the palette from
@@ -159,7 +165,43 @@ img { max-width: 100%; height: auto; }
 .site-nav a[data-nav="family"]:hover   { background: rgba(224,138,93,0.14); color: var(--terracotta-deep); }
 .site-nav a[data-nav="civil"]:hover    { background: rgba(125,156,122,0.18); color: #3a5a44; }
 .site-nav a[data-nav="business"]:hover { background: rgba(212,175,86,0.20); color: #7a5a18; }
+.site-nav a[data-nav="for-attorneys"]:hover { background: rgba(164,91,52,0.16); color: var(--terracotta-deep); }
 .site-nav a[data-nav="about"]:hover    { background: rgba(26,46,74,0.08);   color: var(--navy); }
+
+/* "For Attorneys" — B2B differentiator. Always carries a terracotta
+   accent so it stands out from the consumer-facing nav items even
+   without hover. */
+.site-nav a.site-nav-accent {
+  color: var(--terracotta-deep);
+  background: rgba(164,91,52,0.06);
+  border: 1px solid rgba(164,91,52,0.18);
+}
+.site-nav a.site-nav-accent:hover {
+  background: var(--terracotta-deep);
+  color: #fff;
+  border-color: var(--terracotta-deep);
+}
+
+/* Active page — bold underline pill in the matching brand color so
+   visitors always know where they are. aria-current="page" is set by
+   SiteHeader.astro based on the current slug. */
+.site-nav a[aria-current="page"] {
+  font-weight: 700;
+}
+.site-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 2px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--navy-dark);
+}
+.site-nav a[aria-current="page"][data-nav="family"]::after    { background: var(--terracotta-deep); }
+.site-nav a[aria-current="page"][data-nav="civil"]::after     { background: #3a5a44; }
+.site-nav a[aria-current="page"][data-nav="business"]::after  { background: #7a5a18; }
+.site-nav a[aria-current="page"][data-nav="for-attorneys"]::after { background: var(--terracotta-deep); }
 .site-lang {
   display: flex;
   align-items: center;

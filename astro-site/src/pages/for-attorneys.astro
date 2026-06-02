@@ -5,39 +5,45 @@ import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
-const title = 'For Attorneys — Affordable Paralegal Support in California | Imverica';
-const description = 'Imverica works with California attorneys as an independent paralegal — preparing USCIS, EOIR, family law, small claims, unlawful detainer, probate and business filings under your direction. Affordable pay-by-project, hourly, and retainer fee structures.';
+const title = 'For Attorneys — Affordable Paralegal Support, USCIS & EOIR Nationwide | Imverica';
+const description = 'Imverica is your independent paralegal partner — preparing USCIS petitions and EOIR filings for attorneys nationwide, and California state court documents (family law, small claims, unlawful detainer, probate, business) for California attorneys. We are ready to partner with your firm. Pay-by-project, hourly, or retainer.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'Independent Paralegal Services for California Attorneys',
+  serviceType: 'Independent Paralegal Services for Attorneys',
+  areaServed: [
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'State', name: 'California' }
+  ],
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: "Independent paralegal services for California attorneys — document preparation across USCIS, EOIR, family law, small claims, unlawful detainer, probate, and business filings under the attorney's direction."
+  description: "Independent paralegal services for attorneys. USCIS petitions and EOIR immigration court filings handled for attorneys in any US state (federal forms — no state bar restriction). California state-court matters (family law, small claims, unlawful detainer, probate, business) for California attorneys. Document preparation under the attorney's direction."
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/for-attorneys"
   slug="/for-attorneys" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
-  <Hero
-    eyebrow="For California attorneys"
-    heading="Affordable paralegal support — under your direction"
-    sub="Imverica works as an independent paralegal for California attorneys across USCIS petitions, EOIR filings, family law, small claims, unlawful detainer, probate, and business documents. You stay counsel of record; we prepare the paperwork — accurately, on time, at affordable rates that scale with how you bill."
-    ctaPrimary={{ href: '#fees', text: 'See fee structures' }}
-  />
+  <div class="for-attorneys-hero">
+    <Hero
+      eyebrow="For attorneys · USCIS & EOIR nationwide · California state court"
+      heading="Affordable paralegal support — under your direction"
+      sub="Your full-service paralegal partner. We handle USCIS petitions and EOIR immigration court work for attorneys in any state, and California state-court matters (family law, small claims, unlawful detainer, probate, business) for California attorneys. You stay counsel of record. We prepare the paperwork — accurately, on time, on your firm's templates. We're ready to partner with you on a single matter or a steady book of work."
+      ctaPrimary={{ href: '#fees', text: 'See fee structures' }}
+    />
+  </div>
 
   <CategoryTiles
     kicker="What we handle for your firm"
     heading="Practice areas we support"
-    intro="Pick a category. We have the form mastery, templates, and California court / USCIS familiarity to pick up where your associate's plate stops."
+    intro="USCIS and EOIR are federal — we work with attorneys in any US state. California-specific matters (family law, small claims, unlawful detainer, probate, business) we handle for California attorneys. Pick a category and we'll show you our fee structures and a clear path to engage us — these tiles route to our pricing and contact section, not to a client intake. You're the attorney; this is your B2B view."
     tiles={[
-      { icon: '🛂', title: 'USCIS petitions',     desc: 'I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864 packages, RFE responses, evidence indexes.', href: '/immigration', color: 'var(--navy)' },
-      { icon: '⚖️', title: 'EOIR filings',         desc: 'EOIR-29 / 42A / 42B / 40, motions to reopen/reconsider, evidence packets, country-conditions exhibits, witness declarations.', href: '/eoir-immigration-court', color: 'var(--navy-dark)' },
-      { icon: '👨‍👩‍👧', title: 'Family law',         desc: 'FL-100/110/120/150/160/300, custody packets, UCCJEA, judgment papers, post-judgment modifications.', href: '/fl', color: 'var(--terracotta)' },
-      { icon: '📃', title: 'Small claims & civil', desc: 'SC-100/120/104/133/140, demand letters, wage garnishment, abstract of judgment, civil cover sheets, POS.', href: '/sc', color: 'var(--sage)' },
-      { icon: '🏠', title: 'Unlawful detainer',    desc: 'UD-100/105/110, three-day notices, default packets, post-judgment writs.', href: '/california-unlawful-detainer', color: 'var(--gold)' },
-      { icon: '🏛️', title: 'Probate',              desc: 'DE-111/121/160/221 series, small estate affidavits, probate notice & inventory packets.', href: '/california-probate', color: 'var(--navy-light)' },
-      { icon: '🏢', title: 'Business filings',     desc: 'LLC-1 / LLC-12, ARTS-GS, SI-550, FBN/DBA, SS-4 EIN support, operating agreements, foreign-LLC registration.', href: '/business', color: 'var(--terracotta-deep)' },
-      { icon: '🌐', title: 'Translation & notary',  desc: 'Russian / Ukrainian / Spanish certified translations, apostille coordination, mobile notary referrals.', href: '/#document-translation-california', color: 'var(--navy)' }
+      { icon: '🛂', title: 'USCIS petitions · nationwide', desc: 'I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864 packages, RFE responses, evidence indexes. Federal forms — any state.', href: '#fees', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'EOIR filings · nationwide',    desc: 'EOIR-29 / 42A / 42B / 40, motions to reopen/reconsider, evidence packets, country-conditions exhibits, witness declarations. Federal immigration court — any state.', href: '#fees', color: 'var(--navy-dark)' },
+      { icon: '👨‍👩‍👧', title: 'Family law · CA',           desc: 'FL-100/110/120/150/160/300, custody packets, UCCJEA, judgment papers, post-judgment modifications.', href: '#fees', color: 'var(--terracotta)' },
+      { icon: '📃', title: 'Small claims & civil · CA',   desc: 'SC-100/120/104/133/140, demand letters, wage garnishment, abstract of judgment, civil cover sheets, POS.', href: '#fees', color: 'var(--sage)' },
+      { icon: '🏠', title: 'Unlawful detainer · CA',       desc: 'UD-100/105/110, three-day notices, default packets, post-judgment writs.', href: '#fees', color: 'var(--gold)' },
+      { icon: '🏛️', title: 'Probate · CA',                 desc: 'DE-111/121/160/221 series, small estate affidavits, probate notice & inventory packets.', href: '#fees', color: 'var(--navy-light)' },
+      { icon: '🏢', title: 'Business filings · CA',        desc: 'LLC-1 / LLC-12, ARTS-GS, SI-550, FBN/DBA, SS-4 EIN support, operating agreements, foreign-LLC registration.', href: '#fees', color: 'var(--terracotta-deep)' },
+      { icon: '🌐', title: 'Translation & notary',         desc: 'Russian / Ukrainian / Spanish certified translations, apostille coordination, mobile notary referrals. Nationwide.', href: '#fees', color: 'var(--navy)' }
     ]}
   />
 
@@ -49,39 +55,55 @@ const schema = {
     { href: '/business', label: 'Business filings (LLC-, ARTS-, FBN)' }
   ]}>
     <p class="lead">
-      You're an attorney with a full calendar. Imverica is the steady hand
-      that prepares the paperwork — accurately, on time, in your client's
-      voice. We work under your direction as an independent paralegal:
-      drafting forms, assembling exhibit binders, building evidence indexes,
-      and turning your strategy notes into a court-ready package. You stay
-      counsel of record. We stay invisible to the client unless you want us
-      visible.
+      <strong>We're ready to partner with your firm.</strong> You're an
+      attorney with a full calendar — we're the steady hand that prepares
+      the paperwork accurately, on time, in your client's voice. Whether
+      you're a solo immigration attorney in New York filing a single
+      I-589, or a California firm with a steady book of family-law
+      matters, we plug in as your independent paralegal: drafting forms,
+      assembling exhibit binders, building evidence indexes, and turning
+      your strategy notes into a court-ready package. You stay counsel
+      of record. We stay invisible to the client unless you want us
+      visible. <strong>One matter, ten matters, or full ongoing
+      support — we'd love to work with you.</strong>
     </p>
 
     <h2 id="who-we-help">Who we work with</h2>
+    <p>
+      We partner with attorneys across the country on federal immigration
+      matters, and with California-licensed attorneys on state-court work:
+    </p>
     <ul>
-      <li><strong>Solo and small-firm immigration attorneys</strong> handling adjustment, asylum, family-petition, removal-defense, and humanitarian dockets — typically referring us 30-80 hours of paralegal time per month.</li>
-      <li><strong>Family law attorneys</strong> drowning in form-heavy filings (FL-150 income-and-expense, FL-160 property declarations, FL-300 RFOs, FL-105 UCCJEA).</li>
-      <li><strong>Litigation attorneys</strong> who need small-claims and civil packets prepared cleanly to free up associate time for actual lawyering.</li>
-      <li><strong>Estate-planning attorneys</strong> with probate and small-estate work.</li>
-      <li><strong>Business attorneys</strong> wanting California entity formation and post-formation compliance outsourced.</li>
+      <li><strong>Immigration attorneys anywhere in the US</strong> — solo and small-firm practitioners handling adjustment, asylum, family-petition, removal-defense, naturalization, and humanitarian dockets. USCIS and EOIR are federal, so no state bar restriction applies to our paralegal work — we partner with attorneys from New York to Texas to Florida and everywhere in between.</li>
+      <li><strong>California family law attorneys</strong> drowning in form-heavy filings (FL-150 income-and-expense, FL-160 property declarations, FL-300 RFOs, FL-105 UCCJEA, judgment packages, post-judgment modifications).</li>
+      <li><strong>California litigation attorneys</strong> who need small-claims and civil packets prepared cleanly to free up associate time for actual lawyering.</li>
+      <li><strong>California estate-planning attorneys</strong> with probate, small-estate, and post-decedent administrative work.</li>
+      <li><strong>California business attorneys</strong> wanting entity formation, foreign-LLC registration, and post-formation compliance outsourced.</li>
+      <li><strong>Multi-state firms</strong> who want one paralegal partner for their federal immigration practice and any California desk they operate.</li>
     </ul>
 
     <h2 id="how-we-work">How we work with your firm</h2>
     <p>
-      Engagement is simple. You send us the matter (intake notes, client
-      info, strategy decisions you've already made). We confirm scope and
-      timeline in writing. We prepare the documents in your firm's
-      preferred template style — your letterhead, your formatting
-      conventions, your exhibit numbering. You review and sign. We never
-      hold your client file outside what's needed for the immediate task,
-      and everything we touch is encrypted at rest and in transit.
+      <strong>Engagement is fast and informal — we want to make it easy
+      to say yes.</strong> Send us the matter (intake notes, client info,
+      strategy decisions you've already made). We confirm scope and
+      timeline in writing the same business day. We prepare the documents
+      in your firm's preferred template style — your letterhead, your
+      formatting conventions, your exhibit numbering. You review and
+      sign. We never hold your client file outside what's needed for the
+      immediate task, and everything we touch is encrypted at rest and
+      in transit. Conflict checks, confidentiality terms, and ABA Model
+      Rule 5.3 supervision protocols — all handled to your satisfaction
+      before the first matter starts.
     </p>
     <p>
       We don't give legal advice — that's your job. We don't sign anything
       that requires a member of the State Bar — that's also your job. We
       handle the form mastery, the data entry, the cross-referencing,
-      and the proofreading. You handle the law and the client relationship.
+      the citations, and the proofreading. You handle the law and the
+      client relationship. We've worked with attorneys for years and
+      we know how to make ourselves useful without ever stepping outside
+      our lane.
     </p>
 
     <h2 id="fees">Fee structures — pick what fits how you bill</h2>
@@ -141,12 +163,12 @@ const schema = {
     </div>
 
     <p class="affordable-note">
-      <strong>All rates are affordable and negotiable.</strong> We're a
-      California-registered Legal Document Assistant and Immigration
-      Consultant — not a law firm — and we price accordingly. Send us a
-      sample matter or your current paralegal cost structure; we'll come
-      back with a quote that's typically 30–50% below in-house associate
-      time for equivalent work.
+      <strong>All rates are affordable and negotiable — we want your
+      business and we'll price to earn it.</strong> Send us a sample
+      matter or your current paralegal cost structure; we'll come back
+      with a quote that's typically 30–50% below in-house associate
+      time for equivalent work. First-time attorney clients always get
+      an introductory rate on their first matter — try us with low risk.
     </p>
 
     <h2 id="what-we-do-not-do">What we do not do</h2>
@@ -159,33 +181,70 @@ const schema = {
       match what you'd expect from in-house staff.
     </p>
 
-    <h2 id="next-step">Next step</h2>
+    <h2 id="next-step">Let's start a conversation</h2>
     <p>
-      Easiest first contact: send a sample matter or your typical
-      attorney-paralegal workload to <strong>+1 (916) 399-3992</strong>
-      (call or text) or use the contact form below. We'll respond same
-      business day with either a fixed-fee quote, an hourly estimate, or
-      a retainer proposal — whichever fits the matter.
+      The easiest first step: <strong>call or text +1 (916) 399-3992</strong>
+      or send a sample matter through the contact form below. We'll respond
+      the same business day with a fixed-fee quote, an hourly estimate, or
+      a retainer proposal — whichever fits the matter. No commitment to
+      start. If we're not the right fit, we'll say so on the first call;
+      if we are, we can usually have a signed engagement and first
+      deliverable turned around within 48 hours.
+    </p>
+    <p>
+      <strong>We're genuinely excited to partner with attorneys</strong> —
+      whether you're a solo immigration practitioner in another state
+      looking for reliable USCIS support, or a California firm building
+      a long-term paralegal relationship. Reach out and let's see how
+      we can help.
     </p>
 
     <cite>
-      <strong>California regulatory note:</strong> Imverica Legal Solutions
-      is a California-registered Legal Document Assistant (Cal. Bus. &amp;
+      <strong>Regulatory note.</strong> Imverica Legal Solutions is a
+      California-registered Legal Document Assistant (Cal. Bus. &amp;
       Prof. Code §§6400–6415) and Immigration Consultant (§§22440–22448).
-      All paralegal work performed for an attorney is by definition done
-      under the attorney's supervision and direction — California's LDA
-      restrictions on giving legal advice do not apply to work done as
-      directed paralegal support for a licensed attorney. References
+      <strong>For USCIS petitions and EOIR immigration court work,
+      Imverica may be engaged by any attorney licensed in any US state</strong> —
+      these are federal proceedings and no state-bar licensure boundary
+      applies to paralegal support. All paralegal work performed for an
+      attorney is by definition done under the attorney's supervision and
+      direction, consistent with ABA Model Rule 5.3 and analogous state
+      rules — so the LDA restrictions on giving legal advice do not apply
+      to directed paralegal support for a licensed attorney. References
       available on request.
     </cite>
   </LandingBody>
 
   <CTAStrip
     heading="Outsource the paperwork. Keep the practice."
-    sub="Affordable, accurate, on time. Pay-by-project, hourly, or retainer."
+    sub="Federal immigration nationwide · California state court. Pay-by-project, hourly, or retainer — we work on your terms."
     primaryHref="/#get-started?topic=for-attorneys"
     primaryText="Send a sample matter"
   />
+
+  <style is:global>
+    /* Keep the hero headline on ONE LINE on desktop and tablet.
+       Global .hero is max-width: 1040px and h1 is max-width: 820px,
+       which wraps "Affordable paralegal support — under your direction"
+       mid-sentence. Scoped to .for-attorneys-hero so it only affects
+       this page's hero. We widen the container, clear the h1 max-width,
+       and cap the font-size with clamp() so it fits cleanly at any
+       common breakpoint. At ≥980px we force nowrap; on narrower screens
+       text-wrap: balance distributes the line break gracefully. */
+    .for-attorneys-hero .hero-wrap .hero {
+      max-width: 1240px;
+    }
+    .for-attorneys-hero .hero-wrap .hero h1 {
+      max-width: none;
+      font-size: clamp(26px, 4.4vw, 50px);
+      text-wrap: balance;
+    }
+    @media (min-width: 980px) {
+      .for-attorneys-hero .hero-wrap .hero h1 {
+        white-space: nowrap;
+      }
+    }
+  </style>
 
   <style>
     .fee-grid {
