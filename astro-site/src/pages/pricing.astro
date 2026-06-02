@@ -60,13 +60,13 @@ const schema = {
             <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Gov. fee*</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>I-90</strong> Green Card renewal / replacement</td><td class="num"><span class="price">$199</span></td><td class="num gov">$415</td></tr>
-            <tr><td><strong>I-765</strong> Work Permit / EAD</td><td class="num"><span class="price">$199</span></td><td class="num gov">$520</td></tr>
-            <tr><td><strong>I-131</strong> Travel Document / Re-entry Permit</td><td class="num"><span class="price">$179</span></td><td class="num gov">$630</td></tr>
-            <tr><td><strong>I-864</strong> Affidavit of Support (standalone)</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>I-693</strong> Medical Exam package coordination</td><td class="num"><span class="price">$99</span></td><td class="num gov">—</td></tr>
-            <tr><td><strong>G-639</strong> FOIA Request to USCIS</td><td class="num"><span class="price">$129</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>AR-11</strong> Change of Address</td><td class="num"><span class="price">$49</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need help with I-90 Green Card renewal" data-formcode="I-90"><td><strong>I-90</strong> Green Card renewal / replacement</td><td class="num"><span class="price">$199</span></td><td class="num gov">$415</td></tr>
+            <tr data-prefill="I need an I-765 Work Permit (EAD)" data-formcode="I-765"><td><strong>I-765</strong> Work Permit / EAD</td><td class="num"><span class="price">$199</span></td><td class="num gov">$520</td></tr>
+            <tr data-prefill="I need an I-131 travel document / re-entry permit" data-formcode="I-131"><td><strong>I-131</strong> Travel Document / Re-entry Permit</td><td class="num"><span class="price">$179</span></td><td class="num gov">$630</td></tr>
+            <tr data-prefill="I need an I-864 Affidavit of Support" data-formcode="I-864"><td><strong>I-864</strong> Affidavit of Support (standalone)</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need help coordinating the I-693 medical exam package" data-formcode="I-693"><td><strong>I-693</strong> Medical Exam package coordination</td><td class="num"><span class="price">$99</span></td><td class="num gov">—</td></tr>
+            <tr data-prefill="I need a G-639 FOIA request to USCIS" data-formcode="G-639"><td><strong>G-639</strong> FOIA Request to USCIS</td><td class="num"><span class="price">$129</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need an AR-11 change-of-address with USCIS" data-formcode="AR-11"><td><strong>AR-11</strong> Change of Address</td><td class="num"><span class="price">$49</span></td><td class="num gov">$0</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -92,16 +92,16 @@ const schema = {
             <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Gov. fee*</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>I-130</strong> Family Petition (standalone)</td><td class="num"><span class="price">$499</span></td><td class="num gov">$675</td></tr>
-            <tr><td><strong>I-485</strong> Adjustment of Status (single applicant)</td><td class="num"><span class="price">$999</span></td><td class="num gov">$1,440</td></tr>
-            <tr class="price-row-popular">
+            <tr data-prefill="I need help with I-130 family petition" data-formcode="I-130"><td><strong>I-130</strong> Family Petition (standalone)</td><td class="num"><span class="price">$499</span></td><td class="num gov">$675</td></tr>
+            <tr data-prefill="I need help with I-485 adjustment of status (single applicant)" data-formcode="I-485"><td><strong>I-485</strong> Adjustment of Status (single applicant)</td><td class="num"><span class="price">$999</span></td><td class="num gov">$1,440</td></tr>
+            <tr class="price-row-popular" data-prefill="I need the full I-485 marriage-based AOS package (I-130 + I-485 + I-765 + I-864 + evidence)" data-formcode="I-485">
               <td><strong>I-485 Marriage-Based AOS Package</strong><br><span class="price-row-meta">I-130 + I-485 + I-765 + I-864 + evidence binder</span><span class="price-popular-pill">Most popular</span></td>
               <td class="num"><span class="price">$1,799</span></td>
               <td class="num gov">$2,090</td>
             </tr>
-            <tr><td><strong>I-751</strong> Remove Conditions on Green Card</td><td class="num"><span class="price">$899</span></td><td class="num gov">$750</td></tr>
-            <tr><td><strong>N-400</strong> Naturalization</td><td class="num"><span class="price">$599</span></td><td class="num gov">$760</td></tr>
-            <tr><td><strong>I-824</strong> Action on Approved Application</td><td class="num"><span class="price">$249</span></td><td class="num gov">$620</td></tr>
+            <tr data-prefill="I need help with I-751 remove conditions on green card" data-formcode="I-751"><td><strong>I-751</strong> Remove Conditions on Green Card</td><td class="num"><span class="price">$899</span></td><td class="num gov">$750</td></tr>
+            <tr data-prefill="I need help with N-400 naturalization application" data-formcode="N-400"><td><strong>N-400</strong> Naturalization</td><td class="num"><span class="price">$599</span></td><td class="num gov">$760</td></tr>
+            <tr data-prefill="I need an I-824 action on approved application" data-formcode="I-824"><td><strong>I-824</strong> Action on Approved Application</td><td class="num"><span class="price">$249</span></td><td class="num gov">$620</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -127,14 +127,14 @@ const schema = {
             <tr><th>Service</th><th class="num">Starting at</th><th class="num">Gov. fee*</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>I-589</strong> Asylum document preparation</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>RFE Response</strong> package</td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>Country conditions</strong> evidence packet</td><td class="num"><span class="price">from $599</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>EOIR-29</strong> Notice of Appeal to BIA</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$110</td></tr>
-            <tr><td><strong>EOIR-42A / 42B</strong> Cancellation of Removal</td><td class="num quote">custom quote</td><td class="num gov">$100</td></tr>
-            <tr><td><strong>EOIR-40</strong> Suspension of Deportation</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
-            <tr><td><strong>Motion to Reopen / Reconsider</strong></td><td class="num"><span class="price">from $699</span></td><td class="num gov">$110</td></tr>
-            <tr><td><strong>U / T / VAWA / U4U</strong> humanitarian packages</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need I-589 asylum document preparation" data-formcode="I-589"><td><strong>I-589</strong> Asylum document preparation</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I received a USCIS Request for Evidence (RFE) and need a response prepared"><td><strong>RFE Response</strong> package</td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need a country-conditions evidence packet"><td><strong>Country conditions</strong> evidence packet</td><td class="num"><span class="price">from $599</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need to file EOIR-29 Notice of Appeal to the BIA" data-formcode="EOIR-29"><td><strong>EOIR-29</strong> Notice of Appeal to BIA</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$110</td></tr>
+            <tr data-prefill="I need help with EOIR-42A or EOIR-42B Cancellation of Removal"><td><strong>EOIR-42A / 42B</strong> Cancellation of Removal</td><td class="num quote">custom quote</td><td class="num gov">$100</td></tr>
+            <tr data-prefill="I need help with EOIR-40 Suspension of Deportation" data-formcode="EOIR-40"><td><strong>EOIR-40</strong> Suspension of Deportation</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need to file a motion to reopen or reconsider in immigration court"><td><strong>Motion to Reopen / Reconsider</strong></td><td class="num"><span class="price">from $699</span></td><td class="num gov">$110</td></tr>
+            <tr data-prefill="I need help with a humanitarian package (U-visa, T-visa, VAWA, or U4U)"><td><strong>U / T / VAWA / U4U</strong> humanitarian packages</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -160,27 +160,27 @@ const schema = {
             <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Court fee*</th></tr>
           </thead>
           <tbody>
-            <tr class="price-row-popular">
+            <tr class="price-row-popular" data-prefill="I need a simple FL-100 divorce package (no kids, no property)" data-formcode="FL-100">
               <td><strong>FL-100 Simple Divorce</strong> package<br><span class="price-row-meta">no kids, no property — FL-100/110/115 + service</span><span class="price-popular-pill">Most popular</span></td>
               <td class="num"><span class="price">from $349</span></td>
               <td class="num gov">$435</td>
             </tr>
-            <tr><td><strong>FL-100 Full Divorce</strong> (kids + property, UCCJEA)</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
-            <tr><td><strong>FL-300</strong> Request for Order (custody/support)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>FL-150 / FL-160</strong> Financial disclosures</td><td class="num"><span class="price">$149 each</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>Post-judgment modification</strong> (family law)</td><td class="num"><span class="price">from $499</span></td><td class="num gov">$0</td></tr>
-            <tr class="price-row-popular">
+            <tr data-prefill="I need a full FL-100 divorce package with kids and/or property (UCCJEA)" data-formcode="FL-100"><td><strong>FL-100 Full Divorce</strong> (kids + property, UCCJEA)</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
+            <tr data-prefill="I need an FL-300 Request for Order (custody/support/visitation)" data-formcode="FL-300"><td><strong>FL-300</strong> Request for Order (custody/support)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need FL-150 / FL-160 financial disclosures prepared" data-formcode="FL-150"><td><strong>FL-150 / FL-160</strong> Financial disclosures</td><td class="num"><span class="price">$149 each</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need a post-judgment modification (family law)"><td><strong>Post-judgment modification</strong> (family law)</td><td class="num"><span class="price">from $499</span></td><td class="num gov">$0</td></tr>
+            <tr class="price-row-popular" data-prefill="I need the SC-100 small-claims package (SC-100 + proof of service)" data-formcode="SC-100">
               <td><strong>SC-100 Small Claims</strong> package<br><span class="price-row-meta">SC-100 + proof of service (POS-010)</span></td>
               <td class="num"><span class="price">$249</span></td>
               <td class="num gov">$30–$75</td>
             </tr>
-            <tr><td><strong>Demand letter</strong> (pre-litigation)</td><td class="num"><span class="price">$99</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>WG-001 / EJ-001</strong> Judgment collection</td><td class="num"><span class="price">$199</span></td><td class="num gov">$40</td></tr>
-            <tr><td><strong>UD response</strong> (tenant defense)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$240</td></tr>
-            <tr><td><strong>Restraining order</strong> document package</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
-            <tr><td><strong>Small estate affidavit</strong> (under $184,500)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>DE-111 Probate</strong> petition</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
-            <tr><td><strong>Full Probate</strong> package (DE-111/121/160/221)</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$435+</td></tr>
+            <tr data-prefill="I need a demand letter prepared before filing in court"><td><strong>Demand letter</strong> (pre-litigation)</td><td class="num"><span class="price">$99</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need help collecting on a court judgment (WG-001 wage garnishment / EJ-001 abstract)"><td><strong>WG-001 / EJ-001</strong> Judgment collection</td><td class="num"><span class="price">$199</span></td><td class="num gov">$40</td></tr>
+            <tr data-prefill="I need an unlawful-detainer (eviction) response prepared — I'm the tenant"><td><strong>UD response</strong> (tenant defense)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$240</td></tr>
+            <tr data-prefill="I need a restraining order document package (DV / CH / EA / GV / WV)"><td><strong>Restraining order</strong> document package</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need a small-estate affidavit (estate under $184,500)"><td><strong>Small estate affidavit</strong> (under $184,500)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need a DE-111 probate petition" data-formcode="DE-111"><td><strong>DE-111 Probate</strong> petition</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
+            <tr data-prefill="I need the full California probate package (DE-111 / 121 / 160 / 221)" data-formcode="DE-111"><td><strong>Full Probate</strong> package (DE-111/121/160/221)</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$435+</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -206,24 +206,24 @@ const schema = {
             <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">State fee*</th></tr>
           </thead>
           <tbody>
-            <tr class="price-row-popular">
+            <tr class="price-row-popular" data-prefill="I want the LLC Launch Package (LLC-1 + LLC-12 + EIN + operating agreement)" data-formcode="LLC-1">
               <td><strong>LLC Launch Package</strong><br><span class="price-row-meta">LLC-1 + LLC-12 + EIN + operating agreement</span><span class="price-popular-pill">Best value</span></td>
               <td class="num"><span class="price">$449</span></td>
               <td class="num gov">$90</td>
             </tr>
-            <tr><td><strong>Corporation Launch Package</strong><br><span class="price-row-meta">ARTS-GS + SI-550 + EIN + bylaws</span></td><td class="num"><span class="price">$549</span></td><td class="num gov">$125</td></tr>
-            <tr><td><strong>LLC-1</strong> Form an LLC (standalone)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$70</td></tr>
-            <tr><td><strong>LLC-12</strong> Statement of Information</td><td class="num"><span class="price">$99</span></td><td class="num gov">$20</td></tr>
-            <tr><td><strong>SS-4 EIN</strong> application</td><td class="num"><span class="price">$79</span></td><td class="num gov">$0</td></tr>
-            <tr><td><strong>DBA / FBN</strong> (Fictitious Business Name)</td><td class="num"><span class="price">$129</span></td><td class="num gov">varies (county)</td></tr>
-            <tr><td><strong>Foreign-LLC registration</strong></td><td class="num"><span class="price">$299</span></td><td class="num gov">$70</td></tr>
-            <tr><td><strong>Operating agreement</strong> (customised template)</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I want the Corporation Launch Package (ARTS-GS + SI-550 + EIN + bylaws)" data-formcode="ARTS-GS"><td><strong>Corporation Launch Package</strong><br><span class="price-row-meta">ARTS-GS + SI-550 + EIN + bylaws</span></td><td class="num"><span class="price">$549</span></td><td class="num gov">$125</td></tr>
+            <tr data-prefill="I need to form an LLC (LLC-1 only)" data-formcode="LLC-1"><td><strong>LLC-1</strong> Form an LLC (standalone)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$70</td></tr>
+            <tr data-prefill="I need to file LLC-12 Statement of Information" data-formcode="LLC-12"><td><strong>LLC-12</strong> Statement of Information</td><td class="num"><span class="price">$99</span></td><td class="num gov">$20</td></tr>
+            <tr data-prefill="I need help getting an EIN (SS-4)" data-formcode="SS-4"><td><strong>SS-4 EIN</strong> application</td><td class="num"><span class="price">$79</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need to file a DBA / Fictitious Business Name" data-formcode="FBN"><td><strong>DBA / FBN</strong> (Fictitious Business Name)</td><td class="num"><span class="price">$129</span></td><td class="num gov">varies (county)</td></tr>
+            <tr data-prefill="I need to register a foreign LLC in California" data-formcode="LLC-1A"><td><strong>Foreign-LLC registration</strong></td><td class="num"><span class="price">$299</span></td><td class="num gov">$70</td></tr>
+            <tr data-prefill="I need an operating agreement template customised for my LLC"><td><strong>Operating agreement</strong> (customised template)</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
             <tr><td colspan="3" class="price-table-divider">Translation & notary</td></tr>
-            <tr><td><strong>Certified translation</strong> (RU / UA / ES ↔ EN)</td><td class="num"><span class="price">from $35/page</span></td><td class="num gov">—</td></tr>
-            <tr><td><strong>Standard certificate</strong> (birth/marriage/divorce)</td><td class="num"><span class="price">$45 each</span></td><td class="num gov">—</td></tr>
-            <tr><td><strong>Diploma / transcript</strong> translation</td><td class="num"><span class="price">$75 each</span></td><td class="num gov">—</td></tr>
-            <tr><td><strong>Apostille coordination</strong> (CA Secretary of State)</td><td class="num"><span class="price">$99</span></td><td class="num gov">$26+</td></tr>
-            <tr><td><strong>Mobile notary</strong> (Sacramento metro, up to 3 signatures)</td><td class="num"><span class="price">from $75</span></td><td class="num gov">—</td></tr>
+            <tr data-prefill="I need a certified translation (Russian / Ukrainian / Spanish ↔ English)"><td><strong>Certified translation</strong> (RU / UA / ES ↔ EN)</td><td class="num"><span class="price">from $35/page</span></td><td class="num gov">—</td></tr>
+            <tr data-prefill="I need a certified translation of a birth / marriage / divorce / death certificate"><td><strong>Standard certificate</strong> (birth/marriage/divorce)</td><td class="num"><span class="price">$45 each</span></td><td class="num gov">—</td></tr>
+            <tr data-prefill="I need a certified translation of a diploma / academic transcript"><td><strong>Diploma / transcript</strong> translation</td><td class="num"><span class="price">$75 each</span></td><td class="num gov">—</td></tr>
+            <tr data-prefill="I need apostille coordination through California Secretary of State"><td><strong>Apostille coordination</strong> (CA Secretary of State)</td><td class="num"><span class="price">$99</span></td><td class="num gov">$26+</td></tr>
+            <tr data-prefill="I need a mobile notary in the Sacramento area"><td><strong>Mobile notary</strong> (Sacramento metro, up to 3 signatures)</td><td class="num"><span class="price">from $75</span></td><td class="num gov">—</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -240,36 +240,36 @@ const schema = {
           <p>Layer these on top of any package. Multiple discounts can stack.</p>
         </div>
         <div class="discounts-grid">
-          <div class="discount-card">
+          <button type="button" class="discount-card" data-prefill="I'm a first-time Imverica client and would like the introductory discount applied.">
             <div class="discount-pct">−15%</div>
             <div class="discount-title">First-time client</div>
             <div class="discount-desc">First matter with Imverica gets an introductory discount, applied automatically.</div>
-          </div>
-          <div class="discount-card">
+          </button>
+          <button type="button" class="discount-card" data-prefill="I have two or more family members on the same I-130 / I-485 flow — please apply the family-bundle discount.">
             <div class="discount-pct">−10%</div>
             <div class="discount-title">Family bundle</div>
             <div class="discount-desc">Two or more family members on the same I-130 / I-485 flow — discount on the second relative onward.</div>
-          </div>
-          <div class="discount-card">
+          </button>
+          <button type="button" class="discount-card" data-prefill="I'd like a multi-form bundle (3+ forms from the same family) — please quote with the bundle discount.">
             <div class="discount-pct">−10%</div>
             <div class="discount-title">Multi-form bundle</div>
             <div class="discount-desc">Three or more forms from the same family (e.g. full I-485 package) — discount on the bundle total.</div>
-          </div>
-          <div class="discount-card">
+          </button>
+          <button type="button" class="discount-card" data-prefill="I was referred by an existing Imverica client — please apply the referral credit.">
             <div class="discount-pct">−10%</div>
             <div class="discount-title">Referral credit</div>
             <div class="discount-desc">You refer a new client to Imverica — both of you get a credit on the next invoice.</div>
-          </div>
-          <div class="discount-card">
+          </button>
+          <button type="button" class="discount-card" data-prefill="I qualify for the USCIS fee waiver (I-912) or California court fee waiver — please apply the fee-waiver discount.">
             <div class="discount-pct">−25%</div>
             <div class="discount-title">Fee-waiver verified</div>
             <div class="discount-desc">If your household qualifies for the USCIS fee waiver (I-912) or California court fee waiver — we reduce our fee too.</div>
-          </div>
-          <div class="discount-card discount-card--b2b">
+          </button>
+          <a class="discount-card discount-card--b2b" href="/for-attorneys">
             <div class="discount-pct">B2B</div>
             <div class="discount-title">Attorney retainer</div>
-            <div class="discount-desc">Law firms with a monthly retainer (10+ hours/month) bill at our reduced paralegal rate. <a href="/for-attorneys">See attorney pricing →</a></div>
-          </div>
+            <div class="discount-desc">Law firms with a monthly retainer (10+ hours/month) bill at our reduced paralegal rate. <span class="b2b-link">See attorney pricing →</span></div>
+          </a>
         </div>
       </div>
 
@@ -382,6 +382,47 @@ const schema = {
     primaryHref="/#get-started"
     primaryText="Start your case"
   />
+
+  <!-- Wire price-table rows and discount cards to the QuickIntakeModal.
+       Each row/card carries data-prefill (and optionally data-formcode);
+       on click we open the intake with that text pre-filled into the
+       situation field so the visitor's first message to us is already
+       written. Falls back gracefully if openIntakeModal isn't ready. -->
+  <script is:inline>
+    (function () {
+      function openIntake(prefill, formCode) {
+        if (typeof window.openIntakeModal !== 'function') {
+          // Modal hasn't loaded — fall back to the generic homepage CTA.
+          window.location.href = '/#get-started';
+          return;
+        }
+        window.openIntakeModal(prefill || '', formCode ? { formCode: formCode } : undefined);
+      }
+
+      // Price-table rows
+      document.querySelectorAll('.price-table tr[data-prefill]').forEach(function (row) {
+        row.classList.add('price-row-clickable');
+        row.setAttribute('role', 'button');
+        row.setAttribute('tabindex', '0');
+        row.addEventListener('click', function () {
+          openIntake(row.getAttribute('data-prefill'), row.getAttribute('data-formcode'));
+        });
+        row.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openIntake(row.getAttribute('data-prefill'), row.getAttribute('data-formcode'));
+          }
+        });
+      });
+
+      // Discount cards (the B2B card is a real <a href> link — skip)
+      document.querySelectorAll('.discount-card[data-prefill]').forEach(function (card) {
+        card.addEventListener('click', function () {
+          openIntake(card.getAttribute('data-prefill'));
+        });
+      });
+    })();
+  </script>
 
   <style>
     /* ===== Hero overrides on this page only ===== */
@@ -500,6 +541,39 @@ const schema = {
     }
     .price-table tbody tr:last-child td { border-bottom: 0; }
     .price-table .num { text-align: right; white-space: nowrap; }
+
+    /* Clickable rows — added by JS at runtime when data-prefill is set.
+       Cursor, subtle hover, and a fade-in arrow on the first cell so
+       the row reads as an actionable element. */
+    .price-table tr.price-row-clickable { cursor: pointer; transition: background 0.15s ease; }
+    .price-table tr.price-row-clickable td:first-child { position: relative; padding-right: 28px; }
+    .price-table tr.price-row-clickable td:first-child::after {
+      content: "→";
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translate(-6px, -50%);
+      color: var(--terracotta-deep);
+      font-weight: 700;
+      font-size: 16px;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .price-table tr.price-row-clickable:hover {
+      background: rgba(164,91,52,0.05);
+    }
+    .price-table tr.price-row-clickable:hover td:first-child::after {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+    .price-table tr.price-row-clickable:focus-visible {
+      outline: 2px solid var(--terracotta-deep);
+      outline-offset: -2px;
+    }
+    /* Popular rows keep their warm tint AND show the arrow */
+    .price-table tr.price-row-popular.price-row-clickable:hover {
+      background: rgba(255,237,210,0.75);
+    }
     .price-table .price {
       display: inline-block;
       padding: 4px 12px;
@@ -645,21 +719,38 @@ const schema = {
       padding: 18px 18px 16px;
       border: 1px solid rgba(40,30,20,0.08);
       box-shadow: 0 6px 16px rgba(40,30,20,0.04);
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      /* Button reset — these cards are real <button>s for click-to-intake. */
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      color: inherit;
     }
     .discount-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(40,30,20,0.10);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(40,30,20,0.12);
+      border-color: rgba(164,91,52,0.30);
+    }
+    .discount-card:focus-visible {
+      outline: 2px solid var(--terracotta-deep);
+      outline-offset: 2px;
     }
     .discount-card--b2b {
       background: var(--navy-dark);
       color: #e8eef7;
       border-color: var(--navy-dark);
     }
+    .discount-card--b2b:hover {
+      border-color: var(--gold);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+    }
     .discount-card--b2b .discount-title,
     .discount-card--b2b .discount-pct { color: #fff; }
     .discount-card--b2b .discount-desc { color: #c5d1e0; }
-    .discount-card--b2b a { color: var(--gold); text-decoration: underline; }
+    .discount-card--b2b .b2b-link { color: var(--gold); text-decoration: underline; font-weight: 600; }
     .discount-pct {
       font-family: var(--font-display);
       font-size: 32px;
