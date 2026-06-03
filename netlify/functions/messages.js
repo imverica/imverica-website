@@ -177,12 +177,15 @@ async function notifyOwnerOfClientMessage(clientEmail, text) {
   const ownerInboxes = (process.env.MESSAGES_NOTIFY_TO || 'imverica@gmail.com,info@imverica.com')
     .split(',').map((s) => s.trim()).filter(Boolean);
   const fromAddr = process.env.MESSAGES_FROM || 'Imverica Messages <messages@imverica.com>';
-  // Replies in Gmail land at this address. Cloudflare Email Routing
-  // is configured on imverica.com to catch `replies+*@imverica.com`
-  // and forward to a Worker which POSTs to /api/messages-inbound.
-  // No subdomain → no extra DNS zone setup needed.
-  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'imverica.com';
-  const replyLocalPart = process.env.MESSAGES_REPLY_LOCAL || 'replies';
+  // Replies land at a per-thread token address on the `reply.imverica.com`
+  // subdomain. Why a subdomain: the imverica.com root MX points at Zoho
+  // (info@imverica.com), so touching the root would break the existing
+  // mailbox. A subdomain has independent MX — we point reply.imverica.com
+  // MX at Resend's inbound mail server (feedback-smtp.resend.com), and
+  // Resend posts the parsed email to /api/messages-inbound. Zoho keeps
+  // owning the root domain — no collision.
+  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'reply.imverica.com';
+  const replyLocalPart = process.env.MESSAGES_REPLY_LOCAL || 'reply';
   const replyTo = `${replyLocalPart}+${threadToken(clientEmail)}@${replyDomain}`;
   const subject = `New portal message from ${clientEmail}`;
   const portalLink = (process.env.URL || 'https://imverica.com')
