@@ -58,7 +58,18 @@ function normalizeEmail(value) {
 const DIR = path.join(os.tmpdir(), 'imverica-profiles');
 
 async function getStore() {
-  try { return require('@netlify/blobs').getStore('imverica-profiles'); } catch { return null; }
+  // consistency: 'strong' makes reads see writes immediately. Without it,
+  // a GET right after a POST (e.g. saveProfile → ensureProfile → loadDashboard)
+  // can return stale `null` from the previous deploy / eventual-consistency
+  // window, which loops the UI back to step-profile with the button stuck
+  // on "Saving…". The strong-consistency cost is a single extra millisecond
+  // — well worth it for profile reads, which are rare and small.
+  try { return require('@netlify/blobs').getStore({ name: 'imverica-profiles', consistency: 'strong' }); }
+  catch {
+    // Older @netlify/blobs versions don't support the options object —
+    // fall back to the string-name signature.
+    try { return require('@netlify/blobs').getStore('imverica-profiles'); } catch { return null; }
+  }
 }
 
 function blobKey(email) {

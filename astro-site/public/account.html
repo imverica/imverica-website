@@ -1323,7 +1323,18 @@ async function saveProfile(){
     const r=await fetch('/api/profile',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:first,lastName:last,phone:phone,legalName:legal})});
     const d=await r.json();
     if(!r.ok || !d.ok){ btn.disabled=false; btn.textContent= T.profSave; msg('profile-msg','error',d.error || T.errSaveFail); return; }
-    loadDashboard();
+    // Use the saved profile from the POST response directly — re-fetching
+    // via GET can hit Netlify Blobs eventual-consistency and return null,
+    // which would loop us back to step-profile with the button still
+    // showing "Saving…". Always reset the button so even error branches
+    // never strand the UI.
+    btn.disabled=false; btn.textContent= T.profSave;
+    if (d.profile && d.profile.firstName) {
+      currentProfile = d.profile;
+      loadDashboardWithProfile(d.profile);
+    } else {
+      loadDashboard();
+    }
   }catch(e){ btn.disabled=false; btn.textContent= T.profSave; msg('profile-msg','error', T.errServerUnreach); }
 }
 
@@ -1340,7 +1351,17 @@ async function loadDashboard(){
 
   // First time: require a profile before showing the cabinet.
   const profile = await ensureProfile();
-  if (!profile){ clearMsg('profile-msg'); show('step-profile'); $('pf-first').focus(); return; }
+  if (!profile){
+    clearMsg('profile-msg');
+    // ALWAYS reset the save button when returning to step-profile so the
+    // UI never gets stranded on "Saving…" — covers the case where saveProfile
+    // succeeded server-side but the immediate GET hit eventual-consistency.
+    const saveBtn = $('pf-save');
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = T.profSave; }
+    show('step-profile');
+    $('pf-first').focus();
+    return;
+  }
 
   currentProfile = profile;
   currentSessionEmail = data.email || '';
@@ -1351,6 +1372,28 @@ async function loadDashboard(){
   refreshTileBadges(data.orders||[]);
   show('step-dash');
   startChat();
+}
+
+// Faster variant for the just-saved case — uses the profile object returned
+// in the POST /api/profile response directly, skipping the ensureProfile()
+// re-fetch that can hit eventual-consistency.
+async function loadDashboardWithProfile(profile){
+  try {
+    const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
+    if (res.status===401){ show('step-email'); stopChat(); return; }
+    const data = await res.json().catch(()=>({}));
+    if (!data.ok){ show('step-email'); stopChat(); return; }
+    currentSessionEmail = data.email || '';
+    $('dash-name').textContent = profile.firstName;
+    $('dash-email').textContent = currentSessionEmail;
+    renderOrders(data.orders||[]);
+    refreshTileBadges(data.orders||[]);
+    show('step-dash');
+    startChat();
+  } catch (e) {
+    // Fall through to the canonical path if anything blows up here.
+    loadDashboard();
+  }
 }
 
 /* ===== Quick-action tile handlers ===== */
