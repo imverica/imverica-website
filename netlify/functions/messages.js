@@ -177,14 +177,15 @@ async function notifyOwnerOfClientMessage(clientEmail, text) {
   const ownerInboxes = (process.env.MESSAGES_NOTIFY_TO || 'imverica@gmail.com,info@imverica.com')
     .split(',').map((s) => s.trim()).filter(Boolean);
   const fromAddr = process.env.MESSAGES_FROM || 'Imverica Messages <messages@imverica.com>';
-  // Replies land at a per-thread token address on the `reply.imverica.com`
-  // subdomain. Why a subdomain: the imverica.com root MX points at Zoho
-  // (info@imverica.com), so touching the root would break the existing
-  // mailbox. A subdomain has independent MX — we point reply.imverica.com
-  // MX at Resend's inbound mail server (feedback-smtp.resend.com), and
-  // Resend posts the parsed email to /api/messages-inbound. Zoho keeps
-  // owning the root domain — no collision.
-  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'reply.imverica.com';
+  // Replies land at a per-thread token address served by Resend Inbound.
+  // We default to the predefined `estutkal.resend.app` subdomain because
+  // imverica.com's root MX points at Zoho (info@imverica.com) and the
+  // free Resend plan only allows one custom domain (already taken by
+  // imverica.com for outbound). The predefined `*@<id>.resend.app`
+  // address fires the `email.received` webhook → /api/messages-inbound.
+  // Override via MESSAGES_REPLY_DOMAIN once a paid plan / custom domain
+  // is in place (e.g. reply.imverica.com).
+  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'estutkal.resend.app';
   const replyLocalPart = process.env.MESSAGES_REPLY_LOCAL || 'reply';
   const replyTo = `${replyLocalPart}+${threadToken(clientEmail)}@${replyDomain}`;
   const subject = `New portal message from ${clientEmail}`;

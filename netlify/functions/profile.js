@@ -69,11 +69,18 @@ function verifySession(token, event) {
 // Profile encryption + storage are shared with auth.js (TOTP fields).
 // See lib/profile-store.js for the AES-256-GCM envelope format.
 const { readProfile, updateProfile } = require('./lib/profile-store');
+const { ensureBlobs } = require('./lib/abuse-guard');
 
 const NAME_OK = /[A-Za-zÀ-ɏЀ-ӿ]/;
 
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
+
+  // CRITICAL: connect @netlify/blobs to the current Lambda context. Without
+  // this, getStore() in profile-store.js throws MissingBlobsEnvironmentError
+  // and silently falls back to the ephemeral /tmp filesystem — every cold
+  // start loses the user's profile and the UI re-asks for their name.
+  ensureBlobs(event);
 
   const session = verifySession(parseCookie(event.headers && (event.headers.cookie || event.headers.Cookie), 'imv_session'), event);
   if (!session) return json(401, { ok: false, error: 'Not signed in' });
