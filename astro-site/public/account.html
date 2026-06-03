@@ -40,6 +40,8 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .form-group label{display:block;font-size:12px;font-weight:500;letter-spacing:0.5px;color:#555;margin-bottom:0.4rem;text-transform:uppercase;}
 .form-group input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:3px;font-size:15px;font-family:var(--font-system);color:#1a1a1a;outline:none;transition:border 0.2s;}
 .form-group input:focus{border-color:var(--navy);}
+.form-group .hint{display:block;margin-top:4px;font-size:11px;color:#7a8595;font-style:italic;letter-spacing:0;text-transform:none;}
+.form-group input:invalid:not(:placeholder-shown){border-color:#c0392b;}
 #code-input{letter-spacing:8px;font-size:22px;text-align:center;font-weight:500;}
 
 .btn{width:100%;background:var(--navy);color:#fff;border:none;padding:14px;font-size:15px;font-family:var(--font-system);font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;}
@@ -433,8 +435,22 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
     <div class="auth-kicker" data-i18n="profKicker">One last step</div>
     <h1 class="auth-h1" data-i18n="profH1">Complete your profile</h1>
     <p class="auth-sub" data-i18n="profSub">A few details so we can prepare your documents accurately. Stored encrypted, never shared.</p>
-    <div class="form-group"><label for="pf-first" data-i18n="profFirst">First name *</label><input type="text" id="pf-first" data-i18n-placeholder="profFirstPh" placeholder="First name" autocomplete="given-name"></div>
-    <div class="form-group"><label for="pf-last" data-i18n="profLast">Last name *</label><input type="text" id="pf-last" data-i18n-placeholder="profLastPh" placeholder="Last name" autocomplete="family-name"></div>
+    <div class="form-group">
+      <label for="pf-first" data-i18n="profFirst">First name *</label>
+      <input type="text" id="pf-first" data-i18n-placeholder="profFirstPh" placeholder="First name"
+             autocomplete="given-name" maxlength="60"
+             pattern="[A-Za-z][A-Za-z\s\-'.]*"
+             title="English letters only (A–Z, a–z). Apostrophe, hyphen, and dot allowed.">
+      <small class="hint" data-i18n="profNameHint">English letters only (A–Z, a–z) — as on your passport.</small>
+    </div>
+    <div class="form-group">
+      <label for="pf-last" data-i18n="profLast">Last name *</label>
+      <input type="text" id="pf-last" data-i18n-placeholder="profLastPh" placeholder="Last name"
+             autocomplete="family-name" maxlength="60"
+             pattern="[A-Za-z][A-Za-z\s\-'.]*"
+             title="English letters only (A–Z, a–z). Apostrophe, hyphen, and dot allowed.">
+      <small class="hint" data-i18n="profNameHint">English letters only (A–Z, a–z) — as on your passport.</small>
+    </div>
     <div class="form-group"><label for="pf-phone" data-i18n="profPhone">Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
     <div class="form-group"><label for="pf-legal" data-i18n="profLegal">Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" data-i18n-placeholder="profLegalPh" placeholder="Legal name as printed on your documents"></div>
     <button class="btn" id="pf-save" onclick="saveProfile()" data-i18n="profSave">Save and continue</button>
@@ -663,6 +679,8 @@ const STRINGS = {
     errSendFail: 'Could not send a code. Try again.',
     errSaveFail: 'Could not save. Try again.',
     errNameMissing: 'Please enter your first and last name.',
+    errNameLatin: 'Name must use English letters only (A–Z, a–z) — as printed on your passport.',
+    profNameHint: 'English letters only (A–Z, a–z) — as on your passport.',
     errPhoneShort: 'Please enter a valid phone number.',
     errServerUnreach: 'Could not reach the server.',
     errFileBig: 'File too large (max 4 MB).',
@@ -753,6 +771,8 @@ const STRINGS = {
     errSendFail: 'Не удалось отправить код. Попробуйте ещё раз.',
     errSaveFail: 'Не удалось сохранить. Попробуйте ещё раз.',
     errNameMissing: 'Пожалуйста, введите имя и фамилию.',
+    errNameLatin: 'Имя должно быть на латинице (A–Z, a–z) — как в паспорте для USCIS.',
+    profNameHint: 'Только латиница (A–Z, a–z) — как в паспорте.',
     errPhoneShort: 'Пожалуйста, введите корректный номер телефона.',
     errServerUnreach: 'Не удалось связаться с сервером.',
     errFileBig: 'Файл слишком большой (максимум 4 МБ).',
@@ -843,6 +863,8 @@ const STRINGS = {
     errSendFail: 'Не вдалося надіслати код. Спробуйте ще раз.',
     errSaveFail: 'Не вдалося зберегти. Спробуйте ще раз.',
     errNameMissing: 'Будь ласка, введіть ім\'я та прізвище.',
+    errNameLatin: 'Ім\'я має бути латиницею (A–Z, a–z) — як у паспорті для USCIS.',
+    profNameHint: 'Тільки латиниця (A–Z, a–z) — як у паспорті.',
     errPhoneShort: 'Будь ласка, введіть коректний номер телефону.',
     errServerUnreach: 'Не вдалося зв\'язатися з сервером.',
     errFileBig: 'Файл задовгий (максимум 4 МБ).',
@@ -933,6 +955,8 @@ const STRINGS = {
     errSendFail: 'No se pudo enviar el código. Inténtelo de nuevo.',
     errSaveFail: 'No se pudo guardar. Inténtelo de nuevo.',
     errNameMissing: 'Por favor, ingrese su nombre y apellido.',
+    errNameLatin: 'El nombre debe usar letras inglesas (A–Z, a–z) — como en su pasaporte para USCIS.',
+    profNameHint: 'Solo letras inglesas (A–Z, a–z) — como en su pasaporte.',
     errPhoneShort: 'Por favor, ingrese un número de teléfono válido.',
     errServerUnreach: 'No se pudo contactar al servidor.',
     errFileBig: 'Archivo demasiado grande (máx. 4 MB).',
@@ -1276,11 +1300,23 @@ async function ensureProfile(){
   }catch(e){ return null; }
 }
 
+// First/last name: English letters only (plus space/hyphen/apostrophe/dot).
+// USCIS / EOIR / CA-court forms must be filled in English. The separate
+// "Full legal name" field (#pf-legal) stays permissive — it's what's printed
+// on the client's ID and may legitimately contain non-Latin characters.
+function validNameAccount(v){ return typeof v==='string' && /^[A-Za-z][A-Za-z\s\-'.]*$/.test(v.trim()); }
+
 async function saveProfile(){
   clearMsg('profile-msg');
   const first=$('pf-first').value.trim(), last=$('pf-last').value.trim();
   const phone=$('pf-phone').value.trim(), legal=$('pf-legal').value.trim();
   if(!first || !last){ msg('profile-msg','error', T.errNameMissing); return; }
+  if(!validNameAccount(first) || !validNameAccount(last)){
+    msg('profile-msg','error', T.errNameLatin || T.errNameMissing);
+    if (!validNameAccount(first)) $('pf-first').focus();
+    else $('pf-last').focus();
+    return;
+  }
   if(phone.replace(/\D/g,'').length<10){ msg('profile-msg','error', T.errPhoneShort); return; }
   const btn=$('pf-save'); btn.disabled=true; btn.textContent= T.profSaving;
   try{
@@ -1571,6 +1607,22 @@ $('email-input').addEventListener('keydown',e=>{ if(e.key==='Enter') requestCode
 $('code-input').addEventListener('keydown',e=>{ if(e.key==='Enter') verifyCode(); });
 $('chat-input').addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
 (function(){ var p=$('pf-phone'); if(!p) return; p.addEventListener('input',function(){ var d=p.value.replace(/\D/g,'').slice(0,10); p.value = d.length<=3?(d?'('+d:''):d.length<=6?'('+d.slice(0,3)+') '+d.slice(3):'('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6); }); })();
+// Live name filter — strips characters the server will reject so the user
+// never sees Cyrillic / accented Latin / digits sneak past validation.
+(function(){
+  ['pf-first','pf-last'].forEach(function(id){
+    var el = $(id); if (!el) return;
+    el.addEventListener('input', function(){
+      var before = el.value;
+      var after = before.replace(/[^A-Za-z\s\-'.]/g, '');
+      if (after !== before) {
+        var pos = el.selectionStart - (before.length - after.length);
+        el.value = after;
+        try { el.setSelectionRange(pos, pos); } catch(e) {}
+      }
+    });
+  });
+})();
 $('pf-legal').addEventListener('keydown',e=>{ if(e.key==='Enter') saveProfile(); });
 
 // ===== Google Sign-In (Google Identity Services) =====

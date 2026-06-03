@@ -38,6 +38,8 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:3px;font-size:14px;font-family:var(--font-system);color:#1a1a1a;background:#fff;outline:none;transition:border 0.2s;}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--navy);}
 .form-group textarea{resize:vertical;min-height:80px;}
+.form-group .hint{display:block;margin-top:4px;font-size:11px;color:#7a8595;font-style:italic;}
+.form-group input:invalid:not(:placeholder-shown){border-color:#c0392b;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 @media(max-width:600px){.form-row{grid-template-columns:1fr;}}
 
@@ -142,11 +144,21 @@ footer p{font-size:12px;color:#d8e6f6;}
       <div class="form-row">
         <div class="form-group">
           <label data-i18n="firstName">First Name *</label>
-          <input type="text" id="fname" data-i18n-placeholder="firstNamePh" placeholder="First name" required>
+          <input type="text" id="fname" data-i18n-placeholder="firstNamePh" placeholder="First name"
+                 autocomplete="given-name" maxlength="60"
+                 pattern="[A-Za-z][A-Za-z\s\-'.]*"
+                 title="English letters only (A–Z, a–z). Apostrophe, hyphen, and dot allowed."
+                 required>
+          <small class="hint" data-i18n="nameHintEn">English letters only (A–Z, a–z).</small>
         </div>
         <div class="form-group">
           <label data-i18n="lastName">Last Name *</label>
-          <input type="text" id="lname" data-i18n-placeholder="lastNamePh" placeholder="Last name" required>
+          <input type="text" id="lname" data-i18n-placeholder="lastNamePh" placeholder="Last name"
+                 autocomplete="family-name" maxlength="60"
+                 pattern="[A-Za-z][A-Za-z\s\-'.]*"
+                 title="English letters only (A–Z, a–z). Apostrophe, hyphen, and dot allowed."
+                 required>
+          <small class="hint" data-i18n="nameHintEn">English letters only (A–Z, a–z).</small>
         </div>
       </div>
 
@@ -279,7 +291,8 @@ const STRINGS = {
     newsLoading: 'Loading the latest official updates…',
     newsReadOnSource: 'Read on the official source →',
     footer: '© 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992',
-    errName: 'Please enter your first and last name.',
+    errName: 'Please enter your first and last name in English letters (A–Z, a–z).',
+    nameHintEn: 'English letters only (A–Z, a–z).',
     errPhone: 'Please enter a valid phone number (at least 10 digits).',
     errEmail: 'Please enter a valid email address — we use it to send your reference number.',
     errService: 'Please pick a service from the dropdown above.',
@@ -333,7 +346,8 @@ const STRINGS = {
     newsLoading: 'Загружаем свежие официальные обновления…',
     newsReadOnSource: 'Читать в официальном источнике →',
     footer: '© 2026 Imverica Legal Solutions · Не юридическая фирма · Юридических консультаций не даём · +1 (916) 399-3992',
-    errName: 'Пожалуйста, введите имя и фамилию.',
+    errName: 'Введите имя и фамилию латинскими буквами (как в паспорте для USCIS).',
+    nameHintEn: 'Только латиница (A–Z, a–z). Как в паспорте.',
     errPhone: 'Пожалуйста, введите корректный номер телефона (минимум 10 цифр).',
     errEmail: 'Пожалуйста, введите корректный email — мы отправим на него номер вашей заявки.',
     errService: 'Пожалуйста, выберите услугу из выпадающего списка выше.',
@@ -387,7 +401,8 @@ const STRINGS = {
     newsLoading: 'Завантажуємо свіжі офіційні оновлення…',
     newsReadOnSource: 'Читати в офіційному джерелі →',
     footer: '© 2026 Imverica Legal Solutions · Не юридична фірма · Юридичних консультацій не надаємо · +1 (916) 399-3992',
-    errName: 'Будь ласка, введіть ім\'я та прізвище.',
+    errName: 'Введіть ім\'я та прізвище латинськими літерами (як у паспорті для USCIS).',
+    nameHintEn: 'Тільки латиниця (A–Z, a–z). Як у паспорті.',
     errPhone: 'Будь ласка, введіть коректний номер телефону (мінімум 10 цифр).',
     errEmail: 'Будь ласка, введіть коректний email — ми надішлемо на нього номер вашої заявки.',
     errService: 'Будь ласка, оберіть послугу з випадного списку вище.',
@@ -441,7 +456,8 @@ const STRINGS = {
     newsLoading: 'Cargando últimas actualizaciones oficiales…',
     newsReadOnSource: 'Leer en la fuente oficial →',
     footer: '© 2026 Imverica Legal Solutions · No es un bufete · No brindamos asesoría legal · +1 (916) 399-3992',
-    errName: 'Por favor, ingrese su nombre y apellido.',
+    errName: 'Ingrese su nombre y apellido con letras inglesas (como en su pasaporte para USCIS).',
+    nameHintEn: 'Solo letras inglesas (A–Z, a–z). Como en su pasaporte.',
     errPhone: 'Por favor, ingrese un número de teléfono válido (al menos 10 dígitos).',
     errEmail: 'Por favor, ingrese un email válido — lo usamos para enviarle su número de referencia.',
     errService: 'Por favor, seleccione un servicio del menú desplegable.',
@@ -555,7 +571,35 @@ function copyOrderId(){
 }
 
 // Mirror the backend validators in netlify/functions/intake.js
-function validName(v){ var t=(v||'').trim(); var letters=(t.match(/[A-Za-zА-Яа-яЁёІіЇїЄєҐґÁÉÍÓÚÜÑáéíóúüñ]/g)||[]).length; return letters>=4; }
+// First/last name: English letters only (plus space/hyphen/apostrophe/dot).
+// USCIS / EOIR / CA-court forms must be filled in English, so we reject
+// Cyrillic, accented Latin, and digits at the source. legalName (separate
+// field on /account) stays permissive — it represents what's on the passport.
+function validNamePart(v){ return typeof v==='string' && /^[A-Za-z][A-Za-z\s\-'.]*$/.test(v.trim()); }
+function validName(v){
+  var parts = (v||'').trim().split(/\s+/);
+  return parts.length >= 2 && parts.every(validNamePart);
+}
+
+// Live filter: strip any character that isn't allowed in a name. Runs on
+// every input event so the user never sees Cyrillic land in the field.
+function attachNameFilter(id){
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', function(){
+    var before = el.value;
+    var after = before.replace(/[^A-Za-z\s\-'.]/g, '');
+    if (after !== before) {
+      var pos = el.selectionStart - (before.length - after.length);
+      el.value = after;
+      try { el.setSelectionRange(pos, pos); } catch(e) {}
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', function(){
+  attachNameFilter('fname');
+  attachNameFilter('lname');
+});
 function validPhone(v){ var d=(v||'').replace(/\D/g,''); return d.length>=10 && d.length<=15; }
 function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((v||'').trim()); }
 
@@ -570,8 +614,8 @@ function handleSubmit() {
   var service = serviceSel.value;
   var description = document.getElementById('description').value.trim();
 
+  if (!validNamePart(fname) || !validNamePart(lname)) return showError(T.errName);
   var fullName = (fname + ' ' + lname).trim();
-  if (!validName(fullName)) return showError(T.errName);
   if (!validPhone(phone)) return showError(T.errPhone);
   if (!validEmail(email)) return showError(T.errEmail);
   if (!service) {

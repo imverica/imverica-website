@@ -71,7 +71,17 @@ function verifySession(token, event) {
 const { readProfile, updateProfile } = require('./lib/profile-store');
 const { ensureBlobs } = require('./lib/abuse-guard');
 
-const NAME_OK = /[A-Za-zÀ-ɏЀ-ӿ]/;
+// First / last name policy: English letters only (plus space, hyphen,
+// apostrophe, dot for compound names like O'Brien / Jean-Luc / Jr.).
+// Cyrillic, accented Latin, digits, and other scripts are rejected so
+// USCIS / EOIR / CA-court forms — which must be filled in English —
+// don't get junk that we'd have to transliterate later.
+//
+// `legalName` (separate field) stays permissive — it represents what
+// appears on the client's passport, which may legitimately have
+// non-English characters in supporting documents.
+const NAME_ALLOWED = /^[A-Za-z][A-Za-z\s\-'.]*$/;
+function validName(s) { return typeof s === 'string' && s.length > 0 && NAME_ALLOWED.test(s); }
 
 exports.handler = async function (event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
@@ -105,9 +115,9 @@ exports.handler = async function (event) {
     const lastName = cleanField(body.lastName, 60);
     const legalName = cleanField(body.legalName, 160);
     const phoneDigits = String(body.phone || '').replace(/\D/g, '');
-    if (!NAME_OK.test(firstName)) return json(422, { ok: false, error: 'Please enter your first name.' });
-    if (!NAME_OK.test(lastName)) return json(422, { ok: false, error: 'Please enter your last name.' });
-    if (phoneDigits.length < 10 || phoneDigits.length > 15) return json(422, { ok: false, error: 'Please enter a valid phone number.' });
+    if (!validName(firstName)) return json(422, { ok: false, error: 'First name must use English letters only (A–Z, a–z).', field: 'firstName' });
+    if (!validName(lastName)) return json(422, { ok: false, error: 'Last name must use English letters only (A–Z, a–z).', field: 'lastName' });
+    if (phoneDigits.length < 10 || phoneDigits.length > 15) return json(422, { ok: false, error: 'Please enter a valid phone number.', field: 'phone' });
 
     const patch = {
       firstName, lastName, legalName,
