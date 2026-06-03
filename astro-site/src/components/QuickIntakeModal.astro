@@ -8,7 +8,7 @@
  * auto-save against the order record.
  *
  * Fields: name, email, phone (optional), what-do-you-need, attach up to
- * 5 files (PDF/JPG/PNG/DOCX, ≤4 MB total), submit. POSTs JSON with
+ * 5 files (PDF/JPG/PNG/DOCX, ≤5 MB each, ≤5 MB total), submit. POSTs JSON with
  * base64-encoded files to /api/quick-intake. Backend emails
  * info@imverica.com + imverica@gmail.com immediately and stores the
  * order in the same blob store the admin console reads.
@@ -66,7 +66,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
         <input id="qiFiles" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.docx,application/pdf,image/jpeg,image/png,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
         <label for="qiFiles" class="qi-files-cta">
           <span aria-hidden="true">📎</span>
-          <span data-i18n="filesCta">Choose files (PDF, JPG, PNG, DOCX — 4 MB each)</span>
+          <span data-i18n="filesCta">Choose files (PDF, JPG, PNG, DOCX — up to 5 MB each, 5 MB total)</span>
         </label>
         <ul id="qiFileList" class="qi-file-list" aria-live="polite"></ul>
       </div>
@@ -365,7 +365,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       lblSituation: 'How can we help? *',
       situationHint: 'Describe your situation, mention any deadline or USCIS / court notice.',
       lblFiles: 'Attach documents (optional, up to 5)',
-      filesCta: 'Choose files (PDF / JPG / PNG / DOCX — up to 4 MB total)',
+      filesCta: 'Choose files (PDF / JPG / PNG / DOCX — up to 5 MB each, 5 MB total)',
       submit: 'Send request',
       sending: 'Sending…',
       success: 'Got it! Your request was sent. We will reply at the email above within one business day.',
@@ -377,7 +377,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       errFields: 'Please fill all required fields.',
       errNetwork: 'Could not reach the server. Please check your connection or call +1 (916) 399-3992.',
       errTooMany: 'You can attach up to 5 files.',
-      errFileSize: 'Each file must be 4 MB or smaller.',
+      errFileSize: 'Each file must be 5 MB or smaller. Total upload up to 5 MB. For larger files, please email info@imverica.com.',
       errFileType: 'Only PDF, JPG, PNG, and DOCX files are accepted.',
       finePre: 'By submitting you agree to be contacted at the email or phone above. We do not share your data with third parties. ',
       fineTerms: 'Terms'
@@ -391,7 +391,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       lblSituation: 'Чем мы можем помочь? *',
       situationHint: 'Опишите ситуацию, укажите крайний срок или уведомление от USCIS / суда.',
       lblFiles: 'Прикрепить документы (по желанию, до 5 файлов)',
-      filesCta: 'Выбрать файлы (PDF / JPG / PNG / DOCX — до 4 МБ суммарно)',
+      filesCta: 'Выбрать файлы (PDF / JPG / PNG / DOCX — до 5 МБ за файл, всего 5 МБ)',
       submit: 'Отправить запрос',
       sending: 'Отправляем…',
       success: 'Готово! Запрос отправлен. Мы ответим на указанный email в течение одного рабочего дня.',
@@ -403,7 +403,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       errFields: 'Заполните, пожалуйста, обязательные поля.',
       errNetwork: 'Не удалось связаться с сервером. Проверьте интернет или позвоните +1 (916) 399-3992.',
       errTooMany: 'Можно прикрепить максимум 5 файлов.',
-      errFileSize: 'Каждый файл должен быть до 4 МБ.',
+      errFileSize: 'Каждый файл до 5 МБ. Всего до 5 МБ. Для больших файлов пишите info@imverica.com.',
       errFileType: 'Принимаем только PDF, JPG, PNG и DOCX.',
       finePre: 'Отправляя форму, вы соглашаетесь на связь по указанным email / телефону. Мы не передаём данные третьим сторонам. ',
       fineTerms: 'Условия'
@@ -417,7 +417,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       lblSituation: 'Чим ми можемо допомогти? *',
       situationHint: 'Опишіть ситуацію, вкажіть кінцевий термін або повідомлення від USCIS / суду.',
       lblFiles: 'Прикріпити документи (за бажанням, до 5 файлів)',
-      filesCta: 'Обрати файли (PDF / JPG / PNG / DOCX — до 4 МБ загалом)',
+      filesCta: 'Обрати файли (PDF / JPG / PNG / DOCX — до 5 МБ за файл, всего 5 МБ)',
       submit: 'Надіслати запит',
       sending: 'Надсилаємо…',
       success: 'Готово! Запит надіслано. Ми відповімо на вказаний email протягом одного робочого дня.',
@@ -429,7 +429,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       errFields: "Будь ласка, заповніть обов'язкові поля.",
       errNetwork: "Не вдалося зв'язатися із сервером. Перевірте інтернет або зателефонуйте +1 (916) 399-3992.",
       errTooMany: 'Можна прикріпити максимум 5 файлів.',
-      errFileSize: 'Кожен файл має бути до 4 МБ.',
+      errFileSize: 'Кожен файл до 5 МБ. Загалом до 5 МБ. Для більших файлів пишіть info@imverica.com.',
       errFileType: 'Приймаємо лише PDF, JPG, PNG і DOCX.',
       finePre: "Надсилаючи форму, ви погоджуєтеся на зв'язок за вказаним email / телефоном. Ми не передаємо ваші дані третім сторонам. ",
       fineTerms: 'Умови'
@@ -443,7 +443,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       lblSituation: '¿Cómo podemos ayudar? *',
       situationHint: 'Describa su situación, mencione cualquier plazo o aviso de USCIS / tribunal.',
       lblFiles: 'Adjuntar documentos (opcional, hasta 5)',
-      filesCta: 'Elegir archivos (PDF / JPG / PNG / DOCX — hasta 4 MB en total)',
+      filesCta: 'Elegir archivos (PDF / JPG / PNG / DOCX — hasta 5 MB cada uno, 5 MB total)',
       submit: 'Enviar solicitud',
       sending: 'Enviando…',
       success: '¡Listo! Solicitud enviada. Le responderemos al email indicado en un día laborable.',
@@ -455,14 +455,22 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       errFields: 'Complete los campos obligatorios.',
       errNetwork: 'No pudimos conectar con el servidor. Revise su conexión o llame al +1 (916) 399-3992.',
       errTooMany: 'Puede adjuntar hasta 5 archivos.',
-      errFileSize: 'Cada archivo debe ser de 4 MB o menos.',
+      errFileSize: 'Cada archivo hasta 5 MB. Total hasta 5 MB. Para archivos más grandes escriba a info@imverica.com.',
       errFileType: 'Aceptamos solo PDF, JPG, PNG y DOCX.',
       finePre: 'Al enviar acepta ser contactado en el email / teléfono indicados. No compartimos sus datos con terceros. ',
       fineTerms: 'Términos'
     }
   };
 
-  const MAX_FILE_BYTES = 4 * 1024 * 1024;
+  // 5 MB per file (was 4 MB) and 5 MB total — limited by Netlify's
+   // synchronous-function 6 MB body cap, of which base64 + JSON
+   // overhead consumes ~25%. For larger uploads we route through the
+   // background-function path that's queued for Phase-2 (direct upload
+   // to a Google Drive folder named after the client — bypasses the
+   // 6 MB sync ceiling entirely). UI honestly tells the user the
+   // current limit so they don't try a 25 MB scan and get rejected.
+  const MAX_FILE_BYTES = 5 * 1024 * 1024;
+  const MAX_TOTAL_BYTES = 5 * 1024 * 1024;
   const MAX_FILES = 5;
   const ALLOWED_MIMES = [
     'application/pdf',

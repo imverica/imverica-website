@@ -155,6 +155,84 @@ async function appendMessage(s, email, from, text, event) {
   return thread;
 }
 
+// ----- Owner notification via Resend -----
+// Reply-To is a per-thread token (12 chars of sha256(email)) so Resend
+// Inbound (or any other inbound provider) can route the owner's reply
+// back to the right portal thread via messages-inbound.js.
+const THREAD_TOKEN_LEN = 12;
+function threadToken(email) {
+  return sha256(cleanEmail(email)).slice(0, THREAD_TOKEN_LEN);
+}
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+}
+async function notifyOwnerOfClientMessage(clientEmail, text) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('[messages] RESEND_API_KEY not set — skipping owner notification email');
+    return { sent: false, skipped: true };
+  }
+  const ownerInboxes = (process.env.MESSAGES_NOTIFY_TO || 'imverica@gmail.com,info@imverica.com')
+    .split(',').map((s) => s.trim()).filter(Boolean);
+  const fromAddr = process.env.MESSAGES_FROM || 'Imverica Messages <messages@imverica.com>';
+  // Replies in Gmail will go to this address; Resend Inbound (or Cloudflare
+  // Email Routing → Worker) routes it to /api/messages-inbound, which
+  // identifies the thread by the token and appends the reply as a staff
+  // message in the client's portal thread.
+  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'reply.imverica.com';
+  const replyTo = `reply+${threadToken(clientEmail)}@${replyDomain}`;
+  const subject = `New portal message from ${clientEmail}`;
+  const portalLink = (process.env.URL || 'https://imverica.com')
+    + '/admin.html#messages=' + encodeURIComponent(clientEmail);
+
+  const html = `
+    <div style="font-family:system-ui,Arial,sans-serif;line-height:1.55;color:#1a2238;">
+      <h2 style="margin:0 0 12px;font-size:18px;color:#0f1c2f;">New message in client portal</h2>
+      <p style="margin:0 0 8px;"><strong>From:</strong> ${escapeHtml(clientEmail)}</p>
+      <div style="margin:14px 0;padding:14px 16px;background:#f3f6fb;border-left:3px solid #1a2e4a;border-radius:0 6px 6px 0;font-size:14.5px;white-space:pre-wrap;">${escapeHtml(text)}</div>
+      <p style="margin:14px 0 4px;font-size:13px;color:#4a5a6e;">
+        <strong>Reply by simply replying to this email</strong> — your reply will appear in the client's portal automatically.<br>
+        Or open the conversation in admin: <a href="${portalLink}" style="color:#1a2e4a;">${portalLink}</a>
+      </p>
+      <hr style="border:0;border-top:1px solid #e6e6e6;margin:18px 0;">
+      <p style="font-size:11.5px;color:#8a93a3;margin:0;">
+        This message originates from the Imverica client portal at imverica.com/account. The client has consented to electronic communication. Imverica is not a law firm; do not include legal advice in replies.
+      </p>
+    </div>
+  `;
+
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: fromAddr,
+        to: ownerInboxes,
+        reply_to: replyTo,
+        subject,
+        html,
+        headers: {
+          // Helps inbound webhooks identify the thread even if the
+          // owner's mail client drops the Reply-To and replies to From:.
+          'X-Imverica-Thread': threadToken(clientEmail),
+          'X-Imverica-Client-Email': clientEmail
+        }
+      })
+    });
+    if (!r.ok) {
+      const detail = await r.text().catch(() => '');
+      console.error('[messages] Resend notification failed', r.status, detail.slice(0, 200));
+      return { sent: false, error: `Resend ${r.status}` };
+    }
+    return { sent: true };
+  } catch (err) {
+    console.error('[messages] notification error:', err.message || err);
+    return { sent: false, error: 'network' };
+  }
+}
+
 exports.handler = async function (event) {
   ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
@@ -193,6 +271,14 @@ exports.handler = async function (event) {
     if (!text) return json(422, { ok: false, error: 'Message is empty.' });
     if (!isValidEmail(email)) return json(400, { ok: false, error: 'Missing email' });
     const thread = await appendMessage(s, email, admin ? 'staff' : 'client', text, event);
+    // When the CLIENT sends, notify the owner via email so they can
+    // reply directly from Gmail (Resend Inbound routes the reply back
+    // into the same thread via /api/messages-inbound). When STAFF sends
+    // from the admin console, no email goes out — staff is already
+    // actively in the conversation.
+    if (!admin) {
+      notifyOwnerOfClientMessage(email, text).catch((e) => console.error('[messages] notify:', e));
+    }
     return json(200, { ok: true, email, messages: thread.messages });
   }
 

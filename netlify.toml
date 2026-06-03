@@ -153,6 +153,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/messages-inbound"
+  to = "/.netlify/functions/messages-inbound"
+  status = 200
+
+[[redirects]]
   from = "/api/admin-order"
   to = "/.netlify/functions/admin-order"
   status = 200

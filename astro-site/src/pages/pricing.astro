@@ -434,7 +434,7 @@ const schema = {
       padding: 56px 1.5rem 80px;
     }
     .pricing-inner {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -892,16 +892,21 @@ const schema = {
       transform: translateY(-50%);
       width: 22px;
       height: 22px;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(26,46,74,0.08);
       color: var(--navy-dark);
       border-radius: 50%;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
-      line-height: 1;
-      transition: transform 0.2s ease, background 0.2s ease;
+      line-height: 22px;
+      /* Optical centering — the glyph baseline of "+" sits slightly
+         below true center, so nudge it up 1px so it reads as visually
+         centered inside the circle. */
+      padding-bottom: 2px;
+      box-sizing: border-box;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
     }
     .pricing-faq details[open] summary::after {
       transform: translateY(-50%) rotate(45deg);

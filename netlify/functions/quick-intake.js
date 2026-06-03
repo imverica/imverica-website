@@ -36,6 +36,7 @@ const { encryptRecord, emailHash } = require('./lib/crypto');
 const { validateUpload } = require('./lib/file-validator');
 const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 const { getStore } = require('@netlify/blobs');
+const { uploadAttachmentsToClientFolder, DriveDisabled } = require('./lib/google-drive');
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -59,9 +60,13 @@ const MAX_FILES = 5;
 // attachments at 4 MB raw → 5.3 MB base64 → safely inside the 6 MB request
 // guard. Users with bigger batches should upload via the cabinet (which
 // streams files one-at-a-time through /api/upload).
-const MAX_FILE_BYTES = 4 * 1024 * 1024;        // 4 MB raw per file
-const MAX_TOTAL_BYTES = 4 * 1024 * 1024;       // 4 MB total raw (across files)
+const MAX_FILE_BYTES = 5 * 1024 * 1024;        // 5 MB raw per file
+const MAX_TOTAL_BYTES = 5 * 1024 * 1024;       // 5 MB total raw (across files)
 const MAX_BODY_BYTES = 5.8 * 1024 * 1024;      // 5.8 MB JSON body guard
+// Netlify synchronous-function bodies cap around 6 MB. Base64 + JSON
+// overhead eats ~25 % so 5 MB raw is the practical ceiling. For larger
+// uploads use the cabinet at /account.html (streams one file at a
+// time) or Phase-2 direct-to-Google-Drive picker.
 
 function json(statusCode, body, extraHeaders = {}) {
   return {
@@ -91,7 +96,7 @@ function escapeHtml(s) {
   ));
 }
 
-async function notifyOwner(record, attachments) {
+async function notifyOwner(record, attachments, driveResult) {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     console.log('[quick-intake] DEV — no RESEND_API_KEY, skipping owner email', record.id);
@@ -101,6 +106,12 @@ async function notifyOwner(record, attachments) {
   const fileList = (attachments || [])
     .map((a, i) => `${i + 1}. ${a.filename} (${Math.round(a.size / 1024)} KB)`)
     .join('\n') || 'No attachments';
+  const driveLine = driveResult && driveResult.orderFolder && driveResult.orderFolder.webViewLink
+    ? `<p style="margin:0 0 8px;"><strong>📁 Drive folder:</strong> <a href="${escapeHtml(driveResult.orderFolder.webViewLink)}" target="_blank" rel="noopener">${escapeHtml(driveResult.clientFolder.name)} / ${escapeHtml(driveResult.orderFolder.name)}</a></p>`
+    : '';
+  const driveText = driveResult && driveResult.orderFolder && driveResult.orderFolder.webViewLink
+    ? `Drive folder: ${driveResult.orderFolder.webViewLink}\n`
+    : '';
 
   const html = `
     <div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;color:#1c2c40;max-width:640px;">
@@ -119,6 +130,7 @@ async function notifyOwner(record, attachments) {
       <p style="margin:0;white-space:pre-wrap;">${escapeHtml(record.situation || '')}</p>
       <hr style="border:none;border-top:1px solid #d6d9df;margin:16px 0;" />
       <h3 style="margin:0 0 8px;color:#0f1c2f;">Attachments</h3>
+      ${driveLine}
       <pre style="margin:0;font-family:ui-monospace,SFMono-Regular,monospace;font-size:13px;background:#f5f7fa;padding:10px;border-radius:6px;">${escapeHtml(fileList)}</pre>
       <hr style="border:none;border-top:1px solid #d6d9df;margin:16px 0;" />
       <p style="font-size:12px;color:#6b7280;">Stored in blob: <code>${escapeHtml(record.id)}</code> — also viewable in /admin.html</p>
@@ -136,7 +148,7 @@ async function notifyOwner(record, attachments) {
     (record.formCode ? `Form hint: ${record.formCode}\n` : '') +
     `Language: ${record.language || 'en'}\n\n` +
     `--- SITUATION ---\n${record.situation || ''}\n\n` +
-    `--- ATTACHMENTS ---\n${fileList}\n`;
+    `--- ATTACHMENTS ---\n${driveText}${fileList}\n`;
 
   const payload = {
     from: FROM_EMAIL,
@@ -257,7 +269,7 @@ exports.handler = async function (event) {
     catch { return json(400, { ok: false, error: `Could not decode attachment "${fname}".` }); }
     if (!buf.length) continue;
     if (buf.length > MAX_FILE_BYTES) {
-      return json(413, { ok: false, error: `Attachment "${fname}" is too large (max 4 MB).` });
+      return json(413, { ok: false, error: `Attachment "${fname}" is too large (max 5 MB).` });
     }
     totalBytes += buf.length;
     if (totalBytes > MAX_TOTAL_BYTES) {
@@ -287,11 +299,49 @@ exports.handler = async function (event) {
     situation
   };
 
+  // Upload attachments to Google Drive (best-effort — Drive failure
+  // never blocks the intake. Email + Blob storage still carry the
+  // file content as fallback.) The folder layout is:
+  //   <root>/<Client Name>/<orderId>/file1.pdf
+  //   <root>/<Client Name>/<orderId>/file2.pdf
+  let driveResult = null;
+  if (attachments.length > 0) {
+    try {
+      driveResult = await uploadAttachmentsToClientFolder({
+        clientName: name,
+        orderId,
+        attachments: attachments.map((a) => ({
+          filename: a.filename,
+          contentBase64: a.contentBase64,
+          mimeType: a.type
+        }))
+      });
+      console.log('[quick-intake] Drive upload', orderId, 'uploaded:', driveResult.uploadedFiles.length, 'skipped:', driveResult.skippedFiles.length);
+    } catch (err) {
+      if (err instanceof DriveDisabled) {
+        console.log('[quick-intake] Drive disabled (env vars not set) — skipping');
+      } else {
+        console.error('[quick-intake] Drive upload failed', err.message);
+      }
+      driveResult = null;
+    }
+  }
+
   const PII_PATHS = ['contact.name', 'contact.email', 'contact.phone', 'situation'];
   const encrypted = encryptRecord(record, PII_PATHS, event);
   encrypted.emailHash = emailHash(email, event);
   encrypted.attachmentCount = attachments.length;
   encrypted.attachmentSummary = attachments.map((a) => ({ name: a.filename, size: a.size, type: a.type }));
+  if (driveResult && driveResult.enabled) {
+    encrypted.drive = {
+      clientFolderId: driveResult.clientFolder.id,
+      clientFolderUrl: driveResult.clientFolder.webViewLink,
+      orderFolderId: driveResult.orderFolder.id,
+      orderFolderUrl: driveResult.orderFolder.webViewLink,
+      uploadedFiles: driveResult.uploadedFiles,
+      skippedFiles: driveResult.skippedFiles
+    };
+  }
 
   try {
     const store = intakesStore();
@@ -303,7 +353,7 @@ exports.handler = async function (event) {
 
   // Email the owner (best-effort — request succeeds even if mail bounces).
   let emailStatus;
-  try { emailStatus = await notifyOwner(record, attachments); }
+  try { emailStatus = await notifyOwner(record, attachments, driveResult); }
   catch (err) {
     console.error('[quick-intake] notify failed', err);
     emailStatus = { sent: false, error: String(err && err.message || err) };
@@ -313,6 +363,7 @@ exports.handler = async function (event) {
     ok: true,
     orderId,
     emailed: !!(emailStatus && emailStatus.sent),
-    attachmentCount: attachments.length
+    attachmentCount: attachments.length,
+    driveFolderUrl: driveResult && driveResult.orderFolder ? driveResult.orderFolder.webViewLink : null
   });
 };

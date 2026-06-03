@@ -375,7 +375,11 @@ img { max-width: 100%; height: auto; }
   color: var(--muted);
   line-height: 1.55;
   margin: 0 auto 1rem;
-  max-width: 760px;
+  /* 760px was the original cap. Russian and Ukrainian translations of
+     the home hero are ~40% longer than English and were stretching to
+     nearly the full viewport — visually unbalanced. Narrowed to 640px
+     so multilingual copy wraps tighter and reads as a centered block. */
+  max-width: 640px;
   font-weight: 300;
 }
 .hero-actions {
@@ -585,7 +589,7 @@ img { max-width: 100%; height: auto; }
    the site. Small UI text inside the panels (meta, headline titles,
    status, legend) stays in the body system font via normal inheritance. */
 .news-inner {
-  max-width: 1120px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(260px, 0.82fr) minmax(320px, 1.18fr);
@@ -593,7 +597,10 @@ img { max-width: 100%; height: auto; }
   align-items: start;
 }
 .news-copy h2 {
+  font-family: var(--font-display);
   font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
   margin-bottom: 12px;
 }
 .news-copy p {
