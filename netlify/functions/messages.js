@@ -177,12 +177,13 @@ async function notifyOwnerOfClientMessage(clientEmail, text) {
   const ownerInboxes = (process.env.MESSAGES_NOTIFY_TO || 'imverica@gmail.com,info@imverica.com')
     .split(',').map((s) => s.trim()).filter(Boolean);
   const fromAddr = process.env.MESSAGES_FROM || 'Imverica Messages <messages@imverica.com>';
-  // Replies in Gmail will go to this address; Resend Inbound (or Cloudflare
-  // Email Routing → Worker) routes it to /api/messages-inbound, which
-  // identifies the thread by the token and appends the reply as a staff
-  // message in the client's portal thread.
-  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'reply.imverica.com';
-  const replyTo = `reply+${threadToken(clientEmail)}@${replyDomain}`;
+  // Replies in Gmail land at this address. Cloudflare Email Routing
+  // is configured on imverica.com to catch `replies+*@imverica.com`
+  // and forward to a Worker which POSTs to /api/messages-inbound.
+  // No subdomain → no extra DNS zone setup needed.
+  const replyDomain = process.env.MESSAGES_REPLY_DOMAIN || 'imverica.com';
+  const replyLocalPart = process.env.MESSAGES_REPLY_LOCAL || 'replies';
+  const replyTo = `${replyLocalPart}+${threadToken(clientEmail)}@${replyDomain}`;
   const subject = `New portal message from ${clientEmail}`;
   const portalLink = (process.env.URL || 'https://imverica.com')
     + '/admin.html#messages=' + encodeURIComponent(clientEmail);
