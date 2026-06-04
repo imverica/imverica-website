@@ -844,8 +844,13 @@ export function initIntakeWizard(): void {
     }).join('');
   }
 
+  // Forms whose wizard question-flow is verified to feed their pdf-map well
+  // (>=10 fields filled, 0 skips) — see scripts/qa-uscis-flow-coverage.js.
+  // Only coverage-verified forms get the draft button so a client never
+  // receives a near-empty PDF. Expand only after the coverage gate passes.
   function canGeneratePdfDraft(formCode) {
-    return ['I-765', 'I-485'].indexOf(normalizeFormCode(formCode)) !== -1;
+    return ['I-485', 'I-765', 'N-400', 'I-751', 'I-90', 'I-539', 'I-864']
+      .indexOf(normalizeFormCode(formCode)) !== -1;
   }
 
   function draftFormText(text) {
