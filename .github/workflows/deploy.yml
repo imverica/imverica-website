@@ -1,0 +1,67 @@
+name: Build & Deploy to Netlify
+
+# Builds the Astro site on GitHub Actions (free CI minutes — 2000/month on
+# the free GitHub plan) and deploys the PREBUILT output to Netlify with
+# `--no-build`. This keeps Netlify build-credit usage minimal: Netlify only
+# receives already-compiled files + functions, it does not run a build.
+#
+# IMPORTANT — one-time setup before this works:
+#   1. Add two GitHub repo secrets (Settings → Secrets and variables →
+#      Actions → New repository secret):
+#        NETLIFY_AUTH_TOKEN  — a personal access token from
+#                              https://app.netlify.com/user/applications
+#                              (User settings → Applications → New access token)
+#        NETLIFY_SITE_ID     — 491d3de4-1b2d-4412-bc6e-84032ea06967
+#   2. In Netlify (Site → Build & deploy → Continuous deployment) STOP the
+#      automatic builds (set "Builds" to Stopped / lock deploys), so Netlify
+#      does NOT also build on every push — otherwise both this workflow AND
+#      Netlify build, doubling credit usage. This workflow becomes the single
+#      deploy path.
+#
+# NOTE: while the Netlify account is over its credit limit, deploys are
+# rejected at the account level ("new deploys are blocked until credits are
+# added") — this workflow will run the build on GitHub but the final deploy
+# step will fail until credits reset (next usage period) or are added.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}   # allow manual "Run workflow" from the Actions tab
+
+# Cancel an in-flight deploy if a newer push arrives.
+concurrency:
+  group: netlify-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: astro-site/package-lock.json
+
+      - name: Install dependencies
+        run: npm --prefix astro-site ci
+
+      - name: Build site
+        run: npm --prefix astro-site run build
+
+      - name: Deploy prebuilt output to Netlify (no Netlify build)
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npx --yes netlify-cli@latest deploy \
+            --prod \
+            --no-build \
+            --dir=astro-site/dist \
+            --functions=netlify/functions \
+            --message="GH Actions: ${GITHUB_SHA::7} — ${GITHUB_REF_NAME}"
