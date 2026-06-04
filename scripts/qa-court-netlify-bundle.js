@@ -5,6 +5,8 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { listPreparableSmallClaimsSlugs } = require('../netlify/functions/lib/ca-small-claims-catalog');
+const { listPreparableFamilyLawSlugs } = require('../netlify/functions/lib/ca-family-law-catalog');
 
 const root = path.resolve(__dirname, '..');
 const functionsDir = path.join(root, '.netlify/functions');
@@ -46,36 +48,41 @@ async function main() {
     process.chdir(courtDir);
     const courtFlow = endpointAt(courtDir, 'court-flow');
     const headers = signedHeaders(courtDir);
-    const schemaResponse = await courtFlow.handler({
-      httpMethod: 'GET',
-      headers,
-      queryStringParameters: { code: 'SC-100' }
-    });
-    const schema = json(schemaResponse);
-    const fields = (schema.steps || []).flatMap((step) => step.fields || []);
-    if (schemaResponse.statusCode !== 200 || fields.length < 50) {
-      throw new Error(`bundled SC-100 schema is empty or incomplete: status=${schemaResponse.statusCode}, fields=${fields.length}`);
-    }
-    console.log(`✓ bundled court-flow returns ${fields.length} SC-100 fields`);
-
-    const sample = fields.find((field) => field.type === 'text' || field.type === 'textarea');
-    if (!sample) throw new Error('bundled SC-100 schema has no text field');
-
-    process.chdir(generateDir);
+    const slugs = [...listPreparableSmallClaimsSlugs(), ...listPreparableFamilyLawSlugs()];
     const generate = endpointAt(generateDir, 'generate-court-pdf');
-    const generated = await generate.handler({
-      httpMethod: 'POST',
-      headers: { ...signedHeaders(generateDir), 'content-type': 'application/json' },
-      body: JSON.stringify({
-        formCode: 'SC-100',
-        directFields: { [sample.id]: 'Bundle QA' }
-      })
-    });
-    if (generated.statusCode !== 200 || !generated.isBase64Encoded ||
-        Buffer.from(generated.body || '', 'base64').subarray(0, 5).toString('latin1') !== '%PDF-') {
-      throw new Error(`bundled SC-100 generation failed: status=${generated.statusCode}`);
+    for (const slug of slugs) {
+      process.chdir(courtDir);
+      const code = slug.toUpperCase();
+      const schemaResponse = await courtFlow.handler({
+        httpMethod: 'GET',
+        headers,
+        queryStringParameters: { code }
+      });
+      const schema = json(schemaResponse);
+      const fields = (schema.steps || []).flatMap((step) => step.fields || []);
+      if (schemaResponse.statusCode !== 200 || !fields.length) {
+        throw new Error(`bundled ${code} schema is empty: status=${schemaResponse.statusCode}, fields=${fields.length}`);
+      }
+      const sample = fields.find((field) => field.type === 'text' || field.type === 'textarea') || fields[0];
+      const value = sample.type === 'checkbox'
+        ? true
+        : sample.type === 'select'
+          ? sample.options?.[0]?.value
+          : 'Bundle QA';
+      if (value === undefined) throw new Error(`bundled ${code} has no usable sample field`);
+
+      process.chdir(generateDir);
+      const generated = await generate.handler({
+        httpMethod: 'POST',
+        headers: { ...signedHeaders(generateDir), 'content-type': 'application/json' },
+        body: JSON.stringify({ formCode: code, directFields: { [sample.id]: value } })
+      });
+      if (generated.statusCode !== 200 || !generated.isBase64Encoded ||
+          Buffer.from(generated.body || '', 'base64').subarray(0, 5).toString('latin1') !== '%PDF-') {
+        throw new Error(`bundled ${code} generation failed: status=${generated.statusCode}`);
+      }
+      console.log(`✓ bundled ${code}: ${fields.length} fields + PDF`);
     }
-    console.log('✓ bundled generate-court-pdf produces an SC-100 PDF');
   } finally {
     process.chdir(originalCwd);
     fs.rmSync(courtDir, { recursive: true, force: true });

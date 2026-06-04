@@ -50,9 +50,10 @@ const FORM_SPECIFIC_COURT_ONLY = {
 function isCourtOnlyField(name, label, slug) {
   const path = String(name);
   const text = String(label);
-  if (/\.(Order|CrtOrder|Clerk|Judge|JudicialOfficer|CourtUse|CourtOnly|ClerkUse)\[\d+\]/i.test(path)) return true;
+  if (/\.(Order|CrtOrder|Clerk|ClerkCertificate|Judge|JudicialOfficer|CourtUse|CourtOnly|ClerkUse)\[\d+\]/i.test(path)) return true;
   if ((FORM_SPECIFIC_COURT_ONLY[slug] || []).some((pattern) => pattern.test(path))) return true;
-  return /^(clerk,?\s*by|judge|judicial officer|trial date|trial time|trial department|date mailed by clerk)\b/i.test(text);
+  return /^(clerk\s*,?\s*by|judge|judicial officer|trial date|trial time|trial department|date mailed by clerk)\b/i.test(text) ||
+    /\bclerk\s+to\s+(?:insert|complete)\b/i.test(text);
 }
 
 function directField(field, slug) {
@@ -128,7 +129,9 @@ async function sanitizeDirectFields(slug, rawFields) {
   }
 
   const output = {};
-  for (const [name, raw] of Object.entries(rawFields).slice(0, 400)) {
+  // FL-160 currently exposes 524 party-fillable fields. Keep a generous
+  // abuse-safety cap without silently truncating complete official forms.
+  for (const [name, raw] of Object.entries(rawFields).slice(0, 1000)) {
     const field = allowed.get(name);
     if (!field) continue;
     if (field.type === 'checkbox') {
