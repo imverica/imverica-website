@@ -53,8 +53,11 @@ const ANSWERS = {
 const PAYLOAD = { formAnswers: ANSWERS, contact: { phone: '9163993992', email: 'john.smith@example.com' } };
 
 // Forms to spot-check — a spread across categories + complexity.
+// NOTE: I-130 is intentionally NOT here. It now reads petitioner_/beneficiary_
+// prefixed keys (the real wizard flow), not the generic single-applicant keys
+// this smoke test uses. I-130 is validated by scripts/qa-uscis-flow-coverage.js
+// (real flow → map) and scripts/qa-i130-sample.js (full populated sample).
 const FORMS = [
-  'I-130',   // family petition
   'I-485',   // adjustment of status (most complex, has flow logic)
   'I-765',   // work authorization
   'N-400',   // naturalization
