@@ -1,7 +1,17 @@
 'use strict';
 
 const fs = require('fs');
-const { PDFDocument, PDFName } = require('pdf-lib');
+const {
+  PDFButton,
+  PDFCheckBox,
+  PDFDocument,
+  PDFDropdown,
+  PDFName,
+  PDFOptionList,
+  PDFRadioGroup,
+  PDFSignature,
+  PDFTextField
+} = require('pdf-lib');
 const { findCourtTemplate } = require('./ca-court-template');
 
 const CACHE = new Map();
@@ -51,24 +61,25 @@ function directField(field, slug) {
   const label = cleanLabel(tooltipOf(field), leaf);
   if (isCourtOnlyField(name, label, slug)) return null;
 
-  const className = field.constructor.name;
-  if (className === 'PDFButton' || className === 'PDFSignature') return null;
-  if (className === 'PDFCheckBox') {
+  // Netlify's esbuild bundle renames pdf-lib constructors (for example,
+  // PDFTextField becomes PDFTextField2), so constructor.name is not stable.
+  if (field instanceof PDFButton || field instanceof PDFSignature) return null;
+  if (field instanceof PDFCheckBox) {
     return { id: name, label, type: 'checkbox', page: pageNumber(name) };
   }
-  if (className === 'PDFRadioGroup' || className === 'PDFDropdown' || className === 'PDFOptionList') {
+  if (field instanceof PDFRadioGroup || field instanceof PDFDropdown || field instanceof PDFOptionList) {
     let options = [];
     try { options = field.getOptions().map((value) => ({ value, label: value })); } catch {}
     return {
       id: name,
       label,
       type: 'select',
-      selectMode: className === 'PDFRadioGroup' ? 'radio' : 'dropdown',
+      selectMode: field instanceof PDFRadioGroup ? 'radio' : 'dropdown',
       options,
       page: pageNumber(name)
     };
   }
-  if (className === 'PDFTextField') {
+  if (field instanceof PDFTextField) {
     let multiline = false;
     let maxLength;
     try { multiline = field.isMultiline(); } catch {}
