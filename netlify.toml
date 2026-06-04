@@ -32,6 +32,16 @@ included_files = [
   "overlay-maps/normalized/**"
 ]
 
+[functions."generate-court-pdf"]
+included_files = [
+  "assets/form-cache/ca-court/**"
+]
+
+[functions."court-flow"]
+included_files = [
+  "assets/form-cache/ca-court/**"
+]
+
 # Only uscis-pdf-map needs the pdf-maps directory.
 [functions."uscis-pdf-map"]
 included_files = [
@@ -165,4 +175,14 @@ included_files = [
 [[redirects]]
   from = "/api/profile"
   to = "/.netlify/functions/profile"
+  status = 200
+
+[[redirects]]
+  from = "/api/court-flow"
+  to = "/.netlify/functions/court-flow"
+  status = 200
+
+[[redirects]]
+  from = "/api/generate-court-pdf"
+  to = "/.netlify/functions/generate-court-pdf"
   status = 200

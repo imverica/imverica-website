@@ -1,36 +1,49 @@
 'use strict';
 /**
- * GET /api/court-flow?code=FL-100
+ * GET /api/court-flow
+ * GET /api/court-flow?code=SC-100
  *
- * Serves the static intake schema for a California court form so the
- * court-intake UI can render its questions. Mirrors immigration-flow.js's
- * response contract. Read-only, no side effects, no auth (schemas are not
- * sensitive — they describe which public-form fields we collect).
+ * Serves the cabinet-only Small Claims catalog or a fillable field schema.
+ * Every request requires the same signed session cookie as /api/account.
  */
 
 const { getCourtSchema, listCourtSchemas } = require('./lib/ca-court-flow-schema');
+const { getDirectCourtSchema } = require('./lib/ca-court-direct-schema');
+const { getSmallClaimsCatalog, getSmallClaimsForm } = require('./lib/ca-small-claims-catalog');
+const { sessionFromEvent } = require('./lib/session-auth');
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type'
-};
+const HEADERS = { 'Cache-Control': 'private, no-store' };
 
 function json(statusCode, body, extraHeaders = {}) {
   return {
     statusCode,
-    headers: { ...CORS_HEADERS, 'Content-Type': 'application/json', ...extraHeaders },
+    headers: { ...HEADERS, 'Content-Type': 'application/json', ...extraHeaders },
     body: JSON.stringify(body)
   };
 }
 
 exports.handler = async function (event) {
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: HEADERS };
   if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
+  if (!sessionFromEvent(event)) return json(401, { ok: false, error: 'Not signed in' });
 
   const code = (event.queryStringParameters && event.queryStringParameters.code) || '';
   if (!code) {
-    return json(400, { ok: false, error: 'Missing court form code', supported: listCourtSchemas() });
+    return json(200, { ok: true, ...getSmallClaimsCatalog() });
+  }
+
+  const smallClaimsForm = getSmallClaimsForm(code);
+  if (smallClaimsForm) {
+    if (smallClaimsForm.role !== 'prepare') {
+      return json(409, {
+        ok: false,
+        error: 'This official document is not a client-prepared form',
+        form: smallClaimsForm
+      });
+    }
+    const schema = await getDirectCourtSchema(smallClaimsForm.code.toLowerCase(), smallClaimsForm.title);
+    if (!schema) return json(404, { ok: false, error: 'Fillable template not found', code: smallClaimsForm.code });
+    return json(200, { ok: true, form: smallClaimsForm, ...schema });
   }
 
   const schema = getCourtSchema(code);

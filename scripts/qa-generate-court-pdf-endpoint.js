@@ -12,12 +12,15 @@
 
 const { PDFDocument } = require('pdf-lib');
 const endpoint = require('../netlify/functions/generate-court-pdf');
+const { signSession } = require('../netlify/functions/lib/session-auth');
 
 let pass = 0, fail = 0;
 const ok = (m) => { console.log('  ✓', m); pass++; };
 const bad = (m) => { console.error('  ✗', m); fail++; };
 
-async function call(payload, method = 'POST', raw = null) {
+async function call(payload, method = 'POST', raw = null, authenticated = true) {
+  const sessionEvent = { headers: { host: 'localhost:8888' } };
+  const token = signSession('court-qa@example.com', sessionEvent);
   return endpoint.handler({
     httpMethod: method,
     // Same-origin browser request from the site — originGuard requires a
@@ -27,7 +30,9 @@ async function call(payload, method = 'POST', raw = null) {
     // (which needs the Netlify runtime) is skipped in this local test.
     headers: {
       'content-type': 'application/json',
-      'origin': 'https://imverica.com'
+      'origin': 'https://imverica.com',
+      host: 'localhost:8888',
+      ...(authenticated ? { cookie: `imv_session=${token}` } : {})
     },
     body: raw !== null ? raw : JSON.stringify(payload)
   });
@@ -47,7 +52,14 @@ const FL100_PAYLOAD = {
 async function main() {
   console.log('\n=== /api/generate-court-pdf endpoint QA ===\n');
 
-  // 1. Happy path — FL-100
+  // 1. Cabinet session is mandatory.
+  {
+    const r = await call(FL100_PAYLOAD, 'POST', null, false);
+    if (r.statusCode === 401) ok('unsigned request → 401');
+    else bad(`unsigned request expected 401, got ${r.statusCode}`);
+  }
+
+  // 2. Happy path — FL-100
   {
     const r = await call(FL100_PAYLOAD);
     if (r.statusCode === 200) ok('FL-100 → 200');
@@ -73,7 +85,7 @@ async function main() {
     }
   }
 
-  // 2. SC-100 (different structure) happy path
+  // 3. SC-100 (different structure) happy path
   {
     const r = await call({
       formCode: 'SC-100',
@@ -87,7 +99,26 @@ async function main() {
     else bad(`SC-100 expected 200 PDF, got ${r.statusCode}`);
   }
 
-  // 3. Unknown form → 404 + supported list
+  // 4. Direct Small Claims field fill.
+  {
+    const r = await call({
+      formCode: 'SC-105',
+      directFields: {
+        'SC-105[0].Page1[0].RightCaption[0].CSENO[0].CaseNumber[0]': '26SC00999'
+      }
+    });
+    if (r.statusCode === 200 && r.isBase64Encoded) ok('SC-105 direct fields → 200 PDF');
+    else bad(`SC-105 direct fields expected 200 PDF, got ${r.statusCode}`);
+  }
+
+  // 5. Court-only forms cannot be generated as client drafts.
+  {
+    const r = await call({ formCode: 'SC-105A', directFields: { anything: 'value' } });
+    if (r.statusCode === 403) ok('court-only SC-105A → 403');
+    else bad(`court-only SC-105A expected 403, got ${r.statusCode}`);
+  }
+
+  // 6. Unknown form → 404 + supported list
   {
     const r = await call({ formCode: 'XY-999', formAnswers: { foo: 'bar' } });
     const body = safeJson(r.body);
@@ -97,21 +128,21 @@ async function main() {
     else bad('404 should list supported forms');
   }
 
-  // 4. Missing formCode → 400
+  // 7. Missing formCode → 400
   {
     const r = await call({ formAnswers: { foo: 'bar' } });
     if (r.statusCode === 400) ok('missing formCode → 400');
     else bad(`missing formCode expected 400, got ${r.statusCode}`);
   }
 
-  // 5. Bad JSON → 400
+  // 8. Bad JSON → 400
   {
     const r = await call(null, 'POST', '{not valid json');
     if (r.statusCode === 400) ok('bad JSON → 400');
     else bad(`bad JSON expected 400, got ${r.statusCode}`);
   }
 
-  // 6. Empty answers → still 200: FL-100 has sensible defaults
+  // 9. Empty answers → still 200: FL-100 has sensible defaults
   // (self-represented + marriage), so it produces a minimal draft rather
   // than nothing. The 422 guard only fires when a map yields literally 0
   // fields. This matches the USCIS endpoint, which fills signature dates
@@ -122,14 +153,14 @@ async function main() {
     else bad(`empty answers expected 200, got ${r.statusCode}`);
   }
 
-  // 7. Wrong method → 405
+  // 10. Wrong method → 405
   {
     const r = await call(FL100_PAYLOAD, 'GET');
     if (r.statusCode === 405) ok('GET → 405');
     else bad(`GET expected 405, got ${r.statusCode}`);
   }
 
-  // 8. formType alias works
+  // 11. formType alias works
   {
     const r = await call({ formType: 'FL-100', formAnswers: FL100_PAYLOAD.formAnswers });
     if (r.statusCode === 200) ok('formType alias accepted');

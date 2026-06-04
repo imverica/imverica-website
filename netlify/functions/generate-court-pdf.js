@@ -22,11 +22,14 @@
  */
 
 const fs = require('fs');
-const path = require('path');
 
 const { fillCourtForm, fillAndFlattenCourtForm } = require('./lib/ca-court-fill');
 const { getBuilder, listForms } = require('./lib/ca-court-registry');
+const { findCourtTemplate } = require('./lib/ca-court-template');
+const { sanitizeDirectFields } = require('./lib/ca-court-direct-schema');
+const { getSmallClaimsForm, listPreparableSmallClaimsSlugs } = require('./lib/ca-small-claims-catalog');
 const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
+const { sessionFromEvent } = require('./lib/session-auth');
 
 function json(statusCode, body) {
   return {
@@ -36,27 +39,17 @@ function json(statusCode, body) {
   };
 }
 
-// Decrypted CA templates live under assets/form-cache/ca-court. Search the
-// same set of roots generate-pdf.js uses, so it works in dev + on Netlify.
-function findTemplate(slug) {
-  const rootFromFunction = path.resolve(__dirname, '..', '..');
-  const dirs = [
-    path.join(process.cwd(), 'assets/form-cache/ca-court'),
-    path.join(__dirname, 'assets/form-cache/ca-court'),
-    path.join(rootFromFunction, 'assets/form-cache/ca-court')
-  ];
-  for (const dir of dirs) {
-    const p = path.join(dir, slug + '.pdf');
-    if (fs.existsSync(p)) return p;
-  }
-  return null;
-}
-
 exports.handler = async function (event) {
   try {
     if (event.httpMethod !== 'POST') {
       return { statusCode: 405, body: 'Method Not Allowed' };
     }
+
+    // Court-form preparation is a personal-cabinet feature. Requiring the
+    // same signed session used by /api/account prevents public generation
+    // links from bypassing the cabinet wizard.
+    const session = sessionFromEvent(event);
+    if (!session) return json(401, { error: 'Not signed in' });
 
     // Same abuse-guard chain as /api/generate-pdf — PDF fills are expensive.
     const originReject = originGuard(event);
@@ -75,23 +68,44 @@ exports.handler = async function (event) {
     const formCode = payload.formCode || payload.formType || payload.code;
     if (!formCode) return json(400, { error: 'Missing formCode' });
 
-    const entry = getBuilder(formCode);
-    if (!entry) {
-      return json(404, {
-        error: 'Court form not supported',
-        formCode,
-        supported: listForms()
-      });
+    const smallClaimsForm = getSmallClaimsForm(formCode);
+    const directMode = payload.directFields && typeof payload.directFields === 'object';
+    let slug;
+    let fieldValues;
+
+    if (directMode) {
+      if (!smallClaimsForm) {
+        return json(404, { error: 'Small Claims form not found', formCode });
+      }
+      if (smallClaimsForm.role !== 'prepare') {
+        return json(403, {
+          error: 'This form is completed by the court or is an information sheet',
+          formCode: smallClaimsForm.code,
+          role: smallClaimsForm.role
+        });
+      }
+      slug = smallClaimsForm.code.toLowerCase();
+      fieldValues = await sanitizeDirectFields(slug, payload.directFields);
+    } else {
+      const entry = getBuilder(formCode);
+      if (!entry) {
+        return json(404, {
+          error: 'Court form not supported',
+          formCode,
+          supported: [...new Set([...listForms(), ...listPreparableSmallClaimsSlugs()])]
+        });
+      }
+      slug = entry.slug;
+      fieldValues = entry.build(payload);
     }
 
-    const templatePath = findTemplate(entry.slug);
+    const templatePath = findCourtTemplate(slug);
     if (!templatePath) {
-      return json(404, { error: 'Decrypted template not found', formCode: entry.slug });
+      return json(404, { error: 'Decrypted template not found', formCode: slug });
     }
 
-    const fieldValues = entry.build(payload);
     if (!fieldValues || Object.keys(fieldValues).length === 0) {
-      return json(422, { error: 'No fields could be filled from the provided answers', formCode: entry.slug });
+      return json(422, { error: 'No fields could be filled from the provided answers', formCode: slug });
     }
 
     const inputPdf = fs.readFileSync(templatePath);
@@ -101,7 +115,9 @@ exports.handler = async function (event) {
       : await fillCourtForm(inputPdf, fieldValues);
 
     console.log('COURT PDF RESULT', {
-      formCode: entry.slug,
+      formCode: slug,
+      account: session.email,
+      mode: directMode ? 'direct' : 'mapped',
       mapped: Object.keys(fieldValues).length,
       filled: result.filled.length,
       skipped: result.skipped.length,
@@ -112,7 +128,7 @@ exports.handler = async function (event) {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename=${entry.slug}-filled.pdf`,
+        'Content-Disposition': `attachment; filename=${slug}-filled.pdf`,
         'Cache-Control': 'no-store'
       },
       body: result.buffer.toString('base64'),

@@ -47,8 +47,13 @@ const PRIORITY = [
   'ch-100', 'ch-109', 'ch-110',
   // Unlawful detainer (eviction)
   'ud-100', 'ud-105',
-  // Small claims
-  'sc-100', 'sc-104',
+  // Small claims — every current client/server-prepared SC form. Court-only
+  // orders, clerk certificates, and information sheets are intentionally
+  // excluded from generation.
+  'sc-100', 'sc-100a', 'sc-101', 'sc-103', 'sc-104', 'sc-104a', 'sc-105',
+  'sc-107', 'sc-108', 'sc-109', 'sc-112a', 'sc-114', 'sc-120', 'sc-120a',
+  'sc-132', 'sc-133', 'sc-134', 'sc-135', 'sc-136', 'sc-140', 'sc-145',
+  'sc-150', 'sc-220', 'sc-221', 'sc-223', 'sc-224', 'sc-290', 'sc-300',
   // Proof of service (used with most filings)
   'pos-040'
 ];
