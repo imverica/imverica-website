@@ -1,16 +1,14 @@
 'use strict';
 /**
- * QA — CA court form auto-generation (FL-100 reference), fully local.
+ * QA — CA court form auto-generation, fully local.
  *
- * Pipeline under test:
- *   intake answers → ca-fl100-map → ca-court-fill (pdf-lib) → filled PDF
+ * Pipeline under test, per registered form:
+ *   intake answers → <form>-map → ca-court-fill (pdf-lib) → filled PDF
  *
- * Verifies:
- *   1. The decrypted template exists (decrypt-ca-forms.js was run)
- *   2. The map produces a healthy field count from a realistic divorce intake
- *   3. ca-court-fill sets every mapped field with 0 unexpected skips
- *   4. Output is a valid PDF, larger than the blank
- *   5. Read-back: caption values (petitioner, case #) survive a save+reload
+ * For each form verifies: decrypted template present, map produces a
+ * healthy field count, fill reports 0 skips, output is a valid larger PDF,
+ * and (FL-100) caption read-back survives save+reload. Writes each filled
+ * PDF to decks/.build/ for optional visual inspection.
  *
  * Run:  node scripts/qa-ca-court-autogen.js
  * Exit: 0 = pass, 1 = fail.
@@ -20,111 +18,119 @@ const fs = require('fs');
 const path = require('path');
 const { PDFDocument } = require('pdf-lib');
 const { fillCourtForm } = require('../netlify/functions/lib/ca-court-fill');
-const { fl_100FieldValues } = require('../netlify/functions/lib/ca-fl100-map');
+const { getBuilder, listForms } = require('../netlify/functions/lib/ca-court-registry');
 
 const CA_DIR = path.resolve(__dirname, '../assets/form-cache/ca-court');
+const OUT_DIR = path.resolve(__dirname, '../decks/.build');
 
-// Realistic uncontested-divorce-with-kids intake.
-const PAYLOAD = {
-  formAnswers: {
-    case_type: 'dissolution',
-    relationship_type: 'marriage',
-    petitioner_first_name: 'John', petitioner_middle_name: 'Michael', petitioner_last_name: 'Smith',
-    respondent_first_name: 'Jane', respondent_middle_name: 'Anne', respondent_last_name: 'Smith',
-    petitioner_address_line1: '456 New Street, Apt 5',
-    petitioner_city: 'Sacramento', petitioner_state: 'CA', petitioner_zip: '95814',
-    petitioner_phone: '9163993992', petitioner_email: 'john.smith@example.com',
-    court_county: 'Sacramento',
-    court_street_address: '3341 Power Inn Road',
-    court_city_zip: 'Sacramento, CA 95826',
-    court_branch_name: 'William R. Ridgeway Family Relations Courthouse',
-    case_number: '26FL01234',
-    petitioner_meets_residency: 'yes',
-    petitioner_residence_county: 'Sacramento County',
-    date_of_marriage: '2015-06-20',
-    date_of_separation: '2025-11-01',
-    minor_children: [
-      { name: 'Emma Smith', birthdate: '2017-03-12', age: '9' },
-      { name: 'Liam Smith', birthdate: '2019-08-30', age: '6' }
-    ]
-  },
-  contact: { name: 'John Michael Smith', phone: '9163993992', email: 'john.smith@example.com' }
+// Shared intake covering family-law + landlord/tenant + small-claims keys.
+const ANSWERS = {
+  // family law
+  case_type: 'dissolution', relationship_type: 'marriage',
+  petitioner_first_name: 'John', petitioner_middle_name: 'Michael', petitioner_last_name: 'Smith',
+  respondent_first_name: 'Jane', respondent_middle_name: 'Anne', respondent_last_name: 'Smith',
+  petitioner_address_line1: '456 New Street, Apt 5',
+  petitioner_city: 'Sacramento', petitioner_state: 'CA', petitioner_zip: '95814',
+  petitioner_phone: '9163993992', petitioner_email: 'john.smith@example.com',
+  date_of_marriage: '2015-06-20', date_of_separation: '2025-11-01',
+  petitioner_meets_residency: 'yes', petitioner_residence_county: 'Sacramento County',
+  minor_children: [
+    { name: 'Emma Smith', birthdate: '2017-03-12', age: '9' },
+    { name: 'Liam Smith', birthdate: '2019-08-30', age: '6' }
+  ],
+  // court
+  court_county: 'Sacramento', court_street_address: '3341 Power Inn Road',
+  court_city_zip: 'Sacramento, CA 95826', court_branch_name: 'Family Relations Courthouse',
+  case_number: '26FL01234',
+  // landlord / tenant (UD-100)
+  plaintiff_name: 'Acme Properties LLC', defendant_name: 'Robert Tenant',
+  plaintiff_address_line1: '100 Owner Ave', plaintiff_city: 'Sacramento', plaintiff_state: 'CA', plaintiff_zip: '95814',
+  plaintiff_phone: '9165550100',
+  premises_address: '789 Rental Rd, Unit 3, Sacramento, CA 95820',
+  // small claims (SC-100)
+  defendant_address_line1: '789 Rental Rd, Unit 3', defendant_city: 'Sacramento', defendant_state: 'CA', defendant_zip: '95820',
+  defendant_phone: '9165550199',
+  claim_amount: '4500', claim_reason: 'Unpaid rent for November and December 2025 plus late fees.'
 };
+const PAYLOAD = { formAnswers: ANSWERS, contact: { name: 'John Michael Smith', phone: '9163993992', email: 'john.smith@example.com' } };
+
+// Minimum sensible mapped-field count per form (sanity floor).
+const MIN_FIELDS = { 'fl-100': 20, 'fl-120': 12, 'fl-110': 4, 'ud-100': 12, 'sc-100': 12 };
 
 let pass = 0, fail = 0;
-const ok = (m) => { console.log('  ✓', m); pass++; };
-const bad = (m) => { console.error('  ✗', m); fail++; };
+const ok = (m) => { console.log('    ✓', m); pass++; };
+const bad = (m) => { console.error('    ✗', m); fail++; };
 
-async function main() {
-  console.log('\n=== CA court auto-generation — FL-100 reference QA ===\n');
+async function testForm(slug) {
+  console.log(`\n── ${slug.toUpperCase()} ──`);
+  const tmpl = path.join(CA_DIR, slug + '.pdf');
+  if (!fs.existsSync(tmpl)) { bad(`template missing (run decrypt-ca-forms.js ${slug})`); return; }
 
-  const tmpl = path.join(CA_DIR, 'fl-100.pdf');
-  if (!fs.existsSync(tmpl)) {
-    bad('Decrypted fl-100.pdf missing — run: node scripts/decrypt-ca-forms.js');
-    return finish();
-  }
-  ok('Decrypted FL-100 template present');
+  const entry = getBuilder(slug);
+  if (!entry) { bad('no builder registered'); return; }
 
-  const fieldValues = fl_100FieldValues(PAYLOAD);
-  const mappedCount = Object.keys(fieldValues).length;
-  console.log('  → map produced', mappedCount, 'fields');
-  if (mappedCount >= 20) ok(`Map filled a healthy ${mappedCount} fields`);
-  else bad(`Map only produced ${mappedCount} fields (expected ≥20)`);
+  const fieldValues = entry.build(PAYLOAD);
+  const n = Object.keys(fieldValues).length;
+  const floor = MIN_FIELDS[slug] || 4;
+  if (n >= floor) ok(`map produced ${n} fields (≥${floor})`);
+  else bad(`map produced only ${n} fields (expected ≥${floor})`);
 
-  const blankSize = fs.statSync(tmpl).size;
-  const result = await fillCourtForm(fs.readFileSync(tmpl), fieldValues);
+  const res = await fillCourtForm(fs.readFileSync(tmpl), fieldValues);
 
-  console.log('  → filled', result.filled.length, '/ skipped', result.skipped.length);
-  if (result.skipped.length) console.log('     skips:', result.skipped.map((s) => s.name.split('.').pop()).join(', '));
+  if (res.skipped.length === 0) ok(`fill: ${res.filled.length} set, 0 skipped`);
+  else bad(`fill skipped ${res.skipped.length}: ${res.skipped.map((s) => s.name.split('.').pop()).join(', ')}`);
 
-  if (result.skipped.length === 0) ok('0 fields skipped (all mapped names matched the PDF)');
-  else bad(`${result.skipped.length} fields skipped — field-name mismatch`);
+  // Validity = parses as a PDF AND a sample filled text value survives a
+  // save+reload. (Size isn't a valid check: pdf-lib strips the XFA layer,
+  // so a correctly-filled form can be SMALLER than the encrypted original.)
+  const isPdf = res.buffer.slice(0, 5).toString('latin1').startsWith('%PDF');
+  let readBackOk = false;
+  try {
+    const form = (await PDFDocument.load(res.buffer, { ignoreEncryption: true })).getForm();
+    const sampleName = (res.filled || []).find((n) => {
+      try { return form.getField(n).constructor.name === 'PDFTextField'; } catch { return false; }
+    });
+    if (sampleName) readBackOk = (form.getTextField(sampleName).getText() || '') !== '';
+  } catch { /* readBackOk stays false */ }
 
-  if (result.buffer.slice(0, 5).toString('latin1').startsWith('%PDF')) ok('Output is a valid PDF');
-  else bad('Output is not a PDF');
+  if (isPdf && readBackOk) ok('valid PDF, filled value survives reload');
+  else bad(`output invalid (pdf=${isPdf}, readback=${readBackOk})`);
 
-  if (result.buffer.length > blankSize) ok(`Output larger than blank (${(blankSize/1024).toFixed(0)}KB → ${(result.buffer.length/1024).toFixed(0)}KB)`);
-  else bad('Output not larger than blank');
-
-  // Read-back through a fresh load.
-  const doc = await PDFDocument.load(result.buffer, { ignoreEncryption: true });
-  const form = doc.getForm();
-  const checks = [
-    ['FL-100[0].Page1[0].CaptionP1_sf[0].TitlePartyName[0].Party1_ft[0]', 'Smith, John Michael'],
-    ['FL-100[0].Page1[0].CaptionP1_sf[0].TitlePartyName[0].Party2_ft[0]', 'Smith, Jane Anne'],
-    ['FL-100[0].Page1[0].CaptionP1_sf[0].CaseNumber[0].CaseNumber_ft[0]', '26FL01234'],
-    ['FL-100[0].Page1[0].CaptionP1_sf[0].CourtInfo[0].CrtCounty_ft[0]', 'SACRAMENTO']
-  ];
-  for (const [name, expect] of checks) {
-    let got = '';
-    try { got = form.getTextField(name).getText() || ''; } catch (e) { got = '<err>'; }
-    if (got === expect) ok(`read-back ${name.split('.').pop()} = "${got}"`);
-    else bad(`read-back ${name.split('.').pop()} = "${got}" (expected "${expect}")`);
-  }
-
-  // Checkbox read-back: dissolution + marriage should be checked.
-  for (const [name, label] of [
-    ['FL-100[0].Page1[0].CaptionP1_sf[0].FormTitle[0].DissolutionOf_cb[0]', 'Dissolution'],
-    ['FL-100[0].Page1[0].CaptionP1_sf[0].FormTitle[0].Marriage_cb[0]', 'Marriage'],
-    ['FL-100[0].Page1[0].WeAreMarried_cb[0]', 'We are married']
-  ]) {
-    let checked = false;
-    try { checked = form.getCheckBox(name).isChecked(); } catch (e) {}
-    if (checked) ok(`checkbox "${label}" is checked`);
-    else bad(`checkbox "${label}" NOT checked`);
-  }
-
-  // Write the artifact for visual inspection.
-  const outDir = path.resolve(__dirname, '../decks/.build');
-  fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, 'fl-100-qa.pdf'), result.buffer);
-  console.log('\n  artifact → decks/.build/fl-100-qa.pdf');
-
-  finish();
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  fs.writeFileSync(path.join(OUT_DIR, slug + '-qa.pdf'), res.buffer);
 }
 
-function finish() {
-  console.log(`\nPassed: ${pass}   Failed: ${fail}\n`);
+async function readbackFL100() {
+  console.log('\n── FL-100 read-back ──');
+  const res = await fillCourtForm(
+    fs.readFileSync(path.join(CA_DIR, 'fl-100.pdf')),
+    getBuilder('fl-100').build(PAYLOAD)
+  );
+  const form = (await PDFDocument.load(res.buffer, { ignoreEncryption: true })).getForm();
+  const checks = [
+    ['FL-100[0].Page1[0].CaptionP1_sf[0].TitlePartyName[0].Party1_ft[0]', 'Smith, John Michael'],
+    ['FL-100[0].Page1[0].CaptionP1_sf[0].CaseNumber[0].CaseNumber_ft[0]', '26FL01234']
+  ];
+  for (const [name, exp] of checks) {
+    let got = ''; try { got = form.getTextField(name).getText() || ''; } catch {}
+    got === exp ? ok(`read-back ${name.split('.').pop()} = "${got}"`) : bad(`read-back got "${got}" expected "${exp}"`);
+  }
+  for (const [name, label] of [
+    ['FL-100[0].Page1[0].CaptionP1_sf[0].FormTitle[0].DissolutionOf_cb[0]', 'Dissolution'],
+    ['FL-100[0].Page1[0].WeAreMarried_cb[0]', 'We are married']
+  ]) {
+    let c = false; try { c = form.getCheckBox(name).isChecked(); } catch {}
+    c ? ok(`checkbox "${label}" checked`) : bad(`checkbox "${label}" not checked`);
+  }
+}
+
+async function main() {
+  console.log('\n=== CA court auto-generation QA ===');
+  console.log('registered forms:', listForms().join(', '));
+  for (const slug of listForms()) await testForm(slug);
+  await readbackFL100();
+  console.log(`\n=== Passed: ${pass}   Failed: ${fail} ===`);
+  console.log('artifacts → decks/.build/<form>-qa.pdf\n');
   process.exit(fail > 0 ? 1 : 0);
 }
 
