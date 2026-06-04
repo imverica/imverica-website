@@ -708,16 +708,18 @@ function handleSubmit() {
     const accountData = await accountRes.json().catch(()=>null);
     const prof = profileData && profileData.ok && profileData.profile;
     const email = accountData && accountData.ok && accountData.email;
-    if (!prof || !prof.firstName) return;
-
     const fname = document.getElementById('fname');
     const lname = document.getElementById('lname');
     const phone = document.getElementById('phone');
     const emailEl = document.getElementById('email');
-    if (fname) fname.value = prof.firstName || '';
-    if (lname) lname.value = prof.lastName || '';
-    if (phone) phone.value = prof.phone || '';
+    if (fname) fname.value = (prof && prof.firstName) || '';
+    if (lname) lname.value = (prof && prof.lastName) || '';
+    if (phone) phone.value = (prof && prof.phone) || '';
     if (emailEl) emailEl.value = email || '';
+
+    // Keep contact fields visible until every required value exists. Google
+    // sign-in can provide the name, but it does not provide a phone number.
+    if (!prof || !prof.firstName || !prof.lastName || !prof.phone) return;
 
     // Only hide the prefilled name/phone/email rows — keep the Service
     // dropdown + Description visible so the signed-in client still has

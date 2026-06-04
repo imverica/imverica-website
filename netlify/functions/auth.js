@@ -61,6 +61,24 @@ function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 }
 
+const GOOGLE_NAME_ALLOWED = /^[A-Za-z][A-Za-z\s\-'.]*$/;
+function cleanGoogleName(value) {
+  const name = String(value || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+  return GOOGLE_NAME_ALLOWED.test(name) ? name : '';
+}
+
+function googleProfileNames(payload) {
+  let firstName = cleanGoogleName(payload.given_name);
+  let lastName = cleanGoogleName(payload.family_name);
+  const fullName = String(payload.name || '').replace(/\s+/g, ' ').trim();
+  if ((!firstName || !lastName) && fullName) {
+    const parts = fullName.split(' ');
+    if (!firstName) firstName = cleanGoogleName(parts.shift());
+    if (!lastName) lastName = cleanGoogleName(parts.join(' '));
+  }
+  return { firstName, lastName };
+}
+
 function sha256(value) {
   return crypto.createHash('sha256').update(String(value)).digest('hex');
 }
@@ -454,6 +472,24 @@ exports.handler = async function (event) {
         body: JSON.stringify({ ok: true, email: gEmail, requireTotp: true })
       };
     }
+
+    // Google already verified the user's identity and supplies given/family
+    // names in the ID token. Persist missing names so a returning Google user
+    // is not sent through "Complete your profile" on every sign-in.
+    const googleNames = googleProfileNames(payload);
+    const profilePatch = {};
+    if (!gProfile.firstName && googleNames.firstName) profilePatch.firstName = googleNames.firstName;
+    if (!gProfile.lastName && googleNames.lastName) profilePatch.lastName = googleNames.lastName;
+    if (Object.keys(profilePatch).length) {
+      try {
+        await updateProfile(gEmail, profilePatch);
+      } catch (err) {
+        // Profile storage must never prevent a verified user from signing in.
+        // The dashboard remains usable and profile details can be retried later.
+        console.error('Could not persist Google profile names:', err.message);
+      }
+    }
+
     const gToken = signSession(gEmail, event);
     if (!gToken) return json(503, { ok: false, error: 'Sign-in is not configured on this server.' });
     return json(200, { ok: true, email: gEmail }, { 'Set-Cookie': sessionCookie(gToken, event) });

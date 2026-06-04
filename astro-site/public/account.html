@@ -1349,24 +1349,15 @@ async function loadDashboard(){
   const data = await res.json().catch(()=>({}));
   if (!data.ok){ show('step-email'); stopChat(); return; }
 
-  // First time: require a profile before showing the cabinet.
-  const profile = await ensureProfile();
-  if (!profile){
-    clearMsg('profile-msg');
-    // ALWAYS reset the save button when returning to step-profile so the
-    // UI never gets stranded on "Saving…" — covers the case where saveProfile
-    // succeeded server-side but the immediate GET hit eventual-consistency.
-    const saveBtn = $('pf-save');
-    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = T.profSave; }
-    show('step-profile');
-    $('pf-first').focus();
-    return;
-  }
-
+  // Authentication grants access to the cabinet. Profile details improve
+  // document preparation, but must never trap an already-signed-in user in
+  // a repeated onboarding loop.
+  const profile = (await ensureProfile()) || {};
   currentProfile = profile;
   currentSessionEmail = data.email || '';
 
-  $('dash-name').textContent = profile.firstName;
+  const emailName = currentSessionEmail.split('@')[0].replace(/[._-]+/g, ' ').trim();
+  $('dash-name').textContent = profile.firstName || emailName || currentSessionEmail;
   $('dash-email').textContent = currentSessionEmail;
   renderOrders(data.orders||[]);
   refreshTileBadges(data.orders||[]);
@@ -1435,8 +1426,7 @@ function quickUpload(){
 }
 
 function openProfilePanel(){
-  if (!currentProfile){ return; }
-  const p = currentProfile;
+  const p = currentProfile || {};
   document.getElementById('pp-name').textContent = ((p.firstName||'') + ' ' + (p.lastName||'')).trim() || '—';
   document.getElementById('pp-phone').textContent = p.phone || '—';
   document.getElementById('pp-email').textContent = currentSessionEmail || '—';
@@ -1446,8 +1436,7 @@ function openProfilePanel(){
 }
 
 function editProfile(){
-  if (!currentProfile) return;
-  const p = currentProfile;
+  const p = currentProfile || {};
   $('pf-first').value = p.firstName || '';
   $('pf-last').value  = p.lastName  || '';
   $('pf-phone').value = p.phone     || '';

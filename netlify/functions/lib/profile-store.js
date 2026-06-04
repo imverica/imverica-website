@@ -57,18 +57,19 @@ function normalizeEmail(value) {
 
 const DIR = path.join(os.tmpdir(), 'imverica-profiles');
 
+function allowFilesystemFallback() {
+  return process.env.NETLIFY_DEV === 'true'
+    || process.env.NODE_ENV === 'test'
+    || (!process.env.NETLIFY && !process.env.CONTEXT);
+}
+
 async function getStore() {
-  // consistency: 'strong' makes reads see writes immediately. Without it,
-  // a GET right after a POST (e.g. saveProfile → ensureProfile → loadDashboard)
-  // can return stale `null` from the previous deploy / eventual-consistency
-  // window, which loops the UI back to step-profile with the button stuck
-  // on "Saving…". The strong-consistency cost is a single extra millisecond
-  // — well worth it for profile reads, which are rare and small.
-  try { return require('@netlify/blobs').getStore({ name: 'imverica-profiles', consistency: 'strong' }); }
-  catch {
-    // Older @netlify/blobs versions don't support the options object —
-    // fall back to the string-name signature.
-    try { return require('@netlify/blobs').getStore('imverica-profiles'); } catch { return null; }
+  try {
+    return require('@netlify/blobs').getStore('imverica-profiles');
+  } catch (err) {
+    if (allowFilesystemFallback()) return null;
+    console.error('profile-store could not connect to Netlify Blobs:', err.message);
+    throw err;
   }
 }
 
@@ -85,8 +86,17 @@ async function readProfile(email) {
   const s = await getStore();
   const k = blobKey(email);
   let raw = null;
-  if (s) { try { raw = await s.get(k, { type: 'json' }); } catch { /* fall */ } }
-  if (!raw) {
+  if (s) {
+    try {
+      raw = await s.get(k, { type: 'json' });
+    } catch (err) {
+      if (!allowFilesystemFallback()) {
+        console.error('profile-store could not read from Netlify Blobs:', err.message);
+        throw err;
+      }
+    }
+  }
+  if (!raw && allowFilesystemFallback()) {
     try { raw = JSON.parse(await fs.readFile(path.join(DIR, `${fsName(k)}.json`), 'utf8')); } catch { return null; }
   }
   return decrypt(raw);
@@ -97,7 +107,18 @@ async function writeProfile(email, profile) {
   const s = await getStore();
   const k = blobKey(email);
   const enc = encrypt(profile);
-  if (s) { try { await s.setJSON(k, enc); return; } catch { /* fall */ } }
+  if (s) {
+    try {
+      await s.setJSON(k, enc);
+      return;
+    } catch (err) {
+      if (!allowFilesystemFallback()) {
+        console.error('profile-store could not write to Netlify Blobs:', err.message);
+        throw err;
+      }
+    }
+  }
+  if (!allowFilesystemFallback()) throw new Error('Netlify Blobs profile store is unavailable.');
   await fs.mkdir(DIR, { recursive: true });
   await fs.writeFile(path.join(DIR, `${fsName(k)}.json`), JSON.stringify(enc));
 }
