@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: npm --prefix astro-site ci
 
+      - name: Install function dependencies
+        run: npm ci
+
       - name: Build site
         run: npm --prefix astro-site run build
 
