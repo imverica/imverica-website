@@ -28,6 +28,7 @@ const { getBuilder, listForms } = require('./lib/ca-court-registry');
 const { findCourtTemplate } = require('./lib/ca-court-template');
 const { sanitizeDirectFields } = require('./lib/ca-court-direct-schema');
 const { getSmallClaimsForm, listPreparableSmallClaimsSlugs } = require('./lib/ca-small-claims-catalog');
+const { getFamilyLawForm, listPreparableFamilyLawSlugs } = require('./lib/ca-family-law-catalog');
 const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 const { sessionFromEvent } = require('./lib/session-auth');
 
@@ -68,23 +69,25 @@ exports.handler = async function (event) {
     const formCode = payload.formCode || payload.formType || payload.code;
     if (!formCode) return json(400, { error: 'Missing formCode' });
 
-    const smallClaimsForm = getSmallClaimsForm(formCode);
+    // Catalog form = a small-claims OR family-law form filled via raw
+    // direct fields (SC- and FL- codes never collide).
+    const catalogForm = getSmallClaimsForm(formCode) || getFamilyLawForm(formCode);
     const directMode = payload.directFields && typeof payload.directFields === 'object';
     let slug;
     let fieldValues;
 
     if (directMode) {
-      if (!smallClaimsForm) {
-        return json(404, { error: 'Small Claims form not found', formCode });
+      if (!catalogForm) {
+        return json(404, { error: 'Court form not found', formCode });
       }
-      if (smallClaimsForm.role !== 'prepare') {
+      if (catalogForm.role !== 'prepare') {
         return json(403, {
           error: 'This form is completed by the court or is an information sheet',
-          formCode: smallClaimsForm.code,
-          role: smallClaimsForm.role
+          formCode: catalogForm.code,
+          role: catalogForm.role
         });
       }
-      slug = smallClaimsForm.code.toLowerCase();
+      slug = catalogForm.code.toLowerCase();
       fieldValues = await sanitizeDirectFields(slug, payload.directFields);
     } else {
       const entry = getBuilder(formCode);
@@ -92,7 +95,7 @@ exports.handler = async function (event) {
         return json(404, {
           error: 'Court form not supported',
           formCode,
-          supported: [...new Set([...listForms(), ...listPreparableSmallClaimsSlugs()])]
+          supported: [...new Set([...listForms(), ...listPreparableSmallClaimsSlugs(), ...listPreparableFamilyLawSlugs()])]
         });
       }
       slug = entry.slug;

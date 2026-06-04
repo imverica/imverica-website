@@ -539,6 +539,14 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <div class="qt-sub" data-i18n="tileScSub">Prepare California court forms</div>
     </button>
 
+    <button class="qt" type="button" onclick="openFamilyLawWizard()" aria-label="California Family Law wizard">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-4.97-3.05-8-6.3-8-10a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 3.7-3.03 6.95-8 10z"/></svg>
+      </div>
+      <div class="qt-title" data-i18n="tileFlTitle">Family Law wizard</div>
+      <div class="qt-sub" data-i18n="tileFlSub">Divorce, custody & support forms</div>
+    </button>
+
     <button class="qt" type="button" onclick="quickUpload()" aria-label="Upload documents">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -723,6 +731,7 @@ const STRINGS = {
     tileProfileTitle: 'Profile', tileProfileSub: 'Name, phone, settings',
     tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
     tileScTitle: 'Small Claims wizard', tileScSub: 'Prepare California court forms',
+    tileFlTitle: 'Family Law wizard', tileFlSub: 'Divorce, custody & support forms',
     tileHelpTitle: 'Help & FAQ', tileHelpSub: 'What is a California LDA?',
     ppTitle: 'Your profile',
     ppKeyName: 'Name', ppKeyPhone: 'Phone', ppKeyEmail: 'Email', ppKeyLegal: 'Legal name',
@@ -741,6 +750,7 @@ const STRINGS = {
     mdTagPrepared: 'Prepared', mdTagUploaded: 'Uploaded',
     mdDownload: 'Download', mdRequestLabel: 'Request',
     scTitle: 'California Small Claims wizard',
+    scTitleFamily: 'California Family Law wizard',
     scSubtitle: 'Choose your task, complete the official form fields, and download an editable draft.',
     scChooseTask: 'Choose what you need to do', scChooseForm: 'Choose an official form',
     scPrepare: 'Prepare in wizard', scCourtOnly: 'Court completes this', scReference: 'Information only',
@@ -825,6 +835,7 @@ const STRINGS = {
     tileProfileTitle: 'Профиль', tileProfileSub: 'Имя, телефон, настройки',
     tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
     tileScTitle: 'Small Claims мастер', tileScSub: 'Формы суда малых исков California',
+    tileFlTitle: 'Мастер семейного права', tileFlSub: 'Развод, опека, алименты',
     tileHelpTitle: 'Помощь и FAQ', tileHelpSub: 'Кто такой California LDA?',
     ppTitle: 'Ваш профиль',
     ppKeyName: 'Имя', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Имя как в ID',
@@ -843,6 +854,7 @@ const STRINGS = {
     mdTagPrepared: 'Готово', mdTagUploaded: 'Загружено',
     mdDownload: 'Скачать', mdRequestLabel: 'Заявка',
     scTitle: 'Мастер California Small Claims',
+    scTitleFamily: 'Мастер семейного права California',
     scSubtitle: 'Выберите задачу, заполните официальные поля и скачайте редактируемый черновик.',
     scChooseTask: 'Что вам нужно сделать', scChooseForm: 'Выберите официальную форму',
     scPrepare: 'Заполнить в мастере', scCourtOnly: 'Заполняет суд', scReference: 'Только информация',
@@ -927,6 +939,7 @@ const STRINGS = {
     tileProfileTitle: 'Профіль', tileProfileSub: 'Ім\'я, телефон, налаштування',
     tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
     tileScTitle: 'Small Claims майстер', tileScSub: 'Форми суду малих позовів California',
+    tileFlTitle: 'Майстер сімейного права', tileFlSub: 'Розлучення, опіка, аліменти',
     tileHelpTitle: 'Допомога і FAQ', tileHelpSub: 'Хто такий California LDA?',
     ppTitle: 'Ваш профіль',
     ppKeyName: 'Ім\'я', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Ім\'я як в ID',
@@ -945,6 +958,7 @@ const STRINGS = {
     mdTagPrepared: 'Готово', mdTagUploaded: 'Завантажено',
     mdDownload: 'Завантажити', mdRequestLabel: 'Заявка',
     scTitle: 'Майстер California Small Claims',
+    scTitleFamily: 'Майстер сімейного права California',
     scSubtitle: 'Оберіть завдання, заповніть офіційні поля та завантажте редагований чернетку.',
     scChooseTask: 'Що вам потрібно зробити', scChooseForm: 'Оберіть офіційну форму',
     scPrepare: 'Заповнити у майстрі', scCourtOnly: 'Заповнює суд', scReference: 'Лише інформація',
@@ -1029,6 +1043,7 @@ const STRINGS = {
     tileProfileTitle: 'Perfil', tileProfileSub: 'Nombre, teléfono, ajustes',
     tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
     tileScTitle: 'Asistente Small Claims', tileScSub: 'Prepare formularios judiciales de California',
+    tileFlTitle: 'Asistente de Derecho Familiar', tileFlSub: 'Divorcio, custodia y manutención',
     tileHelpTitle: 'Ayuda y FAQ', tileHelpSub: '¿Qué es un California LDA?',
     ppTitle: 'Su perfil',
     ppKeyName: 'Nombre', ppKeyPhone: 'Teléfono', ppKeyEmail: 'Email', ppKeyLegal: 'Nombre legal',
@@ -1047,6 +1062,7 @@ const STRINGS = {
     mdTagPrepared: 'Preparado', mdTagUploaded: 'Subido',
     mdDownload: 'Descargar', mdRequestLabel: 'Solicitud',
     scTitle: 'Asistente de California Small Claims',
+    scTitleFamily: 'Asistente de Derecho Familiar de California',
     scSubtitle: 'Elija su tarea, complete los campos oficiales y descargue un borrador editable.',
     scChooseTask: 'Elija lo que necesita hacer', scChooseForm: 'Elija un formulario oficial',
     scPrepare: 'Preparar en el asistente', scCourtOnly: 'Lo completa el tribunal', scReference: 'Solo información',
@@ -1659,7 +1675,9 @@ function renderMyDocuments(){
 
 /* ===== California Small Claims cabinet wizard ===== */
 const smallClaimsState = {
-  catalog: null,
+  category: '',          // '' = Small Claims (default), 'family-law' = Family Law
+  catalog: null,         // active catalog
+  catalogs: {},          // cache keyed by category
   stage: 'tasks',
   taskId: '',
   form: null,
@@ -1697,11 +1715,24 @@ function setSmallClaimsStatus(kind, text){
   status.textContent = text;
 }
 
-async function openSmallClaimsWizard(){
+function setSmallClaimsTitle(){
+  const titleEl = document.getElementById('sc-title');
+  if (!titleEl) return;
+  titleEl.textContent = smallClaimsState.category === 'family-law'
+    ? (T.scTitleFamily || 'California Family Law wizard')
+    : (T.scTitle || 'California Small Claims wizard');
+}
+
+async function openSmallClaimsWizard(category){
+  smallClaimsState.category = category === 'family-law' ? 'family-law' : '';
+  setSmallClaimsTitle();
   const overlay = document.getElementById('sc-overlay');
   overlay.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
-  if (smallClaimsState.catalog) {
+  // Per-category catalog cache so switching wizards doesn't show stale forms.
+  const cached = smallClaimsState.catalogs[smallClaimsState.category];
+  if (cached) {
+    smallClaimsState.catalog = cached;
     renderSmallClaimsTasks();
     return;
   }
@@ -1709,7 +1740,8 @@ async function openSmallClaimsWizard(){
   setSmallClaimsFooter(false, false);
   document.getElementById('sc-body').innerHTML = '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div><div class="md-empty">' + escText(T.mdLoading) + '</div>';
   try {
-    const response = await fetch('/api/court-flow', { credentials:'include', headers:{Accept:'application/json'} });
+    const url = '/api/court-flow' + (smallClaimsState.category ? '?category=' + encodeURIComponent(smallClaimsState.category) : '');
+    const response = await fetch(url, { credentials:'include', headers:{Accept:'application/json'} });
     if (response.status === 401) {
       closeSmallClaimsWizard();
       show('step-email');
@@ -1717,12 +1749,14 @@ async function openSmallClaimsWizard(){
     }
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || 'load failed');
+    smallClaimsState.catalogs[smallClaimsState.category] = data;
     smallClaimsState.catalog = data;
     renderSmallClaimsTasks();
   } catch(e) {
     document.getElementById('sc-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.scLoadFail) + '</div>';
   }
 }
+function openFamilyLawWizard(){ return openSmallClaimsWizard('family-law'); }
 
 function closeSmallClaimsWizard(){
   document.getElementById('sc-overlay').classList.add('hidden');
@@ -1923,9 +1957,10 @@ async function generateSmallClaimsPdf(){
 function maybeOpenSmallClaimsFromUrl(){
   if (smallClaimsState.openedFromUrl) return;
   const open = new URLSearchParams(window.location.search).get('open');
-  if (open !== 'small-claims') return;
+  if (open !== 'small-claims' && open !== 'family-law') return;
   smallClaimsState.openedFromUrl = true;
-  setTimeout(openSmallClaimsWizard, 100);
+  const cat = open === 'family-law' ? 'family-law' : '';
+  setTimeout(function(){ openSmallClaimsWizard(cat); }, 100);
 }
 
 /* ===== Notifications dropdown ===== */

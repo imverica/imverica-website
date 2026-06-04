@@ -10,6 +10,7 @@
 const { getCourtSchema, listCourtSchemas } = require('./lib/ca-court-flow-schema');
 const { getDirectCourtSchema } = require('./lib/ca-court-direct-schema');
 const { getSmallClaimsCatalog, getSmallClaimsForm } = require('./lib/ca-small-claims-catalog');
+const { getFamilyLawCatalog, getFamilyLawForm } = require('./lib/ca-family-law-catalog');
 const { sessionFromEvent } = require('./lib/session-auth');
 
 const HEADERS = { 'Cache-Control': 'private, no-store' };
@@ -27,23 +28,31 @@ exports.handler = async function (event) {
   if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
   if (!sessionFromEvent(event)) return json(401, { ok: false, error: 'Not signed in' });
 
+  const category = (event.queryStringParameters && event.queryStringParameters.category) || '';
   const code = (event.queryStringParameters && event.queryStringParameters.code) || '';
+
+  // No code → return the requested catalog. Small claims stays the default
+  // so existing cabinet behavior is unchanged.
   if (!code) {
+    if (category === 'family-law') return json(200, { ok: true, ...getFamilyLawCatalog() });
     return json(200, { ok: true, ...getSmallClaimsCatalog() });
   }
 
-  const smallClaimsForm = getSmallClaimsForm(code);
-  if (smallClaimsForm) {
-    if (smallClaimsForm.role !== 'prepare') {
+  // A specific form → serve its direct field schema. Check both catalogs
+  // (SC- and FL- codes never collide), then fall back to the legacy
+  // mapped schema for the original 5 forms.
+  const catalogForm = getSmallClaimsForm(code) || getFamilyLawForm(code);
+  if (catalogForm) {
+    if (catalogForm.role !== 'prepare') {
       return json(409, {
         ok: false,
         error: 'This official document is not a client-prepared form',
-        form: smallClaimsForm
+        form: catalogForm
       });
     }
-    const schema = await getDirectCourtSchema(smallClaimsForm.code.toLowerCase(), smallClaimsForm.title);
-    if (!schema) return json(404, { ok: false, error: 'Fillable template not found', code: smallClaimsForm.code });
-    return json(200, { ok: true, form: smallClaimsForm, ...schema });
+    const schema = await getDirectCourtSchema(catalogForm.code.toLowerCase(), catalogForm.title);
+    if (!schema) return json(404, { ok: false, error: 'Fillable template not found', code: catalogForm.code });
+    return json(200, { ok: true, form: catalogForm, ...schema });
   }
 
   const schema = getCourtSchema(code);
