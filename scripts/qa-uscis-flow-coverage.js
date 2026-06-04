@@ -85,6 +85,17 @@ function answersFromFlow(flow) {
   for (const step of (flow.steps || [])) {
     for (const f of (step.fields || [])) {
       if (!f.id) continue;
+      // addressBlock stores values under its part KEYS (e.g. *_line1, *_city),
+      // not under the block id — maps read the parts, so synth must populate them.
+      if (f.type === 'addressBlock' && f.parts) {
+        a[f.parts.line1] = '456 Test Street';
+        if (f.parts.line2) a[f.parts.line2] = 'Apt 5';
+        a[f.parts.city] = 'Sacramento';
+        a[f.parts.state] = 'CA';
+        a[f.parts.zip] = '95814';
+        if (f.parts.country) a[f.parts.country] = 'United States';
+        continue;
+      }
       a[f.id] = synthValue(f);
     }
   }

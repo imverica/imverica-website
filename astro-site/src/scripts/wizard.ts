@@ -849,7 +849,7 @@ export function initIntakeWizard(): void {
   // Only coverage-verified forms get the draft button so a client never
   // receives a near-empty PDF. Expand only after the coverage gate passes.
   function canGeneratePdfDraft(formCode) {
-    return ['I-485', 'I-765', 'N-400', 'I-751', 'I-90', 'I-539', 'I-864', 'I-130']
+    return ['I-485', 'I-765', 'N-400', 'I-751', 'I-90', 'I-539', 'I-864', 'I-130', 'I-131']
       .indexOf(normalizeFormCode(formCode)) !== -1;
   }
 
