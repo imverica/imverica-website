@@ -40,6 +40,8 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .form-group label{display:block;font-size:12px;font-weight:500;letter-spacing:0.5px;color:#555;margin-bottom:0.4rem;text-transform:uppercase;}
 .form-group input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:3px;font-size:15px;font-family:var(--font-system);color:#1a1a1a;outline:none;transition:border 0.2s;}
 .form-group input:focus{border-color:var(--navy);}
+.form-group .hint{display:block;margin-top:4px;font-size:11px;color:#7a8595;font-style:italic;letter-spacing:0;text-transform:none;}
+.form-group input:invalid:not(:placeholder-shown){border-color:#c0392b;}
 #code-input{letter-spacing:8px;font-size:22px;text-align:center;font-weight:500;}
 
 .btn{width:100%;background:var(--navy);color:#fff;border:none;padding:14px;font-size:15px;font-family:var(--font-system);font-weight:500;cursor:pointer;border-radius:3px;transition:background 0.2s;}
@@ -101,6 +103,50 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .md-file-prepared .md-file-tag{background:#eef7f0;color:#1a5a3a;}
 .md-file-dl{flex:0 0 auto;color:var(--navy);text-decoration:none;font-weight:600;font-size:12.5px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;}
 .md-file-dl:hover{background:#f0f4f8;}
+
+/* ===== Small Claims cabinet wizard ===== */
+.sc-overlay{position:fixed;inset:0;background:rgba(15,22,35,0.62);backdrop-filter:blur(3px);z-index:1002;display:flex;align-items:center;justify-content:center;padding:20px;}
+.sc-modal{background:#fff;border-radius:16px;width:100%;max-width:960px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(15,22,35,.45);overflow:hidden;}
+.sc-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:20px;}
+.sc-head h3{font-family:var(--font-display);font-size:24px;color:var(--navy-dark);margin:0 0 4px;}
+.sc-head p{font-size:12.5px;color:var(--muted);line-height:1.5;margin:0;}
+.sc-close{background:none;border:none;color:#8c8c8c;font-size:30px;line-height:1;cursor:pointer;padding:0 5px;}
+.sc-progress{padding:10px 24px;background:#f7f8fa;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--terracotta-deep);}
+.sc-body{padding:22px 24px;overflow-y:auto;flex:1;}
+.sc-intro{font-size:13px;color:#586779;line-height:1.65;margin-bottom:18px;padding:12px 14px;background:#f8f8f6;border-left:3px solid var(--terracotta);}
+.sc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.sc-choice{display:block;width:100%;background:#fff;border:1px solid var(--border);border-radius:10px;padding:15px;text-align:left;cursor:pointer;font-family:inherit;transition:border .15s,box-shadow .15s,transform .15s;}
+.sc-choice:hover{border-color:#9eafc1;box-shadow:0 7px 20px rgba(26,46,74,.08);transform:translateY(-1px);}
+.sc-choice-title{font-size:14px;font-weight:700;color:var(--navy-dark);line-height:1.35;}
+.sc-choice-sub{font-size:12px;color:var(--muted);line-height:1.5;margin-top:5px;}
+.sc-choice-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px;}
+.sc-pill{display:inline-flex;padding:3px 8px;border-radius:999px;background:#eef2f7;color:#33506e;font-size:9.5px;font-weight:800;letter-spacing:.55px;text-transform:uppercase;}
+.sc-pill.prepare{background:#eef7f0;color:#1a5a3a;}
+.sc-pill.court{background:#fff3e0;color:#8a5a00;}
+.sc-pill.info{background:#f1eef7;color:#5a4381;}
+.sc-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.sc-field{min-width:0;}
+.sc-field.full{grid-column:1/-1;}
+.sc-field label{display:block;font-size:12px;font-weight:600;color:#3e4b5d;line-height:1.4;margin-bottom:6px;}
+.sc-field input[type=text],.sc-field textarea,.sc-field select{display:block;width:100%;border:1px solid var(--border);border-radius:6px;padding:10px 11px;font:14px var(--font-system);color:#1a1a1a;background:#fff;outline:none;}
+.sc-field input[type=text]:focus,.sc-field textarea:focus,.sc-field select:focus{border-color:var(--navy);}
+.sc-field textarea{min-height:92px;resize:vertical;}
+.sc-check{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;background:#f8f8f6;border:1px solid var(--border);border-radius:7px;}
+.sc-check input{margin-top:3px;flex:0 0 auto;}
+.sc-check label{margin:0;font-weight:500;}
+.sc-reference{padding:20px;border:1px solid var(--border);border-radius:10px;background:#fafaf8;}
+.sc-reference h4{font-size:17px;color:var(--navy-dark);margin:0 0 8px;}
+.sc-reference p{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 14px;}
+.sc-reference a{display:inline-flex;background:var(--navy);color:#fff;text-decoration:none;padding:10px 14px;border-radius:6px;font-size:13px;font-weight:600;}
+.sc-status{display:none;margin-top:16px;padding:11px 13px;border-radius:6px;font-size:12.5px;line-height:1.5;}
+.sc-status.info{display:block;background:#eef2f7;color:#33506e;}
+.sc-status.error{display:block;background:#fdeeee;color:#9a2f24;}
+.sc-status.ok{display:block;background:#eef7f0;color:#1a5a3a;}
+.sc-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 24px;border-top:1px solid var(--border);background:#fafaf8;}
+.sc-footer button{font:600 13px var(--font-system);padding:10px 16px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);}
+.sc-footer button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+.sc-footer button:disabled{opacity:.55;cursor:not-allowed;}
+@media(max-width:700px){.sc-grid,.sc-fields{grid-template-columns:1fr}.sc-field.full{grid-column:auto}.sc-modal{max-height:96vh}.sc-head,.sc-body,.sc-footer{padding-left:16px;padding-right:16px}}
 
 /* ===== Notifications dropdown ===== */
 .notif-overlay{position:fixed;inset:0;z-index:998;display:none;}
@@ -433,8 +479,22 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
     <div class="auth-kicker" data-i18n="profKicker">One last step</div>
     <h1 class="auth-h1" data-i18n="profH1">Complete your profile</h1>
     <p class="auth-sub" data-i18n="profSub">A few details so we can prepare your documents accurately. Stored encrypted, never shared.</p>
-    <div class="form-group"><label for="pf-first" data-i18n="profFirst">First name *</label><input type="text" id="pf-first" data-i18n-placeholder="profFirstPh" placeholder="First name" autocomplete="given-name"></div>
-    <div class="form-group"><label for="pf-last" data-i18n="profLast">Last name *</label><input type="text" id="pf-last" data-i18n-placeholder="profLastPh" placeholder="Last name" autocomplete="family-name"></div>
+    <div class="form-group">
+      <label for="pf-first" data-i18n="profFirst">First name *</label>
+      <input type="text" id="pf-first" data-i18n-placeholder="profFirstPh" placeholder="First name"
+             autocomplete="given-name" maxlength="60"
+             pattern="[A-Za-z][A-Za-z\s\-'.]*"
+             title="English letters only (A–Z, a–z). Apostrophe, hyphen, and dot allowed.">
+      <small class="hint" data-i18n="profNameHint">English letters only (A–Z, a–z) — as on your passport.</small>
+    </div>
+    <div class="form-group">
+      <label for="pf-last" data-i18n="profLast">Last name *</label>
+      <input type="text" id="pf-last" data-i18n-placeholder="profLastPh" placeholder="Last name"
+             autocomplete="family-name" maxlength="60"
+             pattern="[A-Za-z][A-Za-z\s\-'.]*"
+             title="English letters only (A–Z, a–z). Apostrophe, hyphen, and dot allowed.">
+      <small class="hint" data-i18n="profNameHint">English letters only (A–Z, a–z) — as on your passport.</small>
+    </div>
     <div class="form-group"><label for="pf-phone" data-i18n="profPhone">Phone *</label><input type="tel" id="pf-phone" placeholder="(916) 000-0000" autocomplete="tel"></div>
     <div class="form-group"><label for="pf-legal" data-i18n="profLegal">Full legal name (optional, as on your ID)</label><input type="text" id="pf-legal" data-i18n-placeholder="profLegalPh" placeholder="Legal name as printed on your documents"></div>
     <button class="btn" id="pf-save" onclick="saveProfile()" data-i18n="profSave">Save and continue</button>
@@ -470,6 +530,22 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <div class="qt-title" data-i18n="tileNewTitle">+ New request</div>
       <div class="qt-sub" data-i18n="tileNewSub">Start a document package</div>
     </a>
+
+    <button class="qt" type="button" onclick="openSmallClaimsWizard()" aria-label="California Small Claims Court wizard">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6zM17 6l-4 7h8l-4-7z"/><path d="M4 21h16"/></svg>
+      </div>
+      <div class="qt-title" data-i18n="tileScTitle">Small Claims wizard</div>
+      <div class="qt-sub" data-i18n="tileScSub">Prepare California court forms</div>
+    </button>
+
+    <button class="qt" type="button" onclick="openFamilyLawWizard()" aria-label="California Family Law wizard">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-4.97-3.05-8-6.3-8-10a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 3.7-3.03 6.95-8 10z"/></svg>
+      </div>
+      <div class="qt-title" data-i18n="tileFlTitle">Family Law wizard</div>
+      <div class="qt-sub" data-i18n="tileFlSub">Divorce, custody & support forms</div>
+    </button>
 
     <button class="qt" type="button" onclick="quickUpload()" aria-label="Upload documents">
       <div class="qt-icon-wrap">
@@ -575,6 +651,25 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
   </div>
 </div>
 
+<!-- ===== Authenticated Small Claims wizard ===== -->
+<div class="sc-overlay hidden" id="sc-overlay" onclick="if(event.target===this) closeSmallClaimsWizard()">
+  <div class="sc-modal" role="dialog" aria-modal="true" aria-labelledby="sc-title">
+    <div class="sc-head">
+      <div>
+        <h3 id="sc-title" data-i18n="scTitle">California Small Claims wizard</h3>
+        <p data-i18n="scSubtitle">Choose your task, complete the official form fields, and download an editable draft.</p>
+      </div>
+      <button class="sc-close" type="button" aria-label="Close" onclick="closeSmallClaimsWizard()">×</button>
+    </div>
+    <div class="sc-progress" id="sc-progress"></div>
+    <div class="sc-body" id="sc-body"></div>
+    <div class="sc-footer">
+      <button type="button" id="sc-back" onclick="smallClaimsBack()" data-i18n="scBack">Back</button>
+      <button class="primary" type="button" id="sc-next" onclick="smallClaimsNext()" data-i18n="scNext">Next</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== Notifications dropdown ===== -->
 <div class="notif-overlay" id="notif-overlay" onclick="if(event.target===this) closeNotifications()">
   <div class="notif-panel" role="dialog" aria-modal="true" aria-labelledby="notif-title">
@@ -635,6 +730,8 @@ const STRINGS = {
     tileDocsTitle: 'My documents', tileDocsSub: 'All files across requests',
     tileProfileTitle: 'Profile', tileProfileSub: 'Name, phone, settings',
     tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
+    tileScTitle: 'Small Claims wizard', tileScSub: 'Prepare California court forms',
+    tileFlTitle: 'Family Law wizard', tileFlSub: 'Divorce, custody & support forms',
     tileHelpTitle: 'Help & FAQ', tileHelpSub: 'What is a California LDA?',
     ppTitle: 'Your profile',
     ppKeyName: 'Name', ppKeyPhone: 'Phone', ppKeyEmail: 'Email', ppKeyLegal: 'Legal name',
@@ -652,6 +749,16 @@ const STRINGS = {
     mdNoneInView: 'No files in this view yet.',
     mdTagPrepared: 'Prepared', mdTagUploaded: 'Uploaded',
     mdDownload: 'Download', mdRequestLabel: 'Request',
+    scTitle: 'California Small Claims wizard',
+    scTitleFamily: 'California Family Law wizard',
+    scSubtitle: 'Choose your task, complete the official form fields, and download an editable draft.',
+    scChooseTask: 'Choose what you need to do', scChooseForm: 'Choose an official form',
+    scPrepare: 'Prepare in wizard', scCourtOnly: 'Court completes this', scReference: 'Information only',
+    scOfficial: 'Open official court document', scBack: 'Back', scNext: 'Next', scGenerate: 'Generate PDF',
+    scGenerating: 'Preparing your PDF…', scReady: 'Your editable draft is ready and has been downloaded.',
+    scLoadFail: 'Could not load the Small Claims wizard. Please try again.',
+    scNoFields: 'This form has no client-fillable fields.', scFields: 'fillable fields',
+    scDisclaimer: 'Imverica prepares documents at your direction and does not provide legal advice. Leave court, clerk, and judge sections blank. Review every field before filing.',
     notifTitle: 'Notifications', notifMarkAll: 'Mark all read',
     notifEmpty: 'No notifications yet.', notifEmptyLong: 'No notifications yet. Replies from Imverica and status updates will show here.',
     notifImvericaReplied: 'Imverica replied', notifStatus: 'Status:',
@@ -663,6 +770,8 @@ const STRINGS = {
     errSendFail: 'Could not send a code. Try again.',
     errSaveFail: 'Could not save. Try again.',
     errNameMissing: 'Please enter your first and last name.',
+    errNameLatin: 'Name must use English letters only (A–Z, a–z) — as printed on your passport.',
+    profNameHint: 'English letters only (A–Z, a–z) — as on your passport.',
     errPhoneShort: 'Please enter a valid phone number.',
     errServerUnreach: 'Could not reach the server.',
     errFileBig: 'File too large (max 4 MB).',
@@ -725,6 +834,8 @@ const STRINGS = {
     tileDocsTitle: 'Мои документы', tileDocsSub: 'Все файлы по всем заявкам',
     tileProfileTitle: 'Профиль', tileProfileSub: 'Имя, телефон, настройки',
     tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
+    tileScTitle: 'Small Claims мастер', tileScSub: 'Формы суда малых исков California',
+    tileFlTitle: 'Мастер семейного права', tileFlSub: 'Развод, опека, алименты',
     tileHelpTitle: 'Помощь и FAQ', tileHelpSub: 'Кто такой California LDA?',
     ppTitle: 'Ваш профиль',
     ppKeyName: 'Имя', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Имя как в ID',
@@ -742,6 +853,16 @@ const STRINGS = {
     mdNoneInView: 'Файлов в этом виде пока нет.',
     mdTagPrepared: 'Готово', mdTagUploaded: 'Загружено',
     mdDownload: 'Скачать', mdRequestLabel: 'Заявка',
+    scTitle: 'Мастер California Small Claims',
+    scTitleFamily: 'Мастер семейного права California',
+    scSubtitle: 'Выберите задачу, заполните официальные поля и скачайте редактируемый черновик.',
+    scChooseTask: 'Что вам нужно сделать', scChooseForm: 'Выберите официальную форму',
+    scPrepare: 'Заполнить в мастере', scCourtOnly: 'Заполняет суд', scReference: 'Только информация',
+    scOfficial: 'Открыть официальный документ', scBack: 'Назад', scNext: 'Далее', scGenerate: 'Сгенерировать PDF',
+    scGenerating: 'Готовим PDF…', scReady: 'Редактируемый черновик готов и скачан.',
+    scLoadFail: 'Не удалось загрузить мастер Small Claims. Попробуйте ещё раз.',
+    scNoFields: 'В этой форме нет полей для заполнения клиентом.', scFields: 'полей для заполнения',
+    scDisclaimer: 'Imverica готовит документы по вашим указаниям и не даёт юридических консультаций. Оставляйте разделы суда, клерка и судьи пустыми. Проверьте каждое поле перед подачей.',
     notifTitle: 'Уведомления', notifMarkAll: 'Отметить всё прочитанным',
     notifEmpty: 'Уведомлений пока нет.', notifEmptyLong: 'Уведомлений пока нет. Здесь появятся ответы от Imverica и обновления статусов.',
     notifImvericaReplied: 'Imverica ответили', notifStatus: 'Статус:',
@@ -753,6 +874,8 @@ const STRINGS = {
     errSendFail: 'Не удалось отправить код. Попробуйте ещё раз.',
     errSaveFail: 'Не удалось сохранить. Попробуйте ещё раз.',
     errNameMissing: 'Пожалуйста, введите имя и фамилию.',
+    errNameLatin: 'Имя должно быть на латинице (A–Z, a–z) — как в паспорте для USCIS.',
+    profNameHint: 'Только латиница (A–Z, a–z) — как в паспорте.',
     errPhoneShort: 'Пожалуйста, введите корректный номер телефона.',
     errServerUnreach: 'Не удалось связаться с сервером.',
     errFileBig: 'Файл слишком большой (максимум 4 МБ).',
@@ -815,6 +938,8 @@ const STRINGS = {
     tileDocsTitle: 'Мої документи', tileDocsSub: 'Усі файли по всіх заявках',
     tileProfileTitle: 'Профіль', tileProfileSub: 'Ім\'я, телефон, налаштування',
     tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
+    tileScTitle: 'Small Claims майстер', tileScSub: 'Форми суду малих позовів California',
+    tileFlTitle: 'Майстер сімейного права', tileFlSub: 'Розлучення, опіка, аліменти',
     tileHelpTitle: 'Допомога і FAQ', tileHelpSub: 'Хто такий California LDA?',
     ppTitle: 'Ваш профіль',
     ppKeyName: 'Ім\'я', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Ім\'я як в ID',
@@ -832,6 +957,16 @@ const STRINGS = {
     mdNoneInView: 'Файлів у цьому вигляді поки немає.',
     mdTagPrepared: 'Готово', mdTagUploaded: 'Завантажено',
     mdDownload: 'Завантажити', mdRequestLabel: 'Заявка',
+    scTitle: 'Майстер California Small Claims',
+    scTitleFamily: 'Майстер сімейного права California',
+    scSubtitle: 'Оберіть завдання, заповніть офіційні поля та завантажте редагований чернетку.',
+    scChooseTask: 'Що вам потрібно зробити', scChooseForm: 'Оберіть офіційну форму',
+    scPrepare: 'Заповнити у майстрі', scCourtOnly: 'Заповнює суд', scReference: 'Лише інформація',
+    scOfficial: 'Відкрити офіційний документ', scBack: 'Назад', scNext: 'Далі', scGenerate: 'Створити PDF',
+    scGenerating: 'Готуємо PDF…', scReady: 'Редагований чернетка готовий і завантажений.',
+    scLoadFail: 'Не вдалося завантажити майстер Small Claims. Спробуйте ще раз.',
+    scNoFields: 'У цій формі немає полів для заповнення клієнтом.', scFields: 'полів для заповнення',
+    scDisclaimer: 'Imverica готує документи за вашими вказівками й не надає юридичних консультацій. Залишайте розділи суду, клерка та судді порожніми. Перевірте кожне поле перед поданням.',
     notifTitle: 'Сповіщення', notifMarkAll: 'Позначити все прочитаним',
     notifEmpty: 'Сповіщень поки немає.', notifEmptyLong: 'Сповіщень поки немає. Тут з\'являться відповіді від Imverica та оновлення статусів.',
     notifImvericaReplied: 'Imverica відповіли', notifStatus: 'Статус:',
@@ -843,6 +978,8 @@ const STRINGS = {
     errSendFail: 'Не вдалося надіслати код. Спробуйте ще раз.',
     errSaveFail: 'Не вдалося зберегти. Спробуйте ще раз.',
     errNameMissing: 'Будь ласка, введіть ім\'я та прізвище.',
+    errNameLatin: 'Ім\'я має бути латиницею (A–Z, a–z) — як у паспорті для USCIS.',
+    profNameHint: 'Тільки латиниця (A–Z, a–z) — як у паспорті.',
     errPhoneShort: 'Будь ласка, введіть коректний номер телефону.',
     errServerUnreach: 'Не вдалося зв\'язатися з сервером.',
     errFileBig: 'Файл задовгий (максимум 4 МБ).',
@@ -905,6 +1042,8 @@ const STRINGS = {
     tileDocsTitle: 'Mis documentos', tileDocsSub: 'Todos los archivos de todas las solicitudes',
     tileProfileTitle: 'Perfil', tileProfileSub: 'Nombre, teléfono, ajustes',
     tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
+    tileScTitle: 'Asistente Small Claims', tileScSub: 'Prepare formularios judiciales de California',
+    tileFlTitle: 'Asistente de Derecho Familiar', tileFlSub: 'Divorcio, custodia y manutención',
     tileHelpTitle: 'Ayuda y FAQ', tileHelpSub: '¿Qué es un California LDA?',
     ppTitle: 'Su perfil',
     ppKeyName: 'Nombre', ppKeyPhone: 'Teléfono', ppKeyEmail: 'Email', ppKeyLegal: 'Nombre legal',
@@ -922,6 +1061,16 @@ const STRINGS = {
     mdNoneInView: 'No hay archivos en esta vista aún.',
     mdTagPrepared: 'Preparado', mdTagUploaded: 'Subido',
     mdDownload: 'Descargar', mdRequestLabel: 'Solicitud',
+    scTitle: 'Asistente de California Small Claims',
+    scTitleFamily: 'Asistente de Derecho Familiar de California',
+    scSubtitle: 'Elija su tarea, complete los campos oficiales y descargue un borrador editable.',
+    scChooseTask: 'Elija lo que necesita hacer', scChooseForm: 'Elija un formulario oficial',
+    scPrepare: 'Preparar en el asistente', scCourtOnly: 'Lo completa el tribunal', scReference: 'Solo información',
+    scOfficial: 'Abrir documento oficial', scBack: 'Atrás', scNext: 'Siguiente', scGenerate: 'Generar PDF',
+    scGenerating: 'Preparando su PDF…', scReady: 'Su borrador editable está listo y se descargó.',
+    scLoadFail: 'No se pudo cargar el asistente Small Claims. Inténtelo de nuevo.',
+    scNoFields: 'Este formulario no tiene campos para completar por el cliente.', scFields: 'campos editables',
+    scDisclaimer: 'Imverica prepara documentos según sus instrucciones y no brinda asesoría legal. Deje en blanco las secciones del tribunal, secretario y juez. Revise cada campo antes de presentar.',
     notifTitle: 'Notificaciones', notifMarkAll: 'Marcar todo leído',
     notifEmpty: 'No hay notificaciones aún.', notifEmptyLong: 'No hay notificaciones aún. Aquí aparecerán respuestas de Imverica y actualizaciones de estado.',
     notifImvericaReplied: 'Imverica respondió', notifStatus: 'Estado:',
@@ -933,6 +1082,8 @@ const STRINGS = {
     errSendFail: 'No se pudo enviar el código. Inténtelo de nuevo.',
     errSaveFail: 'No se pudo guardar. Inténtelo de nuevo.',
     errNameMissing: 'Por favor, ingrese su nombre y apellido.',
+    errNameLatin: 'El nombre debe usar letras inglesas (A–Z, a–z) — como en su pasaporte para USCIS.',
+    profNameHint: 'Solo letras inglesas (A–Z, a–z) — como en su pasaporte.',
     errPhoneShort: 'Por favor, ingrese un número de teléfono válido.',
     errServerUnreach: 'No se pudo contactar al servidor.',
     errFileBig: 'Archivo demasiado grande (máx. 4 MB).',
@@ -1276,18 +1427,41 @@ async function ensureProfile(){
   }catch(e){ return null; }
 }
 
+// First/last name: English letters only (plus space/hyphen/apostrophe/dot).
+// USCIS / EOIR / CA-court forms must be filled in English. The separate
+// "Full legal name" field (#pf-legal) stays permissive — it's what's printed
+// on the client's ID and may legitimately contain non-Latin characters.
+function validNameAccount(v){ return typeof v==='string' && /^[A-Za-z][A-Za-z\s\-'.]*$/.test(v.trim()); }
+
 async function saveProfile(){
   clearMsg('profile-msg');
   const first=$('pf-first').value.trim(), last=$('pf-last').value.trim();
   const phone=$('pf-phone').value.trim(), legal=$('pf-legal').value.trim();
   if(!first || !last){ msg('profile-msg','error', T.errNameMissing); return; }
+  if(!validNameAccount(first) || !validNameAccount(last)){
+    msg('profile-msg','error', T.errNameLatin || T.errNameMissing);
+    if (!validNameAccount(first)) $('pf-first').focus();
+    else $('pf-last').focus();
+    return;
+  }
   if(phone.replace(/\D/g,'').length<10){ msg('profile-msg','error', T.errPhoneShort); return; }
   const btn=$('pf-save'); btn.disabled=true; btn.textContent= T.profSaving;
   try{
     const r=await fetch('/api/profile',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:first,lastName:last,phone:phone,legalName:legal})});
     const d=await r.json();
     if(!r.ok || !d.ok){ btn.disabled=false; btn.textContent= T.profSave; msg('profile-msg','error',d.error || T.errSaveFail); return; }
-    loadDashboard();
+    // Use the saved profile from the POST response directly — re-fetching
+    // via GET can hit Netlify Blobs eventual-consistency and return null,
+    // which would loop us back to step-profile with the button still
+    // showing "Saving…". Always reset the button so even error branches
+    // never strand the UI.
+    btn.disabled=false; btn.textContent= T.profSave;
+    if (d.profile && d.profile.firstName) {
+      currentProfile = d.profile;
+      loadDashboardWithProfile(d.profile);
+    } else {
+      loadDashboard();
+    }
   }catch(e){ btn.disabled=false; btn.textContent= T.profSave; msg('profile-msg','error', T.errServerUnreach); }
 }
 
@@ -1302,19 +1476,44 @@ async function loadDashboard(){
   const data = await res.json().catch(()=>({}));
   if (!data.ok){ show('step-email'); stopChat(); return; }
 
-  // First time: require a profile before showing the cabinet.
-  const profile = await ensureProfile();
-  if (!profile){ clearMsg('profile-msg'); show('step-profile'); $('pf-first').focus(); return; }
-
+  // Authentication grants access to the cabinet. Profile details improve
+  // document preparation, but must never trap an already-signed-in user in
+  // a repeated onboarding loop.
+  const profile = (await ensureProfile()) || {};
   currentProfile = profile;
   currentSessionEmail = data.email || '';
 
-  $('dash-name').textContent = profile.firstName;
+  const emailName = currentSessionEmail.split('@')[0].replace(/[._-]+/g, ' ').trim();
+  $('dash-name').textContent = profile.firstName || emailName || currentSessionEmail;
   $('dash-email').textContent = currentSessionEmail;
   renderOrders(data.orders||[]);
   refreshTileBadges(data.orders||[]);
   show('step-dash');
   startChat();
+  maybeOpenSmallClaimsFromUrl();
+}
+
+// Faster variant for the just-saved case — uses the profile object returned
+// in the POST /api/profile response directly, skipping the ensureProfile()
+// re-fetch that can hit eventual-consistency.
+async function loadDashboardWithProfile(profile){
+  try {
+    const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
+    if (res.status===401){ show('step-email'); stopChat(); return; }
+    const data = await res.json().catch(()=>({}));
+    if (!data.ok){ show('step-email'); stopChat(); return; }
+    currentSessionEmail = data.email || '';
+    $('dash-name').textContent = profile.firstName;
+    $('dash-email').textContent = currentSessionEmail;
+    renderOrders(data.orders||[]);
+    refreshTileBadges(data.orders||[]);
+    show('step-dash');
+    startChat();
+    maybeOpenSmallClaimsFromUrl();
+  } catch (e) {
+    // Fall through to the canonical path if anything blows up here.
+    loadDashboard();
+  }
 }
 
 /* ===== Quick-action tile handlers ===== */
@@ -1356,8 +1555,7 @@ function quickUpload(){
 }
 
 function openProfilePanel(){
-  if (!currentProfile){ return; }
-  const p = currentProfile;
+  const p = currentProfile || {};
   document.getElementById('pp-name').textContent = ((p.firstName||'') + ' ' + (p.lastName||'')).trim() || '—';
   document.getElementById('pp-phone').textContent = p.phone || '—';
   document.getElementById('pp-email').textContent = currentSessionEmail || '—';
@@ -1367,8 +1565,7 @@ function openProfilePanel(){
 }
 
 function editProfile(){
-  if (!currentProfile) return;
-  const p = currentProfile;
+  const p = currentProfile || {};
   $('pf-first').value = p.firstName || '';
   $('pf-last').value  = p.lastName  || '';
   $('pf-phone').value = p.phone     || '';
@@ -1476,6 +1673,296 @@ function renderMyDocuments(){
   body.innerHTML = html;
 }
 
+/* ===== California Small Claims cabinet wizard ===== */
+const smallClaimsState = {
+  category: '',          // '' = Small Claims (default), 'family-law' = Family Law
+  catalog: null,         // active catalog
+  catalogs: {},          // cache keyed by category
+  stage: 'tasks',
+  taskId: '',
+  form: null,
+  schema: null,
+  pageIndex: 0,
+  values: {},
+  openedFromUrl: false
+};
+
+function scAttr(value){
+  return String(value == null ? '' : value).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+  });
+}
+function scRoleLabel(role){
+  if (role === 'prepare') return T.scPrepare;
+  if (role === 'court') return T.scCourtOnly;
+  return T.scReference;
+}
+function setSmallClaimsFooter(backVisible, nextVisible, nextLabel){
+  const back = document.getElementById('sc-back');
+  const next = document.getElementById('sc-next');
+  back.classList.toggle('hidden', !backVisible);
+  next.classList.toggle('hidden', !nextVisible);
+  next.disabled = false;
+  next.textContent = nextLabel || T.scNext;
+}
+function setSmallClaimsProgress(text){
+  document.getElementById('sc-progress').textContent = text || '';
+}
+function setSmallClaimsStatus(kind, text){
+  const status = document.getElementById('sc-status');
+  if (!status) return;
+  status.className = 'sc-status ' + kind;
+  status.textContent = text;
+}
+
+function setSmallClaimsTitle(){
+  const titleEl = document.getElementById('sc-title');
+  if (!titleEl) return;
+  titleEl.textContent = smallClaimsState.category === 'family-law'
+    ? (T.scTitleFamily || 'California Family Law wizard')
+    : (T.scTitle || 'California Small Claims wizard');
+}
+
+async function openSmallClaimsWizard(category){
+  smallClaimsState.category = category === 'family-law' ? 'family-law' : '';
+  setSmallClaimsTitle();
+  const overlay = document.getElementById('sc-overlay');
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  // Per-category catalog cache so switching wizards doesn't show stale forms.
+  const cached = smallClaimsState.catalogs[smallClaimsState.category];
+  if (cached) {
+    smallClaimsState.catalog = cached;
+    renderSmallClaimsTasks();
+    return;
+  }
+  setSmallClaimsProgress(T.scChooseTask);
+  setSmallClaimsFooter(false, false);
+  document.getElementById('sc-body').innerHTML = '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div><div class="md-empty">' + escText(T.mdLoading) + '</div>';
+  try {
+    const url = '/api/court-flow' + (smallClaimsState.category ? '?category=' + encodeURIComponent(smallClaimsState.category) : '');
+    const response = await fetch(url, { credentials:'include', headers:{Accept:'application/json'} });
+    if (response.status === 401) {
+      closeSmallClaimsWizard();
+      show('step-email');
+      return;
+    }
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'load failed');
+    smallClaimsState.catalogs[smallClaimsState.category] = data;
+    smallClaimsState.catalog = data;
+    renderSmallClaimsTasks();
+  } catch(e) {
+    document.getElementById('sc-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.scLoadFail) + '</div>';
+  }
+}
+function openFamilyLawWizard(){ return openSmallClaimsWizard('family-law'); }
+
+function closeSmallClaimsWizard(){
+  document.getElementById('sc-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function renderSmallClaimsTasks(){
+  smallClaimsState.stage = 'tasks';
+  smallClaimsState.taskId = '';
+  smallClaimsState.form = null;
+  smallClaimsState.schema = null;
+  smallClaimsState.values = {};
+  setSmallClaimsProgress(T.scChooseTask);
+  setSmallClaimsFooter(false, false);
+  const tasks = smallClaimsState.catalog.tasks || [];
+  document.getElementById('sc-body').innerHTML =
+    '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div>' +
+    '<div class="sc-grid">' + tasks.map(function(task){
+      return '<button class="sc-choice" type="button" onclick="chooseSmallClaimsTask(\'' + scAttr(task.id) + '\')">' +
+        '<div class="sc-choice-title">' + escText(task.title) + '</div>' +
+        '<div class="sc-choice-sub">' + escText(task.description) + ' · ' + task.formCount + '</div>' +
+      '</button>';
+    }).join('') + '</div>';
+}
+
+function chooseSmallClaimsTask(taskId){
+  smallClaimsState.stage = 'forms';
+  smallClaimsState.taskId = taskId;
+  const task = (smallClaimsState.catalog.tasks || []).find(function(item){ return item.id === taskId; });
+  const forms = (smallClaimsState.catalog.forms || [])
+    .filter(function(item){ return item.task === taskId; })
+    .sort(function(a,b){ return (a.role === 'prepare' ? 0 : 1) - (b.role === 'prepare' ? 0 : 1) || a.code.localeCompare(b.code); });
+  setSmallClaimsProgress(T.scChooseForm + (task ? ' · ' + task.title : ''));
+  setSmallClaimsFooter(true, false);
+  document.getElementById('sc-body').innerHTML =
+    '<div class="sc-grid">' + forms.map(function(form){
+      return '<button class="sc-choice" type="button" onclick="chooseSmallClaimsForm(\'' + scAttr(form.code) + '\')">' +
+        '<div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill ' + scAttr(form.role) + '">' + escText(scRoleLabel(form.role)) + '</span></div>' +
+        '<div class="sc-choice-title">' + escText(form.title) + '</div>' +
+        '<div class="sc-choice-sub">' + escText(form.description || '') + '</div>' +
+      '</button>';
+    }).join('') + '</div>';
+}
+
+async function chooseSmallClaimsForm(code){
+  const form = (smallClaimsState.catalog.forms || []).find(function(item){ return item.code === code; });
+  if (!form) return;
+  smallClaimsState.form = form;
+  smallClaimsState.values = {};
+  if (form.role !== 'prepare') {
+    smallClaimsState.stage = 'reference';
+    setSmallClaimsProgress(form.code + ' · ' + scRoleLabel(form.role));
+    setSmallClaimsFooter(true, false);
+    document.getElementById('sc-body').innerHTML =
+      '<div class="sc-reference"><div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill ' + scAttr(form.role) + '">' + escText(scRoleLabel(form.role)) + '</span></div>' +
+      '<h4>' + escText(form.title) + '</h4><p>' + escText(form.description || T.scNoFields) + '</p>' +
+      '<a href="' + scAttr(form.officialPageUrl) + '" target="_blank" rel="noopener">' + escText(T.scOfficial) + '</a></div>';
+    return;
+  }
+
+  smallClaimsState.stage = 'loading';
+  setSmallClaimsProgress(form.code + ' · ' + form.title);
+  setSmallClaimsFooter(true, false);
+  document.getElementById('sc-body').innerHTML = '<div class="md-empty">' + escText(T.mdLoading) + '</div>';
+  try {
+    const response = await fetch('/api/court-flow?code=' + encodeURIComponent(form.code), { credentials:'include', headers:{Accept:'application/json'} });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'load failed');
+    smallClaimsState.schema = data;
+    smallClaimsState.pageIndex = 0;
+    smallClaimsState.stage = 'fields';
+    renderSmallClaimsFields();
+  } catch(e) {
+    smallClaimsState.stage = 'forms';
+    document.getElementById('sc-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.scLoadFail) + '</div>';
+    setSmallClaimsFooter(true, false);
+  }
+}
+
+function renderSmallClaimsFields(){
+  const schema = smallClaimsState.schema;
+  const step = schema && schema.steps && schema.steps[smallClaimsState.pageIndex];
+  if (!step) {
+    document.getElementById('sc-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.scNoFields) + '</div>';
+    setSmallClaimsFooter(true, false);
+    return;
+  }
+  const fields = step.fields || [];
+  setSmallClaimsProgress(smallClaimsState.form.code + ' · ' + step.title + ' · ' + schema.fieldCount + ' ' + T.scFields);
+  setSmallClaimsFooter(true, true, smallClaimsState.pageIndex === schema.steps.length - 1 ? T.scGenerate : T.scNext);
+  document.getElementById('sc-body').innerHTML =
+    '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div>' +
+    '<div class="sc-fields">' + fields.map(renderSmallClaimsField).join('') + '</div>' +
+    '<div class="sc-status" id="sc-status"></div>';
+}
+
+function renderSmallClaimsField(field){
+  const saved = smallClaimsState.values[field.id];
+  const name = scAttr(field.id);
+  const label = escText(field.label);
+  if (field.type === 'checkbox') {
+    return '<div class="sc-field full"><div class="sc-check"><input type="checkbox" data-sc-field="' + name + '"' + (saved === true ? ' checked' : '') + '><label>' + label + '</label></div></div>';
+  }
+  if (field.type === 'select') {
+    const options = (field.options || []).map(function(option){
+      return '<option value="' + scAttr(option.value) + '"' + (saved === option.value ? ' selected' : '') + '>' + escText(option.label) + '</option>';
+    }).join('');
+    return '<div class="sc-field"><label>' + label + '</label><select data-sc-field="' + name + '"><option value=""></option>' + options + '</select></div>';
+  }
+  if (field.type === 'textarea') {
+    return '<div class="sc-field full"><label>' + label + '</label><textarea data-sc-field="' + name + '"' + (field.maxLength ? ' maxlength="' + Number(field.maxLength) + '"' : '') + '>' + escText(saved || '') + '</textarea></div>';
+  }
+  return '<div class="sc-field"><label>' + label + '</label><input type="text" data-sc-field="' + name + '" value="' + scAttr(saved || '') + '"' + (field.maxLength ? ' maxlength="' + Number(field.maxLength) + '"' : '') + '></div>';
+}
+
+function collectSmallClaimsPage(){
+  document.querySelectorAll('#sc-body [data-sc-field]').forEach(function(input){
+    const key = input.getAttribute('data-sc-field');
+    if (input.type === 'checkbox') {
+      if (input.checked) smallClaimsState.values[key] = true;
+      else delete smallClaimsState.values[key];
+      return;
+    }
+    const value = String(input.value || '').trim();
+    if (value) smallClaimsState.values[key] = value;
+    else delete smallClaimsState.values[key];
+  });
+}
+
+function smallClaimsBack(){
+  if (smallClaimsState.stage === 'fields') {
+    collectSmallClaimsPage();
+    if (smallClaimsState.pageIndex > 0) {
+      smallClaimsState.pageIndex -= 1;
+      renderSmallClaimsFields();
+    } else {
+      chooseSmallClaimsTask(smallClaimsState.taskId);
+    }
+    return;
+  }
+  if (smallClaimsState.stage === 'forms' || smallClaimsState.stage === 'loading') {
+    renderSmallClaimsTasks();
+    return;
+  }
+  if (smallClaimsState.stage === 'reference') chooseSmallClaimsTask(smallClaimsState.taskId);
+}
+
+function smallClaimsNext(){
+  if (smallClaimsState.stage !== 'fields') return;
+  collectSmallClaimsPage();
+  if (smallClaimsState.pageIndex < smallClaimsState.schema.steps.length - 1) {
+    smallClaimsState.pageIndex += 1;
+    renderSmallClaimsFields();
+  } else {
+    generateSmallClaimsPdf();
+  }
+}
+
+async function generateSmallClaimsPdf(){
+  const next = document.getElementById('sc-next');
+  next.disabled = true;
+  next.textContent = T.scGenerating;
+  setSmallClaimsStatus('info', T.scGenerating);
+  try {
+    const response = await fetch('/api/generate-court-pdf', {
+      method:'POST',
+      credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ formCode:smallClaimsState.form.code, directFields:smallClaimsState.values, flatten:false })
+    });
+    if (response.status === 401) {
+      closeSmallClaimsWizard();
+      show('step-email');
+      return;
+    }
+    if (!response.ok) {
+      const data = await response.json().catch(function(){ return {}; });
+      throw new Error(data.error || T.scLoadFail);
+    }
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = smallClaimsState.form.code + '-draft.pdf';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    setSmallClaimsStatus('ok', T.scReady);
+  } catch(e) {
+    setSmallClaimsStatus('error', e.message || T.scLoadFail);
+  } finally {
+    next.disabled = false;
+    next.textContent = T.scGenerate;
+  }
+}
+
+function maybeOpenSmallClaimsFromUrl(){
+  if (smallClaimsState.openedFromUrl) return;
+  const open = new URLSearchParams(window.location.search).get('open');
+  if (open !== 'small-claims' && open !== 'family-law') return;
+  smallClaimsState.openedFromUrl = true;
+  const cat = open === 'family-law' ? 'family-law' : '';
+  setTimeout(function(){ openSmallClaimsWizard(cat); }, 100);
+}
+
 /* ===== Notifications dropdown ===== */
 const NOTIF_READ_KEY = 'imverica_notif_read_ts';
 function openNotifications(){
@@ -1563,6 +2050,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape'){
     closeNotifications();
     closeMyDocuments();
+    closeSmallClaimsWizard();
   }
 });
 
@@ -1571,6 +2059,22 @@ $('email-input').addEventListener('keydown',e=>{ if(e.key==='Enter') requestCode
 $('code-input').addEventListener('keydown',e=>{ if(e.key==='Enter') verifyCode(); });
 $('chat-input').addEventListener('keydown',e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
 (function(){ var p=$('pf-phone'); if(!p) return; p.addEventListener('input',function(){ var d=p.value.replace(/\D/g,'').slice(0,10); p.value = d.length<=3?(d?'('+d:''):d.length<=6?'('+d.slice(0,3)+') '+d.slice(3):'('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6); }); })();
+// Live name filter — strips characters the server will reject so the user
+// never sees Cyrillic / accented Latin / digits sneak past validation.
+(function(){
+  ['pf-first','pf-last'].forEach(function(id){
+    var el = $(id); if (!el) return;
+    el.addEventListener('input', function(){
+      var before = el.value;
+      var after = before.replace(/[^A-Za-z\s\-'.]/g, '');
+      if (after !== before) {
+        var pos = el.selectionStart - (before.length - after.length);
+        el.value = after;
+        try { el.setSelectionRange(pos, pos); } catch(e) {}
+      }
+    });
+  });
+})();
 $('pf-legal').addEventListener('keydown',e=>{ if(e.key==='Enter') saveProfile(); });
 
 // ===== Google Sign-In (Google Identity Services) =====

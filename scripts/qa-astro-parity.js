@@ -60,9 +60,11 @@ const phoneExpectations = [
   ['index.html', 'tel:+19163993992'],
   ['portal.html', '+1 (916) 399-3992'],
   ['astro-site/src/scripts/wizard.ts', 'tel:+19163993992'],
-  ['astro-site/src/pages/california-family-law.astro', 'tel:+19163993992'],
-  ['astro-site/src/pages/i-130-family-petition.astro', 'tel:+19163993992'],
-  ['astro-site/src/pages/i-765-work-permit-help.astro', 'tel:+19163993992']
+  ['astro-site/src/components/SiteHeader.astro', 'tel:+19163993992'],
+  ['astro-site/src/components/Hero.astro', 'tel:+19163993992'],
+  ['astro-site/src/pages/fl.astro', '+1-916-399-3992'],
+  ['astro-site/src/pages/i-130-family-petition.astro', '+1-916-399-3992'],
+  ['astro-site/src/pages/i-765-work-permit-help.astro', '+1-916-399-3992']
 ];
 for (const [file, text] of phoneExpectations) {
   assertIncludes(file, text);

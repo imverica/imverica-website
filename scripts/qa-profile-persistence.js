@@ -79,9 +79,21 @@ const { readProfile, updateProfile } = require(storePath);
   assert.strictEqual(googleProfile.firstName, 'Google');
   assert.strictEqual(googleProfile.lastName, 'Tester');
 
-  const accountHtml = fs.readFileSync(path.resolve(__dirname, '../astro-site/public/account.html'), 'utf8');
-  assert(accountHtml.includes('const profile = (await ensureProfile()) || {};'));
-  assert(!accountHtml.includes("if (!profile){\n    clearMsg('profile-msg');"));
+  for (const accountFile of ['account.html', 'astro-site/public/account.html']) {
+    const accountHtml = fs.readFileSync(path.resolve(__dirname, '..', accountFile), 'utf8');
+    assert(
+      accountHtml.includes('const profile = (await ensureProfile()) || {};'),
+      `${accountFile} must let signed-in users enter the dashboard even when optional profile details are missing`
+    );
+    assert(
+      accountHtml.includes('Authentication grants access to the cabinet.'),
+      `${accountFile} should document that profile details cannot gate dashboard access`
+    );
+    assert(
+      !accountHtml.includes("if (!profile){ clearMsg('profile-msg'); show('step-profile'); $('pf-first').focus(); return; }"),
+      `${accountFile} must not force the repeated Complete your profile loop`
+    );
+  }
 
   console.log('Profile persistence QA passed.');
 })().catch((err) => {
