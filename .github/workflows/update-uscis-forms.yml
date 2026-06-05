@@ -1,0 +1,86 @@
+name: Monthly USCIS Forms Refresh
+
+# Once a month, refresh official USCIS PDF templates used by immigration
+# document generation. The updater checks uscis.gov form pages, replaces changed
+# cached PDFs, updates the shared form-cache manifest, runs USCIS PDF QA, commits
+# any safe changes, and deploys the prebuilt site/functions to Netlify.
+
+on:
+  schedule:
+    # 04:47 Pacific during standard time / 03:47 during daylight time.
+    - cron: "47 11 1 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: uscis-forms-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            astro-site/package-lock.json
+
+      - name: Install function dependencies
+        run: npm ci
+
+      - name: Install site dependencies
+        run: npm --prefix astro-site ci
+
+      - name: Refresh official USCIS PDFs
+        run: npm run update:uscis-forms
+
+      - name: Verify USCIS PDF map catalog
+        run: npm run qa:uscis-pdf-maps
+
+      - name: Verify USCIS PDF fill integrity
+        run: npm run qa:uscis-pdf-integrity
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if git diff --quiet -- assets/form-cache/pdfs assets/form-cache/manifest.json netlify/functions/form-cache-manifest.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit refreshed USCIS forms
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "imverica-form-updater"
+          git config user.email "actions@github.com"
+          git add assets/form-cache/pdfs assets/form-cache/manifest.json netlify/functions/form-cache-manifest.json
+          git commit -m "Refresh USCIS form templates"
+          git push origin HEAD:main
+
+      - name: Build site after form refresh
+        if: steps.changes.outputs.changed == 'true'
+        run: npm --prefix astro-site run build
+
+      - name: Deploy refreshed forms to Netlify
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npx --yes netlify-cli@latest deploy \
+            --prod \
+            --no-build \
+            --dir=astro-site/dist \
+            --functions=netlify/functions \
+            --message="Monthly USCIS forms refresh: ${GITHUB_SHA::7}"

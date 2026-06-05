@@ -23,7 +23,10 @@ function acroFormObject(parsed) {
 async function callGeneratePdf(payload) {
   return await generatePdf.handler({
     httpMethod: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      origin: 'https://imverica.com'
+    },
     body: JSON.stringify(payload)
   });
 }
