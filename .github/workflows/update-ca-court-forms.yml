@@ -1,0 +1,89 @@
+name: Monthly California Court Forms Refresh
+
+# Once a month, refresh the official California Judicial Council PDF templates
+# used by the account court-form wizards. The updater downloads from the
+# official California Courts sources recorded by scripts/update-ca-court-forms.js,
+# replaces changed source/decrypted PDFs, updates the manifest, runs QA, commits
+# any changes, and deploys the prebuilt site/functions to Netlify.
+
+on:
+  schedule:
+    # 03:17 Pacific during standard time / 02:17 during daylight time.
+    - cron: "17 10 1 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ca-court-forms-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            astro-site/package-lock.json
+
+      - name: Install qpdf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qpdf
+
+      - name: Install function dependencies
+        run: npm ci
+
+      - name: Install site dependencies
+        run: npm --prefix astro-site ci
+
+      - name: Refresh official court PDFs
+        run: npm run update:ca-court-forms
+
+      - name: Verify all court forms
+        run: npm run qa:all-ca-court
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if git diff --quiet -- assets/form-cache/pdfs assets/form-cache/ca-court; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit refreshed court forms
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "imverica-form-updater"
+          git config user.email "actions@github.com"
+          git add assets/form-cache/pdfs assets/form-cache/ca-court assets/form-cache/ca-court-manifest.json
+          git commit -m "Refresh California court form templates"
+          git push origin HEAD:main
+
+      - name: Build site after form refresh
+        if: steps.changes.outputs.changed == 'true'
+        run: npm --prefix astro-site run build
+
+      - name: Deploy refreshed forms to Netlify
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npx --yes netlify-cli@latest deploy \
+            --prod \
+            --no-build \
+            --dir=astro-site/dist \
+            --functions=netlify/functions \
+            --message="Monthly CA court forms refresh: ${GITHUB_SHA::7}"
