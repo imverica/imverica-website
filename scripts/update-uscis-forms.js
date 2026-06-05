@@ -16,7 +16,9 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const fsp = require('fs/promises');
+const os = require('os');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const CATALOG_PATH = path.join(ROOT, 'netlify/functions/forms/immigration.json');
@@ -26,6 +28,7 @@ const PDF_DIR = path.join(ROOT, 'assets/form-cache/pdfs');
 const USCIS_BASE = 'https://www.uscis.gov';
 const USER_AGENT = 'Imverica USCIS form updater (+https://imverica.com)';
 const CONCURRENCY = 4;
+const DEFAULT_EXPIRATION_WARNING_DAYS = 90;
 
 const FORM_PAGE_PATHS = {
   'I-130A': ['i-130'],
@@ -217,14 +220,75 @@ async function writeIfChanged(file, buffer) {
   return true;
 }
 
+function parseUscisDate(value) {
+  const match = String(value || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
+  if (!match) return null;
+  const month = Number(match[1]);
+  const day = Number(match[2]);
+  const year = match[3].length === 2 ? 2000 + Number(match[3]) : Number(match[3]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  if (parsed.getUTCFullYear() !== year || parsed.getUTCMonth() !== month - 1 || parsed.getUTCDate() !== day) return null;
+  return parsed;
+}
+
+function expirationStatus(expirationDate, warningDays) {
+  const parsed = parseUscisDate(expirationDate);
+  if (!parsed) return 'unknown';
+
+  const now = new Date();
+  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  const expiration = Date.UTC(parsed.getUTCFullYear(), parsed.getUTCMonth(), parsed.getUTCDate());
+  const warningMs = Math.max(0, warningDays) * 24 * 60 * 60 * 1000;
+
+  if (expiration < today) return 'expired';
+  if (expiration - today <= warningMs) return 'expires-soon';
+  return 'current';
+}
+
+function expirationIso(expirationDate) {
+  const parsed = parseUscisDate(expirationDate);
+  return parsed ? parsed.toISOString().slice(0, 10) : '';
+}
+
+async function extractPdfText(buffer, slug) {
+  const temporary = path.join(os.tmpdir(), `imverica-uscis-${slug}-${process.pid}.pdf`);
+  try {
+    await fsp.writeFile(temporary, buffer);
+    return execFileSync('pdftotext', ['-f', '1', '-l', '1', '-layout', temporary, '-'], {
+      encoding: 'utf8',
+      maxBuffer: 4 * 1024 * 1024
+    });
+  } finally {
+    await fsp.rm(temporary, { force: true });
+  }
+}
+
+async function pdfExpirationMetadata(buffer, code, warningDays) {
+  const text = await extractPdfText(buffer, safeSlug(code));
+  const match = text.match(/\bExpires:?\s+([0-9]{1,2}\/[0-9]{1,2}\/(?:[0-9]{2}|[0-9]{4}))\b/i);
+  const expirationDate = match ? match[1].replace(/\b(\d)\/(\d{1,2})\//, '0$1/$2/').replace(/\/(\d)\/(\d{2,4})$/, '/0$1/$2') : '';
+  return {
+    expirationDate,
+    expirationDateIso: expirationIso(expirationDate),
+    expirationStatus: expirationStatus(expirationDate, warningDays)
+  };
+}
+
 function parseArgs() {
   const args = process.argv.slice(2);
-  const options = { codes: new Set(), limit: 0 };
+  const options = {
+    codes: new Set(),
+    limit: 0,
+    expirationWarningDays: DEFAULT_EXPIRATION_WARNING_DAYS
+  };
   for (let i = 0; i < args.length; i += 1) {
     if (args[i] === '--codes') {
       String(args[++i] || '').split(',').map(normalizeCode).filter(Boolean).forEach((code) => options.codes.add(code));
     } else if (args[i] === '--limit') {
       options.limit = Number(args[++i] || 0);
+    } else if (args[i] === '--expiration-warning-days') {
+      options.expirationWarningDays = Number(args[++i] || DEFAULT_EXPIRATION_WARNING_DAYS);
     }
   }
   return options;
@@ -252,7 +316,7 @@ async function loadUscisEntries(options) {
   return entries;
 }
 
-function mergeRecord(previous, entry, official, downloaded, changed) {
+function mergeRecord(previous, entry, official, downloaded, changed, pdfMetadata) {
   const slug = safeSlug(entry.code);
   const cachedFile = previous?.cachedFile || `assets/form-cache/pdfs/${slug}.pdf`;
   return {
@@ -273,6 +337,9 @@ function mergeRecord(previous, entry, official, downloaded, changed) {
     editionDate: official.editionDate,
     effectiveDate: '',
     resolvedTitle: official.title,
+    expirationDate: pdfMetadata.expirationDate,
+    expirationDateIso: pdfMetadata.expirationDateIso,
+    expirationStatus: pdfMetadata.expirationStatus,
     bytes: downloaded.bytes,
     sha256: downloaded.sha256,
     contentType: downloaded.contentType,
@@ -287,6 +354,9 @@ function significantRecordChanged(a, b) {
     'officialStatus',
     'officialPdfUrl',
     'editionDate',
+    'expirationDate',
+    'expirationDateIso',
+    'expirationStatus',
     'bytes',
     'sha256',
     'contentType',
@@ -295,7 +365,7 @@ function significantRecordChanged(a, b) {
   return keys.some((key) => JSON.stringify(a?.[key]) !== JSON.stringify(b?.[key]));
 }
 
-async function refreshEntry(entry, previous) {
+async function refreshEntry(entry, previous, options) {
   const official = await resolveOfficial(entry.code);
   if (!official.officialPdfUrl) {
     if (previous?.cacheStatus === 'cached') {
@@ -317,6 +387,9 @@ async function refreshEntry(entry, previous) {
       officialPdfUrl: '',
       officialPageUrl: official.officialPageUrl,
       editionDate: official.editionDate,
+      expirationDate: '',
+      expirationDateIso: '',
+      expirationStatus: 'unknown',
       effectiveDate: '',
       resolvedTitle: official.title,
       cacheStatus: 'not_found',
@@ -326,10 +399,11 @@ async function refreshEntry(entry, previous) {
   }
 
   const downloaded = await downloadPdf(official.officialPdfUrl);
+  const pdfMetadata = await pdfExpirationMetadata(downloaded.buffer, entry.code, options.expirationWarningDays);
   const cachedFile = previous?.cachedFile || `assets/form-cache/pdfs/${safeSlug(entry.code)}.pdf`;
   const targetFile = path.join(ROOT, cachedFile);
   const pdfChanged = await writeIfChanged(targetFile, downloaded.buffer);
-  const next = mergeRecord(previous, entry, official, downloaded, pdfChanged);
+  const next = mergeRecord(previous, entry, official, downloaded, pdfChanged, pdfMetadata);
   return {
     record: next,
     changed: pdfChanged || significantRecordChanged(previous, next),
@@ -370,7 +444,13 @@ async function main() {
     .map((form) => [normalizeCode(form.code), form]));
 
   await fsp.mkdir(PDF_DIR, { recursive: true });
-  const results = await runQueue(entries, (entry) => refreshEntry(entry, previousByCode.get(entry.code)));
+  try {
+    execFileSync('pdftotext', ['-v'], { stdio: 'ignore' });
+  } catch {
+    throw new Error('pdftotext is required for USCIS expiration tracking. Install poppler-utils (Linux) or poppler (macOS).');
+  }
+
+  const results = await runQueue(entries, (entry) => refreshEntry(entry, previousByCode.get(entry.code), options));
   const failed = results.filter((result) => result.error);
   if (failed.length) {
     console.error(`\nFailed USCIS refreshes: ${failed.map((result) => result.code).join(', ')}`);
