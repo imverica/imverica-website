@@ -77,6 +77,26 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .profile-panel .pp-actions button{font-size:13px;padding:9px 16px;border-radius:6px;cursor:pointer;font-family:var(--font-system);border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:500;}
 .profile-panel .pp-actions button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
 
+/* ===== Official forms monitor ===== */
+.forms-status-panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.35rem 1.5rem;margin-bottom:1.4rem;box-shadow:0 12px 34px rgba(40,30,20,0.045);}
+.fsp-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:1rem;}
+.fsp-kicker{font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--terracotta-deep);margin-bottom:5px;}
+.fsp-title{font-family:var(--font-display);font-size:22px;color:var(--navy-dark);line-height:1.2;margin:0;}
+.fsp-sub{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:5px;}
+.fsp-updated{font-size:11px;color:#748095;white-space:nowrap;padding-top:4px;}
+.fsp-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:12px;}
+.fsp-stat{border:1px solid #ece8df;background:#fafaf8;border-radius:11px;padding:11px 10px;}
+.fsp-stat strong{display:block;font-size:22px;line-height:1;color:var(--navy-dark);margin-bottom:5px;}
+.fsp-stat span{font-size:10px;font-weight:800;letter-spacing:.65px;text-transform:uppercase;color:#6f7886;}
+.fsp-stat.ok strong{color:#1a5a3a;}
+.fsp-stat.warn strong{color:#9a5a00;}
+.fsp-stat.bad strong{color:#9a2f24;}
+.fsp-attention{font-size:12.5px;line-height:1.6;color:#526070;background:#f8f8f6;border-left:3px solid var(--terracotta);padding:10px 12px;border-radius:7px;}
+.fsp-attention strong{color:var(--navy-dark);}
+.fsp-attention a{color:var(--navy);font-weight:700;text-decoration:none;}
+.fsp-attention a:hover{text-decoration:underline;}
+@media (max-width:760px){.fsp-head{display:block}.fsp-updated{margin-top:6px;white-space:normal}.fsp-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.fsp-stat:first-child{grid-column:1/-1;}}
+
 /* ===== My Documents modal ===== */
 .md-overlay{position:fixed;inset:0;background:rgba(15,22,35,0.55);backdrop-filter:blur(2px);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px;}
 .md-overlay.hidden{display:none !important;}
@@ -97,10 +117,12 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .md-file{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8f8f6;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:13.5px;}
 .md-file-icon{flex:0 0 auto;width:32px;height:32px;border-radius:8px;background:#eef2f7;display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:14px;font-weight:700;}
 .md-file-prepared .md-file-icon{background:#eef7f0;color:#1a5a3a;}
+.md-file-generated .md-file-icon{background:#fff3e0;color:#8a5a00;}
 .md-file-name{flex:1;color:var(--navy-dark);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .md-file-meta{flex:0 0 auto;color:var(--muted);font-size:12px;}
 .md-file-tag{flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#eef2f7;color:#33506e;}
 .md-file-prepared .md-file-tag{background:#eef7f0;color:#1a5a3a;}
+.md-file-generated .md-file-tag{background:#fff3e0;color:#8a5a00;}
 .md-file-dl{flex:0 0 auto;color:var(--navy);text-decoration:none;font-weight:600;font-size:12.5px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;}
 .md-file-dl:hover{background:#f0f4f8;}
 
@@ -620,6 +642,19 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
     </div>
   </div>
 
+  <div class="forms-status-panel hidden" id="uscis-status-panel" aria-live="polite">
+    <div class="fsp-head">
+      <div>
+        <div class="fsp-kicker" data-i18n="uscisKicker">Official form monitor</div>
+        <h3 class="fsp-title" data-i18n="uscisTitle">USCIS forms status</h3>
+        <p class="fsp-sub" data-i18n="uscisSub">Official USCIS PDF templates are cached here and checked monthly for new versions.</p>
+      </div>
+      <div class="fsp-updated" id="uscis-status-updated"></div>
+    </div>
+    <div class="fsp-grid" id="uscis-status-stats"></div>
+    <div class="fsp-attention" id="uscis-status-attention" data-i18n="uscisLoading">Checking official form cache…</div>
+  </div>
+
   <div id="orders"></div>
 
   <div class="chat-card">
@@ -747,8 +782,18 @@ const STRINGS = {
     mdLoadFail: 'Could not load documents. Please try again.',
     mdNoOrders: 'You have no requests yet — start a New request to upload documents.',
     mdNoneInView: 'No files in this view yet.',
-    mdTagPrepared: 'Prepared', mdTagUploaded: 'Uploaded',
-    mdDownload: 'Download', mdRequestLabel: 'Request',
+    mdTagPrepared: 'Prepared', mdTagUploaded: 'Uploaded', mdTagGenerated: 'Generated',
+    mdDownload: 'Download', mdRequestLabel: 'Request', mdGeneratedLabel: 'Generated drafts',
+    uscisKicker: 'Official form monitor',
+    uscisTitle: 'USCIS forms status',
+    uscisSub: 'Official USCIS PDF templates are cached here and checked monthly for new versions.',
+    uscisLoading: 'Checking official form cache…',
+    uscisUpdated: 'Updated',
+    uscisTotal: 'USCIS forms', uscisCached: 'Cached', uscisCurrent: 'Current', uscisSoon: 'Expiring soon', uscisExpired: 'Expired',
+    uscisAllGood: 'No urgent USCIS expiration issues in the account cache.',
+    uscisAttention: 'Needs attention:',
+    uscisUnknown: 'Unknown expiration dates',
+    uscisOfficialNote: 'Official USCIS pages are still the source of truth before filing.',
     scTitle: 'California Small Claims wizard',
     scTitleFamily: 'California Family Law wizard',
     scSubtitle: 'Choose your task, complete the official form fields, and download an editable draft.',
@@ -851,8 +896,18 @@ const STRINGS = {
     mdLoadFail: 'Не удалось загрузить документы. Попробуйте ещё раз.',
     mdNoOrders: 'У вас пока нет заявок — создайте новую, чтобы загрузить документы.',
     mdNoneInView: 'Файлов в этом виде пока нет.',
-    mdTagPrepared: 'Готово', mdTagUploaded: 'Загружено',
-    mdDownload: 'Скачать', mdRequestLabel: 'Заявка',
+    mdTagPrepared: 'Готово', mdTagUploaded: 'Загружено', mdTagGenerated: 'Сгенерировано',
+    mdDownload: 'Скачать', mdRequestLabel: 'Заявка', mdGeneratedLabel: 'Сгенерированные черновики',
+    uscisKicker: 'Монитор официальных форм',
+    uscisTitle: 'Статус USCIS форм',
+    uscisSub: 'Официальные PDF-шаблоны USCIS хранятся в кэше и проверяются раз в месяц на новые версии.',
+    uscisLoading: 'Проверяем кэш официальных форм…',
+    uscisUpdated: 'Обновлено',
+    uscisTotal: 'USCIS форм', uscisCached: 'В кэше', uscisCurrent: 'Актуальны', uscisSoon: 'Скоро истекают', uscisExpired: 'Истекли',
+    uscisAllGood: 'Срочных проблем по срокам USCIS форм в кэше нет.',
+    uscisAttention: 'Требует внимания:',
+    uscisUnknown: 'Неизвестные даты окончания',
+    uscisOfficialNote: 'Перед подачей официальный сайт USCIS остаётся источником истины.',
     scTitle: 'Мастер California Small Claims',
     scTitleFamily: 'Мастер семейного права California',
     scSubtitle: 'Выберите задачу, заполните официальные поля и скачайте редактируемый черновик.',
@@ -955,8 +1010,18 @@ const STRINGS = {
     mdLoadFail: 'Не вдалося завантажити документи. Спробуйте ще раз.',
     mdNoOrders: 'У вас поки немає заявок — створіть нову, щоб завантажити документи.',
     mdNoneInView: 'Файлів у цьому вигляді поки немає.',
-    mdTagPrepared: 'Готово', mdTagUploaded: 'Завантажено',
-    mdDownload: 'Завантажити', mdRequestLabel: 'Заявка',
+    mdTagPrepared: 'Готово', mdTagUploaded: 'Завантажено', mdTagGenerated: 'Створено',
+    mdDownload: 'Завантажити', mdRequestLabel: 'Заявка', mdGeneratedLabel: 'Створені чернетки',
+    uscisKicker: 'Монітор офіційних форм',
+    uscisTitle: 'Статус форм USCIS',
+    uscisSub: 'Офіційні PDF-шаблони USCIS зберігаються в кеші та перевіряються щомісяця на нові версії.',
+    uscisLoading: 'Перевіряємо кеш офіційних форм…',
+    uscisUpdated: 'Оновлено',
+    uscisTotal: 'USCIS форм', uscisCached: 'У кеші', uscisCurrent: 'Актуальні', uscisSoon: 'Скоро спливають', uscisExpired: 'Спливли',
+    uscisAllGood: 'Термінових проблем зі строками USCIS форм у кеші немає.',
+    uscisAttention: 'Потребує уваги:',
+    uscisUnknown: 'Невідомі дати закінчення',
+    uscisOfficialNote: 'Перед поданням офіційний сайт USCIS залишається джерелом істини.',
     scTitle: 'Майстер California Small Claims',
     scTitleFamily: 'Майстер сімейного права California',
     scSubtitle: 'Оберіть завдання, заповніть офіційні поля та завантажте редагований чернетку.',
@@ -1059,8 +1124,18 @@ const STRINGS = {
     mdLoadFail: 'No se pudieron cargar los documentos. Inténtelo de nuevo.',
     mdNoOrders: 'No tiene solicitudes aún — inicie una Nueva solicitud para subir documentos.',
     mdNoneInView: 'No hay archivos en esta vista aún.',
-    mdTagPrepared: 'Preparado', mdTagUploaded: 'Subido',
-    mdDownload: 'Descargar', mdRequestLabel: 'Solicitud',
+    mdTagPrepared: 'Preparado', mdTagUploaded: 'Subido', mdTagGenerated: 'Generado',
+    mdDownload: 'Descargar', mdRequestLabel: 'Solicitud', mdGeneratedLabel: 'Borradores generados',
+    uscisKicker: 'Monitor de formularios oficiales',
+    uscisTitle: 'Estado de formularios USCIS',
+    uscisSub: 'Las plantillas PDF oficiales de USCIS se guardan en caché y se revisan mensualmente para nuevas versiones.',
+    uscisLoading: 'Revisando caché de formularios oficiales…',
+    uscisUpdated: 'Actualizado',
+    uscisTotal: 'Formularios USCIS', uscisCached: 'En caché', uscisCurrent: 'Vigentes', uscisSoon: 'Por vencer', uscisExpired: 'Vencidos',
+    uscisAllGood: 'No hay problemas urgentes de vencimiento en la caché de USCIS.',
+    uscisAttention: 'Requiere atención:',
+    uscisUnknown: 'Fechas de vencimiento desconocidas',
+    uscisOfficialNote: 'Antes de presentar, el sitio oficial de USCIS sigue siendo la fuente de verdad.',
     scTitle: 'Asistente de California Small Claims',
     scTitleFamily: 'Asistente de Derecho Familiar de California',
     scSubtitle: 'Elija su tarea, complete los campos oficiales y descargue un borrador editable.',
@@ -1469,6 +1544,53 @@ async function saveProfile(){
 // badges, edit-profile flow).
 let currentProfile = null;
 let currentSessionEmail = '';
+let uscisStatusLoaded = false;
+
+function renderUscisStat(value, label, cls){
+  return '<div class="fsp-stat ' + (cls || '') + '"><strong>' + escText(String(value)) + '</strong><span>' + escText(label) + '</span></div>';
+}
+
+async function loadUscisFormsStatus(){
+  const panel = document.getElementById('uscis-status-panel');
+  const stats = document.getElementById('uscis-status-stats');
+  const attention = document.getElementById('uscis-status-attention');
+  const updated = document.getElementById('uscis-status-updated');
+  if (!panel || !stats || !attention) return;
+  panel.classList.remove('hidden');
+  if (uscisStatusLoaded) return;
+  try {
+    const response = await fetch('/api/forms-status', { credentials:'include', headers:{Accept:'application/json'} });
+    if (!response.ok) throw new Error('forms status unavailable');
+    const data = await response.json();
+    if (!data || !data.ok || !data.uscis || !data.uscis.counts) throw new Error('forms status malformed');
+    const counts = data.uscis.counts;
+    stats.innerHTML =
+      renderUscisStat(counts.total || 0, T.uscisTotal, '') +
+      renderUscisStat(counts.cached || 0, T.uscisCached, 'ok') +
+      renderUscisStat(counts.current || 0, T.uscisCurrent, 'ok') +
+      renderUscisStat(counts.expiresSoon || 0, T.uscisSoon, 'warn') +
+      renderUscisStat(counts.expired || 0, T.uscisExpired, 'bad');
+    if (updated && data.generatedAt) {
+      updated.textContent = T.uscisUpdated + ' ' + new Date(data.generatedAt).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+    }
+    const urgent = (data.uscis.urgent || []).slice(0, 6);
+    if (urgent.length) {
+      const links = urgent.map(function(form){
+        const label = form.code + (form.expirationDate ? ' · ' + form.expirationDate : '');
+        if (form.officialPageUrl) return '<a href="' + scAttr(form.officialPageUrl) + '" target="_blank" rel="noopener">' + escText(label) + '</a>';
+        return escText(label);
+      }).join(', ');
+      attention.innerHTML = '<strong>' + escText(T.uscisAttention) + '</strong> ' + links + '. ' +
+        escText(T.uscisUnknown) + ': ' + (counts.unknown || 0) + '. ' + escText(T.uscisOfficialNote);
+    } else {
+      attention.innerHTML = '<strong>' + escText(T.uscisAllGood) + '</strong> ' +
+        escText(T.uscisUnknown) + ': ' + (counts.unknown || 0) + '. ' + escText(T.uscisOfficialNote);
+    }
+    uscisStatusLoaded = true;
+  } catch(e) {
+    attention.textContent = T.mdLoadFail;
+  }
+}
 
 async function loadDashboard(){
   const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
@@ -1488,6 +1610,7 @@ async function loadDashboard(){
   $('dash-email').textContent = currentSessionEmail;
   renderOrders(data.orders||[]);
   refreshTileBadges(data.orders||[]);
+  loadUscisFormsStatus();
   show('step-dash');
   startChat();
   maybeOpenSmallClaimsFromUrl();
@@ -1507,6 +1630,7 @@ async function loadDashboardWithProfile(profile){
     $('dash-email').textContent = currentSessionEmail;
     renderOrders(data.orders||[]);
     refreshTileBadges(data.orders||[]);
+    loadUscisFormsStatus();
     show('step-dash');
     startChat();
     maybeOpenSmallClaimsFromUrl();
@@ -1576,7 +1700,7 @@ function editProfile(){
 }
 
 /* ===== My Documents modal ===== */
-let mdAllFiles = []; // [{orderId, orderLabel, file: {fileId,name,type,size,uploadedAt,source}}]
+let mdAllFiles = []; // [{scope, orderId, orderLabel, file: {fileId,name,type,size,uploadedAt,source}}]
 let mdFilter = 'all';
 
 function openMyDocuments(){
@@ -1611,18 +1735,27 @@ async function loadMyDocuments(){
       return;
     }
     const orders = account.orders || [];
-    if (!orders.length){
-      body.innerHTML = '<div class="md-empty">' + T.mdNoOrders + '</div>';
-      return;
-    }
-    // Fetch files for each order in parallel.
     const allFiles = [];
+    try {
+      const generatedRes = await fetch('/api/generated-documents', { credentials:'include', headers:{Accept:'application/json'} });
+      const generated = await generatedRes.json();
+      if (generated && generated.ok && Array.isArray(generated.files)) {
+        generated.files.forEach(f => allFiles.push({
+          scope: 'generated',
+          orderId: 'generated-drafts',
+          orderLabel: T.mdGeneratedLabel,
+          file: f
+        }));
+      }
+    } catch(e){}
+    // Fetch request-attached files in parallel.
     await Promise.all(orders.map(async (o) => {
       try {
         const r = await fetch('/api/upload?orderId=' + encodeURIComponent(o.id), { credentials:'include' });
         const d = await r.json();
         if (d && d.ok && Array.isArray(d.files)){
           d.files.forEach(f => allFiles.push({
+            scope: 'order',
             orderId: o.id,
             orderLabel: (o.service || o.serviceLabel || T.mdRequestLabel) + (o.formCode ? ' · ' + o.formCode : ''),
             file: f
@@ -1640,8 +1773,8 @@ function renderMyDocuments(){
   const body = document.getElementById('md-body');
   if (!body) return;
   let items = mdAllFiles;
-  if (mdFilter === 'prepared') items = items.filter(x => x.file.source === 'prepared');
-  if (mdFilter === 'mine')     items = items.filter(x => x.file.source !== 'prepared');
+  if (mdFilter === 'prepared') items = items.filter(x => x.file.source === 'prepared' || x.file.source === 'generated');
+  if (mdFilter === 'mine')     items = items.filter(x => x.file.source !== 'prepared' && x.file.source !== 'generated');
   if (!items.length){
     body.innerHTML = '<div class="md-empty">' + T.mdNoneInView + '</div>';
     return;
@@ -1659,13 +1792,17 @@ function renderMyDocuments(){
     html += '<div class="md-group-title">' + escText(orderId) + '<span class="md-group-meta">' + escText(g.orderLabel) + '</span></div>';
     g.files.forEach(f => {
       const isPrep = f.source === 'prepared';
+      const isGenerated = f.source === 'generated';
       const ext = (f.name.split('.').pop() || '?').toUpperCase().slice(0,4);
-      html += '<div class="md-file' + (isPrep ? ' md-file-prepared' : '') + '">';
+      html += '<div class="md-file' + (isPrep ? ' md-file-prepared' : '') + (isGenerated ? ' md-file-generated' : '') + '">';
       html += '<span class="md-file-icon">' + escText(ext) + '</span>';
       html += '<span class="md-file-name">' + escText(f.name) + '</span>';
       html += '<span class="md-file-meta">' + fmtSize(f.size) + '</span>';
-      html += '<span class="md-file-tag">' + (isPrep ? T.mdTagPrepared : T.mdTagUploaded) + '</span>';
-      html += '<a class="md-file-dl" href="/api/upload?orderId=' + encodeURIComponent(orderId) + '&fileId=' + encodeURIComponent(f.fileId) + '">' + T.mdDownload + '</a>';
+      html += '<span class="md-file-tag">' + (isGenerated ? T.mdTagGenerated : (isPrep ? T.mdTagPrepared : T.mdTagUploaded)) + '</span>';
+      const href = isGenerated
+        ? '/api/generated-documents?fileId=' + encodeURIComponent(f.fileId)
+        : '/api/upload?orderId=' + encodeURIComponent(orderId) + '&fileId=' + encodeURIComponent(f.fileId);
+      html += '<a class="md-file-dl" href="' + href + '">' + T.mdDownload + '</a>';
       html += '</div>';
     });
     html += '</div>';
@@ -1915,6 +2052,38 @@ function smallClaimsNext(){
   }
 }
 
+function blobToDataUrl(blob){
+  return new Promise(function(resolve, reject){
+    const reader = new FileReader();
+    reader.onload = function(){ resolve(String(reader.result || '')); };
+    reader.onerror = function(){ reject(reader.error || new Error('Could not read generated PDF')); };
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function saveGeneratedDraft(blob, meta){
+  try {
+    const dataBase64 = await blobToDataUrl(blob);
+    const response = await fetch('/api/generated-documents', {
+      method:'POST',
+      credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name: meta.name,
+        type: blob.type || 'application/pdf',
+        dataBase64,
+        formCode: meta.formCode || '',
+        title: meta.title || '',
+        category: meta.category || 'court'
+      })
+    });
+    const data = await response.json().catch(function(){ return {}; });
+    return Boolean(response.ok && data.ok);
+  } catch(e) {
+    return false;
+  }
+}
+
 async function generateSmallClaimsPdf(){
   const next = document.getElementById('sc-next');
   next.disabled = true;
@@ -1937,14 +2106,21 @@ async function generateSmallClaimsPdf(){
       throw new Error(data.error || T.scLoadFail);
     }
     const blob = await response.blob();
+    const fileName = smallClaimsState.form.code + '-draft.pdf';
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = smallClaimsState.form.code + '-draft.pdf';
+    link.download = fileName;
     document.body.appendChild(link);
     link.click();
     link.remove();
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    await saveGeneratedDraft(blob, {
+      name: fileName,
+      formCode: smallClaimsState.form.code,
+      title: smallClaimsState.form.title || '',
+      category: smallClaimsState.category === 'family-law' ? 'family-law' : 'small-claims'
+    });
     setSmallClaimsStatus('ok', T.scReady);
   } catch(e) {
     setSmallClaimsStatus('error', e.message || T.scLoadFail);

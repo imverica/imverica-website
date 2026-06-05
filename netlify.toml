@@ -153,6 +153,16 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/forms-status"
+  to = "/.netlify/functions/forms-status"
+  status = 200
+
+[[redirects]]
+  from = "/api/generated-documents"
+  to = "/.netlify/functions/generated-documents"
+  status = 200
+
+[[redirects]]
   from = "/api/prepare-doc"
   to = "/.netlify/functions/prepare-doc"
   status = 200

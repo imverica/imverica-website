@@ -13,6 +13,7 @@ interface RelatedLink {
   label: string;
 }
 interface Props {
+  lang?: string;
   related?: RelatedLink[];
 }
 const { related = [] } = Astro.props;

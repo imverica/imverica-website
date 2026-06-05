@@ -116,8 +116,11 @@ const initial: Review[] = ALL.slice(0, 6);
       var grid = document.getElementById('testimonialsGrid');
       var data = document.getElementById('testimonialsData');
       if (!grid || !data) return;
-      var pool;
-      try { pool = JSON.parse(data.textContent || '[]'); }
+      var gridEl = grid;
+      var dataEl = data;
+      type Review = { stars: number; body: string; name: string; meta: string };
+      var pool: Review[];
+      try { pool = JSON.parse(dataEl.textContent || '[]'); }
       catch (e) { return; }
       if (!Array.isArray(pool) || pool.length < 18) return;
 
@@ -130,14 +133,14 @@ const initial: Review[] = ALL.slice(0, 6);
       }
       var batches = [pool.slice(0, 6), pool.slice(6, 12), pool.slice(12, 18)];
 
-      function esc(s) {
+      function esc(s: unknown): string {
         return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-          return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c];
+          return ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c] || '';
         });
       }
 
-      function render(reviews) {
-        grid.innerHTML = reviews.map(function (r) {
+      function render(reviews: Review[]) {
+        gridEl.innerHTML = reviews.map(function (r: Review) {
           var filled = '★'.repeat(r.stars);
           var empty = '★'.repeat(5 - r.stars);
           return '<article class="testimonial-card">' +
@@ -165,7 +168,7 @@ const initial: Review[] = ALL.slice(0, 6);
         reduced = !!(mq && mq.matches);
       } catch (e) {}
 
-      grid.style.transition = reduced ? 'none' : 'opacity 0.45s ease';
+      gridEl.style.transition = reduced ? 'none' : 'opacity 0.45s ease';
 
       var idx = 0;
       var ROTATE_MS = 60000; // every minute, per spec
@@ -177,12 +180,12 @@ const initial: Review[] = ALL.slice(0, 6);
           idx = next;
           return;
         }
-        grid.style.opacity = '0';
+        gridEl.style.opacity = '0';
         setTimeout(function () {
           render(batches[next]);
           idx = next;
           // Reflow + restore opacity → triggers the fade-in.
-          grid.style.opacity = '1';
+          gridEl.style.opacity = '1';
         }, 450);
       }
 

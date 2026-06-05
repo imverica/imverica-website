@@ -90,16 +90,18 @@ const active = activeNav();
     var burger = document.getElementById('siteBurger');
     var menu = document.getElementById('siteMobileMenu');
     if (!burger || !menu) return;
-    function setOpen(open) {
-      menu.hidden = !open;
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      burger.classList.toggle('open', open);
+    var burgerEl = burger;
+    var menuEl = menu;
+    function setOpen(open: boolean) {
+      menuEl.hidden = !open;
+      burgerEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burgerEl.classList.toggle('open', open);
     }
-    burger.addEventListener('click', function () {
-      setOpen(menu.hidden);
+    burgerEl.addEventListener('click', function () {
+      setOpen(menuEl.hidden);
     });
     // Close when a link is tapped or on Escape.
-    menu.addEventListener('click', function (e) {
+    menuEl.addEventListener('click', function (e) {
       if (e.target instanceof HTMLAnchorElement) setOpen(false);
     });
     document.addEventListener('keydown', function (e) {
