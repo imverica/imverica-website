@@ -127,6 +127,9 @@ async function main() {
     assert(html.includes('maybeOpenUscisFromUrl();'), `${label}: URL-open hook is not wired after dashboard load`);
     assert(html.includes('requestedUscisFormFromUrl'), `${label}: form-specific URL open is missing`);
     assert(!html.includes('/.netlify/functions/generate-pdf'), `${label}: must not call direct USCIS renderer`);
+    assert(!html.includes('/api/forms-status'), `${label}: must not expose internal forms-status endpoint`);
+    assert(!html.includes('Official form monitor'), `${label}: must not show internal form-monitor copy`);
+    assert(!html.includes('USCIS forms status'), `${label}: must not show internal USCIS status copy`);
   }
 
   assert(indexHtml.includes('data-open-uscis-account'), 'public intake should link to account USCIS wizard');

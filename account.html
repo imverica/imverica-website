@@ -77,26 +77,6 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .profile-panel .pp-actions button{font-size:13px;padding:9px 16px;border-radius:6px;cursor:pointer;font-family:var(--font-system);border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:500;}
 .profile-panel .pp-actions button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
 
-/* ===== Official forms monitor ===== */
-.forms-status-panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.35rem 1.5rem;margin-bottom:1.4rem;box-shadow:0 12px 34px rgba(40,30,20,0.045);}
-.fsp-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:1rem;}
-.fsp-kicker{font-size:10.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--terracotta-deep);margin-bottom:5px;}
-.fsp-title{font-family:var(--font-display);font-size:22px;color:var(--navy-dark);line-height:1.2;margin:0;}
-.fsp-sub{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:5px;}
-.fsp-updated{font-size:11px;color:#748095;white-space:nowrap;padding-top:4px;}
-.fsp-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:12px;}
-.fsp-stat{border:1px solid #ece8df;background:#fafaf8;border-radius:11px;padding:11px 10px;}
-.fsp-stat strong{display:block;font-size:22px;line-height:1;color:var(--navy-dark);margin-bottom:5px;}
-.fsp-stat span{font-size:10px;font-weight:800;letter-spacing:.65px;text-transform:uppercase;color:#6f7886;}
-.fsp-stat.ok strong{color:#1a5a3a;}
-.fsp-stat.warn strong{color:#9a5a00;}
-.fsp-stat.bad strong{color:#9a2f24;}
-.fsp-attention{font-size:12.5px;line-height:1.6;color:#526070;background:#f8f8f6;border-left:3px solid var(--terracotta);padding:10px 12px;border-radius:7px;}
-.fsp-attention strong{color:var(--navy-dark);}
-.fsp-attention a{color:var(--navy);font-weight:700;text-decoration:none;}
-.fsp-attention a:hover{text-decoration:underline;}
-@media (max-width:760px){.fsp-head{display:block}.fsp-updated{margin-top:6px;white-space:normal}.fsp-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.fsp-stat:first-child{grid-column:1/-1;}}
-
 /* ===== My Documents modal ===== */
 .md-overlay{position:fixed;inset:0;background:rgba(15,22,35,0.55);backdrop-filter:blur(2px);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px;}
 .md-overlay.hidden{display:none !important;}
@@ -664,19 +644,6 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
     </div>
   </div>
 
-  <div class="forms-status-panel hidden" id="uscis-status-panel" aria-live="polite">
-    <div class="fsp-head">
-      <div>
-        <div class="fsp-kicker" data-i18n="uscisKicker">Official form monitor</div>
-        <h3 class="fsp-title" data-i18n="uscisTitle">USCIS forms status</h3>
-        <p class="fsp-sub" data-i18n="uscisSub">Official USCIS PDF templates are cached here and checked monthly for new versions.</p>
-      </div>
-      <div class="fsp-updated" id="uscis-status-updated"></div>
-    </div>
-    <div class="fsp-grid" id="uscis-status-stats"></div>
-    <div class="fsp-attention" id="uscis-status-attention" data-i18n="uscisLoading">Checking official form cache…</div>
-  </div>
-
   <div id="orders"></div>
 
   <div class="chat-card">
@@ -826,16 +793,6 @@ const STRINGS = {
     mdNoneInView: 'No files in this view yet.',
     mdTagPrepared: 'Prepared', mdTagUploaded: 'Uploaded', mdTagGenerated: 'Generated',
     mdDownload: 'Download', mdRequestLabel: 'Request', mdGeneratedLabel: 'Generated drafts',
-    uscisKicker: 'Official form monitor',
-    uscisTitle: 'USCIS forms status',
-    uscisSub: 'Official USCIS PDF templates are cached here and checked monthly for new versions.',
-    uscisLoading: 'Checking official form cache…',
-    uscisUpdated: 'Updated',
-    uscisTotal: 'USCIS forms', uscisCached: 'Cached', uscisCurrent: 'Current', uscisSoon: 'Expiring soon', uscisExpired: 'Expired',
-    uscisAllGood: 'No urgent USCIS expiration issues in the account cache.',
-    uscisAttention: 'Needs attention:',
-    uscisUnknown: 'Unknown expiration dates',
-    uscisOfficialNote: 'Official USCIS pages are still the source of truth before filing.',
     uscisWizardTitle: 'USCIS forms wizard',
     uscisWizardSubtitle: 'Choose an official USCIS form, complete the account-only wizard, and download a draft PDF.',
     uscisChooseWizardForm: 'Choose a USCIS form',
@@ -958,16 +915,6 @@ const STRINGS = {
     mdNoneInView: 'Файлов в этом виде пока нет.',
     mdTagPrepared: 'Готово', mdTagUploaded: 'Загружено', mdTagGenerated: 'Сгенерировано',
     mdDownload: 'Скачать', mdRequestLabel: 'Заявка', mdGeneratedLabel: 'Сгенерированные черновики',
-    uscisKicker: 'Монитор официальных форм',
-    uscisTitle: 'Статус USCIS форм',
-    uscisSub: 'Официальные PDF-шаблоны USCIS хранятся в кэше и проверяются раз в месяц на новые версии.',
-    uscisLoading: 'Проверяем кэш официальных форм…',
-    uscisUpdated: 'Обновлено',
-    uscisTotal: 'USCIS форм', uscisCached: 'В кэше', uscisCurrent: 'Актуальны', uscisSoon: 'Скоро истекают', uscisExpired: 'Истекли',
-    uscisAllGood: 'Срочных проблем по срокам USCIS форм в кэше нет.',
-    uscisAttention: 'Требует внимания:',
-    uscisUnknown: 'Неизвестные даты окончания',
-    uscisOfficialNote: 'Перед подачей официальный сайт USCIS остаётся источником истины.',
     uscisWizardTitle: 'Мастер USCIS форм',
     uscisWizardSubtitle: 'Выберите официальную USCIS форму, заполните мастер в личном кабинете и скачайте PDF-черновик.',
     uscisChooseWizardForm: 'Выберите USCIS форму',
@@ -1090,16 +1037,6 @@ const STRINGS = {
     mdNoneInView: 'Файлів у цьому вигляді поки немає.',
     mdTagPrepared: 'Готово', mdTagUploaded: 'Завантажено', mdTagGenerated: 'Створено',
     mdDownload: 'Завантажити', mdRequestLabel: 'Заявка', mdGeneratedLabel: 'Створені чернетки',
-    uscisKicker: 'Монітор офіційних форм',
-    uscisTitle: 'Статус форм USCIS',
-    uscisSub: 'Офіційні PDF-шаблони USCIS зберігаються в кеші та перевіряються щомісяця на нові версії.',
-    uscisLoading: 'Перевіряємо кеш офіційних форм…',
-    uscisUpdated: 'Оновлено',
-    uscisTotal: 'USCIS форм', uscisCached: 'У кеші', uscisCurrent: 'Актуальні', uscisSoon: 'Скоро спливають', uscisExpired: 'Спливли',
-    uscisAllGood: 'Термінових проблем зі строками USCIS форм у кеші немає.',
-    uscisAttention: 'Потребує уваги:',
-    uscisUnknown: 'Невідомі дати закінчення',
-    uscisOfficialNote: 'Перед поданням офіційний сайт USCIS залишається джерелом істини.',
     uscisWizardTitle: 'Майстер USCIS форм',
     uscisWizardSubtitle: 'Оберіть офіційну USCIS форму, заповніть майстер в особистому кабінеті та завантажте PDF-чернетку.',
     uscisChooseWizardForm: 'Оберіть USCIS форму',
@@ -1222,16 +1159,6 @@ const STRINGS = {
     mdNoneInView: 'No hay archivos en esta vista aún.',
     mdTagPrepared: 'Preparado', mdTagUploaded: 'Subido', mdTagGenerated: 'Generado',
     mdDownload: 'Descargar', mdRequestLabel: 'Solicitud', mdGeneratedLabel: 'Borradores generados',
-    uscisKicker: 'Monitor de formularios oficiales',
-    uscisTitle: 'Estado de formularios USCIS',
-    uscisSub: 'Las plantillas PDF oficiales de USCIS se guardan en caché y se revisan mensualmente para nuevas versiones.',
-    uscisLoading: 'Revisando caché de formularios oficiales…',
-    uscisUpdated: 'Actualizado',
-    uscisTotal: 'Formularios USCIS', uscisCached: 'En caché', uscisCurrent: 'Vigentes', uscisSoon: 'Por vencer', uscisExpired: 'Vencidos',
-    uscisAllGood: 'No hay problemas urgentes de vencimiento en la caché de USCIS.',
-    uscisAttention: 'Requiere atención:',
-    uscisUnknown: 'Fechas de vencimiento desconocidas',
-    uscisOfficialNote: 'Antes de presentar, el sitio oficial de USCIS sigue siendo la fuente de verdad.',
     uscisWizardTitle: 'Asistente de formularios USCIS',
     uscisWizardSubtitle: 'Elija un formulario oficial de USCIS, complete el asistente de cuenta y descargue un borrador PDF.',
     uscisChooseWizardForm: 'Elija un formulario USCIS',
@@ -1657,53 +1584,6 @@ async function saveProfile(){
 // badges, edit-profile flow).
 let currentProfile = null;
 let currentSessionEmail = '';
-let uscisStatusLoaded = false;
-
-function renderUscisStat(value, label, cls){
-  return '<div class="fsp-stat ' + (cls || '') + '"><strong>' + escText(String(value)) + '</strong><span>' + escText(label) + '</span></div>';
-}
-
-async function loadUscisFormsStatus(){
-  const panel = document.getElementById('uscis-status-panel');
-  const stats = document.getElementById('uscis-status-stats');
-  const attention = document.getElementById('uscis-status-attention');
-  const updated = document.getElementById('uscis-status-updated');
-  if (!panel || !stats || !attention) return;
-  panel.classList.remove('hidden');
-  if (uscisStatusLoaded) return;
-  try {
-    const response = await fetch('/api/forms-status', { credentials:'include', headers:{Accept:'application/json'} });
-    if (!response.ok) throw new Error('forms status unavailable');
-    const data = await response.json();
-    if (!data || !data.ok || !data.uscis || !data.uscis.counts) throw new Error('forms status malformed');
-    const counts = data.uscis.counts;
-    stats.innerHTML =
-      renderUscisStat(counts.total || 0, T.uscisTotal, '') +
-      renderUscisStat(counts.cached || 0, T.uscisCached, 'ok') +
-      renderUscisStat(counts.current || 0, T.uscisCurrent, 'ok') +
-      renderUscisStat(counts.expiresSoon || 0, T.uscisSoon, 'warn') +
-      renderUscisStat(counts.expired || 0, T.uscisExpired, 'bad');
-    if (updated && data.generatedAt) {
-      updated.textContent = T.uscisUpdated + ' ' + new Date(data.generatedAt).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
-    }
-    const urgent = (data.uscis.urgent || []).slice(0, 6);
-    if (urgent.length) {
-      const links = urgent.map(function(form){
-        const label = form.code + (form.expirationDate ? ' · ' + form.expirationDate : '');
-        if (form.officialPageUrl) return '<a href="' + scAttr(form.officialPageUrl) + '" target="_blank" rel="noopener">' + escText(label) + '</a>';
-        return escText(label);
-      }).join(', ');
-      attention.innerHTML = '<strong>' + escText(T.uscisAttention) + '</strong> ' + links + '. ' +
-        escText(T.uscisUnknown) + ': ' + (counts.unknown || 0) + '. ' + escText(T.uscisOfficialNote);
-    } else {
-      attention.innerHTML = '<strong>' + escText(T.uscisAllGood) + '</strong> ' +
-        escText(T.uscisUnknown) + ': ' + (counts.unknown || 0) + '. ' + escText(T.uscisOfficialNote);
-    }
-    uscisStatusLoaded = true;
-  } catch(e) {
-    attention.textContent = T.mdLoadFail;
-  }
-}
 
 async function loadDashboard(){
   const res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
@@ -1723,7 +1603,6 @@ async function loadDashboard(){
   $('dash-email').textContent = currentSessionEmail;
   renderOrders(data.orders||[]);
   refreshTileBadges(data.orders||[]);
-  loadUscisFormsStatus();
   show('step-dash');
   startChat();
   maybeOpenSmallClaimsFromUrl();
@@ -1744,7 +1623,6 @@ async function loadDashboardWithProfile(profile){
     $('dash-email').textContent = currentSessionEmail;
     renderOrders(data.orders||[]);
     refreshTileBadges(data.orders||[]);
-    loadUscisFormsStatus();
     show('step-dash');
     startChat();
     maybeOpenSmallClaimsFromUrl();

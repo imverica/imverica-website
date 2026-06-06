@@ -24,13 +24,15 @@ async function main() {
   const generatedFn = read(GENERATED_FN);
   const statusFn = require(STATUS_FN);
 
-  assert(account.includes('id="uscis-status-panel"'), 'account dashboard is missing USCIS status panel');
-  assert(account.includes('/api/forms-status'), 'account dashboard does not call /api/forms-status');
+  assert(!account.includes('id="uscis-status-panel"'), 'client account dashboard must not expose the internal USCIS status monitor');
+  assert(!account.includes('/api/forms-status'), 'client account dashboard must not call the internal forms-status endpoint');
+  assert(!account.includes('Official form monitor'), 'client account dashboard must not show internal form-monitor copy');
+  assert(!account.includes('USCIS forms status'), 'client account dashboard must not show internal USCIS status copy');
   assert(account.includes('/api/generated-documents'), 'My Documents does not call /api/generated-documents');
   assert(account.includes('saveGeneratedDraft(blob'), 'Small Claims wizard does not save generated PDFs');
   assert(account.includes('mdTagGenerated'), 'My Documents has no generated-file tag');
 
-  assert(netlify.includes('from = "/api/forms-status"'), 'netlify.toml is missing /api/forms-status redirect');
+  assert(netlify.includes('from = "/api/forms-status"'), 'netlify.toml is missing internal /api/forms-status redirect');
   assert(netlify.includes('from = "/api/generated-documents"'), 'netlify.toml is missing /api/generated-documents redirect');
 
   assert(generatedFn.includes("getStore('imverica-generated-documents')"), 'generated documents function uses wrong store');
