@@ -898,7 +898,6 @@ function i485FieldValues(payload = {}) {
     'Pt6Line4_MiddleName[0]': clean(answers.spouse_middle_name, 60),
     'Pt6Line5_AlienNumber[0]': digits(answers.spouse_alien_number, 9),
     'Pt6Line7_Country[0]': clean(answers.spouse_country_of_birth, 60),
-    'Pt6Line9_DateofMarriage[0]': dateMdY(answers.current_marriage_date),
     'Pt6Line10_CityTownOfBirth[0]': clean(answers.current_marriage_city, 60),
     'Pt6Line10_State[0]': clean(answers.current_marriage_state, 60),
     'Pt6Line10_Country[0]': clean(answers.current_marriage_country, 60),
