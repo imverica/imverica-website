@@ -150,12 +150,26 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .sc-field{min-width:0;}
 .sc-field.full{grid-column:1/-1;}
 .sc-field label{display:block;font-size:12px;font-weight:600;color:#3e4b5d;line-height:1.4;margin-bottom:6px;}
-.sc-field input[type=text],.sc-field textarea,.sc-field select{display:block;width:100%;border:1px solid var(--border);border-radius:6px;padding:10px 11px;font:14px var(--font-system);color:#1a1a1a;background:#fff;outline:none;}
-.sc-field input[type=text]:focus,.sc-field textarea:focus,.sc-field select:focus{border-color:var(--navy);}
+.sc-field input[type=text],.sc-field input[type=email],.sc-field input[type=date],.sc-field input[type=number],.sc-field textarea,.sc-field select{display:block;width:100%;border:1px solid var(--border);border-radius:6px;padding:10px 11px;font:14px var(--font-system);color:#1a1a1a;background:#fff;outline:none;}
+.sc-field input[type=text]:focus,.sc-field input[type=email]:focus,.sc-field input[type=date]:focus,.sc-field input[type=number]:focus,.sc-field textarea:focus,.sc-field select:focus{border-color:var(--navy);}
 .sc-field textarea{min-height:92px;resize:vertical;}
 .sc-check{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;background:#f8f8f6;border:1px solid var(--border);border-radius:7px;}
 .sc-check input{margin-top:3px;flex:0 0 auto;}
 .sc-check label{margin:0;font-weight:500;}
+.sc-field-help{font-size:11.5px;color:#7a8494;line-height:1.45;margin-top:5px;}
+.sc-fieldset{grid-column:1/-1;border:1px solid var(--border);border-radius:10px;background:#fafaf8;padding:13px 14px;}
+.sc-fieldset-title{font-size:12px;font-weight:700;color:#3e4b5d;margin-bottom:10px;}
+.sc-address-grid,.sc-phone-grid,.sc-history-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.sc-address-grid .wide,.sc-history-grid .wide{grid-column:1/-1;}
+.sc-check-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.sc-history-entry{border:1px solid #ece8df;background:#fff;border-radius:8px;padding:11px;margin-bottom:9px;}
+.sc-history-entry h4{font-size:12px;color:#3e4b5d;margin:0 0 9px;}
+.uscis-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 10px;}
+.uscis-list-head h4{font-family:var(--font-display);font-size:17px;color:var(--navy-dark);margin:0;}
+.uscis-search{width:260px;max-width:100%;border:1px solid var(--border);border-radius:999px;padding:9px 13px;font:13px var(--font-system);outline:none;}
+.sc-choice.disabled{opacity:.55;cursor:not-allowed;}
+.sc-choice.disabled:hover{transform:none;box-shadow:none;border-color:var(--border);}
+.sc-pill.bad{background:#fdeeee;color:#9a2f24;}
 .sc-reference{padding:20px;border:1px solid var(--border);border-radius:10px;background:#fafaf8;}
 .sc-reference h4{font-size:17px;color:var(--navy-dark);margin:0 0 8px;}
 .sc-reference p{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 14px;}
@@ -168,7 +182,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .sc-footer button{font:600 13px var(--font-system);padding:10px 16px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);}
 .sc-footer button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
 .sc-footer button:disabled{opacity:.55;cursor:not-allowed;}
-@media(max-width:700px){.sc-grid,.sc-fields{grid-template-columns:1fr}.sc-field.full{grid-column:auto}.sc-modal{max-height:96vh}.sc-head,.sc-body,.sc-footer{padding-left:16px;padding-right:16px}}
+@media(max-width:700px){.sc-grid,.sc-fields,.sc-address-grid,.sc-phone-grid,.sc-history-grid,.sc-check-list{grid-template-columns:1fr}.sc-field.full{grid-column:auto}.sc-modal{max-height:96vh}.sc-head,.sc-body,.sc-footer{padding-left:16px;padding-right:16px}.uscis-list-head{display:block}.uscis-search{margin-top:8px;width:100%;}}
 
 /* ===== Notifications dropdown ===== */
 .notif-overlay{position:fixed;inset:0;z-index:998;display:none;}
@@ -569,6 +583,14 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <div class="qt-sub" data-i18n="tileFlSub">Divorce, custody & support forms</div>
     </button>
 
+    <button class="qt" type="button" onclick="openUscisWizard()" aria-label="USCIS forms wizard">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6M8 9h2"/></svg>
+      </div>
+      <div class="qt-title" data-i18n="tileUscisTitle">USCIS wizard</div>
+      <div class="qt-sub" data-i18n="tileUscisSub">Generate immigration PDFs</div>
+    </button>
+
     <button class="qt" type="button" onclick="quickUpload()" aria-label="Upload documents">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -705,6 +727,25 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
   </div>
 </div>
 
+<!-- ===== Authenticated USCIS forms wizard ===== -->
+<div class="sc-overlay hidden" id="uscis-overlay" onclick="if(event.target===this) closeUscisWizard()">
+  <div class="sc-modal" role="dialog" aria-modal="true" aria-labelledby="uscis-title">
+    <div class="sc-head">
+      <div>
+        <h3 id="uscis-title" data-i18n="uscisWizardTitle">USCIS forms wizard</h3>
+        <p data-i18n="uscisWizardSubtitle">Choose an official USCIS form, complete the account-only wizard, and download a draft PDF.</p>
+      </div>
+      <button class="sc-close" type="button" aria-label="Close" onclick="closeUscisWizard()">×</button>
+    </div>
+    <div class="sc-progress" id="uscis-progress"></div>
+    <div class="sc-body" id="uscis-body"></div>
+    <div class="sc-footer">
+      <button type="button" id="uscis-back" onclick="uscisBack()" data-i18n="scBack">Back</button>
+      <button class="primary" type="button" id="uscis-next" onclick="uscisNext()" data-i18n="scNext">Next</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== Notifications dropdown ===== -->
 <div class="notif-overlay" id="notif-overlay" onclick="if(event.target===this) closeNotifications()">
   <div class="notif-panel" role="dialog" aria-modal="true" aria-labelledby="notif-title">
@@ -767,6 +808,7 @@ const STRINGS = {
     tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
     tileScTitle: 'Small Claims wizard', tileScSub: 'Prepare California court forms',
     tileFlTitle: 'Family Law wizard', tileFlSub: 'Divorce, custody & support forms',
+    tileUscisTitle: 'USCIS wizard', tileUscisSub: 'Generate immigration PDFs',
     tileHelpTitle: 'Help & FAQ', tileHelpSub: 'What is a California LDA?',
     ppTitle: 'Your profile',
     ppKeyName: 'Name', ppKeyPhone: 'Phone', ppKeyEmail: 'Email', ppKeyLegal: 'Legal name',
@@ -794,6 +836,23 @@ const STRINGS = {
     uscisAttention: 'Needs attention:',
     uscisUnknown: 'Unknown expiration dates',
     uscisOfficialNote: 'Official USCIS pages are still the source of truth before filing.',
+    uscisWizardTitle: 'USCIS forms wizard',
+    uscisWizardSubtitle: 'Choose an official USCIS form, complete the account-only wizard, and download a draft PDF.',
+    uscisChooseWizardForm: 'Choose a USCIS form',
+    uscisTopForms: 'Most used forms',
+    uscisAllForms: 'All preparable USCIS forms',
+    uscisSearchPh: 'Search by code or name',
+    uscisPreparable: 'Preparable',
+    uscisNotPreparable: 'Template missing',
+    uscisLoadFail: 'Could not load the USCIS wizard. Please try again.',
+    uscisNoMatches: 'No matching USCIS forms found.',
+    uscisNoVisibleFields: 'This step has no visible fields based on your answers.',
+    uscisGenerate: 'Generate USCIS PDF',
+    uscisGeneratingPdf: 'Preparing your USCIS PDF…',
+    uscisReadyPdf: 'Your USCIS draft is ready, downloaded, and saved to My documents.',
+    uscisFields: 'wizard fields',
+    uscisDisclaimer: 'USCIS forms must be filed using current official instructions. Imverica prepares documents at your direction and does not provide legal advice. Review every field before filing.',
+    uscisOfficial: 'Official USCIS page',
     scTitle: 'California Small Claims wizard',
     scTitleFamily: 'California Family Law wizard',
     scSubtitle: 'Choose your task, complete the official form fields, and download an editable draft.',
@@ -881,6 +940,7 @@ const STRINGS = {
     tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
     tileScTitle: 'Small Claims мастер', tileScSub: 'Формы суда малых исков California',
     tileFlTitle: 'Мастер семейного права', tileFlSub: 'Развод, опека, алименты',
+    tileUscisTitle: 'USCIS мастер', tileUscisSub: 'Генерация immigration PDF',
     tileHelpTitle: 'Помощь и FAQ', tileHelpSub: 'Кто такой California LDA?',
     ppTitle: 'Ваш профиль',
     ppKeyName: 'Имя', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Имя как в ID',
@@ -908,6 +968,23 @@ const STRINGS = {
     uscisAttention: 'Требует внимания:',
     uscisUnknown: 'Неизвестные даты окончания',
     uscisOfficialNote: 'Перед подачей официальный сайт USCIS остаётся источником истины.',
+    uscisWizardTitle: 'Мастер USCIS форм',
+    uscisWizardSubtitle: 'Выберите официальную USCIS форму, заполните мастер в личном кабинете и скачайте PDF-черновик.',
+    uscisChooseWizardForm: 'Выберите USCIS форму',
+    uscisTopForms: 'Самые частые формы',
+    uscisAllForms: 'Все USCIS формы, доступные для подготовки',
+    uscisSearchPh: 'Поиск по коду или названию',
+    uscisPreparable: 'Готовится',
+    uscisNotPreparable: 'Нет шаблона',
+    uscisLoadFail: 'Не удалось загрузить USCIS мастер. Попробуйте ещё раз.',
+    uscisNoMatches: 'Подходящих USCIS форм не найдено.',
+    uscisNoVisibleFields: 'На этом шаге нет видимых полей с учетом ваших ответов.',
+    uscisGenerate: 'Сгенерировать USCIS PDF',
+    uscisGeneratingPdf: 'Готовим USCIS PDF…',
+    uscisReadyPdf: 'USCIS черновик готов, скачан и сохранён в Мои документы.',
+    uscisFields: 'полей мастера',
+    uscisDisclaimer: 'USCIS формы нужно подавать по актуальным официальным инструкциям. Imverica готовит документы по вашим указаниям и не даёт юридических консультаций. Проверьте каждое поле перед подачей.',
+    uscisOfficial: 'Официальная страница USCIS',
     scTitle: 'Мастер California Small Claims',
     scTitleFamily: 'Мастер семейного права California',
     scSubtitle: 'Выберите задачу, заполните официальные поля и скачайте редактируемый черновик.',
@@ -995,6 +1072,7 @@ const STRINGS = {
     tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
     tileScTitle: 'Small Claims майстер', tileScSub: 'Форми суду малих позовів California',
     tileFlTitle: 'Майстер сімейного права', tileFlSub: 'Розлучення, опіка, аліменти',
+    tileUscisTitle: 'USCIS майстер', tileUscisSub: 'Генерація immigration PDF',
     tileHelpTitle: 'Допомога і FAQ', tileHelpSub: 'Хто такий California LDA?',
     ppTitle: 'Ваш профіль',
     ppKeyName: 'Ім\'я', ppKeyPhone: 'Телефон', ppKeyEmail: 'Email', ppKeyLegal: 'Ім\'я як в ID',
@@ -1022,6 +1100,23 @@ const STRINGS = {
     uscisAttention: 'Потребує уваги:',
     uscisUnknown: 'Невідомі дати закінчення',
     uscisOfficialNote: 'Перед поданням офіційний сайт USCIS залишається джерелом істини.',
+    uscisWizardTitle: 'Майстер USCIS форм',
+    uscisWizardSubtitle: 'Оберіть офіційну USCIS форму, заповніть майстер в особистому кабінеті та завантажте PDF-чернетку.',
+    uscisChooseWizardForm: 'Оберіть USCIS форму',
+    uscisTopForms: 'Найчастіші форми',
+    uscisAllForms: 'Усі USCIS форми, доступні для підготовки',
+    uscisSearchPh: 'Пошук за кодом або назвою',
+    uscisPreparable: 'Готується',
+    uscisNotPreparable: 'Немає шаблону',
+    uscisLoadFail: 'Не вдалося завантажити USCIS майстер. Спробуйте ще раз.',
+    uscisNoMatches: 'Відповідних USCIS форм не знайдено.',
+    uscisNoVisibleFields: 'На цьому кроці немає видимих полів з урахуванням ваших відповідей.',
+    uscisGenerate: 'Створити USCIS PDF',
+    uscisGeneratingPdf: 'Готуємо USCIS PDF…',
+    uscisReadyPdf: 'USCIS чернетка готова, завантажена й збережена в Мої документи.',
+    uscisFields: 'полів майстра',
+    uscisDisclaimer: 'USCIS форми потрібно подавати за актуальними офіційними інструкціями. Imverica готує документи за вашими вказівками й не надає юридичних консультацій. Перевірте кожне поле перед поданням.',
+    uscisOfficial: 'Офіційна сторінка USCIS',
     scTitle: 'Майстер California Small Claims',
     scTitleFamily: 'Майстер сімейного права California',
     scSubtitle: 'Оберіть завдання, заповніть офіційні поля та завантажте редагований чернетку.',
@@ -1109,6 +1204,7 @@ const STRINGS = {
     tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
     tileScTitle: 'Asistente Small Claims', tileScSub: 'Prepare formularios judiciales de California',
     tileFlTitle: 'Asistente de Derecho Familiar', tileFlSub: 'Divorcio, custodia y manutención',
+    tileUscisTitle: 'Asistente USCIS', tileUscisSub: 'Generar PDFs migratorios',
     tileHelpTitle: 'Ayuda y FAQ', tileHelpSub: '¿Qué es un California LDA?',
     ppTitle: 'Su perfil',
     ppKeyName: 'Nombre', ppKeyPhone: 'Teléfono', ppKeyEmail: 'Email', ppKeyLegal: 'Nombre legal',
@@ -1136,6 +1232,23 @@ const STRINGS = {
     uscisAttention: 'Requiere atención:',
     uscisUnknown: 'Fechas de vencimiento desconocidas',
     uscisOfficialNote: 'Antes de presentar, el sitio oficial de USCIS sigue siendo la fuente de verdad.',
+    uscisWizardTitle: 'Asistente de formularios USCIS',
+    uscisWizardSubtitle: 'Elija un formulario oficial de USCIS, complete el asistente de cuenta y descargue un borrador PDF.',
+    uscisChooseWizardForm: 'Elija un formulario USCIS',
+    uscisTopForms: 'Formularios más usados',
+    uscisAllForms: 'Todos los formularios USCIS preparables',
+    uscisSearchPh: 'Buscar por código o nombre',
+    uscisPreparable: 'Preparable',
+    uscisNotPreparable: 'Falta plantilla',
+    uscisLoadFail: 'No se pudo cargar el asistente USCIS. Inténtelo de nuevo.',
+    uscisNoMatches: 'No se encontraron formularios USCIS coincidentes.',
+    uscisNoVisibleFields: 'Este paso no tiene campos visibles según sus respuestas.',
+    uscisGenerate: 'Generar PDF USCIS',
+    uscisGeneratingPdf: 'Preparando su PDF USCIS…',
+    uscisReadyPdf: 'Su borrador USCIS está listo, descargado y guardado en Mis documentos.',
+    uscisFields: 'campos del asistente',
+    uscisDisclaimer: 'Los formularios USCIS deben presentarse con las instrucciones oficiales vigentes. Imverica prepara documentos según sus instrucciones y no brinda asesoría legal. Revise cada campo antes de presentar.',
+    uscisOfficial: 'Página oficial USCIS',
     scTitle: 'Asistente de California Small Claims',
     scTitleFamily: 'Asistente de Derecho Familiar de California',
     scSubtitle: 'Elija su tarea, complete los campos oficiales y descargue un borrador editable.',
@@ -1614,6 +1727,7 @@ async function loadDashboard(){
   show('step-dash');
   startChat();
   maybeOpenSmallClaimsFromUrl();
+  maybeOpenUscisFromUrl();
 }
 
 // Faster variant for the just-saved case — uses the profile object returned
@@ -1634,6 +1748,7 @@ async function loadDashboardWithProfile(profile){
     show('step-dash');
     startChat();
     maybeOpenSmallClaimsFromUrl();
+    maybeOpenUscisFromUrl();
   } catch (e) {
     // Fall through to the canonical path if anything blows up here.
     loadDashboard();
@@ -2137,6 +2252,509 @@ function maybeOpenSmallClaimsFromUrl(){
   smallClaimsState.openedFromUrl = true;
   const cat = open === 'family-law' ? 'family-law' : '';
   setTimeout(function(){ openSmallClaimsWizard(cat); }, 100);
+}
+
+/* ===== USCIS cabinet wizard ===== */
+const USCIS_PRIORITY_CODES = ['I-589','I-765','I-485','I-130','N-400','I-131','I-90','I-751','I-864','I-912'];
+const uscisWizardState = {
+  catalog: null,
+  stage: 'catalog',
+  form: null,
+  schema: null,
+  pageIndex: 0,
+  values: {},
+  filter: '',
+  openedFromUrl: false,
+  requestedFormOpened: false
+};
+
+function setUscisFooter(backVisible, nextVisible, nextLabel){
+  const back = document.getElementById('uscis-back');
+  const next = document.getElementById('uscis-next');
+  back.classList.toggle('hidden', !backVisible);
+  next.classList.toggle('hidden', !nextVisible);
+  next.disabled = false;
+  next.textContent = nextLabel || T.scNext;
+}
+function setUscisProgress(text){
+  document.getElementById('uscis-progress').textContent = text || '';
+}
+function setUscisStatus(kind, text){
+  const status = document.getElementById('uscis-status');
+  if (!status) return;
+  status.className = 'sc-status ' + kind;
+  status.textContent = text;
+}
+function uscisOptionValue(option){
+  if (option && typeof option === 'object') return String(option.value || option.label || '');
+  return String(option || '');
+}
+function uscisOptionLabel(option){
+  if (option && typeof option === 'object') return String(option.label || option.value || '');
+  return String(option || '');
+}
+function uscisOptionSelected(option, value){
+  const ov = uscisOptionValue(option);
+  const ol = uscisOptionLabel(option);
+  const v = String(value || '');
+  if (ov === v || ol === v) return true;
+  const code = ov.match(/^([A-Z]{2})\s+-\s+/);
+  return Boolean(code && code[1] === v.toUpperCase());
+}
+function renderUscisOptions(options, value){
+  return (Array.isArray(options) ? options : []).map(function(option){
+    return '<option value="' + scAttr(uscisOptionValue(option)) + '"' + (uscisOptionSelected(option, value) ? ' selected' : '') + '>' + escText(uscisOptionLabel(option)) + '</option>';
+  }).join('');
+}
+function uscisValue(id, fallback){
+  if (Object.prototype.hasOwnProperty.call(uscisWizardState.values, id)) return uscisWizardState.values[id];
+  return fallback || '';
+}
+function uscisConditionMet(condition){
+  if (!condition || !condition.id) return true;
+  const value = uscisWizardState.values[condition.id];
+  if (Object.prototype.hasOwnProperty.call(condition, 'equals')) return String(value || '') === String(condition.equals || '');
+  if (Array.isArray(condition.in)) return condition.in.map(String).includes(String(value || ''));
+  if (Object.prototype.hasOwnProperty.call(condition, 'gte')) return Number(value || 0) >= Number(condition.gte);
+  return true;
+}
+function uscisFieldVisible(field){
+  if (Array.isArray(field.showWhen) && !field.showWhen.every(uscisConditionMet)) return false;
+  if (Array.isArray(field.showWhenAny) && !field.showWhenAny.some(uscisConditionMet)) return false;
+  return true;
+}
+function visibleUscisFields(step){
+  return ((step && step.fields) || []).filter(uscisFieldVisible);
+}
+function nextVisibleUscisStep(startIndex, direction){
+  const steps = (uscisWizardState.schema && uscisWizardState.schema.steps) || [];
+  for (let i = startIndex; i >= 0 && i < steps.length; i += direction) {
+    if (visibleUscisFields(steps[i]).length) return i;
+  }
+  return -1;
+}
+
+function requestedUscisFormFromUrl(){
+  return String(new URLSearchParams(window.location.search).get('form') || '').trim().toUpperCase();
+}
+
+function chooseRequestedUscisFormFromUrl(){
+  if (uscisWizardState.requestedFormOpened) return false;
+  const code = requestedUscisFormFromUrl();
+  if (!code || !uscisWizardState.catalog) return false;
+  const form = (uscisWizardState.catalog.forms || []).find(function(item){ return item.code === code && item.preparable; });
+  if (!form) return false;
+  uscisWizardState.requestedFormOpened = true;
+  setTimeout(function(){ chooseUscisForm(code); }, 0);
+  return true;
+}
+
+async function openUscisWizard(){
+  const overlay = document.getElementById('uscis-overlay');
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  if (uscisWizardState.catalog) {
+    renderUscisCatalog();
+    chooseRequestedUscisFormFromUrl();
+    return;
+  }
+  setUscisProgress(T.uscisChooseWizardForm);
+  setUscisFooter(false, false);
+  document.getElementById('uscis-body').innerHTML = '<div class="sc-intro">' + escText(T.uscisDisclaimer) + '</div><div class="md-empty">' + escText(T.mdLoading) + '</div>';
+  try {
+    const response = await fetch('/api/uscis-flow-catalog', { credentials:'include', headers:{Accept:'application/json'} });
+    if (response.status === 401) {
+      closeUscisWizard();
+      show('step-email');
+      return;
+    }
+    const data = await response.json();
+    if (!response.ok || !data.ok || !Array.isArray(data.forms)) throw new Error(data.error || 'load failed');
+    uscisWizardState.catalog = data;
+    renderUscisCatalog();
+    chooseRequestedUscisFormFromUrl();
+  } catch(e) {
+    document.getElementById('uscis-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.uscisLoadFail) + '</div>';
+  }
+}
+
+function closeUscisWizard(){
+  document.getElementById('uscis-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function filterUscisForms(value){
+  uscisWizardState.filter = String(value || '').trim().toLowerCase();
+  renderUscisCatalog();
+  setTimeout(function(){
+    const input = document.querySelector('#uscis-body .uscis-search');
+    if (input) {
+      input.focus();
+      const end = input.value.length;
+      try { input.setSelectionRange(end, end); } catch(e) {}
+    }
+  }, 0);
+}
+
+function renderUscisFormCard(form){
+  const disabled = !form.preparable;
+  const statusClass = form.expirationStatus === 'expired' ? 'bad' : (form.expirationStatus === 'expires-soon' ? 'court' : 'prepare');
+  const onclick = disabled ? '' : ' onclick="chooseUscisForm(\'' + scAttr(form.code) + '\')"';
+  return '<button class="sc-choice' + (disabled ? ' disabled' : '') + '" type="button"' + onclick + (disabled ? ' disabled' : '') + '>' +
+    '<div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill ' + statusClass + '">' + escText(form.expirationStatus || 'unknown') + '</span><span class="sc-pill ' + (form.preparable ? 'prepare' : 'bad') + '">' + escText(form.preparable ? T.uscisPreparable : T.uscisNotPreparable) + '</span></div>' +
+    '<div class="sc-choice-title">' + escText(form.title || form.code) + '</div>' +
+    '<div class="sc-choice-sub">' + escText(form.description || '') + (form.expirationDate ? ' · Exp. ' + escText(form.expirationDate) : '') + '</div>' +
+  '</button>';
+}
+
+function renderUscisCatalog(){
+  uscisWizardState.stage = 'catalog';
+  uscisWizardState.form = null;
+  uscisWizardState.schema = null;
+  uscisWizardState.values = {};
+  setUscisProgress(T.uscisChooseWizardForm);
+  setUscisFooter(false, false);
+  const catalog = uscisWizardState.catalog || { forms: [], counts: {} };
+  const filter = uscisWizardState.filter;
+  const forms = (catalog.forms || []).filter(function(form){
+    if (!filter) return true;
+    return (form.code + ' ' + form.title + ' ' + (form.description || '')).toLowerCase().includes(filter);
+  });
+  const topForms = forms.filter(function(form){ return form.preparable && USCIS_PRIORITY_CODES.includes(form.code); });
+  const allForms = forms.filter(function(form){ return form.preparable && !USCIS_PRIORITY_CODES.includes(form.code); });
+  const blocked = forms.filter(function(form){ return !form.preparable; });
+  const stats = catalog.counts || {};
+  let html = '<div class="sc-intro">' + escText(T.uscisDisclaimer) + '</div>' +
+    '<div class="sc-choice-meta"><span class="sc-pill prepare">' + escText(String(stats.preparable || 0)) + ' ' + escText(T.uscisPreparable) + '</span><span class="sc-pill">' + escText(String(stats.total || 0)) + ' USCIS</span></div>' +
+    '<div class="uscis-list-head"><h4>' + escText(T.uscisTopForms) + '</h4><input class="uscis-search" type="search" oninput="filterUscisForms(this.value)" value="' + scAttr(uscisWizardState.filter) + '" placeholder="' + scAttr(T.uscisSearchPh) + '"></div>';
+  if (!forms.length) {
+    html += '<div class="md-empty">' + escText(T.uscisNoMatches) + '</div>';
+  } else {
+    if (topForms.length) html += '<div class="sc-grid">' + topForms.map(renderUscisFormCard).join('') + '</div>';
+    html += '<div class="uscis-list-head"><h4>' + escText(T.uscisAllForms) + '</h4></div>';
+    html += '<div class="sc-grid">' + allForms.concat(blocked).map(renderUscisFormCard).join('') + '</div>';
+  }
+  document.getElementById('uscis-body').innerHTML = html;
+}
+
+async function chooseUscisForm(code){
+  const form = ((uscisWizardState.catalog && uscisWizardState.catalog.forms) || []).find(function(item){ return item.code === code; });
+  if (!form || !form.preparable) return;
+  uscisWizardState.form = form;
+  uscisWizardState.values = {};
+  uscisWizardState.stage = 'loading';
+  setUscisProgress(form.code + ' · ' + form.title);
+  setUscisFooter(true, false);
+  document.getElementById('uscis-body').innerHTML = '<div class="md-empty">' + escText(T.mdLoading) + '</div>';
+  try {
+    const response = await fetch('/api/immigration-flow?code=' + encodeURIComponent(form.code) + '&lang=' + encodeURIComponent(CURRENT_LANG), { credentials:'include', headers:{Accept:'application/json'} });
+    const data = await response.json();
+    if (!response.ok || !data.ok || !Array.isArray(data.steps)) throw new Error(data.error || 'load failed');
+    uscisWizardState.schema = data;
+    uscisWizardState.pageIndex = nextVisibleUscisStep(0, 1);
+    uscisWizardState.stage = 'fields';
+    renderUscisFields();
+  } catch(e) {
+    uscisWizardState.stage = 'catalog';
+    document.getElementById('uscis-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.uscisLoadFail) + '</div>';
+    setUscisFooter(true, false);
+  }
+}
+
+function renderUscisFields(){
+  const schema = uscisWizardState.schema;
+  const step = schema && schema.steps && schema.steps[uscisWizardState.pageIndex];
+  if (!step) {
+    document.getElementById('uscis-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.uscisNoVisibleFields) + '</div>';
+    setUscisFooter(true, false);
+    return;
+  }
+  const fields = visibleUscisFields(step);
+  const totalFields = (schema.steps || []).reduce(function(sum, item){ return sum + ((item.fields || []).length); }, 0);
+  setUscisProgress(uscisWizardState.form.code + ' · ' + step.title + ' · ' + totalFields + ' ' + T.uscisFields);
+  setUscisFooter(true, true, nextVisibleUscisStep(uscisWizardState.pageIndex + 1, 1) === -1 ? T.uscisGenerate : T.scNext);
+  document.getElementById('uscis-body').innerHTML =
+    '<div class="sc-intro">' + escText(step.help || T.uscisDisclaimer) + '</div>' +
+    '<div class="sc-fields">' + (fields.length ? fields.map(renderUscisField).join('') : '<div class="md-empty">' + escText(T.uscisNoVisibleFields) + '</div>') + '</div>' +
+    '<div class="sc-status" id="uscis-status"></div>';
+}
+
+function renderUscisHelp(field){
+  return field.help ? '<div class="sc-field-help">' + escText(field.help) + '</div>' : '';
+}
+function renderUscisFieldLabel(field){
+  return escText(field.label || field.id) + (field.required ? ' *' : '');
+}
+function uscisInputType(field){
+  if (field.type === 'date') return 'date';
+  if (field.type === 'email') return 'email';
+  if (field.type === 'number') return 'number';
+  return 'text';
+}
+function renderUscisField(field){
+  if (field.type === 'addressBlock') return renderUscisAddressBlock(field);
+  if (field.type === 'phone') return renderUscisPhone(field);
+  if (field.type === 'addressHistory' || field.type === 'employmentHistory' || field.type === 'travelHistory') return renderUscisHistory(field);
+  if (field.type === 'checkboxes') return renderUscisCheckboxes(field);
+  if (field.type === 'radio') return renderUscisRadio(field);
+  if (field.type === 'select') {
+    const saved = uscisValue(field.id, field.value);
+    return '<div class="sc-field"><label>' + renderUscisFieldLabel(field) + '</label><select data-uscis-field="' + scAttr(field.id) + '"><option value=""></option>' + renderUscisOptions(field.options || [], saved) + '</select>' + renderUscisHelp(field) + '</div>';
+  }
+  if (field.type === 'textarea') {
+    const saved = uscisValue(field.id, field.value);
+    return '<div class="sc-field full"><label>' + renderUscisFieldLabel(field) + '</label><textarea data-uscis-field="' + scAttr(field.id) + '"' + (field.rows ? ' rows="' + Number(field.rows) + '"' : '') + (field.maxLength ? ' maxlength="' + Number(field.maxLength) + '"' : '') + '>' + escText(saved || '') + '</textarea>' + renderUscisHelp(field) + '</div>';
+  }
+  const saved = uscisValue(field.id, field.value);
+  return '<div class="sc-field"><label>' + renderUscisFieldLabel(field) + '</label><input type="' + uscisInputType(field) + '" data-uscis-field="' + scAttr(field.id) + '" value="' + scAttr(saved || '') + '"' + (field.placeholder ? ' placeholder="' + scAttr(field.placeholder) + '"' : '') + (field.maxLength ? ' maxlength="' + Number(field.maxLength) + '"' : '') + (field.inputmode ? ' inputmode="' + scAttr(field.inputmode) + '"' : '') + (field.autocomplete ? ' autocomplete="' + scAttr(field.autocomplete) + '"' : '') + '>' + renderUscisHelp(field) + '</div>';
+}
+
+function renderUscisRadio(field){
+  const saved = String(uscisValue(field.id, field.value) || '');
+  return '<div class="sc-fieldset" data-uscis-radio-group="' + scAttr(field.id) + '"><div class="sc-fieldset-title">' + renderUscisFieldLabel(field) + '</div><div class="sc-check-list">' +
+    (field.options || []).map(function(option){
+      const value = uscisOptionValue(option);
+      return '<label class="sc-check"><input type="radio" name="uscis_' + scAttr(field.id) + '" value="' + scAttr(value) + '"' + (value === saved ? ' checked' : '') + '><span>' + escText(uscisOptionLabel(option)) + '</span></label>';
+    }).join('') +
+    '</div>' + renderUscisHelp(field) + '</div>';
+}
+
+function renderUscisCheckboxes(field){
+  const saved = uscisValue(field.id, field.value);
+  const selected = Array.isArray(saved) ? saved.map(String) : String(saved || '').split(/[,;\n]+/).map(function(v){ return v.trim(); }).filter(Boolean);
+  return '<div class="sc-fieldset" data-uscis-checkbox-group="' + scAttr(field.id) + '"><div class="sc-fieldset-title">' + renderUscisFieldLabel(field) + '</div><div class="sc-check-list">' +
+    (field.options || []).map(function(option){
+      const value = uscisOptionValue(option);
+      return '<label class="sc-check"><input type="checkbox" value="' + scAttr(value) + '"' + (selected.includes(value) ? ' checked' : '') + '><span>' + escText(uscisOptionLabel(option)) + '</span></label>';
+    }).join('') +
+    '</div>' + renderUscisHelp(field) + '</div>';
+}
+
+function renderUscisPhone(field){
+  const saved = uscisValue(field.id, field.value);
+  const phone = (saved && typeof saved === 'object') ? saved : { countryCode: field.countryCodeDefault || '+1', areaCode: '', number: '' };
+  return '<div class="sc-fieldset" data-uscis-phone-group="' + scAttr(field.id) + '"><div class="sc-fieldset-title">' + renderUscisFieldLabel(field) + '</div>' +
+    '<div class="sc-phone-grid">' +
+      '<div class="sc-field"><label>Country</label><input type="text" data-uscis-phone-part="countryCode" value="' + scAttr(phone.countryCode || '+1') + '"></div>' +
+      '<div class="sc-field"><label>Area code</label><input type="text" data-uscis-phone-part="areaCode" inputmode="numeric" value="' + scAttr(phone.areaCode || '') + '"></div>' +
+      '<div class="sc-field full"><label>Number</label><input type="text" data-uscis-phone-part="number" inputmode="numeric" value="' + scAttr(phone.number || '') + '"></div>' +
+    '</div>' + renderUscisHelp(field) + '</div>';
+}
+
+function renderUscisAddressBlock(field){
+  const parts = field.parts || {};
+  const current = uscisValue(field.id, {});
+  function partValue(part){
+    const key = parts[part];
+    if (key && Object.prototype.hasOwnProperty.call(uscisWizardState.values, key)) return uscisWizardState.values[key];
+    if (current && typeof current === 'object' && current[part]) return current[part];
+    if (part === 'country') return field.countryDefault || 'United States';
+    return '';
+  }
+  function input(part, label, wide){
+    const key = parts[part] || '';
+    return '<div class="sc-field' + (wide ? ' wide' : '') + '"><label>' + escText(label) + '</label><input type="text" data-uscis-address-part="' + scAttr(part) + '" data-uscis-address-key="' + scAttr(key) + '" value="' + scAttr(partValue(part)) + '"></div>';
+  }
+  return '<div class="sc-fieldset" data-uscis-address-block="' + scAttr(field.id) + '"><div class="sc-fieldset-title">' + renderUscisFieldLabel(field) + '</div><div class="sc-address-grid">' +
+    input('line1', 'Street address', true) +
+    input('line2', 'Apt / suite / unit', false) +
+    input('city', 'City', false) +
+    '<div class="sc-field"><label>State</label><select data-uscis-address-part="state" data-uscis-address-key="' + scAttr(parts.state || '') + '"><option value=""></option>' + renderUscisOptions(field.stateOptions || [], partValue('state')) + '</select></div>' +
+    input('zip', 'ZIP', false) +
+    '<div class="sc-field wide"><label>Country</label><select data-uscis-address-part="country" data-uscis-address-key="' + scAttr(parts.country || '') + '"><option value=""></option>' + renderUscisOptions(field.countryOptions || [], partValue('country')) + '</select></div>' +
+    '</div>' + renderUscisHelp(field) + '</div>';
+}
+
+function uscisHistoryRows(field){
+  const rows = uscisValue(field.id, []);
+  if (Array.isArray(rows) && rows.length) return rows;
+  return [{}];
+}
+function renderUscisHistory(field){
+  const rows = uscisHistoryRows(field);
+  const kind = field.type === 'travelHistory' ? 'travel' : (field.type === 'employmentHistory' ? 'employment' : 'address');
+  return '<div class="sc-fieldset" data-uscis-history="' + scAttr(field.id) + '" data-uscis-history-kind="' + kind + '"><div class="sc-fieldset-title">' + renderUscisFieldLabel(field) + '</div>' +
+    rows.map(function(row, index){ return renderUscisHistoryRow(field, row || {}, index, kind, rows.length); }).join('') +
+    '<button type="button" class="doc-add" onclick="addUscisHistoryRow(\'' + scAttr(field.id) + '\')">+ Add entry</button>' +
+    renderUscisHelp(field) + '</div>';
+}
+function renderUscisHistoryRow(field, row, index, kind, count){
+  function text(part, label, wide, type){
+    return '<div class="sc-field' + (wide ? ' wide' : '') + '"><label>' + escText(label) + '</label><input type="' + (type || 'text') + '" data-uscis-history-part="' + scAttr(part) + '" value="' + scAttr(row[part] || '') + '"></div>';
+  }
+  function select(part, label, options, value, wide){
+    return '<div class="sc-field' + (wide ? ' wide' : '') + '"><label>' + escText(label) + '</label><select data-uscis-history-part="' + scAttr(part) + '"><option value=""></option>' + renderUscisOptions(options || [], value || '') + '</select></div>';
+  }
+  let fields = text('from', 'From', false, 'date') + text('to', 'To', false, 'date');
+  if (kind === 'travel') {
+    fields += select('country', 'Country', field.countryOptions || [], row.country, true) + text('days', 'Days', false, 'number');
+  } else if (kind === 'employment') {
+    fields += text('name', 'Employer / school / activity', true) + text('occupation', 'Occupation', false) + text('line1', 'Street address', true) + text('city', 'City', false) + select('state', 'State', field.stateOptions || [], row.state, false) + text('zip', 'ZIP', false) + select('country', 'Country', field.countryOptions || [], row.country || 'United States', true);
+  } else {
+    fields += text('line1', 'Street address', true) + text('line2', 'Apt / suite / unit', false) + text('city', 'City', false) + select('state', 'State', field.stateOptions || [], row.state, false) + text('zip', 'ZIP', false) + select('country', 'Country', field.countryOptions || [], row.country || 'United States', true);
+  }
+  return '<div class="sc-history-entry" data-uscis-history-index="' + index + '"><h4>Entry ' + (index + 1) + (count > 1 ? ' <button type="button" class="notif-mark" onclick="removeUscisHistoryRow(\'' + scAttr(field.id) + '\',' + index + ')">Remove</button>' : '') + '</h4><div class="sc-history-grid">' + fields + '</div></div>';
+}
+
+function addUscisHistoryRow(fieldId){
+  collectUscisPage();
+  const rows = Array.isArray(uscisWizardState.values[fieldId]) ? uscisWizardState.values[fieldId] : [];
+  rows.push({});
+  uscisWizardState.values[fieldId] = rows;
+  renderUscisFields();
+}
+function removeUscisHistoryRow(fieldId, index){
+  collectUscisPage();
+  const rows = Array.isArray(uscisWizardState.values[fieldId]) ? uscisWizardState.values[fieldId] : [];
+  rows.splice(index, 1);
+  uscisWizardState.values[fieldId] = rows.length ? rows : [{}];
+  renderUscisFields();
+}
+
+function collectUscisPage(){
+  document.querySelectorAll('#uscis-body [data-uscis-field]').forEach(function(input){
+    const key = input.getAttribute('data-uscis-field');
+    const value = String(input.value || '').trim();
+    if (value) uscisWizardState.values[key] = value;
+    else delete uscisWizardState.values[key];
+  });
+  document.querySelectorAll('#uscis-body [data-uscis-radio-group]').forEach(function(group){
+    const key = group.getAttribute('data-uscis-radio-group');
+    const selected = group.querySelector('input[type=radio]:checked');
+    if (selected) uscisWizardState.values[key] = selected.value;
+    else delete uscisWizardState.values[key];
+  });
+  document.querySelectorAll('#uscis-body [data-uscis-checkbox-group]').forEach(function(group){
+    const key = group.getAttribute('data-uscis-checkbox-group');
+    const values = Array.prototype.slice.call(group.querySelectorAll('input[type=checkbox]:checked')).map(function(item){ return item.value; });
+    if (values.length) uscisWizardState.values[key] = values;
+    else delete uscisWizardState.values[key];
+  });
+  document.querySelectorAll('#uscis-body [data-uscis-phone-group]').forEach(function(group){
+    const key = group.getAttribute('data-uscis-phone-group');
+    const phone = {};
+    group.querySelectorAll('[data-uscis-phone-part]').forEach(function(input){ phone[input.getAttribute('data-uscis-phone-part')] = String(input.value || '').trim(); });
+    if (phone.countryCode || phone.areaCode || phone.number) uscisWizardState.values[key] = phone;
+    else delete uscisWizardState.values[key];
+  });
+  document.querySelectorAll('#uscis-body [data-uscis-address-block]').forEach(function(block){
+    const key = block.getAttribute('data-uscis-address-block');
+    const address = {};
+    block.querySelectorAll('[data-uscis-address-part]').forEach(function(input){
+      const part = input.getAttribute('data-uscis-address-part');
+      const partKey = input.getAttribute('data-uscis-address-key');
+      const value = String(input.value || '').trim();
+      address[part] = value;
+      if (partKey) {
+        if (value) uscisWizardState.values[partKey] = value;
+        else delete uscisWizardState.values[partKey];
+      }
+    });
+    if (Object.values(address).some(Boolean)) uscisWizardState.values[key] = address;
+    else delete uscisWizardState.values[key];
+  });
+  document.querySelectorAll('#uscis-body [data-uscis-history]').forEach(function(group){
+    const key = group.getAttribute('data-uscis-history');
+    const rows = Array.prototype.slice.call(group.querySelectorAll('[data-uscis-history-index]')).map(function(row){
+      const item = {};
+      row.querySelectorAll('[data-uscis-history-part]').forEach(function(input){
+        item[input.getAttribute('data-uscis-history-part')] = String(input.value || '').trim();
+      });
+      return item;
+    }).filter(function(row){ return Object.values(row).some(Boolean); });
+    if (rows.length) uscisWizardState.values[key] = rows;
+    else delete uscisWizardState.values[key];
+  });
+}
+
+function uscisBack(){
+  if (uscisWizardState.stage === 'fields') {
+    collectUscisPage();
+    const prev = nextVisibleUscisStep(uscisWizardState.pageIndex - 1, -1);
+    if (prev >= 0) {
+      uscisWizardState.pageIndex = prev;
+      renderUscisFields();
+    } else {
+      renderUscisCatalog();
+    }
+    return;
+  }
+  renderUscisCatalog();
+}
+
+function uscisNext(){
+  if (uscisWizardState.stage !== 'fields') return;
+  collectUscisPage();
+  const next = nextVisibleUscisStep(uscisWizardState.pageIndex + 1, 1);
+  if (next >= 0) {
+    uscisWizardState.pageIndex = next;
+    renderUscisFields();
+  } else {
+    generateUscisPdf();
+  }
+}
+
+async function generateUscisPdf(){
+  const next = document.getElementById('uscis-next');
+  next.disabled = true;
+  next.textContent = T.uscisGeneratingPdf;
+  setUscisStatus('info', T.uscisGeneratingPdf);
+  try {
+    const profileName = currentProfile ? [currentProfile.firstName, currentProfile.lastName].filter(Boolean).join(' ') : '';
+    const response = await fetch('/api/generate-uscis-pdf', {
+      method:'POST',
+      credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        formCode: uscisWizardState.form.code,
+        formAnswers: uscisWizardState.values,
+        contact: {
+          name: profileName,
+          phone: currentProfile ? (currentProfile.phone || '') : '',
+          email: currentSessionEmail || ''
+        }
+      })
+    });
+    if (response.status === 401) {
+      closeUscisWizard();
+      show('step-email');
+      return;
+    }
+    if (!response.ok) {
+      const data = await response.json().catch(function(){ return {}; });
+      throw new Error(data.error || T.uscisLoadFail);
+    }
+    const blob = await response.blob();
+    const fileName = uscisWizardState.form.code + '-uscis-draft.pdf';
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    await saveGeneratedDraft(blob, {
+      name: fileName,
+      formCode: uscisWizardState.form.code,
+      title: uscisWizardState.form.title || '',
+      category: 'uscis'
+    });
+    setUscisStatus('ok', T.uscisReadyPdf);
+  } catch(e) {
+    setUscisStatus('error', e.message || T.uscisLoadFail);
+  } finally {
+    next.disabled = false;
+    next.textContent = T.uscisGenerate;
+  }
+}
+
+function maybeOpenUscisFromUrl(){
+  if (uscisWizardState.openedFromUrl) return;
+  const open = new URLSearchParams(window.location.search).get('open');
+  if (open !== 'uscis' && open !== 'uscis-forms') return;
+  uscisWizardState.openedFromUrl = true;
+  setTimeout(function(){ openUscisWizard(); }, 100);
 }
 
 /* ===== Notifications dropdown ===== */

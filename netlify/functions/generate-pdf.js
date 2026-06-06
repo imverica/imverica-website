@@ -99,6 +99,17 @@ exports.handler = async function(event) {
       };
     }
 
+    if (event.internalPdfRender !== true) {
+      return {
+        statusCode: 403,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ok: false,
+          error: "USCIS PDF generation is available only inside the signed-in account wizard."
+        })
+      };
+    }
+
     // PDF rendering = expensive (CPU + memory + compute minutes burn).
     // Public endpoint, same abuse-guard pattern as /api/pdf-draft.
     const originReject = originGuard(event);

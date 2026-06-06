@@ -46,11 +46,11 @@ includes('.intake-option input{position:absolute;opacity:0;pointer-events:none;}
 includes('function optionValue(option)', 'canonical option value helper');
 includes('function optionLabel(option)', 'localized option label helper');
 includes('renderSelectOptions(options, value)', 'state dropdown selection renderer');
-includes('pdfDraftEndpoint', 'PDF draft endpoint binding');
-includes('pdfDraftEndpoints', 'PDF draft endpoint fallback binding');
-includes('data-generate-pdf-draft', 'PDF draft button binding');
-includes("['I-765', 'I-485']", 'I-765 and I-485 PDF draft support');
-includes("link.download = 'imverica-' + formCode.toLowerCase() + '-draft.pdf';", 'form-specific PDF draft filename');
+includes('canOpenAccountUscisWizard', 'USCIS account wizard eligibility helper');
+includes('accountUscisWizardUrl', 'USCIS account wizard URL helper');
+includes('data-open-uscis-account', 'USCIS account wizard button binding');
+assert(!html.includes('/.netlify/functions/generate-pdf'), 'public intake must not call direct USCIS PDF generation');
+assert(!html.includes('data-generate-pdf-draft'), 'public intake must not expose direct USCIS PDF draft button');
 includes('function validateBaseStep()', 'base intake step validation');
 includes('state.step === 1 && !state.service', 'service step cannot advance without category');
 includes('state.step === 2 && !state.formCode && !state.situation', 'details step cannot advance without form or situation');

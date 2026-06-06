@@ -365,10 +365,10 @@ export function initIntakeWizard(): void {
       reviewPackage: 'Possible package',
       reviewAnswers: 'Answers collected',
       reviewContact: 'Contact',
-      generateDraft: 'Generate I-765 draft PDF',
-      generatingDraft: 'Generating draft PDF...',
-      draftReady: 'I-765 draft PDF generated. Review before filing.',
-      draftError: 'Could not generate the I-765 draft PDF yet. Check the required fields or call us.',
+      generateDraft: 'Open USCIS wizard in account',
+      generatingDraft: 'Opening account wizard...',
+      draftReady: 'USCIS wizard opened in your account.',
+      draftError: 'Open your account to generate USCIS draft PDFs securely.',
       telegram: 'Telegram',
       callOffice: 'Call +1 (916) 399-3992',
       close: 'Close',
@@ -472,10 +472,10 @@ export function initIntakeWizard(): void {
       reviewPackage: 'Возможный пакет',
       reviewAnswers: 'Собранные ответы',
       reviewContact: 'Контакт',
-      generateDraft: 'Сгенерировать черновик PDF I-765',
-      generatingDraft: 'Генерируем черновик PDF...',
-      draftReady: 'Черновик PDF I-765 сгенерирован. Проверьте перед подачей.',
-      draftError: 'Пока не удалось сгенерировать черновик PDF I-765. Проверьте обязательные поля или свяжитесь с нами.',
+      generateDraft: 'Открыть USCIS wizard в кабинете',
+      generatingDraft: 'Открываем личный кабинет...',
+      draftReady: 'USCIS wizard открыт в кабинете.',
+      draftError: 'Откройте личный кабинет, чтобы безопасно генерировать USCIS PDF.',
       telegram: 'Telegram',
       callOffice: 'Позвонить +1 (916) 399-3992',
       close: 'Закрыть',
@@ -579,10 +579,10 @@ export function initIntakeWizard(): void {
       reviewPackage: 'Можливий пакет',
       reviewAnswers: 'Зібрані відповіді',
       reviewContact: 'Контакт',
-      generateDraft: 'Згенерувати чернетку PDF I-765',
-      generatingDraft: 'Генеруємо чернетку PDF...',
-      draftReady: 'Чернетку PDF I-765 згенеровано. Перевірте перед поданням.',
-      draftError: 'Поки не вдалося згенерувати чернетку PDF I-765. Перевірте обов’язкові поля або зв’яжіться з нами.',
+      generateDraft: 'Відкрити USCIS wizard у кабінеті',
+      generatingDraft: 'Відкриваємо кабінет...',
+      draftReady: 'USCIS wizard відкрито в кабінеті.',
+      draftError: 'Відкрийте кабінет, щоб безпечно генерувати USCIS PDF.',
       telegram: 'Telegram',
       callOffice: 'Зателефонувати +1 (916) 399-3992',
       close: 'Закрити',
@@ -686,10 +686,10 @@ export function initIntakeWizard(): void {
       reviewPackage: 'Paquete posible',
       reviewAnswers: 'Respuestas recopiladas',
       reviewContact: 'Contacto',
-      generateDraft: 'Generar borrador PDF I-765',
-      generatingDraft: 'Generando borrador PDF...',
-      draftReady: 'Borrador PDF I-765 generado. Revíselo antes de presentar.',
-      draftError: 'Todavía no se pudo generar el borrador PDF I-765. Revise los campos requeridos o llámenos.',
+      generateDraft: 'Abrir wizard USCIS en portal',
+      generatingDraft: 'Abriendo el portal...',
+      draftReady: 'Wizard USCIS abierto en su portal.',
+      draftError: 'Abra el portal para generar PDF USCIS de forma segura.',
       telegram: 'Telegram',
       callOffice: 'Llamar +1 (916) 399-3992',
       close: 'Cerrar',
@@ -844,25 +844,25 @@ export function initIntakeWizard(): void {
     }).join('');
   }
 
-  // Forms whose wizard question-flow is verified to feed their pdf-map well
-  // (>=10 fields filled, 0 skips) — see scripts/qa-uscis-flow-coverage.js.
-  // Only coverage-verified forms get the draft button so a client never
-  // receives a near-empty PDF. Expand only after the coverage gate passes.
-  function canGeneratePdfDraft(formCode) {
-    return ['I-485', 'I-765', 'N-400', 'I-751', 'I-90', 'I-539', 'I-864', 'I-130', 'I-131']
-      .indexOf(normalizeFormCode(formCode)) !== -1;
+  function canOpenAccountUscisWizard(formCode) {
+    return /^(I|N|G)-[0-9A-Z]/.test(normalizeFormCode(formCode));
   }
 
-  function draftFormText(text) {
+  function accountWizardText(text) {
     var code = normalizeFormCode(state.formCode);
-    return String(text || '').replace(/I-765/g, code || 'PDF');
+    return String(text || '').replace(/USCIS/g, code || 'USCIS');
+  }
+
+  function accountUscisWizardUrl() {
+    var code = normalizeFormCode(state.formCode);
+    return '/account.html?open=uscis' + (code ? '&form=' + encodeURIComponent(code) : '');
   }
 
   function renderCompleted() {
     var copy = t();
-    var canGenerateDraft = canGeneratePdfDraft(state.formCode);
-    var draftAction = canGenerateDraft
-      ? '<button type="button" class="dark" data-generate-pdf-draft>' + esc(draftFormText(copy.generateDraft)) + '</button><div id="intakeDraftStatus" class="intake-draft-status"></div>'
+    var canOpenWizard = canOpenAccountUscisWizard(state.formCode);
+    var draftAction = canOpenWizard
+      ? '<button type="button" class="dark" data-open-uscis-account>' + esc(accountWizardText(copy.generateDraft)) + '</button>'
       : '';
     progress.style.width = '100%';
     backBtn.style.display = 'none';
@@ -2013,22 +2013,6 @@ export function initIntakeWizard(): void {
     return usesFilePreview() ? 'https://imverica.com/.netlify/functions/intake' : '/.netlify/functions/intake';
   }
 
-  function pdfDraftEndpoint() {
-    return pdfDraftEndpoints()[0];
-  }
-
-  function pdfDraftEndpoints() {
-    var path = '/.netlify/functions/generate-pdf';
-    var localHost = window.location.protocol === 'file:' ||
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname === 'localhost';
-    var endpoints = [];
-    if (window.location.protocol === 'file:') endpoints.push('http://127.0.0.1:8888' + path);
-    else endpoints.push(path);
-    if (localHost) endpoints.push('https://imverica.com' + path);
-    return endpoints;
-  }
-
   async function submitIntake(payload) {
     var response = await fetch(intakeEndpoint(), {
       method: 'POST',
@@ -2043,70 +2027,6 @@ export function initIntakeWizard(): void {
       throw new Error(data.error || 'Could not save intake');
     }
     return data;
-  }
-
-  async function generatePdfDraft() {
-    captureStep();
-    var copy = t();
-    var button = card.querySelector('[data-generate-pdf-draft]');
-    var status = document.getElementById('intakeDraftStatus');
-    var formCode = normalizeFormCode(state.formCode);
-    if (!button || !canGeneratePdfDraft(formCode)) return;
-    if (status) {
-      status.className = 'intake-draft-status';
-      status.textContent = draftFormText(copy.generatingDraft);
-    }
-    button.disabled = true;
-    button.textContent = draftFormText(copy.generatingDraft);
-    var payload = Object.assign({}, state.savedPayload || {}, {
-      formCode: state.formCode,
-      formAnswers: state.formAnswers,
-      contact: state.contact,
-      officialForm: state.officialForm || (state.savedPayload && state.savedPayload.officialForm) || null,
-      orderId: state.orderId || (state.savedPayload && state.savedPayload.orderId) || ''
-    });
-    try {
-      var response = null;
-      var endpoints = pdfDraftEndpoints();
-      for (var i = 0; i < endpoints.length; i += 1) {
-        try {
-          response = await fetch(endpoints[i], {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/pdf, application/json' },
-            body: JSON.stringify(payload)
-          });
-          if (response.ok || i === endpoints.length - 1) break;
-        } catch (endpointErr) {
-          if (i === endpoints.length - 1) throw endpointErr;
-        }
-      }
-      if (!response.ok) {
-        var errorData = {};
-        try { errorData = await response.json(); } catch (err) {}
-        throw new Error(errorData.error || copy.draftError);
-      }
-      var blob = await response.blob();
-      var url = URL.createObjectURL(blob);
-      var link = document.createElement('a');
-      link.href = url;
-      link.download = 'imverica-' + formCode.toLowerCase() + '-draft.pdf';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
-      if (status) {
-        status.className = 'intake-draft-status ok';
-        status.textContent = draftFormText(copy.draftReady);
-      }
-    } catch (err) {
-      if (status) {
-        status.className = 'intake-draft-status error';
-        status.textContent = draftFormText(copy.draftError);
-      }
-    } finally {
-      button.disabled = false;
-      button.textContent = draftFormText(copy.generateDraft);
-    }
   }
 
   async function saveIntake() {
@@ -2178,7 +2098,7 @@ export function initIntakeWizard(): void {
 
   card.addEventListener('click', async function (event) {
     var addressSuggestion = event.target.closest('[data-address-suggestion-index]');
-    var pdfDraft = event.target.closest('[data-generate-pdf-draft]');
+    var accountWizard = event.target.closest('[data-open-uscis-account]');
     var addHistoryRow = event.target.closest('[data-add-history-row]');
     var removeHistoryRow = event.target.closest('[data-remove-history-row]');
     var addTravelRow = event.target.closest('[data-add-travel-row]');
@@ -2186,8 +2106,8 @@ export function initIntakeWizard(): void {
     var lang = event.target.closest('[data-intake-lang]');
     var service = event.target.closest('[data-service]');
     var account = event.target.closest('[data-account-mode]');
-    if (pdfDraft) {
-      await generatePdfDraft();
+    if (accountWizard) {
+      window.location.href = accountUscisWizardUrl();
       return;
     }
     if (addressSuggestion) {

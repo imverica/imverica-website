@@ -77,7 +77,7 @@ async function generatePdfBuffer(record, override) {
     answers: record.formAnswers || {}
   };
   const generate = require('./generate-pdf').handler;
-  const res = await generate({ httpMethod: 'POST', headers: {}, body: JSON.stringify(payload) });
+  const res = await generate({ httpMethod: 'POST', headers: {}, body: JSON.stringify(payload), internalPdfRender: true });
   if (res.statusCode !== 200 || !res.isBase64Encoded) {
     let msg = 'PDF generation failed';
     try { msg = JSON.parse(res.body).error || msg; } catch { /* keep */ }

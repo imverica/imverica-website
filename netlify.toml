@@ -26,6 +26,12 @@ included_files = [
   "overlay-maps/normalized/**"
 ]
 
+[functions."generate-uscis-pdf"]
+included_files = [
+  "assets/form-cache/pdfs/**",
+  "overlay-maps/normalized/**"
+]
+
 [functions."prepare-doc"]
 included_files = [
   "assets/form-cache/pdfs/**",
@@ -160,6 +166,16 @@ included_files = [
 [[redirects]]
   from = "/api/generated-documents"
   to = "/.netlify/functions/generated-documents"
+  status = 200
+
+[[redirects]]
+  from = "/api/uscis-flow-catalog"
+  to = "/.netlify/functions/uscis-flow-catalog"
+  status = 200
+
+[[redirects]]
+  from = "/api/generate-uscis-pdf"
+  to = "/.netlify/functions/generate-uscis-pdf"
   status = 200
 
 [[redirects]]
