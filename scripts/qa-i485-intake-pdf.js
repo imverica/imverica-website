@@ -23,8 +23,10 @@ const formAnswers = {
   country_of_birth: 'Ukraine',
   country_of_citizenship: 'Ukraine',
   sex: 'Female',
+  other_dob_used: 'No',
   marital_status: 'Divorced',
   alien_number: 'A208924970',
+  has_prior_alien_number: 'No',
   uscis_online_account_number: '123456789012',
 
   mailing_address_line1: '15 164 ST SW',
@@ -166,10 +168,17 @@ const values = i485FieldValues(payload);
 const overlays = i485TextOverlays(payload);
 
 assert(Object.keys(values).length >= 175, `expected at least 175 fields from frontend I-485 intake, got ${Object.keys(values).length}`);
-assert(overlays.length >= 7, `expected at least 7 text overlays from frontend I-485 intake, got ${overlays.length}`);
+assertEqual(overlays.length, 0, 'current frontend I-485 intake should not require synthetic overlays');
 
 assertEqual(values['Pt1Line1_FamilyName[0]'], 'Hovdan', 'applicant family name');
+assertEqual(values['Pt1Line3_YN[1]'], true, 'other date of birth no checkbox');
+assertEqual(values['Pt1Line4_YN[0]'], true, 'has A-number yes checkbox');
+assertEqual(values['Pt1Line4_YN[1]'], false, 'has A-number no checkbox');
+assertEqual(values['Pt1Line5_YN[1]'], true, 'prior A-number no checkbox');
 assertEqual(values['Pt1Line6_CB_Sex[0]'], true, 'female checkbox');
+assertEqual(values['Pt1Line10_NonImmDate[0]'], 'N/A', 'N/A visa issue date when visa number is N/A');
+assertEqual(values['Pt2Line11_CB[1]'], true, 'paroled checkbox uses current PDF value 1');
+assertEqual(values['Pt2Line11_CB[2]'], false, 'without admission/parole checkbox should not be selected for parole');
 assertEqual(values['Pt6Line1_MaritalStatus[0]'], true, 'divorced checkbox uses PDF value 0');
 assertEqual(values['P1Line12_I94[0]'], '77692068933', 'I-94 number');
 assertEqual(values['Pt1Line10_CityTown[0]'], 'San Ysidro', 'place entry city split');
@@ -185,7 +194,8 @@ assertEqual(values['Pt7Line5_Eyecolor[2]'], true, 'brown eye color checkbox');
 assertEqual(values['Pt7Line6_Haircolor[3]'], true, 'brown hair color checkbox');
 assertEqual(values['Pt9Line10_YesNo[0]'], true, 'Part 9 No maps to PDF no option');
 assertEqual(values['Pt9Line10_YesNo[1]'], false, 'Part 9 No unsets yes option');
-assertEqual(values['Pt9Line63_YesNo[1]'], true, 'Part 9 Yes maps to PDF yes option');
+assertEqual(values['Pt9Line63_YesNo[0]'], true, 'Part 9 Yes maps to PDF yes option');
+assertEqual(values['Pt9Line63_YesNo[1]'], false, 'Part 9 Yes unsets no option');
 
 const inputPdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf'));
 const result = incrementalFillPdf(inputPdf, values, overlays);

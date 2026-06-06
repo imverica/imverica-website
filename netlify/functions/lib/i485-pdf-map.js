@@ -185,20 +185,21 @@ function hairColorFields(value) {
   return result;
 }
 
-// Part 1, Line 11 admission basis
-// Pt2Line11_CB (prefix is Pt2 in form XML despite being Part 1 content):
-// [0]=Immigrant, [1]=Nonimmigrant, [2]=Parolee, [3]=Other
+// Part 1, Line 11 admission basis.
+// The PDF field prefix is Pt2 despite this being Part 1 content:
+// [0]=admitted after inspection, [1]=paroled, [2]=without admission/parole, [3]=other.
 function admissionBasisFields(value) {
   const text = clean(value, 120).toLowerCase();
-  if (/nonimmigrant|non-immigrant/.test(text)) {
+  if (/parol/.test(text)) {
     return { 'Pt2Line11_CB[0]': false, 'Pt2Line11_CB[1]': true, 'Pt2Line11_CB[2]': false, 'Pt2Line11_CB[3]': false };
   }
-  if (/parol/.test(text)) {
+  if (/without.*(admission|parole)|no admission|entered without|ewi/.test(text)) {
     return { 'Pt2Line11_CB[0]': false, 'Pt2Line11_CB[1]': false, 'Pt2Line11_CB[2]': true, 'Pt2Line11_CB[3]': false };
   }
-  if (/immigrant/.test(text)) {
+  if (/admitted|inspected|nonimmigrant|non-immigrant|immigrant|visitor|student|worker|exchange|b-?2|f-?1|j-?1|h-?1b/.test(text)) {
     return { 'Pt2Line11_CB[0]': true, 'Pt2Line11_CB[1]': false, 'Pt2Line11_CB[2]': false, 'Pt2Line11_CB[3]': false };
   }
+  if (text) return { 'Pt2Line11_CB[0]': false, 'Pt2Line11_CB[1]': false, 'Pt2Line11_CB[2]': false, 'Pt2Line11_CB[3]': true };
   return {};
 }
 
@@ -357,6 +358,10 @@ function isPresentExactValue(value) {
   return value !== undefined && value !== null && exactText(value, 1000) !== '';
 }
 
+function firstPresentValue(...values) {
+  return values.find(isPresentExactValue) ?? '';
+}
+
 function exactSelectedValue(key, rawValue) {
   const text = exactText(rawValue, 80);
   const lower = text.toLowerCase();
@@ -365,6 +370,126 @@ function exactSelectedValue(key, rawValue) {
     if (['no', 'n', 'нет', 'ні', 'false'].includes(lower)) return '0';
   }
   return text;
+}
+
+function checkboxIndex(value, yesIndex = 0, noIndex = 1) {
+  const text = exactText(value, 80).toLowerCase();
+  if (['yes', 'y', 'да', 'так', 'sí', 'si', 'true'].includes(text)) return yesIndex;
+  if (['no', 'n', 'нет', 'ні', 'false'].includes(text)) return noIndex;
+  if (/^\d+$/.test(text)) return Number(text);
+  return -1;
+}
+
+function checkboxGroupByIndex(value, fieldPrefix, optionCount, yesIndex = 0, noIndex = 1) {
+  const selected = checkboxIndex(value, yesIndex, noIndex);
+  if (selected < 0 || selected >= optionCount) return {};
+  const result = {};
+  for (let i = 0; i < optionCount; i += 1) result[`${fieldPrefix}[${i}]`] = i === selected;
+  return result;
+}
+
+const PDF_CHECKBOX_OPTIONS_BY_BASE = NORMALIZED_FIELDS.reduce((map, field) => {
+  if (!['checkbox', 'radio'].includes(field?.kind)) return map;
+  for (const name of originalFieldNames(field)) {
+    const match = name.match(/^(.+)\[(\d+)\]$/);
+    if (!match) continue;
+    const base = match[1];
+    const index = Number(match[2]);
+    const options = map.get(base) || [];
+    options[index] = {
+      name,
+      index,
+      x: Number(field.x || 0),
+      key: field.key || ''
+    };
+    map.set(base, options);
+  }
+  return map;
+}, new Map());
+
+function checkboxGroupFromPdfBase(value, fieldPrefix, fallbackCount = 2) {
+  const options = PDF_CHECKBOX_OPTIONS_BY_BASE.get(fieldPrefix);
+  if (!options?.length) return checkboxGroupByIndex(value, fieldPrefix, fallbackCount);
+
+  const text = exactText(value, 80).toLowerCase();
+  let selected = /^\d+$/.test(text) ? Number(text) : -1;
+
+  if (selected < 0 && ['yes', 'y', 'да', 'так', 'sí', 'si', 'true'].includes(text)) {
+    selected = options
+      .filter(Boolean)
+      .reduce((leftmost, option) => (!leftmost || option.x < leftmost.x ? option : leftmost), null)?.index ?? -1;
+  }
+
+  if (selected < 0 && ['no', 'n', 'нет', 'ні', 'false'].includes(text)) {
+    selected = options
+      .filter(Boolean)
+      .reduce((rightmost, option) => (!rightmost || option.x > rightmost.x ? option : rightmost), null)?.index ?? -1;
+  }
+
+  if (selected < 0) return {};
+  const result = {};
+  const count = Math.max(fallbackCount, options.length);
+  for (let i = 0; i < count; i += 1) {
+    const name = options[i]?.name || `${fieldPrefix}[${i}]`;
+    result[name] = i === selected;
+  }
+  return result;
+}
+
+function legacyPdfBaseForAnswerKey(key) {
+  if (key === 'a_YesNo') return 'Pt8Line42\\.a_YesNo';
+  if (key === 'b_YesNo') return 'Pt8Line42\\.b_YesNo';
+  return key;
+}
+
+function legacyExactI485Values(answers = {}) {
+  const result = {};
+  const aNumber = firstPresentValue(answers.alien_number, answers.AlienNumber, answers.Pt1Line4_AlienNumber);
+  const aDigits = digits(aNumber, 9);
+
+  if (aDigits) {
+    result['Pt1Line4_AlienNumber[0]'] = aDigits;
+    Object.assign(result, checkboxGroupFromPdfBase(0, 'Pt1Line4_YN', 2));
+  }
+
+  if (isPresentExactValue(answers.Pt1Line3_YN)) {
+    Object.assign(result, checkboxGroupFromPdfBase(answers.Pt1Line3_YN, 'Pt1Line3_YN', 2));
+  }
+
+  if (isPresentExactValue(answers.Pt1Line5_YN)) {
+    Object.assign(result, checkboxGroupFromPdfBase(answers.Pt1Line5_YN, 'Pt1Line5_YN', 2));
+  }
+
+  if (isPresentExactValue(answers.Pt1Line6_CB_Sex)) {
+    Object.assign(result, checkboxGroupByIndex(answers.Pt1Line6_CB_Sex, 'Pt1Line6_CB_Sex', 2));
+  }
+
+  if (isPresentExactValue(answers.Pt2Line11_CB)) {
+    Object.assign(result, checkboxGroupByIndex(answers.Pt2Line11_CB, 'Pt2Line11_CB', 4));
+  }
+
+  for (const [key, rawValue] of Object.entries(answers)) {
+    if (!isPresentExactValue(rawValue)) continue;
+    const base = legacyPdfBaseForAnswerKey(key);
+    if (!/(?:_YN|_YesNo|YesNo)$/.test(base)) continue;
+    if (!PDF_CHECKBOX_OPTIONS_BY_BASE.has(base)) continue;
+    Object.assign(result, checkboxGroupFromPdfBase(rawValue, base, 2));
+  }
+
+  const visaNumber = firstPresentValue(answers.visa_number, answers.Pt1Line10_VisaNum);
+  const visaIssueDate = firstPresentValue(
+    answers.nonimmigrant_visa_issue_date,
+    answers.date_nonimmigrant_visa_issued,
+    answers.visa_issue_date,
+    answers.Pt1Line10_NonImmDate
+  );
+  if (isPresentExactValue(visaIssueDate)) {
+    result['Pt1Line10_NonImmDate[0]'] = dateMdY(visaIssueDate);
+  } else if (/^(n\/?a|not applicable)$/i.test(clean(visaNumber, 40))) {
+    result['Pt1Line10_NonImmDate[0]'] = 'N/A';
+  }
+
+  return result;
 }
 
 const EXACT_PHONE_KEYS = new Set([
@@ -468,11 +593,29 @@ function i485TextOverlays(payload = {}) {
 function i485FieldValues(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
   const exactValues = exactScenarioFieldValues(answers);
+  const legacyValues = legacyExactI485Values(answers);
   const contact = payload.contact || {};
   const phone = usPhonePdf(answers.daytime_phone || contact.phone);
   const mobile = usPhonePdf(answers.mobile_phone || answers.daytime_phone || contact.phone);
   const email = clean(answers.email_address || contact.email, 180);
-  const alienNum = digits(answers.alien_number, 9);
+  const alienNum = digits(firstPresentValue(answers.alien_number, answers.AlienNumber, answers.Pt1Line4_AlienNumber), 9);
+  const visaNumber = firstPresentValue(answers.visa_number, answers.Pt1Line10_VisaNum);
+  const visaIssueDate = firstPresentValue(
+    answers.nonimmigrant_visa_issue_date,
+    answers.date_nonimmigrant_visa_issued,
+    answers.visa_issue_date,
+    answers.Pt1Line10_NonImmDate
+  );
+  const visaIssueDateForPdf = isPresentExactValue(visaIssueDate)
+    ? dateMdY(visaIssueDate)
+    : (/^(n\/?a|not applicable)$/i.test(clean(visaNumber, 40)) ? 'N/A' : '');
+  const admissionBasis = firstPresentValue(
+    answers.admission_basis,
+    answers.Pt1Line11_Paroled ? 'paroled' : '',
+    answers.Pt1Line11_Admitted ? 'admitted' : '',
+    answers.Pt1Line11_Other ? 'other' : '',
+    answers.status_at_last_entry
+  );
   const priorPetition = yesNo(answers.petition_previously_filed);
   const hasSsn = yesNo(answers.has_ssn);
   const otherDob = yesNo(answers.other_dob_used);
@@ -529,11 +672,11 @@ function i485FieldValues(payload = {}) {
     'Pt1Line10_PassportNum[0]': clean(answers.passport_number, 20),
     'Pt1Line10_ExpDate[0]': dateMdY(answers.passport_expiration),
     'Pt1Line10_Passport[0]': clean(answers.passport_country_of_issuance, 60),
-    'Pt1Line10_VisaNum[0]': clean(answers.visa_number, 20),
+    'Pt1Line10_VisaNum[0]': clean(visaNumber, 20),
     'Pt1Line10_CityTown[0]': clean(answers.port_of_entry_city || placeEntry.city, 60),
     'Pt1Line10_State[0]': stateCode(answers.port_of_entry_state || placeEntry.state),
     'Pt1Line10_DateofArrival[0]': dateMdY(answers.date_of_arrival || answers.last_arrival_date),
-    'Pt1Line10_NonImmDate[0]': clean(answers.status_expiration_date, 20),
+    'Pt1Line10_NonImmDate[0]': visaIssueDateForPdf,
 
     // Admission basis and status at entry
     'Pt1Line11_Admitted[0]': clean(answers.status_at_last_entry, 40),
@@ -652,7 +795,7 @@ function i485FieldValues(payload = {}) {
     'Pt12Line5_PreparerEmail[0]': clean(answers.preparer_email, 180),
 
     // Repeating A-number header on all pages
-    ...alienNumberFields(answers.alien_number),
+    ...alienNumberFields(alienNum),
 
     // Composite field groups
     ...sexFields(answers.sex),
@@ -661,7 +804,7 @@ function i485FieldValues(payload = {}) {
     ...raceFields(answers.race),
     ...eyeColorFields(answers.eye_color),
     ...hairColorFields(answers.hair_color),
-    ...admissionBasisFields(answers.admission_basis || answers.status_at_last_entry),
+    ...admissionBasisFields(admissionBasis),
     ...eligibilityFields(answers.eligibility_basis),
     ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', priorMarriageEndTypeValue(answers.prior_spouse_marriage_end_type), 4),
     ...checkboxPair(sameAddress5yrs, 'Pt1Line18_last5yrs_YN[0]', 'Pt1Line18_last5yrs_YN[1]'),
@@ -677,7 +820,7 @@ function i485FieldValues(payload = {}) {
       .filter(([, value]) => value !== undefined && value !== null && value !== '')
   );
 
-  return { ...semanticValues, ...exactValues };
+  return { ...semanticValues, ...exactValues, ...legacyValues };
 }
 
 module.exports = { i485FieldValues, i485TextOverlays, dateMdY, usPhonePdf };

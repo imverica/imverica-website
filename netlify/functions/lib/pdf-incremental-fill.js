@@ -496,22 +496,176 @@ function combAppearanceContent(text, width, height, fontSize, y, maxLength) {
 
 function normalizeFieldBodyStrings(body, object, encryption) {
   if (!encryption) return body;
-  return body.replace(/(\((?:\\.|[^\\)])*\)|(?<!<)<(?!<)[^>]*>(?!>))/g, (token) => {
-    const value = decodePdfString(token, object.decryptString);
-    return encryptedStringToken(encryption, object.objectNumber, object.generation, value);
-  });
+  let output = '';
+  let index = 0;
+
+  while (index < body.length) {
+    if (body.startsWith('<<', index) || body.startsWith('>>', index)) {
+      output += body.slice(index, index + 2);
+      index += 2;
+      continue;
+    }
+
+    if (body[index] === '(') {
+      const end = skipPdfLiteralString(body, index);
+      const token = body.slice(index, end);
+      const value = decodePdfString(token, object.decryptString);
+      output += encryptedStringToken(encryption, object.objectNumber, object.generation, value);
+      index = end;
+      continue;
+    }
+
+    if (body[index] === '<' && body[index + 1] !== '<') {
+      const end = skipPdfHexString(body, index);
+      const token = body.slice(index, end);
+      const value = decodePdfString(token, object.decryptString);
+      output += encryptedStringToken(encryption, object.objectNumber, object.generation, value);
+      index = end;
+      continue;
+    }
+
+    output += body[index];
+    index += 1;
+  }
+
+  return output;
+}
+
+function isPdfWhitespace(char) {
+  return /[\s\0]/.test(char || '');
+}
+
+function isPdfDelimiter(char) {
+  return !char || /[\s<>()\[\]{}%/]/.test(char);
+}
+
+function skipPdfWhitespace(text, index) {
+  let i = index;
+  while (i < text.length && isPdfWhitespace(text[i])) i += 1;
+  return i;
+}
+
+function skipPdfLiteralString(text, index) {
+  let i = index + 1;
+  let depth = 1;
+  while (i < text.length && depth > 0) {
+    const char = text[i];
+    if (char === '\\') {
+      i += 2;
+      continue;
+    }
+    if (char === '(') depth += 1;
+    else if (char === ')') depth -= 1;
+    i += 1;
+  }
+  return i;
+}
+
+function skipPdfHexString(text, index) {
+  const end = text.indexOf('>', index + 1);
+  return end < 0 ? text.length : end + 1;
+}
+
+function skipPdfName(text, index) {
+  let i = index + 1;
+  while (i < text.length && !isPdfDelimiter(text[i])) i += 1;
+  return i;
+}
+
+function skipPdfArray(text, index) {
+  let i = index + 1;
+  let depth = 1;
+  while (i < text.length && depth > 0) {
+    if (text[i] === '(') i = skipPdfLiteralString(text, i);
+    else if (text[i] === '<' && text[i + 1] !== '<') i = skipPdfHexString(text, i);
+    else if (text[i] === '<' && text[i + 1] === '<') i = skipPdfDictionary(text, i);
+    else if (text[i] === '[') {
+      depth += 1;
+      i += 1;
+    } else if (text[i] === ']') {
+      depth -= 1;
+      i += 1;
+    } else {
+      i += 1;
+    }
+  }
+  return i;
+}
+
+function skipPdfDictionary(text, index) {
+  let i = index + 2;
+  let depth = 1;
+  while (i < text.length && depth > 0) {
+    if (text[i] === '(') i = skipPdfLiteralString(text, i);
+    else if (text[i] === '<' && text[i + 1] !== '<') i = skipPdfHexString(text, i);
+    else if (text[i] === '<' && text[i + 1] === '<') {
+      depth += 1;
+      i += 2;
+    } else if (text[i] === '>' && text[i + 1] === '>') {
+      depth -= 1;
+      i += 2;
+    } else if (text[i] === '[') {
+      i = skipPdfArray(text, i);
+    } else {
+      i += 1;
+    }
+  }
+  return i;
+}
+
+function skipPdfSimpleToken(text, index) {
+  let i = index;
+  while (i < text.length && !isPdfDelimiter(text[i])) i += 1;
+  const first = text.slice(index, i);
+  const secondStart = skipPdfWhitespace(text, i);
+  let j = secondStart;
+  while (j < text.length && !isPdfDelimiter(text[j])) j += 1;
+  const second = text.slice(secondStart, j);
+  const thirdStart = skipPdfWhitespace(text, j);
+  if (/^\d+$/.test(first) && /^\d+$/.test(second) && text[thirdStart] === 'R') {
+    return thirdStart + 1;
+  }
+  return i;
+}
+
+function skipPdfValue(text, index) {
+  const i = skipPdfWhitespace(text, index);
+  if (text.startsWith('<<', i)) return skipPdfDictionary(text, i);
+  if (text[i] === '[') return skipPdfArray(text, i);
+  if (text[i] === '(') return skipPdfLiteralString(text, i);
+  if (text[i] === '<') return skipPdfHexString(text, i);
+  if (text[i] === '/') return skipPdfName(text, i);
+  return skipPdfSimpleToken(text, i);
 }
 
 function removeDictionaryEntry(body, key) {
-  return body
-    .replace(new RegExp(`\\/${key}\\s+(?:\\((?:\\\\.|[^\\\\)])*\\)|<[^>]*>|\\/[^\\s<>()\\[\\]{}%]+|\\d+\\s+\\d+\\s+R)`, 'g'), '')
-    .replace(/\s+>>\s*$/, ' >>');
+  const token = `/${key}`;
+  let output = '';
+  let index = 0;
+
+  while (index < body.length) {
+    const found = body.indexOf(token, index);
+    if (found < 0) {
+      output += body.slice(index);
+      break;
+    }
+
+    const afterKey = found + token.length;
+    if (!isPdfDelimiter(body[afterKey])) {
+      output += body.slice(index, afterKey);
+      index = afterKey;
+      continue;
+    }
+
+    output += body.slice(index, found);
+    index = skipPdfValue(body, afterKey);
+  }
+
+  return output.replace(/\s+>>\s*$/, ' >>');
 }
 
 function removeDictionaryArrayEntry(body, key) {
-  return body
-    .replace(new RegExp(`\\/${key}\\s*\\[[\\s\\S]*?\\]\\s*`, 'g'), '')
-    .replace(/\s+>>\s*$/, ' >>');
+  return removeDictionaryEntry(body, key);
 }
 
 function addDictionaryEntries(body, entries) {
@@ -523,7 +677,8 @@ function addDictionaryEntries(body, entries) {
 }
 
 function updateTextFieldBody(object, value, encryption, appearanceObjectNumber) {
-  let body = normalizeFieldBodyStrings(object.body, object, encryption);
+  let body = removeDictionaryEntry(object.body, 'TU');
+  body = normalizeFieldBodyStrings(body, object, encryption);
   body = removeDictionaryEntry(body, 'V');
   body = removeDictionaryEntry(body, 'AP');
   return addDictionaryEntries(body, {
@@ -538,7 +693,8 @@ function updateChoiceFieldBody(object, value, encryption, appearanceObjectNumber
 
 function updateButtonFieldBody(object, checked, encryption) {
   const state = checked ? (object.appearanceStates[0] || 'Yes') : 'Off';
-  let body = normalizeFieldBodyStrings(object.body, object, encryption);
+  let body = removeDictionaryEntry(object.body, 'TU');
+  body = normalizeFieldBodyStrings(body, object, encryption);
   body = removeDictionaryEntry(body, 'V');
   body = removeDictionaryEntry(body, 'AS');
   return addDictionaryEntries(body, {
