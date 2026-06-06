@@ -2545,6 +2545,51 @@ function collectUscisPage(){
   });
 }
 
+function uscisIsFilled(value){
+  if (Array.isArray(value)) return value.length > 0;
+  if (value && typeof value === 'object') return Object.values(value).some(uscisIsFilled);
+  return String(value || '').trim() !== '';
+}
+function uscisRequiredHistoryValid(field, rows){
+  if (!field.required) return true;
+  if (!Array.isArray(rows) || !rows.length) return false;
+  const kind = field.type === 'employmentHistory' ? 'employment' : (field.type === 'travelHistory' ? 'travel' : 'address');
+  return rows.some(function(row){
+    if (!row || typeof row !== 'object') return false;
+    if (kind === 'employment') return Boolean(row.from && row.name && row.occupation && row.country);
+    if (kind === 'travel') return Boolean(row.from && row.to && row.country);
+    return Boolean(row.from && row.line1 && row.city && row.country);
+  });
+}
+function uscisRequiredAddressValid(field, address){
+  if (!field.required) return true;
+  const value = address && typeof address === 'object' ? address : {};
+  const parts = Array.isArray(field.requiredParts) ? field.requiredParts : ['line1', 'city', 'country'];
+  return parts.every(function(part){ return String(value[part] || '').trim(); });
+}
+function validateUscisCurrentPage(){
+  const schema = uscisWizardState.schema;
+  const step = schema && schema.steps && schema.steps[uscisWizardState.pageIndex];
+  const fields = visibleUscisFields(step);
+  for (const field of fields) {
+    if (!field.required) continue;
+    const value = uscisWizardState.values[field.id];
+    if (field.type === 'addressBlock' && !uscisRequiredAddressValid(field, value)) {
+      setUscisStatus('error', 'Complete required address fields: ' + (field.label || field.id));
+      return false;
+    }
+    if ((field.type === 'addressHistory' || field.type === 'employmentHistory' || field.type === 'travelHistory') && !uscisRequiredHistoryValid(field, value)) {
+      setUscisStatus('error', 'Complete at least one full required history entry: ' + (field.label || field.id));
+      return false;
+    }
+    if (!uscisIsFilled(value)) {
+      setUscisStatus('error', 'Complete required field: ' + (field.label || field.id));
+      return false;
+    }
+  }
+  return true;
+}
+
 function uscisBack(){
   if (uscisWizardState.stage === 'fields') {
     collectUscisPage();
@@ -2563,6 +2608,7 @@ function uscisBack(){
 function uscisNext(){
   if (uscisWizardState.stage !== 'fields') return;
   collectUscisPage();
+  if (!validateUscisCurrentPage()) return;
   const next = nextVisibleUscisStep(uscisWizardState.pageIndex + 1, 1);
   if (next >= 0) {
     uscisWizardState.pageIndex = next;

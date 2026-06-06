@@ -24,7 +24,7 @@
     },
     {
       "page": 5,
-      "required": ["AlienNumber", "Pt2Line2_CB", "Pt2Line2_AlienNumber"]
+      "required": ["AlienNumber", "Pt2Line1_YN", "Pt2Line2_CB", "Pt2Line2_AlienNumber"]
     },
     {
       "page": 6,
@@ -32,7 +32,7 @@
     },
     {
       "page": 7,
-      "required": ["AlienNumber", "Pt2Line3d_AsyleeRefugeeCB", "Pt2Line3d_Asylum"]
+      "required": ["AlienNumber", "Pt2Line3d_AsyleeRefugeeCB", "Pt2Line3d_Asylum", "Pt2Line4_CB", "Pt2Line5_CB"]
     },
     {
       "page": 8,
@@ -60,15 +60,18 @@
     },
     {
       "page": 14,
-      "required": ["AlienNumber", "Pt9Line10_YesNo", "Pt9Line11_YesNo", "Pt8Line13_YesNo", "Pt8Line17_YesNo", "Pt8Line18_YesNo", "Pt8Line19_YesNo", "Pt8Line20_YesNo", "Pt8Line22_YesNo", "Pt8Line23_YesNo", "Pt8Line24a_YesNo", "Pt8Line24b_YesNo", "Pt8Line24c_YesNo", "Pt9Line12_YesNo"]
+      "required": ["AlienNumber", "Pt9Line10_YesNo", "Pt9Line11_YesNo", "Pt8Line13_YesNo", "Pt8Line17_YesNo", "Pt8Line18_YesNo", "Pt8Line19_YesNo", "Pt8Line20_YesNo", "Pt8Line22_YesNo", "Pt8Line23_YesNo", "Pt8Line24a_YesNo", "Pt9Line12_YesNo"],
+      "blank": ["Pt8Line24b_YesNo", "Pt8Line24c_YesNo"]
     },
     {
       "page": 15,
-      "required": ["AlienNumber", "Pt9Line23_YesNo", "Pt9Line24_YesNo", "Pt8Line25_YesNo", "Pt8Line26_YesNo", "Pt8Line27_YesNo", "Pt8Line28_YesNo", "Pt8Line29_YesNo", "Pt8Line30_YesNo", "Pt8Line31_YesNo", "Pt8Line32_YesNo", "Pt8Line33_YesNo", "Pt8Line34_YesNo", "Pt8Line35a_YesNo", "Pt8Line35b_YesNo", "Pt8Line36_YesNo", "Pt8Line37_YesNo"]
+      "required": ["AlienNumber", "Pt9Line23_YesNo", "Pt9Line24_YesNo", "Pt8Line25_YesNo", "Pt8Line26_YesNo", "Pt8Line27_YesNo", "Pt8Line28_YesNo", "Pt8Line30_YesNo", "Pt8Line31_YesNo", "Pt8Line32_YesNo", "Pt8Line33_YesNo", "Pt8Line34_YesNo", "Pt8Line35a_YesNo", "Pt8Line36_YesNo", "Pt8Line37_YesNo"],
+      "blank": ["Pt8Line29_YesNo", "Pt8Line35b_YesNo"]
     },
     {
       "page": 16,
-      "required": ["AlienNumber", "Pt8Line38_YesNo", "Pt9Line39_YesNo", "Pt8Line40_YesNo", "Pt8Line41_YesNo", "a_YesNo", "b_YesNo", "Pt8Line42c_YesNo", "Pt8Line42d_YesNo", "Pt8Line43a_YesNo", "Pt8Line43b_YesNo", "Pt8Line43c_YesNo", "Pt8Line43d_YesNo", "Pt8Line43e_YesNo", "Pt8Line43fYesNo", "Pt8Line43g_YesNo", "Pt8Line43h_YesNo", "Pt8Line43i_YesNo", "Pt8Line44_YesNo", "Pt8Line45_YesNo"]
+      "required": ["AlienNumber", "Pt8Line38_YesNo", "Pt9Line39_YesNo", "Pt8Line41_YesNo", "a_YesNo", "b_YesNo", "Pt8Line42c_YesNo", "Pt8Line42d_YesNo", "Pt8Line43a_YesNo", "Pt8Line43b_YesNo", "Pt8Line43c_YesNo", "Pt8Line43d_YesNo", "Pt8Line43e_YesNo", "Pt8Line43fYesNo", "Pt8Line43g_YesNo", "Pt8Line43h_YesNo", "Pt8Line43i_YesNo", "Pt8Line44_YesNo", "Pt8Line45_YesNo"],
+      "blank": ["Pt8Line40_YesNo"]
     },
     {
       "page": 17,
@@ -80,7 +83,8 @@
     },
     {
       "page": 19,
-      "required": ["AlienNumber", "Pt9Line56_CB", "Pt9Line63_YesNo", "Pt9Line64_YesNo"]
+      "required": ["AlienNumber", "Pt9Line56_CB"],
+      "blank": ["Pt9Line63_YesNo", "Pt9Line64_YesNo"]
     },
     {
       "page": 20,

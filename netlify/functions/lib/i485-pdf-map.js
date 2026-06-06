@@ -1,9 +1,11 @@
 const normalizedI485Map = require('../../../overlay-maps/normalized/i-485.json');
+const part9Logic = require('../../../form-logic/i-485.part9.json');
 
 function clean(value, max = 300) {
   if (value && typeof value === 'object' && !Array.isArray(value)) {
     return Object.values(value).filter(Boolean).join(' ').replace(/\s+/g, ' ').trim().slice(0, max);
   }
+  if (value === 0) return '0';
   return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
 }
 
@@ -319,6 +321,71 @@ function employmentFields(answers) {
   };
 }
 
+const PART14_SLOT_TEXT_FIELDS = [
+  'P14_Line2_AdditionalInfo[0]',
+  'P14_Line3_AdditionalInfo[0]',
+  'P14_Line4_AdditionalInfo[0]',
+  'P14_Line5_AdditionalInfo[0]'
+];
+
+function explicitPart14SlotUsed(answers, slot) {
+  if (slot === 0) return ['Pt9Line3a_PageNumber', 'Pt9Line3b_PartNumber', 'Pt9Line3c_ItemNumber', 'P14_Line2_Title', 'P14_Line2_Address'].some((key) => isPresentExactValue(answers[key]));
+  if (slot === 1) return ['Pt9Line4a_PageNumber', 'Pt9Line4b_PartNumber', 'Pt9Line4c_ItemNumber', 'P14_Line3_Title', 'P14_Line3_Employment', 'P14_Line3_Dates', 'P14_Line3_Occupation'].some((key) => isPresentExactValue(answers[key]));
+  return false;
+}
+
+function childAdditionalInfo(n, answers) {
+  const name = [answers[`child${n}_family_name`], answers[`child${n}_given_name`], answers[`child${n}_middle_name`]].filter(isPresentExactValue).join(' ');
+  const pieces = [
+    name,
+    answers[`child${n}_dob`] ? `DOB ${dateMdY(answers[`child${n}_dob`])}` : '',
+    answers[`child${n}_alien_number`] ? `A-${digits(answers[`child${n}_alien_number`], 9)}` : '',
+    answers[`child${n}_country_of_birth`] ? `COUNTRY OF BIRTH ${clean(answers[`child${n}_country_of_birth`], 60)}` : '',
+    answers[`child${n}_relationship`] ? `RELATIONSHIP ${clean(answers[`child${n}_relationship`], 80)}` : '',
+    answers[`child${n}_applying_with_you`] ? `APPLYING WITH APPLICANT: ${clean(answers[`child${n}_applying_with_you`], 20)}` : ''
+  ].filter(Boolean);
+  return pieces.length ? `CHILD ${n}: ${pieces.join('; ')}` : '';
+}
+
+function additionalInfoFields(answers) {
+  const entries = [];
+  if (isPresentExactValue(answers.additional_spouse_history)) {
+    entries.push({
+      page: '11',
+      part: '6',
+      item: '11',
+      text: `ADDITIONAL SPOUSE/MARRIAGE HISTORY: ${clean(answers.additional_spouse_history, 700)}`
+    });
+  }
+
+  const childEntries = [];
+  for (let n = 3; n <= 8; n += 1) {
+    const text = childAdditionalInfo(n, answers);
+    if (text) childEntries.push(text);
+  }
+  if (childEntries.length) {
+    entries.push({
+      page: '12',
+      part: '7',
+      item: '2',
+      text: `ADDITIONAL CHILDREN: ${childEntries.join(' | ')}`
+    });
+  }
+
+  const result = {};
+  let entryIndex = 0;
+  for (let slot = 0; slot < PART14_SLOT_TEXT_FIELDS.length && entryIndex < entries.length; slot += 1) {
+    if (explicitPart14SlotUsed(answers, slot)) continue;
+    const entry = entries[entryIndex];
+    result[`Pt9Line3a_PageNumber[${slot}]`] = entry.page;
+    result[`Pt9Line3b_PartNumber[${slot}]`] = entry.part;
+    result[`Pt9Line3c_ItemNumber[${slot}]`] = entry.item;
+    result[PART14_SLOT_TEXT_FIELDS[slot]] = clean(entry.text, 950);
+    entryIndex += 1;
+  }
+  return result;
+}
+
 const NORMALIZED_FIELDS = Array.isArray(normalizedI485Map.fields) ? normalizedI485Map.fields : [];
 const NORMALIZED_FIELDS_BY_KEY = NORMALIZED_FIELDS.reduce((map, field) => {
   if (!field?.key) return map;
@@ -408,24 +475,88 @@ const PDF_CHECKBOX_OPTIONS_BY_BASE = NORMALIZED_FIELDS.reduce((map, field) => {
   return map;
 }, new Map());
 
+const PART9_ITEMS_BY_NUMBER = new Map((part9Logic.items || []).map((item) => [item.item, item]));
+const PART9_DEPENDENCIES = Array.isArray(part9Logic.dependencies) ? part9Logic.dependencies : [];
+const PUBLIC_CHARGE_ITEM_KEYS = /^(?:Pt9Line57_|Pt9Line53_CB|Pt9Line59_CB|Pt9Line60_CB|Pt9Line61_|Pt9Line6[2-6])/;
+const PUBLIC_CHARGE_NOT_EXEMPT_INDEX = 23;
+
+function checkboxOptions(fieldPrefix) {
+  return (PDF_CHECKBOX_OPTIONS_BY_BASE.get(fieldPrefix) || []).filter(Boolean);
+}
+
+function checkboxOptionByVisualSide(fieldPrefix, side) {
+  const options = checkboxOptions(fieldPrefix);
+  if (!options.length) return null;
+  return options.reduce((picked, option) => {
+    if (!picked) return option;
+    return side === 'left'
+      ? (option.x < picked.x ? option : picked)
+      : (option.x > picked.x ? option : picked);
+  }, null);
+}
+
+function checkboxSelectedIndexFromPdfBase(value, fieldPrefix) {
+  const text = exactText(value, 80).toLowerCase();
+  if (!isPresentExactValue(value)) return -1;
+  if (/^\d+$/.test(text)) return Number(text);
+  if (['yes', 'y', 'да', 'так', 'sí', 'si', 'true'].includes(text)) {
+    return checkboxOptionByVisualSide(fieldPrefix, 'left')?.index ?? 0;
+  }
+  if (['no', 'n', 'нет', 'ні', 'false'].includes(text)) {
+    return checkboxOptionByVisualSide(fieldPrefix, 'right')?.index ?? 1;
+  }
+  return -1;
+}
+
+function pdfYesNoEquals(answers, item, expected) {
+  if (!item?.key) return false;
+  const selected = checkboxSelectedIndexFromPdfBase(answers[item.key], item.key);
+  if (selected < 0) return false;
+  const yesIndex = checkboxOptionByVisualSide(item.key, 'left')?.index ?? 0;
+  const noIndex = checkboxOptionByVisualSide(item.key, 'right')?.index ?? 1;
+  if (expected === 'yes') return selected === yesIndex;
+  if (expected === 'no') return selected === noIndex;
+  return false;
+}
+
+function part9ConditionMet(answers, condition) {
+  const item = PART9_ITEMS_BY_NUMBER.get(condition.item);
+  if (!item) return false;
+  const expected = String(condition.equals || '').trim().toLowerCase();
+  if (item.type === 'yesNo') return pdfYesNoEquals(answers, item, expected);
+  const value = clean(answers[item.key], 300).toLowerCase();
+  return Boolean(value) && value === expected;
+}
+
+function shouldKeepPublicChargeQuestions(answers) {
+  if (!isPresentExactValue(answers.Pt9Line56_CB)) return true;
+  return checkboxSelectedIndexFromPdfBase(answers.Pt9Line56_CB, 'Pt9Line56_CB') === PUBLIC_CHARGE_NOT_EXEMPT_INDEX;
+}
+
+function sanitizeI485Answers(rawAnswers = {}) {
+  const answers = { ...rawAnswers };
+
+  for (const dependency of PART9_DEPENDENCIES) {
+    const dependentItem = PART9_ITEMS_BY_NUMBER.get(dependency.requireItem);
+    if (!dependentItem?.key) continue;
+    const isRequired = (dependency.when || []).every((condition) => part9ConditionMet(answers, condition));
+    if (!isRequired) delete answers[dependentItem.key];
+  }
+
+  if (!shouldKeepPublicChargeQuestions(answers)) {
+    for (const key of Object.keys(answers)) {
+      if (PUBLIC_CHARGE_ITEM_KEYS.test(key)) delete answers[key];
+    }
+  }
+
+  return answers;
+}
+
 function checkboxGroupFromPdfBase(value, fieldPrefix, fallbackCount = 2) {
   const options = PDF_CHECKBOX_OPTIONS_BY_BASE.get(fieldPrefix);
   if (!options?.length) return checkboxGroupByIndex(value, fieldPrefix, fallbackCount);
 
-  const text = exactText(value, 80).toLowerCase();
-  let selected = /^\d+$/.test(text) ? Number(text) : -1;
-
-  if (selected < 0 && ['yes', 'y', 'да', 'так', 'sí', 'si', 'true'].includes(text)) {
-    selected = options
-      .filter(Boolean)
-      .reduce((leftmost, option) => (!leftmost || option.x < leftmost.x ? option : leftmost), null)?.index ?? -1;
-  }
-
-  if (selected < 0 && ['no', 'n', 'нет', 'ні', 'false'].includes(text)) {
-    selected = options
-      .filter(Boolean)
-      .reduce((rightmost, option) => (!rightmost || option.x > rightmost.x ? option : rightmost), null)?.index ?? -1;
-  }
+  const selected = checkboxSelectedIndexFromPdfBase(value, fieldPrefix);
 
   if (selected < 0) return {};
   const result = {};
@@ -572,7 +703,7 @@ function exactScenarioFieldValues(answers = {}) {
 }
 
 function i485TextOverlays(payload = {}) {
-  const answers = payload.formAnswers || payload.answers || {};
+  const answers = sanitizeI485Answers(payload.formAnswers || payload.answers || {});
 
   const overlays = [];
 
@@ -622,7 +753,7 @@ function i485TextOverlays(payload = {}) {
 }
 
 function i485FieldValues(payload = {}) {
-  const answers = payload.formAnswers || payload.answers || {};
+  const answers = sanitizeI485Answers(payload.formAnswers || payload.answers || {});
   const exactValues = exactScenarioFieldValues(answers);
   const legacyValues = legacyExactI485Values(answers);
   const contact = payload.contact || {};
@@ -647,7 +778,7 @@ function i485FieldValues(payload = {}) {
     answers.Pt1Line11_Other ? 'other' : '',
     answers.status_at_last_entry
   );
-  const priorPetition = yesNo(answers.petition_previously_filed);
+  const eoirAdjustment = yesNo(answers.eoir_adjustment_proceedings);
   const hasSsn = yesNo(answers.has_ssn);
   const otherDob = yesNo(answers.other_dob_used);
   const priorANumber = yesNo(answers.has_prior_alien_number);
@@ -658,7 +789,8 @@ function i485FieldValues(payload = {}) {
   const ssaConsent = yesNo(answers.ssn_ssa_consent);
   const currentlyWorking = yesNo(answers.currently_working);
   const unauthorizedWork = yesNo(answers.worked_without_authorization);
-  const concurrentFiling = yesNo(answers.concurrent_filing);
+  const ina245iAdjustment = yesNo(answers.ina_245i_adjustment);
+  const cspaChildAdjustment = yesNo(answers.cspa_child_adjustment);
   const physicalSameAsMailing = yesNo(answers.physical_same_as_mailing);
   const placeEntry = splitCityState(answers.place_entry);
   const weight = weightParts(answers.weight_lbs || `${answers.weight_hundreds || ''}${answers.weight_tens || ''}${answers.weight_ones || ''}`);
@@ -729,14 +861,15 @@ function i485FieldValues(payload = {}) {
     ...checkboxPair(ssaConsent, 'Pt1Line19_SSA_YN[0]', 'Pt1Line19_SSA_YN[1]'),
     ...checkboxPair(ssaConsent, 'Pt1Line19_Consent_YN[0]', 'Pt1Line19_Consent_YN[1]'),
 
-    // Part 2 — Prior petition
-    ...checkboxPair(priorPetition, 'Pt2Line1_YN[0]', 'Pt2Line1_YN[1]'),
-    'Pt2Line2_Receipt[0]': clean(answers.petition_receipt_number, 20),
-    'Pt2Line2_Date[0]': dateMdY(answers.petition_date),
+    // Part 2 — EOIR / underlying petition and category follow-up
+    ...checkboxPair(eoirAdjustment, 'Pt2Line1_YN[0]', 'Pt2Line1_YN[1]'),
+    'Pt2Line2_Receipt[0]': clean(firstPresentValue(answers.petition_receipt_number, answers.underlying_receipt_number), 20),
+    'Pt2Line2_Date[0]': dateMdY(firstPresentValue(answers.priority_date, answers.petition_date)),
     'Pt2Line2_FamilyName[0]': clean(answers.petitioner_family_name, 60),
     'Pt2Line2_GivenName[0]': clean(answers.petitioner_given_name, 60),
     'Pt2Line2_AlienNumber[0]': digits(answers.petitioner_alien_number, 9),
-    ...checkboxPair(concurrentFiling, 'Pt2Line5_CB[0]', 'Pt2Line5_CB[1]'),
+    ...checkboxPair(ina245iAdjustment, 'Pt2Line4_CB[1]', 'Pt2Line4_CB[0]'),
+    ...checkboxPair(cspaChildAdjustment, 'Pt2Line5_CB[1]', 'Pt2Line5_CB[0]'),
 
     // Part 4 — Processing / Employment
     ...checkboxPair(currentlyWorking, 'Pt4Line5_YN[1]', 'Pt4Line5_YN[0]'),
@@ -836,13 +969,14 @@ function i485FieldValues(payload = {}) {
     ...eyeColorFields(answers.eye_color),
     ...hairColorFields(answers.hair_color),
     ...admissionBasisFields(admissionBasis),
-    ...eligibilityFields(answers.eligibility_basis),
+    ...eligibilityFields(firstPresentValue(answers.eligibility_basis, answers.adjustment_basis)),
     ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', priorMarriageEndTypeValue(answers.prior_spouse_marriage_end_type), 4),
     ...checkboxPair(sameAddress5yrs, 'Pt1Line18_last5yrs_YN[0]', 'Pt1Line18_last5yrs_YN[1]'),
     ...checkboxPair(physicalSameAsMailing, 'Pt1Line18_YN[0]', 'Pt1Line18_YN[1]'),
     ...priorUsAddressFields(answers),
     ...lastForeignAddressFields(answers),
     ...employmentFields(answers),
+    ...additionalInfoFields(answers),
     ...usAddress(answers)
   };
 
@@ -854,4 +988,4 @@ function i485FieldValues(payload = {}) {
   return { ...semanticValues, ...exactValues, ...legacyValues };
 }
 
-module.exports = { i485FieldValues, i485TextOverlays, dateMdY, usPhonePdf };
+module.exports = { i485FieldValues, i485TextOverlays, dateMdY, usPhonePdf, sanitizeI485Answers };

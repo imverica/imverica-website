@@ -122,6 +122,8 @@ async function main() {
     assert(html.includes('openUscisWizard'), `${label}: missing USCIS wizard opener`);
     assert(html.includes('/api/uscis-flow-catalog'), `${label}: missing USCIS catalog endpoint`);
     assert(html.includes('/api/generate-uscis-pdf'), `${label}: missing account-only PDF endpoint`);
+    assert(html.includes('validateUscisCurrentPage'), `${label}: missing required-field validation guard`);
+    assert(html.includes('uscisRequiredHistoryValid'), `${label}: missing required history validation guard`);
     assert(html.includes('saveGeneratedDraft(blob'), `${label}: generated USCIS PDFs are not saved to My Documents`);
     assert(html.includes('tileUscisTitle'), `${label}: missing USCIS dashboard tile translations`);
     assert(html.includes('maybeOpenUscisFromUrl();'), `${label}: URL-open hook is not wired after dashboard load`);

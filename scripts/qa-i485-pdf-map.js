@@ -19,7 +19,7 @@ function assertEqual(actual, expected, message) {
 const values = i485FieldValues({ formAnswers: scenario.fields, contact: {} });
 const textOverlays = i485TextOverlays({ formAnswers: scenario.fields, contact: {} });
 
-assert(Object.keys(values).length >= 420, `Expected exact I-485 map to produce at least 420 real fields, got ${Object.keys(values).length}`);
+assert(Object.keys(values).length >= 415, `Expected exact I-485 map to produce at least 415 real fields, got ${Object.keys(values).length}`);
 assertEqual(textOverlays.length, 0, 'No synthetic overlays are expected for the current I-485 map');
 
 assertEqual(values['AlienNumber[0]'], '208924970', 'A-number page 1');
@@ -41,8 +41,14 @@ assertEqual(values['Pt2Line11_CB[2]'], false, 'Last arrival without admission/pa
 assertEqual(values['Pt2Line11_CB[3]'], false, 'Last arrival other checkbox should be unselected');
 assertEqual(values['P1Line12_I94[0]'], '77692068933', 'I-94 exact field');
 assertEqual(values['Pt1Line18US_Unit[2]'], true, 'Current US address apartment checkbox');
+assertEqual(values['Pt2Line1_YN[0]'], false, 'Part 2 EOIR Yes should be unselected');
+assertEqual(values['Pt2Line1_YN[1]'], true, 'Part 2 EOIR No should be selected');
 assertEqual(values['Pt2Line2_CB[0]'], true, 'Part 2 principal applicant checkbox');
 assertEqual(values['Pt2Line3d_AsyleeRefugeeCB[0]'], true, 'Part 2 asylee eligibility checkbox');
+assertEqual(values['Pt2Line4_CB[0]'], true, 'Part 2 INA 245(i) No should be selected');
+assertEqual(values['Pt2Line4_CB[1]'], false, 'Part 2 INA 245(i) Yes should be unselected');
+assertEqual(values['Pt2Line5_CB[0]'], true, 'Part 2 CSPA No should be selected');
+assertEqual(values['Pt2Line5_CB[1]'], false, 'Part 2 CSPA Yes should be unselected');
 assertEqual(values['Pt1Line18_PriorAddress_Unit[0]'], true, 'Prior US address apartment checkbox');
 assertEqual(values['Pt1Line19_SSN[0]'], '671842359', 'SSN exact field');
 assertEqual(values['Pt3Line1_CB[4]'], true, 'Part 3 no exemptions apply checkbox');
@@ -63,6 +69,13 @@ assertEqual(values['Pt7Line2_Race[1]'], true, 'Race white checkbox');
 assertEqual(values['Pt7Line5_Eyecolor[0]'], true, 'Eye color blue checkbox');
 assertEqual(values['Pt7Line6_Haircolor[3]'], true, 'Hair color brown checkbox');
 assertEqual(values['Pt9Line56_CB[3]'], true, 'Asylee/refugee public charge exemption checkbox');
+assertEqual(values['Pt9Line63_YesNo[0]'], undefined, 'Public charge Item 63 must be blank when an exemption category is selected');
+assertEqual(values['Pt9Line64_YesNo[0]'], undefined, 'Public charge Item 64 must be blank when an exemption category is selected');
+assertEqual(values['Pt8Line24b_YesNo[0]'], undefined, 'Item 20 must be blank when Item 19 is No');
+assertEqual(values['Pt8Line24c_YesNo[0]'], undefined, 'Item 21 must be blank when Item 19 is No');
+assertEqual(values['Pt8Line29_YesNo[0]'], undefined, 'Item 29 must be blank when Item 28 is No');
+assertEqual(values['Pt8Line35b_YesNo[0]'], undefined, 'Item 35.b must be blank when Item 35.a is No');
+assertEqual(values['Pt8Line40_YesNo[0]'], undefined, 'Item 40 must be blank when Item 39 is No');
 assertEqual(values['a_YesNo[1]'], true, 'Part 9 line 42.a No checkbox');
 assertEqual(values['b_YesNo[0]'], true, 'Part 9 line 42.b No checkbox');
 assertEqual(values['Pt3Line3_DaytimePhoneNumber1[0]'], '(253) 409-7210', 'Applicant daytime phone');
@@ -89,9 +102,19 @@ assertEqual(semanticBio['Pt7Line2_Race[1]'], true, 'Semantic white race checkbox
 assertEqual(semanticBio['Pt7Line5_Eyecolor[0]'], true, 'Semantic blue eye checkbox uses current PDF index');
 assertEqual(semanticBio['Pt7Line6_Haircolor[3]'], true, 'Semantic brown hair checkbox uses current PDF index');
 
+const conditionalNo = i485FieldValues({
+  formAnswers: { Pt8Line28_YesNo: 'No', Pt8Line29_YesNo: 'No', Pt9Line56_CB: 3 }
+});
+assertEqual(conditionalNo['Pt8Line29_YesNo[0]'], undefined, 'Semantic conditional child should be omitted when parent is No');
+
+const conditionalYes = i485FieldValues({
+  formAnswers: { Pt8Line28_YesNo: 'Yes', Pt8Line29_YesNo: 'No', Pt9Line56_CB: 3 }
+});
+assertEqual(conditionalYes['Pt8Line29_YesNo[0]'], true, 'Semantic conditional child No should render when parent is Yes');
+
 const inputPdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf'));
 const result = incrementalFillPdf(inputPdf, values, textOverlays);
-assert(result.filledFields.length >= 420, `Expected at least 420 incremental fields filled, got ${result.filledFields.length}`);
+assert(result.filledFields.length >= 415, `Expected at least 415 incremental fields filled, got ${result.filledFields.length}`);
 assertEqual(result.skippedFields.length, 0, 'No exact I-485 fields should be skipped');
 
 console.log(JSON.stringify({

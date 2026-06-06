@@ -18,6 +18,7 @@ function collectQuestionnaireKeys(questionnaire) {
 function collectOverlayFields(overlay) {
   const fields = new Map();
   const duplicates = new Set();
+  const originalBases = new Set();
 
   for (const field of overlay.fields || []) {
     if (fields.has(field.key)) {
@@ -26,9 +27,19 @@ function collectOverlayFields(overlay) {
     } else {
       fields.set(field.key, [field]);
     }
+
+    const originals = [
+      ...(Array.isArray(field.originalKeys) ? field.originalKeys : []),
+      field.originalKey
+    ].filter(Boolean);
+    for (const original of originals) {
+      const pdfName = String(original).split('.').pop();
+      if (!pdfName) continue;
+      originalBases.add(pdfName.replace(/\[\d+\]$/, ''));
+    }
   }
 
-  return { fields, duplicates };
+  return { fields, duplicates, originalBases };
 }
 
 function isBlank(value) {
@@ -110,15 +121,26 @@ function auditScenario(scenarioPath, payloadPath) {
   const questionnaire = readJson(questionnairePath);
   const overlay = readJson(overlayPath);
   const questionnaireKeys = collectQuestionnaireKeys(questionnaire);
-  const { fields: overlayFields, duplicates } = collectOverlayFields(overlay);
+  const { fields: overlayFields, duplicates, originalBases } = collectOverlayFields(overlay);
+  const exactPdfScenario = Boolean(
+    form === 'i-485' &&
+    scenario.notes &&
+    /exact numeric option values|exact pdf/i.test(Object.values(scenario.notes).join(' '))
+  );
 
   for (const key of duplicates) {
     warnings.push(`${key}: duplicate overlay-map key; accepted if it intentionally renders the same value in multiple places`);
   }
 
   for (const [key, value] of Object.entries(fields)) {
-    if (!questionnaireKeys.has(key)) issues.push(`${key}: missing from questionnaire`);
-    if (!overlayFields.has(key)) issues.push(`${key}: missing from normalized overlay map`);
+    const isExactPdfKey = exactPdfScenario && (
+      overlayFields.has(key) ||
+      originalBases.has(key) ||
+      /^(?:AlienNumber|Pt\d|P\d|Part\d|P14_|a_YesNo|b_YesNo)/.test(key)
+    );
+
+    if (!questionnaireKeys.has(key) && !isExactPdfKey) issues.push(`${key}: missing from questionnaire`);
+    if (!overlayFields.has(key) && !isExactPdfKey) issues.push(`${key}: missing from normalized overlay map`);
 
     const overlayEntries = overlayFields.get(key) || [];
     const choiceEntries = overlayEntries.filter(field => field.mode === 'checkbox_group' || field.mode === 'radio_group');
