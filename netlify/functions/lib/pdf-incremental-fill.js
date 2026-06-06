@@ -408,6 +408,66 @@ function pdfContentText(value) {
     .slice(0, 240);
 }
 
+function pdfContentLine(value) {
+  return String(value || '')
+    .replace(/[^\x20-\x7e]/g, '')
+    .replace(/([\\()])/g, '\\$1');
+}
+
+function wrapPdfContentLines(value, maxChars, maxLines) {
+  const raw = String(value || '')
+    .replace(/[^\x20-\x7e\r\n]/g, '')
+    .replace(/\r\n?/g, '\n')
+    .slice(0, 600);
+  const lines = [];
+
+  for (const paragraph of raw.split('\n')) {
+    const words = paragraph.trim().split(/\s+/).filter(Boolean);
+    if (!words.length) {
+      if (lines.length) lines.push('');
+      continue;
+    }
+
+    let line = '';
+    for (const word of words) {
+      const candidate = line ? `${line} ${word}` : word;
+      if (candidate.length <= maxChars) {
+        line = candidate;
+        continue;
+      }
+      if (line) lines.push(line);
+      line = word.length <= maxChars ? word : word.slice(0, maxChars);
+      if (lines.length >= maxLines) break;
+    }
+    if (line && lines.length < maxLines) lines.push(line);
+    if (lines.length >= maxLines) break;
+  }
+
+  return lines.slice(0, maxLines).map(pdfContentLine);
+}
+
+function multilineAppearanceContent(value, width, height, fontSize) {
+  const lineHeight = fontSize + 4;
+  const maxLines = Math.max(1, Math.floor((height - 6) / lineHeight));
+  const maxChars = Math.max(8, Math.floor((width - 4) / (fontSize * 0.58)));
+  const lines = wrapPdfContentLines(value, maxChars, maxLines);
+  const startY = Math.max(2, height - fontSize - 5);
+  const parts = [
+    `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n`,
+    'BT',
+    `/F1 ${fontSize.toFixed(2)} Tf`,
+    '0 g',
+    `2 ${startY.toFixed(2)} Td`
+  ];
+
+  lines.forEach((line, index) => {
+    if (index > 0) parts.push(`0 -${lineHeight.toFixed(2)} Td`);
+    parts.push(`(${line}) Tj`);
+  });
+  parts.push('ET', 'Q', '');
+  return parts.join('\n');
+}
+
 function detectBodyFontObjectNumber(parsed) {
   // Scan for the body-text font. USCIS forms use CourierNewPS-BoldMT; fall back to Helvetica.
   // I-765 stores fonts as indirect objects; I-485 compresses them into object streams — accept both.
@@ -434,8 +494,11 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption, f
   const maxLength = firstPdfNumber(object.body, 'MaxLen') || 0;
   const text = pdfContentText(value);
   const isComb = Boolean((flags & 16777216) && maxLength > 1);
+  const isTallTextField = height >= 36;
   const content = isComb
     ? combAppearanceContent(text, width, height, fontSize, y, maxLength)
+    : isTallTextField
+      ? multilineAppearanceContent(value, width, height, fontSize)
     : `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g\n2 ${y.toFixed(2)} Td\n(${text}) Tj\nET\nQ\n`;
   const encrypted = encryptObjectBytes(encryption, appearanceObjectNumber, 0, Buffer.from(content, 'latin1'), 'stream');
   return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 ${fontObjectNumber} 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;

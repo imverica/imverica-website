@@ -189,7 +189,7 @@ assertEqual(values['Pt1Line19_YN[1]'], true, 'has SSN checkbox uses PDF yes valu
 assertEqual(values['Pt1Line19_SSN[0]'], '671842359', 'SSN digits');
 assertEqual(values['Pt4Line5_YN[1]'], true, 'currently working yes');
 assertEqual(values['Pt4Line6_YN[0]'], true, 'unauthorized work no');
-assertEqual(values['Pt7Line2_Race[4]'], true, 'race white checkbox');
+assertEqual(values['Pt7Line2_Race[1]'], true, 'race white checkbox');
 assertEqual(values['Pt7Line5_Eyecolor[2]'], true, 'brown eye color checkbox');
 assertEqual(values['Pt7Line6_Haircolor[3]'], true, 'brown hair color checkbox');
 assertEqual(values['Pt9Line10_YesNo[0]'], true, 'Part 9 No maps to PDF no option');

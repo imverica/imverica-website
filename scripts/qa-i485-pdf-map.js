@@ -19,7 +19,7 @@ function assertEqual(actual, expected, message) {
 const values = i485FieldValues({ formAnswers: scenario.fields, contact: {} });
 const textOverlays = i485TextOverlays({ formAnswers: scenario.fields, contact: {} });
 
-assert(Object.keys(values).length >= 300, `Expected exact I-485 map to produce at least 300 real fields, got ${Object.keys(values).length}`);
+assert(Object.keys(values).length >= 420, `Expected exact I-485 map to produce at least 420 real fields, got ${Object.keys(values).length}`);
 assertEqual(textOverlays.length, 0, 'No synthetic overlays are expected for the current I-485 map');
 
 assertEqual(values['AlienNumber[0]'], '208924970', 'A-number page 1');
@@ -40,10 +40,42 @@ assertEqual(values['Pt2Line11_CB[1]'], true, 'Last arrival paroled checkbox shou
 assertEqual(values['Pt2Line11_CB[2]'], false, 'Last arrival without admission/parole checkbox should be unselected');
 assertEqual(values['Pt2Line11_CB[3]'], false, 'Last arrival other checkbox should be unselected');
 assertEqual(values['P1Line12_I94[0]'], '77692068933', 'I-94 exact field');
+assertEqual(values['Pt1Line18US_Unit[2]'], true, 'Current US address apartment checkbox');
+assertEqual(values['Pt2Line2_CB[0]'], true, 'Part 2 principal applicant checkbox');
+assertEqual(values['Pt2Line3d_AsyleeRefugeeCB[0]'], true, 'Part 2 asylee eligibility checkbox');
+assertEqual(values['Pt1Line18_PriorAddress_Unit[0]'], true, 'Prior US address apartment checkbox');
 assertEqual(values['Pt1Line19_SSN[0]'], '671842359', 'SSN exact field');
+assertEqual(values['Pt3Line1_CB[4]'], true, 'Part 3 no exemptions apply checkbox');
+assertEqual(values['Pt4Line7_EmployerName[0]'], 'DELUX DELIVERY LLC', 'Current employer or school name');
+assertEqual(values['Pt4Line7_EmployerName[1]'], 'SELF-EMPLOYED DRIVER', 'Current occupation');
+assertEqual(values['Pt4Line7_EmployerName[2]'], 'DELUX DELIVERY LLC', 'Current employer name duplicate field');
+assertEqual(values['Part4Line7_StreetName[0]'], '200 W MARINE VIEW DR', 'Current employer street address');
+assertEqual(values['Pt5Line8_DateofBirth[0]'], '06/04/1970', 'Mother date of birth');
+assertEqual(values['Pt6Line1_MaritalStatus[0]'], true, 'Applicant divorced checkbox');
+assertEqual(values['Pt5Line8_DateofBirth[3]'], '09/19/1986', 'Prior spouse date of birth');
+assertEqual(values['Pt6Line16_DateofBirth[0]'], '09/28/2007', 'Date of marriage to prior spouse');
+assertEqual(values['Pt6Line10_CityTownOfBirth[1]'], 'MALOLEPETYKHA VILLAGE', 'Prior spouse place of marriage city');
+assertEqual(values['Pt6Line10_State[1]'], 'VELYKA LEPETYKHA DISTRICT KHERSON OBLAST', 'Prior spouse place of marriage state');
+assertEqual(values['Pt6Line10_Country[1]'], 'UKRAINE', 'Prior spouse place of marriage country');
+assertEqual(values['Pt6Line16_DateofBirth[1]'], '04/27/2010', 'Prior marriage end date');
+assertEqual(values['Pt6Line19_MaritalStatus[3]'], true, 'Prior marriage ended by divorce checkbox');
+assertEqual(values['Pt7Line2_Race[1]'], true, 'Race white checkbox');
+assertEqual(values['Pt7Line5_Eyecolor[0]'], true, 'Eye color blue checkbox');
+assertEqual(values['Pt7Line6_Haircolor[3]'], true, 'Hair color brown checkbox');
+assertEqual(values['Pt9Line56_CB[3]'], true, 'Asylee/refugee public charge exemption checkbox');
+assertEqual(values['a_YesNo[1]'], true, 'Part 9 line 42.a No checkbox');
+assertEqual(values['b_YesNo[0]'], true, 'Part 9 line 42.b No checkbox');
 assertEqual(values['Pt3Line3_DaytimePhoneNumber1[0]'], '(253) 409-7210', 'Applicant daytime phone');
 assertEqual(values['Pt3Line4_MobileNumber1[0]'], '(253) 409-7210', 'Applicant mobile phone');
 assertEqual(values['Pt3Line5_Email[0]'], 'yanahovdan@gmail.com', 'Applicant email');
+assertEqual(values['Pt9Line3a_PageNumber[0]'], '4', 'Additional information row 1 page number');
+assertEqual(values['Pt9Line3b_PartNumber[0]'], '1', 'Additional information row 1 part number');
+assertEqual(values['Pt9Line3c_ItemNumber[0]'], '18', 'Additional information row 1 item number');
+assertEqual(values['P14_Line2_AdditionalInfo[0]'], 'PRIOR ADDRESS: 15 164st STREET SW, APT B-35, BOTHELL, WA 8012; 10/01/2019 - 01/01/2021', 'Additional information prior address');
+assertEqual(values['Pt9Line3a_PageNumber[1]'], '8', 'Additional information row 2 page number');
+assertEqual(values['Pt9Line3b_PartNumber[1]'], '4', 'Additional information row 2 part number');
+assertEqual(values['Pt9Line3c_ItemNumber[1]'], '7', 'Additional information row 2 item number');
+assertEqual(values['P14_Line3_AdditionalInfo[0]'], 'EMPLOYMENT: SELF-EMPLOYED AT FEDEX: 7301 HARDESON RD, EVERETT, WA 98203 DATES OF EMPLOYMENT: 10/10/2020 - 12/20/2023 OCCUPATION: SELF-EMPLOYED DRIVER', 'Additional information employment');
 
 const semanticFemale = i485FieldValues({ formAnswers: { applicant_family_name: 'TEST', sex: 'female' } });
 const semanticMale = i485FieldValues({ formAnswers: { applicant_family_name: 'TEST', sex: 'male' } });
@@ -52,9 +84,14 @@ assertEqual(semanticFemale['Pt1Line6_CB_Sex[1]'], false, 'Semantic female checkb
 assertEqual(semanticMale['Pt1Line6_CB_Sex[0]'], false, 'Semantic male checkbox [0]');
 assertEqual(semanticMale['Pt1Line6_CB_Sex[1]'], true, 'Semantic male checkbox [1]');
 
+const semanticBio = i485FieldValues({ formAnswers: { applicant_family_name: 'TEST', race: ['White'], eye_color: 'Blue', hair_color: 'Brown' } });
+assertEqual(semanticBio['Pt7Line2_Race[1]'], true, 'Semantic white race checkbox uses current PDF index');
+assertEqual(semanticBio['Pt7Line5_Eyecolor[0]'], true, 'Semantic blue eye checkbox uses current PDF index');
+assertEqual(semanticBio['Pt7Line6_Haircolor[3]'], true, 'Semantic brown hair checkbox uses current PDF index');
+
 const inputPdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf'));
 const result = incrementalFillPdf(inputPdf, values, textOverlays);
-assert(result.filledFields.length >= 300, `Expected at least 300 incremental fields filled, got ${result.filledFields.length}`);
+assert(result.filledFields.length >= 420, `Expected at least 420 incremental fields filled, got ${result.filledFields.length}`);
 assertEqual(result.skippedFields.length, 0, 'No exact I-485 fields should be skipped');
 
 console.log(JSON.stringify({

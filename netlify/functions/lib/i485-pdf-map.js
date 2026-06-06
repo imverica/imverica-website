@@ -151,20 +151,21 @@ function ethnicityFields(value) {
   return { 'Pt7Line1_Ethnicity[0]': false, 'Pt7Line1_Ethnicity[1]': true };
 }
 
-// Pt7Line2_Race: [0]=AI/AN, [1]=Asian, [2]=Black/AA, [3]=NHPI, [4]=White
+// Pt7Line2_Race follows the current PDF order:
+// [0]=Asian, [1]=White, [2]=Black/AA, [3]=AI/AN, [4]=NHPI
 function raceFields(value) {
   const text = clean(value, 120).toLowerCase();
   const result = {};
-  if (/indian|alaska|native american/.test(text)) result['Pt7Line2_Race[0]'] = true;
-  if (/asian|азіат/.test(text)) result['Pt7Line2_Race[1]'] = true;
+  if (/asian|азіат/.test(text)) result['Pt7Line2_Race[0]'] = true;
+  if (/white|caucasian|european/.test(text)) result['Pt7Line2_Race[1]'] = true;
   if (/black|african/.test(text)) result['Pt7Line2_Race[2]'] = true;
-  if (/hawaiian|pacific|islander/.test(text)) result['Pt7Line2_Race[3]'] = true;
-  if (/white|caucasian|european/.test(text)) result['Pt7Line2_Race[4]'] = true;
+  if (/indian|alaska|native american/.test(text)) result['Pt7Line2_Race[3]'] = true;
+  if (/hawaiian|pacific|islander/.test(text)) result['Pt7Line2_Race[4]'] = true;
   return result;
 }
 
-// Pt7Line5_Eyecolor: [0]=Black, [1]=Blue, [2]=Brown, [3]=Gray, [4]=Green, [5]=Hazel, [6]=Maroon, [7]=Pink, [8]=Unknown
-const EYE_COLORS = ['black', 'blue', 'brown', 'gray', 'green', 'hazel', 'maroon', 'pink', 'unknown'];
+// Pt7Line5_Eyecolor: [0]=Blue, [1]=Black, [2]=Brown, [3]=Gray, [4]=Green, [5]=Hazel, [6]=Maroon, [7]=Pink, [8]=Unknown
+const EYE_COLORS = ['blue', 'black', 'brown', 'gray', 'green', 'hazel', 'maroon', 'pink', 'unknown'];
 function eyeColorFields(value) {
   const text = clean(value, 40).toLowerCase();
   const idx = EYE_COLORS.findIndex((c) => text.includes(c));
@@ -437,8 +438,6 @@ function checkboxGroupFromPdfBase(value, fieldPrefix, fallbackCount = 2) {
 }
 
 function legacyPdfBaseForAnswerKey(key) {
-  if (key === 'a_YesNo') return 'Pt8Line42\\.a_YesNo';
-  if (key === 'b_YesNo') return 'Pt8Line42\\.b_YesNo';
   return key;
 }
 
@@ -446,6 +445,10 @@ function legacyExactI485Values(answers = {}) {
   const result = {};
   const aNumber = firstPresentValue(answers.alien_number, answers.AlienNumber, answers.Pt1Line4_AlienNumber);
   const aDigits = digits(aNumber, 9);
+  const addText = (fieldName, value, formatter = clean) => {
+    if (!isPresentExactValue(value)) return;
+    result[fieldName] = formatter(value);
+  };
 
   if (aDigits) {
     result['Pt1Line4_AlienNumber[0]'] = aDigits;
@@ -471,10 +474,38 @@ function legacyExactI485Values(answers = {}) {
   for (const [key, rawValue] of Object.entries(answers)) {
     if (!isPresentExactValue(rawValue)) continue;
     const base = legacyPdfBaseForAnswerKey(key);
-    if (!/(?:_YN|_YesNo|YesNo)$/.test(base)) continue;
     if (!PDF_CHECKBOX_OPTIONS_BY_BASE.has(base)) continue;
+    if (!/^\d+$/.test(exactText(rawValue, 80)) && !/(?:_YN|_YesNo|YesNo)$/.test(base)) continue;
     Object.assign(result, checkboxGroupFromPdfBase(rawValue, base, 2));
   }
+
+  addText('Pt4Line7_EmployerName[0]', answers.Pt4Line7_EmployerName);
+  addText('Pt4Line7_EmployerName[2]', firstPresentValue(answers.Pt4Line7_NameOfEmployer, answers.Pt4Line7_EmployerName));
+  addText('Pt4Line7_EmployerName[1]', answers.Pt4Line7_Occupation);
+  addText('Part4Line7_StreetName[0]', answers.Part4Line7_StreetName);
+
+  addText('Pt5Line8_DateofBirth[0]', answers.Pt5Line8_DateofBirth, dateMdY);
+  addText('Pt5Line8_DateofBirth[3]', answers.Pt6Line13_DateofBirth, dateMdY);
+  addText('Pt6Line16_DateofBirth[0]', answers.Pt6Line16_DateofBirth, dateMdY);
+  addText('Pt6Line10_CityTownOfBirth[1]', answers.Pt6Line17_CityTownOfMarriage);
+  addText('Pt6Line10_State[1]', answers.Pt6Line17_State);
+  addText('Pt6Line10_Country[1]', answers.Pt6Line17_Country);
+  addText('Pt6Line16_DateofBirth[1]', answers.Pt6Line18_DateMarriageEnded, dateMdY);
+
+  addText('Pt9Line3a_PageNumber[0]', answers.Pt9Line3a_PageNumber);
+  addText('Pt9Line3b_PartNumber[0]', answers.Pt9Line3b_PartNumber);
+  addText('Pt9Line3c_ItemNumber[0]', answers.Pt9Line3c_ItemNumber);
+  addText('P14_Line2_AdditionalInfo[0]', [answers.P14_Line2_Title, answers.P14_Line2_Address].filter(isPresentExactValue).join(' '));
+
+  addText('Pt9Line3a_PageNumber[1]', answers.Pt9Line4a_PageNumber);
+  addText('Pt9Line3b_PartNumber[1]', answers.Pt9Line4b_PartNumber);
+  addText('Pt9Line3c_ItemNumber[1]', answers.Pt9Line4c_ItemNumber);
+  addText('P14_Line3_AdditionalInfo[0]', [
+    answers.P14_Line3_Title,
+    answers.P14_Line3_Employment,
+    answers.P14_Line3_Dates,
+    answers.P14_Line3_Occupation
+  ].filter(isPresentExactValue).join(' '));
 
   const visaNumber = firstPresentValue(answers.visa_number, answers.Pt1Line10_VisaNum);
   const visaIssueDate = firstPresentValue(
