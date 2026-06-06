@@ -50,7 +50,7 @@ const schema = {
       <div class="price-card price-card--navy">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <div class="price-card-icon" aria-hidden="true">🛂</div>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with a simple USCIS form." aria-label="Start simple USCIS forms intake"><span aria-hidden="true">🛂</span></button>
           <div>
             <div class="price-card-kicker">Federal · all 50 states</div>
             <h2>Simple USCIS forms</h2>
@@ -82,7 +82,7 @@ const schema = {
       <div class="price-card price-card--terracotta">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <div class="price-card-icon" aria-hidden="true">👨‍👩‍👧</div>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with family-based immigration forms." aria-label="Start family-based immigration intake"><span aria-hidden="true">👨‍👩‍👧</span></button>
           <div>
             <div class="price-card-kicker">Federal · all 50 states</div>
             <h2>Family-based immigration</h2>
@@ -117,7 +117,7 @@ const schema = {
       <div class="price-card price-card--terracotta-deep">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <div class="price-card-icon" aria-hidden="true">📋</div>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with a complex immigration document package." aria-label="Start complex immigration package intake"><span aria-hidden="true">📋</span></button>
           <div>
             <div class="price-card-kicker">Federal · custom quote after document review</div>
             <h2>Complex immigration document packages</h2>
@@ -150,7 +150,7 @@ const schema = {
       <div class="price-card price-card--sage">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <div class="price-card-icon" aria-hidden="true">⚖️</div>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with California court forms." aria-label="Start California court forms intake"><span aria-hidden="true">⚖️</span></button>
           <div>
             <div class="price-card-kicker">California state courts only</div>
             <h2>California court forms</h2>
@@ -199,7 +199,7 @@ const schema = {
       <div class="price-card price-card--gold">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <div class="price-card-icon" aria-hidden="true">🏢</div>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with business filings, translation, or notary support." aria-label="Start business filings and document support intake"><span aria-hidden="true">🏢</span></button>
           <div>
             <div class="price-card-kicker">California business + service add-ons</div>
             <h2>Business filings · translation · notary</h2>
@@ -273,7 +273,8 @@ const schema = {
           <a class="discount-card discount-card--b2b" href="/for-attorneys">
             <div class="discount-pct">B2B</div>
             <div class="discount-title">Attorney retainer</div>
-            <div class="discount-desc">Law firms with a monthly retainer (10+ hours/month) bill at our reduced paralegal rate. <span class="b2b-link">See attorney pricing →</span></div>
+            <div class="discount-desc">Law firms with a monthly retainer (10+ hours/month) bill at our reduced paralegal rate.</div>
+            <div class="discount-action">See attorney pricing →</div>
           </a>
         </div>
       </div>
@@ -420,6 +421,13 @@ const schema = {
         });
       });
 
+      // Price-card icons
+      document.querySelectorAll('.price-card-icon-button[data-prefill]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openIntake(button.getAttribute('data-prefill'));
+        });
+      });
+
       // Discount cards (the B2B card is a real <a href> link — skip)
       document.querySelectorAll('.discount-card[data-prefill]').forEach(function (card) {
         card.addEventListener('click', function () {
@@ -484,6 +492,21 @@ const schema = {
       font-size: 28px;
       color: #fff;
       box-shadow: 0 6px 16px rgba(40,30,20,0.18);
+    }
+    .price-card-icon-button {
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    }
+    .price-card-icon-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 10px 22px rgba(40,30,20,0.24);
+    }
+    .price-card-icon-button:focus-visible {
+      outline: 3px solid rgba(212,175,86,0.75);
+      outline-offset: 3px;
     }
     .price-card--navy .price-card-icon          { background: var(--navy-dark); }
     .price-card--terracotta .price-card-icon    { background: var(--terracotta); }
@@ -744,18 +767,27 @@ const schema = {
       outline-offset: 2px;
     }
     .discount-card--b2b {
-      background: var(--navy-dark);
-      color: #e8eef7;
-      border-color: var(--navy-dark);
+      background: linear-gradient(135deg, #fff 0%, #f8fbff 100%);
+      border-color: rgba(26,46,74,0.22);
+      color: inherit;
     }
     .discount-card--b2b:hover {
-      border-color: var(--gold);
-      box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+      border-color: rgba(26,46,74,0.40);
+      box-shadow: 0 14px 28px rgba(26,46,74,0.14);
     }
     .discount-card--b2b .discount-title,
-    .discount-card--b2b .discount-pct { color: #fff; }
-    .discount-card--b2b .discount-desc { color: #c5d1e0; }
-    .discount-card--b2b .b2b-link { color: var(--gold); text-decoration: underline; font-weight: 600; }
+    .discount-card--b2b .discount-pct { color: var(--navy-dark); }
+    .discount-card--b2b .discount-desc { color: #4a5a6e; }
+    .discount-action {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 10px;
+      color: var(--terracotta-deep);
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     .discount-pct {
       font-family: var(--font-display);
       font-size: 32px;

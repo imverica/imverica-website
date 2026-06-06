@@ -1,12 +1,14 @@
 ---
-import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPathSafe, type Locale } from '~/data/i18n';
+import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPath, localizedPathSafe, type Locale } from '~/data/i18n';
 
 interface Props {
   lang?: Locale;
   /** Current page slug (e.g. '/i-485-help') — used to build correct alternate-language URLs in the language switcher. */
   currentSlug?: string;
+  /** Locales with this exact slug available. Unsupported locale buttons fall back to that locale's homepage. */
+  availableLocales?: Locale[];
 }
-const { lang = 'en', currentSlug = '/' } = Astro.props;
+const { lang = 'en', currentSlug = '/', availableLocales = SUPPORTED_LOCALES } = Astro.props;
 
 const t = NAV[lang];
 const prefix = LOCALES[lang].prefix;
@@ -31,6 +33,10 @@ function activeNav() {
   return '';
 }
 const active = activeNav();
+function localeHref(locale: Locale) {
+  if (availableLocales.includes(locale)) return localizedPath(locale, currentSlug || '/');
+  return localizedPath(locale, '/');
+}
 ---
 <header class="site-header">
   <div class="site-topbar" aria-label="Contact">
@@ -55,7 +61,7 @@ const active = activeNav();
     <div class="site-lang" aria-label="Language">
       {SUPPORTED_LOCALES.map((locale) => (
         <a
-          href={localizedPathSafe(locale, currentSlug)}
+          href={localeHref(locale)}
           class={lang === locale ? 'active' : ''}
           aria-label={`${LOCALES[locale].label} language`}
         >

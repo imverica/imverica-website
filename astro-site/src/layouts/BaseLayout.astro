@@ -84,7 +84,7 @@ const alternates = slug && availableLocales.length > 1
   ))}
 </head>
 <body>
-  <SiteHeader lang={lang} currentSlug={slug} />
+  <SiteHeader lang={lang} currentSlug={slug} availableLocales={availableLocales} />
   <main>
     <slot />
   </main>
