@@ -4,7 +4,7 @@ import Hero from '~/components/Hero.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'Pricing — Flat-Fee Document Preparation | Imverica Legal Solutions';
-const description = 'Transparent flat-fee pricing for USCIS, EOIR, California family law, small claims, probate, and business document preparation. Simple forms from $49. USCIS packages from $199. Family law from $349. Complex cases by custom quote. No hidden fees, no hourly creep. Imverica is not a law firm.';
+const description = 'Transparent flat-fee pricing for USCIS, EOIR, California family law, small claims, probate, record cleanup, and business document preparation. Simple forms from $49. Probate from $249. Record cleanup from $349. Complex cases by custom quote. Imverica is not a law firm.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -25,6 +25,8 @@ const schema = {
     { '@type': 'Offer', name: 'N-400 Naturalization',          priceCurrency: 'USD', price: '599' },
     { '@type': 'Offer', name: 'SC-100 Small Claims Package',   priceCurrency: 'USD', price: '249' },
     { '@type': 'Offer', name: 'FL-100 Simple Divorce',         priceCurrency: 'USD', price: '349' },
+    { '@type': 'Offer', name: 'Probate Starter / Small Estate', priceCurrency: 'USD', price: '249' },
+    { '@type': 'Offer', name: 'CR-180 Record Cleanup Packet',   priceCurrency: 'USD', price: '349' },
     { '@type': 'Offer', name: 'LLC Launch Package',            priceCurrency: 'USD', price: '449' }
   ]
 };
@@ -152,7 +154,7 @@ const schema = {
           <div>
             <div class="price-card-kicker">California state courts only</div>
             <h2>California court forms</h2>
-            <p class="price-card-sub">Family law, small claims, civil, eviction defense, probate. Packages bundle the common combinations.</p>
+            <p class="price-card-sub">Family law, small claims, civil, eviction defense, probate, and record-cleanup packets. Packages bundle the common combinations.</p>
           </div>
         </div>
         <table class="price-table">
@@ -178,11 +180,12 @@ const schema = {
             <tr data-prefill="I need help collecting on a court judgment (WG-001 wage garnishment / EJ-001 abstract)"><td><strong>WG-001 / EJ-001</strong> Judgment collection</td><td class="num"><span class="price">$199</span></td><td class="num gov">$40</td></tr>
             <tr data-prefill="I need an unlawful-detainer (eviction) response prepared — I'm the tenant"><td><strong>UD response</strong> (tenant defense)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$240</td></tr>
             <tr data-prefill="I need a restraining order document package (DV / CH / EA / GV / WV)"><td><strong>Restraining order</strong> document package</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need a small-estate affidavit (estate under $184,500)"><td><strong>Small estate affidavit</strong> (under $184,500)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need probate document preparation starting at $249 / small-estate affidavit" data-formcode="DE-111"><td><strong>Probate starter</strong> / small-estate affidavit</td><td class="num"><span class="price">from $249</span></td><td class="num gov">$0+</td></tr>
             <tr data-prefill="I need a DE-111 probate petition" data-formcode="DE-111"><td><strong>DE-111 Probate</strong> petition</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
             <tr data-prefill="I need the full California probate package (DE-111 / 121 / 160 / 221)" data-formcode="DE-111"><td><strong>Full Probate</strong> package (DE-111/121/160/221)</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$435+</td></tr>
             <tr data-prefill="I need help closing probate / final distribution / DE-295 final discharge" data-formcode="DE-295"><td><strong>Probate closing</strong> final distribution / DE-295</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need a California expungement / record cleanup packet (CR-180 / CR-181), possibly for DUI" data-formcode="CR-180"><td><strong>CR-180 / CR-181</strong> record-cleanup packet</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need a simple California expungement / record cleanup packet (CR-180 / CR-181), possibly for DUI" data-formcode="CR-180"><td><strong>CR-180 / CR-181</strong> single-case record-cleanup packet</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need help with a large California expungement / record cleanup case with multiple convictions or a big docket" data-formcode="CR-180"><td><strong>Complex record cleanup</strong> multiple cases / large docket</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
