@@ -39,6 +39,10 @@ async function main() {
   await check('FL-300 custody support', { formCode: 'FL-300', service: 'family', flowStatus: 'catalog-only' });
   await check('CH-100 restraining order', { formCode: 'CH-100', service: 'restraining', flowStatus: 'catalog-only' });
   await check('UD-100 eviction tenant', { formCode: 'UD-100', service: 'ud', flowStatus: 'catalog-only' });
+  await check('DUI expungement clean my record', { formCode: 'CR-180', service: 'civil', flowStatus: 'catalog-only' });
+  await check('CR-180', { formCode: 'CR-180', service: 'civil', flowStatus: 'catalog-only' });
+  await check('закрыть probate final distribution', { formCode: 'DE-295', service: 'probate', flowStatus: 'catalog-only' });
+  await check('DE-295', { formCode: 'DE-295', service: 'probate', flowStatus: 'catalog-only' });
 
   const noRoute = await callRoute('zzzzzz nothing matches hopefully');
   assert(noRoute.response.statusCode === 404, `unknown query: expected 404, got ${noRoute.response.statusCode}`);

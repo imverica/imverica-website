@@ -100,6 +100,15 @@ const PACKAGE_RULES = [
     patterns: [/(got|after)\s+(married|marriage).*(change\s+(my\s+)?(last\s+)?name)|(change\s+(my\s+)?(last\s+)?name\s+after\s+(getting\s+)?(married|marriage|wedding))/i],
     reason: 'Name change after marriage → NC-100 (priority over the marriage / FL-100 rule).'
   },
+  {
+    id: 'record_cleanup_expungement',
+    formCode: 'CR-180',
+    service: 'civil',
+    packageForms: ['CR-180', 'CR-181', 'POS-030', 'FW-001'],
+    confidence: 0.92,
+    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes)/i],
+    reason: 'California record-cleanup / expungement language maps to CR-180 / CR-181 packet.'
+  },
 
   // ===== EOIR (immigration court) — most specific first =====
   {
@@ -627,6 +636,15 @@ const PACKAGE_RULES = [
 
   // ===== Probate =====
   {
+    id: 'probate_closing',
+    formCode: 'DE-295',
+    service: 'probate',
+    packageForms: ['DE-295', 'DE-160', 'DE-165'],
+    confidence: 0.9,
+    patterns: [/(de-?295|close\s+(probate|estate)|closing\s+(probate|estate)|probate\s+closing|final\s+(distribution|discharge|accounting|account|report)|discharge\s+(personal\s+representative|executor|administrator)|закрыть\s+probate|закрытие\s+(probate|наследств)|финальн\w*\s+(распредел|отчет)|final\s+distribution|закриття\s+probate|cerrar\s+probate|descargo\s+final|distribuci[oó]n\s+final)/i],
+    reason: 'Probate closing / final discharge language maps to Form DE-295 packet.'
+  },
+  {
     id: 'probate_petition',
     formCode: 'DE-111',
     service: 'probate',
@@ -783,7 +801,7 @@ function routeQuery(queryValue) {
   const lang = detectLanguage(originalQuery);
   const forms = allForms();
 
-  const codeMatch = originalQuery.match(/\b(?:AR|I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC)-[A-Z0-9]+(?:\s+Supplement(?:\s+[A-Z])?)?(?:\([A-Z0-9]+\))?\b/i);
+  const codeMatch = originalQuery.match(/\b(?:AR|I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC|CR)-[A-Z0-9]+(?:\s+Supplement(?:\s+[A-Z])?)?(?:\([A-Z0-9]+\))?\b/i);
   if (codeMatch) {
     const row = findByCode(normalizeCode(codeMatch[0]));
     if (row) {

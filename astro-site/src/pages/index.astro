@@ -11,7 +11,7 @@ import AboutStrip from '~/components/AboutStrip.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
-  'California Licensed LDA & Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, and probate. Remote service worldwide.';
+  'California Licensed LDA & Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, probate closing, and California expungement / record-cleanup packets. Remote service worldwide.';
 
 const legalServiceSchema = {
   '@context': 'https://schema.org',
@@ -26,7 +26,7 @@ const legalServiceSchema = {
     { '@type': 'Country', name: 'United States' }
   ],
   address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
-  description: 'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-Licensed Legal Document Assistant and Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, unlawful detainer, and probate.',
+  description: 'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-Licensed Legal Document Assistant and Immigration Consultant. Document preparation for USCIS, EOIR, family law, small claims, unlawful detainer, probate, probate closing, and California record-cleanup packets.',
   knowsLanguage: ['en', 'ru', 'uk', 'es'],
   serviceType: [
     'USCIS immigration form preparation',
@@ -34,7 +34,9 @@ const legalServiceSchema = {
     'California family law document preparation',
     'Small claims and civil court document preparation',
     'Unlawful detainer document preparation',
-    'Probate document preparation'
+    'Probate document preparation',
+    'Probate closing and final-discharge document preparation',
+    'California expungement and record-cleanup document preparation'
   ],
   disambiguatingDescription: "Imverica Legal Solutions is not a law firm and does not provide legal advice. Documents are prepared at the client's direction."
 };

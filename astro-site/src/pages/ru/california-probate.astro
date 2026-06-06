@@ -5,15 +5,15 @@ import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'ru' as const;
-const title = 'Подготовка документов для probate Калифорнии (DE-111) | Imverica';
-const description = 'California Licensed LDA готовит документы probate — DE-111 petition for probate, DE-121 notice, DE-160 inventory and appraisal, DE-221 spousal property petition, small estate affidavit согласно Probate Code §13100.';
+const title = 'Подготовка документов для probate Калифорнии (DE-111 · DE-295) | Imverica';
+const description = 'California Licensed LDA готовит документы probate — DE-111 petition for probate, DE-121 notice, DE-160 inventory, DE-221 spousal property petition, DE-295 final discharge, final distribution и small estate affidavits.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California Probate Document Preparation',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
-  description: 'Подготовка документов probate Калифорнии по поручению петиционера. Small estates, spousal property и стандартное администрирование.'
+  description: 'Подготовка документов probate Калифорнии по поручению петиционера. Small estates, spousal property, стандартное администрирование, final distribution и final discharge.'
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/california-probate"
@@ -22,7 +22,7 @@ const schema = {
     lang={lang}
     eyebrow="California Probate · Probate Code §8000 et seq."
     heading="Подготовка документов probate Калифорнии"
-    sub="Small estate affidavits, spousal property petitions и стандартное администрирование в superior court Калифорнии. Многоязычная анкета, фиксированная цена."
+    sub="Small estate affidavits, spousal property petitions, стандартное администрирование, final distribution и final discharge packets в superior court Калифорнии. Многоязычная анкета, фиксированная цена."
     ctaPrimary={{ href: '/#get-started?form=DE-111', text: 'Начать пакет probate' }}
   />
 
@@ -54,8 +54,23 @@ const schema = {
       <li><strong>DE-160 Inventory and Appraisal.</strong> Personal representative перечисляет все активы estate в течение 4 месяцев. Probate referee оценивает неденежные активы.</li>
       <li><strong>Creditor claims.</strong> У кредиторов 4 месяца с момента выдачи Letters для подачи claims (Probate Code §9100).</li>
       <li><strong>Продажа активов, оплата долгов, распределение.</strong> Personal representative управляет estate, продаёт активы при необходимости, оплачивает долги/налоги/расходы и распределяет остаток по завещанию или intestacy.</li>
-      <li><strong>Окончательный отчёт и распределение.</strong> DE-180 / DE-295 final accounting petition. Суд утверждает и освобождает personal representative.</li>
+      <li><strong>Окончательный отчёт и распределение.</strong> Personal representative подаёт final account или report, просит суд утвердить distribution, распределяет estate и затем просит discharge.</li>
     </ol>
+
+    <h2>Закрытие probate и final distribution</h2>
+    <p>
+      Мы также готовим closing-stage probate packets, когда estate готов к
+      final distribution. Это может включать final account или report,
+      petition for final distribution, proposed order, receipts
+      beneficiaries, waivers или consents, notice packets и
+      <strong>DE-295</strong> Ex Parte Petition for Final Discharge and Order
+      where applicable.
+    </p>
+    <p>
+      Imverica готовит документы по поручению personal representative. Мы не
+      выступаем personal representative, не даём юридические консультации, не
+      распоряжаемся estate funds и не представляем в суде.
+    </p>
 
     <h2>Формы, которые мы готовим</h2>
     <div class="form-list">
@@ -71,6 +86,9 @@ const schema = {
         <li><strong>DE-161</strong> — Attachment to Inventory and Appraisal</li>
         <li><strong>DE-172</strong> — Creditor's Claim</li>
         <li><strong>DE-221</strong> — Spousal or Domestic Partner Property Petition</li>
+        <li><strong>DE-295</strong> — Ex Parte Petition for Final Discharge and Order, where applicable</li>
+        <li><strong>Final account / report and petition for final distribution</strong> — closing packet по вашим estate records</li>
+        <li><strong>Receipts, waivers, consents и proposed orders</strong> — собираются как часть closing package</li>
         <li><strong>Small Estate Affidavit</strong> — Probate Code §13100 (шаблон у нас в офисе)</li>
         <li><strong>Affidavit Re Real Property of Small Value</strong> — Probate Code §13200</li>
       </ul>
@@ -81,7 +99,8 @@ const schema = {
       (процедуры small estate); §13500 et seq. (spousal property);
       §§8000 et seq. (открытие administration); §§9000 et seq. (creditor
       claims); §10800 et seq. (вознаграждение personal representative);
-      §§11600 et seq. (распределение).
+      §§11600 et seq. (распределение); Judicial Council form DE-295
+      (final discharge).
     </cite>
   </LandingBody>
 

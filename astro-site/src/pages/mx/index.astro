@@ -8,7 +8,7 @@ import { HERO } from '~/data/i18n';
 const lang = 'es' as const;
 const title = 'Imverica Legal Solutions | USCIS · EOIR · Formularios de California';
 const description =
-  'LDA con licencia de California y consultor de inmigración. Preparación de documentos para USCIS, EOIR, derecho familiar, reclamos menores y sucesiones. Servicio remoto en todo el mundo.';
+  'LDA con licencia de California y consultor de inmigración. Preparación de documentos para USCIS, EOIR, derecho familiar, reclamos menores, probate closing y California expungement / record-cleanup packets. Servicio remoto en todo el mundo.';
 
 
 const legalServiceSchema = {
@@ -22,7 +22,7 @@ const legalServiceSchema = {
     { '@type': 'Country', name: 'United States' }
   ],
   address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
-  description: 'Asistente de Documentos Legales con licencia de California y Consultor de Inmigración. Preparación de documentos USCIS, EOIR, derecho familiar, reclamos menores, desalojo y sucesiones.',
+  description: 'Asistente de Documentos Legales con licencia de California y Consultor de Inmigración. Preparación de documentos USCIS, EOIR, derecho familiar, reclamos menores, desalojo, sucesiones, probate closing y California record-cleanup packets.',
   knowsLanguage: ['en', 'ru', 'uk', 'es'],
   serviceType: [
     'Preparación de formularios de inmigración USCIS',
@@ -30,7 +30,9 @@ const legalServiceSchema = {
     'Preparación de formularios de derecho familiar de California',
     'Preparación de documentos de reclamos menores',
     'Preparación de documentos de desalojo',
-    'Preparación de documentos de sucesión'
+    'Preparación de documentos de sucesión',
+    'Preparación de documentos para cerrar probate y final discharge',
+    'Preparación de California expungement y record-cleanup documents'
   ],
   disambiguatingDescription: 'Imverica Legal Solutions no es un bufete de abogados y no brinda asesoría legal. Los documentos se preparan bajo la dirección del cliente.'
 };
@@ -71,6 +73,8 @@ const legalServiceSchema = {
         <a class="btn btn-ghost" href="/immigration#immigration-consultant-california">I-131 — Documento de viaje</a>
         <a class="btn btn-ghost" href="/immigration#eoir-documents">EOIR-28 / 42A / 42B</a>
         <a class="btn btn-ghost" href="/mx/california-unlawful-detainer">Desalojo (UD-100)</a>
+        <a class="btn btn-ghost" href="/mx/california-probate">Probate closing (DE-295)</a>
+        <a class="btn btn-ghost" href="/mx/california-expungement">Expungement / CR-180</a>
       </div>
       <p style="margin:1.4rem auto 0;font-size:13px;color:var(--muted);">
         Lista completa de formularios USCIS, EOIR y California en la página

@@ -6,7 +6,7 @@ const SYSTEM_PROMPT = `You are the AI assistant for Imverica Legal Solutions, a 
 
 WHO WE ARE: Imverica Legal Solutions — California Licensed LDA · Immigration Consultant. Phone: +1 (916) 399-3992. Telegram: t.me/imverica. We prepare documents — we do NOT give legal advice.
 
-WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, any EOIR immigration court documents, family law forms, small claims, civil court, unlawful detainer, translations, notary.
+WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, any EOIR immigration court documents, family law forms, small claims, civil court, unlawful detainer, probate opening and closing packets, California record-cleanup / petition-for-dismissal packets, translations, notary.
 
 CRITICAL — UPL COMPLIANCE: Never give legal advice. Never recommend which form to file. Never say whether someone qualifies. Never predict outcomes. Never explain legal strategy. If asked for advice, say: "We prepare documents at your direction — for legal advice, you'll need an attorney." We are not a law firm and do not provide legal advice.
 
@@ -63,6 +63,8 @@ const COMMUNITY_TERM_ALIASES = [
   { pattern: /компле[ий]нт\w*/i, expansion: 'complaint civil complaint small claims SC-100 PLD-C-001 PLD-PI-001' },
   { pattern: /компла[ий]нт\w*/i, expansion: 'complaint civil complaint small claims SC-100 PLD-C-001 PLD-PI-001' },
   { pattern: /пробе[ий]т\w*/i, expansion: 'probate estate deceased DE-111 DE-120 DE-150' },
+  { pattern: /закрыт\w*\s+(probate|наследств)/i, expansion: 'probate closing final discharge DE-295 final distribution' },
+  { pattern: /экспандж\w*|экспундж\w*|снять\s+судим\w*|снятие\s+судим\w*|погашен\w*\s+судим\w*/i, expansion: 'expungement record cleanup petition for dismissal CR-180 CR-181' },
   { pattern: /консерваторшип\w*/i, expansion: 'conservatorship GC-310 GC-312 GC-340' },
   { pattern: /гардианшип\w*/i, expansion: 'guardianship minor child guardian GC-210 GC-211 GC-240' }
 ];
@@ -278,6 +280,12 @@ function applyRoutingBoosts(form, queryText, baseScore) {
     if (codeIn(code, ['SC-100', 'SC-104', 'SC-104B', 'SC-120', 'SC-105'])) score += 45;
   }
 
+  if (queryHasAny(query, ['expungement', 'record cleanup', 'clean your record', 'record cleaning', 'petition for dismissal', 'dismiss conviction', 'dui expungement', 'dui record', 'снять судимость', 'снятие судимости', 'погашение судимости', 'экспанджмент', 'экспунджмент', 'очистить запись', 'limpiar record', 'limpiar antecedentes', 'borrar antecedentes'])) {
+    if (codeIn(code, ['CR-180', 'CR-181', 'MC-025', 'MC-031', 'POS-030', 'POS-040', 'FW-001'])) score += 95;
+    if (code === 'CR-180') score += 140;
+    if (pane !== 'service' && !codeIn(code, ['FW-001'])) score -= 85;
+  }
+
   if (queryHasAny(query, ['eviction', 'unlawful detainer', 'tenant', 'landlord', 'not paying rent', 'pay rent or quit', 'выселение', 'аренда', 'desalojo', 'inquilino'])) {
     if (pane === 'ud') score += 85;
     if (codeIn(code, ['UD-100', 'UD-105', 'UD-110', 'UD-150', 'UD-N3', 'UD-N30', 'UD-N60', 'UD-N3C'])) score += 50;
@@ -304,9 +312,10 @@ function applyRoutingBoosts(form, queryText, baseScore) {
     if (pane !== 'ro' && !codeIn(code, ['WV-200'])) score -= 80;
   }
 
-  if (queryHasAny(query, ['probate', 'estate', 'deceased', 'executor', 'administrator', 'inheritance', 'small estate', 'наследство', 'умер', 'sucesion', 'herencia'])) {
+  if (queryHasAny(query, ['probate', 'estate', 'deceased', 'executor', 'administrator', 'inheritance', 'small estate', 'closing probate', 'close probate', 'final discharge', 'final distribution', 'наследство', 'закрытие probate', 'закрыть probate', 'умер', 'sucesion', 'herencia', 'cerrar probate'])) {
     if (pane === 'probate') score += 90;
-    if (codeIn(code, ['DE-111', 'DE-120', 'DE-121', 'DE-140', 'DE-150', 'DE-160', 'DE-310', 'DE-305'])) score += 55;
+    if (codeIn(code, ['DE-111', 'DE-120', 'DE-121', 'DE-140', 'DE-150', 'DE-160', 'DE-165', 'DE-295', 'DE-310', 'DE-305'])) score += 55;
+    if (queryHasAny(query, ['closing probate', 'close probate', 'final discharge', 'final distribution', 'закрытие probate', 'закрыть probate', 'cerrar probate']) && code === 'DE-295') score += 120;
     if (pane === 'immigration' && !mentionsImmigration) score -= 70;
   }
 

@@ -8,7 +8,7 @@ import { HERO } from '~/data/i18n';
 const lang = 'ru' as const;
 const title = 'Imverica Legal Solutions | USCIS · EOIR · Калифорнийские формы';
 const description =
-  'Калифорнийский лицензированный LDA и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков и наследственных дел. Удалённый сервис по всему миру.';
+  'Калифорнийский лицензированный LDA и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков, probate closing и California expungement / record-cleanup packets. Удалённый сервис по всему миру.';
 
 
 const legalServiceSchema = {
@@ -22,7 +22,7 @@ const legalServiceSchema = {
     { '@type': 'Country', name: 'United States' }
   ],
   address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
-  description: 'Калифорнийский лицензированный помощник по юридическим документам и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков, выселения и наследственных дел.',
+  description: 'Калифорнийский лицензированный помощник по юридическим документам и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков, выселения, наследственных дел, probate closing и California record-cleanup packets.',
   knowsLanguage: ['en', 'ru', 'uk', 'es'],
   serviceType: [
     'Подготовка иммиграционных форм USCIS',
@@ -30,7 +30,9 @@ const legalServiceSchema = {
     'Подготовка калифорнийских форм семейного права',
     'Подготовка документов малых исков',
     'Подготовка документов unlawful detainer',
-    'Подготовка документов по наследственным делам'
+    'Подготовка документов по наследственным делам',
+    'Подготовка документов для закрытия probate и final discharge',
+    'Подготовка California expungement и record-cleanup документов'
   ],
   disambiguatingDescription: 'Imverica Legal Solutions не является юридической фирмой и не предоставляет юридических консультаций. Документы готовятся по поручению клиента.'
 };
@@ -73,6 +75,8 @@ const legalServiceSchema = {
         <a class="btn btn-ghost" href="/immigration#immigration-consultant-california">I-131 — travel document</a>
         <a class="btn btn-ghost" href="/immigration#eoir-documents">EOIR-28 / 42A / 42B</a>
         <a class="btn btn-ghost" href="/ru/california-unlawful-detainer">Выселение (UD-100)</a>
+        <a class="btn btn-ghost" href="/ru/california-probate">Probate closing (DE-295)</a>
+        <a class="btn btn-ghost" href="/ru/california-expungement">Expungement / CR-180</a>
       </div>
       <p style="margin:1.4rem auto 0;font-size:13px;color:var(--muted);">
         Полный список USCIS, EOIR и калифорнийских форм — на странице

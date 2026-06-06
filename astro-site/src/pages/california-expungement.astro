@@ -1,0 +1,91 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Expungement / Record Cleanup Forms (CR-180) | Imverica';
+const description = 'California Licensed LDA prepares record-cleanup and petition-for-dismissal packets — CR-180 Petition for Dismissal, CR-181 proposed order, declarations, proof of service, and fee waiver support for DUI and other eligible cases.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Record Cleanup and Petition for Dismissal Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: "California record-cleanup and petition-for-dismissal document preparation at the client's direction. CR-180, CR-181, attachments, service, and fee-waiver support."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/california-expungement"
+  slug="/california-expungement" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Criminal Court · CR-180 · CR-181"
+    heading="California expungement and record-cleanup document preparation"
+    sub="We prepare California petition-for-dismissal packets for DUI and other eligible misdemeanor or felony cases at your direction — CR-180, CR-181, declarations, proof of service, and fee-waiver forms when applicable."
+    ctaPrimary={{ href: '/#get-started?form=CR-180', text: 'Start my record-cleanup packet' }}
+  />
+
+  <CategoryTiles
+    kicker="Typical packet"
+    heading="Forms and documents we organize"
+    intro="California courts often call this record cleaning or a petition for dismissal. The exact packet depends on the county, case record, and client instructions."
+    tiles={[
+      { icon: '📄', title: 'CR-180', desc: 'Petition for Dismissal, including Penal Code dismissal and reduction requests where the client directs.', href: '/#get-started?form=CR-180', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'CR-181', desc: 'Proposed Order for Dismissal for the judge to grant or deny the requested relief.', href: '/#get-started?form=CR-181', color: 'var(--terracotta-deep)' },
+      { icon: '🧾', title: 'Declarations', desc: 'MC-025 / MC-031 attachments and supporting facts prepared from your records and instructions.', href: '/#get-started?form=CR-180', color: 'var(--sage)' },
+      { icon: '📨', title: 'Service & fee waiver', desc: 'Proof of service and FW-001 fee waiver support when the county procedure requires it.', href: '/fw-001-fee-waiver', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/fw-001-fee-waiver', label: 'FW-001 — California court fee waiver' },
+    { href: '/california-probate', label: 'California probate opening and closing packets' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Many people call this “expungement,” but California Courts describe it
+      as cleaning your record or asking for dismissal. We prepare the court
+      forms and supporting packet at your direction for DUI and other
+      qualifying misdemeanor or felony matters. We do not decide eligibility,
+      give criminal or immigration advice, or promise a court outcome.
+    </p>
+
+    <h2>What we prepare</h2>
+    <ul>
+      <li><strong>CR-180</strong> — Petition for Dismissal.</li>
+      <li><strong>CR-181</strong> — Order for Dismissal for the court to sign.</li>
+      <li><strong>MC-025 / MC-031</strong> — attachments or declarations when more explanation is needed.</li>
+      <li><strong>POS-030 / POS-040</strong> — proof of service when required by local court procedure.</li>
+      <li><strong>FW-001</strong> — Request to Waive Court Fees when the client wants fee-waiver paperwork prepared.</li>
+      <li>County-specific local forms, filing coversheets, and packet assembly when the county requires them.</li>
+    </ul>
+
+    <h2>DUI and other cases</h2>
+    <p>
+      DUI record-cleanup packets often require exact court-case information:
+      county, case number, conviction date, offense code, probation status,
+      sentence completion, and whether any new case is pending. We turn that
+      information into a clean filing packet, but we do not advise whether the
+      court should grant the petition or whether filing is safe for a
+      non-citizen. Immigration consequences should be reviewed with an
+      attorney before filing.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant, not a law
+      firm. We cannot appear in criminal court, negotiate with the district
+      attorney, advise on eligibility, advise about immigration consequences,
+      or guarantee that the court will dismiss or reduce a conviction.
+    </p>
+
+    <cite>
+      <strong>Official sources:</strong> California Courts Self-Help Guide,
+      “Clean your record”; Judicial Council forms CR-180 Petition for
+      Dismissal and CR-181 Order for Dismissal. Document preparation only —
+      not legal advice.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=CR-180" primaryText="Begin my CR-180 intake" />
+</BaseLayout>

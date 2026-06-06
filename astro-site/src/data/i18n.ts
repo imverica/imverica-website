@@ -39,6 +39,7 @@ const translatedSlugs = new Set<string>([
   '/i-765-work-permit-help',
   '/california-unlawful-detainer',
   '/california-probate',
+  '/california-expungement',
   '/california-restraining-orders',
   '/lda',
   '/fl',

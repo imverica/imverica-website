@@ -69,10 +69,17 @@ const services = [
   },
   {
     id: 'probate-document-preparation-california',
-    title: 'Probate and small estate documents',
-    text: 'California probate document preparation for estate petitions, notices, inventories, small estate affidavits, and related court packets.',
-    items: ['DE-111, DE-121, DE-160, DE-221', 'Small estate affidavit', 'Probate hearing and notice packets'],
+    title: 'Probate, small estate, and closing documents',
+    text: 'California probate document preparation for estate petitions, notices, inventories, small estate affidavits, final distribution, final discharge, and related court packets.',
+    items: ['DE-111, DE-121, DE-160, DE-221', 'DE-295 — Final discharge where applicable', 'Small estate affidavit', 'Final accounting / distribution packets'],
     cite: 'California Probate Code forms and procedures.'
+  },
+  {
+    id: 'expungement-record-clearance-california',
+    title: 'California expungement and record-cleanup packets',
+    text: 'Document preparation for California dismissal / record-cleanup packets, including DUI and other eligible misdemeanor or felony cases, prepared from the client’s court records and instructions.',
+    items: ['CR-180 — Petition for Dismissal', 'CR-181 — Order for Dismissal', 'MC-025 / MC-031 attachments', 'POS-030 / POS-040 proof of service', 'FW-001 fee waiver when applicable'],
+    cite: 'California Courts describe record-cleanup options as complicated; eligibility and immigration consequences should be reviewed with an attorney when needed.'
   },
   {
     id: 'business-filings',
@@ -185,7 +192,7 @@ const FORM_LINKS: Record<string, string> = {
   'FL-300': '/fl',
   'FL-105': '/fl',
   'UCCJEA': '/fl',
-  'FW-001': '/fl',
+  'FW-001': '/fw-001-fee-waiver',
   'SC-100': '/sc',
   'SC-104': '/sc',
   'SC-120': '/sc',
@@ -198,10 +205,17 @@ const FORM_LINKS: Record<string, string> = {
   'EA-100': '/california-restraining-orders',
   'GV-100': '/california-restraining-orders',
   'WV-100': '/california-restraining-orders',
+  'CR-180': '/california-expungement',
+  'CR-181': '/california-expungement',
+  'MC-025': '/california-expungement',
+  'MC-031': '/california-expungement',
+  'POS-030': '/california-expungement',
+  'POS-040': '/california-expungement',
   'DE-111': '/california-probate',
   'DE-121': '/california-probate',
   'DE-160': '/california-probate',
-  'DE-221': '/california-probate'
+  'DE-221': '/california-probate',
+  'DE-295': '/california-probate'
 };
 
 function splitItem(raw: string): { codes: string[]; rest: string } {
@@ -230,6 +244,7 @@ const SERVICE_HREF: Record<string, string> = {
   'small-claims-document-preparation-california': '/sc',
   'restraining-orders-california': '/california-restraining-orders',
   'probate-document-preparation-california': '/california-probate',
+  'expungement-record-clearance-california': '/california-expungement',
   'business-filings': '/business'
 };
 function pageHref(dest: string): string {
