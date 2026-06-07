@@ -228,9 +228,7 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 /* dashboard: mascot in the navy hero, top-right */
 .dash-scene{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:148px;height:180px;z-index:1;pointer-events:none;}
 @media (max-width:640px){.dash-scene{display:none;} .dash-head .who{max-width:100%;}}
-/* sign-in: mascot beside the centered auth card (wide screens only) */
-.auth-mascot{position:absolute;left:calc(50% - 500px);top:50%;transform:translateY(-50%);width:230px;height:300px;z-index:1;pointer-events:none;}
-@media (max-width:1120px){.auth-mascot{display:none;}}
+/* (sign-in mascot removed — the auth screen is a clean centered card) */
 
 .order{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:0.9rem;}
 .order-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap;}
@@ -376,6 +374,24 @@ body.is-auth footer { display: none !important; }
   font-size: 14.5px; color: #6b7689; line-height: 1.6;
   margin: 0 0 28px; font-weight: 400;
 }
+/* Clean, centered sign-in card (Yelp-style): circular brand badge on top,
+   centered title + subtitle, full-width field & button. Form fields stay
+   left-aligned for readability. */
+.auth-card-centered { text-align: center; max-width: 440px; }
+.auth-card-centered .auth-logo {
+  margin: 4px auto 22px; width: 84px; height: 84px; border-radius: 50%;
+}
+.auth-card-centered .auth-logo svg { width: 38px; height: 38px; }
+.auth-card-centered .auth-h1 { margin-bottom: 10px; }
+.auth-card-centered .auth-sub { margin-bottom: 18px; }
+.auth-card-centered .form-group { text-align: left; }
+.auth-card-centered .form-group label { display: none; } /* placeholder is enough on this clean card */
+.auth-terms {
+  font-size: 12.5px; line-height: 1.55; color: #8a93a3;
+  margin: 0 0 22px; text-align: center;
+}
+.auth-terms a { color: var(--navy); font-weight: 600; text-decoration: none; }
+.auth-terms a:hover { text-decoration: underline; }
 /* Override the legacy .card/.form-group/.btn/.msg inside the auth card. */
 .auth-card .form-group { margin-bottom: 18px; }
 .auth-card .form-group label {
@@ -501,8 +517,7 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
 
 <!-- ===== Login: email step ===== -->
 <div class="auth-shell" id="step-email">
-  <div class="auth-mascot" data-mascot aria-hidden="true"></div>
-  <div class="auth-card">
+  <div class="auth-card auth-card-centered">
     <div class="auth-logo" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 3v18"/>
@@ -512,9 +527,9 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
         <path d="M3 7h18"/>
       </svg>
     </div>
-    <div class="auth-kicker" data-i18n="authWelcome">Welcome</div>
     <h1 class="auth-h1" data-i18n="authSignIn">Sign in to your account</h1>
-    <p class="auth-sub" data-i18n="authEmailSub">Enter your email below — we'll send a one-time code to sign you in. No password needed.</p>
+    <p class="auth-sub" data-i18n="authEmailSub">Enter your email and we'll send a one-time code — no password needed.</p>
+    <p class="auth-terms" data-i18n-html="authTerms">By continuing, you agree to Imverica's <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="/terms.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
     <div class="gauth" id="gauth-block" style="display:none;">
       <div id="gbtn-container"></div>
       <div class="auth-or"><span data-i18n="authOr">or</span></div>
@@ -918,6 +933,7 @@ const STRINGS = {
     authWelcome: 'Welcome',
     authSignIn: 'Sign in to your account',
     authEmailSub: "Enter your email below — we'll send a one-time code. This code acts as your password — no separate signup needed.",
+    authTerms: 'By continuing, you agree to Imverica\'s <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="/terms.html" target="_blank" rel="noopener">Privacy Policy</a>.',
     authEmailLabel: 'Email',
     authSendCode: 'Send me a code',
     authSending: 'Sending…',
@@ -1049,6 +1065,7 @@ const STRINGS = {
     authWelcome: 'Добро пожаловать',
     authSignIn: 'Войти в личный кабинет',
     authEmailSub: 'Введите email — мы отправим одноразовый код для входа. Этот код будет вашим паролем — отдельная регистрация не нужна.',
+    authTerms: 'Продолжая, вы соглашаетесь с <a href="/terms.html" target="_blank" rel="noopener">Условиями использования</a> и <a href="/terms.html" target="_blank" rel="noopener">Политикой конфиденциальности</a> Imverica.',
     authEmailLabel: 'Email',
     authSendCode: 'Отправить код',
     authSending: 'Отправляем…',
@@ -1180,6 +1197,7 @@ const STRINGS = {
     authWelcome: 'Ласкаво просимо',
     authSignIn: 'Увійти в особистий кабінет',
     authEmailSub: 'Введіть email — ми надішлемо одноразовий код для входу. Цей код буде вашим паролем — окрема реєстрація не потрібна.',
+    authTerms: 'Продовжуючи, ви погоджуєтесь з <a href="/terms.html" target="_blank" rel="noopener">Умовами використання</a> та <a href="/terms.html" target="_blank" rel="noopener">Політикою конфіденційності</a> Imverica.',
     authEmailLabel: 'Email',
     authSendCode: 'Надіслати код',
     authSending: 'Надсилаємо…',
@@ -1311,6 +1329,7 @@ const STRINGS = {
     authWelcome: 'Bienvenido',
     authSignIn: 'Inicie sesión en su cuenta',
     authEmailSub: 'Ingrese su email — le enviaremos un código de un solo uso. Este código será su contraseña — sin registro aparte.',
+    authTerms: 'Al continuar, aceptas los <a href="/terms.html" target="_blank" rel="noopener">Términos de servicio</a> y la <a href="/terms.html" target="_blank" rel="noopener">Política de privacidad</a> de Imverica.',
     authEmailLabel: 'Email',
     authSendCode: 'Enviarme un código',
     authSending: 'Enviando…',
@@ -1469,6 +1488,10 @@ function applyI18n(){
   document.querySelectorAll('[data-i18n-title]').forEach(function(el){
     var k = el.getAttribute('data-i18n-title');
     if (T[k]) { el.setAttribute('title', T[k]); el.setAttribute('aria-label', T[k]); }
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var k = el.getAttribute('data-i18n-html');
+    if (T[k]) el.innerHTML = T[k]; // values are controlled translation strings
   });
   document.querySelectorAll('.lang-switch a').forEach(function(a){
     if (a.getAttribute('data-lang') === CURRENT_LANG) a.classList.add('active');
