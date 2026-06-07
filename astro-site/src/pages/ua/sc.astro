@@ -6,8 +6,8 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'uk' as const;
-const title = 'Підготовка документів для малих позовів Каліфорнії (SC-100) | Imverica';
-const description = 'California Licensed LDA готує документи для малих позовів — SC-100 (позов позивача), SC-120 (зустрічний позов відповідача), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Ліміт $12,500 згідно CCP §116.221.';
+const title = 'Малі позови та цивільні форми Каліфорнії | Imverica';
+const description = 'California Licensed LDA готує документи для малих позовів і цивільних судів за вашим дорученням — demand letters, SC-100, SC-120, service, fee waivers, subpoenas, post-judgment collection та пов’язані форми.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -21,16 +21,16 @@ const schema = {
   slug="/sc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
   <Hero
     lang={lang}
-    eyebrow="California Civil · CCP §116.110-116.950"
-    heading="SC-100 — Plaintiff's Claim and ORDER (Малі позови Каліфорнії)"
-    sub="SC-100 (позов позивача), SC-120 (зустрічний позов відповідача), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Ліміт $12,500 для фізосіб. Фіксована ціна."
+    eyebrow="California Civil · Small Claims Act"
+    heading="Малі позови та цивільні форми Каліфорнії"
+    sub="Підготовка документів для self-represented позивачів і відповідачів: demand letters, пакети small claims, service papers, fee waivers, subpoenas, документи до слухання та post-judgment collection forms."
     ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Почати пакет малого позову' }}
   />
 
   <CategoryTiles
     kicker="Оберіть свою роль"
     heading="California Small Claims"
-    intro="Позивач, відповідач або стягнення після judgment — почніть потрібний пакет."
+    intro="Оберіть потрібний пакет документів. Ми готуємо папери за вашим дорученням; ви залишаєтесь self-represented і самі подаєте документи або виступаєте в суді."
     tiles={[
       { icon: '✉️', title: 'Demand Letter',           desc: 'Досудовий лист-вимога — часто вирішує спір до подачі позову.', href: '/ua/demand-letter', color: 'var(--terracotta-deep)' },
       { icon: '⚖️', title: 'SC-100 — Позивач',         desc: 'Позов позивача до $12,500 (фізособи).',                href: '/ua/sc-100-plaintiff-claim',  color: 'var(--navy)' },
@@ -40,7 +40,10 @@ const schema = {
       { icon: '🧾', title: 'FW-001 — Fee waiver',      desc: 'Звільнення від мита для відповідних сторін.',           href: '/ua/fw-001-fee-waiver',  color: 'var(--navy-light)' },
       { icon: '🏦', title: 'WG-001 — Garnishment',     desc: 'Wage garnishment для виконання judgment.',              href: '/ua/wg-001-wage-garnishment',  color: 'var(--terracotta-deep)' },
       { icon: '📑', title: 'EJ-001 — Abstract',         desc: 'Abstract of judgment для застави на нерухомість.',     href: '/ua/ej-001-abstract-of-judgment',  color: 'var(--navy)' },
-      { icon: '📅', title: 'SC-140 — Розстрочка',       desc: 'Прохання сплачувати judgment частинами.',              href: '/ua/sc-140-installments',  color: 'var(--sage)' }
+      { icon: '📅', title: 'SC-140 — Розстрочка',       desc: 'Прохання сплачувати judgment частинами.',              href: '/ua/sc-140-installments',  color: 'var(--sage)' },
+      { icon: '🧑‍⚖️', title: 'SC-105 — Court order', desc: 'Request for court order або відповідь у small claims справі.', href: '/#get-started?form=SC-105', color: 'var(--terracotta)' },
+      { icon: '📣', title: 'SC-107 — Subpoena', desc: 'Subpoena для явки свідка або надання документів.', href: '/#get-started?form=SC-107', color: 'var(--gold)' },
+      { icon: '↩️', title: 'SC-135 — Vacate judgment', desc: 'Motion, щоб просити суд скасувати judgment.', href: '/#get-started?form=SC-135', color: 'var(--navy-light)' }
     ]}
   />
 

@@ -6,8 +6,8 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'ru' as const;
-const title = 'Подготовка документов для малых исков Калифорнии (SC-100) | Imverica';
-const description = 'California Licensed LDA готовит документы для малых исков — SC-100 (иск истца), SC-120 (встречный иск ответчика), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Лимит $12,500 согласно CCP §116.221.';
+const title = 'Малые иски и гражданские формы Калифорнии | Imverica';
+const description = 'California Licensed LDA готовит документы для малых исков и гражданских судов по вашему поручению — demand letters, SC-100, SC-120, service, fee waivers, subpoenas, post-judgment collection и связанные формы.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -21,16 +21,16 @@ const schema = {
   slug="/sc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
   <Hero
     lang={lang}
-    eyebrow="California Civil · CCP §116.110-116.950"
-    heading="SC-100 — Plaintiff's Claim and ORDER (Малые иски Калифорнии)"
-    sub="SC-100 (иск истца), SC-120 (встречный иск ответчика), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Лимит $12,500 для физлиц. Фиксированная цена."
+    eyebrow="California Civil · Small Claims Act"
+    heading="Малые иски и гражданские формы Калифорнии"
+    sub="Подготовка документов для self-represented истцов и ответчиков: demand letters, пакеты для подачи small claims, service papers, fee waivers, subpoenas, документы к слушанию и post-judgment collection forms."
     ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Начать пакет малого иска' }}
   />
 
   <CategoryTiles
     kicker="Выберите свою роль"
     heading="California Small Claims"
-    intro="Истец, ответчик или взыскание после judgment — начните нужный пакет."
+    intro="Выберите нужный пакет документов. Мы готовим бумаги по вашему поручению; вы остаётесь self-represented и сами подаёте документы или выступаете в суде."
     tiles={[
       { icon: '✉️', title: 'Demand Letter',           desc: 'Досудебное письмо-требование — часто решает спор до подачи иска.', href: '/ru/demand-letter', color: 'var(--terracotta-deep)' },
       { icon: '⚖️', title: 'SC-100 — Истец',          desc: 'Иск истца до $12,500 (физлица).',                       href: '/ru/sc-100-plaintiff-claim',  color: 'var(--navy)' },
@@ -40,7 +40,10 @@ const schema = {
       { icon: '🧾', title: 'FW-001 — Fee waiver',      desc: 'Освобождение от пошлины для подходящих сторон.',         href: '/ru/fw-001-fee-waiver',  color: 'var(--navy-light)' },
       { icon: '🏦', title: 'WG-001 — Garnishment',     desc: 'Wage garnishment для исполнения judgment.',              href: '/ru/wg-001-wage-garnishment',  color: 'var(--terracotta-deep)' },
       { icon: '📑', title: 'EJ-001 — Abstract',         desc: 'Abstract of judgment для залога на недвижимость.',       href: '/ru/ej-001-abstract-of-judgment',  color: 'var(--navy)' },
-      { icon: '📅', title: 'SC-140 — Рассрочка',       desc: 'Просьба оплачивать judgment частями.',                   href: '/ru/sc-140-installments',  color: 'var(--sage)' }
+      { icon: '📅', title: 'SC-140 — Рассрочка',       desc: 'Просьба оплачивать judgment частями.',                   href: '/ru/sc-140-installments',  color: 'var(--sage)' },
+      { icon: '🧑‍⚖️', title: 'SC-105 — Court order', desc: 'Request for court order или ответ в small claims деле.', href: '/#get-started?form=SC-105', color: 'var(--terracotta)' },
+      { icon: '📣', title: 'SC-107 — Subpoena', desc: 'Subpoena для явки свидетеля или предоставления документов.', href: '/#get-started?form=SC-107', color: 'var(--gold)' },
+      { icon: '↩️', title: 'SC-135 — Vacate judgment', desc: 'Motion, чтобы просить суд отменить judgment.', href: '/#get-started?form=SC-135', color: 'var(--navy-light)' }
     ]}
   />
 

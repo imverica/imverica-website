@@ -6,8 +6,8 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'ru' as const;
-const title = 'Калифорнийское семейное право — подготовка форм (FL-100, FL-300) | Imverica';
-const description = 'California Licensed LDA готовит формы семейного права — FL-100 (заявление о расторжении), FL-120 (ответ), FL-150 (income & expense), FL-300 (request for order), FL-105 UCCJEA, FL-160 (property), FW-001 (fee waiver). Фиксированная цена.';
+const title = 'Калифорнийское семейное право — подготовка документов | Imverica';
+const description = 'California Licensed LDA готовит документы семейного права по вашему поручению — divorce, response, custody, support, financial disclosures, UCCJEA, fee waivers и связанные FL/FW формы.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -22,15 +22,15 @@ const schema = {
   <Hero
     lang={lang}
     eyebrow="California Family Law · Family Code §2330 et seq."
-    heading="FL-100, FL-300 — Расторжение брака, опека, алименты"
-    sub="Готовим все стандартные формы FL- и FW- семейного права по вашему поручению — petition (FL-100), summons (FL-110), Request for Order (FL-300), financial disclosures, UCCJEA, и fee-waiver. Многоязычная анкета по фиксированной цене."
+    heading="Формы семейного права Калифорнии"
+    sub="Подготовка документов для self-represented сторон по family law: развод и ответ, custody и support requests, financial disclosures, property declarations, UCCJEA, fee waivers и связанные FL/FW court forms."
     ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Начать пакет семейного права' }}
   />
 
   <CategoryTiles
     kicker="Выберите направление"
     heading="California Family Law"
-    intro="Нажмите любую плитку, чтобы начать пакет или узнать о формах."
+    intro="Сначала выберите направление семейного дела. Пакеты по конкретным формам — ниже."
     tiles={[
       { icon: '💍', title: 'FL-100 — Развод',            desc: 'Заявление о разводе (no-fault), summons, service.',     href: '/ru/fl-100-divorce',  color: 'var(--navy)' },
       { icon: '👶', title: 'FL-300 — Опека / Алименты',  desc: 'Request for Order: временные приказы, изменение.',      href: '/ru/fl-300-request-for-order',  color: 'var(--terracotta)' },

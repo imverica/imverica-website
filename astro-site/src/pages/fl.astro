@@ -5,8 +5,8 @@ import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
-const title = 'California Family Law Document Preparation (FL-100, FL-300) | Imverica';
-const description = 'California Licensed LDA prepares family-law forms — FL-100 dissolution petition, FL-120 response, FL-150 income & expense, FL-300 request for order, FL-105 UCCJEA, FL-160 property declaration, FW-001 fee waiver. Flat-fee.';
+const title = 'California Family Law Document Preparation | Imverica';
+const description = 'California Licensed LDA prepares family-law document packets at your direction — divorce, response, custody, support, financial disclosures, UCCJEA, fee waivers, and related FL/FW court forms.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -20,15 +20,15 @@ const schema = {
   slug="/fl" jsonLd={[schema]}>
   <Hero
     eyebrow="California Family Law · Family Code §2330 et seq."
-    heading="FL-100, FL-300 — Dissolution, Custody, and Support"
-    sub="We prepare every standard FL- and FW- family-law form at your direction — petition (FL-100), summons (FL-110), Request for Order (FL-300), financial disclosures, UCCJEA, and fee-waiver packets. Multilingual flat-fee intake."
+    heading="California Family Law Forms"
+    sub="Document preparation for self-represented family-law parties: divorce and response packets, custody and support requests, financial disclosures, property declarations, UCCJEA forms, fee waivers, and related FL/FW court documents."
     ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Start my family-law package' }}
   />
 
   <CategoryTiles
     kicker="Pick a Family Law matter"
     heading="California Family Law"
-    intro="Tap any tile to start the package or learn about the forms involved."
+    intro="Start with the family-law matter first. The form-specific packets are listed below."
     tiles={[
       { icon: '💍', title: 'FL-100 — Dissolution',       desc: 'Divorce petition (no-fault), summons, and service.', href: '/fl-100-divorce',  color: 'var(--navy)' },
       { icon: '👶', title: 'FL-300 — Custody / Support',  desc: 'Request for Order: temporary orders, modification.', href: '/fl-300-request-for-order',  color: 'var(--terracotta)' },

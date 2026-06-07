@@ -6,8 +6,8 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
-const title = 'Derecho de familia de California — preparación de formularios (FL-100, FL-300) | Imverica';
-const description = 'California Licensed LDA prepara formularios de derecho de familia — FL-100 (petición de divorcio), FL-120 (respuesta), FL-150 (income & expense), FL-300 (request for order), FL-105 UCCJEA, FL-160 (property), FW-001 (fee waiver). Precio fijo.';
+const title = 'Derecho de familia de California — preparación de documentos | Imverica';
+const description = 'California Licensed LDA prepara documentos de derecho de familia bajo su dirección — divorce, response, custody, support, financial disclosures, UCCJEA, fee waivers y formularios FL/FW relacionados.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -22,15 +22,15 @@ const schema = {
   <Hero
     lang={lang}
     eyebrow="California Family Law · Family Code §2330 et seq."
-    heading="FL-100, FL-300 — Divorcio, custodia y pensión alimenticia"
-    sub="Preparamos todos los formularios estándar FL- y FW- de derecho de familia bajo su dirección — petition (FL-100), summons (FL-110), Request for Order (FL-300), financial disclosures, UCCJEA y fee-waiver. Entrevista multilingüe a precio fijo."
+    heading="Formularios de derecho de familia de California"
+    sub="Preparación de documentos para partes self-represented en family law: divorce y response, custody y support requests, financial disclosures, property declarations, UCCJEA, fee waivers y formularios FL/FW relacionados."
     ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Comenzar paquete de derecho de familia' }}
   />
 
   <CategoryTiles
     kicker="Elija un asunto familiar"
     heading="California Family Law"
-    intro="Toque cualquier tile para iniciar el paquete o conocer los formularios."
+    intro="Primero elija el tipo de asunto familiar. Los paquetes por formulario están abajo."
     tiles={[
       { icon: '💍', title: 'FL-100 — Divorcio',           desc: 'Petición de divorcio (no-fault), summons, service.', href: '/mx/fl-100-divorce',  color: 'var(--navy)' },
       { icon: '👶', title: 'FL-300 — Custodia / Pensión', desc: 'Request for Order: órdenes temporales, modificación.', href: '/mx/fl-300-request-for-order', color: 'var(--terracotta)' },

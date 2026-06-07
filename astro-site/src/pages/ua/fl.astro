@@ -6,8 +6,8 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'uk' as const;
-const title = 'Каліфорнійське сімейне право — підготовка форм (FL-100, FL-300) | Imverica';
-const description = 'California Licensed LDA готує форми сімейного права — FL-100 (заява про розлучення), FL-120 (відповідь), FL-150 (income & expense), FL-300 (request for order), FL-105 UCCJEA, FL-160 (property), FW-001 (fee waiver). Фіксована ціна.';
+const title = 'Каліфорнійське сімейне право — підготовка документів | Imverica';
+const description = 'California Licensed LDA готує документи сімейного права за вашим дорученням — divorce, response, custody, support, financial disclosures, UCCJEA, fee waivers та пов’язані FL/FW форми.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -22,15 +22,15 @@ const schema = {
   <Hero
     lang={lang}
     eyebrow="California Family Law · Family Code §2330 et seq."
-    heading="FL-100, FL-300 — Розлучення, опіка, аліменти"
-    sub="Готуємо всі стандартні форми FL- і FW- сімейного права за вашим дорученням — petition (FL-100), summons (FL-110), Request for Order (FL-300), financial disclosures, UCCJEA та fee-waiver. Багатомовна анкета за фіксованою ціною."
+    heading="Форми сімейного права Каліфорнії"
+    sub="Підготовка документів для self-represented сторін у family law: розлучення та відповідь, custody і support requests, financial disclosures, property declarations, UCCJEA, fee waivers та пов’язані FL/FW court forms."
     ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Почати пакет сімейного права' }}
   />
 
   <CategoryTiles
     kicker="Оберіть напрям"
     heading="California Family Law"
-    intro="Натисніть будь-яку плитку, щоб почати пакет або дізнатися про форми."
+    intro="Спочатку оберіть напрям сімейної справи. Пакети за конкретними формами — нижче."
     tiles={[
       { icon: '💍', title: 'FL-100 — Розлучення',         desc: 'Заява про розлучення (no-fault), summons, service.', href: '/ua/fl-100-divorce',  color: 'var(--navy)' },
       { icon: '👶', title: 'FL-300 — Опіка / Аліменти',   desc: 'Request for Order: тимчасові накази, зміна.',         href: '/ua/fl-300-request-for-order',  color: 'var(--terracotta)' },

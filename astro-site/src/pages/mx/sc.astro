@@ -6,8 +6,8 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
-const title = 'Preparación de documentos para reclamos menores de California (SC-100) | Imverica';
-const description = 'California Licensed LDA prepara documentos de reclamos menores — SC-100 (demanda del demandante), SC-120 (contrademanda del demandado), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Límite $12,500 según CCP §116.221.';
+const title = 'Reclamos menores y formularios civiles de California | Imverica';
+const description = 'California Licensed LDA prepara paquetes de documentos para reclamos menores y corte civil bajo su dirección — demand letters, SC-100, SC-120, service, fee waivers, subpoenas, post-judgment collection y formularios relacionados.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -21,16 +21,16 @@ const schema = {
   slug="/sc" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
   <Hero
     lang={lang}
-    eyebrow="California Civil · CCP §116.110-116.950"
-    heading="SC-100 — Plaintiff's Claim and ORDER (Reclamos menores de California)"
-    sub="SC-100 (demanda del demandante), SC-120 (contrademanda del demandado), SC-104 (proof of service), FW-001 (fee waiver), SC-133 (memorandum of costs). Límite $12,500 para personas físicas. Precio fijo."
+    eyebrow="California Civil · Small Claims Act"
+    heading="Reclamos menores y formularios civiles de California"
+    sub="Preparación de documentos para demandantes y demandados self-represented: demand letters, paquetes small claims, service papers, fee waivers, subpoenas, documentos para audiencia y post-judgment collection forms."
     ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Comenzar paquete de reclamo menor' }}
   />
 
   <CategoryTiles
     kicker="Elija su rol"
     heading="California Small Claims"
-    intro="Demandante, demandado o cobro post-judgment — inicie el paquete correcto."
+    intro="Elija el paquete de documentos que necesita. Preparamos los papeles bajo su dirección; usted sigue siendo self-represented y presenta o comparece en la corte por su cuenta."
     tiles={[
       { icon: '✉️', title: 'Demand Letter',             desc: 'Carta de demanda previa — a menudo resuelve la disputa antes de presentar.', href: '/mx/demand-letter', color: 'var(--terracotta-deep)' },
       { icon: '⚖️', title: 'SC-100 — Demandante',       desc: 'Demanda de demandante hasta $12,500 (personas físicas).', href: '/mx/sc-100-plaintiff-claim',  color: 'var(--navy)' },
@@ -40,7 +40,10 @@ const schema = {
       { icon: '🧾', title: 'FW-001 — Fee waiver',       desc: 'Exención de tasas judiciales si califica.',                 href: '/mx/fw-001-fee-waiver',  color: 'var(--navy-light)' },
       { icon: '🏦', title: 'WG-001 — Garnishment',      desc: 'Wage garnishment para ejecutar judgment.',                  href: '/mx/wg-001-wage-garnishment',  color: 'var(--terracotta-deep)' },
       { icon: '📑', title: 'EJ-001 — Abstract',          desc: 'Abstract of judgment para gravamen sobre propiedad.',       href: '/mx/ej-001-abstract-of-judgment',  color: 'var(--navy)' },
-      { icon: '📅', title: 'SC-140 — Cuotas',           desc: 'Solicitud de pago de judgment en cuotas.',                  href: '/mx/sc-140-installments',  color: 'var(--sage)' }
+      { icon: '📅', title: 'SC-140 — Cuotas',           desc: 'Solicitud de pago de judgment en cuotas.',                  href: '/mx/sc-140-installments',  color: 'var(--sage)' },
+      { icon: '🧑‍⚖️', title: 'SC-105 — Court order', desc: 'Request for court order o respuesta en caso small claims.', href: '/#get-started?form=SC-105', color: 'var(--terracotta)' },
+      { icon: '📣', title: 'SC-107 — Subpoena', desc: 'Subpoena para testigo o documentos.', href: '/#get-started?form=SC-107', color: 'var(--gold)' },
+      { icon: '↩️', title: 'SC-135 — Vacate judgment', desc: 'Motion para pedir que la corte cancele un judgment.', href: '/#get-started?form=SC-135', color: 'var(--navy-light)' }
     ]}
   />
 

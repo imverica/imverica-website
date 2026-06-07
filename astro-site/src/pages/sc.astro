@@ -5,8 +5,8 @@ import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
-const title = 'California Small Claims Document Preparation (SC-100) | Imverica';
-const description = 'California Licensed LDA prepares small claims documents — SC-100 plaintiff complaint, SC-120 defendant claim, SC-104 proof of service, FW-001 fee waiver, SC-133 memorandum of costs. $12,500 limit per CCP §116.221.';
+const title = 'California Small Claims & Civil Court Forms | Imverica';
+const description = 'California Licensed LDA prepares small claims and civil court document packets at your direction — demand letters, SC-100, SC-120, service, fee waivers, subpoenas, post-judgment collection, and related forms.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -19,16 +19,16 @@ const schema = {
 <BaseLayout title={title} description={description} canonical="https://imverica.com/sc"
   slug="/sc" jsonLd={[schema]}>
   <Hero
-    eyebrow="California Civil · CCP §116.110-116.950"
-    heading="SC-100 — Plaintiff's Claim and ORDER (California Small Claims)"
-    sub="SC-100 plaintiff complaint, SC-120 defendant counterclaim, SC-104 proof of service, FW-001 fee waiver, SC-133 memorandum of costs. $12,500 limit for individuals. Flat-fee."
+    eyebrow="California Civil · Small Claims Act"
+    heading="California Small Claims & Civil Court Forms"
+    sub="Document preparation for self-represented plaintiffs and defendants: demand letters, small claims filing packets, service papers, fee waivers, subpoenas, hearing support documents, and post-judgment collection forms."
     ctaPrimary={{ href: '/#get-started?form=SC-100', text: 'Start my small claims package' }}
   />
 
   <CategoryTiles
     kicker="Pick a Small Claims path"
     heading="California Small Claims"
-    intro="Plaintiff, defendant, or post-judgment collection — start the right package."
+    intro="Choose the document packet you need. We prepare the paperwork at your direction; you remain self-represented and file or appear in court yourself."
     tiles={[
       { icon: '✉️', title: 'Demand Letter', desc: 'Pre-suit demand letter — often resolves the dispute before filing.', href: '/demand-letter', color: 'var(--terracotta-deep)' },
       { icon: '⚖️', title: 'SC-100 — Plaintiff', desc: 'Plaintiff complaint up to $12,500 (individuals).',   href: '/sc-100-plaintiff-claim',  color: 'var(--navy)' },
@@ -38,7 +38,10 @@ const schema = {
       { icon: '🧾', title: 'FW-001 — Fee waiver', desc: 'Court-fee waiver for qualifying parties.',           href: '/fw-001-fee-waiver',  color: 'var(--navy-light)' },
       { icon: '🏦', title: 'WG-001 — Garnishment', desc: 'Wage garnishment to enforce a judgment.',           href: '/wg-001-wage-garnishment',  color: 'var(--terracotta-deep)' },
       { icon: '📑', title: 'EJ-001 — Abstract',    desc: 'Abstract of judgment for real-property lien.',      href: '/ej-001-abstract-of-judgment',  color: 'var(--navy)' },
-      { icon: '📅', title: 'SC-140 — Installments', desc: 'Request to pay judgment in installments.',         href: '/sc-140-installments',  color: 'var(--sage)' }
+      { icon: '📅', title: 'SC-140 — Installments', desc: 'Request to pay judgment in installments.',         href: '/sc-140-installments',  color: 'var(--sage)' },
+      { icon: '🧑‍⚖️', title: 'SC-105 — Court order', desc: 'Request for a small-claims court order or response.', href: '/#get-started?form=SC-105', color: 'var(--terracotta)' },
+      { icon: '📣', title: 'SC-107 — Subpoena', desc: 'Small-claims subpoena for witness appearance or records.', href: '/#get-started?form=SC-107', color: 'var(--gold)' },
+      { icon: '↩️', title: 'SC-135 — Vacate judgment', desc: 'Motion paperwork to ask the court to cancel a judgment.', href: '/#get-started?form=SC-135', color: 'var(--navy-light)' }
     ]}
   />
 
