@@ -215,34 +215,22 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .dash-actions a:hover,.dash-actions button:hover{background:rgba(255,255,255,.16);}
 .dash-actions a.primary{background:var(--gold);color:#1a2e4a;border-color:var(--gold);font-weight:700;}
 .dash-actions a.primary:hover{background:#d8b87e;}
-/* animated "documents being prepared" scene */
-.dash-scene{position:absolute;right:26px;top:50%;transform:translateY(-50%);width:170px;height:130px;z-index:1;pointer-events:none;}
+/* ===== Animated businessman mascot (SVG) — shared by sign-in + dashboard ===== */
+.iv-mascot{display:block;width:100%;height:100%;}
+.m-bob{animation:mBob 3.6s ease-in-out infinite;transform-origin:50% 80%;}
+@keyframes mBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.m-fly{animation:mFly 4.2s ease-in-out infinite;transform-origin:center;}
+.m-fly.b{animation-delay:.7s;}
+@keyframes mFly{0%{transform:translate(0,0) rotate(0);opacity:0}15%{opacity:1}50%{transform:translate(-26px,-46px) rotate(-16deg);opacity:1}82%{transform:translate(-42px,-90px) rotate(-26deg);opacity:0}100%{opacity:0}}
+.m-seal{animation:mSeal 4.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box;}
+@keyframes mSeal{0%,55%{opacity:0;transform:scale(1.8)}66%{opacity:1;transform:scale(1)}92%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.m-bob,.m-fly,.m-seal{animation:none;}.m-fly{opacity:0;}}
+/* dashboard: mascot in the navy hero, top-right */
+.dash-scene{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:148px;height:180px;z-index:1;pointer-events:none;}
 @media (max-width:640px){.dash-scene{display:none;} .dash-head .who{max-width:100%;}}
-.ds-person{position:absolute;left:6px;bottom:14px;width:70px;height:104px;animation:dsBob 3.4s ease-in-out infinite;transform-origin:bottom center;}
-@keyframes dsBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-1deg)}}
-.ds-head{position:absolute;left:22px;top:0;width:28px;height:28px;border-radius:50%;background:#f1c9a5;border:2px solid #e0b48c;}
-.ds-hair{position:absolute;left:21px;top:-3px;width:30px;height:15px;border-radius:15px 15px 0 0;background:var(--gold);}
-.ds-body{position:absolute;left:14px;top:26px;width:44px;height:48px;border-radius:14px 14px 9px 9px;background:#cfd8e6;}
-.ds-tie{position:absolute;left:33px;top:29px;width:5px;height:19px;background:var(--terracotta);}
-.ds-arm{position:absolute;left:8px;top:34px;width:11px;height:34px;border-radius:6px;background:#bcc7d8;transform-origin:top center;animation:dsWave 3.4s ease-in-out infinite;}
-.ds-legs{position:absolute;left:17px;top:72px;width:38px;height:34px;}
-.ds-legs:before,.ds-legs:after{content:"";position:absolute;top:0;width:14px;height:34px;border-radius:7px;background:#26344b;}
-.ds-legs:before{left:2px;}.ds-legs:after{right:2px;}
-@keyframes dsWave{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-18deg)}}
-.ds-stack{position:absolute;right:6px;bottom:16px;width:78px;height:96px;}
-.ds-doc{position:absolute;width:62px;height:78px;border-radius:6px;background:#fff;box-shadow:0 5px 12px -5px rgba(0,0,0,.45);border:1px solid #e7e2d6;}
-.ds-doc:before{content:"";position:absolute;left:10px;right:10px;top:14px;height:3px;border-radius:2px;background:#dfe5ee;box-shadow:0 9px 0 #eef1f6,0 18px 0 #eef1f6,0 27px 0 #eef1f6;}
-.ds-doc.d1{right:0;bottom:0;transform:rotate(-8deg);}
-.ds-doc.d2{right:5px;bottom:6px;transform:rotate(-2deg);}
-.ds-doc.d3{right:10px;bottom:12px;transform:rotate(4deg);}
-.ds-fly{right:8px;bottom:14px;animation:dsFly 4s ease-in-out infinite;}
-@keyframes dsFly{0%{transform:translate(-90px,-56px) rotate(-26deg);opacity:0;}28%{opacity:1;}52%{transform:translate(0,0) rotate(4deg);opacity:1;}100%{transform:translate(0,0) rotate(4deg);opacity:1;}}
-.ds-seal{position:absolute;right:12px;bottom:52px;width:30px;height:30px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:700;box-shadow:0 4px 9px -2px rgba(0,0,0,.4);opacity:0;animation:dsStamp 4s ease-in-out infinite;}
-@keyframes dsStamp{0%,52%{opacity:0;transform:scale(1.9) rotate(-12deg);}64%{opacity:1;transform:scale(1) rotate(-12deg);}94%{opacity:1;}100%{opacity:0;}}
-.ds-spark{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:0;}
-.ds-spark.s1{right:6px;bottom:86px;animation:dsSpk 4s ease-in-out infinite;}
-.ds-spark.s2{right:46px;bottom:70px;animation:dsSpk 4s .3s ease-in-out infinite;}
-@keyframes dsSpk{0%,62%{opacity:0;transform:scale(0);}74%{opacity:1;transform:scale(1.3);}100%{opacity:0;transform:scale(0) translateY(-9px);}}
+/* sign-in: mascot beside the centered auth card (wide screens only) */
+.auth-mascot{position:absolute;left:calc(50% - 500px);top:50%;transform:translateY(-50%);width:230px;height:300px;z-index:1;pointer-events:none;}
+@media (max-width:1120px){.auth-mascot{display:none;}}
 
 .order{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:0.9rem;}
 .order-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap;}
@@ -465,6 +453,7 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
 
 <!-- ===== Login: email step ===== -->
 <div class="auth-shell" id="step-email">
+  <div class="auth-mascot" data-mascot aria-hidden="true"></div>
   <div class="auth-card">
     <div class="auth-logo" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -584,19 +573,7 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <a class="primary" href="/portal.html" data-i18n="dashNewCase">+ File a new request</a>
       <button onclick="logout()" data-i18n="dashSignOut">Sign out</button>
     </div>
-    <div class="dash-scene" aria-hidden="true">
-      <div class="ds-person">
-        <div class="ds-hair"></div><div class="ds-head"></div>
-        <div class="ds-body"></div><div class="ds-tie"></div>
-        <div class="ds-arm"></div><div class="ds-legs"></div>
-      </div>
-      <div class="ds-stack">
-        <div class="ds-doc d1"></div><div class="ds-doc d2"></div><div class="ds-doc d3"></div>
-        <div class="ds-doc ds-fly"></div>
-        <div class="ds-seal">✓</div>
-        <div class="ds-spark s1"></div><div class="ds-spark s2"></div>
-      </div>
-    </div>
+    <div class="dash-scene" data-mascot aria-hidden="true"></div>
   </div>
   <div class="msg" id="dash-msg"></div>
 
@@ -2966,6 +2943,75 @@ loadDashboard().then(function(){
   // Defer push permission ask so the cabinet renders first (less jarring).
   setTimeout(registerPushIfNeeded, 1500);
 });
+</script>
+
+<!-- Animated businessman mascot — cloned into every [data-mascot] slot
+     (sign-in card + dashboard hero). One source, no markup duplication. -->
+<template id="iv-mascot-tpl">
+  <svg class="iv-mascot" viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Imverica document preparer">
+    <ellipse cx="150" cy="338" rx="92" ry="14" fill="rgba(20,30,50,.14)"/>
+    <g class="m-fly">
+      <g transform="translate(150 150)">
+        <rect x="-26" y="-34" width="52" height="68" rx="5" fill="#fff" stroke="#e4ded3"/>
+        <rect x="-16" y="-22" width="32" height="4" rx="2" fill="#dfe5ee"/>
+        <rect x="-16" y="-12" width="32" height="4" rx="2" fill="#eef1f6"/>
+        <rect x="-16" y="-2" width="24" height="4" rx="2" fill="#eef1f6"/>
+      </g>
+    </g>
+    <g class="m-fly b">
+      <g transform="translate(120 160)">
+        <rect x="-22" y="-28" width="44" height="58" rx="5" fill="#fff" stroke="#e4ded3"/>
+        <rect x="-13" y="-18" width="26" height="3.5" rx="2" fill="#dfe5ee"/>
+        <rect x="-13" y="-9" width="26" height="3.5" rx="2" fill="#eef1f6"/>
+      </g>
+    </g>
+    <g class="m-bob">
+      <rect x="118" y="250" width="26" height="74" rx="12" fill="#26344b"/>
+      <rect x="156" y="250" width="26" height="74" rx="12" fill="#1f2c40"/>
+      <ellipse cx="128" cy="328" rx="20" ry="9" fill="#15202f"/>
+      <ellipse cx="170" cy="328" rx="20" ry="9" fill="#15202f"/>
+      <path d="M96 150 Q150 132 204 150 L214 256 Q150 272 86 256 Z" fill="#33455f"/>
+      <path d="M132 150 L150 150 L168 150 L156 210 L150 218 L144 210 Z" fill="#f3f5f8"/>
+      <path d="M132 150 L150 150 L138 206 Z" fill="#2a3a52"/>
+      <path d="M168 150 L150 150 L162 206 Z" fill="#2a3a52"/>
+      <path d="M150 154 l9 10 -9 50 -9 -50 Z" fill="#c87a5c"/>
+      <path d="M150 150 l7 8 -7 7 -7 -7 Z" fill="#b0644a"/>
+      <path d="M96 152 q-22 30 -8 70 q6 16 26 18 l4 -22 q-14 -4 -16 -16 q-6 -28 12 -46 Z" fill="#2f4159"/>
+      <path d="M204 152 q22 30 8 70 q-6 16 -26 18 l-4 -22 q14 -4 16 -16 q6 -28 -12 -46 Z" fill="#2f4159"/>
+      <g transform="translate(150 244)">
+        <rect x="-52" y="-6" width="104" height="20" rx="4" fill="#e7eaef"/>
+        <rect x="-50" y="-18" width="100" height="20" rx="4" fill="#f4f6f9"/>
+        <rect x="-54" y="-30" width="108" height="22" rx="5" fill="#fff" stroke="#e4ded3"/>
+        <rect x="-40" y="-24" width="56" height="4" rx="2" fill="#dfe5ee"/>
+        <rect x="-40" y="-16" width="74" height="4" rx="2" fill="#eef1f6"/>
+        <ellipse cx="-54" cy="-8" rx="11" ry="9" fill="#f1c9a5"/>
+        <ellipse cx="54" cy="-8" rx="11" ry="9" fill="#f1c9a5"/>
+      </g>
+      <rect x="140" y="120" width="20" height="22" rx="8" fill="#e7b78f"/>
+      <ellipse cx="150" cy="92" rx="33" ry="35" fill="#f1c9a5"/>
+      <circle cx="118" cy="94" r="6" fill="#ecc096"/><circle cx="182" cy="94" r="6" fill="#ecc096"/>
+      <path d="M119 86 Q120 54 150 52 Q180 54 181 86 Q172 70 150 70 Q128 70 119 86 Z" fill="#c9a96e"/>
+      <path d="M150 52 Q124 54 119 84 L119 74 Q126 58 150 58 Z" fill="#bb9657"/>
+      <circle cx="138" cy="92" r="3.4" fill="#3a3026"/>
+      <circle cx="162" cy="92" r="3.4" fill="#3a3026"/>
+      <path d="M140 106 Q150 113 160 106" stroke="#c98f6b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g class="m-seal" transform="translate(214 150)">
+        <circle r="20" fill="#8a9a85"/>
+        <path d="M-9 0 l6 7 12 -14" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </svg>
+</template>
+<script>
+(function(){
+  try{
+    var tpl=document.getElementById('iv-mascot-tpl');
+    if(!tpl||!tpl.content)return;
+    document.querySelectorAll('[data-mascot]').forEach(function(slot){
+      if(slot.childElementCount===0) slot.appendChild(tpl.content.cloneNode(true));
+    });
+  }catch(e){/* decorative only — never block the cabinet */}
+})();
 </script>
 </body>
 </html>
