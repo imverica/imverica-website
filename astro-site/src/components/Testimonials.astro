@@ -119,19 +119,10 @@ const initial: Review[] = ALL.slice(0, 6);
       var gridEl = grid;
       var dataEl = data;
       type Review = { stars: number; body: string; name: string; meta: string };
-      var pool: Review[];
-      try { pool = JSON.parse(dataEl.textContent || '[]'); }
-      catch (e) { return; }
-      if (!Array.isArray(pool) || pool.length < 18) return;
 
-      // Fisher-Yates shuffle, then carve out 3 non-overlapping batches of 6
-      // (18 unique cards per page-load). Re-shuffles per visit so two
-      // visitors rarely see the same rotation.
-      for (var i = pool.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
-      }
-      var batches = [pool.slice(0, 6), pool.slice(6, 12), pool.slice(12, 18)];
+      var embedded: Review[];
+      try { embedded = JSON.parse(dataEl.textContent || '[]'); }
+      catch (e) { embedded = []; }
 
       function esc(s: unknown): string {
         return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -141,10 +132,11 @@ const initial: Review[] = ALL.slice(0, 6);
 
       function render(reviews: Review[]) {
         gridEl.innerHTML = reviews.map(function (r: Review) {
-          var filled = '★'.repeat(r.stars);
-          var empty = '★'.repeat(5 - r.stars);
+          var s = Math.max(0, Math.min(5, Math.round(r.stars || 0)));
+          var filled = '★'.repeat(s);
+          var empty = '★'.repeat(5 - s);
           return '<article class="testimonial-card">' +
-            '<div class="testimonial-stars" aria-label="' + r.stars + ' out of 5">' +
+            '<div class="testimonial-stars" aria-label="' + s + ' out of 5">' +
               esc(filled) + '<span class="testimonial-stars-dim">' + esc(empty) + '</span>' +
             '</div>' +
             '<p>' + esc(r.body) + '</p>' +
@@ -156,40 +148,57 @@ const initial: Review[] = ALL.slice(0, 6);
         }).join('');
       }
 
-      // Immediately render batch 0 — replaces the SSR'd subset with a
-      // freshly-shuffled batch so even non-rotating users get variety.
-      render(batches[0]);
-
-      // Respect users who've opted out of motion: skip the fade animation
-      // but still rotate the content (visual variety is the whole point).
       var reduced = false;
       try {
         var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
         reduced = !!(mq && mq.matches);
       } catch (e) {}
 
-      gridEl.style.transition = reduced ? 'none' : 'opacity 0.45s ease';
-
-      var idx = 0;
-      var ROTATE_MS = 60000; // every minute, per spec
-
-      function rotate() {
-        var next = (idx + 1) % batches.length;
-        if (reduced) {
-          render(batches[next]);
-          idx = next;
-          return;
+      function start(pool: Review[]) {
+        if (!Array.isArray(pool) || pool.length === 0) return; // keep SSR content
+        // Fisher-Yates shuffle so two visitors rarely see the same order.
+        for (var i = pool.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
         }
-        gridEl.style.opacity = '0';
-        setTimeout(function () {
-          render(batches[next]);
-          idx = next;
-          // Reflow + restore opacity → triggers the fade-in.
-          gridEl.style.opacity = '1';
-        }, 450);
+        // Adaptive batches of 6 (Google may return fewer than the demo pool).
+        var size = 6;
+        var n = Math.min(3, Math.max(1, Math.floor(pool.length / size)));
+        var batches: Review[][] = [];
+        for (var b = 0; b < n; b++) batches.push(pool.slice(b * size, b * size + size));
+        render(batches[0]);
+        if (batches.length < 2) return; // too few to rotate — just show them
+
+        gridEl.style.transition = reduced ? 'none' : 'opacity 0.45s ease';
+        var idx = 0;
+        var ROTATE_MS = 60000; // rotate the visible 6 every minute
+        function rotate() {
+          var next = (idx + 1) % batches.length;
+          if (reduced) { render(batches[next]); idx = next; return; }
+          gridEl.style.opacity = '0';
+          setTimeout(function () { render(batches[next]); idx = next; gridEl.style.opacity = '1'; }, 450);
+        }
+        setInterval(rotate, ROTATE_MS);
       }
 
-      setInterval(rotate, ROTATE_MS);
+      // Prefer LIVE Google reviews; fall back to the built-in pool if the
+      // Google integration isn't configured yet (or returns nothing). The
+      // server-rendered cards stay visible until one of these runs, so the
+      // section is never empty and never breaks.
+      var done = false;
+      function fallback() { if (done) return; done = true; start(embedded); }
+      try {
+        fetch('/api/google-reviews', { headers: { Accept: 'application/json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) {
+            if (done) return;
+            if (d && d.ok && d.configured && Array.isArray(d.reviews) && d.reviews.length >= 1) {
+              done = true; start(d.reviews); // real Google reviews win
+            } else { fallback(); }
+          })
+          .catch(fallback);
+        setTimeout(fallback, 4000); // a hung request must not block the section
+      } catch (e) { fallback(); }
     })();
   </script>
 </section>
