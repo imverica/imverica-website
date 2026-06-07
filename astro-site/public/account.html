@@ -211,6 +211,10 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .dash-actions a:hover,.dash-actions button:hover{background:rgba(255,255,255,.16);}
 .dash-actions a.primary{background:var(--gold);color:#1a2e4a;border-color:var(--gold);font-weight:700;}
 .dash-actions a.primary:hover{background:#d8b87e;}
+/* Sign out — top-right corner of the cabinet, above the hero */
+.dash-topbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:12px;}
+.dash-signout{font-size:12.5px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:600;font-family:var(--font-system);cursor:pointer;transition:background .18s,border-color .18s,box-shadow .18s;}
+.dash-signout:hover{background:#f0f4f8;border-color:var(--navy);box-shadow:0 4px 12px -6px rgba(16,28,47,.4);}
 /* ===== Animated businessman mascot (SVG) — shared by sign-in + dashboard ===== */
 .iv-mascot{display:block;width:100%;height:100%;}
 .m-bob{animation:mBob 3.6s ease-in-out infinite;transform-origin:50% 80%;}
@@ -606,16 +610,15 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
 
 <!-- ===== Dashboard ===== -->
 <div class="dash-wrap hidden" id="step-dash">
+  <div class="dash-topbar">
+    <button class="dash-signout" onclick="logout()" data-i18n="dashSignOut">Sign out</button>
+  </div>
   <div class="dash-head">
     <div class="who">
       <div class="dash-kicker" data-i18n="dashKicker">Imverica · Personal account</div>
       <div class="dash-greeting"><span data-i18n="dashWelcomeBack">Welcome back,</span> <strong id="dash-name"></strong></div>
       <div class="dash-sub" data-i18n="dashSub">Upload documents, message us, and track your requests — all in one place.</div>
       <span id="dash-email" hidden></span>
-    </div>
-    <div class="dash-actions">
-      <a class="primary" href="/portal.html" data-i18n="dashNewCase">+ File a new request</a>
-      <button onclick="logout()" data-i18n="dashSignOut">Sign out</button>
     </div>
     <div class="dash-scene" data-mascot aria-hidden="true"></div>
   </div>
@@ -3234,14 +3237,19 @@ loadDashboard().then(function(){
       <path d="M150 150 l7 8 -7 7 -7 -7 Z" fill="#b0644a"/>
       <path d="M96 152 q-22 30 -8 70 q6 16 26 18 l4 -22 q-14 -4 -16 -16 q-6 -28 12 -46 Z" fill="#2f4159"/>
       <path d="M204 152 q22 30 8 70 q-6 16 -26 18 l-4 -22 q14 -4 16 -16 q6 -28 -12 -46 Z" fill="#2f4159"/>
-      <g transform="translate(150 244)">
-        <rect x="-52" y="-6" width="104" height="20" rx="4" fill="#e7eaef"/>
-        <rect x="-50" y="-18" width="100" height="20" rx="4" fill="#f4f6f9"/>
-        <rect x="-54" y="-30" width="108" height="22" rx="5" fill="#fff" stroke="#e4ded3"/>
-        <rect x="-40" y="-24" width="56" height="4" rx="2" fill="#dfe5ee"/>
-        <rect x="-40" y="-16" width="74" height="4" rx="2" fill="#eef1f6"/>
-        <ellipse cx="-54" cy="-8" rx="11" ry="9" fill="#f1c9a5"/>
-        <ellipse cx="54" cy="-8" rx="11" ry="9" fill="#f1c9a5"/>
+      <!-- briefcase held in front (replaces the document stack) -->
+      <g transform="translate(150 248)">
+        <path d="M-15 -28 q15 -17 30 0" stroke="#5e3d28" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <rect x="-50" y="-24" width="100" height="50" rx="8" fill="#9a6843"/>
+        <rect x="-50" y="-24" width="100" height="15" rx="8" fill="#aa7a50"/>
+        <rect x="-50" y="-12" width="100" height="4" fill="#7d5333"/>
+        <rect x="-50" y="1" width="100" height="3" fill="#7d5333" opacity=".7"/>
+        <circle cx="-42" cy="18" r="2.4" fill="#c9a96e"/>
+        <circle cx="42" cy="18" r="2.4" fill="#c9a96e"/>
+        <rect x="-13" y="-9" width="26" height="15" rx="3" fill="#c9a96e"/>
+        <rect x="-6" y="-4" width="12" height="6" rx="2" fill="#8a6a3e"/>
+        <ellipse cx="-50" cy="0" rx="11" ry="9" fill="#f1c9a5"/>
+        <ellipse cx="50" cy="0" rx="11" ry="9" fill="#f1c9a5"/>
       </g>
       <rect x="140" y="120" width="20" height="22" rx="8" fill="#e7b78f"/>
       <ellipse cx="150" cy="92" rx="33" ry="35" fill="#f1c9a5"/>
