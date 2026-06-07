@@ -30,6 +30,13 @@ const CORS = {
 
 const MAX_TEXT = 4000;
 const MAX_MESSAGES = 500;
+const MAX_ATTACHMENTS = 3;            // per message
+const MAX_FILE_BYTES = 4 * 1024 * 1024; // 4 MB raw (function body limit ~6MB)
+// Reuse the same strict upload validation + AV hash lookup as upload.js so a
+// chat attachment is held to identical safety standards (magic bytes, MIME
+// allow-list, filename ban-list, VirusTotal hash check).
+const { validateUpload, ALLOWED_MIME } = require('./lib/file-validator');
+const { scanBuffer } = require('./lib/virus-scan');
 
 function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
@@ -83,6 +90,63 @@ async function getStore() { try { return require('@netlify/blobs').getStore('imv
 function threadKey(email) { return `thread/${sha256(email)}.json`; }
 function fsName(key) { return key.replace(/[^A-Za-z0-9_-]/g, '_'); }
 
+// ----- attachment storage (chat file uploads) -----
+// File bytes live in a separate Blobs store so the thread JSON stays small.
+// Keyed by sha256(email)/<fileId>; bytes encrypted at rest with encryptBuffer.
+// Download is gated in the GET handler by checking the fileId belongs to the
+// caller's own thread.
+const FILES_DIR = path.join(os.tmpdir(), 'imverica-message-files');
+async function getFilesStore() { try { return require('@netlify/blobs').getStore('imverica-message-files'); } catch { return null; } }
+function fileKey(email, fileId) { return `blob/${sha256(cleanEmail(email))}/${fileId}`; }
+async function writeFileBlob(s, key, buf) {
+  if (s) { try { await s.set(key, buf); return; } catch { /* fall */ } }
+  await fs.mkdir(FILES_DIR, { recursive: true });
+  await fs.writeFile(path.join(FILES_DIR, fsName(key)), buf);
+}
+async function readFileBlob(s, key) {
+  if (s) { try { const v = await s.get(key, { type: 'arrayBuffer' }); if (v) return Buffer.from(v); } catch { /* fall */ } }
+  try { return await fs.readFile(path.join(FILES_DIR, fsName(key))); } catch { return null; }
+}
+
+function sanitizeName(name) {
+  const base = String(name || 'file').split(/[\\/]/).pop().replace(/[^\w.\- ]/g, '_').slice(0, 120);
+  return base || 'file';
+}
+
+/**
+ * Validate + store an array of {name, type, dataBase64} attachments for one
+ * client message. Returns { ok, attachments?, error? }. Each stored file is
+ * AES-GCM encrypted; the returned metadata holds only {fileId, name, type,
+ * size} (plaintext here — writeThread encrypts name/type before persisting).
+ */
+async function processAttachments(rawList, email, event) {
+  if (!Array.isArray(rawList) || !rawList.length) return { ok: true, attachments: [] };
+  if (rawList.length > MAX_ATTACHMENTS) return { ok: false, error: `Up to ${MAX_ATTACHMENTS} files per message.` };
+  const s = await getFilesStore();
+  const out = [];
+  for (const raw of rawList) {
+    const name = sanitizeName(raw && raw.name);
+    const type = String((raw && raw.type) || '').toLowerCase();
+    const data = String((raw && raw.dataBase64) || '').replace(/^data:[^;]+;base64,/, '');
+    if (!data) return { ok: false, error: 'An attachment had no data.' };
+    if (!ALLOWED_MIME.includes(type)) return { ok: false, error: 'Only PDF, JPG, PNG, or DOCX files are accepted.' };
+    let buf;
+    try { buf = Buffer.from(data, 'base64'); } catch { return { ok: false, error: 'Invalid attachment data.' }; }
+    if (!buf.length) return { ok: false, error: 'An attachment was empty.' };
+    if (buf.length > MAX_FILE_BYTES) return { ok: false, error: 'Attachment too large (max 4 MB).' };
+    const validation = validateUpload(buf, name, type);
+    if (!validation.ok) return { ok: false, error: validation.error };
+    const scan = await scanBuffer(buf);
+    if (scan.verdict === 'malicious' || scan.verdict === 'suspicious') {
+      return { ok: false, error: 'An attachment was flagged by anti-virus. Please re-export from a clean source.' };
+    }
+    const fileId = crypto.randomBytes(8).toString('hex');
+    await writeFileBlob(s, fileKey(email, fileId), encryptBuffer(buf, event));
+    out.push({ fileId, name, type: type || 'application/octet-stream', size: buf.length });
+  }
+  return { ok: true, attachments: out };
+}
+
 /**
  * Encrypted-at-rest read: each message's `text` is stored as an
  * AES-256-GCM blob (see lib/crypto.encryptString). On read we decrypt
@@ -90,14 +154,22 @@ function fsName(key) { return key.replace(/[^A-Za-z0-9_-]/g, '_'); }
  * UI) works untouched. Legacy plaintext messages (no _v marker on the
  * thread) pass through unchanged.
  */
-const { encryptString, decryptString } = require('./lib/crypto');
+const { encryptString, decryptString, encryptBuffer, decryptBuffer } = require('./lib/crypto');
 
 function decryptThread(thread, event) {
   if (!thread || !Array.isArray(thread.messages)) return thread;
   if (!thread._v) return thread; // legacy plaintext
   return {
     ...thread,
-    messages: thread.messages.map((m) => ({ ...m, text: decryptString(m.text, event) }))
+    messages: thread.messages.map((m) => ({
+      ...m,
+      text: decryptString(m.text, event),
+      // Attachment filename + MIME are PII (often contain the client's name
+      // or document type) so they are stored encrypted like message text.
+      ...(Array.isArray(m.attachments)
+        ? { attachments: m.attachments.map((a) => ({ ...a, name: decryptString(a.name, event), type: decryptString(a.type, event) })) }
+        : {})
+    }))
   };
 }
 
@@ -116,7 +188,13 @@ async function writeThread(s, email, thread, event) {
   const encryptedThread = {
     ...thread,
     _v: 2,
-    messages: (thread.messages || []).map((m) => ({ ...m, text: encryptString(m.text, event) }))
+    messages: (thread.messages || []).map((m) => ({
+      ...m,
+      text: encryptString(m.text, event),
+      ...(Array.isArray(m.attachments)
+        ? { attachments: m.attachments.map((a) => ({ ...a, name: encryptString(a.name, event), type: encryptString(a.type, event) })) }
+        : {})
+    }))
   };
   const key = threadKey(email);
   if (s) { try { await s.setJSON(key, encryptedThread); return; } catch { /* fall */ } }
@@ -145,10 +223,12 @@ function summarizeThread(t) {
   return { email: t.email, count: t.messages.length, last: last ? { from: last.from, text: last.text.slice(0, 120), ts: last.ts } : null };
 }
 
-async function appendMessage(s, email, from, text, event) {
+async function appendMessage(s, email, from, text, event, attachments) {
   const thread = await readThread(s, email, event);
   if (!Array.isArray(thread.messages)) thread.messages = [];
-  thread.messages.push({ id: crypto.randomBytes(6).toString('hex'), from, text, ts: new Date().toISOString() });
+  const msg = { id: crypto.randomBytes(6).toString('hex'), from, text, ts: new Date().toISOString() };
+  if (Array.isArray(attachments) && attachments.length) msg.attachments = attachments;
+  thread.messages.push(msg);
   if (thread.messages.length > MAX_MESSAGES) thread.messages = thread.messages.slice(-MAX_MESSAGES);
   thread.email = email;
   await writeThread(s, email, thread, event);
@@ -168,12 +248,20 @@ function escapeHtml(s) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   })[c]);
 }
-async function notifyOwnerOfClientMessage(clientEmail, text) {
+async function notifyOwnerOfClientMessage(clientEmail, text, attachments) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.warn('[messages] RESEND_API_KEY not set — skipping owner notification email');
     return { sent: false, skipped: true };
   }
+  // Build Resend attachment objects {filename, content(base64)} from the
+  // raw uploaded files so the owner sees the documents directly in Gmail.
+  const mailAttachments = (Array.isArray(attachments) ? attachments : [])
+    .map((a) => ({
+      filename: String((a && a.name) || 'attachment').split(/[\\/]/).pop().replace(/[^\w.\- ]/g, '_').slice(0, 120),
+      content: String((a && a.dataBase64) || '').replace(/^data:[^;]+;base64,/, '')
+    }))
+    .filter((a) => a.content);
   const ownerInboxes = (process.env.MESSAGES_NOTIFY_TO || 'imverica@gmail.com,info@imverica.com')
     .split(',').map((s) => s.trim()).filter(Boolean);
   const fromAddr = process.env.MESSAGES_FROM || 'Imverica Messages <messages@imverica.com>';
@@ -196,7 +284,8 @@ async function notifyOwnerOfClientMessage(clientEmail, text) {
     <div style="font-family:system-ui,Arial,sans-serif;line-height:1.55;color:#1a2238;">
       <h2 style="margin:0 0 12px;font-size:18px;color:#0f1c2f;">New message in client portal</h2>
       <p style="margin:0 0 8px;"><strong>From:</strong> ${escapeHtml(clientEmail)}</p>
-      <div style="margin:14px 0;padding:14px 16px;background:#f3f6fb;border-left:3px solid #1a2e4a;border-radius:0 6px 6px 0;font-size:14.5px;white-space:pre-wrap;">${escapeHtml(text)}</div>
+      <div style="margin:14px 0;padding:14px 16px;background:#f3f6fb;border-left:3px solid #1a2e4a;border-radius:0 6px 6px 0;font-size:14.5px;white-space:pre-wrap;">${text ? escapeHtml(text) : '<em style="color:#8a93a3;">(no text — see attached file' + (mailAttachments.length > 1 ? 's' : '') + ')</em>'}</div>
+      ${mailAttachments.length ? `<p style="margin:0 0 12px;font-size:13px;color:#1a2e4a;">📎 <strong>${mailAttachments.length}</strong> attachment${mailAttachments.length > 1 ? 's' : ''}: ${mailAttachments.map((a) => escapeHtml(a.filename)).join(', ')}</p>` : ''}
       <p style="margin:14px 0 4px;font-size:13px;color:#4a5a6e;">
         <strong>Reply by simply replying to this email</strong> — your reply will appear in the client's portal automatically.<br>
         Or open the conversation in admin: <a href="${portalLink}" style="color:#1a2e4a;">${portalLink}</a>
@@ -218,6 +307,7 @@ async function notifyOwnerOfClientMessage(clientEmail, text) {
         reply_to: replyTo,
         subject,
         html,
+        ...(mailAttachments.length ? { attachments: mailAttachments } : {}),
         headers: {
           // Helps inbound webhooks identify the thread even if the
           // owner's mail client drops the Reply-To and replies to From:.
@@ -266,6 +356,38 @@ exports.handler = async function (event) {
     }
     if (!isValidEmail(email)) return json(400, { ok: false, error: 'Missing email' });
     const thread = await readThread(s, email, event);
+
+    // Attachment download: ?file=<fileId>. Authorize by confirming the
+    // fileId is referenced by a message in THIS caller's thread, then stream
+    // the decrypted bytes with hardened, no-inline headers (mirrors upload.js).
+    const fileId = String(q.file || '').replace(/[^a-f0-9]/gi, '').slice(0, 32);
+    if (fileId) {
+      let att = null;
+      for (const m of (thread.messages || [])) {
+        if (Array.isArray(m.attachments)) { const f = m.attachments.find((a) => a.fileId === fileId); if (f) { att = f; break; } }
+      }
+      if (!att) return json(404, { ok: false, error: 'File not found' });
+      const fs2 = await getFilesStore();
+      const enc = await readFileBlob(fs2, fileKey(email, fileId));
+      if (!enc) return json(404, { ok: false, error: 'File not found' });
+      const buf = decryptBuffer(enc, event);
+      if (!buf) return json(500, { ok: false, error: 'Could not decrypt file.' });
+      return {
+        statusCode: 200,
+        headers: {
+          ...CORS,
+          'Content-Type': att.type || 'application/octet-stream',
+          'Content-Disposition': `attachment; filename="${String(att.name).replace(/"/g, '')}"`,
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'DENY',
+          'Content-Security-Policy': "default-src 'none'; sandbox",
+          'Cache-Control': 'private, no-store'
+        },
+        body: buf.toString('base64'),
+        isBase64Encoded: true
+      };
+    }
+
     return json(200, { ok: true, email, messages: thread.messages || [] });
   }
 
@@ -273,16 +395,27 @@ exports.handler = async function (event) {
     let body;
     try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
     const text = cleanText(body.text);
-    if (!text) return json(422, { ok: false, error: 'Message is empty.' });
     if (!isValidEmail(email)) return json(400, { ok: false, error: 'Missing email' });
-    const thread = await appendMessage(s, email, admin ? 'staff' : 'client', text, event);
+
+    // Validate + persist attachments (if any). A message may be attachments
+    // only (no text) or text only, but not empty.
+    let stored = [];
+    if (Array.isArray(body.attachments) && body.attachments.length) {
+      const res = await processAttachments(body.attachments, email, event);
+      if (!res.ok) return json(415, { ok: false, error: res.error });
+      stored = res.attachments;
+    }
+    if (!text && !stored.length) return json(422, { ok: false, error: 'Message is empty.' });
+
+    const thread = await appendMessage(s, email, admin ? 'staff' : 'client', text, event, stored);
     // When the CLIENT sends, notify the owner via email so they can
     // reply directly from Gmail (Resend Inbound routes the reply back
     // into the same thread via /api/messages-inbound). When STAFF sends
     // from the admin console, no email goes out — staff is already
-    // actively in the conversation.
+    // actively in the conversation. Attachments ride along as real email
+    // attachments so the owner sees them in Gmail.
     if (!admin) {
-      notifyOwnerOfClientMessage(email, text).catch((e) => console.error('[messages] notify:', e));
+      notifyOwnerOfClientMessage(email, text, stored.length ? body.attachments : []).catch((e) => console.error('[messages] notify:', e));
     }
     return json(200, { ok: true, email, messages: thread.messages });
   }
