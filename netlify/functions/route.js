@@ -97,7 +97,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-120'],
     confidence: 0.85,
-    patterns: [/(i\s+was\s+sued|got\s+sued|served\s+with\s+(a\s+)?(lawsuit|small\s+claims)|need\s+to\s+(file\s+a\s+)?respon(d|se)\s+(to\s+)?(small\s+claims|lawsuit|claim)|меня\s+подали\s+в\s+суд|против\s+меня\s+иск|подали\s+иск\s+против)/i],
+    patterns: [/(i\s+was\s+sued|got\s+sued|been\s+sued|i\s+was\s+served|served\s+(with\s+)?(a\s+)?(lawsuit|small\s+claims|complaint|summons|court\s+papers)|need\s+to\s+(file\s+a\s+)?respon(d|se)\s+(to\s+)?(small\s+claims|lawsuit|claim)|меня\s+подали\s+в\s+суд|против\s+меня\s+(подали\s+)?иск|подали\s+иск\s+против|мне\s+вручили\s+(иск|повестк))/i],
     reason: 'Generic "I was sued / file a response" → SC-120 defendant counter.'
   },
   {
@@ -106,8 +106,8 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['NC-100'],
     confidence: 0.85,
-    patterns: [/(got|after)\s+(married|marriage).*(change\s+(my\s+)?(last\s+)?name)|(change\s+(my\s+)?(last\s+)?name\s+after\s+(getting\s+)?(married|marriage|wedding))/i],
-    reason: 'Name change after marriage → NC-100 (priority over the marriage / FL-100 rule).'
+    patterns: [/(got|after)\s+(married|marriage|divorced?|divorce).*(change\s+(my\s+)?(last\s+)?name)|(change\s+(my\s+)?(last\s+)?name\s+(back\s+)?after\s+(getting\s+)?(married|marriage|wedding|divorced?|divorce))|(last\s+)?name\s+change\s+(back\s+)?(after|due\s+to|following|because\s+of)\s+(my\s+)?(marriage|wedding|divorced?|divorce)|(restore|change\s+back)\s+(my\s+)?(maiden|former|previous)\s+name|change\s+(my\s+)?name\s+back\s+to\s+(my\s+)?maiden/i],
+    reason: 'Name change after marriage OR divorce (incl. restoring a maiden name) → NC-100 (priority over the FL-100 / marriage rule).'
   },
   {
     id: 'record_cleanup_expungement',
@@ -409,6 +409,44 @@ const PACKAGE_RULES = [
   },
 
   // ===== Restraining orders / unlawful detainer =====
+  // Subtype-specific rules FIRST so the correct lead form is chosen; the
+  // generic DV-100 rule below is the domestic / fallback case.
+  {
+    id: 'civil_harassment_ro',
+    formCode: 'CH-100',
+    service: 'restraining',
+    packageForms: ['CH-100', 'CH-109', 'CH-110', 'CH-130'],
+    confidence: 0.9,
+    patterns: [/civil\s+harassment|harassment\s+(order|restraining).*(neighbor|stranger|co-?worker|roommate|landlord)|(neighbor|stranger|co-?worker|roommate)\s+.*harass|non-?domestic\s+harass|гражданск[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+преслед|acoso\s+civil/i],
+    reason: 'Civil (non-domestic) harassment → CH-100.'
+  },
+  {
+    id: 'workplace_violence_ro',
+    formCode: 'WV-100',
+    service: 'restraining',
+    packageForms: ['WV-100', 'WV-109', 'WV-110'],
+    confidence: 0.9,
+    patterns: [/workplace\s+violence|violence\s+(at|in)\s+(the\s+)?work(place)?|employer\s+(seeking|filing).*(restraining|protective)|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|violencia\s+(en\s+el\s+)?(trabajo|lugar\s+de\s+trabajo)/i],
+    reason: 'Workplace violence restraining order → WV-100.'
+  },
+  {
+    id: 'elder_abuse_ro',
+    formCode: 'EA-100',
+    service: 'restraining',
+    packageForms: ['EA-100', 'EA-109', 'EA-110'],
+    confidence: 0.9,
+    patterns: [/elder\s+(or\s+dependent\s+adult\s+)?abuse|abuse\s+of\s+(an?\s+)?elder|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+пожил|abuso\s+de\s+(ancian|adulto\s+mayor)/i],
+    reason: 'Elder/dependent-adult abuse restraining order → EA-100.'
+  },
+  {
+    id: 'gun_violence_ro',
+    formCode: 'GV-100',
+    service: 'restraining',
+    packageForms: ['GV-100', 'GV-109', 'GV-110'],
+    confidence: 0.9,
+    patterns: [/gun\s+violence|firearm\s+(restraining|removal)|red\s+flag\s+(order|law)/i],
+    reason: 'Gun violence restraining order → GV-100.'
+  },
   {
     id: 'restraining_order',
     formCode: 'DV-100',
@@ -435,8 +473,15 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-100', 'SC-104'],
     confidence: 0.9,
-    patterns: [/sc-?100|smol+\s*кле[ий]м|small\s+claims?|подать\s+в\s+(суд\s+по\s+)?мал[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|мал(ый|ые|ого)?\s+иск|невозвращ[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(долг|деньг)|не\s+вернул\s+(долг|деньг)|депозит\s+не\s+вернул|reclamos?\s+menores?|deuda\s+(no\s+pagada|peque[ñn]a)/i],
-    reason: 'Small claims plaintiff language maps to Form SC-100.'
+    patterns: [
+      /sc-?100|smol+\s*кле[ий]м|small\s+claims?|подать\s+в\s+(суд\s+по\s+)?мал[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|мал(ый|ые|ого)?\s+иск|невозвращ[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(долг|деньг)|не\s+вернул\s+(долг|деньг)|депозит\s+не\s+вернул|reclamos?\s+menores?|deuda\s+(no\s+pagada|peque[ñn]a)/i,
+      // "sue someone" / money owed → a money dispute = small claims (NOT an
+      // immigration or family form). \bsue\b excludes "sued" (defendant) and "issue".
+      /\bsue\b(?!\s+(me|us|by))|someone\s+owes\s+me|owes?\s+me\s+(money|\$|\d)|money\s+(owed|owes\s+to\s+me)|должен\s+мне\s+деньг|мне\s+должны\s+(деньг|\d)|взыскать\s+долг|винен\s+мені\s+грош|стягнути\s+борг|me\s+debe\s+(dinero|\$|\d)|reclamar\s+(una\s+)?deuda/i,
+      // unpaid wages / employer didn't pay → small-claims money dispute
+      /unpaid\s+wages?|wage\s+claim|didn'?t\s+pay\s+(me|my\s+(wages?|salary))|(employer|boss|company|client)\s+(didn'?t|won'?t|never|hasn'?t)\s+pa(y|id)|не\s+(за)?плат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(зарплат|за\s+работ)|не\s+виплат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(зарплат|за\s+робот)|позов\s+(на|до)\s+роботодав[\wа-яёіїєґА-ЯЁІЇЄҐ]*|salario\s+no\s+pagado|no\s+me\s+pag[oó]\s+(el\s+)?(salario|sueldo)/i
+    ],
+    reason: 'Small claims plaintiff language (sue / money owed / unpaid wages) maps to Form SC-100.'
   },
   {
     id: 'sc_defendant_claim',
