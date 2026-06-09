@@ -19,6 +19,27 @@ function dateMdY(v){const t=clean(v,40);const m=t.match(/^(\d{4})-(\d{2})-(\d{2}
 function stateCode(v){const t=clean(v,80);const m=t.match(/^([A-Z]{2})\b/);return m?m[1]:t;}
 function unitNumber(v){return clean(v,16).replace(/^(?:apt|ste|fl(?:oor)?|unit|#)\.?\s*/i,'').trim().slice(0,10);}
 
+// Part 2, Petition Type — a single radio (prt2PetitionType[0..7]). Each widget
+// index maps to an EB category (verified via appearance states a/b/c/d/e/f/g/h):
+//   [1]=1.a EB-1A extraordinary · [2]=1.b EB-1B prof/researcher ·
+//   [3]=1.c EB-1C multinational mgr · [4]=1.d EB-2 advanced degree/exceptional ·
+//   [0]=1.e EB-3 professional · [7]=1.f EB-3 skilled · [5]=1.g EB-3 other ·
+//   [6]=1.h EB-2 National Interest Waiver.
+function classificationFields(v) {
+  const s = clean(v, 80).toLowerCase();
+  if (!s) return {};
+  let idx = null;
+  if (/eb-?1a|extraordinary/.test(s)) idx = 1;
+  else if (/eb-?1b|outstanding|professor|researcher/.test(s)) idx = 2;
+  else if (/eb-?1c|multinational|executive|manager/.test(s)) idx = 3;
+  else if (/niw|national interest/.test(s)) idx = 6;                 // before EB-2
+  else if (/eb-?2|advanced degree|exceptional/.test(s)) idx = 4;
+  else if (/professional|bachelor/.test(s)) idx = 0;
+  else if (/skilled/.test(s)) idx = 7;
+  else if (/other worker|unskilled|eb-?3/.test(s)) idx = 5;
+  return idx === null ? {} : { [`prt2PetitionType[${idx}]`]: true };
+}
+
 function i_140FieldValues(payload = {}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
@@ -70,6 +91,9 @@ function i_140FieldValues(payload = {}) {
   v["Line6h_Province[0]"]           = stateCode(a.petitioner_state || a.employer_state || '');  // 3.e State (field: Province)
   v["Line6f_ZipCode[0]"]            = digits(a.petitioner_zip || a.employer_zip, 10);           // 3.e ZIP
   v["Line6i_Country[0]"]            = clean(a.petitioner_country || (orgName ? 'United States' : ''), 40); // 3.h Country
+
+  // Part 2 — EB classification (which preference category).
+  Object.assign(v, classificationFields(a.eb_classification || a.petition_classification || a.visa_category || a.classification || ''));
 
   return Object.fromEntries(Object.entries(v).filter(([,val]) => val !== undefined && val !== null && val !== ''));
 }
