@@ -27,13 +27,15 @@ function i_751FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["Line1a_FamilyName3[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
-  v["Line1b_GivenName3[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
-  v["Line1c_MiddleName3[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
-  v["Line14_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["Line15_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["Line4_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
+  // Part 1 — the conditional resident (render-verified field names; the old
+  // Line1a_FamilyName3 / Line14 / Line15 targets were the wrong blocks).
+  v["Pt1Line1a_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
+  v["Pt1Line1b_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
+  v["Pt1Line1c_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
+  v["P1_Line4_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');   // 4 Date of Birth
+  v["P1_Line7_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);   // 7 A-Number
+  v["P1_Line8_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);      // 8 SSN
+  v["P1_Line9_AcctIdentifier[0]"] = digits(a.uscis_online_account_number, 12); // 9 USCIS account
   v["P1_Line5_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P1_Line6_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["Pt1Line17_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
