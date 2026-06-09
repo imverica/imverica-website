@@ -22,17 +22,25 @@ function i_526FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["P2_Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
-  v["P2_Line1_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
-  v["P2_Line1_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
-  v["P2_Line34_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["P1_Line1_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["P1_Line16_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["P1_Line8_CityTownOfBirth[0]"] = clean(a.city_of_birth || a.place_of_birth_city, 60);
-  v["P2_Line17_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
-  v["Pt6_Line1b_CountryofCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
-  v["P1_Line23_CountryIssuedPassport[0]"] = clean(a.passport_number, 20);
+  // Part 1 "Information About You" — render-verified field names (the visible
+  // Item 4 name boxes are P1_Line4_*, not P2_Line1_*).
+  v["P1_Line4_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);   // 4 Family Name
+  v["P1_Line4_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60); // 4 Given Name
+  v["P1_Line4_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);  // 4 Middle Name
+  v["P1_Line6_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');                   // 6 Date of Birth
+  v["P1_Line1_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);                   // 1 A-Number
+  v["P1_Line2_AcctIdentifier[0]"] = digits(a.uscis_online_account_number, 12);              // 2 USCIS account
+  v["P1_Line8_CityTownOfBirth[0]"] = clean(a.city_of_birth || a.place_of_birth_city, 60);   // 8 City of Birth
+  v["P1_Line8_StateProvinceofBirth[0]"] = clean(a.state_of_birth || a.place_of_birth_state, 60); // 8 State/Province of Birth
+  v["P1_Line8_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);                         // 8 Country of Birth
+  v["P1_Line9_CountriesCitzOrNatzCurrent[0]"]  = clean(a.country_of_citizenship || a.country_of_birth, 60); // 9 Country of Citizenship
+  // Item 12 — Mailing Address.
+  v["P1_Line12_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
+  v["P1_Line12_AptSteFlrNumber[0]"]  = clean(a.mailing_address_line2 || a.address_unit, 16).replace(/^(?:apt|ste|fl(?:oor)?|unit|#)\.?\s*/i, '').slice(0, 10);
+  v["P1_Line12_CityOrTown[0]"] = clean(a.mailing_city || a.city, 60);
+  v["P1_Line12_State[0]"] = stateCode(a.mailing_state || a.state || '');
+  v["P1_Line12_ZipCode[0]"] = digits(a.mailing_zip || a.zip_code, 10);
+  v["P1_Line12_Country[0]"] = clean(a.mailing_country || 'United States', 40);
   v["P10_Line4_PreparersDaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P10_Line6_PreparersEmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P9_Line8_DateofSignature[0]"] = dateMdY(today);
