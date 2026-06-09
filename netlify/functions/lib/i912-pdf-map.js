@@ -32,9 +32,12 @@ function i_912FieldValues(payload={}) {
   v["P2_L2_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["P2_L2_GivenName[0]"] = clean(a.applicant_given_name || a.given_name || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
   v["P2_L2_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name, 60);
-  v["P2_3_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
-  v["P2_3_GivenName[0]"] = clean(a.applicant_given_name || a.given_name || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
-  v["P2_3_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name, 60);
+  // Item 3 "Other Names Used (if any)" — aliases / maiden name ONLY. The legal
+  // name belongs in Item 2 (P2_L2_*); echoing it here wrongly registers the
+  // legal name as an alias, so fill these only from explicit other-name input.
+  v["P2_3_FamilyName[0]"] = clean(a.other_family_name || a.maiden_name || a.other_last_name, 60);
+  v["P2_3_GivenName[0]"]  = clean(a.other_given_name || a.other_first_name, 60);
+  v["P2_3_MiddleName[0]"] = clean(a.other_middle_name, 60);
   v["P2_5_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["P3_Line1_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["P2_Line3_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
