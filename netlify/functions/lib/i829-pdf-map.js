@@ -13,8 +13,11 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"p4Line32Sex[1]":true,"p4Line32Sex[0]":false};
-  if(/^f|female/.test(s))return{"p4Line32Sex[1]":false,"p4Line32Sex[0]":true};
+  // Part 2 Item 6 (the petitioner). p4Line32Sex is a Part 4 *relative*; the
+  // applicant's box is p2Line6Sex, whose states are [0]=Male, [1]=Female
+  // (verified). The leading-anchor /^m/ avoids "female" matching as male.
+  if(/^m/.test(s))return{"p2Line6Sex[0]":true,"p2Line6Sex[1]":false};
+  if(/^f|female/.test(s))return{"p2Line6Sex[0]":false,"p2Line6Sex[1]":true};
   return {};}
 
 function i_829FieldValues(payload={}) {
@@ -22,10 +25,25 @@ function i_829FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["p4Line35DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["p4Line33AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["p2Line4SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["p2Line7CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
+  // Part 2 — petitioner identity (field names are meaningful here: p2LineN =
+  // Part 2 Item N, render-verified). The old map had NO name fields and sent the
+  // A-Number/DOB to p4Line33 / p4Line35 — a *relative's* block in Part 4.
+  v["p2Line1afamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);                  // 1.a Family Name
+  v["p2Line1bGivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60); // 1.b Given Name
+  v["p2Line1cMiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name, 60);                                                            // 1.c Middle Name
+  v["p2Line2AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);                  // 2 A-Number (was p4Line33)
+  v["p2Line3USCISNum[0]"]    = digits(a.uscis_online_account_number, 12);                // 3 USCIS Online Account
+  v["p2Line4SSN[0]"] = digits(a.ssn || a.social_security_number, 9);                     // 4 SSN
+  v["p2Line5DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');                  // 5 Date of Birth (was p4Line35)
+  v["p2Line7CountryofBirth[0]"]  = clean(a.country_of_birth, 60);                        // 7 Country of Birth
+  v["p2Line8CountryCizNatl[0]"]  = clean(a.country_of_citizenship || a.country_of_birth, 60); // 8 Country of Citizenship
+  // Item 14 — mailing address.
+  v["p2Line14InCareofName[0]"]     = clean(a.mailing_in_care_of || a.in_care_of, 60);
+  v["p2Line14StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.address_line1, 80);
+  v["p2Line14AptSteFlrNumber[0]"]  = clean(a.mailing_address_line2 || a.address_unit, 12).replace(/^(?:apt|ste|fl|unit|#)\s*\.?\s*/i,'').slice(0,10);
+  v["p2Line14CityOrTown[0]"]       = clean(a.mailing_city || a.city, 60);
+  v["p2Line14State[0]"]            = stateCode(a.mailing_state || a.state || '');
+  v["p2Line14ZipCode[0]"]          = digits(a.mailing_zip || a.zip_code, 10);
   v["P9_Line1_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["p11Line5Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["p11Line6bDateofSignature[0]"] = dateMdY(today);
