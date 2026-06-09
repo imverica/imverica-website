@@ -15,7 +15,7 @@ function addressLine2(v){return clean(v,12).replace(/^(?:apt|ste|fl|unit|#)\s*\.
 function firstItem(v){return Array.isArray(v)?(v[0]||{}):(v&&typeof v==='object'?v:{});}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m|male/.test(s))return{"P1_Line10_Gender[0]":true,"P1_Line10_Gender[1]":false};
+  if(/^m/.test(s))return{"P1_Line10_Gender[0]":true,"P1_Line10_Gender[1]":false};
   if(/^f|female/.test(s))return{"P1_Line10_Gender[0]":false,"P1_Line10_Gender[1]":true};
   return {};}
 

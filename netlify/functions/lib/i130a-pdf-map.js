@@ -13,7 +13,7 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 function firstItem(v){return Array.isArray(v)?(v[0]||{}):(v&&typeof v==='object'?v:{});}
 function addressLine2(v){return clean(v,12).replace(/^(?:apt|ste|fl|unit|#)\s*\.?\s*/i,'').slice(0,10);}
-function sexFields(v,maleField,femaleField){const s=clean(v,40).toLowerCase();if(/^m|male/.test(s))return{[maleField]:true,[femaleField]:false};if(/^f|female/.test(s))return{[maleField]:false,[femaleField]:true};return{};}
+function sexFields(v,maleField,femaleField){const s=clean(v,40).toLowerCase();if(/^m/.test(s))return{[maleField]:true,[femaleField]:false};if(/^f|female/.test(s))return{[maleField]:false,[femaleField]:true};return{};}
 
 function i_130aFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};

@@ -13,7 +13,7 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m|male/.test(s))return{"Pt2Line10_Gender[1]":true,"Pt2Line10_Gender[0]":false};
+  if(/^m/.test(s))return{"Pt2Line10_Gender[1]":true,"Pt2Line10_Gender[0]":false};
   if(/^f|female/.test(s))return{"Pt2Line10_Gender[1]":false,"Pt2Line10_Gender[0]":true};
   return {};}
 

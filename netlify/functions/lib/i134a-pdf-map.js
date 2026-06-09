@@ -13,7 +13,7 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m|male/.test(s))return{"P2_Line4_Gender[0]":true,"P2_Line4_Gender[1]":false};
+  if(/^m/.test(s))return{"P2_Line4_Gender[0]":true,"P2_Line4_Gender[1]":false};
   if(/^f|female/.test(s))return{"P2_Line4_Gender[0]":false,"P2_Line4_Gender[1]":true};
   return {};}
 
@@ -51,6 +51,43 @@ function i_134aFieldValues(payload={}) {
   v["P7_Line1_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["P7_Line1_PreparerGivenName[0]"]  = clean(a.preparer_given_name, 60);
   v["P7_Line2_PreparerNameofBusinessorOrgName[0]"]    = clean(a.preparer_business_name, 80);
+
+  // ----- Beneficiary: place of birth, citizenship, passport, address, phone -----
+  // (Part 2 of I-134A. Field LINE numbers differ from the printed item numbers;
+  //  mapped by the /TU tooltip semantics, verified against the real PDF.)
+  v["P2_Line6_CityOrTown[0]"]       = clean(a.city_of_birth || a.place_of_birth_city, 60);
+  v["P2_Line6_StateOrProvince[0]"]  = clean(a.state_of_birth || a.place_of_birth_state, 60);
+  v["P2_Line6_Country[0]"]          = clean(a.country_of_birth || a.place_of_birth_country, 60);
+  v["P2_Line7_CountryOfCitizen[0]"] = clean(a.country_of_citizenship || a.country_of_birth, 60);
+  v["P2_Line8_CountryPassportIssue[0]"] = clean(a.passport_country_of_issuance || a.country_of_citizenship || a.country_of_birth, 60);
+  v["P2_Line8_ExpirationDate[0]"]   = dateMdY(a.passport_expiration || '');
+  v["P2_Line13_DaytimePhoneNumber[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
+
+  // Beneficiary's mailing address (Part 2, internal Line10).
+  const _mStreet = clean(a.mailing_address_line1 || a.address_line1, 80);
+  v["P2_Line10_StreetName[0]"] = _mStreet;
+  v["P2_Line10_City[0]"]       = clean(a.mailing_city || a.city, 60);
+  v["P2_Line10_State[0]"]      = stateCode(a.mailing_state || a.state || '');
+  v["P2_Line10_ZipCode[0]"]    = digits(a.mailing_zip || a.zip_code, 10);
+  const _mUnitRaw = clean(a.mailing_address_line2 || a.address_unit || '', 16);
+  if (_mUnitRaw) {
+    v["P2_Line10_Number[0]"] = _mUnitRaw.replace(/^(?:apt|ste|fl(?:oor)?|unit|#)\.?\s*/i,'').trim().slice(0,10);
+    if (/\bste/i.test(_mUnitRaw)) v["P2_Line10_Unit[1]"] = true;        // STE
+    else if (/\bfl/i.test(_mUnitRaw)) v["P2_Line10_Unit[2]"] = true;    // FLR
+    else v["P2_Line10_Unit[0]"] = true;                                 // APT (default)
+  }
+
+  // Item: "Is the mailing address the same as the physical address?" (Line_11 Y/N).
+  const _pStreet = clean(a.physical_address_line1 || '', 80);
+  const _same = !_pStreet || _pStreet === _mStreet;
+  v["P2_Line_11[0]"] = _same;     // Yes
+  v["P2_Line_11[1]"] = !_same;    // No
+  if (!_same) {
+    v["P2_Line12_PhysicalStreetName[0]"] = _pStreet;
+    v["P2_Line12_City[0]"]    = clean(a.physical_city || a.city, 60);
+    v["P2_Line12_State[0]"]   = stateCode(a.physical_state || a.state || '');
+    v["P2_Line12_ZipCode[0]"] = digits(a.physical_zip || a.zip_code, 10);
+  }
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

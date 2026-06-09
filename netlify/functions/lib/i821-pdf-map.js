@@ -14,7 +14,7 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function addressLine2(v){return clean(v,12).replace(/^(?:apt|ste|fl|unit|#)\s*\.?\s*/i,'').slice(0,10);}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m|male/.test(s))return{"Part2_Item12_Sex[0]":true,"Part2_Item12_Sex[1]":false};
+  if(/^m/.test(s))return{"Part2_Item12_Sex[0]":true,"Part2_Item12_Sex[1]":false};
   if(/^f|female/.test(s))return{"Part2_Item12_Sex[0]":false,"Part2_Item12_Sex[1]":true};
   return {};}
 
