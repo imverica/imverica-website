@@ -134,7 +134,7 @@ function applicantStatementFields(statementValue) {
 
 function sexFields(value) {
   const sex = clean(value, 80).toLowerCase();
-  if (/^m|male|муж|чолов|masc/.test(sex)) {
+  if (/^m|муж|чолов|masc/.test(sex)) {
     return { 'Line9_Checkbox[0]': false, 'Line9_Checkbox[1]': true };
   }
   if (/^f|female|жен|жін|fem/.test(sex)) {

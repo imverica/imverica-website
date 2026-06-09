@@ -30,7 +30,7 @@ function addressGroup(v, g, addr){
 // Sex checkbox pair (Male/Female export value "Y").
 function sexFields(v, maleField, femaleField, value){
   const s = clean(value, 20).toLowerCase();
-  if(/^m|male|муж|муж/.test(s)) v[maleField] = true;
+  if(/^m|муж|муж/.test(s)) v[maleField] = true;
   else if(/^f|female|жен/.test(s)) v[femaleField] = true;
 }
 

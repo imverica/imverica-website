@@ -50,7 +50,7 @@ function i_131FieldValues(payload={}) {
   v["Part2_Line7_CountryOfCitizenshiporNationality[0]"] = clean(a.i131_country_of_citizenship || a.country_of_citizenship, 60);
   // Sex checkbox: [1] = Male, [0] = Female.
   const sx = clean(a.i131_sex || a.sex || a.gender, 20).toLowerCase();
-  if(/^m|male|муж/.test(sx)) v["Part2_Line8_Gender[1]"]=true;
+  if(/^m|муж/.test(sx)) v["Part2_Line8_Gender[1]"]=true;
   else if(/^f|female|жен/.test(sx)) v["Part2_Line8_Gender[0]"]=true;
 
   // Mailing address (Part 2, item 3)
