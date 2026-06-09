@@ -14,6 +14,32 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 
 function isUS(country){const t=clean(country,40).toLowerCase();return !t || /united states|u\.?s\.?a?\b|usa|америк|сша/.test(t);}
 
+// I-131 Part 1 Application Type. The "CB_AppType" radio's widget indices each
+// carry an appearance state mapped to a specific item (verified by an overlay
+// probe that stamped each widget's state at its rendered position):
+//   [6]=10.C Re-parole for Ukrainian citizens paroled after 2/11/2022 (U4U) — render-verified
+//   [5]=10.A Family Reunification · [4]=10.B Afghans · [7]=10.D FWVP ·
+//   [8]=10.E IMMVI · [9]=10.F CAM · [1]=10.G FRTF · [2]=10.H Military PIP ·
+//   [3]=10.I Other · [0]=11 (re-parole, no specific program).
+// NOTE: page-1 items (1 Reentry, 2/3 Refugee Travel Document, 4 TPS Travel
+// Authorization, 5 Advance Parole) are XFA-only on this template — they do NOT
+// mark via the static fill engine (page-1 content is XFA-rendered), so they are
+// intentionally not set here. U4U re-parole (the primary Ukrainian travel
+// scenario) is on page 4 and fills correctly.
+function i131ApplicationType(type){
+  const s = clean(type, 80).toLowerCase();
+  if(!s) return {};
+  if(/u4u|uniting for ukraine|ukrain.*re-?parol|re-?parol.*ukrain|ukrainian re-?parole/.test(s)) return {"CB_AppType[6]":true}; // 10.C
+  if(/family reunif(?!ication task)/.test(s)) return {"CB_AppType[5]":true};   // 10.A
+  if(/afghan/.test(s))                          return {"CB_AppType[4]":true}; // 10.B
+  if(/fwvp|filipino/.test(s))                   return {"CB_AppType[7]":true}; // 10.D
+  if(/immvi/.test(s))                           return {"CB_AppType[8]":true}; // 10.E
+  if(/\bcam\b|central american minors/.test(s)) return {"CB_AppType[9]":true}; // 10.F
+  if(/frtf|family reunification task/.test(s))  return {"CB_AppType[1]":true}; // 10.G
+  if(/military.*(pip|parole)/.test(s))          return {"CB_AppType[2]":true}; // 10.H
+  return {};
+}
+
 // Fill an I-131 address group (P2_Line24_ mailing / P2_Line25_ physical).
 function i131Address(v, g, addr){
   if(!addr) return;
@@ -68,6 +94,9 @@ function i_131FieldValues(payload={}) {
     city: a.i131_physical_city, state: a.i131_physical_state,
     zip: a.i131_physical_zip, country: a.i131_physical_country
   });
+
+  // Part 1 — application type (U4U re-parole etc.).
+  Object.assign(v, i131ApplicationType(a.i131_application_type || a.application_type || a.i131_type || a.travel_document_type));
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val===true||(val!==undefined&&val!==null&&val!=='')));
 }
