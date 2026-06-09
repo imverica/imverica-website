@@ -1,18 +1,15 @@
 ---
-// Client reviews. UPL-safe: feedback is about the document-preparation
-// service (clarity, organization, multilingual help, speed) — never about
-// legal advice or guaranteed outcomes.
+// Client reviews — REAL reviews from the Imverica Google Business Profile
+// (lightly trimmed to complete sentences; meaning unchanged). First names
+// only, as requested. UPL-safe: feedback is about document-preparation
+// service quality, never legal advice or guaranteed outcomes.
 //
-// 24 testimonials in the pool. On page load the client-side script picks
-// 3 non-overlapping random batches of 6 (= 18 unique cards per visit) and
-// auto-rotates them with a fade transition every 60 seconds. So the page
-// shows a fresh face every minute and never repeats within the loop. The
-// first batch is also rendered server-side so Google sees real content
-// on initial HTML.
+// The client-side script shuffles the pool and rotates batches of 6 every
+// 60 seconds (adaptive: with 11 reviews it cycles a 6-card and a 5-card
+// batch). The first batch is server-rendered so search engines see content.
 //
-// Mix: ~33% Russian, ~25% Ukrainian, ~25% English, ~17% Spanish.
-// Stars: mostly 5★ with a few 4★ where the wording mentions a small
-// caveat — feels more authentic than 24 perfect reviews.
+// When the live Google reviews endpoint (/api/google-reviews) is configured,
+// it overrides this pool automatically; until then these real reviews show.
 
 interface Review {
   body: string;
@@ -22,61 +19,39 @@ interface Review {
 }
 
 const ALL: Review[] = [
-  // ----- batch 1 -----
-  { stars: 5, name: 'Vlad',       meta: 'Sacramento, CA · USCIS I-765',
-    body: 'They turned a confusing work-permit application into a few clear questions and put together a neat, review-ready packet. No legal advice — just careful, accurate paperwork, done fast.' },
-  { stars: 5, name: 'Mariia',     meta: 'Roseville, CA · Small claims SC-100',
-    body: 'First time filing a small-claims case. They prepared the SC-100 and proof-of-service exactly the way the court wanted and explained every form before I signed it.' },
-  { stars: 5, name: 'Vetal',      meta: 'USCIS N-400',
-    body: 'Помогли подготовить документы на натурализацию (N-400) — всё объяснили по-русски, собрали формы и переводы в один аккуратный пакет. Юридических консультаций не дают, но сделали очень внимательно и быстро.' },
-  { stars: 5, name: 'Tetiana',    meta: 'USCIS I-130',
-    body: 'Готували пакет на сімейну петицію (I-130) для грін-карти — усе чітко пояснили українською, зібрали форми, переклади й супровідні документи разом. Порад юриста не дають, але роблять дуже акуратно.' },
-  { stars: 5, name: 'Carlos R.',  meta: 'USCIS I-765',
-    body: 'Prepararon mi solicitud de permiso de trabajo de forma clara y en español. Organizaron todo el paquete y explicaron cada formulario. No dan asesoría legal, pero el trabajo fue rápido y preciso.' },
-  { stars: 5, name: 'Yevhen',     meta: 'San Jose, CA · USCIS I-485',
-    body: 'Adjustment-of-status paperwork felt overwhelming until they organized every form and document into one package. Flat pricing up front and no surprises.' },
-
-  // ----- batch 2 -----
-  { stars: 5, name: 'Алина',      meta: 'Sacramento, CA · USCIS I-485',
-    body: 'Помогли собрать пакет на грин-карту по браку. Объяснили какие документы и переводы нужны, перепроверили всё перед отправкой в USCIS. Без юридических советов — просто чисто и аккуратно.' },
-  { stars: 5, name: 'Олег П.',    meta: 'USCIS I-130',
-    body: 'Готували сімейну петицію для дружини. Усе українською, без води. Документи зібрали, переклали, упакували акуратно — USCIS прийняв без RFE.' },
-  { stars: 4, name: 'Светлана',   meta: 'San Francisco, CA · USCIS I-130',
-    body: 'Делали семейную петицию для мамы. В целом хорошо, но один раз пришлось переделать форму после запроса USCIS — оперативно исправили без доплаты. В следующий раз снова обращусь.' },
-  { stars: 5, name: 'Jennifer',   meta: 'California · CH-100 restraining order',
-    body: 'Needed a civil-harassment restraining order. They prepared the CH-100, the supporting declaration and the proof of service. Calm, professional, didn\'t ask questions beyond what the forms required.' },
-  { stars: 5, name: 'María C.',   meta: 'Fresno, CA · USCIS I-485',
-    body: 'Ajuste de estatus por matrimonio. Todo en español, paquete completo I-485 con I-130, I-765 y I-864. USCIS aceptó sin RFE. Precio fijo, sin sorpresas al final.' },
-  { stars: 5, name: 'Andriy',     meta: 'USCIS I-134A · U4U',
-    body: 'Допомогли підготувати документи на Uniting for Ukraine — спонсор з США, всі форми, листи підтримки. Спонсор сказав що пакет ідеальний. Без юридичних порад, лише папери — як і обіцяли.' },
-
-  // ----- batch 3 -----
-  { stars: 5, name: 'Дмитрий Л.', meta: 'Sacramento, CA · USCIS N-400',
-    body: 'Документы на гражданство. Простой случай — они честно сказали что юрист не нужен, и помогли собрать пакет. Прошёл интервью с первого раза.' },
-  { stars: 5, name: 'Marcus',     meta: 'California · LLC-1 + EIN',
-    body: 'Formed my California LLC — LLC-1, Statement of Information, EIN application. Lower cost than the big self-service filing sites, and they actually answered questions about the paperwork. Not legal advice, just clean filings.' },
-  { stars: 4, name: 'Игорь',      meta: 'Davis, CA · Small claims SC-100',
-    body: 'Малый иск против бывшего арендодателя — депозит не вернул. Подготовили SC-100 и proof of service. Ответ ждал один день, но в итоге всё прошло гладко в суде.' },
-  { stars: 5, name: 'Lucia',      meta: 'California · Reclamos menores SC-100',
-    body: 'Demanda en small claims contra un contratista. Prepararon SC-100 y la carta de demanda previa. Honestos sobre lo que es preparación de documentos vs asesoría legal — sin promesas que no podían cumplir.' },
-  { stars: 5, name: 'Iryna',      meta: 'USCIS I-589',
-    body: 'Готували заяву на політичний притулок (I-589) — форми, переклади, організація доказів. Самі не консультують з права, але направили до ліцензованого адвоката коли потрібно було.' },
-  { stars: 5, name: 'Diane H.',   meta: 'California · Probate DE-111',
-    body: 'Probate after my father passed. They prepared DE-111 and the notice forms. The court itself is slow — Imverica\'s part was fast and the filings were accepted without amendments.' },
-
-  // ----- batch 4 -----
-  { stars: 5, name: 'Олег',       meta: 'California · FL-100 divorce',
-    body: 'Готовили развод без детей и общего имущества. Объясняли каждую форму — FL-100, FL-110, FL-115, как вручать. Без адвоката получилось сэкономить, но честно сказали бы если бы он понадобился.' },
-  { stars: 5, name: 'Thomas P.',  meta: 'California · FL-300 custody',
-    body: 'Custody modification — FL-300 with the supporting declarations and FL-150 income/expense. Clear pricing up front. Court accepted the filing without any amendments needed.' },
-  { stars: 4, name: 'Yuriy',      meta: 'California · FL-100 divorce',
-    body: 'Розлучення без дітей — спокійно зібрали FL-100, FL-110, FL-120. Один раз була плутанина з графіком зустрічі, але виправили того ж дня. В цілому рекомендую.' },
-  { stars: 5, name: 'Антон',      meta: 'USCIS I-90',
-    body: 'Обновление green card (I-90) — заняло час: заполнили, перепроверили, отправили. Цена в два раза ниже чем у адвоката. Без советов какую форму подавать — просто аккуратное оформление.' },
-  { stars: 5, name: 'Sarah K.',   meta: 'USCIS I-751',
-    body: 'Remove-conditions petition (I-751) after a 2-year green card. They organized 5 years of marriage evidence into a clean indexed packet. Tedious work done patiently.' },
-  { stars: 4, name: 'Antonio R.', meta: 'California · DMV title transfer',
-    body: 'Transferencia de título del carro — los formularios DMV listos en una tarde. Tuve que ir al DMV yo mismo a entregarlos, pero los formularios estaban perfectos y no me hicieron volver.' }
+  { stars: 5, name: 'Elena',
+    meta: 'Immigration documents',
+    body: 'I’m very satisfied with the service. Always quick, clear, and worth it.' },
+  { stars: 5, name: 'Pavlo',
+    meta: 'USCIS · U4U re-parole',
+    body: 'Huge thanks to Imverica Legal Solutions and personally to Farukh for their invaluable help with our U4U re-parole application! Farukh is a true professional who genuinely cares about his clients. He was always in touch.' },
+  { stars: 5, name: 'Mikhail',
+    meta: 'USCIS · Immigration documents',
+    body: 'I would like to thank Farukh for his professionalism and excellent service. Throughout the entire process, everything was handled clearly, efficiently, and in a timely manner.' },
+  { stars: 5, name: 'Olga',
+    meta: 'USCIS · Immigration documents',
+    body: 'I’d like to express my gratitude to Farukh for his professional assistance and attentive attitude. All issues were resolved quickly, competently, and without unnecessary complications.' },
+  { stars: 5, name: 'Aleks',
+    meta: 'USCIS N-400 · Citizenship',
+    body: 'I used Imverica to help with my citizenship application. Everything was prepared quickly, communication was easy, and the process went smoothly from start to finish. Very happy with the service.' },
+  { stars: 5, name: 'Vladimir',
+    meta: 'USCIS N-400 · Citizenship',
+    body: 'Thank you for your help with completing my citizenship application. Everything was clear and professional.' },
+  { stars: 5, name: 'Eva',
+    meta: 'USCIS · Green card',
+    body: 'Thank you for helping us prepare documents for our immigration case. Our green-card application had been pending with USCIS for over three years, and we didn’t know how to properly submit a status update.' },
+  { stars: 5, name: 'Vitalii',
+    meta: 'USCIS · Immigration documents',
+    body: 'A really great company — they helped with so much! Highly recommended.' },
+  { stars: 5, name: 'Aleksandr',
+    meta: 'USCIS · Immigration forms',
+    body: 'Thank you — the company helped me fill out the necessary immigration forms quickly and professionally! To anyone in need of this type of service, I recommend this company 10 out of 10.' },
+  { stars: 5, name: 'Valentin',
+    meta: 'USCIS · Immigration paperwork',
+    body: 'Really happy I chose Imverica Legal Solutions for my immigration paperwork. They moved quickly, kept things on track, and delivered the results I was looking for — all at a price that felt reasonable for the quality of work.' },
+  { stars: 5, name: 'Shroomly LLC',
+    meta: 'Business · Employment green card',
+    body: 'This company helped our employee prepare green-card application forms. The entire process was fast, affordable, and efficient. We highly recommend them.' }
 ];
 
 // Server-render the first 6 so search engines see real content. The
@@ -163,7 +138,7 @@ const initial: Review[] = ALL.slice(0, 6);
         }
         // Adaptive batches of 6 (Google may return fewer than the demo pool).
         var size = 6;
-        var n = Math.min(3, Math.max(1, Math.floor(pool.length / size)));
+        var n = Math.min(3, Math.max(1, Math.ceil(pool.length / size)));
         var batches: Review[][] = [];
         for (var b = 0; b < n; b++) batches.push(pool.slice(b * size, b * size + size));
         render(batches[0]);
