@@ -151,10 +151,32 @@ function mapBusinessProfile(data) {
 }
 
 // ---- Source 2: Places API (≤5 reviews) ----
+// Resolve a Place ID from a business-name query, so the owner only has to set
+// the API key (GOOGLE_PLACE_ID stays optional). Defaults to the Imverica
+// listing; override with GOOGLE_PLACE_QUERY if the name ever changes.
+async function resolvePlaceId(key) {
+  const q = process.env.GOOGLE_PLACE_QUERY || 'Imverica Legal Solutions Sacramento CA';
+  const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(q)}&inputtype=textquery&fields=place_id&key=${encodeURIComponent(key)}`;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    if (data.status === 'OK' && Array.isArray(data.candidates) && data.candidates[0]) {
+      return data.candidates[0].place_id || null;
+    }
+    console.error('[google-reviews] findPlace status', data.status, (data.error_message || '').slice(0, 160));
+    return null;
+  } catch (e) { console.error('[google-reviews] findPlace error', e && e.message); return null; }
+}
+
 async function fetchPlacesReviews() {
   const key = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
-  if (!key || !placeId) return null;
+  if (!key) return null;
+  // Prefer an explicit Place ID; otherwise look it up by name (one less env
+  // var to set). The result is cached for 6h with the reviews payload.
+  let placeId = process.env.GOOGLE_PLACE_ID;
+  if (!placeId) placeId = await resolvePlaceId(key);
+  if (!placeId) return null;
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=reviews,rating,user_ratings_total&reviews_sort=newest&key=${encodeURIComponent(key)}`;
   const resp = await fetch(url);
   if (!resp.ok) {

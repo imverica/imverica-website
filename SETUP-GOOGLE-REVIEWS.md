@@ -39,8 +39,10 @@ env vars are set, the code does the rest.
    (search your business → copy the `ChIJ…` id). *Tell me your business name +
    city and I can confirm the Place ID for you.*
 5. In **Netlify → Site → Settings → Environment variables**, add:
-   - `GOOGLE_PLACES_API_KEY` = your key
-   - `GOOGLE_PLACE_ID` = your `ChIJ…` id
+   - `GOOGLE_PLACES_API_KEY` = your key  ← **the only required one**
+   - `GOOGLE_PLACE_ID` = your `ChIJ…` id  *(optional — if omitted, the function
+     looks it up by name "Imverica Legal Solutions Sacramento CA"; override the
+     name with `GOOGLE_PLACE_QUERY` if needed)*
 6. Redeploy (or just wait for the next deploy). Verify:
    `https://imverica.com/api/google-reviews?refresh=1` → should show
    `"configured": true, "source": "places"` with your reviews.
