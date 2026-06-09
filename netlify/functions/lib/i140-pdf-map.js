@@ -78,7 +78,7 @@ function i_140FieldValues(payload = {}) {
   // Employer petition → company name + FEIN. Self-petition (EB-1A / EB-2 NIW)
   // → the individual is the petitioner, so fall back to the applicant's name.
   // NOTE the scrambled name fields: the "Family Name" box is Pt1Line1b_GivenName.
-  const orgName = clean(a.petitioner_org_name || a.employer_name || a.company_name, 80);
+  const orgName = clean(a.petitioner_org_name || a.employer_name || a.company_name || a.petitioner_or_business_name, 80);
   v["Line2_CompanyName[0]"]         = orgName;                                  // 2 Company/Org Name
   v["Pt1Line3_TaxNumber[0]"]        = digits(a.petitioner_fein || a.employer_ein || a.fein, 9); // 4 IRS EIN (FEIN)
   const petFamily = clean(a.petitioner_family_name, 60) || (orgName ? '' : family);
@@ -103,7 +103,7 @@ function i_140FieldValues(payload = {}) {
   v["Line1_JobTitle[0]"]            = clean(a.job_title || a.position_title, 80);   // 1 Job Title
   const soc = clean(a.soc_code || a.soc, 20).replace(/[^0-9-]/g, '');               // 2 SOC Code (XX-XXXX)
   if (soc) { const sm = soc.match(/^(\d{2})-?(\d{2,4})$/); if (sm) { v["Line2_SOCCode1[0]"] = sm[1]; v["Line2_SOCCode2[0]"] = sm[2]; } }
-  v["Line3_JobDescription[0]"]      = clean(a.job_description || a.job_duties, 300); // 3 Nontechnical Job Description
+  v["Line3_JobDescription[0]"]      = clean(a.job_description || a.job_duties || a.job_or_project_summary, 300); // 3 Nontechnical Job Description
   v["Line5_Hours[0]"]               = digits(a.hours_per_week, 3);                   // 5 Hours/week (if not full-time)
   v["Line8_Wages[0]"]               = digits(a.wage_amount || a.offered_wage || a.salary, 12); // 8 Wages amount
   v["Line8_Per[0]"]                 = clean(a.wage_per || ((a.wage_amount || a.offered_wage || a.salary) ? 'Year' : ''), 12); // 8 per
@@ -114,7 +114,7 @@ function i_140FieldValues(payload = {}) {
   v["Line9e_ZipCode[0]"]            = digits(a.worksite_zip, 10);                                    // 9.d ZIP
 
   // Part 2 — EB classification (which preference category).
-  Object.assign(v, classificationFields(a.eb_classification || a.petition_classification || a.visa_category || a.classification || ''));
+  Object.assign(v, classificationFields(a.eb_classification || a.requested_classification || a.petition_classification || a.visa_category || a.classification || ''));
 
   return Object.fromEntries(Object.entries(v).filter(([,val]) => val !== undefined && val !== null && val !== ''));
 }
