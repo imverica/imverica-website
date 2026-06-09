@@ -92,6 +92,27 @@ function i_140FieldValues(payload = {}) {
   v["Line6f_ZipCode[0]"]            = digits(a.petitioner_zip || a.employer_zip, 10);           // 3.e ZIP
   v["Line6i_Country[0]"]            = clean(a.petitioner_country || (orgName ? 'United States' : ''), 40); // 3.h Country
 
+  // ===== Part 5 — Additional Information About the Petitioner =====
+  v["Line3a_Occupation[0]"]         = clean(a.occupation || a.job_title || a.position_title, 60);   // 11 Occupation
+  v["Line3b_AnnualIncome[0]"]       = clean(a.beneficiary_annual_income || a.annual_income, 20);    // 12 Annual Income
+  v["Line2a_TypeofBusiness[0]"]     = clean(a.business_type || a.employer_business_type, 60);        // 2 Type of Business
+  v["Line2c_NumberofEmployees[0]"]  = digits(a.num_employees || a.employer_num_employees, 8);        // 4 # of U.S. Employees
+  v["Line2f_NAICSCode[0]"]          = digits(a.naics_code, 6);                                       // 7 NAICS Code
+
+  // ===== Part 6 — Basic Information About the Proposed Employment =====
+  v["Line1_JobTitle[0]"]            = clean(a.job_title || a.position_title, 80);   // 1 Job Title
+  const soc = clean(a.soc_code || a.soc, 20).replace(/[^0-9-]/g, '');               // 2 SOC Code (XX-XXXX)
+  if (soc) { const sm = soc.match(/^(\d{2})-?(\d{2,4})$/); if (sm) { v["Line2_SOCCode1[0]"] = sm[1]; v["Line2_SOCCode2[0]"] = sm[2]; } }
+  v["Line3_JobDescription[0]"]      = clean(a.job_description || a.job_duties, 300); // 3 Nontechnical Job Description
+  v["Line5_Hours[0]"]               = digits(a.hours_per_week, 3);                   // 5 Hours/week (if not full-time)
+  v["Line8_Wages[0]"]               = digits(a.wage_amount || a.offered_wage || a.salary, 12); // 8 Wages amount
+  v["Line8_Per[0]"]                 = clean(a.wage_per || ((a.wage_amount || a.offered_wage || a.salary) ? 'Year' : ''), 12); // 8 per
+  v["Line9a_StreetNumberName[0]"]   = clean(a.worksite_address_line1 || a.worksite_street, 80);      // 9.a Worksite Street
+  v["Line9b_AptSteFlrNumber[0]"]    = unitNumber(a.worksite_address_line2 || a.worksite_unit);       // 9.b Apt/Ste/Flr Number
+  v["Line9c_CityOrTown[0]"]         = clean(a.worksite_city, 40);                                    // 9.c City
+  v["Line9d_State[0]"]              = stateCode(a.worksite_state || '');                             // 9.d State
+  v["Line9e_ZipCode[0]"]            = digits(a.worksite_zip, 10);                                    // 9.d ZIP
+
   // Part 2 — EB classification (which preference category).
   Object.assign(v, classificationFields(a.eb_classification || a.petition_classification || a.visa_category || a.classification || ''));
 
