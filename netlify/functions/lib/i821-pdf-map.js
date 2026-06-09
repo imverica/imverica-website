@@ -33,6 +33,19 @@ function i_821FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
+
+  // ===== Part 1 — Type of Application (render-verified, fillable AcroForm) =====
+  // 1.a Initial (first-time) / 1.b Re-registration.
+  const appType = clean(a.tps_application_type || a.application_type || a.tps_type, 30).toLowerCase();
+  if (/re-?reg|повтор|перереєстр/.test(appType)) v["Part1_Item1_ApplicationType[1]"] = true; // 1.b
+  else v["Part1_Item1_ApplicationType[0]"] = true;                                            // 1.a Initial (default)
+  // Item 3 — are you also filing Form I-765 (EAD)? Default Yes (filed together).
+  const ead = yesNo(a.tps_also_filing_ead);
+  if (ead === false) v["Part1_Item3_EADApp[1]"] = true;  // 3.b No
+  else v["Part1_Item3_EADApp[0]"] = true;                // 3.a Yes (default)
+  // Item 4 — designated TPS country (e.g. Ukraine = country of citizenship).
+  v["Part1_TPScountry[0]"] = clean(a.tps_country || a.country_of_citizenship || a.country_of_birth, 60);
+
   v["Part2_Item1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Part2_Item1_GivenName[0]"] = clean(a.applicant_given_name || a.given_name || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
   v["Part2_Item1_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name, 60);
