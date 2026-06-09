@@ -286,7 +286,19 @@ function applyRoutingBoosts(form, queryText, baseScore) {
     if (pane !== 'service' && !codeIn(code, ['FW-001'])) score -= 85;
   }
 
-  if (queryHasAny(query, ['eviction', 'unlawful detainer', 'tenant', 'landlord', 'not paying rent', 'pay rent or quit', 'выселение', 'аренда', 'desalojo', 'inquilino'])) {
+  // Security-deposit disputes (tenant vs landlord) are SMALL CLAIMS (SC-100),
+  // never unlawful detainer. Detect them first and keep them off the UD pane.
+  const isDepositMatter =
+    queryHasAny(query, ['security deposit', 'депозит', 'depósito', 'deposito']) ||
+    (queryHasAny(query, ['deposit', 'заставу', 'застава', 'завдаток']) &&
+      queryHasAny(query, ['landlord', 'tenant', 'rent', 'lease', 'apartment', 'rental', 'аренд', 'оренд', 'квартир', 'лендлорд', 'арендатор', 'арендодател', 'inquilino', 'propietario', 'arrendador', 'alquiler']));
+  if (isDepositMatter) {
+    if (pane === 'sc') score += 100;
+    if (codeIn(code, ['SC-100', 'SC-104', 'SC-120'])) score += 60;
+    if (pane === 'ud') score -= 90; // a deposit dispute is NOT an eviction
+  }
+
+  if (!isDepositMatter && queryHasAny(query, ['eviction', 'unlawful detainer', 'tenant', 'landlord', 'not paying rent', 'pay rent or quit', 'выселение', 'аренда', 'desalojo', 'inquilino'])) {
     if (pane === 'ud') score += 85;
     if (codeIn(code, ['UD-100', 'UD-105', 'UD-110', 'UD-150', 'UD-N3', 'UD-N30', 'UD-N60', 'UD-N3C'])) score += 50;
   }

@@ -79,8 +79,17 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-100', 'DEMAND-LETTER'],
     confidence: 0.94,
-    patterns: [/(landlord\s+(never|didn'?t|wouldn'?t|hasn'?t|has\s+not|will\s+not)\s+return(ed)?.*deposit|security\s+deposit\s+(not\s+)?return|never\s+returned.*(security\s+)?deposit|landlord\s+kept\s+(my\s+)?deposit)/i],
-    reason: 'Landlord-kept-deposit → SC-100 (priority over the broader unlawful-detainer rule).'
+    // A security-deposit dispute (tenant vs landlord) is ALWAYS a small-claims
+    // matter (SC-100) — never an unlawful detainer. The broad UD rule further
+    // down grabs bare "landlord"/"tenant", so this MUST fire first whenever a
+    // deposit is mentioned in a rental context (EN/RU/UA/ES).
+    patterns: [
+      /security\s+deposit/i,
+      /\bdeposit\b[\s\S]{0,60}\b(landlord|tenant|renter|lessor|lessee|rent|lease|apartment|rental)\b|\b(landlord|tenant|renter|lessor|lessee|rent|lease|apartment|rental)\b[\s\S]{0,60}\bdeposit\b/i,
+      /(депозит|завдаток|застав\w*)[\s\S]{0,50}(оренд|аренд|квартир|жил|лендлорд|арендодател|арендатор|орендар|орендодав|tenant|landlord)|(оренд|аренд|квартир|жил|лендлорд|арендодател|арендатор|орендар|орендодав)[\s\S]{0,50}(депозит|завдаток|застав\w*)/i,
+      /dep[oó]sito\s+(de\s+(seguridad|garant\w*)|de\s+alquiler|del\s+inquilino)|dep[oó]sito[\s\S]{0,50}(arrendador|arrendatario|inquilino|alquiler|renta)/i
+    ],
+    reason: 'Security-deposit dispute (tenant vs landlord) → SC-100 small claims — must beat the broad unlawful-detainer rule.'
   },
   {
     id: 'lawsuit_response',
