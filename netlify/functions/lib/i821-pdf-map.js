@@ -105,21 +105,39 @@ function i_821FieldValues(payload={}) {
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }
 
-// Text overlays for boxes that have NO fillable AcroForm field (XFA-only on
-// this template, so the static engine can't fill them and viewers render them
-// blank). Verified by rendering: filling every text field still left these
-// boxes empty. Coordinates are PDF points on page 2, calibrated against the
-// neighbouring Item 9 (SSN) / Item 11 (Other DOB) field rectangles.
-//   - Item 10 "Date of Birth" — single plain box at ~(506, 589).
-// NOTE: Item 7 "Alien Registration Number (A-Number)" is a 9-cell COMB box and
-// is marked "(if any)" (most newly-arrived U4U parolees have none); a plain
-// overlay would not align to the comb cells, so it is left for a per-cell
-// overlay follow-up rather than stamped messily here.
+// Text overlays for boxes that fill at the AcroForm level but are NOT rendered
+// by viewers (XFA-only display on this template). Verified by rendering: setting
+// the fields still leaves these boxes blank. Coordinates are PDF points on page
+// 2, visually calibrated (the AcroForm Rects are mis-placed by the XFA layer).
+//   - Item 10 "Date of Birth" — single plain box at ~(506, 589) [render-verified].
+//   - Items 7/8/9 (A-Number, USCIS account, SSN) — comb boxes, stamped per cell.
+// Stamp a digit string across a comb box, one character per cell. boxLeft is the
+// PDF-x of the box's left edge, cellW the per-cell width, n the cell count, y the
+// text baseline (≈ box vertical centre). Each glyph is nudged to sit centred in
+// its cell. Returns one overlay object per character (extra chars are dropped).
+function combOverlay(page, boxLeft, cellW, n, y, value, size = 10) {
+  const s = String(value || '').slice(0, n);
+  const glyph = size * 0.5; // approx digit width at this size
+  const out = [];
+  for (let i = 0; i < s.length; i++) {
+    out.push({ page, x: boxLeft + cellW * i + (cellW - glyph) / 2, y, text: s[i], size });
+  }
+  return out;
+}
+
 function i_821TextOverlays(payload = {}) {
   const a = payload.formAnswers || payload.answers || {};
   const overlays = [];
   const dob = dateMdY(a.date_of_birth || a.dob || '');
   if (dob) overlays.push({ page: 2, x: 506, y: 589, text: dob, size: 10 });
+  // Only Item 7 (A-Number) is genuinely XFA-blank — its AcroForm widget is
+  // mis-placed so the value never renders at the visible box. Items 8 (USCIS
+  // account) and 9 (SSN) are also comb boxes but their widgets ARE at the
+  // visible position and fill correctly from the AcroForm pass (render-verified),
+  // so overlaying them would double-print. Geometry: 9 cells, right edge shared
+  // with Item 9 (~576pt), stacked one row above the DOB anchor → y≈695.
+  const aNum = digits(a.alien_number || a.a_number, 9);
+  if (aNum) overlays.push(...combOverlay(2, 451, 13.9, 9, 695, aNum)); // 7 A-Number
   return overlays;
 }
 
