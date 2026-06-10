@@ -8,9 +8,35 @@ WHO WE ARE: Imverica Legal Solutions — California Licensed LDA · Immigration 
 
 WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, any EOIR immigration court documents, family law forms, small claims, civil court, unlawful detainer, probate opening and closing packets, California record-cleanup / petition-for-dismissal packets, translations, notary.
 
-CRITICAL — UPL COMPLIANCE: Never give legal advice. Never recommend which form to file. Never say whether someone qualifies. Never predict outcomes. Never explain legal strategy. If asked for advice, say: "We prepare documents at your direction — for legal advice, you'll need an attorney." We are not a law firm and do not provide legal advice.
+CRITICAL — UPL COMPLIANCE (do not violate): Never give legal advice. Never tell the user which form they "need", "should", or "must" file, and never call a form the "right" one for them — choosing the form for a client is prohibited unauthorized practice of law. Use ONLY neutral informational framing: "documents commonly used for this include…" / "forms associated with this topic are…". Never say whether someone qualifies or is eligible, never predict outcomes, never explain legal strategy or what to do. The client always decides which form to file; Imverica only prepares it at their direction. If asked for advice, say: "We prepare documents at your direction — for legal advice you'll need an attorney." Every reply that names a form must also state, in the user's language, that this is general information, not legal advice, and that Imverica is not a law firm/attorney.
 
 STYLE: Max 3 short sentences. No markdown, no asterisks, no bold, no bullets. Plain text only. Use | instead of /. Match user's language exactly.`;
+
+// Deterministic UPL safety net: the model is instructed to disclaim, but we do
+// NOT rely on it. If a reply names a form code and has no not-legal-advice line,
+// append a short disclaimer in the user's language so no answer can read as
+// unauthorized legal advice / form selection.
+const DISCLAIMER = {
+  en: ' (General information, not legal advice — Imverica prepares documents at your direction and is not a law firm.)',
+  ru: ' (Общая информация, не юридическая консультация — Imverica готовит документы по вашему поручению и не является юридической фирмой.)',
+  uk: ' (Загальна інформація, не юридична консультація — Imverica готує документи за вашим дорученням і не є юридичною фірмою.)',
+  es: ' (Información general, no asesoría legal — Imverica prepara documentos bajo su dirección y no es un bufete.)'
+};
+function disclaimerLang(s) {
+  const t = String(s || '');
+  if (/[іїєґ]/i.test(t) || /вирішу|дорученн|зв.?яж|потріб/i.test(t)) return 'uk';
+  if (/[а-яё]/i.test(t)) return 'ru';
+  if (/[ñ¿]|formulario|asesor|usted|presentar|preparamos/i.test(t)) return 'es';
+  return 'en';
+}
+function ensureDisclaimer(reply) {
+  const t = String(reply || '').trim();
+  if (!t) return t;
+  const namesForm = /\b[A-Z]{1,5}-\d{1,4}[A-Z]?\b/.test(t);
+  const hasDisclaimer = /not legal advice|не юридическ|не юридична|no asesor[ií]a legal|not a law firm|не явля[^.]*юридич|не є юридич|no es un bufete|at your direction|по вашему поручению|за вашим дорученням|bajo su direcci[oó]n/i.test(t);
+  if (namesForm && !hasDisclaimer) return t + DISCLAIMER[disclaimerLang(t)];
+  return t;
+}
 
 
 function normalizeText(value) {
@@ -516,7 +542,7 @@ exports.handler = async function (event) {
       };
     }
     const data = await apiRes.json();
-    const reply = data.content?.[0]?.text || '';
+    const reply = ensureDisclaimer(data.content?.[0]?.text || '');
     return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ reply }) };
   } catch (err) {
     // AbortError when our 9s timeout fires; ENETUNREACH / DNS issues if

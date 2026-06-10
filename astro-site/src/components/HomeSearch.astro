@@ -214,17 +214,21 @@ const t = STRINGS[lang] || STRINGS.en;
 
   // Per-language sentence templates so the answer feels native, not
   // machine-translated. Plain text — no HTML — the page renders them.
+  // Informational framing only — an LDA/Immigration Consultant may NOT tell a
+  // client which form they "need" (that is choosing the form for them = UPL).
+  // Present forms as commonly-associated options; the client decides; always
+  // carry the not-legal-advice line.
   const ANSWER_TEMPLATE: Record<string, string> = {
-    en: 'It sounds like you need <strong>{form}</strong> — {name}. We can prepare it under your direction. Tap Continue to start.',
-    ru: 'Похоже, вам нужна форма <strong>{form}</strong> — {name}. Мы подготовим её по вашему поручению. Жмите «Продолжить», чтобы начать.',
-    uk: 'Схоже, вам потрібна форма <strong>{form}</strong> — {name}. Підготуємо її за вашим дорученням. Натисніть «Продовжити», щоб почати.',
-    es: 'Parece que necesita el formulario <strong>{form}</strong> — {name}. Lo preparamos bajo su dirección. Pulse Continuar para comenzar.'
+    en: 'Documents commonly used for situations like this include <strong>{form}</strong> — {name}. You decide which form to file; Imverica prepares it at your direction. General information, not legal advice.',
+    ru: 'Для подобных ситуаций часто используют форму <strong>{form}</strong> — {name}. Какую форму подавать — решаете вы; Imverica готовит её по вашему поручению. Общая информация, не юридическая консультация.',
+    uk: 'Для подібних ситуацій часто використовують форму <strong>{form}</strong> — {name}. Яку форму подавати — вирішуєте ви; Imverica готує її за вашим дорученням. Загальна інформація, не юридична консультація.',
+    es: 'Para situaciones como esta se suele usar el formulario <strong>{form}</strong> — {name}. Usted decide qué formulario presentar; Imverica lo prepara bajo su dirección. Información general, no asesoría legal.'
   };
   const LOW_CONFIDENCE_TEMPLATE: Record<string, string> = {
-    en: 'We are not 100% sure which form you need — possibly <strong>{form}</strong> ({name}). Tap Continue to refine, or call us.',
-    ru: 'Не уверены на 100%, какая форма вам нужна — возможно <strong>{form}</strong> ({name}). Жмите «Продолжить», чтобы уточнить, или позвоните.',
-    uk: 'Не впевнені на 100%, яка форма вам потрібна — можливо <strong>{form}</strong> ({name}). Натисніть «Продовжити» або зателефонуйте.',
-    es: 'No estamos seguros 100% de qué formulario necesita — posiblemente <strong>{form}</strong> ({name}). Pulse Continuar para refinar o llámenos.'
+    en: 'Based on what you wrote, a related form may be <strong>{form}</strong> ({name}). You decide what to file — tap Continue to refine, or contact us. General information, not legal advice.',
+    ru: 'Судя по описанию, к теме может относиться форма <strong>{form}</strong> ({name}). Что подавать — решаете вы. Жмите «Продолжить» или свяжитесь с нами. Общая информация, не юридическая консультация.',
+    uk: 'Судячи з опису, до теми може стосуватися форма <strong>{form}</strong> ({name}). Що подавати — вирішуєте ви. Натисніть «Продовжити» або зв’яжіться з нами. Загальна інформація, не юридична консультація.',
+    es: 'Según lo que escribió, un formulario relacionado puede ser <strong>{form}</strong> ({name}). Usted decide qué presentar — pulse Continuar o contáctenos. Información general, no asesoría legal.'
   };
 
   function setResult(html: string, open = true) {
