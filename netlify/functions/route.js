@@ -7,7 +7,13 @@ const catalogs = {
   ro: require('./forms/ro.json'),
   fee: require('./forms/fee.json'),
   service: require('./forms/service.json'),
-  probate: require('./forms/probate.json')
+  probate: require('./forms/probate.json'),
+  nc: require('./forms/nc.json'),
+  enforce: require('./forms/enforce.json'),
+  juvenile: require('./forms/juvenile.json'),
+  criminal: require('./forms/criminal.json'),
+  appeals: require('./forms/appeals.json'),
+  general: require('./forms/general.json')
 };
 
 const CORS_HEADERS = {
@@ -25,7 +31,13 @@ const SERVICE_BY_CATALOG = {
   ro: 'restraining',
   fee: 'civil',
   service: 'civil',
-  probate: 'probate'
+  probate: 'probate',
+  nc: 'civil',
+  enforce: 'civil',
+  juvenile: 'juvenile',
+  criminal: 'criminal',
+  appeals: 'appeals',
+  general: 'civil'
 };
 
 const JURISDICTION_BY_CATALOG = {
@@ -37,7 +49,13 @@ const JURISDICTION_BY_CATALOG = {
   ro: 'California Superior Court',
   fee: 'California Superior Court',
   service: 'California Superior Court',
-  probate: 'California Superior Court'
+  probate: 'California Superior Court',
+  nc: 'California Superior Court',
+  enforce: 'California Superior Court',
+  juvenile: 'California Superior Court',
+  criminal: 'California Superior Court',
+  appeals: 'California Court of Appeal',
+  general: 'California Superior Court'
 };
 
 // Multi-language NLP routing rules. Each rule covers EN / RU / UA / ES
@@ -565,7 +583,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['NC-100', 'NC-110', 'NC-120', 'NC-130'],
     confidence: 0.93,
-    patterns: [/name\s+chang|change\s+my\s+(legal\s+)?name|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили)|cambio\s+de\s+nombre|cambiar\s+(mi\s+)?nombre/i],
+    patterns: [/name\s+chang|change\s+my\s+(legal\s+)?name|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили)|змін[іиа][\wа-яёіїєґ'’]*\s+(ім|прізвищ)|зміна\s+(імен|прізвищ)|поміня[\wа-яёіїєґ'’]*\s+(ім|прізвищ)|cambio\s+de\s+nombre|cambiar\s+(mi\s+)?nombre/i],
     reason: 'Legal name change → NC-100 series (CA).'
   },
   {
@@ -855,7 +873,7 @@ function routeQuery(queryValue) {
   const lang = detectLanguage(originalQuery);
   const forms = allForms();
 
-  const codeMatch = originalQuery.match(/\b(?:AR|I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC|CR)-[A-Z0-9]+(?:\s+Supplement(?:\s+[A-Z])?)?(?:\([A-Z0-9]+\))?\b/i);
+  const codeMatch = originalQuery.match(/\b(?:AR|I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC|CR|NC|EJ|WG|JV|APP|MC|ADM|MIL)-[A-Z0-9]+(?:\s+Supplement(?:\s+[A-Z])?)?(?:\([A-Z0-9]+\))?\b/i);
   if (codeMatch) {
     const row = findByCode(normalizeCode(codeMatch[0]));
     if (row) {
