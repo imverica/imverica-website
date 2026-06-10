@@ -25,7 +25,9 @@
      (~15 KB woff2) gives Imverica a distinct brand signature that the
      bare system stack cannot. Loaded via Google Fonts in BaseLayout. */
   --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  /* One font across the whole site: headings use the same system sans as body
+     text (was Playfair Display serif) — per the single-font design decision. */
+  --font-display: var(--font-system);
 }
 
 * { box-sizing: border-box; }

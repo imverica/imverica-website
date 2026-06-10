@@ -12,7 +12,7 @@
   --terracotta:#e08a5d;--terracotta-deep:#a45b34;
   --gold:#c9a96e;--sage:#8a9a85;--cream:#f8f5ef;
   --bg:#f4f3f0;--border:#dddad4;--white:#fff;--muted:#666;
---font-system:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro","Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;--font-display:"Playfair Display",Georgia,"Times New Roman",serif;}
+--font-system:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro","Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;--font-display:var(--font-system);}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:var(--font-system);background:var(--bg);color:#1a1a1a;}
 
@@ -493,7 +493,7 @@ body.is-auth footer { display: none !important; }
 html.in-app body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
 html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <script src="/imverica-native.js"></script>
 </head>
 <body class="is-auth">
