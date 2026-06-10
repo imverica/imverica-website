@@ -15,9 +15,12 @@ function phoneParts(v){const r=usPhone(v);return{area:r.slice(0,3),number:r.slic
 function addressLine2(v){return clean(v,12).replace(/^(?:apt|ste|fl|unit|#)\s*\.?\s*/i,'').slice(0,10);}
 function yesNoFields(value, yesField, noField){const yn=yesNo(value);if(yn===true)return{[yesField]:true,[noField]:false};if(yn===false)return{[yesField]:false,[noField]:true};return{};}
 
+// Part A.I Item 10 Sex. The applicant's box is PartALine9Sex ([0]=Male,
+// [1]=Female, render-verified); CheckBox12_Sex (used before) is a different
+// page's field and left Item 10 blank.
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"CheckBox12_Sex[2]":true,"CheckBox12_Sex[3]":false};
-  if(/^f|female/.test(s))return{"CheckBox12_Sex[2]":false,"CheckBox12_Sex[3]":true};
+  if(/^m/.test(s))return{"PartALine9Sex[0]":true,"PartALine9Sex[1]":false};
+  if(/^f|female|жен|жiн/.test(s))return{"PartALine9Sex[0]":false,"PartALine9Sex[1]":true};
   return {};}
 function maritalFields(v){const s=clean(v,80).toLowerCase();const all={"Marital[0]":false,"Marital[1]":false,"Marital[2]":false,"Marital[3]":false};if(/single|never|холост/.test(s))return{...all,"Marital[0]":true};if(/married|spouse|брак/.test(s))return{...all,"Marital[1]":true};if(/divorc|развед/.test(s))return{...all,"Marital[2]":true};if(/widow|вдов/.test(s))return{...all,"Marital[3]":true};return{};}
 

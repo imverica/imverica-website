@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitRadio } = require("./form-helpers");
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -36,6 +37,7 @@ function i_130aFieldValues(payload={}) {
 
   v["Pt1Line4a_StreetNumberName[0]"] = clean(a.spouse_current_address_line1 || a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
   v["Pt1Line4b_AptSteFlrNumber[0]"] = addressLine2(a.spouse_current_address_line2 || a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("Pt1Line4b_Unit", a.spouse_current_address_line2 || a.mailing_address_line2 || a.address_unit));
   v["Pt1Line4c_CityOrTown[0]"] = clean(a.spouse_current_city || a.mailing_city || a.city, 60);
   v["Pt1Line4d_State[0]"] = stateCode(a.spouse_current_state || a.mailing_state || a.state || '');
   v["Pt1Line4e_ZipCode[0]"] = digits(a.spouse_current_zip || a.mailing_zip || a.zip_code, 10);
@@ -55,6 +57,7 @@ function i_130aFieldValues(payload={}) {
   v["Pt2Line5_EmployerOrCompName[0]"] = clean(priorEmployment.name || priorEmployment.company, 80);
   v["Pt2Line6_StreetNumberName[0]"] = clean(priorEmployment.line1 || a.spouse_last_foreign_address_line1 || a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
   v["Pt2Line6_AptSteFlrNumber[0]"] = addressLine2(priorEmployment.line2 || a.spouse_last_foreign_address_line2 || a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("Pt2Line6_Unit", priorEmployment.line2 || a.spouse_last_foreign_address_line2 || a.mailing_address_line2 || a.address_unit));
   v["Pt2Line6_CityOrTown[0]"] = clean(priorEmployment.city || a.spouse_last_foreign_city || a.mailing_city || a.city, 60);
   v["Pt2Line6_State[0]"] = stateCode(priorEmployment.state || a.mailing_state || a.state || '');
   v["Pt2Line6_ZipCode[0]"] = digits(priorEmployment.zip || a.mailing_zip || a.zip_code, 10);

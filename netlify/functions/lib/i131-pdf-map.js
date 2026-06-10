@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitNumber, unitRadio } = require('./form-helpers');
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -44,6 +45,8 @@ function i131ApplicationType(type){
 function i131Address(v, g, addr){
   if(!addr) return;
   v[g+"StreetNumberName[0]"] = clean(addr.line1, 80);
+  v[g+"AptSteFlrNumber[0]"]  = unitNumber(addr.line2);
+  Object.assign(v, unitRadio(g+"Unit", addr.line2)); // Apt/Ste/Flr selector
   v[g+"CityTown[0]"]         = clean(addr.city, 60);
   v[g+"ZipCode[0]"]          = digits(addr.zip, 10);
   if(isUS(addr.country)){ v[g+"State[0]"] = stateCode(addr.state); }

@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitNumber, unitRadio } = require('./form-helpers');
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -57,7 +58,8 @@ function n_400FieldValues(payload={}) {
   v["P2_Line6_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["P2_Line10_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P4_Line1_StreetName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
-  v["P4_Line1_Number[0]"] = clean(a.mailing_address_line2 || a.address_unit, 10).replace(/^(?:apt|ste|fl|unit|#)\s*\.?\s*/i,'').slice(0,6);
+  v["P4_Line1_Number[0]"] = unitNumber(a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("P4_Line1_Unit", a.mailing_address_line2 || a.address_unit)); // Apt/Ste/Flr selector
   v["P4_Line1_City[0]"] = clean(a.mailing_city || a.city, 60);
   v["P4_Line1_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["P4_Line1_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);

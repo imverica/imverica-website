@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitNumber, unitRadio } = require("./form-helpers");
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -30,6 +31,8 @@ function i_693FieldValues(payload={}) {
   v["Pt1Line3f_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["Pt1Line3_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Pt1Line2_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
+  v["Pt1Line2_AptSteFlrNumber[0]"] = unitNumber(a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("Pt1Line2_Unit", a.mailing_address_line2 || a.address_unit)); // Apt/Ste/Flr selector
   v["Pt7Line7_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt9Line3_DateSigned[0]"] = dateMdY(today);
   Object.assign(v, sexFields(a.sex || a.gender || ''));

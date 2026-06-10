@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitRadio } = require("./form-helpers");
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -67,6 +68,7 @@ function i_912FieldValues(payload={}) {
   v["P9_L2_BusOrgName[0]"] = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
   v["P9_L3A_StreetNumberName[0]"] = clean(a.interpreter_address_line1 || a.mailing_address_line1, 80);
   v["P9_L3B_AptSteFlrNumber[0]"] = addressLine2(a.interpreter_address_line2 || a.mailing_address_line2);
+  Object.assign(v, unitRadio("P9_LB_Unit", a.interpreter_address_line2 || a.mailing_address_line2));
   v["P9_L3c_City[0]"] = clean(a.interpreter_city || a.mailing_city, 60);
   v["P9_L3d_State[0]"] = stateCode(a.interpreter_state || a.mailing_state || '');
   v["P9_L3e_ZipCode[0]"] = digits(a.interpreter_zip || a.mailing_zip, 10);
@@ -80,6 +82,7 @@ function i_912FieldValues(payload={}) {
   v["P10_L2_BusOrgName[0]"] = clean(a.preparer_business_name, 80);
   v["P10_L3a_StreetNumberName[0]"] = clean(a.preparer_address_line1 || a.mailing_address_line1, 80);
   v["P10_L3b_AptSteFlrNumber[0]"] = addressLine2(a.preparer_address_line2 || a.mailing_address_line2);
+  Object.assign(v, unitRadio("P10_L3b_Unit", a.preparer_address_line2 || a.mailing_address_line2));
   v["P10_L3c_City[0]"] = clean(a.preparer_city || a.mailing_city, 60);
   v["P10_L3d_State[0]"] = stateCode(a.preparer_state || a.mailing_state || '');
   v["P10_L3e_ZipCode[0]"] = digits(a.preparer_zip || a.mailing_zip, 10);

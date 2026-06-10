@@ -1,4 +1,5 @@
 'use strict';
+const { unitRadio } = require('./form-helpers');
 // I-140, Immigrant Petition for Alien Worker (EB-1/EB-2/EB-3).
 //
 // WARNING: this PDF's internal field names are SCRAMBLED — they do NOT match
@@ -109,6 +110,7 @@ function i_140FieldValues(payload = {}) {
   v["Line8_Per[0]"]                 = clean(a.wage_per || ((a.wage_amount || a.offered_wage || a.salary) ? 'Year' : ''), 12); // 8 per
   v["Line9a_StreetNumberName[0]"]   = clean(a.worksite_address_line1 || a.worksite_street, 80);      // 9.a Worksite Street
   v["Line9b_AptSteFlrNumber[0]"]    = unitNumber(a.worksite_address_line2 || a.worksite_unit);       // 9.b Apt/Ste/Flr Number
+  Object.assign(v, unitRadio("Line9b_Unit", a.worksite_address_line2 || a.worksite_unit));           // 9.b Apt/Ste/Flr selector
   v["Line9c_CityOrTown[0]"]         = clean(a.worksite_city, 40);                                    // 9.c City
   v["Line9d_State[0]"]              = stateCode(a.worksite_state || '');                             // 9.d State
   v["Line9e_ZipCode[0]"]            = digits(a.worksite_zip, 10);                                    // 9.d ZIP

@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitRadio } = require('./form-helpers');
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -66,11 +67,13 @@ function i_821FieldValues(payload={}) {
   v["Part2_Item22_I94[0]"]     = clean(a.i94_number, 20);
   v["Part2_Item4_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.address_line1, 80);
   v["Part2_Item4_AptSteFlrNumber[0]"] = addressLine2(a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("Part2_Item4_Unit", a.mailing_address_line2 || a.address_unit));
   v["Part2_Item4_CityOrTown[0]"] = clean(a.mailing_city || a.city, 60);
   v["Part2_Item4_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Part2_Item4_ZipCode[0]"] = digits(a.mailing_zip || a.zip_code, 10);
   v["Part2_Item6_StreetNumberName[0]"] = clean(a.physical_address_line1 || a.mailing_address_line1 || a.address_line1, 80);
   v["Part2_Item6_AptSteFlrNumber[0]"] = addressLine2(a.physical_address_line2 || a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("Part2_Item6_Unit", a.physical_address_line2 || a.mailing_address_line2 || a.address_unit));
   v["Part2_Item6_CityOrTown[0]"] = clean(a.physical_city || a.mailing_city || a.city, 60);
   v["Part2_Item6_State[0]"] = stateCode(a.physical_state || a.mailing_state || a.state || '');
   v["Part2_Item6_ZipCode[0]"] = digits(a.physical_zip || a.mailing_zip || a.zip_code, 10);

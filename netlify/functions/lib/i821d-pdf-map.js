@@ -1,5 +1,6 @@
 'use strict';
 const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+const { unitRadio } = require("./form-helpers");
 
 function clean(v, max = 300) {
   if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
@@ -41,6 +42,7 @@ function i_821dFieldValues(payload={}) {
   v["P1_Line3c_Name[0]"] = clean(a.applicant_middle_name || a.middle_name, 60);
   v["P1_Line4b_Street[0]"] = clean(a.mailing_address_line1 || a.address_line1, 80);
   v["P1_Line4c_Number[0]"] = addressLine2(a.mailing_address_line2 || a.address_unit);
+  Object.assign(v, unitRadio("P1_Line4c_Unit", a.mailing_address_line2 || a.address_unit));
   v["P1_Line4d_City[0]"] = clean(a.mailing_city || a.city, 60);
   v["P1_Line4e_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["P1_Line4f_ZipCode[0]"] = digits(a.mailing_zip || a.zip_code, 10);
@@ -58,6 +60,7 @@ function i_821dFieldValues(payload={}) {
   v["P2_Line2a_Date_From[0]"] = dateMdY(residence.from);
   v["P2_Line2b_Street[0]"] = clean(residence.line1 || a.physical_address_line1, 80);
   v["P2_Line2c_Number[0]"] = addressLine2(residence.line2 || a.physical_address_line2);
+  Object.assign(v, unitRadio("P2_Line2c_Unit", residence.line2 || a.physical_address_line2));
   v["P2_Line2d_City[0]"] = clean(residence.city || a.physical_city, 60);
   v["P2_Line2e_State[0]"] = stateCode(residence.state || a.physical_state || '');
   v["P2_Line2f_ZipCode[0]"] = digits(residence.zip || a.physical_zip, 10);
@@ -76,6 +79,7 @@ function i_821dFieldValues(payload={}) {
   v["P6_Line2_Organization[0]"] = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
   v["P6_Line3a_Street[0]"] = clean(a.interpreter_address_line1 || a.mailing_address_line1, 80);
   v["P6_Line3b_Number[0]"] = addressLine2(a.interpreter_address_line2 || a.mailing_address_line2);
+  Object.assign(v, unitRadio("P6_Line3b_Unit", a.interpreter_address_line2 || a.mailing_address_line2));
   v["P6_Line3c_City[0]"] = clean(a.interpreter_city || a.mailing_city, 60);
   v["P6_Line3d_State[0]"] = stateCode(a.interpreter_state || a.mailing_state || '');
   v["P6_Line3e_ZipCode[0]"] = digits(a.interpreter_zip || a.mailing_zip, 10);
@@ -89,6 +93,7 @@ function i_821dFieldValues(payload={}) {
   v["P7_Line2_Organization[0]"] = clean(a.preparer_business_name, 80);
   v["P7_Line3a_Street[0]"] = clean(a.preparer_address_line1 || a.mailing_address_line1, 80);
   v["P7_Line3b_Number[0]"] = addressLine2(a.preparer_address_line2 || a.mailing_address_line2);
+  Object.assign(v, unitRadio("P7_Line3b_Unit", a.preparer_address_line2 || a.mailing_address_line2));
   v["P7_Line3c_City[0]"] = clean(a.preparer_city || a.mailing_city, 60);
   v["P7_Line3d_State[0]"] = stateCode(a.preparer_state || a.mailing_state || '');
   v["P7_Line3e_ZipCode[0]"] = digits(a.preparer_zip || a.mailing_zip, 10);
