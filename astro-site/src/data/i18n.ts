@@ -243,7 +243,7 @@ export const HERO: Record<Locale, {
   sub: string;
 }> = {
   en: {
-    eyebrow: 'California · Licensed LDA · Immigration Consultant',
+    eyebrow: 'California · Registered LDA · Immigration Consultant',
     heading: 'What document do you need prepared?',
     sub: 'Describe your situation or enter a form number. We prepare USCIS petitions (I-485, I-130, I-765, I-589, N-400, I-131, I-90), EOIR immigration court documents, California family law forms (FL-100, FL-300), small claims (SC-100), unlawful detainer, restraining orders, probate, and fee waivers — for clients across California and worldwide.'
   },
