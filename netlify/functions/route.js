@@ -357,7 +357,10 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-130', 'I-130A', 'I-485', 'I-765', 'I-131', 'I-864'],
     confidence: 0.86,
-    patterns: [/свадьб|брак|женит|замуж|spouse|marriage|муж[ау]?|жен[аеуы]|супруг|супруга|вийти\s+заміж|одружитися|esposo\s+ciudadano|matrimonio\s+(con\s+ciudadano|inmigraci[oó]n)/i],
+    // Require BOTH a marriage term AND an immigration signal in proximity (either
+    // order) so a bare spouse word ("муж", "развестись с мужем") no longer pulls
+    // an immigration petition, while real "marriage + USCIS/green card" queries do.
+    patterns: [/(?:marriage|married|spouse|husband|wife|fianc|свадьб|брак|замуж|женит|вийти\s+заміж|одружит|matrimonio|esposo|esposa|c[oó]nyuge|муж|жен|супруг)[\s\S]{0,45}(?:uscis|green\s*card|citizen|residen|\bvisa\b|petition|immigrat|грин[\s-]?карт|гражданств|иммигра|петиц|\bвиз[аыу]|спонсир|іммігра|громадянств)|(?:uscis|green\s*card|citizen|residen|\bvisa\b|petition\s+for|immigrat|грин[\s-]?карт|гражданств|иммигра|петиц|спонсир|іммігра|громадянств)[\s\S]{0,45}(?:marriage|married|spouse|husband|wife|свадьб|брак|замуж|женит|matrimonio|esposo|esposa|c[oó]nyuge|муж|жен|супруг)/i],
     reason: 'Marriage/family immigration language maps to a family petition + AOS package.'
   },
 
@@ -399,12 +402,25 @@ const PACKAGE_RULES = [
     reason: 'UCCJEA / interstate custody jurisdiction maps to Form FL-105.'
   },
   {
+    // Guardianship of a minor (by a non-parent, e.g. grandparent) or
+    // conservatorship of an adult → GC series (probate), NOT family-law custody.
+    // Placed before family_request_order so "опека над внуком" doesn't read as
+    // parent custody (FL-300).
+    id: 'guardianship_conservatorship',
+    formCode: 'GC-210',
+    service: 'probate',
+    packageForms: ['GC-210', 'GC-110', 'GC-310'],
+    confidence: 0.86,
+    patterns: [/guardianship|conservatorship|legal\s+guardian|become\s+(a\s+)?guardian|guardian\s+of\s+(a\s+)?(minor|child|grandchild|grandson|granddaughter)|conservator(ship)?\s+(of|for)|опек[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(внук|несовершеннолетн|недееспособн|онук)|попечительств|опіка\s+над\s+(онук|дитин|неповнолітн)|tutela\s+(legal|de\s+un\s+menor|de\s+menor)|curadur[ií]a|conservadur[ií]a/i],
+    reason: 'Guardianship of a minor / conservatorship of an adult → GC series (CA probate).'
+  },
+  {
     id: 'family_request_order',
     formCode: 'FL-300',
     service: 'family',
     packageForms: ['FL-300', 'FL-311', 'FL-150'],
     confidence: 0.82,
-    patterns: [/fl-?300|request\s+for\s+order|custody|visitation|child\s+support|spousal\s+support|кастоди|опек|алимент|алімент|содержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ребен|содержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+супруг|делить\s+дет|раздел[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+дет|поділ\s+(діт|опік)|с\s+кем\s+(будут|останут)\s+дет|pensi[oó]n\s+(alimenticia|de\s+manutenci[oó]n)|custodia|visitas/i],
+    patterns: [/fl-?300|request\s+for\s+order|custody|visitation|child\s+support|spousal\s+support|(see|visit)\s+my\s+(kid|child|son|daughter|children)|won'?t\s+let\s+me\s+see\s+(my\s+)?(kid|child)|кастоди|опек(?![\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(внук|онук))|алимент|алімент|содержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ребен|содержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+супруг|делить\s+дет|раздел[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+дет|видеть\s+(детей|ребён|ребен)|не\s+да[её]т\s+видеть|поділ\s+(діт|опік)|с\s+кем\s+(будут|останут)\s+дет|pensi[oó]n\s+(alimenticia|de\s+manutenci[oó]n)|custodia|visitas/i],
     reason: 'Family-law request (custody / support / visitation) maps to Form FL-300.'
   },
   {
@@ -422,7 +438,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['FW-001'],
     confidence: 0.9,
-    patterns: [/fw-?001|fee\s+waiver\s+(court|california|c[ao])|waive\s+(court\s+)?fees|освобожден[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+от\s+(пошлин|судебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+сбор)|не\s+могу\s+заплатить\s+(пошлин|судебн)|exenci[oó]n\s+de\s+cuota\s+(de\s+corte|judicial)/i],
+    patterns: [/fw-?001|fee\s+waiver\s+(court|california|c[ao])|waive\s+(court\s+|filing\s+)?fees|(can'?t|cannot|unable\s+to)\s+afford\s+(the\s+)?(court\s+|filing\s+){0,2}fee|afford\s+the\s+(court|filing)\s+fee|(court|filing)\s+fees?\b.{0,15}(waiv|afford|can'?t\s+pay|too\s+expensive)|waive\s+.{0,12}court\s+fee|освобожден[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+от\s+(пошлин|судебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+сбор)|не\s+могу\s+(за)?платить\s+(пошлин|судебн|сбор\s+в\s+суд)|exenci[oó]n\s+de\s+cuota\s+(de\s+corte|judicial)/i],
     reason: 'Court fee waiver language maps to Form FW-001.'
   },
 
@@ -435,7 +451,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['CH-100', 'CH-109', 'CH-110', 'CH-130'],
     confidence: 0.9,
-    patterns: [/civil\s+harassment|harassment\s+(order|restraining).*(neighbor|stranger|co-?worker|roommate|landlord)|(neighbor|stranger|co-?worker|roommate)\s+.*harass|non-?domestic\s+harass|гражданск[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+преслед|acoso\s+civil/i],
+    patterns: [/civil\s+harassment|harassment\s+(order|restraining).*(neighbor|stranger|co-?worker|roommate|landlord)|(neighbor|stranger|roommate)\s+.{0,20}(harass|threaten|stalk)|non-?domestic\s+harass|гражданск[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+преслед|сосед[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+.{0,15}(угрож|преслед|домога|пресліду)|(угрож|преслед|домога)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+.{0,10}сосед|vecino\s+.{0,15}(amenaz|acos|hostig)|acoso\s+civil/i],
     reason: 'Civil (non-domestic) harassment → CH-100.'
   },
   {
@@ -444,7 +460,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['WV-100', 'WV-109', 'WV-110'],
     confidence: 0.9,
-    patterns: [/workplace\s+violence|violence\s+(at|in)\s+(the\s+)?work(place)?|employer\s+(seeking|filing).*(restraining|protective)|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|violencia\s+(en\s+el\s+)?(trabajo|lugar\s+de\s+trabajo)/i],
+    patterns: [/workplace\s+violence|violence\s+(at|in)\s+(the\s+)?work(place)?|(co-?worker|colleague|employee|boss|supervisor)\s+.{0,25}(threat|violen|harass|assault|stalk)|(threat|violen|harass|assault)[\wa-z]*\s+.{0,15}(at\s+work|workplace|co-?worker|colleague)|employer\s+(seeking|filing).*(restraining|protective)|коллег[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(угрож|насил)|угрож[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|violencia\s+(en\s+el\s+)?(trabajo|lugar\s+de\s+trabajo)|compañero\s+de\s+trabajo\s+.{0,20}(amenaz|acos)/i],
     reason: 'Workplace violence restraining order → WV-100.'
   },
   {
@@ -453,7 +469,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['EA-100', 'EA-109', 'EA-110'],
     confidence: 0.9,
-    patterns: [/elder\s+(or\s+dependent\s+adult\s+)?abuse|abuse\s+of\s+(an?\s+)?elder|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+пожил|abuso\s+de\s+(ancian|adulto\s+mayor)/i],
+    patterns: [/elder\s+(or\s+dependent\s+adult\s+)?abuse|abus(e|ed|ing|er)\s+.{0,20}(elder|elderly|senior|grandparent|grandmother|grandfather|aging\s+(parent|mother|father))|(elder|elderly|senior|grandparent|grandmother|grandfather|dependent\s+adult)\s+.{0,20}abus|abuse\s+of\s+(an?\s+)?(elder|elderly|senior|dependent)|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(пожил|престарел|літн)|обижа[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(пожил|престарел)|abuso\s+de\s+(ancian|adulto\s+mayor|persona\s+mayor)|(abuelo|abuela|anciano|adulto\s+mayor|persona\s+mayor)\s+.{0,25}(abus|maltrat)|(abus|maltrat)[\wa-zá-ú]*\s+.{0,15}(abuelo|abuela|anciano|adulto\s+mayor)/i],
     reason: 'Elder/dependent-adult abuse restraining order → EA-100.'
   },
   {
@@ -471,7 +487,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['DV-100', 'CH-100', 'EA-100', 'GV-100', 'WV-100'],
     confidence: 0.9,
-    patterns: [/restraining\s+order|protective\s+order|harass|stalk|рестре[ий]нинг|ристре[ий]нинг|защитн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ордер|охоронн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+наказ|угрож|преслед[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+меня|orden\s+(de\s+)?(restricci[oó]n|protecci[oó]n|alejamiento)|acoso|violencia\s+dom[eé]stica/i],
+    patterns: [/restraining\s+order|protective\s+order|harass|stalk|domestic\s+(violence|abuse)|hits?\s+me|beat(s|en|ing)?\s+me|abus(e|ed|ing)\s+(me|by\s+my)|afraid\s+of\s+my\s+(husband|wife|partner|boyfriend|girlfriend|ex)|need\s+protection\s+from|рестре[ий]нинг|ристре[ий]нинг|защитн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ордер|охоронн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+наказ|угрож|преслед[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+меня|бьёт|бьет|избива|побои|домашн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+насил|нужна\s+защит|боюсь\s+(муж|парт|сожит|бывш)|orden\s+(de\s+)?(restricci[oó]n|protecci[oó]n|alejamiento)|acoso|violencia\s+(dom[eé]stica|de\s+pareja|familiar)|me\s+(pega|golpea)/i],
     reason: 'Restraining-order / harassment language maps to the DV-100/CH-100 family.'
   },
   {
@@ -583,7 +599,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['NC-100', 'NC-110', 'NC-120', 'NC-130'],
     confidence: 0.93,
-    patterns: [/name\s+chang|change\s+my\s+(legal\s+)?name|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили)|змін[іиа][\wа-яёіїєґ'’]*\s+(ім|прізвищ)|зміна\s+(імен|прізвищ)|поміня[\wа-яёіїєґ'’]*\s+(ім|прізвищ)|cambio\s+de\s+nombre|cambiar\s+(mi\s+)?nombre/i],
+    patterns: [/name\s+chang|change\s+(my\s+)?(legal\s+)?name|change\s+(my\s+)?(child|kid|son|daughter|minor)('?s)?\s+name|change\s+the\s+name\s+of\s+my\s+(child|son|daughter|kid)|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили|имя\s+ребен)|змін[іиа][\wа-яёіїєґ'’]*\s+(ім|прізвищ)|зміна\s+(імен|прізвищ)|поміня[\wа-яёіїєґ'’]*\s+(ім|прізвищ)|cambio\s+de\s+nombre|cambiar\s+(mi\s+|el\s+)?nombre/i],
     reason: 'Legal name change → NC-100 series (CA).'
   },
   {
