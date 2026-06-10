@@ -277,6 +277,45 @@ function summarizeRecord(record) {
 // ADMIN_TOTP_SECRET env variable.
 const { isAdmin } = require('./lib/admin-auth');
 
+// Owner notification — completed guided intakes are saved to the blob store
+// (admin console) but the operator should ALSO get an email so leads aren't
+// missed. Same two inboxes as quick-intake; skips cleanly if RESEND_API_KEY is
+// not set. Fire-and-forget: never blocks or fails the submission.
+const NOTIFY_TO = ['info@imverica.com', 'imverica@gmail.com'];
+const FROM_EMAIL = process.env.OTP_FROM_EMAIL || 'Imverica Legal Solutions <info@imverica.com>';
+function escHtml(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+async function notifyOwner(record) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) { console.log('[intake] no RESEND_API_KEY — skipping owner email', record.id); return; }
+  const c = record.contact || {};
+  const adminUrl = (process.env.URL || 'https://imverica.com') + '/admin.html';
+  const rows = [
+    ['Order ID', record.id],
+    ['Submitted', new Date(record.createdAt).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }) + ' PT'],
+    ['Name', c.name], ['Email', c.email], ['Phone', c.phone],
+    ['Service', record.serviceLabel || record.service],
+    ['Form', record.formCode], ['Package', (record.packageForms || []).join(', ')],
+    ['Language', record.language || 'en']
+  ].filter(([, v]) => v);
+  const html = `<div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;color:#1c2c40;max-width:640px;">
+    <h2 style="color:#0f1c2f;margin:0 0 12px;">New guided intake</h2>
+    ${rows.map(([k, v]) => `<p style="margin:0 0 4px;"><strong>${escHtml(k)}:</strong> ${escHtml(v)}</p>`).join('')}
+    <h3 style="color:#0f1c2f;margin:16px 0 6px;">Situation</h3>
+    <p style="white-space:pre-wrap;margin:0;">${escHtml(record.situation || '(none provided)')}</p>
+    <p style="font-size:12px;color:#6b7280;margin-top:16px;">View in <a href="${escHtml(adminUrl)}">admin console</a> · blob id <code>${escHtml(record.id)}</code></p>
+  </div>`;
+  const text = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + `\n\nSituation:\n${record.situation || '(none provided)'}\n\nAdmin: ${adminUrl}`;
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: FROM_EMAIL, to: NOTIFY_TO, reply_to: c.email || undefined, subject: `[Imverica] New intake ${record.id} — ${c.name || 'client'}${record.formCode ? ' · ' + record.formCode : ''}`, html, text })
+    });
+    if (!res.ok) console.error('[intake] Resend notify failed', res.status, (await res.text().catch(() => '')).slice(0, 200));
+  } catch (e) { console.error('[intake] notify error', e && e.message); }
+}
+
 exports.handler = async function (event) {
   ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
@@ -318,6 +357,8 @@ exports.handler = async function (event) {
 
     try {
       const saved = await saveRecord(record, event);
+      // Notify both owner inboxes (does not block or fail the submission).
+      notifyOwner(record).catch((e) => console.error('[intake] notify:', e && e.message));
       return json(200, {
         ok: true,
         orderId: record.id,
