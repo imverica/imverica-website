@@ -754,8 +754,29 @@ function updateChoiceFieldBody(object, value, encryption, appearanceObjectNumber
   return updateTextFieldBody(object, value, encryption, appearanceObjectNumber);
 }
 
-function updateButtonFieldBody(object, checked, encryption) {
-  const state = checked ? (object.appearanceStates[0] || 'Yes') : 'Off';
+// Decode a PDF name's #XX hex escapes (e.g. "#20APT#20" -> " APT ") then strip
+// whitespace and upper-case it, so radio appearance states can be compared by
+// meaning regardless of padding/case.
+function normalizeBtnState(s) {
+  return String(s || '')
+    .replace(/#([0-9A-Fa-f]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/\s+/g, '')
+    .toUpperCase();
+}
+
+function updateButtonFieldBody(object, value, encryption) {
+  const myState = (object.appearanceStates && object.appearanceStates[0]) || '';
+  let checked;
+  if (typeof value === 'string' && value.trim() && !/^(true|false)$/i.test(value.trim())) {
+    // State-match mode: the caller passed a desired appearance state (e.g.
+    // "APT"/"STE"/"FLR" for a unit-type radio, or an explicit export value).
+    // Only the widget whose OWN state matches is checked; siblings get Off.
+    // This makes the per-form widget-index order irrelevant.
+    checked = !!myState && normalizeBtnState(myState) === normalizeBtnState(value);
+  } else {
+    checked = value === true || /^true$/i.test(String(value));
+  }
+  const state = checked ? (myState || 'Yes') : 'Off';
   let body = removeDictionaryEntry(object.body, 'TU');
   body = normalizeFieldBodyStrings(body, object, encryption);
   body = removeDictionaryEntry(body, 'V');
@@ -900,7 +921,7 @@ function incrementalFillPdf(input, fieldValues, textOverlays = []) {
 
     let body;
     if (object.pdfFieldType === 'Btn') {
-      body = updateButtonFieldBody(object, Boolean(rawValue), parsed.encryption);
+      body = updateButtonFieldBody(object, rawValue, parsed.encryption);
     } else if (object.pdfFieldType === 'Ch') {
       const appearanceObjectNumber = nextObjectNumber;
       nextObjectNumber += 1;
