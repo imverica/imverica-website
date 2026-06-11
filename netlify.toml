@@ -38,6 +38,14 @@ included_files = [
   "overlay-maps/normalized/**"
 ]
 
+[functions."generate-uscis-packet"]
+included_files = [
+  "assets/form-cache/pdfs-normalized/**",
+  "assets/form-cache/manifest.json",
+  "assets/form-cache/ca-court-manifest.json",
+  "assets/form-cache/ca-forms-catalog.json"
+]
+
 [functions."generate-court-pdf"]
 included_files = [
   "assets/form-cache/ca-court/**"
