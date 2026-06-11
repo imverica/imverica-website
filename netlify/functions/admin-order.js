@@ -62,16 +62,29 @@ exports.handler = async function (event) {
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
   const orderId = safeId(body.orderId);
-  const status = normalizeStatus(body.status);
+  const hasQc = Array.isArray(body.qcChecks);
+  const status = body.status !== undefined ? normalizeStatus(body.status) : null;
   if (!orderId) return json(400, { ok: false, error: 'Missing orderId' });
-  if (!status) return json(422, { ok: false, error: `status must be one of ${ALLOWED_STATUS.join(', ')}` });
+  if (body.status !== undefined && !status) return json(422, { ok: false, error: `status must be one of ${ALLOWED_STATUS.join(', ')}` });
+  if (!status && !hasQc) return json(400, { ok: false, error: 'Nothing to update: provide status and/or qcChecks' });
 
   const store = await getStore();
   const record = await readOrder(store, orderId);
   if (!record) return json(404, { ok: false, error: 'Order not found' });
 
-  applyStatus(record, status, { by: 'admin', role: 'admin', note: body.note });
+  if (status) applyStatus(record, status, { by: 'admin', role: 'admin', note: body.note });
+  if (hasQc) {
+    // QC checklist state: the list of confirmed item texts. The final-PDF
+    // endpoint compares its length against the canonical checklist before
+    // opening the QC lock.
+    record.qc = {
+      items: body.qcChecks.map((x) => String(x).slice(0, 200)).slice(0, 40),
+      by: 'admin',
+      updatedAt: new Date().toISOString()
+    };
+    record.updatedAt = record.qc.updatedAt;
+  }
   await writeOrder(store, orderId, record);
 
-  return json(200, { ok: true, orderId, status: record.status, updatedAt: record.updatedAt, statusHistory: record.statusHistory });
+  return json(200, { ok: true, orderId, status: record.status, qc: record.qc || null, updatedAt: record.updatedAt, statusHistory: record.statusHistory });
 };

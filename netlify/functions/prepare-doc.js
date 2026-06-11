@@ -102,7 +102,18 @@ exports.handler = async function (event) {
 
   let buf, name;
   try {
-    if (body.pdfBase64) {
+    if (body.final === true) {
+      // ===== FINAL PDF — both locks must be open (no exceptions) =====
+      const { assertFinalLocks, buildFinalPdf } = require('./lib/final-pdf');
+      try { assertFinalLocks(record); }
+      catch (lockErr) { return json(lockErr.statusCode || 409, { ok: false, error: lockErr.message, lock: lockErr.lock || null }); }
+      const gen = await buildFinalPdf(record.formCode, {
+        formAnswers: record.formAnswers || {},
+        contact: record.contact || {}
+      });
+      buf = gen.buffer;
+      name = `${record.formCode}-FINAL.pdf`;
+    } else if (body.pdfBase64) {
       buf = Buffer.from(String(body.pdfBase64).replace(/^data:[^;]+;base64,/, ''), 'base64');
       name = String(body.name || `${record.formCode || 'document'}-prepared.pdf`).replace(/[^\w.\- ]/g, '_').slice(0, 120);
       if (!buf.length) return json(400, { ok: false, error: 'Empty PDF' });

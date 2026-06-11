@@ -268,7 +268,10 @@ function summarizeRecord(record) {
     packageForms: record.packageForms,
     officialForm: record.officialForm,
     accountMode: record.accountMode,
-    contact: record.contact
+    contact: record.contact,
+    situation: record.situation,
+    qc: record.qc || null,
+    statusHistory: (record.statusHistory || []).slice(-5)
   };
 }
 

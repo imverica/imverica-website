@@ -48,6 +48,10 @@ button.act.ghost{background:#fff;color:var(--navy);border:1px solid var(--border
 .inbox-item:hover{border-color:var(--navy);}
 .muted{color:var(--muted);font-size:12px;}
 .empty{padding:2rem;text-align:center;color:var(--muted);font-size:14px;}
+.qc{margin-top:10px;border-top:1px dashed var(--border);padding-top:8px;}
+.qc summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--navy);}
+.qc-item{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.45;padding:4px 0;}
+.qc-item input{margin-top:2px;}
 </style>
 
 </head>
@@ -125,6 +129,51 @@ function badge(s){
 }
 function esc(t){ const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; }
 
+// Canonical QC checklist — keep the texts in sync with
+// netlify/functions/lib/form-registry.js QC_CHECKLISTS._generic (the server
+// opens the QC lock by comparing the number of confirmed items against it).
+const QC_ITEMS = [
+  'Client legal name spelled identically on every form and document',
+  'Date of birth consistent across all pages',
+  'A-Number (if any) present and identical everywhere it appears',
+  'Current mailing address complete, with Apt/Ste/Flr type marked',
+  'Every required signature line identified for the client',
+  'All client uploads attached and legible',
+  'Form edition date current per the official source at preparation time',
+  'Client reviewed and approved the packet before finalization'
+];
+const FINAL_ENABLED = ['I-765','I-589'];
+
+function qcBlock(o){
+  const checked = (o.qc && Array.isArray(o.qc.items)) ? o.qc.items : [];
+  const finalable = FINAL_ENABLED.includes(String(o.formCode||'').toUpperCase());
+  return '<details class="qc"><summary>QC checklist ('+checked.length+'/'+QC_ITEMS.length+')'+
+    (finalable?' · final-PDF capable':'')+'</summary>'+
+    QC_ITEMS.map(function(item,i){
+      return '<label class="qc-item"><input type="checkbox" data-qc="'+o.id+'" value="'+esc(item)+'"'+(checked.includes(item)?' checked':'')+'> <span>'+esc(item)+'</span></label>';
+    }).join('')+
+    '<div class="controls">'+
+      '<button class="act ghost" onclick="saveQc(\''+o.id+'\')">Save QC</button>'+
+      (finalable?'<button class="act" onclick="generateFinal(\''+o.id+'\')">Generate FINAL (flattened)</button>':'')+
+      '<span class="note" id="qcnote-'+o.id+'"></span>'+
+    '</div></details>';
+}
+
+async function saveQc(orderId){
+  const note=$('qcnote-'+orderId); note.className='note'; note.textContent='Saving…';
+  const checks=[...document.querySelectorAll('input[data-qc="'+orderId+'"]:checked')].map(i=>i.value);
+  const r=await api('/api/admin-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId,qcChecks:checks})});
+  if(r.status===200&&r.data.ok){ note.className='note ok'; note.textContent='QC saved ('+checks.length+'/'+QC_ITEMS.length+')'; }
+  else { note.className='note err'; note.textContent=r.data.error||'Failed'; }
+}
+
+async function generateFinal(orderId){
+  const note=$('qcnote-'+orderId); note.className='note'; note.textContent='Generating FINAL…';
+  const r=await api('/api/prepare-doc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId,final:true})});
+  if(r.status===200&&r.data.ok){ note.className='note ok'; note.textContent='FINAL added to client cabinet ('+Math.round((r.data.size||0)/1024)+' KB)'; }
+  else { note.className='note err'; note.textContent=(r.data&&r.data.error)||'Failed'; }
+}
+
 async function loadOrders(){
   const box=$('view-orders'); box.innerHTML='<div class="empty">Loading…</div>';
   const r=await api('/api/intake');
@@ -148,9 +197,10 @@ async function loadOrders(){
           ['new_request','waiting_for_documents','quote_sent','payment_pending','paid','in_preparation','ready_for_client_review','revision_requested','approved_by_client','completed','closed','lost'].map(s=>'<option value="'+s+'"'+(((o.status||'new_request')===s)||((o.status==='new'&&s==='new_request'))||((o.status==='in_review'&&s==='in_preparation'))||((o.status==='ready'&&s==='ready_for_client_review'))?' selected':'')+'>'+s.replace(/_/g,' ')+'</option>').join('')+
         '</select>'+
         '<button class="act ghost" onclick="setStatus(\''+o.id+'\')">Save status</button>'+
-        '<button class="act" onclick="prepareDoc(\''+o.id+'\')">Prepare PDF</button>'+
+        '<button class="act" onclick="prepareDoc(\''+o.id+'\')">Prepare PDF (draft)</button>'+
         '<span class="note" id="note-'+o.id+'"></span>'+
-      '</div>';
+      '</div>'+
+      qcBlock(o);
     box.appendChild(card);
   });
 }
