@@ -44,23 +44,32 @@ const { kicker, heading, intro, tiles } = Astro.props as Props;
 </section>
 
 <style>
-  .cat-tiles-section { padding: 60px 1.5rem 32px; background: #fff; }
+  .cat-tiles-section { padding: var(--space-section) 1.5rem 32px; background: #fff; }
   .cat-tiles-inner { max-width: 1200px; margin: 0 auto; }
   .cat-tiles-kicker {
     font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
     text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 10px;
   }
-  .cat-tiles-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+  .cat-tiles-section h2 { font-size: var(--fs-h2); font-weight: 700; margin-bottom: 12px; }
   .cat-tiles-section > .cat-tiles-inner > p {
     color: #3a4a5e; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 780px;
   }
   .cat-tiles-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
   }
+  /* Same row-alignment trick as ImmigrationCategories: tiles subgrid over
+     3 rows (icon / title / desc) so titles + descriptions align across a row. */
+  @supports (grid-template-rows: subgrid) {
+    .cat-tiles-grid > .cat-tile { display: grid; grid-template-rows: subgrid; grid-row: span 3; align-content: start; justify-items: start; }
+  }
   @media (max-width: 980px) { .cat-tiles-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .cat-tiles-grid { grid-template-columns: 1fr; } }
   .cat-tile {
-    display: block;
+    /* Flex column inside the grid row → every tile in a row renders equal
+       height, and icon/title/description start at the same y across the row. */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     background: #fff;
     border: 1px solid rgba(40,30,20,0.10);
     border-radius: 14px;

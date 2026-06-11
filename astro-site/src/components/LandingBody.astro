@@ -47,7 +47,7 @@ const { related = [] } = Astro.props;
 
 <style is:global>
   .lb-section {
-    padding: 64px 2rem;
+    padding: var(--space-section) 2rem;
     background: #fffaf2;
     border-top: 1px solid rgba(40,30,20,0.08);
   }
@@ -61,7 +61,7 @@ const { related = [] } = Astro.props;
   }
   @media (max-width: 920px) {
     .lb-inner { grid-template-columns: 1fr; }
-    .lb-section { padding: 44px 1.25rem; }
+    .lb-section { padding: var(--space-section) 1.25rem; }
   }
 
   .lb-article {
@@ -90,7 +90,7 @@ const { related = [] } = Astro.props;
 
   /* Headings stay left-aligned + no auto-hyphenation — justification on
      short single-line headings produces awful spacing. */
-  .lb-article h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 18px; text-align: left; hyphens: manual; }
+  .lb-article h1 { font-size: var(--fs-h1); font-weight: 700; letter-spacing: -0.01em; margin: 0 0 18px; text-align: left; hyphens: manual; }
   .lb-article h2 {
     font-family: var(--font-display);
     font-size: 28px;

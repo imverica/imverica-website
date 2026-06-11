@@ -176,7 +176,7 @@ const cats = [
 
 <style>
   .imm-cats-section {
-    padding: 76px 1.5rem 0;
+    padding: var(--space-section) 1.5rem 0;
     background: #fff;
   }
   .imm-cats-inner { max-width: 1200px; margin: 0 auto; }
@@ -184,17 +184,25 @@ const cats = [
     font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
     text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 10px;
   }
-  .imm-cats-section h2 { font-size: 36px; font-weight: 700; margin-bottom: 14px; }
+  .imm-cats-section h2 { font-size: var(--fs-h2); font-weight: 700; margin-bottom: 14px; }
   .imm-cats-section > .imm-cats-inner > p {
     color: #3a4a5e; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 780px;
   }
   .imm-cats-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
   }
+  /* Align icon / title / description rows ACROSS tiles: each tile becomes a
+     3-row subgrid, so a 2-line title in one card pushes the whole row's
+     descriptions to the same baseline. No-subgrid browsers keep block flow. */
+  @supports (grid-template-rows: subgrid) {
+    .imm-cats-grid { grid-auto-rows: auto; }
+    .imm-cats-grid > .imm-cat { display: grid; grid-template-rows: subgrid; align-content: start; justify-items: start; }
+  }
   @media (max-width: 980px) { .imm-cats-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .imm-cats-grid { grid-template-columns: 1fr; } }
   .imm-cat {
     display: block;
+    grid-row: span 3;
     background: #fff;
     border: 1px solid rgba(40,30,20,0.10);
     border-radius: 14px;
