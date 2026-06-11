@@ -173,6 +173,41 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .sc-status.ok{display:block;background:#eef7f0;color:#1a5a3a;}
 .sc-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 24px;border-top:1px solid var(--border);background:#fafaf8;}
 .sc-footer button{font:600 13px var(--font-system);padding:10px 16px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);}
+/* ===== USCIS wizard — split-screen, one question per screen ===== */
+.uz-shell{background:#fff;border-radius:18px;width:100%;max-width:1120px;height:min(92vh,760px);display:flex;box-shadow:0 30px 90px rgba(15,22,35,.45);overflow:hidden;}
+.uz-left{flex:0 0 42%;background:linear-gradient(160deg,var(--navy) 0%,var(--navy-dark) 100%);color:#fff;padding:44px 40px 36px;display:flex;flex-direction:column;gap:14px;min-width:0;}
+.uz-kicker{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.55);}
+.uz-question{font-size:clamp(20px,2vw,27px);line-height:1.25;font-weight:700;color:#fff;margin:0;text-wrap:balance;}
+.uz-help{font-size:13px;line-height:1.6;color:rgba(255,255,255,.72);margin:0;max-width:46ch;overflow-y:auto;}
+.uz-progress{margin-top:auto;}
+.uz-bar{height:6px;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden;}
+.uz-bar-fill{height:100%;width:0;border-radius:999px;background:var(--gold);transition:width .35s ease;}
+.uz-progress-text{margin-top:8px;font-size:11.5px;font-weight:600;letter-spacing:.4px;color:rgba(255,255,255,.65);}
+.uz-left-actions{display:flex;gap:10px;margin-top:12px;}
+.uz-left-actions button{font:600 12px var(--font-system);padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;cursor:pointer;transition:background .15s;}
+.uz-left-actions button:hover{background:rgba(255,255,255,.12);}
+.uz-right{flex:1 1 auto;display:flex;flex-direction:column;position:relative;min-width:0;background:linear-gradient(180deg,#fbfcfd 0%,#fff 38%);}
+.uz-close{position:absolute;top:12px;right:16px;z-index:2;}
+.uz-body{flex:1;overflow-y:auto;padding:46px 44px 24px;}
+.uz-footer{display:flex;justify-content:flex-end;padding:14px 44px 20px;border-top:1px solid var(--border);background:#fff;}
+.uz-footer button.primary{font:600 14px var(--font-system);padding:12px 28px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;cursor:pointer;}
+.uz-footer button.primary:hover{background:var(--navy-light);}
+.uz-choices{display:flex;flex-direction:column;gap:14px;max-width:520px;margin:0 auto;}
+.uz-choice{display:block;width:100%;padding:18px 22px;border:1px solid var(--border);border-radius:12px;background:#fff;font:600 15px var(--font-system);color:var(--navy);text-align:center;cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s,transform .15s;}
+.uz-choice:hover{border-color:var(--navy);box-shadow:0 10px 26px rgba(26,46,74,.10);transform:translateY(-1px);}
+.uz-choice.selected{border-color:var(--gold);background:#fffaf0;box-shadow:inset 0 0 0 1px var(--gold);}
+@media (max-width:860px){
+  #uscis-overlay.sc-overlay{padding:0;}
+  .uz-shell{height:100%;max-height:none;border-radius:0;flex-direction:column;}
+  .uz-left{flex:0 0 auto;padding:18px 18px 14px;gap:7px;}
+  .uz-help{max-height:64px;}
+  .uz-progress{margin-top:6px;}
+  .uz-left-actions{margin-top:6px;}
+  .uz-close{position:fixed;top:10px;right:12px;color:rgba(255,255,255,.85);}
+  .uz-body{padding:20px 16px 14px;}
+  .uz-body .sc-fields{grid-template-columns:1fr;}
+  .uz-footer{padding:12px 16px calc(14px + env(safe-area-inset-bottom));}
+}
 .sc-footer button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
 .sc-footer button:disabled{opacity:.55;cursor:not-allowed;}
 @media(max-width:700px){.sc-grid,.sc-fields,.sc-address-grid,.sc-phone-grid,.sc-history-grid,.sc-check-list{grid-template-columns:1fr}.sc-field.full{grid-column:auto}.sc-modal{max-height:96vh}.sc-head,.sc-body,.sc-footer{padding-left:16px;padding-right:16px}.uscis-list-head{display:block}.uscis-search{margin-top:8px;width:100%;}}
@@ -891,20 +926,27 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
 
 <!-- ===== Authenticated USCIS forms wizard ===== -->
 <div class="sc-overlay hidden" id="uscis-overlay" onclick="if(event.target===this) closeUscisWizard()">
-  <div class="sc-modal" role="dialog" aria-modal="true" aria-labelledby="uscis-title">
-    <div class="sc-head">
-      <div>
-        <h3 id="uscis-title" data-i18n="uscisWizardTitle">USCIS forms wizard</h3>
-        <p data-i18n="uscisWizardSubtitle">Choose an official USCIS form, complete the account-only wizard, and download a draft PDF.</p>
+  <div class="uz-shell" role="dialog" aria-modal="true" aria-labelledby="uscis-title">
+    <aside class="uz-left">
+      <div class="uz-kicker" id="uscis-kicker">USCIS</div>
+      <h3 class="uz-question" id="uscis-title" data-i18n="uscisWizardTitle">USCIS forms wizard</h3>
+      <p class="uz-help" id="uscis-subtitle" data-i18n="uscisWizardSubtitle">Choose an official USCIS form, complete the account-only wizard, and download a draft PDF.</p>
+      <div class="uz-progress">
+        <div class="uz-bar"><div class="uz-bar-fill" id="uz-bar-fill"></div></div>
+        <div class="uz-progress-text" id="uscis-progress"></div>
       </div>
-      <button class="sc-close" type="button" aria-label="Close" onclick="closeUscisWizard()">×</button>
-    </div>
-    <div class="sc-progress" id="uscis-progress"></div>
-    <div class="sc-body" id="uscis-body"></div>
-    <div class="sc-footer">
-      <button type="button" id="uscis-back" onclick="uscisBack()" data-i18n="scBack">Back</button>
-      <button class="primary" type="button" id="uscis-next" onclick="uscisNext()" data-i18n="scNext">Next</button>
-    </div>
+      <div class="uz-left-actions">
+        <button type="button" id="uscis-back" onclick="uscisBack()" data-i18n="scBack">Back</button>
+        <button type="button" id="uscis-restart" class="hidden" onclick="uscisRestart()" data-i18n="uzRestart">Restart</button>
+      </div>
+    </aside>
+    <main class="uz-right">
+      <button class="sc-close uz-close" type="button" aria-label="Close" onclick="closeUscisWizard()">×</button>
+      <div class="uz-body" id="uscis-body"></div>
+      <div class="uz-footer">
+        <button class="primary" type="button" id="uscis-next" onclick="uscisNext()" data-i18n="scNext">Next</button>
+      </div>
+    </main>
   </div>
 </div>
 
@@ -925,6 +967,7 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
   <p data-i18n="footer">&copy; 2026 Imverica Legal Solutions · Not a law firm · We do not provide legal advice · +1 (916) 399-3992</p>
 </footer>
 
+<script src="/assets/js/wizard-progress.js"></script>
 <script>
 // ===== i18n =====
 const STRINGS = {
@@ -1000,6 +1043,7 @@ const STRINGS = {
     mdDownload: 'Download', mdRequestLabel: 'Request', mdGeneratedLabel: 'Generated drafts',
     uscisWizardTitle: 'USCIS forms wizard',
     uscisWizardSubtitle: 'Choose an official USCIS form, complete the account-only wizard, and download a draft PDF.',
+    uzRestart: 'Restart',
     uscisChooseWizardForm: 'Choose a USCIS form',
     uscisTopForms: 'Most used forms',
     uscisAllForms: 'All preparable USCIS forms',
@@ -1132,6 +1176,7 @@ const STRINGS = {
     mdDownload: 'Скачать', mdRequestLabel: 'Заявка', mdGeneratedLabel: 'Сгенерированные черновики',
     uscisWizardTitle: 'Мастер USCIS форм',
     uscisWizardSubtitle: 'Выберите официальную USCIS форму, заполните мастер в личном кабинете и скачайте PDF-черновик.',
+    uzRestart: 'Начать заново',
     uscisChooseWizardForm: 'Выберите USCIS форму',
     uscisTopForms: 'Самые частые формы',
     uscisAllForms: 'Все USCIS формы, доступные для подготовки',
@@ -1264,6 +1309,7 @@ const STRINGS = {
     mdDownload: 'Завантажити', mdRequestLabel: 'Заявка', mdGeneratedLabel: 'Створені чернетки',
     uscisWizardTitle: 'Майстер USCIS форм',
     uscisWizardSubtitle: 'Оберіть офіційну USCIS форму, заповніть майстер в особистому кабінеті та завантажте PDF-чернетку.',
+    uzRestart: 'Почати спочатку',
     uscisChooseWizardForm: 'Оберіть USCIS форму',
     uscisTopForms: 'Найчастіші форми',
     uscisAllForms: 'Усі USCIS форми, доступні для підготовки',
@@ -1396,6 +1442,7 @@ const STRINGS = {
     mdDownload: 'Descargar', mdRequestLabel: 'Solicitud', mdGeneratedLabel: 'Borradores generados',
     uscisWizardTitle: 'Asistente de formularios USCIS',
     uscisWizardSubtitle: 'Elija un formulario oficial de USCIS, complete el asistente de cuenta y descargue un borrador PDF.',
+    uzRestart: 'Reiniciar',
     uscisChooseWizardForm: 'Elija un formulario USCIS',
     uscisTopForms: 'Formularios más usados',
     uscisAllForms: 'Todos los formularios USCIS preparables',
@@ -2610,6 +2657,11 @@ function renderUscisCatalog(){
   uscisWizardState.form = null;
   uscisWizardState.schema = null;
   uscisWizardState.values = {};
+  setUscisKicker('USCIS');
+  document.getElementById('uscis-title').textContent = T.uscisWizardTitle;
+  document.getElementById('uscis-subtitle').textContent = T.uscisWizardSubtitle;
+  const uzFill = document.getElementById('uz-bar-fill'); if (uzFill) uzFill.style.width = '0%';
+  const uzRestart = document.getElementById('uscis-restart'); if (uzRestart) uzRestart.classList.add('hidden');
   setUscisProgress(T.uscisChooseWizardForm);
   setUscisFooter(false, false);
   const catalog = uscisWizardState.catalog || { forms: [], counts: {} };
@@ -2659,6 +2711,45 @@ async function chooseUscisForm(code){
   }
 }
 
+// ===== Split-screen wizard helpers =====
+function setUscisKicker(text){ const el = document.getElementById('uscis-kicker'); if (el) el.textContent = text || 'USCIS'; }
+// A step qualifies for the one-question big-button screen when it has exactly
+// one visible field and that field is a radio (any size) or a small select.
+function uscisSingleChoice(fields){
+  if (!Array.isArray(fields) || fields.length !== 1) return null;
+  const f = fields[0];
+  if (f.type === 'radio' && Array.isArray(f.options) && f.options.length) return f;
+  if (f.type === 'select' && Array.isArray(f.options) && f.options.length && f.options.length <= 8) return f;
+  return null;
+}
+// Requirement-based progress (completed required ÷ total required, hidden and
+// skipped-conditional fields excluded) — assets/js/wizard-progress.js.
+function updateUscisProgressBar(){
+  const fill = document.getElementById('uz-bar-fill');
+  if (!fill || typeof calculateWizardProgress !== 'function' || !uscisWizardState.schema) return;
+  const p = calculateWizardProgress(uscisWizardState.schema, uscisWizardState.values, { pageIndex: uscisWizardState.pageIndex });
+  fill.style.width = p.percent + '%';
+  setUscisProgress(p.percent + '% · ' + p.completedRequiredItems + '/' + p.totalRequiredItems + ' · ' + p.currentStep + '/' + p.totalVisibleSteps);
+  const restart = document.getElementById('uscis-restart');
+  if (restart) restart.classList.remove('hidden');
+}
+function uscisChoose(fieldId, value, btn){
+  uscisWizardState.values[fieldId] = value;
+  if (btn && btn.parentElement) {
+    btn.parentElement.querySelectorAll('.uz-choice').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+  }
+  updateUscisProgressBar();
+  const isLast = nextVisibleUscisStep(uscisWizardState.pageIndex + 1, 1) === -1;
+  if (isLast) { setUscisFooter(true, true, T.uscisGenerate); return; } // never auto-generate the PDF
+  setTimeout(uscisNext, 170); // brief selected flash, then advance
+}
+function uscisRestart(){
+  if (uscisWizardState.stage !== 'fields') return;
+  const first = nextVisibleUscisStep(0, 1);
+  if (first >= 0) { uscisWizardState.pageIndex = first; renderUscisFields(); }
+}
+
 function renderUscisFields(){
   const schema = uscisWizardState.schema;
   const step = schema && schema.steps && schema.steps[uscisWizardState.pageIndex];
@@ -2668,11 +2759,30 @@ function renderUscisFields(){
     return;
   }
   const fields = visibleUscisFields(step);
-  const totalFields = (schema.steps || []).reduce(function(sum, item){ return sum + ((item.fields || []).length); }, 0);
-  setUscisProgress(uscisWizardState.form.code + ' · ' + step.title + ' · ' + totalFields + ' ' + T.uscisFields);
-  setUscisFooter(true, true, nextVisibleUscisStep(uscisWizardState.pageIndex + 1, 1) === -1 ? T.uscisGenerate : T.scNext);
+  const isLast = nextVisibleUscisStep(uscisWizardState.pageIndex + 1, 1) === -1;
+  // Split-screen: step title becomes the big question on the left navy panel,
+  // step help sits under it; the right panel carries only the inputs.
+  setUscisKicker(uscisWizardState.form.code + (uscisWizardState.form.title ? ' \u00b7 ' + uscisWizardState.form.title : ''));
+  document.getElementById('uscis-title').textContent = step.title || uscisWizardState.form.code;
+  document.getElementById('uscis-subtitle').textContent = step.help || '';
+  updateUscisProgressBar();
+  const choice = uscisSingleChoice(fields);
+  if (choice) {
+    const saved = String(uscisValue(choice.id, choice.value) || '');
+    document.getElementById('uscis-body').innerHTML =
+      '<div class="uz-choices">' + (choice.options || []).map(function(option){
+        const value = uscisOptionValue(option);
+        return '<button type="button" class="uz-choice' + (saved && uscisOptionSelected(option, saved) ? ' selected' : '') + '" data-uz-choice="' + scAttr(choice.id) + '" data-uz-value="' + scAttr(value) + '">' + escText(uscisOptionLabel(option)) + '</button>';
+      }).join('') + '</div>' +
+      '<div class="sc-status" id="uscis-status"></div>';
+    document.querySelectorAll('#uscis-body [data-uz-choice]').forEach(function(b){
+      b.onclick = function(){ uscisChoose(b.getAttribute('data-uz-choice'), b.getAttribute('data-uz-value'), b); };
+    });
+    setUscisFooter(true, Boolean(saved), isLast ? T.uscisGenerate : T.scNext);
+    return;
+  }
+  setUscisFooter(true, true, isLast ? T.uscisGenerate : T.scNext);
   document.getElementById('uscis-body').innerHTML =
-    '<div class="sc-intro">' + escText(step.help || T.uscisDisclaimer) + '</div>' +
     '<div class="sc-fields">' + (fields.length ? fields.map(renderUscisField).join('') : '<div class="md-empty">' + escText(T.uscisNoVisibleFields) + '</div>') + '</div>' +
     '<div class="sc-status" id="uscis-status"></div>';
 }
