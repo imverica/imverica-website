@@ -512,6 +512,14 @@ body.is-auth footer { display: none !important; }
 .ec-btn.primary{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 8px 20px rgba(26,46,74,0.18);}
 .ec-btn.primary:hover{background:var(--navy-light);}
 
+/* ===== Client review decision block ===== */
+.order-review{margin-top:14px;padding:14px;border:1px solid #d9e6dc;background:#f4faf5;border-radius:10px;}
+.order-review-msg{font-size:13px;color:#1a5a3a;line-height:1.5;margin-bottom:10px;}
+.order-review-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.rv-approve{font:600 13px var(--font-system);padding:10px 18px;border-radius:999px;border:1px solid #1a5a3a;background:#1a5a3a;color:#fff;cursor:pointer;}
+.rv-approve:hover{background:#14492e;}
+.rv-fix{font:600 13px var(--font-system);padding:10px 18px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--navy);cursor:pointer;}
+.rv-fix:hover{border-color:var(--navy);}
 /* ===== Order status tracker (Received → Ready) ===== */
 .order-track{display:flex;align-items:flex-start;margin:16px 0 6px;}
 .track-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;text-align:center;}
@@ -1095,6 +1103,8 @@ const STRINGS = {
     msgNoRequests: 'You have no requests yet.',
     msgNoRequestsHint: 'Use <strong>+ New request</strong> to submit your first one.',
     statusReady: 'Ready', statusReview: 'In review', statusNew: 'Received',
+    stNewRequest: 'New request', stWaitingDocs: 'Waiting for documents', stQuoteSent: 'Quote sent', stPaymentPending: 'Payment pending', stPaid: 'Paid', stInPreparation: 'In preparation', stReadyReview: 'Ready for your review', stRevisionRequested: 'Revision in progress', stApproved: 'Approved by you', stCompleted: 'Completed', stClosed: 'Closed',
+    reviewPrompt: 'Your documents are ready. Please review them in My documents, then confirm.', reviewApprove: 'Approve documents', reviewFix: 'Request corrections', reviewFixPrompt: 'What should we correct?', reviewSaved: 'Thank you — saved.', reviewFailed: 'Could not save, try again.',
     docsPrepLabel: 'Prepared by Imverica — ready to download',
     docsYourLabel: 'Your documents',
     docAttach: '+ Attach a document',
@@ -1228,6 +1238,8 @@ const STRINGS = {
     msgNoRequests: 'У вас пока нет заявок.',
     msgNoRequestsHint: 'Нажмите <strong>+ Новая заявка</strong>, чтобы создать первую.',
     statusReady: 'Готово', statusReview: 'В работе', statusNew: 'Принято',
+    stNewRequest: 'Новая заявка', stWaitingDocs: 'Ждём документы', stQuoteSent: 'Смета отправлена', stPaymentPending: 'Ожидает оплаты', stPaid: 'Оплачено', stInPreparation: 'Готовим документы', stReadyReview: 'Готово к вашей проверке', stRevisionRequested: 'Вносим правки', stApproved: 'Вы подтвердили', stCompleted: 'Завершено', stClosed: 'Закрыто',
+    reviewPrompt: 'Документы готовы. Проверьте их в «Мои документы» и подтвердите.', reviewApprove: 'Подтвердить документы', reviewFix: 'Запросить правки', reviewFixPrompt: 'Что нужно исправить?', reviewSaved: 'Спасибо — сохранено.', reviewFailed: 'Не сохранилось, попробуйте ещё раз.',
     docsPrepLabel: 'Подготовлено Imverica — готово к скачиванию',
     docsYourLabel: 'Ваши документы',
     docAttach: '+ Прикрепить документ',
@@ -1361,6 +1373,8 @@ const STRINGS = {
     msgNoRequests: 'У вас поки немає заявок.',
     msgNoRequestsHint: 'Натисніть <strong>+ Нова заявка</strong>, щоб створити першу.',
     statusReady: 'Готово', statusReview: 'У роботі', statusNew: 'Прийнято',
+    stNewRequest: 'Нова заявка', stWaitingDocs: 'Чекаємо документи', stQuoteSent: 'Кошторис надіслано', stPaymentPending: 'Очікує оплати', stPaid: 'Оплачено', stInPreparation: 'Готуємо документи', stReadyReview: 'Готово до вашої перевірки', stRevisionRequested: 'Вносимо правки', stApproved: 'Ви підтвердили', stCompleted: 'Завершено', stClosed: 'Закрито',
+    reviewPrompt: 'Документи готові. Перегляньте їх у «Мої документи» і підтвердьте.', reviewApprove: 'Підтвердити документи', reviewFix: 'Запросити правки', reviewFixPrompt: 'Що потрібно виправити?', reviewSaved: 'Дякуємо — збережено.', reviewFailed: 'Не збереглося, спробуйте ще раз.',
     docsPrepLabel: 'Підготовлено Imverica — готово до завантаження',
     docsYourLabel: 'Ваші документи',
     docAttach: '+ Прикріпити документ',
@@ -1494,6 +1508,8 @@ const STRINGS = {
     msgNoRequests: 'No tiene solicitudes aún.',
     msgNoRequestsHint: 'Use <strong>+ Nueva solicitud</strong> para enviar la primera.',
     statusReady: 'Listo', statusReview: 'En revisión', statusNew: 'Recibido',
+    stNewRequest: 'Solicitud nueva', stWaitingDocs: 'Esperando documentos', stQuoteSent: 'Cotización enviada', stPaymentPending: 'Pago pendiente', stPaid: 'Pagado', stInPreparation: 'En preparación', stReadyReview: 'Listo para su revisión', stRevisionRequested: 'Corrigiendo', stApproved: 'Aprobado por usted', stCompleted: 'Completado', stClosed: 'Cerrado',
+    reviewPrompt: 'Sus documentos están listos. Revíselos en Mis documentos y confirme.', reviewApprove: 'Aprobar documentos', reviewFix: 'Solicitar correcciones', reviewFixPrompt: '¿Qué debemos corregir?', reviewSaved: 'Gracias — guardado.', reviewFailed: 'No se guardó, intente de nuevo.',
     docsPrepLabel: 'Preparado por Imverica — listo para descargar',
     docsYourLabel: 'Sus documentos',
     docAttach: '+ Adjuntar un documento',
@@ -1603,8 +1619,37 @@ async function logout(){
   currentEmail=''; $('email-input').value=''; stopChat(); show('step-email');
 }
 
+async function sendReviewDecision(orderId, decision, note, msgEl, buttons){
+  buttons.forEach(b=>b.disabled=true);
+  msgEl.textContent='…';
+  try{
+    const r=await fetch('/api/account',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'review-decision',orderId,decision,note})});
+    const data=await r.json().catch(()=>({}));
+    if(r.ok&&data.ok){ msgEl.textContent=T.reviewSaved; setTimeout(loadDashboard,900); }
+    else { msgEl.textContent=data.error||T.reviewFailed; buttons.forEach(b=>b.disabled=false); }
+  }catch(e){ msgEl.textContent=T.reviewFailed; buttons.forEach(b=>b.disabled=false); }
+}
+
 function badgeFor(status){
   const s=(status||'new').toLowerCase();
+  // Canonical lifecycle keys (lib/case-status.js). Visual class buckets:
+  // new (grey) / review (amber) / ready (green).
+  const MAP = {
+    new_request:            ['new',    T.stNewRequest],
+    waiting_for_documents:  ['review', T.stWaitingDocs],
+    quote_sent:             ['review', T.stQuoteSent],
+    payment_pending:        ['review', T.stPaymentPending],
+    paid:                   ['review', T.stPaid],
+    in_preparation:         ['review', T.stInPreparation],
+    ready_for_client_review:['ready',  T.stReadyReview],
+    revision_requested:     ['review', T.stRevisionRequested],
+    approved_by_client:     ['ready',  T.stApproved],
+    completed:              ['ready',  T.stCompleted],
+    closed:                 ['new',    T.stClosed],
+    lost:                   ['new',    T.stClosed]
+  };
+  if (MAP[s]) return MAP[s];
   if (s.includes('ready')||s.includes('complete')||s.includes('done')) return ['ready', T.statusReady];
   if (s.includes('review')||s.includes('progress')) return ['review', T.statusReview];
   return ['new', T.statusNew];
@@ -1629,7 +1674,25 @@ function renderOrders(orders){
     date.textContent = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '';
     const sit=document.createElement('div'); sit.className='order-sit'; sit.textContent=o.situation||'';
     card.appendChild(top); card.appendChild(svc); if(date.textContent) card.appendChild(date); if(sit.textContent) card.appendChild(sit);
-    card.appendChild(buildOrderTrack(o.status));
+    card.appendChild(buildOrderTrack(o.status, o.trackPosition));
+
+    // ===== Client review decision (only when the packet awaits their review) =====
+    if ((o.status||'') === 'ready_for_client_review') {
+      const rev=document.createElement('div'); rev.className='order-review';
+      const msg=document.createElement('div'); msg.className='order-review-msg'; msg.textContent=T.reviewPrompt;
+      const row=document.createElement('div'); row.className='order-review-actions';
+      const ok=document.createElement('button'); ok.type='button'; ok.className='rv-approve'; ok.textContent=T.reviewApprove;
+      const fix=document.createElement('button'); fix.type='button'; fix.className='rv-fix'; fix.textContent=T.reviewFix;
+      const note=document.createElement('div'); note.className='doc-msg';
+      ok.onclick=()=>sendReviewDecision(o.id,'approve','',note,[ok,fix]);
+      fix.onclick=()=>{
+        const reason=prompt(T.reviewFixPrompt)||'';
+        if(reason.trim()) sendReviewDecision(o.id,'request_corrections',reason.trim(),note,[ok,fix]);
+      };
+      row.appendChild(ok); row.appendChild(fix);
+      rev.appendChild(msg); rev.appendChild(row); rev.appendChild(note);
+      card.appendChild(rev);
+    }
 
     // Documents section
     const docs=document.createElement('div'); docs.className='docs';
@@ -1682,11 +1745,12 @@ function renderOrders(orders){
   });
 }
 
-function buildOrderTrack(status){
+function buildOrderTrack(status, trackPosition){
   const steps = [T.trackReceived, T.trackReview, T.trackPrepared, T.trackReady];
   const s = (status||'new').toLowerCase();
   let idx = 0;
-  if (s.includes('ready')||s.includes('complete')||s.includes('done')||s.includes('resolved')) idx = 3;
+  if (typeof trackPosition === 'number') idx = Math.max(0, Math.min(3, trackPosition));
+  else if (s.includes('ready')||s.includes('complete')||s.includes('done')||s.includes('resolved')) idx = 3;
   else if (s.includes('review')||s.includes('progress')||s.includes('prepar')) idx = 1;
   const wrap = document.createElement('div'); wrap.className='order-track';
   steps.forEach((label, i) => {

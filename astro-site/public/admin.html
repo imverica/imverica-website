@@ -113,7 +113,16 @@ function switchTab(t){
   if(t==='orders') loadOrders(); else loadInbox();
 }
 
-function badge(s){ s=(s||'new'); const map={new:'Received',in_review:'In review',ready:'Ready'}; return '<span class="badge '+s+'">'+(map[s]||s)+'</span>'; }
+function badge(s){
+  s=(s||'new_request');
+  const map={new:'Received',in_review:'In preparation',ready:'Ready for review',
+    new_request:'New request',waiting_for_documents:'Waiting for documents',quote_sent:'Quote sent',
+    payment_pending:'Payment pending',paid:'Paid',in_preparation:'In preparation',
+    ready_for_client_review:'Ready for client review',revision_requested:'Revision requested',
+    approved_by_client:'Approved by client',completed:'Completed',closed:'Closed',lost:'Lost'};
+  const cls = /ready|approved|completed/.test(s)?'ready':(/new|closed|lost/.test(s)?'new':'in_review');
+  return '<span class="badge '+cls+'">'+(map[s]||s.replace(/_/g,' '))+'</span>';
+}
 function esc(t){ const d=document.createElement('div'); d.textContent=t==null?'':t; return d.innerHTML; }
 
 async function loadOrders(){
@@ -136,7 +145,7 @@ async function loadOrders(){
       (o.situation?('<div class="sit">'+esc(o.situation)+'</div>'):'')+
       '<div class="controls">'+
         '<select id="st-'+o.id+'">'+
-          ['new','in_review','ready'].map(s=>'<option value="'+s+'"'+((o.status||'new')===s?' selected':'')+'>'+s+'</option>').join('')+
+          ['new_request','waiting_for_documents','quote_sent','payment_pending','paid','in_preparation','ready_for_client_review','revision_requested','approved_by_client','completed','closed','lost'].map(s=>'<option value="'+s+'"'+(((o.status||'new_request')===s)||((o.status==='new'&&s==='new_request'))||((o.status==='in_review'&&s==='in_preparation'))||((o.status==='ready'&&s==='ready_for_client_review'))?' selected':'')+'>'+s.replace(/_/g,' ')+'</option>').join('')+
         '</select>'+
         '<button class="act ghost" onclick="setStatus(\''+o.id+'\')">Save status</button>'+
         '<button class="act" onclick="prepareDoc(\''+o.id+'\')">Prepare PDF</button>'+

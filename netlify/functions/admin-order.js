@@ -20,7 +20,10 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Authorization, Content-Type'
 };
 
-const ALLOWED_STATUS = ['new', 'in_review', 'ready'];
+// Full case lifecycle (lib/case-status.js). Legacy new|in_review|ready still
+// accepted via normalizeStatus aliases.
+const { STATUSES, normalizeStatus, applyStatus } = require('./lib/case-status');
+const ALLOWED_STATUS = STATUSES;
 
 function json(statusCode, body) {
   return { statusCode, headers: { ...CORS, 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
@@ -59,17 +62,16 @@ exports.handler = async function (event) {
   let body;
   try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
   const orderId = safeId(body.orderId);
-  const status = String(body.status || '').trim();
+  const status = normalizeStatus(body.status);
   if (!orderId) return json(400, { ok: false, error: 'Missing orderId' });
-  if (!ALLOWED_STATUS.includes(status)) return json(422, { ok: false, error: `status must be one of ${ALLOWED_STATUS.join(', ')}` });
+  if (!status) return json(422, { ok: false, error: `status must be one of ${ALLOWED_STATUS.join(', ')}` });
 
   const store = await getStore();
   const record = await readOrder(store, orderId);
   if (!record) return json(404, { ok: false, error: 'Order not found' });
 
-  record.status = status;
-  record.updatedAt = new Date().toISOString();
+  applyStatus(record, status, { by: 'admin', role: 'admin', note: body.note });
   await writeOrder(store, orderId, record);
 
-  return json(200, { ok: true, orderId, status, updatedAt: record.updatedAt });
+  return json(200, { ok: true, orderId, status: record.status, updatedAt: record.updatedAt, statusHistory: record.statusHistory });
 };

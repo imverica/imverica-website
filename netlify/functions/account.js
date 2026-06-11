@@ -16,6 +16,7 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs/promises');
 const { decryptRecord, emailHash } = require('./lib/crypto');
+const { normalizeStatus, applyStatus, TRACK_POSITION, CLIENT_DECISIONS } = require('./lib/case-status');
 
 // Keep PII_PATHS in sync with intake.js — what was encrypted on write
 // must be decrypted on read.
@@ -124,9 +125,14 @@ async function listRecords(store) {
 }
 
 function summarize(record) {
+  const status = normalizeStatus(record.status) || 'new_request';
   return {
     id: record.id,
-    status: record.status || 'new',
+    status,
+    trackPosition: TRACK_POSITION[status] ?? 0,
+    statusHistory: (Array.isArray(record.statusHistory) ? record.statusHistory : [])
+      .slice(-10)
+      .map((h) => ({ status: h.status, at: h.at, role: h.role, note: h.note })),
     createdAt: record.createdAt,
     service: record.serviceLabel || record.service || '',
     situation: String(record.situation || '').slice(0, 600),
@@ -134,14 +140,87 @@ function summarize(record) {
   };
 }
 
+// Write helper for the client review decision (same store the GET path reads).
+async function writeRecord(store, record) {
+  const key = `orders/${record.id}.json`;
+  if (store) { try { await store.setJSON(key, record); return true; } catch { /* fall */ } }
+  try {
+    const dir = path.join(os.tmpdir(), 'imverica-intakes', 'orders');
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(path.join(dir, `${record.id}.json`), JSON.stringify(record, null, 2));
+    return true;
+  } catch { return false; }
+}
+
+// Email both owner inboxes when a client approves or requests corrections —
+// this is exactly the moment the operator must act. Skips cleanly without
+// RESEND_API_KEY; never blocks the response.
+async function notifyOwnerOfDecision(record, status, clientEmail, note) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return;
+  const subject = `[Imverica] ${record.id} — client ${status === 'approved_by_client' ? 'APPROVED documents' : 'requested corrections'}`;
+  const text = `Order: ${record.id}\nClient: ${clientEmail}\nNew status: ${status}\n` +
+    (note ? `Client note: ${String(note).slice(0, 500)}\n` : '') +
+    `\nAdmin console: ${(process.env.URL || 'https://imverica.com')}/admin.html`;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: process.env.OTP_FROM_EMAIL || 'Imverica Legal Solutions <info@imverica.com>',
+        to: ['info@imverica.com', 'imverica@gmail.com'],
+        reply_to: clientEmail,
+        subject,
+        text
+      })
+    });
+  } catch { /* fire-and-forget */ }
+}
+
 exports.handler = async function (event) {
   ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
-  if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
+  if (event.httpMethod !== 'GET' && event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' });
 
   const token = parseCookie(event.headers?.cookie || event.headers?.Cookie, 'imv_session');
   const session = verifySession(token, event);
   if (!session) return json(401, { ok: false, error: 'Not signed in' });
+
+  // ===== POST — client review decision on their OWN order =====
+  // { action: 'review-decision', orderId, decision: 'approve'|'request_corrections', note? }
+  // Strictly limited: only from ready_for_client_review, only on an order whose
+  // contact email matches the session. Everything else stays admin-only.
+  if (event.httpMethod === 'POST') {
+    let body;
+    try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
+    if (body.action !== 'review-decision') return json(400, { ok: false, error: 'Unknown action' });
+    const target = CLIENT_DECISIONS[String(body.decision || '')];
+    if (!target) return json(422, { ok: false, error: 'decision must be approve or request_corrections' });
+    const orderId = String(body.orderId || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64);
+    if (!orderId) return json(400, { ok: false, error: 'Missing orderId' });
+
+    let store;
+    try { store = await getStore(); } catch { store = null; }
+    let record = null;
+    if (store) { try { record = await store.get(`orders/${orderId}.json`, { type: 'json' }); } catch { /* fall */ } }
+    if (!record) {
+      try { record = JSON.parse(await fs.readFile(path.join(os.tmpdir(), 'imverica-intakes', 'orders', `${orderId}.json`), 'utf8')); } catch { /* missing */ }
+    }
+    if (!record) return json(404, { ok: false, error: 'Order not found' });
+
+    const ownsByHash = record.emailHash && record.emailHash === emailHash(session.email, event);
+    const ownsByEmail = record.contact && String(record.contact.email || '').toLowerCase() === session.email;
+    if (!ownsByHash && !ownsByEmail) return json(403, { ok: false, error: 'Not your order' });
+    if ((normalizeStatus(record.status) || '') !== 'ready_for_client_review') {
+      return json(409, { ok: false, error: 'This order is not awaiting your review.' });
+    }
+
+    applyStatus(record, target, { by: session.email, role: 'client', note: body.note });
+    const saved = await writeRecord(store, record);
+    if (!saved) return json(500, { ok: false, error: 'Could not save your decision.' });
+    notifyOwnerOfDecision(record, target, session.email, body.note).catch(() => {});
+    return json(200, { ok: true, orderId, status: record.status });
+  }
 
   let records;
   try {
