@@ -159,6 +159,11 @@ function maritalStatusFields(value) {
   };
 }
 
+const { unitRadio } = require('./form-helpers');
+
+// Legacy helper kept for any external callers; new code uses unitRadio (the
+// engine matches the widget by its own appearance state, so per-edition index
+// order can never break the checkbox again).
 function unitCheckbox(unitValue, aptField, suiteField, floorField) {
   const text = clean(unitValue, 40).toLowerCase();
   if (/ste|suite/.test(text)) return { [suiteField]: true, [aptField]: false, [floorField]: false };
@@ -229,7 +234,7 @@ function mappedAddress(answers) {
     'Pt2Line5_CityOrTown[0]': answers.mailing_city,
     'Pt2Line5_State[0]': stateCode(answers.mailing_state),
     'Pt2Line5_ZipCode[0]': digits(answers.mailing_zip, 10),
-    ...(unit ? unitCheckbox(unit, 'Pt2Line5_Unit[2]', 'Pt2Line5_Unit[0]', 'Pt2Line5_Unit[1]') : {})
+    ...unitRadio('Pt2Line5_Unit', unit)
   };
 }
 

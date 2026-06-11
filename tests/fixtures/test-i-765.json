@@ -1,0 +1,36 @@
+{
+  "formCode": "I-765",
+  "description": "EAD application — asylum-pending (c)(8) demo applicant",
+  "formAnswers": {
+    "applicant_family_name": "Kovalenko",
+    "applicant_given_name": "Oksana",
+    "applicant_middle_name": "M",
+    "date_of_birth": "1990-03-15",
+    "country_of_birth": "Ukraine",
+    "country_of_citizenship": "Ukraine",
+    "sex": "Female",
+    "marital_status": "Married",
+    "alien_number": "241567890",
+    "i94_number": "12345678901",
+    "ssn": "",
+    "uscis_online_account_number": "123456789012",
+    "mailing_address_line1": "456 New Street",
+    "mailing_address_line2": "Apt 5",
+    "mailing_city": "Sacramento",
+    "mailing_state": "CA",
+    "mailing_zip": "95814",
+    "eligibility_category": "(c)(8)",
+    "place_entry": "San Francisco, CA",
+    "date_last_entered_us": "2024-02-11",
+    "current_immigration_status": "Asylum applicant",
+    "daytime_phone": "9163993992",
+    "email_address": "test.client@example.com"
+  },
+  "contact": { "name": "Oksana M Kovalenko", "phone": "9163993992", "email": "test.client@example.com" },
+  "expect": {
+    "minFilled": 20,
+    "valuesContain": ["Kovalenko", "Oksana", "Ukraine", "Sacramento", "95814"],
+    "dateFormat": "03/15/1990",
+    "unitNumber": "5"
+  }
+}
