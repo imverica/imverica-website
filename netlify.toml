@@ -38,6 +38,10 @@ included_files = [
   "overlay-maps/normalized/**"
 ]
 
+# Daily client nudges for stalled orders (waiting_for_documents / quote_sent).
+[functions."case-nudges"]
+schedule = "@daily"
+
 [functions."generate-uscis-packet"]
 included_files = [
   "assets/form-cache/pdfs-normalized/**",
