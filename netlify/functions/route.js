@@ -247,7 +247,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-90'],
     confidence: 0.93,
-    patterns: [/i-?90\b|renew\s+green\s*card|replace\s+green\s*card|green\s*card\s+(renew|replace|lost|stolen|expir)|обнов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|замен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|потер[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|поновлен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грін)|renovar\s+(green\s*card|tarjeta\s+verde)|reemplaz\w*\s+(green|tarjeta\s+verde)/i],
+    patterns: [/i-?90\b|renew\s+green\s*card|replace\s+green\s*card|green\s*card\s+(renew|replace|lost|stolen|expir)|обнов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|замен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|потер[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|поновлен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грін)|renovar\s+(green\s*card|tarjeta\s+verde)|reemplaz\w*\s+(green|tarjeta\s+verde)|(lost|stolen|damaged|потерял|украли|повредил|загубив)[\s\S]{0,25}(green ?card|грин[- ]?карт)(?![\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон))|(green ?card|грин[- ]?карт)[\s\S]{0,25}(lost|stolen|damaged|потерял|украли)(?![\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон))/i],
     reason: 'Green card renewal / replacement language maps to Form I-90.'
   },
   {
@@ -283,7 +283,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-131A'],
     confidence: 0.95,
-    patterns: [/i-?131a|carrier\s+documentation|returning\s+(resident|lpr)|boarding\s+foil|зеленая\s+карта\s+истекл[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+за\s+границ|истек\s+за\s+границ/i],
+    patterns: [/i-?131a|returning resident|carrier documentation|(lost|stolen|потерял|украли|загубив|вкрали)[\s\S]{0,30}(green ?card|грин[- ]?карт)[\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон|travel)|(green ?card|грин[- ]?карт)[\s\S]{0,30}(lost|stolen|потерял|украли)[\s\S]{0,30}(abroad|overseas|за границ|за кордон)/i],
     reason: 'Returning-resident with expired green card maps to Form I-131A.'
   },
   {
@@ -402,6 +402,17 @@ const PACKAGE_RULES = [
     reason: 'UCCJEA / interstate custody jurisdiction maps to Form FL-105.'
   },
   {
+    // Opening probate after a death → DE-111 petition (the keyword scorer was
+    // landing on DE-122 Citation for "died without a will" queries).
+    id: 'probate_open',
+    formCode: 'DE-111',
+    service: 'probate',
+    packageForms: ['DE-111', 'DE-121', 'DE-140'],
+    confidence: 0.9,
+    patterns: [/petition for probate|de-?111|(father|mother|parent|husband|wife|spouse|brother|sister|отец|мать|муж|жена|батько|мати|padre|madre|esposo|esposa)[\s\S]{0,30}(died|passed away|умер|помер|falleci)|died (with|without) a will|умер (без|с) завещани|помер (без|із) заповіт|открыть наследств|відкрити спадщин|estate of (my|the) (late|deceased)/i],
+    reason: 'Opening a decedent estate → DE-111 Petition for Probate (CA).'
+  },
+  {
     // Guardianship of a minor (by a non-parent, e.g. grandparent) or
     // conservatorship of an adult → GC series (probate), NOT family-law custody.
     // Placed before family_request_order so "опека над внуком" doesn't read as
@@ -502,6 +513,15 @@ const PACKAGE_RULES = [
 
   // ===== Small Claims / Civil =====
   {
+    id: 'sc_subpoena',
+    formCode: 'SC-107',
+    service: 'civil',
+    packageForms: ['SC-107'],
+    confidence: 0.9,
+    patterns: [/small claims subpoena|subpoena[\s\S]{0,30}(witness|small claims|hearing|trial)|(witness|свидетел|свідок|testigo)[\s\S]{0,40}(refus|won.?t come|не яв|не прид|повестк|subpoena)|вызвать свидетел|викликати свідк/i],
+    reason: 'Compelling a witness/documents in small claims → SC-107 subpoena.'
+  },
+  {
     id: 'small_claims_plaintiff',
     formCode: 'SC-100',
     service: 'civil',
@@ -590,8 +610,19 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['G-639'],
     confidence: 0.93,
-    patterns: [/foia|g-?639|freedom\s+of\s+information|uscis\s+(file|records|a-?file|alien\s+file)|copy\s+of\s+(my\s+)?(uscis|immigration)\s+(file|records)|мой\s+иммиграционн\w*\s+файл|записи\s+(uscis|иммиграц)|solicitar\s+(mi\s+)?archivo\s+uscis/i],
+    patterns: [/foia|g-?639|freedom\s+of\s+information|uscis\s+(file|records|a-?file|alien\s+file)|copy\s+of\s+(my\s+)?(uscis|immigration)\s+(file|records)|мой\s+иммиграционн\w*\s+файл|записи\s+(uscis|иммиграц)|solicitar\s+(mi\s+)?archivo\s+uscis|(request|get|copy of|запрос)[\s\S]{0,25}(my )?(immigration|uscis|иммиграцион)[\s\S]{0,15}(file|record|history|файл|дел[оа]|истори)/i],
     reason: 'FOIA / USCIS records request → Form G-639.'
+  },
+  {
+    // Gender marker / sex identifier recognition → NC-300 series (before the
+    // generic name-change rule so "gender marker" doesn't read as plain NC-100).
+    id: 'gender_recognition',
+    formCode: 'NC-300',
+    service: 'civil',
+    packageForms: ['NC-300', 'NC-125'],
+    confidence: 0.92,
+    patterns: [/gender (marker|identifier|recognition|change)|change (my )?gender|sex identifier|смен[аить]+ (пола|гендер)|гендерн|зміна статі|cambio de g[eé]nero|marcador de g[eé]nero/i],
+    reason: 'Gender/sex-identifier recognition → NC-300 series (CA).'
   },
   {
     id: 'name_change_court',
