@@ -50,9 +50,11 @@ const { kicker, heading, intro, tiles } = Astro.props as Props;
     font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
     text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 10px;
   }
+  .cat-tiles-kicker, .cat-tiles-section h2 { text-align: center; }
   .cat-tiles-section h2 { font-size: var(--fs-h2); font-weight: 700; margin-bottom: 12px; }
   .cat-tiles-section > .cat-tiles-inner > p {
     color: #3a4a5e; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 780px;
+    text-align: center; margin-left: auto; margin-right: auto;
   }
   .cat-tiles-grid {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
