@@ -1,28 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Imverica app icon — 1024×1024 source.
-  Generates iOS + Android icon sets via @capacitor/assets.
-  Brand palette: navy #1a2e4a, navy-light #2b4264, terracotta #c2603e, cream #f5f0e6.
--->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <!-- Navy background with subtle gradient -->
+  <!-- Imverica app icon: the brand scales-of-justice mark, white on navy.
+       Same geometry as the site's auth-screen logo (24x24 grid scaled). -->
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1a2e4a"/>
-      <stop offset="100%" stop-color="#2b4264"/>
+      <stop offset="0" stop-color="#16273f"/>
+      <stop offset="1" stop-color="#2a4060"/>
     </linearGradient>
   </defs>
   <rect width="1024" height="1024" fill="url(#bg)"/>
-
-  <!-- Large serif "I" monogram in cream -->
-  <text x="512" y="700"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="780"
-        font-weight="700"
-        fill="#f5f0e6"
-        text-anchor="middle"
-        font-style="italic">I</text>
-
-  <!-- Terracotta accent — thin underscore representing a document line -->
-  <rect x="392" y="800" width="240" height="14" rx="7" fill="#c2603e"/>
+  <!-- 24x24 logo grid scaled x30 and centered: offset = (1024-720)/2 = 152 -->
+  <g transform="translate(152,152) scale(30)" fill="none" stroke="#f7f4ec"
+     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v18"/>
+    <path d="M5 21h14"/>
+    <path d="M5 7l-3 5a3 3 0 0 0 6 0L5 7Z"/>
+    <path d="M19 7l-3 5a3 3 0 0 0 6 0L19 7Z"/>
+    <path d="M3 7h18"/>
+  </g>
 </svg>
