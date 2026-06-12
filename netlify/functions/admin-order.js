@@ -23,6 +23,85 @@ const CORS = {
 // Full case lifecycle (lib/case-status.js). Legacy new|in_review|ready still
 // accepted via normalizeStatus aliases.
 const { STATUSES, normalizeStatus, applyStatus } = require('./lib/case-status');
+const { decryptRecord } = require('./lib/crypto');
+
+// Keep in sync with intake.js — what was encrypted on write.
+const PII_PATHS = ['contact.name', 'contact.email', 'contact.phone', 'serviceLabel', 'situation'];
+
+// ===== Review request on completion =====
+// The moment an order is marked completed we ask the client for a Google
+// review — in their language, once per order. Fire-and-forget: never blocks
+// the status update; skips cleanly without RESEND_API_KEY.
+const REVIEW_URL = () => process.env.GOOGLE_REVIEW_URL
+  || 'https://www.google.com/search?q=Imverica+Legal+Solutions+Sacramento+reviews';
+
+const REVIEW_COPY = {
+  en: {
+    subject: 'Thank you from Imverica — one small favor?',
+    body: (name) => `${name ? name + ', t' : 'T'}hank you for trusting Imverica Legal Solutions with your documents — your order is complete.
+
+If you have one minute, a short Google review helps other families in our community find us:
+${REVIEW_URL()}
+
+Thank you!
+Imverica Legal Solutions · +1 (916) 399-3992`
+  },
+  ru: {
+    subject: 'Спасибо от Imverica — одна маленькая просьба',
+    body: (name) => `${name ? name + ', с' : 'С'}пасибо, что доверили Imverica Legal Solutions подготовку ваших документов — ваш заказ завершён.
+
+Если найдётся минута, короткий отзыв в Google помогает другим семьям из нашей общины найти нас:
+${REVIEW_URL()}
+
+Спасибо!
+Imverica Legal Solutions · +1 (916) 399-3992`
+  },
+  uk: {
+    subject: 'Дякуємо від Imverica — одне маленьке прохання',
+    body: (name) => `${name ? name + ', д' : 'Д'}якуємо, що довірили Imverica Legal Solutions підготовку ваших документів — ваше замовлення завершено.
+
+Якщо знайдеться хвилина, короткий відгук у Google допомагає іншим родинам з нашої громади знайти нас:
+${REVIEW_URL()}
+
+Дякуємо!
+Imverica Legal Solutions · +1 (916) 399-3992`
+  },
+  es: {
+    subject: 'Gracias de Imverica — ¿un pequeño favor?',
+    body: (name) => `${name ? name + ', g' : 'G'}racias por confiar sus documentos a Imverica Legal Solutions — su orden está completa.
+
+Si tiene un minuto, una breve reseña en Google ayuda a otras familias de nuestra comunidad a encontrarnos:
+${REVIEW_URL()}
+
+¡Gracias!
+Imverica Legal Solutions · +1 (916) 399-3992`
+  }
+};
+
+async function sendReviewRequest(record, event) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key || record.reviewRequestedAt) return false;
+  let contact = {};
+  try { contact = (decryptRecord({ ...record }, PII_PATHS, event) || {}).contact || {}; } catch { contact = record.contact || {}; }
+  const email = String(contact.email || '').trim();
+  if (!email || !email.includes('@')) return false;
+  const lang = ['ru', 'uk', 'es'].includes(record.language) ? record.language : 'en';
+  const t = REVIEW_COPY[lang];
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: process.env.OTP_FROM_EMAIL || 'Imverica Legal Solutions <info@imverica.com>',
+        to: [email],
+        subject: t.subject,
+        text: t.body(String(contact.name || '').split(' ')[0])
+      })
+    });
+    if (res.ok) { record.reviewRequestedAt = new Date().toISOString(); return true; }
+  } catch { /* fire-and-forget */ }
+  return false;
+}
 const ALLOWED_STATUS = STATUSES;
 
 function json(statusCode, body) {
@@ -72,7 +151,10 @@ exports.handler = async function (event) {
   const record = await readOrder(store, orderId);
   if (!record) return json(404, { ok: false, error: 'Order not found' });
 
-  if (status) applyStatus(record, status, { by: 'admin', role: 'admin', note: body.note });
+  if (status) {
+    applyStatus(record, status, { by: 'admin', role: 'admin', note: body.note });
+    if (status === 'completed') await sendReviewRequest(record, event);
+  }
   if (hasQc) {
     // QC checklist state: the list of confirmed item texts. The final-PDF
     // endpoint compares its length against the canonical checklist before
