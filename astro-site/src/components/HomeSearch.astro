@@ -237,7 +237,17 @@ const t = STRINGS[lang] || STRINGS.en;
     result.classList.toggle('open', open);
   }
 
+  // Fire-and-forget analytics beacon — never blocks or breaks the UX.
+  function logSearchEvent(type: 'search' | 'start', query: string, formCode: string, confidence: number) {
+    try {
+      const payload = JSON.stringify({ type, query: query.slice(0, 200), lang: detectLang(query), formCode, confidence });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/analytics', new Blob([payload], { type: 'application/json' }));
+      else fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(() => {});
+    } catch { /* analytics must never break search */ }
+  }
+
   function continueToWizard(query: string) {
+    logSearchEvent('start', query, '', 0);
     const opener = (window as Window & { openIntakeModal?: (prefill?: string) => void }).openIntakeModal;
     if (typeof opener === 'function') {
       opener(query);
@@ -270,6 +280,7 @@ const t = STRINGS[lang] || STRINGS.en;
     const routeData = await routePromise;
     const formCode = String(routeData?.route?.formCode || '').toUpperCase();
     const confidence = Number(routeData?.route?.confidence || 0);
+    logSearchEvent('search', query, formCode, confidence);
     const matched = FORM_NAMES[formCode];
 
     if (formCode && matched) {

@@ -77,6 +77,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/analytics"
+  to = "/.netlify/functions/analytics"
+  status = 200
+
+[[redirects]]
   from = "/api/route"
   to = "/.netlify/functions/route"
   status = 200

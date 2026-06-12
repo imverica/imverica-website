@@ -75,9 +75,11 @@ button.act.ghost{background:#fff;color:var(--navy);border:1px solid var(--border
   <div class="tabs">
     <div class="tab on" id="tab-orders" onclick="switchTab('orders')">Orders</div>
     <div class="tab" id="tab-messages" onclick="switchTab('messages')">Messages</div>
+    <div class="tab" id="tab-searches" onclick="switchTab('searches')">Searches</div>
   </div>
   <div id="view-orders"></div>
   <div id="view-messages" class="hidden"></div>
+  <div id="view-searches" class="hidden"></div>
 </div>
 
 <script>
@@ -112,9 +114,33 @@ function openConsole(){
 function switchTab(t){
   $('tab-orders').classList.toggle('on', t==='orders');
   $('tab-messages').classList.toggle('on', t==='messages');
+  $('tab-searches').classList.toggle('on', t==='searches');
   $('view-orders').classList.toggle('hidden', t!=='orders');
   $('view-messages').classList.toggle('hidden', t!=='messages');
-  if(t==='orders') loadOrders(); else loadInbox();
+  $('view-searches').classList.toggle('hidden', t!=='searches');
+  if(t==='orders') loadOrders(); else if(t==='messages') loadInbox(); else loadSearches();
+}
+
+async function loadSearches(){
+  const box=$('view-searches'); box.innerHTML='<div class="empty">Loading…</div>';
+  const r=await api('/api/analytics?days=14');
+  if(r.status!==200||!r.data.ok){ box.innerHTML='<div class="empty">Could not load analytics.</div>'; return; }
+  const sum=r.data.summary||{}; const events=r.data.events||[];
+  const forms=Object.entries(sum.byForm||{}).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  const langs=Object.entries(sum.byLang||{}).sort((a,b)=>b[1]-a[1]);
+  box.innerHTML=
+    '<div class="card"><div class="row"><div><div class="oid">Last 14 days</div>'+
+    '<div class="who">'+(sum.searches||0)+' searches · '+(sum.starts||0)+' start-clicks · conversion '+
+    ((sum.searches?Math.round(100*(sum.starts||0)/sum.searches):0))+'%</div></div></div>'+
+    '<div class="sit"><strong>Top routed forms:</strong> '+(forms.map(f=>f[0]+' ('+f[1]+')').join(' · ')||'—')+'<br>'+
+    '<strong>Languages:</strong> '+(langs.map(l=>l[0]+' ('+l[1]+')').join(' · ')||'—')+'</div></div>'+
+    events.slice(0,150).map(e=>
+      '<div class="card"><div class="row"><div>'+
+      '<div class="sit">'+esc(e.query||'')+'</div>'+
+      '<div class="muted">'+esc(e.ts?new Date(e.ts).toLocaleString():'')+' · '+esc(e.lang||'')+
+      (e.formCode?(' · → '+esc(e.formCode)):'')+(e.confidence?(' · '+Math.round(e.confidence*100)+'%'):'')+'</div>'+
+      '</div><div>'+(e.type==='start'?'<span class="badge ready">START</span>':'<span class="badge new">search</span>')+'</div></div></div>'
+    ).join('');
 }
 
 function badge(s){
