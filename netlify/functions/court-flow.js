@@ -11,40 +11,12 @@ const { getCourtSchema, listCourtSchemas } = require('./lib/ca-court-flow-schema
 const { getDirectCourtSchema } = require('./lib/ca-court-direct-schema');
 const { getSmallClaimsCatalog, getSmallClaimsForm } = require('./lib/ca-small-claims-catalog');
 const { getFamilyLawCatalog, getFamilyLawForm } = require('./lib/ca-family-law-catalog');
+const {
+  getAllCourtCatalogSummary,
+  getAllCourtForm,
+  searchAllCourtForms
+} = require('./lib/ca-all-court-catalog');
 const { sessionFromEvent } = require('./lib/session-auth');
-const path = require('path');
-
-// ===== Full statewide catalog (345 forms, ca-forms-catalog.json) =====
-// Search endpoint for the cabinet's "All California forms" mode; any form with
-// a template in the static store is preparable via the direct schema.
-let _allCatalog = null;
-function allFormsCatalog() {
-  if (_allCatalog) return _allCatalog;
-  try {
-    const raw = require(path.resolve(__dirname, '..', '..', 'assets/form-cache/ca-forms-catalog.json'));
-    _allCatalog = (raw.forms || []).map((f) => ({
-      code: f.code,
-      slug: f.slug || String(f.code || '').toLowerCase(),
-      title: String(f.title || f.code).replace(/\s*\([A-Z]+-\d+[A-Z]?\)$/, ''), // strip trailing "(FL-100)" duplicates
-      category: f.categoryName || f.category || '',
-      fieldCount: f.fieldCount || null,
-      role: 'prepare'
-    }));
-  } catch { _allCatalog = []; }
-  return _allCatalog;
-}
-function searchAllForms(query) {
-  const q = String(query || '').trim().toLowerCase();
-  const all = allFormsCatalog();
-  if (!q) return all.slice(0, 60);
-  return all.filter((f) =>
-    f.code.toLowerCase().includes(q) || f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q)
-  ).slice(0, 60);
-}
-function getAllCatalogForm(code) {
-  const c = String(code || '').trim().toUpperCase();
-  return allFormsCatalog().find((f) => f.code === c) || null;
-}
 
 const HEADERS = { 'Cache-Control': 'private, no-store' };
 
@@ -70,7 +42,12 @@ exports.handler = async function (event) {
     if (category === 'family-law') return json(200, { ok: true, ...getFamilyLawCatalog() });
     if (category === 'all') {
       const q = (event.queryStringParameters && event.queryStringParameters.q) || '';
-      return json(200, { ok: true, category: 'all', forms: searchAllForms(q), total: allFormsCatalog().length });
+      return json(200, {
+        ok: true,
+        category: 'all',
+        forms: searchAllCourtForms(q),
+        ...getAllCourtCatalogSummary()
+      });
     }
     return json(200, { ok: true, ...getSmallClaimsCatalog() });
   }
@@ -94,8 +71,15 @@ exports.handler = async function (event) {
 
   // Statewide long tail: any of the 345 cataloged Judicial Council forms with
   // a template in the static store is preparable through the direct schema.
-  const anyForm = getAllCatalogForm(code);
+  const anyForm = getAllCourtForm(code);
   if (anyForm) {
+    if (anyForm.role !== 'prepare') {
+      return json(409, {
+        ok: false,
+        error: 'This official document is reference-only or completed by the court',
+        form: anyForm
+      });
+    }
     const schema = await getDirectCourtSchema(anyForm.slug, anyForm.title);
     if (schema) return json(200, { ok: true, form: anyForm, ...schema });
   }

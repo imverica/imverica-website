@@ -52,12 +52,14 @@ included_files = [
 
 [functions."generate-court-pdf"]
 included_files = [
-  "assets/form-cache/ca-court/**"
+  "assets/form-cache/ca-court/**",
+  "assets/form-cache/ca-forms-catalog.json"
 ]
 
 [functions."court-flow"]
 included_files = [
-  "assets/form-cache/ca-court/**"
+  "assets/form-cache/ca-court/**",
+  "assets/form-cache/ca-forms-catalog.json"
 ]
 
 # Only uscis-pdf-map needs the pdf-maps directory.

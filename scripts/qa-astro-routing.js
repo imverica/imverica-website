@@ -40,6 +40,7 @@ function normalizeInternalUrl(rawUrl) {
   if (!rawUrl || rawUrl.startsWith('#')) return null;
   if (/^(tel|mailto|javascript):/i.test(rawUrl)) return null;
   if (rawUrl.startsWith('/.netlify/functions/')) return null;
+  if (rawUrl.startsWith('/api/')) return null;
   if (rawUrl.startsWith('/assets/')) return rawUrl;
   if (rawUrl.startsWith('/')) return rawUrl;
   if (rawUrl.startsWith(SITE)) return rawUrl.slice(SITE.length) || '/';

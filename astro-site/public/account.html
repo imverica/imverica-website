@@ -721,7 +721,7 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileAllCourtTitle">All CA Court Forms</div>
-      <div class="qt-sub" data-i18n="tileAllCourtSub">Search 345 Judicial Council forms</div>
+      <div class="qt-sub" data-i18n="tileAllCourtSub">Browse official forms and prepare fillable drafts</div>
     </button>
 
     <a class="qt" href="/business" aria-label="Business formation services">
@@ -1029,7 +1029,7 @@ const STRINGS = {
     tileProfileTitle: 'Profile', tileProfileSub: 'Name, phone, settings',
     tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
     tileScTitle: 'Small Claims', tileScSub: 'Prepare California court forms',
-    tileAllCourtTitle: 'All CA Court Forms', tileAllCourtSub: 'Search 345 Judicial Council forms', scTitleAll: 'All California Court Forms', scAllForms: 'Search every California Judicial Council form',
+    tileAllCourtTitle: 'All CA Court Forms', tileAllCourtSub: 'Browse official forms and prepare fillable drafts', scTitleAll: 'All California Court Forms', scAllForms: 'Official California court-form library',
     tileFlTitle: 'Family Law', tileFlSub: 'Divorce, custody & support forms',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Generate immigration PDFs',
     tileBizTitle: 'Business', tileBizSub: 'LLC, EIN, DBA & corporate filings',
@@ -1165,7 +1165,7 @@ const STRINGS = {
     tileProfileTitle: 'Профиль', tileProfileSub: 'Имя, телефон, настройки',
     tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
     tileScTitle: 'Small Claims', tileScSub: 'Формы суда малых исков California',
-    tileAllCourtTitle: 'Все формы судов CA', tileAllCourtSub: 'Поиск по 345 формам Judicial Council', scTitleAll: 'Все формы судов Калифорнии', scAllForms: 'Поиск по всем формам Judicial Council',
+    tileAllCourtTitle: 'Все формы судов CA', tileAllCourtSub: 'Официальные формы и заполняемые проекты', scTitleAll: 'Все формы судов Калифорнии', scAllForms: 'Библиотека официальных форм судов Калифорнии',
     tileFlTitle: 'Семейное право', tileFlSub: 'Развод, опека, алименты',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Генерация immigration PDF',
     tileBizTitle: 'Бизнес', tileBizSub: 'LLC, EIN, DBA и корпоративные документы',
@@ -1301,7 +1301,7 @@ const STRINGS = {
     tileProfileTitle: 'Профіль', tileProfileSub: 'Ім\'я, телефон, налаштування',
     tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
     tileScTitle: 'Small Claims', tileScSub: 'Форми суду малих позовів California',
-    tileAllCourtTitle: 'Усі форми судів CA', tileAllCourtSub: 'Пошук серед 345 форм Judicial Council', scTitleAll: 'Усі форми судів Каліфорнії', scAllForms: 'Пошук серед усіх форм Judicial Council',
+    tileAllCourtTitle: 'Усі форми судів CA', tileAllCourtSub: 'Офіційні форми та заповнювані проєкти', scTitleAll: 'Усі форми судів Каліфорнії', scAllForms: 'Бібліотека офіційних форм судів Каліфорнії',
     tileFlTitle: 'Сімейне право', tileFlSub: 'Розлучення, опіка, аліменти',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Генерація immigration PDF',
     tileBizTitle: 'Бізнес', tileBizSub: 'LLC, EIN, DBA та корпоративні документи',
@@ -1437,7 +1437,7 @@ const STRINGS = {
     tileProfileTitle: 'Perfil', tileProfileSub: 'Nombre, teléfono, ajustes',
     tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
     tileScTitle: 'Small Claims', tileScSub: 'Prepare formularios judiciales de California',
-    tileAllCourtTitle: 'Todos los formularios CA', tileAllCourtSub: 'Busque 345 formularios del Judicial Council', scTitleAll: 'Todos los formularios de cortes de California', scAllForms: 'Busque cualquier formulario del Judicial Council',
+    tileAllCourtTitle: 'Todos los formularios CA', tileAllCourtSub: 'Formularios oficiales y borradores rellenables', scTitleAll: 'Todos los formularios de cortes de California', scAllForms: 'Biblioteca oficial de formularios judiciales de California',
     tileFlTitle: 'Derecho Familiar', tileFlSub: 'Divorcio, custodia y manutención',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Generar PDFs migratorios',
     tileBizTitle: 'Negocios', tileBizSub: 'LLC, EIN, DBA y trámites corporativos',
@@ -2467,7 +2467,9 @@ function openAllCourtFormsWizard(){ return openSmallClaimsWizard('all'); }
 let allFormsSearchTimer = null;
 function renderAllFormsSearch(){
   smallClaimsState.stage = 'forms';
-  setSmallClaimsProgress((T.scAllForms || 'Search every California Judicial Council form') + ' · ' + (smallClaimsState.catalog.total || ''));
+  setSmallClaimsProgress((T.scAllForms || 'Official California court-form library') + ' · ' +
+    (smallClaimsState.catalog.preparableCount || 0) + ' ' + scRoleLabel('prepare') + ' · ' +
+    (smallClaimsState.catalog.referenceCount || 0) + ' ' + scRoleLabel('info'));
   setSmallClaimsFooter(false, false);
   document.getElementById('sc-body').innerHTML =
     '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div>' +
@@ -2487,9 +2489,10 @@ function renderAllFormsGrid(forms){
   if (!grid) return;
   grid.innerHTML = forms.map(function(form){
     return '<button class="sc-choice" type="button" onclick="chooseSmallClaimsForm(\'' + scAttr(form.code) + '\')">' +
-      '<div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill prepare">' + escText(scRoleLabel('prepare')) + '</span>' +
+      '<div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill ' + scAttr(form.role) + '">' + escText(scRoleLabel(form.role)) + '</span>' +
       (form.category ? '<span class="sc-pill info">' + escText(form.category) + '</span>' : '') + '</div>' +
       '<div class="sc-choice-title">' + escText(form.title) + '</div>' +
+      (form.description ? '<div class="sc-choice-sub">' + escText(form.description) + '</div>' : '') +
     '</button>';
   }).join('') || '<div class="md-empty">' + escText(T.uscisNoMatches || 'No matches') + '</div>';
 }
@@ -2604,7 +2607,7 @@ async function generateSmallClaimsPdf(){
       name: fileName,
       formCode: smallClaimsState.form.code,
       title: smallClaimsState.form.title || '',
-      category: smallClaimsState.category === 'family-law' ? 'family-law' : 'small-claims'
+      category: smallClaimsState.category === 'family-law' ? 'family-law' : (smallClaimsState.category === 'all' ? 'california-court' : 'small-claims')
     });
     setSmallClaimsStatus('ok', T.scReady);
   } catch(e) {

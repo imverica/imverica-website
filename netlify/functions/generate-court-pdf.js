@@ -29,6 +29,7 @@ const { loadCourtTemplate } = require('./lib/ca-court-template');
 const { sanitizeDirectFields } = require('./lib/ca-court-direct-schema');
 const { getSmallClaimsForm, listPreparableSmallClaimsSlugs } = require('./lib/ca-small-claims-catalog');
 const { getFamilyLawForm, listPreparableFamilyLawSlugs } = require('./lib/ca-family-law-catalog');
+const { getAllCourtForm } = require('./lib/ca-all-court-catalog');
 const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 const { sessionFromEvent } = require('./lib/session-auth');
 
@@ -71,7 +72,7 @@ exports.handler = async function (event) {
 
     // Catalog form = a small-claims OR family-law form filled via raw
     // direct fields (SC- and FL- codes never collide).
-    const catalogForm = getSmallClaimsForm(formCode) || getFamilyLawForm(formCode);
+    const catalogForm = getSmallClaimsForm(formCode) || getFamilyLawForm(formCode) || getAllCourtForm(formCode);
     const directMode = payload.directFields && typeof payload.directFields === 'object';
     let slug;
     let fieldValues;
@@ -87,7 +88,7 @@ exports.handler = async function (event) {
           role: catalogForm.role
         });
       }
-      slug = catalogForm.code.toLowerCase();
+      slug = catalogForm.slug || catalogForm.code.toLowerCase();
       fieldValues = await sanitizeDirectFields(slug, payload.directFields);
     } else {
       const entry = getBuilder(formCode);
@@ -116,15 +117,27 @@ exports.handler = async function (event) {
       ? await fillAndFlattenCourtForm(inputPdf, fieldValues)
       : await fillCourtForm(inputPdf, fieldValues);
 
-    console.log('COURT PDF RESULT', {
-      formCode: slug,
-      account: session.email,
-      mode: directMode ? 'direct' : 'mapped',
-      mapped: Object.keys(fieldValues).length,
-      filled: result.filled.length,
-      skipped: result.skipped.length,
-      flattened: Boolean(result.flattened)
-    });
+    if (result.skipped.length || result.filled.length !== Object.keys(fieldValues).length) {
+      return json(422, {
+        error: 'Some PDF fields could not be filled',
+        formCode: slug,
+        filled: result.filled.length,
+        expected: Object.keys(fieldValues).length,
+        skipped: result.skipped.slice(0, 20)
+      });
+    }
+
+    if (process.env.COURT_PDF_QA !== '1') {
+      console.log('COURT PDF RESULT', {
+        formCode: slug,
+        account: session.email,
+        mode: directMode ? 'direct' : 'mapped',
+        mapped: Object.keys(fieldValues).length,
+        filled: result.filled.length,
+        skipped: result.skipped.length,
+        flattened: Boolean(result.flattened)
+      });
+    }
 
     return {
       statusCode: 200,

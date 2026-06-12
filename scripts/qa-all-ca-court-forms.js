@@ -2,6 +2,7 @@
 'use strict';
 
 process.env.SESSION_SECRET = process.env.SESSION_SECRET || 'all-ca-court-form-qa-secret';
+process.env.COURT_PDF_QA = '1';
 
 const crypto = require('crypto');
 const fs = require('fs');
@@ -9,6 +10,7 @@ const path = require('path');
 const {
   PDFCheckBox,
   PDFDocument,
+  PDFDropdown,
   PDFRadioGroup,
   PDFTextField
 } = require('pdf-lib');
@@ -22,6 +24,12 @@ const {
   listPreparableSmallClaimsSlugs
 } = require('../netlify/functions/lib/ca-small-claims-catalog');
 const { listPreparableFamilyLawSlugs } = require('../netlify/functions/lib/ca-family-law-catalog');
+const {
+  getAllCourtCatalogSummary,
+  listAllCourtForms,
+  listPreparableAllCourtForms
+} = require('../netlify/functions/lib/ca-all-court-catalog');
+const { findCourtTemplate } = require('../netlify/functions/lib/ca-court-template');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANIFEST = require('../assets/form-cache/ca-court-manifest.json');
@@ -60,6 +68,9 @@ function rawAnswers(schema) {
 function forbiddenWizardField(field) {
   const value = `${field.id} ${field.label}`;
   return /\.(Order|CrtOrder|Clerk|ClerkCertificate|Judge|JudicialOfficer|CourtUse|CourtOnly|ClerkUse)\[\d+\]/i.test(field.id) ||
+    /(?:^|\.)(?:Clerk|Clert)(?:Sub|Cert|Certificate|Signature|Sig|Name|Date)?(?:\[|\.|$)/i.test(field.id) ||
+    /(?:^|\.)(?:JudgeSign|JudgeSignature(?:Date)?|JudicialOfficer|HearingJudge|NameOfJudicialOfficer|Temp_Judge)(?:\[|\.|$)/i.test(field.id) ||
+    /(?:DateClerkSig|ClerkSignature|ClerkCertificate|ClerkName|JudgeSignatureDate)/i.test(field.id) ||
     /^(clerk\s*,?\s*by|judge|judicial officer|trial date|trial time|trial department|date mailed by clerk)\b/i.test(field.label) ||
     /\bclerk\s+to\s+(?:insert|complete)\b/i.test(value);
 }
@@ -113,8 +124,8 @@ async function verifyTemplate(record) {
   }
 }
 
-async function verifyDirectForm(slug) {
-  const code = slug.toUpperCase();
+async function verifyDirectForm(form) {
+  const { code, slug } = form;
   try {
     const schema = await getDirectCourtSchema(slug, code);
     const fields = schema.steps.flatMap((step) => step.fields || []);
@@ -137,7 +148,23 @@ async function verifyDirectForm(slug) {
     if (generated.statusCode !== 200 || !generated.isBase64Encoded || pdf.subarray(0, 5).toString('latin1') !== '%PDF-') {
       throw new Error(`generation status=${generated.statusCode}`);
     }
-    ok(`${code}: wizard ${fields.length} fields, full sanitize + full endpoint PDF`);
+
+    const output = await PDFDocument.load(pdf, { ignoreEncryption: true });
+    const outputForm = output.getForm();
+    let readback = false;
+    for (const [name, value] of Object.entries(sanitized)) {
+      try {
+        const outputField = outputForm.getField(name);
+        if (outputField instanceof PDFTextField && outputField.getText() === String(value)) readback = true;
+        else if (outputField instanceof PDFCheckBox && outputField.isChecked() === Boolean(value)) readback = true;
+        else if (outputField instanceof PDFRadioGroup && outputField.getSelected() === value.radio) readback = true;
+        else if (outputField instanceof PDFDropdown && outputField.getSelected().includes(value.dropdown)) readback = true;
+      } catch {}
+      if (readback) break;
+    }
+    if (!readback) throw new Error('generated values did not survive PDF reload');
+
+    ok(`${code}: ${fields.length} wizard fields → full endpoint PDF → readback`);
   } catch (error) {
     bad(`${code}: ${error.message}`);
   }
@@ -161,9 +188,28 @@ async function main() {
   if (directSlugs.length === 49) ok('49 cabinet wizard forms registered');
   else bad(`expected 49 cabinet wizard forms, got ${directSlugs.length}`);
 
+  const allForms = listAllCourtForms();
+  const preparableForms = listPreparableAllCourtForms();
+  const summary = getAllCourtCatalogSummary();
+  if (summary.total === 345 && allForms.length === 345) ok('statewide catalog contains 345 unique official forms');
+  else bad(`expected 345 statewide forms, got ${summary.total}/${allForms.length}`);
+  if (summary.preparableCount === preparableForms.length && summary.preparableCount + summary.referenceCount === summary.total) {
+    ok(`${summary.preparableCount} preparable + ${summary.referenceCount} reference/court forms classified`);
+  } else {
+    bad('statewide role totals are inconsistent');
+  }
+
+  const missingTemplates = allForms.filter((form) => !findCourtTemplate(form.slug));
+  if (!missingTemplates.length) ok('every statewide catalog entry has a deployed PDF template');
+  else bad(`missing statewide templates: ${missingTemplates.map((form) => form.code).join(', ')}`);
+
   for (const record of MANIFEST.forms) await verifyTemplate(record);
-  for (const slug of directSlugs) await verifyDirectForm(slug);
-  for (const form of getSmallClaimsCatalog().forms.filter((entry) => entry.role !== 'prepare')) await verifyBlockedForm(form);
+  for (const form of preparableForms) await verifyDirectForm(form);
+
+  const blocked = new Map();
+  for (const form of allForms.filter((entry) => entry.role !== 'prepare')) blocked.set(form.code, form);
+  for (const form of getSmallClaimsCatalog().forms.filter((entry) => entry.role !== 'prepare')) blocked.set(form.code, form);
+  for (const form of blocked.values()) await verifyBlockedForm(form);
 
   console.log(`\n=== Passed: ${pass}   Failed: ${fail} ===\n`);
   process.exit(fail ? 1 : 0);

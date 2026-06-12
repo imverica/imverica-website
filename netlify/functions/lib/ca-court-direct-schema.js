@@ -51,6 +51,9 @@ function isCourtOnlyField(name, label, slug) {
   const path = String(name);
   const text = String(label);
   if (/\.(Order|CrtOrder|Clerk|ClerkCertificate|Judge|JudicialOfficer|CourtUse|CourtOnly|ClerkUse)\[\d+\]/i.test(path)) return true;
+  if (/(?:^|\.)(?:Clerk|Clert)(?:Sub|Cert|Certificate|Signature|Sig|Name|Date)?(?:\[|\.|$)/i.test(path)) return true;
+  if (/(?:^|\.)(?:JudgeSign|JudgeSignature(?:Date)?|JudicialOfficer|HearingJudge|NameOfJudicialOfficer|Temp_Judge)(?:\[|\.|$)/i.test(path)) return true;
+  if (/(?:DateClerkSig|ClerkSignature|ClerkCertificate|ClerkName|JudgeSignatureDate)/i.test(path)) return true;
   if ((FORM_SPECIFIC_COURT_ONLY[slug] || []).some((pattern) => pattern.test(path))) return true;
   return /^(clerk\s*,?\s*by|judge|judicial officer|trial date|trial time|trial department|date mailed by clerk)\b/i.test(text) ||
     /\bclerk\s+to\s+(?:insert|complete)\b/i.test(text);
