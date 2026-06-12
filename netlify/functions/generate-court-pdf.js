@@ -25,7 +25,7 @@ const fs = require('fs');
 
 const { fillCourtForm, fillAndFlattenCourtForm } = require('./lib/ca-court-fill');
 const { getBuilder, listForms } = require('./lib/ca-court-registry');
-const { findCourtTemplate } = require('./lib/ca-court-template');
+const { loadCourtTemplate } = require('./lib/ca-court-template');
 const { sanitizeDirectFields } = require('./lib/ca-court-direct-schema');
 const { getSmallClaimsForm, listPreparableSmallClaimsSlugs } = require('./lib/ca-small-claims-catalog');
 const { getFamilyLawForm, listPreparableFamilyLawSlugs } = require('./lib/ca-family-law-catalog');
@@ -102,8 +102,8 @@ exports.handler = async function (event) {
       fieldValues = entry.build(payload);
     }
 
-    const templatePath = findCourtTemplate(slug);
-    if (!templatePath) {
+    const inputPdf = await loadCourtTemplate(slug);
+    if (!inputPdf) {
       return json(404, { error: 'Decrypted template not found', formCode: slug });
     }
 
@@ -111,7 +111,6 @@ exports.handler = async function (event) {
       return json(422, { error: 'No fields could be filled from the provided answers', formCode: slug });
     }
 
-    const inputPdf = fs.readFileSync(templatePath);
     const flatten = payload.flatten === true;
     const result = flatten
       ? await fillAndFlattenCourtForm(inputPdf, fieldValues)

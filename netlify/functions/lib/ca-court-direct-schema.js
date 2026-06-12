@@ -12,7 +12,7 @@ const {
   PDFSignature,
   PDFTextField
 } = require('pdf-lib');
-const { findCourtTemplate } = require('./ca-court-template');
+const { loadCourtTemplate } = require('./ca-court-template');
 
 const CACHE = new Map();
 
@@ -98,10 +98,12 @@ function directField(field, slug) {
 
 async function getDirectCourtSchema(slug, title) {
   if (CACHE.has(slug)) return CACHE.get(slug);
-  const templatePath = findCourtTemplate(slug);
-  if (!templatePath) return null;
+  // Buffer-based loader: bundled file when present, static /ca-templates/
+  // HTTP store for the long tail (full set exceeds the function size limit).
+  const templateBuffer = await loadCourtTemplate(slug);
+  if (!templateBuffer) return null;
 
-  const document = await PDFDocument.load(fs.readFileSync(templatePath), { ignoreEncryption: true });
+  const document = await PDFDocument.load(templateBuffer, { ignoreEncryption: true });
   const fields = document.getForm().getFields().map((field) => directField(field, slug)).filter(Boolean);
   const pages = [...new Set(fields.map((field) => field.page))].sort((a, b) => a - b);
   const schema = {

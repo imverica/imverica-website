@@ -716,6 +716,14 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <div class="qt-sub" data-i18n="tileUscisSub">Generate immigration PDFs</div>
     </button>
 
+    <button class="qt" type="button" onclick="openAllCourtFormsWizard()" aria-label="All California court forms">
+      <div class="qt-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </div>
+      <div class="qt-title" data-i18n="tileAllCourtTitle">All CA Court Forms</div>
+      <div class="qt-sub" data-i18n="tileAllCourtSub">Search 345 Judicial Council forms</div>
+    </button>
+
     <a class="qt" href="/business" aria-label="Business formation services">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>
@@ -1021,6 +1029,7 @@ const STRINGS = {
     tileProfileTitle: 'Profile', tileProfileSub: 'Name, phone, settings',
     tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
     tileScTitle: 'Small Claims', tileScSub: 'Prepare California court forms',
+    tileAllCourtTitle: 'All CA Court Forms', tileAllCourtSub: 'Search 345 Judicial Council forms', scTitleAll: 'All California Court Forms', scAllForms: 'Search every California Judicial Council form',
     tileFlTitle: 'Family Law', tileFlSub: 'Divorce, custody & support forms',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Generate immigration PDFs',
     tileBizTitle: 'Business', tileBizSub: 'LLC, EIN, DBA & corporate filings',
@@ -1156,6 +1165,7 @@ const STRINGS = {
     tileProfileTitle: 'Профиль', tileProfileSub: 'Имя, телефон, настройки',
     tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
     tileScTitle: 'Small Claims', tileScSub: 'Формы суда малых исков California',
+    tileAllCourtTitle: 'Все формы судов CA', tileAllCourtSub: 'Поиск по 345 формам Judicial Council', scTitleAll: 'Все формы судов Калифорнии', scAllForms: 'Поиск по всем формам Judicial Council',
     tileFlTitle: 'Семейное право', tileFlSub: 'Развод, опека, алименты',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Генерация immigration PDF',
     tileBizTitle: 'Бизнес', tileBizSub: 'LLC, EIN, DBA и корпоративные документы',
@@ -1291,6 +1301,7 @@ const STRINGS = {
     tileProfileTitle: 'Профіль', tileProfileSub: 'Ім\'я, телефон, налаштування',
     tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
     tileScTitle: 'Small Claims', tileScSub: 'Форми суду малих позовів California',
+    tileAllCourtTitle: 'Усі форми судів CA', tileAllCourtSub: 'Пошук серед 345 форм Judicial Council', scTitleAll: 'Усі форми судів Каліфорнії', scAllForms: 'Пошук серед усіх форм Judicial Council',
     tileFlTitle: 'Сімейне право', tileFlSub: 'Розлучення, опіка, аліменти',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Генерація immigration PDF',
     tileBizTitle: 'Бізнес', tileBizSub: 'LLC, EIN, DBA та корпоративні документи',
@@ -1426,6 +1437,7 @@ const STRINGS = {
     tileProfileTitle: 'Perfil', tileProfileSub: 'Nombre, teléfono, ajustes',
     tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
     tileScTitle: 'Small Claims', tileScSub: 'Prepare formularios judiciales de California',
+    tileAllCourtTitle: 'Todos los formularios CA', tileAllCourtSub: 'Busque 345 formularios del Judicial Council', scTitleAll: 'Todos los formularios de cortes de California', scAllForms: 'Busque cualquier formulario del Judicial Council',
     tileFlTitle: 'Derecho Familiar', tileFlSub: 'Divorcio, custodia y manutención',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Generar PDFs migratorios',
     tileBizTitle: 'Negocios', tileBizSub: 'LLC, EIN, DBA y trámites corporativos',
@@ -2281,11 +2293,13 @@ function setSmallClaimsTitle(){
   if (!titleEl) return;
   titleEl.textContent = smallClaimsState.category === 'family-law'
     ? (T.scTitleFamily || 'California Family Law')
-    : (T.scTitle || 'California Small Claims');
+    : smallClaimsState.category === 'all'
+      ? (T.scTitleAll || 'All California Court Forms')
+      : (T.scTitle || 'California Small Claims');
 }
 
 async function openSmallClaimsWizard(category){
-  smallClaimsState.category = category === 'family-law' ? 'family-law' : '';
+  smallClaimsState.category = category === 'family-law' ? 'family-law' : (category === 'all' ? 'all' : '');
   setSmallClaimsTitle();
   const overlay = document.getElementById('sc-overlay');
   overlay.classList.remove('hidden');
@@ -2294,7 +2308,7 @@ async function openSmallClaimsWizard(category){
   const cached = smallClaimsState.catalogs[smallClaimsState.category];
   if (cached) {
     smallClaimsState.catalog = cached;
-    renderSmallClaimsTasks();
+    if (smallClaimsState.category === 'all') renderAllFormsSearch(); else renderSmallClaimsTasks();
     return;
   }
   setSmallClaimsProgress(T.scChooseTask);
@@ -2312,7 +2326,7 @@ async function openSmallClaimsWizard(category){
     if (!response.ok || !data.ok) throw new Error(data.error || 'load failed');
     smallClaimsState.catalogs[smallClaimsState.category] = data;
     smallClaimsState.catalog = data;
-    renderSmallClaimsTasks();
+    if (smallClaimsState.category === 'all') renderAllFormsSearch(); else renderSmallClaimsTasks();
   } catch(e) {
     document.getElementById('sc-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.scLoadFail) + '</div>';
   }
@@ -2447,19 +2461,66 @@ function collectSmallClaimsPage(){
   });
 }
 
+// ===== "All California forms" mode — searchable 345-form catalog =====
+function openAllCourtFormsWizard(){ return openSmallClaimsWizard('all'); }
+
+let allFormsSearchTimer = null;
+function renderAllFormsSearch(){
+  smallClaimsState.stage = 'forms';
+  setSmallClaimsProgress((T.scAllForms || 'Search every California Judicial Council form') + ' · ' + (smallClaimsState.catalog.total || ''));
+  setSmallClaimsFooter(false, false);
+  document.getElementById('sc-body').innerHTML =
+    '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div>' +
+    '<div class="uscis-list-head"><h4>' + escText(T.scAllForms || 'All California court forms') + '</h4>' +
+    '<input class="uscis-search" id="all-forms-q" type="search" placeholder="' + scAttr(T.uscisSearchPh || 'Search…') + '"></div>' +
+    '<div class="sc-grid" id="all-forms-grid"></div>';
+  document.getElementById('all-forms-q').addEventListener('input', function(){
+    clearTimeout(allFormsSearchTimer);
+    const q = this.value;
+    allFormsSearchTimer = setTimeout(function(){ fetchAllForms(q); }, 250);
+  });
+  renderAllFormsGrid(smallClaimsState.catalog.forms || []);
+}
+
+function renderAllFormsGrid(forms){
+  const grid = document.getElementById('all-forms-grid');
+  if (!grid) return;
+  grid.innerHTML = forms.map(function(form){
+    return '<button class="sc-choice" type="button" onclick="chooseSmallClaimsForm(\'' + scAttr(form.code) + '\')">' +
+      '<div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill prepare">' + escText(scRoleLabel('prepare')) + '</span>' +
+      (form.category ? '<span class="sc-pill info">' + escText(form.category) + '</span>' : '') + '</div>' +
+      '<div class="sc-choice-title">' + escText(form.title) + '</div>' +
+    '</button>';
+  }).join('') || '<div class="md-empty">' + escText(T.uscisNoMatches || 'No matches') + '</div>';
+}
+
+async function fetchAllForms(q){
+  try {
+    const r = await fetch('/api/court-flow?category=all&q=' + encodeURIComponent(q || ''), { credentials:'include', headers:{Accept:'application/json'} });
+    const data = await r.json();
+    if (r.ok && data.ok) {
+      smallClaimsState.catalog.forms = data.forms || [];
+      renderAllFormsGrid(smallClaimsState.catalog.forms);
+    }
+  } catch(e) { /* keep current grid */ }
+}
+
 function smallClaimsBack(){
   if (smallClaimsState.stage === 'fields') {
     collectSmallClaimsPage();
     if (smallClaimsState.pageIndex > 0) {
       smallClaimsState.pageIndex -= 1;
       renderSmallClaimsFields();
+    } else if (smallClaimsState.category === 'all') {
+      renderAllFormsSearch();
+      return;
     } else {
       chooseSmallClaimsTask(smallClaimsState.taskId);
     }
     return;
   }
   if (smallClaimsState.stage === 'forms' || smallClaimsState.stage === 'loading') {
-    renderSmallClaimsTasks();
+    if (smallClaimsState.category === 'all') renderAllFormsSearch(); else renderSmallClaimsTasks();
     return;
   }
   if (smallClaimsState.stage === 'reference') chooseSmallClaimsTask(smallClaimsState.taskId);
