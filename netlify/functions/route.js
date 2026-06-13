@@ -856,6 +856,163 @@ function findByCode(code) {
   return allForms().find((row) => row.code === code);
 }
 
+// ---- Local (non-Judicial-Council) county form lookup ---------------------
+// Public-search fallback: recognise a LOCAL county Superior Court form code
+// (e.g. LASC-ADM-080, CVE-100, AC014) that has no statewide catalog entry.
+// Loaded from the compact code index, normalised (strip non-alphanumerics) so
+// "lasc adm 080" and "LASC-ADM-080" both resolve.
+const LOCAL_CODE_INDEX = require('../../assets/form-cache/ca-local-court-code-index.json');
+const NORMALIZED_LOCAL_CODES = (() => {
+  const map = new Map();
+  for (const [code, entries] of Object.entries(LOCAL_CODE_INDEX.codes || {})) {
+    const key = code.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (key.length >= 4) map.set(key, { code, entries });
+  }
+  return map;
+})();
+
+const LOCAL_COUNTIES = (() => {
+  const counties = new Map();
+  for (const entries of Object.values(LOCAL_CODE_INDEX.codes || {})) {
+    for (const entry of entries || []) {
+      if (!entry.county || !entry.countySlug) continue;
+      counties.set(entry.countySlug, { name: entry.county, slug: entry.countySlug });
+    }
+  }
+  return [...counties.values()].sort((a, b) => a.name.localeCompare(b.name));
+})();
+const LOCAL_COUNTY_BY_SLUG = new Map(LOCAL_COUNTIES.map((county) => [county.slug, county]));
+const COUNTY_ALIASES = new Map([
+  ['la', 'los-angeles'],
+  ['l-a', 'los-angeles'],
+  ['sf', 'san-francisco'],
+  ['s-f', 'san-francisco'],
+  ['oc', 'orange'],
+  ['o-c', 'orange']
+]);
+
+function normalizeCounty(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/\bcounty\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function resolveCounty(value) {
+  const slug = normalizeCounty(value);
+  if (!slug) return null;
+  return LOCAL_COUNTY_BY_SLUG.get(slug) || LOCAL_COUNTY_BY_SLUG.get(COUNTY_ALIASES.get(slug)) || null;
+}
+
+function countyFromQuery(query) {
+  const normalized = ` ${normalizeText(query).replace(/[^a-z0-9]+/g, ' ')} `;
+  for (const county of [...LOCAL_COUNTIES].sort((a, b) => b.name.length - a.name.length)) {
+    const name = county.name.toLowerCase().replace(/[^a-z0-9]+/g, ' ');
+    if (normalized.includes(` ${name} county `) || normalized.includes(` ${name} `)) return county;
+  }
+  const aliasMatch = normalized.match(/\b(?:la|l a|sf|s f|oc|o c)\s+county\b/);
+  return aliasMatch ? resolveCounty(aliasMatch[0]) : null;
+}
+
+function findLocalByCode(originalQuery) {
+  // Candidate tokens look like a form code: a letter-led run that contains at
+  // least one digit, length >= 4 after normalising. Avoids matching words.
+  const tokens = String(originalQuery || '').toUpperCase().match(/[A-Z][A-Z0-9-]{3,}/g) || [];
+  for (const token of tokens) {
+    const key = token.replace(/[^A-Z0-9]/g, '');
+    if (key.length < 4 || !/[0-9]/.test(key)) continue;
+    const hit = NORMALIZED_LOCAL_CODES.get(key);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+function routeFromLocalForm(hit, lang, requestedCounty) {
+  const entries = hit.entries || [];
+  const counties = [...new Set(entries.map((e) => e.county))];
+  const county = resolveCounty(requestedCounty);
+  const matching = county ? entries.filter((entry) => entry.countySlug === county.slug) : [];
+  const preferred = (matching.length ? matching : entries).find((entry) => entry.role === 'prepare') || matching[0] || entries[0];
+  const countyMismatch = Boolean(county && !matching.length);
+  return {
+    service: 'civil',
+    catalog: 'ca-local-court',
+    scope: 'local',
+    county: county ? county.name : '',
+    countySlug: county ? county.slug : '',
+    counties,
+    countyMismatch,
+    needsCounty: !county || countyMismatch,
+    jurisdiction: county ? `Superior Court of California, County of ${county.name}` : 'California Superior Court — county required',
+    formCode: hit.code,
+    formTitle: preferred.title,
+    localFormId: countyMismatch || !county ? '' : preferred.id,
+    officialEndpoint: '',
+    flowEndpoint: '/api/court-flow',
+    flowStatus: countyMismatch ? 'county-mismatch' : (!county ? 'awaiting-county' : (preferred.role === 'prepare' ? 'schema-ready' : 'reference-only')),
+    packageForms: [hit.code],
+    confidence: 0.95,
+    reason: countyMismatch
+      ? `${hit.code} is not listed by ${county.name} County. It is listed by: ${counties.join(', ')}.`
+      : (county
+        ? `Local ${county.name} County Superior Court form.`
+        : `A filing county is required before selecting the local ${hit.code} form.`)
+  };
+}
+
+const CALIFORNIA_COURT_SERVICES = new Set(['family', 'civil', 'ud', 'restraining', 'probate']);
+const CALIFORNIA_COURT_QUERY = /\b(?:california|court|small claims?|divorc|custody|support|probate|estate|evict|unlawful detainer|restraining|expung|dismissal|record clean|суд|иск|развод|опек|алим|наслед|выселен|ордер|судимост|позов|розлуч|спадщин|виселен|tribunal|reclamos menores|divorcio|custodia|desalojo|sucesi[oó]n)\b/i;
+
+function requiresCaliforniaCourtCounty(route) {
+  return Boolean(route && (route.catalog === 'ca-local-court' || CALIFORNIA_COURT_SERVICES.has(route.service)));
+}
+
+function finalizeCountyRoute(result, originalQuery, requestedCounty) {
+  if (!result || !result.ok || !result.route) return result;
+  if (!requiresCaliforniaCourtCounty(result.route)) return { ...result, needsCounty: false };
+
+  if (result.route.catalog === 'ca-local-court') {
+    const county = resolveCounty(requestedCounty) || countyFromQuery(originalQuery);
+    const hit = findLocalByCode(originalQuery);
+    const route = hit ? routeFromLocalForm(hit, result.language, county && county.slug) : result.route;
+    return {
+      ...result,
+      needsCounty: Boolean(route.needsCounty),
+      county: county || null,
+      counties: LOCAL_COUNTIES,
+      availableCounties: route.counties || [],
+      countyMismatch: Boolean(route.countyMismatch),
+      route
+    };
+  }
+
+  const county = resolveCounty(requestedCounty) || countyFromQuery(originalQuery);
+  if (!county) {
+    return {
+      ...result,
+      needsCounty: true,
+      county: null,
+      counties: LOCAL_COUNTIES,
+      route: { ...result.route, needsCounty: true }
+    };
+  }
+
+  return {
+    ...result,
+    needsCounty: false,
+    county,
+    counties: LOCAL_COUNTIES,
+    route: {
+      ...result.route,
+      needsCounty: false,
+      county: county.name,
+      countySlug: county.slug,
+      jurisdiction: `Superior Court of California, County of ${county.name}`
+    }
+  };
+}
+
 // Build a route object for a rule whose formCode is intentionally NOT in
 // any catalog JSON — business filings (LLC-1, FBN, EIN, …), EOIR motions
 // and landing-page targets (DEMAND-LETTER, OPERATING-AGREEMENT). Keeps
@@ -914,7 +1071,7 @@ function scoreCatalogMatch(row, query, lang) {
   return score;
 }
 
-function routeQuery(queryValue) {
+function routeQuery(queryValue, options = {}) {
   const originalQuery = String(queryValue || '').trim();
   const query = normalizeText(originalQuery);
   const lang = detectLanguage(originalQuery);
@@ -924,38 +1081,52 @@ function routeQuery(queryValue) {
   if (codeMatch) {
     const row = findByCode(normalizeCode(codeMatch[0]));
     if (row) {
-      return {
+      return finalizeCountyRoute({
         ok: true,
         query: originalQuery,
         language: lang,
         route: routeFromForm(row, lang, 0.99, 'Direct form code match.')
-      };
+      }, originalQuery, options.county);
     }
+  }
+
+  // An explicit county-local code must beat generic keyword scoring. Without
+  // this priority, words such as "request copies" can incorrectly route a
+  // local LASC form to an unrelated USCIS records form.
+  const explicitLocalHit = findLocalByCode(originalQuery);
+  if (explicitLocalHit) {
+    const county = resolveCounty(options.county) || countyFromQuery(originalQuery);
+    return finalizeCountyRoute({
+      ok: true,
+      query: originalQuery,
+      language: lang,
+      route: routeFromLocalForm(explicitLocalHit, lang, county && county.slug)
+    }, originalQuery, options.county);
   }
 
   for (const rule of PACKAGE_RULES) {
     if (rule.patterns.some((pattern) => pattern.test(originalQuery) || pattern.test(query))) {
       const row = findByCode(rule.formCode);
       if (row) {
-        return {
+        return finalizeCountyRoute({
           ok: true,
           query: originalQuery,
           language: lang,
           route: routeFromForm(row, lang, rule.confidence, rule.reason, rule.packageForms),
           packageRule: rule.id
-        };
+        }, originalQuery, options.county);
       }
       // Catalog miss — synthesize a route from the rule itself so business
       // filings (LLC-1, FBN, EIN), EOIR motions and landing-page targets
       // (demand-letter, operating-agreement) don't silently fall through
       // to a low-confidence catalog match.
-      return {
+      return finalizeCountyRoute({
         ok: true,
         query: originalQuery,
         language: lang,
         route: synthesizeRouteFromRule(rule, lang),
         packageRule: rule.id
-      };
+      }, originalQuery, options.county);
     }
   }
 
@@ -966,12 +1137,53 @@ function routeQuery(queryValue) {
 
   if (scored[0]) {
     const confidence = Math.min(0.88, Math.max(0.45, scored[0].score / 120));
-    return {
+    return finalizeCountyRoute({
       ok: true,
       query: originalQuery,
       language: lang,
       route: routeFromForm(scored[0].row, lang, Number(confidence.toFixed(2)), 'Best catalog keyword match.'),
       alternatives: scored.slice(1, 4).map((item) => routeFromForm(item.row, lang, Number(Math.min(0.7, item.score / 140).toFixed(2)), 'Alternative catalog match.'))
+    }, originalQuery, options.county);
+  }
+
+  // Fallback: an explicit LOCAL county form code that no statewide rule or
+  // catalog matched. Fires only here, so statewide/USCIS routing is untouched.
+  const localHit = findLocalByCode(originalQuery);
+  if (localHit) {
+    const county = resolveCounty(options.county) || countyFromQuery(originalQuery);
+    return finalizeCountyRoute({
+      ok: true,
+      query: originalQuery,
+      language: lang,
+      route: routeFromLocalForm(localHit, lang, county && county.slug)
+    }, originalQuery, options.county);
+  }
+
+  if (CALIFORNIA_COURT_QUERY.test(originalQuery)) {
+    const county = resolveCounty(options.county) || countyFromQuery(originalQuery);
+    return {
+      ok: true,
+      query: originalQuery,
+      language: lang,
+      needsCounty: !county,
+      county: county || null,
+      counties: LOCAL_COUNTIES,
+      route: {
+        service: 'civil',
+        catalog: '',
+        jurisdiction: county ? `Superior Court of California, County of ${county.name}` : 'California Superior Court — county required',
+        county: county ? county.name : '',
+        countySlug: county ? county.slug : '',
+        needsCounty: !county,
+        formCode: '',
+        formTitle: '',
+        officialEndpoint: '',
+        flowEndpoint: '',
+        flowStatus: county ? 'county-known' : 'awaiting-county',
+        packageForms: [],
+        confidence: 0,
+        reason: county ? 'County captured for a California court-form search.' : 'County is required to check local Superior Court forms.'
+      }
     };
   }
 
@@ -1001,10 +1213,12 @@ async function handler(event) {
   if (!['GET', 'POST'].includes(event.httpMethod)) return json(405, { ok: false, error: 'Method not allowed' });
 
   let query = event.queryStringParameters?.q || event.queryStringParameters?.query || '';
+  let county = event.queryStringParameters?.county || '';
   if (event.httpMethod === 'POST') {
     try {
       const body = JSON.parse(event.body || '{}');
       query = body.q || body.query || body.text || query;
+      county = body.county || county;
     } catch {
       return json(400, { ok: false, error: 'Invalid JSON' });
     }
@@ -1012,7 +1226,7 @@ async function handler(event) {
 
   if (!String(query || '').trim()) return json(400, { ok: false, error: 'Missing query' });
 
-  const result = routeQuery(query);
+  const result = routeQuery(query, { county });
   return json(result.ok ? 200 : 404, result, { 'Cache-Control': 'public, max-age=300' });
 }
 
