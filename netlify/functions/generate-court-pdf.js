@@ -30,6 +30,8 @@ const { sanitizeDirectFields } = require('./lib/ca-court-direct-schema');
 const { getSmallClaimsForm, listPreparableSmallClaimsSlugs } = require('./lib/ca-small-claims-catalog');
 const { getFamilyLawForm, listPreparableFamilyLawSlugs } = require('./lib/ca-family-law-catalog');
 const { getAllCourtForm } = require('./lib/ca-all-court-catalog');
+const { getLocalCourtForm } = require('./lib/ca-local-court-catalog');
+const { loadLocalCourtTemplate } = require('./lib/ca-local-court-template');
 const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 const { sessionFromEvent } = require('./lib/session-auth');
 
@@ -67,12 +69,13 @@ exports.handler = async function (event) {
     try { payload = JSON.parse(event.body || '{}'); }
     catch { return json(400, { error: 'Invalid JSON body' }); }
 
-    const formCode = payload.formCode || payload.formType || payload.code;
+    const localForm = payload.localFormId ? getLocalCourtForm(payload.localFormId) : null;
+    const formCode = payload.formCode || payload.formType || payload.code || (localForm && localForm.code);
     if (!formCode) return json(400, { error: 'Missing formCode' });
 
     // Catalog form = a small-claims OR family-law form filled via raw
     // direct fields (SC- and FL- codes never collide).
-    const catalogForm = getSmallClaimsForm(formCode) || getFamilyLawForm(formCode) || getAllCourtForm(formCode);
+    const catalogForm = localForm || getSmallClaimsForm(formCode) || getFamilyLawForm(formCode) || getAllCourtForm(formCode);
     const directMode = payload.directFields && typeof payload.directFields === 'object';
     let slug;
     let fieldValues;
@@ -89,7 +92,17 @@ exports.handler = async function (event) {
         });
       }
       slug = catalogForm.slug || catalogForm.code.toLowerCase();
-      fieldValues = await sanitizeDirectFields(slug, payload.directFields);
+      const localOptions = localForm ? {
+        cacheKey: `local:${localForm.id}`,
+        title: localForm.title,
+        loadTemplate: () => loadLocalCourtTemplate(localForm.countySlug, localForm.slug, {
+          url: localForm.officialPdfUrl,
+          sha256: localForm.sourceSha256,
+          referer: localForm.sourcePageUrl,
+          cached: Boolean(localForm.cachedTemplate)
+        })
+      } : {};
+      fieldValues = await sanitizeDirectFields(slug, payload.directFields, localOptions);
     } else {
       const entry = getBuilder(formCode);
       if (!entry) {
@@ -103,7 +116,14 @@ exports.handler = async function (event) {
       fieldValues = entry.build(payload);
     }
 
-    const inputPdf = await loadCourtTemplate(slug);
+    const inputPdf = localForm
+      ? await loadLocalCourtTemplate(localForm.countySlug, slug, {
+        url: localForm.officialPdfUrl,
+        sha256: localForm.sourceSha256,
+        referer: localForm.sourcePageUrl,
+        cached: Boolean(localForm.cachedTemplate)
+      })
+      : await loadCourtTemplate(slug);
     if (!inputPdf) {
       return json(404, { error: 'Decrypted template not found', formCode: slug });
     }
@@ -131,7 +151,7 @@ exports.handler = async function (event) {
       console.log('COURT PDF RESULT', {
         formCode: slug,
         account: session.email,
-        mode: directMode ? 'direct' : 'mapped',
+        mode: localForm ? 'local-direct' : (directMode ? 'direct' : 'mapped'),
         mapped: Object.keys(fieldValues).length,
         filled: result.filled.length,
         skipped: result.skipped.length,
@@ -143,7 +163,7 @@ exports.handler = async function (event) {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename=${slug}-filled.pdf`,
+        'Content-Disposition': `attachment; filename=${localForm ? `${localForm.countySlug}-` : ''}${slug}-filled.pdf`,
         'Cache-Control': 'no-store'
       },
       body: result.buffer.toString('base64'),

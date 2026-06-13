@@ -30,3 +30,18 @@ deno.lock
 # QA fixtures / generated artifacts
 answers/
 payloads/
+
+# --- Local county forms: build cache (redundant; runtime serves from public/ca-local-templates) ---
+assets/form-cache/ca-local-court/
+
+# Owner working reference docs (not site assets)
+NOW Green Card Renewal Application FLOW.docx
+NOW Green Card Renewal Application FLOW.pdf
+
+# Pitch deck + build artifacts (not part of the app)
+decks/
+
+# Local county templates now live in Netlify Blobs (store: ca-local-templates),
+# uploaded by scripts/upload-ca-local-templates-to-blobs.js. Not in git — too
+# large (1.4GB) and served from Blobs at runtime.
+astro-site/public/ca-local-templates/

@@ -1029,7 +1029,7 @@ const STRINGS = {
     tileProfileTitle: 'Profile', tileProfileSub: 'Name, phone, settings',
     tileNotifTitle: 'Notifications', tileNotifSub: 'Replies & status updates',
     tileScTitle: 'Small Claims', tileScSub: 'Prepare California court forms',
-    tileAllCourtTitle: 'All CA Court Forms', tileAllCourtSub: 'Browse official forms and prepare fillable drafts', scTitleAll: 'All California Court Forms', scAllForms: 'Official California court-form library',
+    tileAllCourtTitle: 'All CA Court Forms', tileAllCourtSub: 'Browse official forms and prepare fillable drafts', scTitleAll: 'All California Court Forms', scAllForms: 'Official California court-form library', scCounty: 'County', scAllCounties: 'Statewide only', scLocalForms: 'local forms',
     tileFlTitle: 'Family Law', tileFlSub: 'Divorce, custody & support forms',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Generate immigration PDFs',
     tileBizTitle: 'Business', tileBizSub: 'LLC, EIN, DBA & corporate filings',
@@ -1165,7 +1165,7 @@ const STRINGS = {
     tileProfileTitle: 'Профиль', tileProfileSub: 'Имя, телефон, настройки',
     tileNotifTitle: 'Уведомления', tileNotifSub: 'Ответы и статусы',
     tileScTitle: 'Small Claims', tileScSub: 'Формы суда малых исков California',
-    tileAllCourtTitle: 'Все формы судов CA', tileAllCourtSub: 'Официальные формы и заполняемые проекты', scTitleAll: 'Все формы судов Калифорнии', scAllForms: 'Библиотека официальных форм судов Калифорнии',
+    tileAllCourtTitle: 'Все формы судов CA', tileAllCourtSub: 'Официальные формы и заполняемые проекты', scTitleAll: 'Все формы судов Калифорнии', scAllForms: 'Библиотека официальных форм судов Калифорнии', scCounty: 'Каунти', scAllCounties: 'Только формы штата', scLocalForms: 'локальных форм',
     tileFlTitle: 'Семейное право', tileFlSub: 'Развод, опека, алименты',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Генерация immigration PDF',
     tileBizTitle: 'Бизнес', tileBizSub: 'LLC, EIN, DBA и корпоративные документы',
@@ -1301,7 +1301,7 @@ const STRINGS = {
     tileProfileTitle: 'Профіль', tileProfileSub: 'Ім\'я, телефон, налаштування',
     tileNotifTitle: 'Сповіщення', tileNotifSub: 'Відповіді та статуси',
     tileScTitle: 'Small Claims', tileScSub: 'Форми суду малих позовів California',
-    tileAllCourtTitle: 'Усі форми судів CA', tileAllCourtSub: 'Офіційні форми та заповнювані проєкти', scTitleAll: 'Усі форми судів Каліфорнії', scAllForms: 'Бібліотека офіційних форм судів Каліфорнії',
+    tileAllCourtTitle: 'Усі форми судів CA', tileAllCourtSub: 'Офіційні форми та заповнювані проєкти', scTitleAll: 'Усі форми судів Каліфорнії', scAllForms: 'Бібліотека офіційних форм судів Каліфорнії', scCounty: 'Округ', scAllCounties: 'Лише форми штату', scLocalForms: 'локальних форм',
     tileFlTitle: 'Сімейне право', tileFlSub: 'Розлучення, опіка, аліменти',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Генерація immigration PDF',
     tileBizTitle: 'Бізнес', tileBizSub: 'LLC, EIN, DBA та корпоративні документи',
@@ -1437,7 +1437,7 @@ const STRINGS = {
     tileProfileTitle: 'Perfil', tileProfileSub: 'Nombre, teléfono, ajustes',
     tileNotifTitle: 'Notificaciones', tileNotifSub: 'Respuestas y estados',
     tileScTitle: 'Small Claims', tileScSub: 'Prepare formularios judiciales de California',
-    tileAllCourtTitle: 'Todos los formularios CA', tileAllCourtSub: 'Formularios oficiales y borradores rellenables', scTitleAll: 'Todos los formularios de cortes de California', scAllForms: 'Biblioteca oficial de formularios judiciales de California',
+    tileAllCourtTitle: 'Todos los formularios CA', tileAllCourtSub: 'Formularios oficiales y borradores rellenables', scTitleAll: 'Todos los formularios de cortes de California', scAllForms: 'Biblioteca oficial de formularios judiciales de California', scCounty: 'Condado', scAllCounties: 'Solo formularios estatales', scLocalForms: 'formularios locales',
     tileFlTitle: 'Derecho Familiar', tileFlSub: 'Divorcio, custodia y manutención',
     tileUscisTitle: 'USCIS', tileUscisSub: 'Generar PDFs migratorios',
     tileBizTitle: 'Negocios', tileBizSub: 'LLC, EIN, DBA y trámites corporativos',
@@ -2247,6 +2247,16 @@ function renderMyDocuments(){
 }
 
 /* ===== California Small Claims cabinet wizard ===== */
+function readPendingCourtRoute(){
+  try {
+    const route = JSON.parse(localStorage.getItem('imverica_court_route') || 'null');
+    return route && typeof route === 'object' ? route : null;
+  } catch(e) {
+    return null;
+  }
+}
+
+const pendingCourtRoute = readPendingCourtRoute();
 const smallClaimsState = {
   category: '',          // '' = Small Claims (default), 'family-law' = Family Law
   catalog: null,         // active catalog
@@ -2257,6 +2267,9 @@ const smallClaimsState = {
   schema: null,
   pageIndex: 0,
   values: {},
+  county: (pendingCourtRoute && pendingCourtRoute.countySlug) || localStorage.getItem('imverica_court_county') || '',
+  pendingRoute: pendingCourtRoute,
+  requestedRouteOpened: false,
   openedFromUrl: false
 };
 
@@ -2308,14 +2321,19 @@ async function openSmallClaimsWizard(category){
   const cached = smallClaimsState.catalogs[smallClaimsState.category];
   if (cached) {
     smallClaimsState.catalog = cached;
-    if (smallClaimsState.category === 'all') renderAllFormsSearch(); else renderSmallClaimsTasks();
+    if (smallClaimsState.category === 'all') {
+      renderAllFormsSearch();
+      maybeOpenRequestedCourtForm();
+    } else renderSmallClaimsTasks();
     return;
   }
   setSmallClaimsProgress(T.scChooseTask);
   setSmallClaimsFooter(false, false);
   document.getElementById('sc-body').innerHTML = '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div><div class="md-empty">' + escText(T.mdLoading) + '</div>';
   try {
-    const url = '/api/court-flow' + (smallClaimsState.category ? '?category=' + encodeURIComponent(smallClaimsState.category) : '');
+    const url = '/api/court-flow' + (smallClaimsState.category
+      ? '?category=' + encodeURIComponent(smallClaimsState.category) + (smallClaimsState.category === 'all' && smallClaimsState.county ? '&county=' + encodeURIComponent(smallClaimsState.county) : '')
+      : '');
     const response = await fetch(url, { credentials:'include', headers:{Accept:'application/json'} });
     if (response.status === 401) {
       closeSmallClaimsWizard();
@@ -2326,7 +2344,10 @@ async function openSmallClaimsWizard(category){
     if (!response.ok || !data.ok) throw new Error(data.error || 'load failed');
     smallClaimsState.catalogs[smallClaimsState.category] = data;
     smallClaimsState.catalog = data;
-    if (smallClaimsState.category === 'all') renderAllFormsSearch(); else renderSmallClaimsTasks();
+    if (smallClaimsState.category === 'all') {
+      renderAllFormsSearch();
+      maybeOpenRequestedCourtForm();
+    } else renderSmallClaimsTasks();
   } catch(e) {
     document.getElementById('sc-body').innerHTML = '<div class="sc-status error" style="display:block">' + escText(T.scLoadFail) + '</div>';
   }
@@ -2376,8 +2397,8 @@ function chooseSmallClaimsTask(taskId){
     }).join('') + '</div>';
 }
 
-async function chooseSmallClaimsForm(code){
-  const form = (smallClaimsState.catalog.forms || []).find(function(item){ return item.code === code; });
+async function chooseSmallClaimsForm(identifier){
+  const form = (smallClaimsState.catalog.forms || []).find(function(item){ return (item.id || item.code) === identifier; });
   if (!form) return;
   smallClaimsState.form = form;
   smallClaimsState.values = {};
@@ -2397,7 +2418,10 @@ async function chooseSmallClaimsForm(code){
   setSmallClaimsFooter(true, false);
   document.getElementById('sc-body').innerHTML = '<div class="md-empty">' + escText(T.mdLoading) + '</div>';
   try {
-    const response = await fetch('/api/court-flow?code=' + encodeURIComponent(form.code), { credentials:'include', headers:{Accept:'application/json'} });
+    const flowQuery = form.scope === 'local'
+      ? 'localId=' + encodeURIComponent(form.id)
+      : 'code=' + encodeURIComponent(form.code);
+    const response = await fetch('/api/court-flow?' + flowQuery, { credentials:'include', headers:{Accept:'application/json'} });
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || 'load failed');
     smallClaimsState.schema = data;
@@ -2464,22 +2488,48 @@ function collectSmallClaimsPage(){
 // ===== "All California forms" mode — searchable 345-form catalog =====
 function openAllCourtFormsWizard(){ return openSmallClaimsWizard('all'); }
 
+function maybeOpenRequestedCourtForm(){
+  if (smallClaimsState.category !== 'all' || smallClaimsState.requestedRouteOpened) return;
+  const route = smallClaimsState.pendingRoute;
+  if (!route) return;
+  const forms = smallClaimsState.catalog && smallClaimsState.catalog.forms || [];
+  const form = forms.find(function(item){
+    if (route.localFormId && item.id === route.localFormId) return true;
+    return !route.localFormId && route.formCode && item.code === route.formCode;
+  });
+  if (!form) return;
+  smallClaimsState.requestedRouteOpened = true;
+  smallClaimsState.pendingRoute = null;
+  try { localStorage.removeItem('imverica_court_route'); } catch(e) {}
+  chooseSmallClaimsForm(form.id || form.code);
+}
+
 let allFormsSearchTimer = null;
 function renderAllFormsSearch(){
   smallClaimsState.stage = 'forms';
   setSmallClaimsProgress((T.scAllForms || 'Official California court-form library') + ' · ' +
     (smallClaimsState.catalog.preparableCount || 0) + ' ' + scRoleLabel('prepare') + ' · ' +
-    (smallClaimsState.catalog.referenceCount || 0) + ' ' + scRoleLabel('info'));
+    (smallClaimsState.catalog.referenceCount || 0) + ' ' + scRoleLabel('info') +
+    (smallClaimsState.county ? ' · ' + (smallClaimsState.catalog.localTotal || 0) + ' ' + (T.scLocalForms || 'local forms') : ''));
   setSmallClaimsFooter(false, false);
   document.getElementById('sc-body').innerHTML =
     '<div class="sc-intro">' + escText(T.scDisclaimer) + '</div>' +
     '<div class="uscis-list-head"><h4>' + escText(T.scAllForms || 'All California court forms') + '</h4>' +
+    '<select class="uscis-search" id="all-forms-county" aria-label="' + scAttr(T.scCounty || 'County') + '">' +
+      '<option value="">' + escText(T.scAllCounties || 'Statewide only') + '</option>' +
+      (smallClaimsState.catalog.counties || []).map(function(county){ return '<option value="' + scAttr(county.countySlug) + '"' + (smallClaimsState.county === county.countySlug ? ' selected' : '') + '>' + escText(county.county) + ' County</option>'; }).join('') +
+    '</select>' +
     '<input class="uscis-search" id="all-forms-q" type="search" placeholder="' + scAttr(T.uscisSearchPh || 'Search…') + '"></div>' +
     '<div class="sc-grid" id="all-forms-grid"></div>';
   document.getElementById('all-forms-q').addEventListener('input', function(){
     clearTimeout(allFormsSearchTimer);
     const q = this.value;
     allFormsSearchTimer = setTimeout(function(){ fetchAllForms(q); }, 250);
+  });
+  document.getElementById('all-forms-county').addEventListener('change', function(){
+    smallClaimsState.county = this.value;
+    localStorage.setItem('imverica_court_county', smallClaimsState.county);
+    fetchAllForms(document.getElementById('all-forms-q').value || '', true);
   });
   renderAllFormsGrid(smallClaimsState.catalog.forms || []);
 }
@@ -2488,8 +2538,10 @@ function renderAllFormsGrid(forms){
   const grid = document.getElementById('all-forms-grid');
   if (!grid) return;
   grid.innerHTML = forms.map(function(form){
-    return '<button class="sc-choice" type="button" onclick="chooseSmallClaimsForm(\'' + scAttr(form.code) + '\')">' +
+    const identifier = form.id || form.code;
+    return '<button class="sc-choice" type="button" onclick="chooseSmallClaimsForm(\'' + scAttr(identifier) + '\')">' +
       '<div class="sc-choice-meta"><span class="sc-pill">' + escText(form.code) + '</span><span class="sc-pill ' + scAttr(form.role) + '">' + escText(scRoleLabel(form.role)) + '</span>' +
+      (form.scope === 'local' ? '<span class="sc-pill info">' + escText(form.county) + ' County · Local</span>' : '') +
       (form.category ? '<span class="sc-pill info">' + escText(form.category) + '</span>' : '') + '</div>' +
       '<div class="sc-choice-title">' + escText(form.title) + '</div>' +
       (form.description ? '<div class="sc-choice-sub">' + escText(form.description) + '</div>' : '') +
@@ -2497,13 +2549,14 @@ function renderAllFormsGrid(forms){
   }).join('') || '<div class="md-empty">' + escText(T.uscisNoMatches || 'No matches') + '</div>';
 }
 
-async function fetchAllForms(q){
+async function fetchAllForms(q, rerender){
   try {
-    const r = await fetch('/api/court-flow?category=all&q=' + encodeURIComponent(q || ''), { credentials:'include', headers:{Accept:'application/json'} });
+    const r = await fetch('/api/court-flow?category=all&q=' + encodeURIComponent(q || '') + '&county=' + encodeURIComponent(smallClaimsState.county || ''), { credentials:'include', headers:{Accept:'application/json'} });
     const data = await r.json();
     if (r.ok && data.ok) {
-      smallClaimsState.catalog.forms = data.forms || [];
-      renderAllFormsGrid(smallClaimsState.catalog.forms);
+      smallClaimsState.catalog = Object.assign({}, smallClaimsState.catalog, data);
+      smallClaimsState.catalogs.all = smallClaimsState.catalog;
+      if (rerender) renderAllFormsSearch(); else renderAllFormsGrid(smallClaimsState.catalog.forms || []);
     }
   } catch(e) { /* keep current grid */ }
 }
@@ -2526,7 +2579,9 @@ function smallClaimsBack(){
     if (smallClaimsState.category === 'all') renderAllFormsSearch(); else renderSmallClaimsTasks();
     return;
   }
-  if (smallClaimsState.stage === 'reference') chooseSmallClaimsTask(smallClaimsState.taskId);
+  if (smallClaimsState.stage === 'reference') {
+    if (smallClaimsState.category === 'all') renderAllFormsSearch(); else chooseSmallClaimsTask(smallClaimsState.taskId);
+  }
 }
 
 function smallClaimsNext(){
@@ -2582,7 +2637,7 @@ async function generateSmallClaimsPdf(){
       method:'POST',
       credentials:'include',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ formCode:smallClaimsState.form.code, directFields:smallClaimsState.values, flatten:false })
+      body:JSON.stringify({ formCode:smallClaimsState.form.code, localFormId:smallClaimsState.form.id || '', directFields:smallClaimsState.values, flatten:false })
     });
     if (response.status === 401) {
       closeSmallClaimsWizard();
@@ -2594,7 +2649,7 @@ async function generateSmallClaimsPdf(){
       throw new Error(data.error || T.scLoadFail);
     }
     const blob = await response.blob();
-    const fileName = smallClaimsState.form.code + '-draft.pdf';
+    const fileName = (smallClaimsState.form.scope === 'local' ? smallClaimsState.form.countySlug + '-' : '') + smallClaimsState.form.code + '-draft.pdf';
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -2621,9 +2676,10 @@ async function generateSmallClaimsPdf(){
 function maybeOpenSmallClaimsFromUrl(){
   if (smallClaimsState.openedFromUrl) return;
   const open = new URLSearchParams(window.location.search).get('open');
-  if (open !== 'small-claims' && open !== 'family-law') return;
+  const hasPendingRoute = Boolean(smallClaimsState.pendingRoute);
+  if (open !== 'small-claims' && open !== 'family-law' && open !== 'california-court' && !hasPendingRoute) return;
   smallClaimsState.openedFromUrl = true;
-  const cat = open === 'family-law' ? 'family-law' : '';
+  const cat = open === 'family-law' ? 'family-law' : (open === 'california-court' || hasPendingRoute ? 'all' : '');
   setTimeout(function(){ openSmallClaimsWizard(cat); }, 100);
 }
 

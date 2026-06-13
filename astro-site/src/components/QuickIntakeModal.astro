@@ -584,6 +584,17 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       const fc = document.getElementById('qiFormCode') as HTMLInputElement | null;
       if (fc) fc.value = hints.formCode;
     }
+    const portal = document.getElementById('qiOpenPortal') as HTMLAnchorElement | null;
+    if (portal) {
+      try {
+        const route = JSON.parse(localStorage.getItem('imverica_court_route') || 'null');
+        portal.href = route && (route.localFormId || route.formCode)
+          ? '/account.html?open=california-court'
+          : '/account.html';
+      } catch {
+        portal.href = '/account.html';
+      }
+    }
     // Focus name (or situation if it was prefilled).
     const nm = document.getElementById('qiName') as HTMLInputElement | null;
     if (nm && !nm.value) nm.focus();

@@ -99,11 +99,14 @@ function directField(field, slug) {
   return null;
 }
 
-async function getDirectCourtSchema(slug, title) {
-  if (CACHE.has(slug)) return CACHE.get(slug);
+async function getDirectCourtSchema(slug, title, options = {}) {
+  const cacheKey = options.cacheKey || slug;
+  if (CACHE.has(cacheKey)) return CACHE.get(cacheKey);
   // Buffer-based loader: bundled file when present, static /ca-templates/
   // HTTP store for the long tail (full set exceeds the function size limit).
-  const templateBuffer = await loadCourtTemplate(slug);
+  const templateBuffer = options.loadTemplate
+    ? await options.loadTemplate()
+    : await loadCourtTemplate(slug);
   if (!templateBuffer) return null;
 
   const document = await PDFDocument.load(templateBuffer, { ignoreEncryption: true });
@@ -120,12 +123,12 @@ async function getDirectCourtSchema(slug, title) {
       fields: fields.filter((field) => field.page === page).map(({ page: _page, ...field }) => field)
     }))
   };
-  CACHE.set(slug, schema);
+  CACHE.set(cacheKey, schema);
   return schema;
 }
 
-async function sanitizeDirectFields(slug, rawFields) {
-  const schema = await getDirectCourtSchema(slug, slug.toUpperCase());
+async function sanitizeDirectFields(slug, rawFields, options = {}) {
+  const schema = await getDirectCourtSchema(slug, options.title || slug.toUpperCase(), options);
   if (!schema || !rawFields || typeof rawFields !== 'object' || Array.isArray(rawFields)) return {};
 
   const allowed = new Map();

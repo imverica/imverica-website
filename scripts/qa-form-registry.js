@@ -45,10 +45,18 @@ ok(Array.isArray(i589.packetChecklist) && i589.packetChecklist.some((x) => /no f
 // Never invent: unknown forms are null, never fabricated.
 ok(getFormProfile('XX-999') === null, 'unknown form returns null (never fabricated)');
 
-// Form-number standard: every code in the registry keeps its hyphen.
+// Form-number standard: every code matches its official Judicial Council /
+// USCIS designation — no space-broken numbers ("I 765"). Most codes are
+// hyphenated (I-765, FL-100); a few official codes legitimately use a dot
+// instead (CP10.5 Prejudgment Claim of Right to Possession) — allow those.
+const OFFICIAL_DOTTED = new Set(['CP10.5', 'CP10']);
 const all = listFormProfiles();
 ok(all.length > 300, `registry covers ${all.length} forms (>300)`);
-ok(all.every((p) => /^[A-Z]+(-[0-9A-Z]+)+$|^[A-Z]+-[0-9]+[A-Z]?$/.test(p.code) || p.code.includes('-')), 'every code uses the official hyphenated number');
+ok(all.every((p) => /^[A-Z]+(-[0-9A-Z]+)+$|^[A-Z]+-[0-9]+[A-Z]?$/.test(p.code) || p.code.includes('-') || OFFICIAL_DOTTED.has(p.code)),
+  'every code uses its official form number (hyphenated, or a known official dotted code)');
+// Catch the real breakage — a space-split form NUMBER ("I 765", "FL 100") —
+// without flagging legitimate suffixed designations ("I-485 Supplement A").
+ok(all.every((p) => !/^[A-Z]+\s+\d/.test(p.code)), 'no code is a space-broken number ("I 765")');
 const blocked = all.filter((p) => p.mapping_status === 'blocked').length;
 const verified = all.filter((p) => p.mapping_status === 'verified-map').length;
 const direct = all.filter((p) => p.mapping_status === 'direct-schema').length;

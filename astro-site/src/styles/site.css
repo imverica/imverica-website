@@ -489,6 +489,98 @@ img { max-width: 100%; height: auto; }
 .ai-result p {
   margin: 0;
 }
+.ai-intent-step h3 {
+  margin: 0;
+  color: var(--navy-dark);
+  font-family: var(--font-serif);
+  font-size: 22px;
+}
+.ai-intent-step > p {
+  margin-top: 4px;
+  color: #637083;
+  font-size: 14px;
+}
+.ai-intent-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.ai-intent-options button {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 84px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: #fff;
+  color: var(--navy-dark);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+.ai-intent-options button:hover {
+  border-color: var(--gold);
+  box-shadow: 0 8px 22px rgb(20 39 68 / 10%);
+  transform: translateY(-1px);
+}
+.ai-intent-options strong {
+  font-size: 15px;
+}
+.ai-intent-options span {
+  color: #637083;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.ai-county-step label {
+  display: block;
+  color: var(--navy-dark);
+  font-weight: 700;
+  font-size: 18px;
+}
+.ai-county-step p {
+  margin-top: 4px;
+  color: #637083;
+  font-size: 14px;
+}
+.ai-county-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-top: 14px;
+}
+.ai-county-controls select,
+.ai-county-controls button {
+  min-height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0 14px;
+  background: #fff;
+  color: var(--navy-dark);
+  font: inherit;
+}
+.ai-county-controls button {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ai-county-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+.ai-county-warning {
+  margin-bottom: 12px !important;
+  color: #9a3f32;
+  font-weight: 600;
+}
+.ai-result-county {
+  margin-top: 8px !important;
+  color: #536174;
+  font-size: 14px;
+}
 .ai-result-actions {
   display: flex;
   justify-content: center;
@@ -1067,6 +1159,12 @@ img { max-width: 100%; height: auto; }
   }
   .ai-finder-submit:hover {
     transform: translateX(2px);
+  }
+  .ai-county-controls {
+    grid-template-columns: 1fr;
+  }
+  .ai-intent-options {
+    grid-template-columns: 1fr;
   }
   .ai-examples {
     grid-template-columns: 1fr;

@@ -30,6 +30,12 @@ function decorate(raw) {
     categoryCode: raw.category || '',
     fieldCount: Number.isFinite(raw.fieldCount) ? raw.fieldCount : null,
     role,
+    // Source separation: every statewide form is explicitly tagged so the UI
+    // can show whether a form is a statewide Judicial Council form or a local
+    // county Superior Court form (which carry scope:'local' + a county).
+    scope: 'statewide',
+    sourceType: 'Statewide Judicial Council form',
+    agency: 'California Judicial Council',
     description: curated?.description || referenceDescription || '',
     officialPageUrl: curated?.officialPageUrl || `https://selfhelp.courts.ca.gov/jcc-form/${code}`
   };

@@ -16,6 +16,13 @@ const {
   getAllCourtForm,
   searchAllCourtForms
 } = require('./lib/ca-all-court-catalog');
+const {
+  getLocalCourtForm,
+  getLocalCourtSummary,
+  listLocalCourtCounties,
+  searchLocalCourtForms
+} = require('./lib/ca-local-court-catalog');
+const { loadLocalCourtTemplate } = require('./lib/ca-local-court-template');
 const { sessionFromEvent } = require('./lib/session-auth');
 
 const HEADERS = { 'Cache-Control': 'private, no-store' };
@@ -35,6 +42,27 @@ exports.handler = async function (event) {
 
   const category = (event.queryStringParameters && event.queryStringParameters.category) || '';
   const code = (event.queryStringParameters && event.queryStringParameters.code) || '';
+  const localId = (event.queryStringParameters && event.queryStringParameters.localId) || '';
+  const county = (event.queryStringParameters && event.queryStringParameters.county) || '';
+
+  if (localId) {
+    const form = getLocalCourtForm(localId);
+    if (!form) return json(404, { ok: false, error: 'Local court form not found', localId });
+    if (form.role !== 'prepare') {
+      return json(409, { ok: false, error: 'This local document is reference-only', form });
+    }
+    const schema = await getDirectCourtSchema(form.slug, form.title, {
+      cacheKey: `local:${form.id}`,
+      loadTemplate: () => loadLocalCourtTemplate(form.countySlug, form.slug, {
+        url: form.officialPdfUrl,
+        sha256: form.sourceSha256,
+        referer: form.sourcePageUrl,
+        cached: Boolean(form.cachedTemplate)
+      })
+    });
+    if (!schema || !schema.fieldCount) return json(404, { ok: false, error: 'Fillable local template not found', localId });
+    return json(200, { ok: true, form, ...schema });
+  }
 
   // No code → return the requested catalog. Small claims stays the default
   // so existing cabinet behavior is unchanged.
@@ -42,11 +70,16 @@ exports.handler = async function (event) {
     if (category === 'family-law') return json(200, { ok: true, ...getFamilyLawCatalog() });
     if (category === 'all') {
       const q = (event.queryStringParameters && event.queryStringParameters.q) || '';
+      const localForms = county ? searchLocalCourtForms(county, q) : [];
+      const statewideForms = searchAllCourtForms(q, Math.max(0, 100 - localForms.length));
       return json(200, {
         ok: true,
         category: 'all',
-        forms: searchAllCourtForms(q),
-        ...getAllCourtCatalogSummary()
+        county,
+        counties: listLocalCourtCounties(),
+        forms: [...localForms, ...statewideForms],
+        ...getAllCourtCatalogSummary(),
+        ...getLocalCourtSummary(county)
       });
     }
     return json(200, { ok: true, ...getSmallClaimsCatalog() });
