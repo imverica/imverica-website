@@ -110,12 +110,6 @@ const t = STRINGS[lang] || STRINGS.en;
   const labels = {
     en: {
       checking: 'Checking possible forms...',
-      countyQuestion: 'Which California county will you file in?',
-      countyHelp: 'Local Superior Court forms vary by county. Choose the filing court before we continue.',
-      countyPlaceholder: 'Select county',
-      countyContinue: 'Check county forms',
-      countyMismatch: 'That local form is not listed for the selected county. Choose the court where you will file.',
-      filingCourt: 'Filing court',
       error: 'Sorry, please try again or call us at +1 (916) 399-3992.',
       continue: 'Continue',
       telegram: 'Telegram',
@@ -123,12 +117,6 @@ const t = STRINGS[lang] || STRINGS.en;
     },
     ru: {
       checking: 'Проверяем возможные формы...',
-      countyQuestion: 'В каком county Калифорнии вы будете подавать документы?',
-      countyHelp: 'Локальные формы Superior Court отличаются по округам. Сначала выберите суд подачи.',
-      countyPlaceholder: 'Выберите county',
-      countyContinue: 'Проверить формы county',
-      countyMismatch: 'Эта локальная форма не найдена для выбранного county. Выберите суд, куда будете подавать.',
-      filingCourt: 'Суд подачи',
       error: 'Попробуйте ещё раз или позвоните нам: +1 (916) 399-3992.',
       continue: 'Продолжить',
       telegram: 'Telegram',
@@ -136,12 +124,6 @@ const t = STRINGS[lang] || STRINGS.en;
     },
     uk: {
       checking: 'Перевіряємо можливі форми...',
-      countyQuestion: 'У якому county Каліфорнії ви подаватимете документи?',
-      countyHelp: 'Локальні форми Superior Court відрізняються за округами. Спочатку оберіть суд подання.',
-      countyPlaceholder: 'Оберіть county',
-      countyContinue: 'Перевірити форми county',
-      countyMismatch: 'Цю локальну форму не знайдено для обраного county. Оберіть суд, куди подаватимете.',
-      filingCourt: 'Суд подання',
       error: 'Спробуйте ще раз або зателефонуйте нам: +1 (916) 399-3992.',
       continue: 'Продовжити',
       telegram: 'Telegram',
@@ -149,12 +131,6 @@ const t = STRINGS[lang] || STRINGS.en;
     },
     es: {
       checking: 'Revisando posibles formularios...',
-      countyQuestion: '¿En qué condado de California presentará los documentos?',
-      countyHelp: 'Los formularios locales del Superior Court varían por condado. Seleccione el tribunal de presentación.',
-      countyPlaceholder: 'Seleccione el condado',
-      countyContinue: 'Revisar formularios locales',
-      countyMismatch: 'Ese formulario local no aparece para el condado seleccionado. Elija el tribunal donde presentará.',
-      filingCourt: 'Tribunal de presentación',
       error: 'Inténtelo de nuevo o llámenos al +1 (916) 399-3992.',
       continue: 'Continuar',
       telegram: 'Telegram',
@@ -175,10 +151,10 @@ const t = STRINGS[lang] || STRINGS.en;
     return isLocal ? 'https://imverica.com/.netlify/functions/chat' : '/.netlify/functions/chat';
   }
 
-  function routeEndpoint(query: string, county = '') {
+  function routeEndpoint(query: string) {
     const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
     const base = isLocal ? 'https://imverica.com' : '';
-    return base + '/.netlify/functions/route?q=' + encodeURIComponent(query) + (county ? '&county=' + encodeURIComponent(county) : '');
+    return base + '/.netlify/functions/route?q=' + encodeURIComponent(query);
   }
 
   // Human-friendly form name lookup for the answer card. Keeps the wizard
@@ -261,39 +237,6 @@ const t = STRINGS[lang] || STRINGS.en;
     result.classList.toggle('open', open);
   }
 
-  function escapeHtml(value: unknown) {
-    return String(value ?? '').replace(/[&<>"']/g, (character) => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[character] || character));
-  }
-
-  function renderCountyPrompt(query: string, routeData: any, lang: keyof typeof labels) {
-    const t = labels[lang] || labels.en;
-    const counties = Array.isArray(routeData?.counties) ? routeData.counties : [];
-    const mismatch = routeData?.countyMismatch ? `<p class="ai-county-warning">${t.countyMismatch}</p>` : '';
-    const options = counties.map((county: any) =>
-      `<option value="${escapeHtml(county.slug)}">${escapeHtml(county.name)} County</option>`
-    ).join('');
-    setResult(`
-      ${mismatch}
-      <div class="ai-county-step">
-        <label for="aiCountySelect">${t.countyQuestion}</label>
-        <p>${t.countyHelp}</p>
-        <div class="ai-county-controls">
-          <select id="aiCountySelect" data-ai-county>
-            <option value="">${t.countyPlaceholder}</option>
-            ${options}
-          </select>
-          <button type="button" class="dark" data-ai-county-continue disabled>${t.countyContinue}</button>
-        </div>
-      </div>
-    `);
-    const select = result?.querySelector('[data-ai-county]') as HTMLSelectElement | null;
-    const button = result?.querySelector('[data-ai-county-continue]') as HTMLButtonElement | null;
-    select?.addEventListener('change', () => { if (button) button.disabled = !select.value; });
-    button?.addEventListener('click', () => { if (select?.value) submitQuery(query, select.value); });
-  }
-
   // Fire-and-forget analytics beacon — never blocks or breaks the UX.
   function logSearchEvent(type: 'search' | 'start', query: string, formCode: string, confidence: number) {
     try {
@@ -303,17 +246,17 @@ const t = STRINGS[lang] || STRINGS.en;
     } catch { /* analytics must never break search */ }
   }
 
-  function continueToWizard(query: string, formCode = '') {
+  function continueToWizard(query: string) {
     logSearchEvent('start', query, '', 0);
-    const opener = (window as Window & { openIntakeModal?: (prefill?: string, options?: { formCode?: string }) => void }).openIntakeModal;
+    const opener = (window as Window & { openIntakeModal?: (prefill?: string) => void }).openIntakeModal;
     if (typeof opener === 'function') {
-      opener(query, formCode ? { formCode } : undefined);
+      opener(query);
       return;
     }
     window.location.hash = 'get-started';
   }
 
-  async function submitQuery(query: string, county = '') {
+  async function submitQuery(query: string) {
     const lang = detectLang(query);
     const t = labels[lang] || labels.en;
     setResult(`<p>${t.checking}</p>`);
@@ -324,55 +267,33 @@ const t = STRINGS[lang] || STRINGS.en;
     // ALSO kick off the chat call in parallel so we can append an AI
     // explanation paragraph when it succeeds, but if chat 502s the user
     // still gets a working answer.
-    const routePromise = fetch(routeEndpoint(query, county), {
+    const routePromise = fetch(routeEndpoint(query), {
       headers: { 'Accept': 'application/json' }
     }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
-    const routeData = await routePromise;
-    if (routeData?.needsCounty) {
-      renderCountyPrompt(query, routeData, lang);
-      return;
-    }
-    const countyName = String(routeData?.county?.name || routeData?.route?.county || '').trim();
-    const countySlug = String(routeData?.county?.slug || routeData?.route?.countySlug || '').trim();
-    if (countySlug) {
-      try {
-        localStorage.setItem('imverica_court_county', countySlug);
-        localStorage.setItem('imverica_court_route', JSON.stringify({
-          county: countyName,
-          countySlug,
-          formCode: routeData?.route?.formCode || '',
-          localFormId: routeData?.route?.localFormId || ''
-        }));
-      } catch { /* Storage may be unavailable in privacy-restricted browsers. */ }
-    }
-    const enrichedQuery = countyName ? `${query}\nFiling county: ${countyName} County, California.` : query;
     const chatPromise = fetch(chatEndpoint(), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{ role: 'user', content: enrichedQuery }] })
+      body: JSON.stringify({ messages: [{ role: 'user', content: query }] })
     }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+
+    const routeData = await routePromise;
     const formCode = String(routeData?.route?.formCode || '').toUpperCase();
     const confidence = Number(routeData?.route?.confidence || 0);
     logSearchEvent('search', query, formCode, confidence);
     const matched = FORM_NAMES[formCode];
-    const routedTitle = String(routeData?.route?.formTitle || '').trim();
 
-    if (formCode && (matched || routedTitle)) {
+    if (formCode && matched) {
       const tmpl = confidence >= 0.7 ? ANSWER_TEMPLATE[lang] : LOW_CONFIDENCE_TEMPLATE[lang];
-      const name = matched
-        ? (matched[lang as 'en' | 'ru' | 'uk' | 'es'] || matched.en)
-        : routedTitle;
+      const name = matched[lang as 'en' | 'ru' | 'uk' | 'es'] || matched.en;
       const headline = (tmpl || ANSWER_TEMPLATE.en)
         .replace('{form}', formCode)
         .replace('{name}', name);
 
       // Render the catalog answer immediately, then asynchronously append
       // the AI elaboration once chat finishes (if it ever does).
-      const countyLine = countyName ? `<p class="ai-result-county">${t.filingCourt}: <strong>${escapeHtml(countyName)} County Superior Court</strong></p>` : '';
       setResult(`
         <p>${headline}</p>
-        ${countyLine}
         <p id="aiExtra" class="ai-result-extra"></p>
         <div class="ai-result-actions">
           <button type="button" class="dark" data-ai-continue>${t.continue}</button>
@@ -380,7 +301,7 @@ const t = STRINGS[lang] || STRINGS.en;
           <a href="tel:+19163993992">${t.call}</a>
         </div>
       `);
-      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery, formCode));
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(query));
 
       const chatData = await chatPromise;
       const reply = String(chatData?.reply || '').trim();
@@ -401,7 +322,7 @@ const t = STRINGS[lang] || STRINGS.en;
           <a href="tel:+19163993992">${t.call}</a>
         </div>
       `);
-      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery));
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(query));
       return;
     }
 
