@@ -114,7 +114,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     <div class="qi-success-icon" aria-hidden="true">✓</div>
     <h3 class="qi-success-title" data-i18n="successTitle">Got it — your request is in.</h3>
     <p class="qi-success-order" data-i18n="successOrder">
-      Order <strong id="qiOrderIdShown">—</strong> queued. We'll reply at the email above within one business day.
+      Reference: <strong id="qiOrderIdShown">—</strong>. Keep it for any follow-up. We'll reply within one business day.
     </p>
     <p class="qi-success-prompt" data-i18n="successPrompt">
       Want to save us 1–2 days? Sign in to your client portal with the same email and fill in the rest of the details yourself. Otherwise we'll call and do it together — your choice.
@@ -304,6 +304,8 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     padding: 1px 7px;
     border-radius: 4px;
     font-weight: 600;
+    white-space: nowrap;
+    user-select: all;
   }
   .qi-success-prompt {
     color: #3a4a5e;
@@ -370,7 +372,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       sending: 'Sending…',
       success: 'Got it! Your request was sent. We will reply at the email above within one business day.',
       successTitle: 'Got it — your request is in.',
-      successOrder: 'Order <strong>{id}</strong> queued. We will reply at the email above within one business day.',
+      successOrder: 'Reference: <strong>{id}</strong>. Keep it for any follow-up. We will reply within one business day.',
       successPrompt: 'Want to save us 1–2 days? Sign in to your client portal with the same email and fill in the rest of the details yourself. Otherwise we will call and do it together — your choice.',
       successOpenPortal: 'Open client portal · save 1–2 days',
       successSkip: 'OK, wait for the call',
@@ -396,7 +398,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       sending: 'Отправляем…',
       success: 'Готово! Запрос отправлен. Мы ответим на указанный email в течение одного рабочего дня.',
       successTitle: 'Готово — заявка принята.',
-      successOrder: 'Заказ <strong>{id}</strong> в очереди. Мы ответим на указанный email в течение одного рабочего дня.',
+      successOrder: 'Номер заявки: <strong>{id}</strong>. Укажите его при обращении. Мы ответим в течение одного рабочего дня.',
       successPrompt: 'Хотите сэкономить 1–2 дня? Войдите в личный кабинет с тем же email и заполните оставшиеся данные сами. Иначе мы перезвоним и заполним вместе — как удобнее.',
       successOpenPortal: 'Открыть кабинет · сэкономить 1–2 дня',
       successSkip: 'Хорошо, жду звонка',
@@ -422,7 +424,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       sending: 'Надсилаємо…',
       success: 'Готово! Запит надіслано. Ми відповімо на вказаний email протягом одного робочого дня.',
       successTitle: 'Готово — заявку прийнято.',
-      successOrder: 'Замовлення <strong>{id}</strong> у черзі. Ми відповімо на вказаний email протягом одного робочого дня.',
+      successOrder: 'Номер заявки: <strong>{id}</strong>. Вкажіть його при зверненні. Ми відповімо протягом одного робочого дня.',
       successPrompt: 'Хочете заощадити 1–2 дні? Увійдіть до особистого кабінету з тим самим email і заповніть решту даних самостійно. Інакше ми зателефонуємо й заповнимо разом — як зручніше.',
       successOpenPortal: 'Відкрити кабінет · заощадити 1–2 дні',
       successSkip: 'Гаразд, чекаю дзвінка',
@@ -448,7 +450,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       sending: 'Enviando…',
       success: '¡Listo! Solicitud enviada. Le responderemos al email indicado en un día laborable.',
       successTitle: 'Listo — su solicitud fue recibida.',
-      successOrder: 'Pedido <strong>{id}</strong> en cola. Le responderemos al email indicado en un día laborable.',
+      successOrder: 'Referencia: <strong>{id}</strong>. Guárdela para cualquier seguimiento. Responderemos en un día laborable.',
       successPrompt: '¿Quiere ahorrar 1–2 días? Inicie sesión en su portal con el mismo email y complete los demás datos usted mismo. De lo contrario lo llamaremos y lo haremos juntos — usted decide.',
       successOpenPortal: 'Abrir portal · ahorrar 1–2 días',
       successSkip: 'Está bien, espero la llamada',

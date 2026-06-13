@@ -31,12 +31,12 @@
  *   }
  */
 
-const crypto = require('crypto');
 const { encryptRecord, emailHash } = require('./lib/crypto');
 const { validateUpload } = require('./lib/file-validator');
 const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 const { getStore } = require('@netlify/blobs');
 const { uploadAttachmentsToClientFolder, DriveDisabled } = require('./lib/google-drive');
+const { makeOrderId } = require('./lib/order-id');
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -82,12 +82,6 @@ function clean(value, max) {
 
 function isValidEmail(addr) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(addr || ''));
-}
-
-function makeOrderId() {
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const suffix = crypto.randomBytes(16).toString('hex').toUpperCase();
-  return `IMV-${date}-${suffix}`;
 }
 
 function escapeHtml(s) {
