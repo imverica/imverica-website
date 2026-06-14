@@ -85,6 +85,16 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/clio-oauth"
+  to = "/.netlify/functions/clio-oauth"
+  status = 200
+
+[[redirects]]
+  from = "/api/clio-push"
+  to = "/.netlify/functions/clio-push"
+  status = 200
+
+[[redirects]]
   from = "/api/relief-packet"
   to = "/.netlify/functions/relief-packet"
   status = 200
