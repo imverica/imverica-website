@@ -246,6 +246,14 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .dash-actions a:hover,.dash-actions button:hover{background:rgba(255,255,255,.16);}
 .dash-actions a.primary{background:var(--gold);color:#1a2e4a;border-color:var(--gold);font-weight:700;}
 .dash-actions a.primary:hover{background:#d8b87e;}
+.clio-card{margin-top:1.2rem;border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.3rem;background:#fbfcfd;}
+.clio-card-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.clio-card-head strong{font-size:15px;color:var(--navy-dark);}
+.clio-badge{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a5a18;background:rgba(219,168,95,.16);border:1px solid rgba(219,168,95,.45);border-radius:999px;padding:2px 8px;}
+.clio-card-text{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 10px;}
+.clio-card-actions a,.clio-card-actions button{font:600 13px var(--font-system);padding:9px 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;text-decoration:none;cursor:pointer;display:inline-block;}
+.clio-card-actions button.ghost{background:#fff;color:var(--navy);}
+.clio-card.is-connected{border-color:#d9e6dc;background:#f4faf5;}
 /* Sign out — top-right corner of the cabinet, above the hero */
 .dash-topbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:12px;}
 .dash-signout{font-size:12.5px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:600;font-family:var(--font-system);cursor:pointer;transition:background .18s,border-color .18s,box-shadow .18s;}
@@ -846,6 +854,16 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
   </div>
 
   <div id="orders"></div>
+
+  <!-- ===== Clio integration (for attorney accounts) ===== -->
+  <div id="clio-card" class="clio-card hidden">
+    <div class="clio-card-head">
+      <span class="clio-badge">For attorneys</span>
+      <strong>Imverica × Clio</strong>
+    </div>
+    <p id="clio-card-text" class="clio-card-text"></p>
+    <div id="clio-card-actions" class="clio-card-actions"></div>
+  </div>
 </div>
 
 <!-- ===== Full-screen chat overlay (opened by the "Message us" tile) ===== -->
@@ -2029,6 +2047,33 @@ async function loadDashboard(){
   startChat();
   maybeOpenSmallClaimsFromUrl();
   maybeOpenUscisFromUrl();
+  loadClioCard();
+}
+
+// Clio integration card (attorney accounts). Reflects the live connection
+// state from /api/clio-oauth. Until the server has Clio app credentials it
+// shows "activation pending" — nothing half-works, nothing misleading.
+async function loadClioCard(){
+  var card=$('clio-card'), text=$('clio-card-text'), actions=$('clio-card-actions');
+  if(!card) return;
+  var st={};
+  try { st=await fetch('/api/clio-oauth?action=status',{credentials:'include',headers:{Accept:'application/json'}}).then(function(r){return r.json();}); } catch(e){ return; }
+  // Hidden until Clio is actually activated on the server. Avoids showing an
+  // attorney-only card to regular clients while there is no attorney role yet.
+  if(!st || !st.ok || !st.configured){ card.classList.add('hidden'); return; }
+  card.classList.remove('hidden'); card.classList.remove('is-connected'); actions.innerHTML='';
+  if(st.connected){
+    card.classList.add('is-connected');
+    text.textContent='Clio is connected. New packets can be pushed directly into your Clio matters.';
+    actions.innerHTML='<button type="button" class="ghost" onclick="clioDisconnect()">Disconnect Clio</button>';
+  } else {
+    text.textContent='Connect your Clio account to push finished packets straight into the matter — no manual download/upload.';
+    actions.innerHTML='<a href="/api/clio-oauth?action=start">Connect Clio</a>';
+  }
+}
+async function clioDisconnect(){
+  try { await fetch('/api/clio-oauth',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'disconnect'})}); } catch(e){}
+  loadClioCard();
 }
 
 // Faster variant for the just-saved case — uses the profile object returned
