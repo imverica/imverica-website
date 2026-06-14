@@ -216,7 +216,12 @@ function sessionCookie(token, event, { clear = false } = {}) {
   const secure = isLocalHost(event) ? '' : ' Secure;';
   const maxAge = clear ? 0 : Math.floor(SESSION_TTL_MS / 1000);
   const value = clear ? '' : token;
-  return `imv_session=${value}; HttpOnly;${secure} SameSite=Strict; Path=/; Max-Age=${maxAge}`;
+  // SameSite=Lax (not Strict): the session must survive returning from the
+  // Google sign-in flow / external navigations, or the user lands back on the
+  // login screen ("authorize again") right after signing in — especially on
+  // Safari/iOS. Lax still blocks the cookie on cross-site POSTs (CSRF), which
+  // is the protection an auth cookie actually needs.
+  return `imv_session=${value}; HttpOnly;${secure} SameSite=Lax; Path=/; Max-Age=${maxAge}`;
 }
 
 // ----- pre-2FA bridge cookie -----

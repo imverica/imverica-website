@@ -1135,7 +1135,10 @@ img { max-width: 100%; height: auto; }
   .hero-sub {
     min-width: 0;
     width: auto;
-    max-width: 330px;
+    /* Match the hero text + search-box column width (was 330px, which left the
+       description inset ~12px on each side and made the hero look misaligned
+       against the eyebrow, headline, and the input box on phones). */
+    max-width: 100%;
   }
   .ai-finder {
     width: 100%;
