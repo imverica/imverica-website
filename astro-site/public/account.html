@@ -3422,7 +3422,22 @@ async function handleGoogleCredential(resp){
   var r = await api('google', { credential: resp.credential });
   if (!r.ok){ msg('email-msg','error', (r.data && r.data.error) || T.errSendFail); return; }
   if (r.data && r.data.requireTotp){ msg('email-msg','info', T.authNeed2fa); return; }
-  loadDashboard();
+  resumeAfterAuth();
+}
+
+// After a successful sign-in the session cookie has just been set; on some
+// browsers (iOS Safari / WKWebView) the very next /api/account read can race
+// the cookie commit and 401, bouncing the user back to "authorize again".
+// Retry a couple times before falling back to the login screen.
+async function resumeAfterAuth(){
+  for (var i=0;i<3;i++){
+    try {
+      var res = await fetch('/api/account', { credentials:'include', headers:{Accept:'application/json'} });
+      if (res.status !== 401) return loadDashboard();
+    } catch(e){}
+    await new Promise(function(r){ setTimeout(r, 250*(i+1)); });
+  }
+  return loadDashboard();
 }
 function initGoogleSignIn(){
   if (!GOOGLE_CLIENT_ID) return; // not configured yet — email-OTP only
@@ -3431,7 +3446,10 @@ function initGoogleSignIn(){
   s.onload = function(){
     try {
       if (!window.google || !google.accounts || !google.accounts.id) return;
-      google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredential });
+      // auto_select: a returning user who already authorized Imverica is
+      // signed in automatically (no second "authorize again" click). One Tap
+      // is shown on the login screen so re-auth is one tap, not a full consent.
+      google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredential, auto_select: true, cancel_on_tap_outside: false });
       var c = document.getElementById('gbtn-container');
       if (c) google.accounts.id.renderButton(c, { theme:'outline', size:'large', text:'continue_with', shape:'pill', width:300 });
       var block = document.getElementById('gauth-block'); if (block) block.style.display = 'block';
