@@ -85,6 +85,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/relief-packet"
+  to = "/.netlify/functions/relief-packet"
+  status = 200
+
+[[redirects]]
   from = "/api/analytics"
   to = "/.netlify/functions/analytics"
   status = 200

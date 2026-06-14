@@ -45,3 +45,10 @@ decks/
 # uploaded by scripts/upload-ca-local-templates-to-blobs.js. Not in git — too
 # large (1.4GB) and served from Blobs at runtime.
 astro-site/public/ca-local-templates/
+
+# macOS Finder/iCloud duplicate-file artifacts ("name 2.ext", "name 3.ext").
+# These are copies of real files created by sync/duplicate operations — never
+# real work. Verified 0 tracked files match this pattern.
+* 2.*
+* 3.*
+* 4.*
