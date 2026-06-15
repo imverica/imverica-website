@@ -255,7 +255,6 @@ function physicalAddress(answers) {
 function i765FieldValues(payload = {}) {
   const answers = payload.formAnswers || payload.answers || {};
   const contact = payload.contact || {};
-  const today = new Date().toISOString().slice(0, 10);
   const fallbackName = splitNameParts(contact.name);
   const category = categoryParts(answers.eligibility_category_code);
   const priorEad = yesNo(answers.prior_ead);
@@ -285,7 +284,9 @@ function i765FieldValues(payload = {}) {
     'Pt3Line3_DaytimePhoneNumber1[0]': phone,
     'Pt3Line4_MobileNumber1[0]': phone,
     'Pt3Line5_Email[0]': email,
-    'Pt3Line7b_DateofSignature[0]': dateMdY(today),
+    // Signature date stays blank unless the client supplies it — the client
+    // dates the form when they physically sign, we never pre-stamp "today".
+    'Pt3Line7b_DateofSignature[0]': dateMdY(answers.applicant_signature_date),
     'section_1[0]': category[0],
     'section_2[0]': category[1],
     'section_3[0]': category[2],
