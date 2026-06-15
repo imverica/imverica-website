@@ -3226,6 +3226,56 @@ function uscisRequiredAddressValid(field, address){
   const parts = Array.isArray(field.requiredParts) ? field.requiredParts : ['line1', 'city', 'country'];
   return parts.every(function(part){ return String(value[part] || '').trim(); });
 }
+// ===== Universal field rules — applied to EVERY USCIS form via the renderer.
+// Keyed off field id/label/type so no per-schema change is needed. Schemas can
+// opt a field out: allowNonLatin:true (native-script name), skipRule:true. =====
+function looksLikeNameField(f){
+  if (f.allowNonLatin || f.nativeScript) return false;                 // I-589 native-alphabet name, etc.
+  if (/native|own language|your language|на вашем|рідною|en su idioma|alphabet/i.test((f.label||'')+' '+(f.id||''))) return false;
+  return /(^|_)(family|given|middle|first|last|maiden|legal|other)?_?name(s)?($|_|\d)/i.test(f.id||'') || /\bname\b/i.test(f.label||'');
+}
+function hasNonLatinLetters(v){ return /[Ͱ-ϿЀ-ӿ԰-׿؀-ۿ぀-ヿ㐀-鿿가-힯]/.test(String(v||'')); }
+function looksLikeDobField(f){ return /(date_of_birth|dob|birth_date|_birthdate)/i.test(f.id||'') || /date of birth|дата рожд|fecha de nac|дата народ/i.test(f.label||''); }
+function looksLikeUsPhone(value){ return value && typeof value==='object' && /^\+?1$/.test(String(value.countryCode||'').replace(/\D/g,'')||'1'); }
+
+function validateUniversalRules(fields){
+  for (const f of fields){
+    if (f.skipRule) continue;
+    const v = uscisWizardState.values[f.id];
+    // Rule 1 — names in Latin letters (unless the field is explicitly native-script).
+    if ((f.type==='text'||!f.type) && uscisIsFilled(v) && looksLikeNameField(f) && hasNonLatinLetters(v)){
+      setUscisStatus('error', 'Use English (Latin) letters for "' + (f.label||f.id) + '". A field for your own alphabet is provided where the form requires it.');
+      return false;
+    }
+    // Rule 3 — date of birth must be a real, past, plausible date.
+    if (looksLikeDobField(f) && uscisIsFilled(v)){
+      const d = new Date(v); const y = d.getFullYear();
+      if (isNaN(d.getTime()) || y < 1900 || d > new Date()){
+        setUscisStatus('error', 'Enter a valid date of birth (not in the future).');
+        return false;
+      }
+    }
+    // Rule 2 — if a unit/apt number is entered, the unit type must be marked.
+    if (f.type==='addressBlock'){
+      const addr = (v && typeof v==='object') ? v : {};
+      const unit = String(addr.line2||'').trim();
+      if (unit && /\d/.test(unit) && !/(apt|ste|suite|fl(oor|r)?|unit|room|rm|#|bldg|space|spc|lot|trlr)/i.test(unit)){
+        setUscisStatus('error', 'Mark the unit type with the number (e.g. "Apt 5", "Ste 200", "Flr 3") in: ' + (f.label||f.id));
+        return false;
+      }
+    }
+    // Rule 5 — US phone must be a full 10-digit number (USCIS format).
+    if (f.type==='phone' && uscisIsFilled(v) && looksLikeUsPhone(v)){
+      const digits = (String(v.areaCode||'')+String(v.number||'')).replace(/\D/g,'');
+      if (digits.length !== 10){
+        setUscisStatus('error', 'Enter a full 10-digit U.S. phone number for: ' + (f.label||f.id));
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function validateUscisCurrentPage(){
   const schema = uscisWizardState.schema;
   const step = schema && schema.steps && schema.steps[uscisWizardState.pageIndex];
@@ -3246,6 +3296,8 @@ function validateUscisCurrentPage(){
       return false;
     }
   }
+  // Rules 1/2/3/5 (rule 4 = required, enforced above) run on filled fields too.
+  if (!validateUniversalRules(fields)) return false;
   return true;
 }
 
