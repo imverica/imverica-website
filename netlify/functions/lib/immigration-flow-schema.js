@@ -1258,6 +1258,7 @@ function applicantSteps() {
     ]),
     step('applicant_birth_country', 'Country of birth', 'Select the country of birth from the official list.', [
       field('country_of_birth', 'Country of birth', 'select', {
+        required: true,
         autocomplete: 'country-name',
         options: COUNTRY_OPTIONS
       })
@@ -1827,7 +1828,7 @@ function i130SpecificSteps() {
     ]),
     step('i130_petitioner_birth_place', 'Petitioner place of birth', 'City/town/village and country of birth.', [
       field('petitioner_city_of_birth', 'Petitioner city/town/village of birth', 'text'),
-      field('petitioner_country_of_birth', 'Petitioner country of birth', 'select', { options: COUNTRY_OPTIONS })
+      field('petitioner_country_of_birth', 'Petitioner country of birth', 'select', { required: true, options: COUNTRY_OPTIONS })
     ]),
     step('i130_petitioner_birth_sex', 'Petitioner date of birth and sex', 'These map to Part 2, Items 8 and 9.', [
       field('petitioner_date_of_birth', 'Petitioner date of birth', 'date', { required: true, autocomplete: 'bday' }),
@@ -1920,7 +1921,7 @@ function i130SpecificSteps() {
     ]),
     step('i130_beneficiary_birth_place', 'Beneficiary birth information', 'Birth city, country, date, and sex.', [
       field('beneficiary_city_of_birth', 'Beneficiary city/town/village of birth', 'text'),
-      field('beneficiary_country_of_birth', 'Beneficiary country of birth', 'select', { options: COUNTRY_OPTIONS })
+      field('beneficiary_country_of_birth', 'Beneficiary country of birth', 'select', { required: true, options: COUNTRY_OPTIONS })
     ]),
     step('i130_beneficiary_birth_sex', 'Beneficiary date of birth and sex', 'These map to Part 4 birth and sex fields.', [
       field('beneficiary_date_of_birth', 'Beneficiary date of birth', 'date', { required: true }),
