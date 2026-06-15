@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_485_supplement_aFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Part1_Line5_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Part2_Line4_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -23,7 +22,9 @@ function i_485_supplement_aFieldValues(payload={}) {
   v["Part1_Line6_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Part1_Line7_CountryofCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["Part4_Line3_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Part4_Line4_DateofSignature[0]"] = dateMdY(today);
+  // Signature date stays blank unless the client supplies it — the client
+  // dates the form when they physically sign; we never pre-stamp "today".
+  v["Part4_Line4_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Part5_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Part5_Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["Part5_Line2_InterpreterBusinessorOrg[0]"]    = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
