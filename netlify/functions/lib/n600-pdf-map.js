@@ -30,7 +30,6 @@ function maritalFields(v){const s=clean(v,80).toLowerCase();
 function n_600FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Pt1Line1_FamilyName[1]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Pt1Line1_GivenName[1]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
@@ -64,7 +63,7 @@ function n_600FieldValues(payload={}) {
   v["Pt2Line10_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
   v["P10_Line4_Telephone[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P10_Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P13_DateofSignature[0]"] = dateMdY(today);
+  v["P13_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
   v["P10_Line1_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);

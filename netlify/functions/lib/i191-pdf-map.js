@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_191FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Pt1Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Pt1Line1_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
@@ -30,7 +29,7 @@ function i_191FieldValues(payload={}) {
   v["Pt11Line3_PrepDaytimeTelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Pt3Line5_MobileTelephoneNumber3[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["Pt10Line5_InterpreterEmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt11Line6_DateofSignature[0]"] = dateMdY(today);
+  v["Pt11Line6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Pt10Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt10Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["Pt4Line6a_NameOfLanguage[0]"]   = clean(a.interpreter_language, 40);

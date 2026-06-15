@@ -21,7 +21,6 @@ function sexFields(v){const s=clean(v,40).toLowerCase();
 function i_693FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Pt1Line1a_FamilyName[11]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Pt1Line1b_GivenName[11]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
@@ -34,7 +33,7 @@ function i_693FieldValues(payload={}) {
   v["Pt1Line2_AptSteFlrNumber[0]"] = unitNumber(a.mailing_address_line2 || a.address_unit);
   Object.assign(v, unitRadio("Pt1Line2_Unit", a.mailing_address_line2 || a.address_unit)); // Apt/Ste/Flr selector
   v["Pt7Line7_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt9Line3_DateSigned[0]"] = dateMdY(today);
+  v["Pt9Line3_DateSigned[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Pt3Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt3Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);

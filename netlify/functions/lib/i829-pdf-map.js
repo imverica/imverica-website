@@ -24,7 +24,6 @@ function sexFields(v){const s=clean(v,40).toLowerCase();
 function i_829FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   // Part 2 — petitioner identity (field names are meaningful here: p2LineN =
   // Part 2 Item N, render-verified). The old map had NO name fields and sent the
@@ -48,7 +47,7 @@ function i_829FieldValues(payload={}) {
   v["p2Line14ZipCode[0]"]          = digits(a.mailing_zip || a.zip_code, 10);
   v["P9_Line1_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["p11Line5Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["p11Line6bDateofSignature[0]"] = dateMdY(today);
+  v["p11Line6bDateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["p10Line1aInterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["p10Line1bInterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);

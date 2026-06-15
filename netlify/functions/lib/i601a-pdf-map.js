@@ -20,7 +20,6 @@ function sexFields(v){const s=clean(v,40).toLowerCase();
 function i_601aFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Pt1Line11_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1Line1_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -30,7 +29,7 @@ function i_601aFieldValues(payload={}) {
   v["Pt1Line14_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["Pt8Line5_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["Pt8Line6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt8Line8b_DateofSignature[0]"] = dateMdY(today);
+  v["Pt8Line8b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Pt7Line1a_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt7Line1b_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);

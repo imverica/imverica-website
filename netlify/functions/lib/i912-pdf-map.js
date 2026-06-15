@@ -28,7 +28,6 @@ function maritalFields(v){const s=clean(v,80).toLowerCase();
 function i_912FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P2_L2_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["P2_L2_GivenName[0]"] = clean(a.applicant_given_name || a.given_name || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
@@ -62,7 +61,7 @@ function i_912FieldValues(payload={}) {
   v["P7_L3_DaytimeTelePhoneNumber1[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P7_L4_MobileTelePhoneNumber1[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["P7_L5_EmailAddress[0]"] = clean(a.email_address || a.email || c.email, 120);
-  v["P7_L6_Date[0]"] = dateMdY(today);
+  v["P7_L6_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P9_L1A_FamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P9_L1B_GivenName[0]"] = clean(a.interpreter_given_name, 60);
   v["P9_L2_BusOrgName[0]"] = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
@@ -75,7 +74,7 @@ function i_912FieldValues(payload={}) {
   v["P9_L3h_Country[0]"] = clean(a.interpreter_country || a.mailing_country, 60);
   v["P9_L4_DaytimeTelePhoneNumber1[0]"] = usPhone(a.interpreter_phone || a.daytime_phone || c.phone);
   v["P9_L5_EmailAddress[0]"] = clean(a.interpreter_email || a.email_address || c.email, 120);
-  v["P9_L6b_Date[0]"] = dateMdY(today);
+  v["P9_L6b_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P9_Language[0]"] = clean(a.interpreter_language || a.applicant_statement_language, 40);
   v["P10_L1A_FamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["P10_L1b_GivenName[0]"] = clean(a.preparer_given_name, 60);
@@ -89,7 +88,7 @@ function i_912FieldValues(payload={}) {
   v["P10_L3h_Country[0]"] = clean(a.preparer_country || a.mailing_country, 60);
   v["P10_L4_DaytimeTelePhoneNumber1[0]"] = usPhone(a.preparer_phone || a.daytime_phone || c.phone);
   v["P10_L6_EmailAddress[0]"]  = clean(a.preparer_email || a.email_address || a.email || c.email, 120);
-  v["P10_L8B_Date[0]"] = dateMdY(today);
+  v["P10_L8B_Date[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, maritalFields(a.marital_status || ''));
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

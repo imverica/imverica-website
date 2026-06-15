@@ -16,7 +16,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function n_648FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Pt1Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Pt1Line1_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
@@ -31,7 +30,7 @@ function n_648FieldValues(payload={}) {
   v["Pt2Line2_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
   v["Pt4Line4_InterpreterDaytimeTelephone[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Pt4Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt4Line8_DateofSignature[0]"] = dateMdY(today);
+  v["Pt4Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

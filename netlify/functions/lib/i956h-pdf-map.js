@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_956hFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P3_Line3_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["P3_Line8_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
@@ -23,7 +22,7 @@ function i_956hFieldValues(payload={}) {
   v["P3_Line4_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P8_Line4_DaytimeTelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P8_Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P8_Line8_DateofSignature[0]"] = dateMdY(today);
+  v["P8_Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P8_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P8_Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
 

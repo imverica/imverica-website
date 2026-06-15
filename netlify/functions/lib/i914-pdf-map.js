@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_914FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["P3_Line5_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
@@ -24,7 +23,7 @@ function i_914FieldValues(payload={}) {
   v["Pt13Line4_DaytimePhoneNumber1[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Pt12Line5_InterpreterMobileTelephone[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["Pt13Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt13Line8_DateofSignature[0]"] = dateMdY(today);
+  v["Pt13Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Pt13Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt13Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["Pt13Line2_InterpreterBusinessorOrg[0]"]    = clean(a.interpreter_org_name || a.interpreter_business_name, 80);

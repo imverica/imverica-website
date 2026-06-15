@@ -30,14 +30,13 @@ function maritalFields(v){const s=clean(v,80).toLowerCase();
 function i_590FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P7_L3_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Linef_CurrentSpouseSSN[0]"] = digits(a.ssn || a.social_security_number, 9);
   v["P7_L3_PlaceOfBirth[0]"] = clean(a.city_of_birth || a.place_of_birth_city, 60);
   v["P11_LE_TelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P11_LF_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P12__DateofSignature[0]"] = dateMdY(today);
+  v["P12__DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
 

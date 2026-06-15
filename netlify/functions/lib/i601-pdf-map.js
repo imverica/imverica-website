@@ -20,14 +20,13 @@ function sexFields(v){const s=clean(v,40).toLowerCase();
 function i_601FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["p6Line8DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["p6Line7AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["p1Line8SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
   v["p1Line13CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["p11Line7Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["p11Line1bAppDateofSignature[0]"] = dateMdY(today);
+  v["p11Line1bAppDateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

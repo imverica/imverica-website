@@ -33,7 +33,6 @@ function maritalFields(v){const s=clean(v,80).toLowerCase();
 function i_821dFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const residence = firstItem(a.residence_history);
   const v = {};
   v["P1_Line2_Date[0]"] = dateMdY(a.prior_daca_dates);
@@ -73,7 +72,7 @@ function i_821dFieldValues(payload={}) {
   v["P5_Line3_DayPhone[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P5_Line4_MobilePhone[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["P5_Line5_Email[0]"] = clean(a.email_address || a.email || c.email, 120);
-  v["P5_Line2b_Date[0]"] = dateMdY(today);
+  v["P5_Line2b_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P6_Line1a_Name[0]"] = clean(a.interpreter_family_name, 60);
   v["P6_Line1b_Name[0]"] = clean(a.interpreter_given_name, 60);
   v["P6_Line2_Organization[0]"] = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
@@ -86,7 +85,7 @@ function i_821dFieldValues(payload={}) {
   v["P6_Line3h_Country[0]"] = clean(a.interpreter_country || a.mailing_country, 60);
   v["P6_Line4_DayPhone[0]"] = usPhone(a.interpreter_phone || a.daytime_phone || c.phone);
   v["P6_Line5_Email[0]"] = clean(a.interpreter_email || a.email_address || c.email, 120);
-  v["P6Line6b_Date[0]"] = dateMdY(today);
+  v["P6Line6b_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P6_Language[0]"] = clean(a.interpreter_language || a.applicant_statement_language, 40);
   v["P7_Line1a_Name[0]"] = clean(a.preparer_family_name, 60);
   v["P7_Line1b_Name[0]"] = clean(a.preparer_given_name, 60);
@@ -101,7 +100,7 @@ function i_821dFieldValues(payload={}) {
   v["P7_Line4_DayPhone[0]"] = usPhone(a.preparer_phone || a.daytime_phone || c.phone);
   v["P7_Line5_MobilePhone[0]"] = usPhone(a.preparer_mobile_phone || a.mobile_phone || c.phone);
   v["P7_Line6_Email[0]"]  = clean(a.preparer_email || a.email_address || a.email || c.email, 120);
-  v["P7_Line7b_Date[0]"] = dateMdY(today);
+  v["P7_Line7b_Date[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
 

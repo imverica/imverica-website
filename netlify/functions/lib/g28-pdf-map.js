@@ -15,11 +15,10 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function g_28FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Pt3Line8_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["Line10_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt5Line2b_DateofSignature[0]"] = dateMdY(today);
+  v["Pt5Line2b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

@@ -13,7 +13,6 @@ function stateCode(v){const t=clean(v,80);const m=t.match(/^([A-Z]{2})\b/);retur
 function ar_11FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
 
   v["S1_FamilyName[0]"]  = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
@@ -44,7 +43,7 @@ function ar_11FieldValues(payload={}) {
   Object.assign(v, unitRadio('S2C_Unit', a.mailing_address_unit || a.mailing_unit_type));
 
   v["S3_SignatureApplicant[0]"] = clean(a.signature || a.applicant_given_name || '', 80);
-  v["S3_DateofSignature[0]"]   = dateMdY(today);
+  v["S3_DateofSignature[0]"]   = dateMdY(a.applicant_signature_date);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

@@ -30,7 +30,6 @@ function maritalFields(v){const s=clean(v,80).toLowerCase();
 function i_765vFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Part1_Item17_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Part2_Item5_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -42,7 +41,7 @@ function i_765vFieldValues(payload={}) {
   v["Part1_Item19_I94[0]"]     = clean(a.i94_number, 20);
   v["Part6_Item4_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Line4_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Part6_Item8_DateofSignature[0]"] = dateMdY(today);
+  v["Part6_Item8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
   v["Part5_Item1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);

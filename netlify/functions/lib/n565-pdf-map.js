@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function n_565FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P2_Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Line6_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
@@ -23,7 +22,7 @@ function n_565FieldValues(payload={}) {
   v["Line3_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["Pt10Line4_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["Pt10Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt10Line7_DateofSignature[0]"] = dateMdY(today);
+  v["Pt10Line7_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Pt10Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt10Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["Pt11Line1_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);

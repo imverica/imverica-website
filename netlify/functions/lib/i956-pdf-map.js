@@ -15,11 +15,10 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_956FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P12_Line4_DaytimeTelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P12_Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P12_Line8_DateofSignature[0]"] = dateMdY(today);
+  v["P12_Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P12_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P12_Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
 

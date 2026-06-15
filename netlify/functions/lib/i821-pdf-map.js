@@ -32,7 +32,6 @@ function maritalFields(v){const s=clean(v,80).toLowerCase();
 function i_821FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
 
   // ===== Part 1 — Type of Application (render-verified, fillable AcroForm) =====
@@ -88,7 +87,7 @@ function i_821FieldValues(payload={}) {
   v["Part9_Item3_Country[0]"] = clean(a.interpreter_country || a.mailing_country, 60);
   v["Part9_Item4_DaytimePhone[0]"] = usPhone(a.interpreter_phone || a.daytime_phone || c.phone);
   v["Part9_Item5_Email[0]"] = clean(a.interpreter_email || a.email_address || c.email, 120);
-  v["Part9_Item6_DateofSignature[0]"] = dateMdY(today);
+  v["Part9_Item6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Part10_Item1_FamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["Part10_Item1_GivenName[0]"] = clean(a.preparer_given_name, 60);
   v["Part10_Item2_OrgName[0]"] = clean(a.preparer_business_name, 80);
@@ -101,7 +100,7 @@ function i_821FieldValues(payload={}) {
   v["Part10_Item4_DaytimePhone[0]"] = usPhone(a.preparer_phone || a.daytime_phone || c.phone);
   v["Part10_Item5_MobilePhone[0]"] = usPhone(a.preparer_mobile_phone || a.mobile_phone || c.phone);
   v["Part10_Item6_Email[0]"] = clean(a.preparer_email || a.email_address || c.email, 120);
-  v["Part10_Item8b_DateofSignature[0]"] = dateMdY(today);
+  v["Part10_Item8b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
 

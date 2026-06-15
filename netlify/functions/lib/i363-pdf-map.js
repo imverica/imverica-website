@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_363FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P1_Line2_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["P1_Line4_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -26,7 +25,7 @@ function i_363FieldValues(payload={}) {
   v["Pt1Line14_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
   v["Line3_DaytimePhoneNumber1[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Line4_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Line5b_DateofSignature[0]"] = dateMdY(today);
+  v["Line5b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Line1a_PreparerFamilyName[1]"] = clean(a.preparer_family_name, 60);
   v["Line1b_PreparerGivenName[2]"]  = clean(a.preparer_given_name, 60);
 

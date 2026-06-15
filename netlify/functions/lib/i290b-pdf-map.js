@@ -16,7 +16,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_290bFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P1_Line2_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1_Line6_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -28,7 +27,7 @@ function i_290bFieldValues(payload={}) {
   v["Pt1Line6_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt1Line6_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
   v["P4_Line5_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P4_Line6b_DateofSignature[0]"] = dateMdY(today);
+  v["P4_Line6b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P5_Line1a_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P5_Line1b_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["P5_Line2_InterpreterBusiness[0]"]    = clean(a.interpreter_org_name || a.interpreter_business_name, 80);

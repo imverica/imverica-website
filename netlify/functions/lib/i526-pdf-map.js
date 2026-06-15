@@ -21,7 +21,6 @@ function sexFields(v){const s=clean(v,40).toLowerCase();
 function i_526FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   // Part 1 "Information About You" — render-verified field names (the visible
   // Item 4 name boxes are P1_Line4_*, not P2_Line1_*).
@@ -45,7 +44,7 @@ function i_526FieldValues(payload={}) {
   v["P1_Line12_Country[0]"] = clean(a.mailing_country || 'United States', 40);
   v["P10_Line4_PreparersDaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P10_Line6_PreparersEmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P9_Line8_DateofSignature[0]"] = dateMdY(today);
+  v["P9_Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["P8_Line1_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P8_Line1_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);

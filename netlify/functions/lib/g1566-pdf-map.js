@@ -15,14 +15,13 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function g_1566FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Line8_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Sec2Line6_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P5_Line4_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Pt3Line5_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P5_Line3b_DateofSignature[0]"] = dateMdY(today);
+  v["P5_Line3b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

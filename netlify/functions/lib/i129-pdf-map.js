@@ -20,7 +20,6 @@ function sexFields(v){const s=clean(v,40).toLowerCase();
 function i_129FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["Line6_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Line10_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -35,7 +34,7 @@ function i_129FieldValues(payload={}) {
   v["Line14b_Passport[0]"] = clean(a.passport_number, 20);
   v["Preparer_DaytimePhoneNumber1[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Part14_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Part14_DateofSignature[1]"] = dateMdY(today);
+  v["Part14_DateofSignature[1]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Line_PreparerFamilyName[1]"] = clean(a.preparer_family_name, 60);
   v["Line_PreparerGivenName[1]"]  = clean(a.preparer_given_name, 60);

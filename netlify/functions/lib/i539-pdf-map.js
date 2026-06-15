@@ -15,7 +15,6 @@ function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y
 function i_539FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["P1_Line8_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1Line2_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
@@ -26,7 +25,7 @@ function i_539FieldValues(payload={}) {
   v["SupA_Line1k_Passport[0]"] = clean(a.passport_number, 20);
   v["P7_Line4_PreparerDaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P7_Line6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["P7_Line8b_DateofSignature[0]"] = dateMdY(today);
+  v["P7_Line8b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P7_Line1a_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["P7_Line1b_PreparerGivenName[0]"]  = clean(a.preparer_given_name, 60);
   v["P7_Line2_PreparerNameofBusinessorOrgName[0]"]    = clean(a.preparer_business_name, 80);
