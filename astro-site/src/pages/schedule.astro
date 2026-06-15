@@ -1,0 +1,9 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import AppointmentScheduler from '~/components/AppointmentScheduler.astro';
+const title = 'Schedule an Appointment | Imverica Legal Solutions';
+const description = 'Request a phone or video appointment with Imverica Legal Solutions for document preparation or attorney partnership questions.';
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/schedule" slug="/schedule" availableLocales={['en','ru','uk','es']}>
+  <AppointmentScheduler lang="en" />
+</BaseLayout>

@@ -1,0 +1,267 @@
+---
+import type { Locale } from '~/data/i18n';
+
+interface Props { lang?: Locale; }
+const { lang = 'en' } = Astro.props;
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+
+const COPY = {
+  en: {
+    eyebrow: 'Schedule a meeting', title: 'Choose a preferred appointment time',
+    sub: 'Select a date and time for a phone or video meeting. We will confirm availability by email.',
+    type: 'Meeting type', phone: 'Phone call · 20 minutes', video: 'Video meeting · 30 minutes', b2b: 'Attorney / law-firm partnership · 30 minutes',
+    date: 'Preferred date', time: 'Preferred time', zone: 'All times are Pacific Time (PT).',
+    name: 'Your name', email: 'Email', phoneLabel: 'Phone', notes: 'What would you like to discuss?',
+    notesHint: 'Briefly describe the document, filing, or partnership question.', submit: 'Request appointment', sending: 'Sending…',
+    confirm: 'This is a scheduling request. Your appointment is confirmed only after you receive our confirmation email.',
+    required: 'Please complete all required fields and select a time.', weekend: 'Please choose a weekday.',
+    error: 'Could not send the request. Please try again or call +1 (916) 399-3992.',
+    success: 'Appointment request received', successText: 'We will confirm the time by email. Your reference is',
+    another: 'Request another time'
+  },
+  ru: {
+    eyebrow: 'Запись на встречу', title: 'Выберите удобное время',
+    sub: 'Выберите дату и время телефонной или видеовстречи. Мы подтвердим свободный слот по email.',
+    type: 'Тип встречи', phone: 'Телефонный звонок · 20 минут', video: 'Видеовстреча · 30 минут', b2b: 'Партнерство с адвокатом / фирмой · 30 минут',
+    date: 'Желаемая дата', time: 'Желаемое время', zone: 'Все время указано по Pacific Time (PT).',
+    name: 'Ваше имя', email: 'Email', phoneLabel: 'Телефон', notes: 'Что вы хотите обсудить?',
+    notesHint: 'Кратко опишите документ, подачу или вопрос о сотрудничестве.', submit: 'Запросить встречу', sending: 'Отправляем…',
+    confirm: 'Это запрос на запись. Встреча считается подтвержденной только после нашего письма.',
+    required: 'Заполните обязательные поля и выберите время.', weekend: 'Выберите рабочий день.',
+    error: 'Не удалось отправить запрос. Попробуйте снова или позвоните +1 (916) 399-3992.',
+    success: 'Запрос на встречу получен', successText: 'Мы подтвердим время по email. Ваш номер', another: 'Выбрать другое время'
+  },
+  uk: {
+    eyebrow: 'Запис на зустріч', title: 'Оберіть зручний час',
+    sub: 'Оберіть дату й час телефонної або відеозустрічі. Ми підтвердимо вільний час електронною поштою.',
+    type: 'Тип зустрічі', phone: 'Телефонний дзвінок · 20 хвилин', video: 'Відеозустріч · 30 хвилин', b2b: 'Партнерство з адвокатом / фірмою · 30 хвилин',
+    date: 'Бажана дата', time: 'Бажаний час', zone: 'Увесь час указано за Pacific Time (PT).',
+    name: 'Ваше ім’я', email: 'Email', phoneLabel: 'Телефон', notes: 'Що ви хочете обговорити?',
+    notesHint: 'Коротко опишіть документ, подання або питання співпраці.', submit: 'Запросити зустріч', sending: 'Надсилаємо…',
+    confirm: 'Це запит на запис. Зустріч підтверджена лише після нашого листа.',
+    required: 'Заповніть обов’язкові поля та оберіть час.', weekend: 'Оберіть робочий день.',
+    error: 'Не вдалося надіслати запит. Спробуйте ще раз або зателефонуйте +1 (916) 399-3992.',
+    success: 'Запит на зустріч отримано', successText: 'Ми підтвердимо час електронною поштою. Ваш номер', another: 'Обрати інший час'
+  },
+  es: {
+    eyebrow: 'Agendar una cita', title: 'Elija un horario preferido',
+    sub: 'Seleccione fecha y hora para una llamada o videollamada. Confirmaremos la disponibilidad por email.',
+    type: 'Tipo de reunión', phone: 'Llamada telefónica · 20 minutos', video: 'Videollamada · 30 minutos', b2b: 'Colaboración con abogado / firma · 30 minutos',
+    date: 'Fecha preferida', time: 'Hora preferida', zone: 'Todos los horarios están en Pacific Time (PT).',
+    name: 'Su nombre', email: 'Email', phoneLabel: 'Teléfono', notes: '¿Qué desea conversar?',
+    notesHint: 'Describa brevemente el documento, trámite o colaboración.', submit: 'Solicitar cita', sending: 'Enviando…',
+    confirm: 'Esta es una solicitud. La cita queda confirmada únicamente después de nuestro email.',
+    required: 'Complete los campos obligatorios y elija una hora.', weekend: 'Seleccione un día hábil.',
+    error: 'No pudimos enviar la solicitud. Intente de nuevo o llame al +1 (916) 399-3992.',
+    success: 'Solicitud de cita recibida', successText: 'Confirmaremos la hora por email. Su referencia es', another: 'Solicitar otra hora'
+  }
+} as const;
+const t = COPY[lang];
+const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
+---
+
+{TURNSTILE_SITE_KEY && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>}
+
+<section class="schedule-shell" data-lang={lang} data-copy={JSON.stringify(t)}>
+  <div class="schedule-intro">
+    <span class="schedule-eyebrow">{t.eyebrow}</span>
+    <h1>{t.title}</h1>
+    <p>{t.sub}</p>
+  </div>
+
+  <div class="schedule-card">
+    <form id="appointmentForm" class="schedule-form" novalidate>
+      <label class="field full">
+        <span>{t.type} *</span>
+        <select id="appointmentType" required>
+          <option value="phone">{t.phone}</option>
+          <option value="video">{t.video}</option>
+          <option value="b2b">{t.b2b}</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>{t.date} *</span>
+        <input id="appointmentDate" type="date" required />
+      </label>
+      <div class="field">
+        <span>{t.time} *</span>
+        <div class="time-slots" id="appointmentSlots" role="radiogroup" aria-label={t.time}>
+          {slots.map((slot) => <button type="button" class="time-slot" data-time={slot} aria-pressed="false">{slot}</button>)}
+        </div>
+        <small>{t.zone}</small>
+      </div>
+
+      <label class="field">
+        <span>{t.name} *</span>
+        <input id="appointmentName" type="text" autocomplete="name" maxlength="120" required />
+      </label>
+      <label class="field">
+        <span>{t.email} *</span>
+        <input id="appointmentEmail" type="email" autocomplete="email" maxlength="180" required />
+      </label>
+      <label class="field full">
+        <span>{t.phoneLabel}</span>
+        <input id="appointmentPhone" type="tel" autocomplete="tel" maxlength="40" />
+      </label>
+      <label class="field full">
+        <span>{t.notes} *</span>
+        <textarea id="appointmentNotes" rows="4" minlength="5" maxlength="1800" required></textarea>
+        <small>{t.notesHint}</small>
+      </label>
+
+      <div class="schedule-pot" aria-hidden="true"><input id="appointmentWebsite" type="text" tabindex="-1" autocomplete="off" /></div>
+      {TURNSTILE_SITE_KEY && (
+        <div class="field full"><div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-callback="appointmentTurnstile"></div></div>
+      )}
+      <input id="appointmentTurnstileToken" type="hidden" />
+      <div id="appointmentMessage" class="schedule-message full" hidden></div>
+      <p class="schedule-confirm full">{t.confirm}</p>
+      <button id="appointmentSubmit" class="schedule-submit full" type="submit">{t.submit}</button>
+    </form>
+
+    <div id="appointmentSuccess" class="schedule-success" hidden>
+      <div class="success-mark" aria-hidden="true">✓</div>
+      <h2>{t.success}</h2>
+      <p>{t.successText} <strong id="appointmentReference"></strong>.</p>
+      <button id="appointmentAnother" type="button">{t.another}</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  declare global { interface Window { appointmentTurnstile?: (token: string) => void; } }
+  window.appointmentTurnstile = function (token: string) {
+    const input = document.getElementById('appointmentTurnstileToken') as HTMLInputElement | null;
+    if (input) input.value = token;
+  };
+
+  const shell = document.querySelector('.schedule-shell') as HTMLElement | null;
+  if (shell) {
+    const copy = JSON.parse(shell.dataset.copy || '{}');
+    const lang = shell.dataset.lang || 'en';
+    const form = document.getElementById('appointmentForm') as HTMLFormElement;
+    const dateInput = document.getElementById('appointmentDate') as HTMLInputElement;
+    const message = document.getElementById('appointmentMessage') as HTMLElement;
+    const submit = document.getElementById('appointmentSubmit') as HTMLButtonElement;
+    let selectedTime = '';
+
+    const iso = (date: Date) => {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    };
+    const nextBusinessDay = () => {
+      const d = new Date(); d.setDate(d.getDate() + 1);
+      while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
+      return d;
+    };
+    const min = nextBusinessDay();
+    const max = new Date(); max.setDate(max.getDate() + 60);
+    dateInput.min = iso(min); dateInput.max = iso(max); dateInput.value = iso(min);
+
+    const show = (text: string, error = true) => {
+      message.textContent = text; message.hidden = false;
+      message.classList.toggle('error', error);
+    };
+    document.querySelectorAll<HTMLButtonElement>('.time-slot').forEach((button) => {
+      button.addEventListener('click', () => {
+        selectedTime = button.dataset.time || '';
+        document.querySelectorAll<HTMLButtonElement>('.time-slot').forEach((item) => {
+          const active = item === button;
+          item.classList.toggle('active', active);
+          item.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        message.hidden = true;
+      });
+    });
+    dateInput.addEventListener('change', () => {
+      const parts = dateInput.value.split('-').map(Number);
+      const day = new Date(parts[0], parts[1] - 1, parts[2]).getDay();
+      if (day === 0 || day === 6) { dateInput.value = ''; show(copy.weekend); }
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity() || !selectedTime) { show(copy.required); return; }
+      const type = document.getElementById('appointmentType') as HTMLSelectElement;
+      const name = document.getElementById('appointmentName') as HTMLInputElement;
+      const email = document.getElementById('appointmentEmail') as HTMLInputElement;
+      const phone = document.getElementById('appointmentPhone') as HTMLInputElement;
+      const notes = document.getElementById('appointmentNotes') as HTMLTextAreaElement;
+      const website = document.getElementById('appointmentWebsite') as HTMLInputElement;
+      const turnstile = document.getElementById('appointmentTurnstileToken') as HTMLInputElement;
+      const typeLabel = type.options[type.selectedIndex].text;
+      const situation = [
+        'APPOINTMENT REQUEST',
+        `Meeting: ${typeLabel}`,
+        `Preferred date: ${dateInput.value}`,
+        `Preferred time: ${selectedTime} Pacific Time`,
+        '', notes.value.trim()
+      ].join('\n');
+      submit.disabled = true; submit.textContent = copy.sending; message.hidden = true;
+      try {
+        const response = await fetch('/.netlify/functions/quick-intake', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name.value.trim(), email: email.value.trim(), phone: phone.value.trim(),
+            situation, formCode: 'APPOINTMENT', language: lang, files: [],
+            website: website.value, turnstileToken: turnstile.value
+          })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.ok) throw new Error(data.error || 'request failed');
+        form.hidden = true;
+        (document.getElementById('appointmentReference') as HTMLElement).textContent = data.orderId || '—';
+        (document.getElementById('appointmentSuccess') as HTMLElement).hidden = false;
+      } catch (_) { show(copy.error); }
+      finally { submit.disabled = false; submit.textContent = copy.submit; }
+    });
+
+    document.getElementById('appointmentAnother')?.addEventListener('click', () => {
+      form.reset(); dateInput.value = iso(nextBusinessDay()); selectedTime = '';
+      document.querySelectorAll('.time-slot').forEach((item) => { item.classList.remove('active'); item.setAttribute('aria-pressed', 'false'); });
+      (document.getElementById('appointmentSuccess') as HTMLElement).hidden = true;
+      form.hidden = false; message.hidden = true;
+    });
+  }
+</script>
+
+<style>
+  .schedule-shell { max-width: 1040px; margin: 0 auto; padding: clamp(42px, 6vw, 76px) 24px 80px; }
+  .schedule-intro { max-width: 720px; margin: 0 auto 28px; text-align: center; }
+  .schedule-eyebrow { display: block; margin-bottom: 10px; color: var(--terracotta-deep); font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .schedule-intro h1 { font-size: var(--fs-h1); }
+  .schedule-intro p { max-width: 640px; margin: 14px auto 0; color: #5e6b7c; font-size: 17px; }
+  .schedule-card { max-width: 820px; margin: 0 auto; padding: clamp(22px, 4vw, 42px); border: 1px solid var(--border); border-radius: 20px; background: #fff; box-shadow: 0 18px 50px rgba(17,30,48,.09); }
+  .schedule-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .field.full, .schedule-form > .full { grid-column: 1 / -1; }
+  .field > span { color: var(--navy-dark); font-size: 14px; font-weight: 700; }
+  .field input, .field select, .field textarea { width: 100%; border: 1px solid #cbd2dc; border-radius: 10px; padding: 12px 13px; background: #fff; color: var(--navy-dark); font: inherit; }
+  .field textarea { resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,46,74,.11); }
+  .field small { color: #6b7280; font-size: 12px; }
+  .time-slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .time-slot { border: 1px solid #cbd2dc; border-radius: 9px; padding: 10px 6px; background: #f8fafc; color: var(--navy); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .time-slot:hover, .time-slot.active { border-color: var(--navy); background: var(--navy); color: #fff; }
+  .schedule-confirm { margin: -3px 0 0; color: #667085; font-size: 12px; line-height: 1.5; }
+  .schedule-submit, .schedule-success button { border: 0; border-radius: 999px; padding: 14px 20px; background: var(--navy); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+  .schedule-submit:disabled { opacity: .6; cursor: wait; }
+  .schedule-message { padding: 11px 13px; border-radius: 9px; background: #e8f4ec; color: #1d5b34; font-size: 14px; }
+  .schedule-message.error { background: #fbe8e8; color: #8a1f1f; }
+  .schedule-pot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .schedule-success { padding: 36px 12px; text-align: center; }
+  .success-mark { display: grid; place-items: center; width: 68px; height: 68px; margin: 0 auto 18px; border-radius: 50%; background: #e3f4ea; color: #1d6b3b; font-size: 34px; }
+  .schedule-success h2 { margin-bottom: 10px; }
+  .schedule-success p { color: #5e6b7c; }
+  .schedule-success button { margin-top: 12px; }
+  @media (max-width: 680px) {
+    .schedule-form { grid-template-columns: 1fr; }
+    .field.full, .schedule-form > .full { grid-column: auto; }
+    .time-slots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .schedule-shell { padding-inline: 16px; }
+    .schedule-card { padding: 22px 17px; border-radius: 15px; }
+  }
+</style>

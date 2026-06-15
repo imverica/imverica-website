@@ -89,19 +89,60 @@ async function main() {
   assert(i765Evidence?.fields.some((field) => field.id === 'has_interpreter'), 'I-765: missing interpreter question');
   assert(i765Evidence?.fields.some((field) => field.id === 'has_preparer'), 'I-765: missing preparer question');
 
-  const n400 = await callFlow('N-400', 'ru');
+  const n400 = await callFlow('N-400', 'en');
   const n400Order = n400.body.steps.map((step) => step.id);
   assert(n400Order.indexOf('n400_eligibility_basis') < n400Order.indexOf('n400_legal_name'), 'N-400: eligibility must come before applicant name');
   assert(n400Order.indexOf('n400_legal_name') < n400Order.indexOf('n400_biographic_ethnicity_race'), 'N-400: applicant identity must come before biographic fields');
   assert(n400Order.indexOf('n400_biographic_colors') < n400Order.indexOf('n400_current_address'), 'N-400: biographic fields must come before residence fields');
   assert(n400Order.indexOf('n400_address_history') < n400Order.indexOf('n400_employment_history'), 'N-400: address history must come before employment history');
   assert(n400Order.indexOf('n400_employment_history') < n400Order.indexOf('n400_trips_outside_us'), 'N-400: employment history must come before travel history');
-  assert(n400Order.indexOf('n400_trips_outside_us') < n400Order.indexOf('n400_citizenship_voting'), 'N-400: travel history must come before Part 9 eligibility questions');
-  assert(n400Order.indexOf('n400_oath_questions') < n400Order.indexOf('n400_applicant_contact'), 'N-400: oath questions must come before applicant contact');
+  assert(n400Order.indexOf('n400_trips_outside_us') < n400Order.indexOf('n400_p9_1_claimed_citizen'), 'N-400: travel history must come before Part 9 eligibility questions');
+  assert(n400Order.indexOf('n400_p9_37_national_importance_work') < n400Order.indexOf('n400_applicant_contact'), 'N-400: oath questions must come before applicant contact');
   const n400Fields = n400.body.steps.flatMap((step) => step.fields || []);
   assert(n400Fields.find((field) => field.id === 'addresses_last_five_years')?.type === 'addressHistory', 'N-400: address history should be structured');
   assert(n400Fields.find((field) => field.id === 'employment_school_last_five_years')?.type === 'employmentHistory', 'N-400: employment history should be structured');
   assert(n400Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'N-400: daytime phone should be US 10-digit phone field');
+  const n400ById = Object.fromEntries(n400Fields.map((field) => [field.id, field]));
+  const n400Basis = n400ById.basis_for_naturalization;
+  assert(n400Basis?.options?.length === 7, 'N-400: Part 1 must offer all seven official filing bases');
+  assert(n400Basis.options.includes('VAWA'), 'N-400: Part 1 must include VAWA');
+  assert(n400Basis.options.includes('Spouse of U.S. Citizen in Qualified Employment Outside the United States'), 'N-400: Part 1 must include INA 319(b) spouse basis');
+  assert(n400Basis.options.includes('At Least One Year of Honorable Military Service at Any Time'), 'N-400: Part 1 must distinguish the honorable military-service basis');
+  assert(n400ById.sex?.options?.length === 2 && n400ById.sex.options.includes('Male') && n400ById.sex.options.includes('Female'), 'N-400: sex choices must match the official 01/20/25 form');
+  assert(n400ById.n400_ssa_card_update, 'N-400: missing Part 2 Item 12.a SSA card/update question');
+  assert(n400ById.n400_ssa_disclosure_consent, 'N-400: missing Part 2 Item 12.c SSA disclosure consent');
+  assert(n400ById.total_children_under_18, 'N-400: Part 6 must ask for children under 18, not all children');
+  assert(n400ById.n400_fee_reduction_eligible_income, 'N-400: missing Part 10 reduced-fee question');
+  assert(n400ById.n400_total_household_income && n400ById.n400_household_size, 'N-400: reduced-fee household details are incomplete');
+  const requiredPart9Ids = [
+    'n400_p9_1_claimed_citizen', 'n400_p9_2_registered_or_voted', 'n400_p9_3_overdue_taxes',
+    'n400_p9_4_nonresident_tax', 'n400_p9_5a_communist_totalitarian', 'n400_p9_5b_advocated_overthrow',
+    'n400_p9_6a_group_weapon_explosive', 'n400_p9_6b_group_kidnap_hijack', 'n400_p9_6c_group_threat_plan',
+    'n400_p9_7a_torture', 'n400_p9_7b_genocide', 'n400_p9_7c_killing', 'n400_p9_7d_severe_injury',
+    'n400_p9_7e_nonconsensual_sexual_contact', 'n400_p9_7f_religious_persecution', 'n400_p9_7g_protected_ground_harm',
+    'n400_p9_8a_military_police_unit', 'n400_p9_8b_armed_group', 'n400_p9_9_detention_facility',
+    'n400_p9_10a_group_used_weapon', 'n400_p9_10b_personally_used_weapon', 'n400_p9_10c_personally_threatened_weapon',
+    'n400_p9_11_weapons_transport', 'n400_p9_12_weapons_training', 'n400_p9_13_recruited_child',
+    'n400_p9_14_child_hostilities', 'n400_p9_15a_unarrested_crime', 'n400_p9_15b_arrested_charged',
+    'n400_p9_16_completed_sentence', 'n400_p9_17a_prostitution', 'n400_p9_17b_controlled_substances',
+    'n400_p9_17c_polygamy', 'n400_p9_17d_marriage_fraud', 'n400_p9_17e_alien_smuggling',
+    'n400_p9_17f_illegal_gambling', 'n400_p9_17g_failed_support', 'n400_p9_17h_public_benefit_misrepresentation',
+    'n400_p9_18_false_documents', 'n400_p9_19_lied_for_entry_benefit', 'n400_p9_20_removal_proceedings',
+    'n400_p9_21_removed_deported', 'n400_p9_22a_male_18_to_26', 'n400_p9_22b_selective_service',
+    'n400_p9_23_left_to_avoid_draft', 'n400_p9_24_military_exemption', 'n400_p9_25_us_armed_forces',
+    'n400_p9_26a_current_service', 'n400_p9_26b_deploying', 'n400_p9_26c_stationed_abroad',
+    'n400_p9_26d_former_service_abroad', 'n400_p9_27_court_martial_discharge', 'n400_p9_28_alien_discharge',
+    'n400_p9_29_deserted', 'n400_p9_30a_nobility', 'n400_p9_30b_give_up_nobility',
+    'n400_p9_31_support_constitution', 'n400_p9_32_understand_oath', 'n400_p9_33_unable_oath',
+    'n400_p9_34_willing_oath', 'n400_p9_35_bear_arms', 'n400_p9_36_noncombatant_service',
+    'n400_p9_37_national_importance_work'
+  ];
+  requiredPart9Ids.forEach((id) => assert(n400ById[id]?.type === 'radio', `N-400: missing independent official Part 9 question ${id}`));
+  [
+    'n400_criminal_history_other_yes', 'n400_security_any_yes', 'n400_removal_or_status_problem',
+    'n400_willing_oath_service', 'n400_contact_permission', 'green_card_family_name',
+    'state_or_province_of_birth', 'disability_accommodation_needed'
+  ].forEach((id) => assert(!n400ById[id], `N-400: deprecated aggregate/non-form question must not return: ${id}`));
 
   const i130a = await callFlow('I-130A', 'en');
   const i130 = await callFlow('I-130', 'en');

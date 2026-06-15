@@ -1,0 +1,8 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import AppointmentScheduler from '~/components/AppointmentScheduler.astro';
+const lang = 'es' as const;
+---
+<BaseLayout title="Agendar una cita | Imverica Legal Solutions" description="Solicite una cita telefónica o por video con Imverica Legal Solutions." canonical="https://imverica.com/mx/schedule" slug="/schedule" lang={lang} availableLocales={['en','ru','uk','es']}>
+  <AppointmentScheduler lang={lang} />
+</BaseLayout>

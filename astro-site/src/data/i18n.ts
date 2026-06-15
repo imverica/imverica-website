@@ -94,7 +94,8 @@ const translatedSlugs = new Set<string>([
   // so RU/UA/MX nav clicks fall back to /pricing (EN) instead of 404.
   // Localised versions are queued as a follow-up.
   '/about',
-  '/for-attorneys'
+  '/for-attorneys',
+  '/schedule'
 ]);
 
 /** Build a per-locale URL from a slug. Uses the prefix in LOCALES, so URLs
@@ -140,6 +141,7 @@ export const NAV: Record<Locale, {
   quote: string;
   start: string;
   phoneCta: string;
+  schedule: string;
 }> = {
   en: {
     uscis: 'USCIS | EOIR',
@@ -152,7 +154,8 @@ export const NAV: Record<Locale, {
     portal: 'Client Portal',
     quote: 'Start Your Case',
     start: 'Start document preparation',
-    phoneCta: '📞 +1 (916) 399-3992'
+    phoneCta: '📞 +1 (916) 399-3992',
+    schedule: 'Schedule Appointment'
   },
   ru: {
     uscis: 'USCIS | EOIR',
@@ -165,7 +168,8 @@ export const NAV: Record<Locale, {
     portal: 'Кабинет',
     quote: 'Начать кейс',
     start: 'Начать подготовку документов',
-    phoneCta: '📞 +1 (916) 399-3992'
+    phoneCta: '📞 +1 (916) 399-3992',
+    schedule: 'Записаться'
   },
   uk: {
     uscis: 'USCIS | EOIR',
@@ -178,7 +182,8 @@ export const NAV: Record<Locale, {
     portal: 'Кабінет',
     quote: 'Почати кейс',
     start: 'Почати підготовку документів',
-    phoneCta: '📞 +1 (916) 399-3992'
+    phoneCta: '📞 +1 (916) 399-3992',
+    schedule: 'Записатися'
   },
   es: {
     uscis: 'USCIS | EOIR',
@@ -191,7 +196,8 @@ export const NAV: Record<Locale, {
     portal: 'Mi portal',
     quote: 'Iniciar su caso',
     start: 'Iniciar preparación de documentos',
-    phoneCta: '📞 +1 (916) 399-3992'
+    phoneCta: '📞 +1 (916) 399-3992',
+    schedule: 'Agendar cita'
   }
 };
 

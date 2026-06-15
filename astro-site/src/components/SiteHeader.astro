@@ -44,6 +44,11 @@ function localeHref(locale: Locale) {
       <span class="site-topbar-label">Call | Text</span>
       <span class="site-topbar-number">+1 (916) 399-3992</span>
     </a>
+    <span class="site-topbar-divider" aria-hidden="true"></span>
+    <a class="site-topbar-schedule" href={localizedPath(lang, '/schedule')}>
+      <span aria-hidden="true">▣</span>
+      <span>{t.schedule}</span>
+    </a>
   </div>
   <div class="site-header-inner">
     <a class="site-brand" href={prefix + '/'} aria-label="Imverica Legal Solutions">
@@ -86,6 +91,7 @@ function localeHref(locale: Locale) {
     <a href={localizedPathSafe(lang, '/pricing')}>{t.pricing}</a>
     <a href={localizedPathSafe(lang, '/for-attorneys')}>{t.forAttorneys}</a>
     <a href={localizedPathSafe(lang, '/about')}>{t.about}</a>
+    <a href={localizedPath(lang, '/schedule')}>▣ {t.schedule}</a>
     <a href="/account.html">👤 {t.portal}</a>
     <a class="btn btn-accent" href={prefix + '/#get-started'}>{t.quote}</a>
   </nav>
@@ -175,5 +181,36 @@ function localeHref(locale: Locale) {
 
   .site-topbar-number {
     white-space: nowrap;
+  }
+
+  .site-topbar-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .site-topbar-schedule {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    border-radius: 999px;
+    line-height: 1;
+  }
+
+  .site-topbar-schedule:hover {
+    border-color: #f7d7b1;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  @media (max-width: 520px) {
+    .site-topbar {
+      gap: 0.55rem;
+      padding-inline: 0.55rem;
+      font-size: 0.74rem;
+    }
+    .site-topbar-label { display: none; }
+    .site-topbar-schedule { padding: 4px 8px; }
   }
 </style>
