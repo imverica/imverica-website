@@ -78,8 +78,10 @@ function i_130aFieldValues(payload={}) {
   v["Pt4Line3_DaytimePhoneNumber1[0]"] = usPhone(a.spouse_daytime_phone || a.daytime_phone || a.phone || c.phone);
   v["Pt4Line4_MobileNumber1[0]"] = usPhone(a.spouse_mobile_phone || a.mobile_phone || a.daytime_phone || c.phone);
   v["Pt4Line5_Email[0]"] = clean(a.spouse_email_address || a.email_address || a.email || c.email, 120);
-  v["Pt6Line4_DaytimePhoneNumber[0]"]  = usPhone(a.preparer_phone || a.daytime_phone || a.phone || c.phone);
-  v["Pt6Line6_Email[0]"]  = clean(a.preparer_email || a.email_address || a.email || c.email, 120);
+  // Preparer fields use ONLY the preparer's own data — never the beneficiary's
+  // phone/email (those belong in Part 4).
+  v["Pt6Line4_DaytimePhoneNumber[0]"]  = usPhone(a.preparer_phone);
+  v["Pt6Line6_Email[0]"]  = clean(a.preparer_email, 120);
   v["Pt6Line8b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Pt5Line1a_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt5Line1b_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);

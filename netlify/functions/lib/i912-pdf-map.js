@@ -65,29 +65,32 @@ function i_912FieldValues(payload={}) {
   v["P9_L1A_FamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P9_L1B_GivenName[0]"] = clean(a.interpreter_given_name, 60);
   v["P9_L2_BusOrgName[0]"] = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
-  v["P9_L3A_StreetNumberName[0]"] = clean(a.interpreter_address_line1 || a.mailing_address_line1, 80);
-  v["P9_L3B_AptSteFlrNumber[0]"] = addressLine2(a.interpreter_address_line2 || a.mailing_address_line2);
-  Object.assign(v, unitRadio("P9_LB_Unit", a.interpreter_address_line2 || a.mailing_address_line2));
-  v["P9_L3c_City[0]"] = clean(a.interpreter_city || a.mailing_city, 60);
-  v["P9_L3d_State[0]"] = stateCode(a.interpreter_state || a.mailing_state || '');
-  v["P9_L3e_ZipCode[0]"] = digits(a.interpreter_zip || a.mailing_zip, 10);
-  v["P9_L3h_Country[0]"] = clean(a.interpreter_country || a.mailing_country, 60);
-  v["P9_L4_DaytimeTelePhoneNumber1[0]"] = usPhone(a.interpreter_phone || a.daytime_phone || c.phone);
-  v["P9_L5_EmailAddress[0]"] = clean(a.interpreter_email || a.email_address || c.email, 120);
+  // Interpreter fields use ONLY the interpreter's own data — never fall back to
+  // the applicant's address/phone/email. Blank when there is no interpreter.
+  v["P9_L3A_StreetNumberName[0]"] = clean(a.interpreter_address_line1, 80);
+  v["P9_L3B_AptSteFlrNumber[0]"] = addressLine2(a.interpreter_address_line2);
+  Object.assign(v, unitRadio("P9_LB_Unit", a.interpreter_address_line2));
+  v["P9_L3c_City[0]"] = clean(a.interpreter_city, 60);
+  v["P9_L3d_State[0]"] = stateCode(a.interpreter_state || '');
+  v["P9_L3e_ZipCode[0]"] = digits(a.interpreter_zip, 10);
+  v["P9_L3h_Country[0]"] = clean(a.interpreter_country, 60);
+  v["P9_L4_DaytimeTelePhoneNumber1[0]"] = usPhone(a.interpreter_phone);
+  v["P9_L5_EmailAddress[0]"] = clean(a.interpreter_email, 120);
   v["P9_L6b_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P9_Language[0]"] = clean(a.interpreter_language || a.applicant_statement_language, 40);
   v["P10_L1A_FamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["P10_L1b_GivenName[0]"] = clean(a.preparer_given_name, 60);
   v["P10_L2_BusOrgName[0]"] = clean(a.preparer_business_name, 80);
-  v["P10_L3a_StreetNumberName[0]"] = clean(a.preparer_address_line1 || a.mailing_address_line1, 80);
-  v["P10_L3b_AptSteFlrNumber[0]"] = addressLine2(a.preparer_address_line2 || a.mailing_address_line2);
-  Object.assign(v, unitRadio("P10_L3b_Unit", a.preparer_address_line2 || a.mailing_address_line2));
-  v["P10_L3c_City[0]"] = clean(a.preparer_city || a.mailing_city, 60);
-  v["P10_L3d_State[0]"] = stateCode(a.preparer_state || a.mailing_state || '');
-  v["P10_L3e_ZipCode[0]"] = digits(a.preparer_zip || a.mailing_zip, 10);
-  v["P10_L3h_Country[0]"] = clean(a.preparer_country || a.mailing_country, 60);
-  v["P10_L4_DaytimeTelePhoneNumber1[0]"] = usPhone(a.preparer_phone || a.daytime_phone || c.phone);
-  v["P10_L6_EmailAddress[0]"]  = clean(a.preparer_email || a.email_address || a.email || c.email, 120);
+  // Preparer fields use ONLY the preparer's own data — same anti-leak rule.
+  v["P10_L3a_StreetNumberName[0]"] = clean(a.preparer_address_line1, 80);
+  v["P10_L3b_AptSteFlrNumber[0]"] = addressLine2(a.preparer_address_line2);
+  Object.assign(v, unitRadio("P10_L3b_Unit", a.preparer_address_line2));
+  v["P10_L3c_City[0]"] = clean(a.preparer_city, 60);
+  v["P10_L3d_State[0]"] = stateCode(a.preparer_state || '');
+  v["P10_L3e_ZipCode[0]"] = digits(a.preparer_zip, 10);
+  v["P10_L3h_Country[0]"] = clean(a.preparer_country, 60);
+  v["P10_L4_DaytimeTelePhoneNumber1[0]"] = usPhone(a.preparer_phone);
+  v["P10_L6_EmailAddress[0]"]  = clean(a.preparer_email, 120);
   v["P10_L8B_Date[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, maritalFields(a.marital_status || ''));
 
