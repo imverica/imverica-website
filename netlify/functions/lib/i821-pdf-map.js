@@ -13,6 +13,21 @@ function usPhone(v){if(v&&typeof v==='object'&&!Array.isArray(v)){return digits(
 function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','так'].includes(t))return true;if(['no','false','нет','ні'].includes(t))return false;return null;}
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 function addressLine2(v){return clean(v,12).replace(/^(?:apt|ste|fl|unit|#)\s*\.?\s*/i,'').slice(0,10);}
+// Resolve an address from either the wizard's addressBlock object (preferred)
+// or legacy flat keys, so the schema's `mailing_address`/`physical_address`
+// blocks fill the PDF instead of silently dropping out.
+function pickAddr(block, flat){
+  const b = (block && typeof block === 'object' && !Array.isArray(block)) ? block : {};
+  const f = flat || {};
+  return {
+    line1: b.line1 || f.line1 || '',
+    line2: b.line2 || f.line2 || '',
+    city:  b.city  || f.city  || '',
+    state: b.state || f.state || '',
+    zip:   b.zip   || f.zip   || '',
+    country: b.country || f.country || ''
+  };
+}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
   if(/^m/.test(s))return{"Part2_Item12_Sex[0]":true,"Part2_Item12_Sex[1]":false};
@@ -33,10 +48,15 @@ function i_821FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
+  const mail = pickAddr(a.mailing_address, { line1: a.mailing_address_line1 || a.address_line1, line2: a.mailing_address_line2 || a.address_unit, city: a.mailing_city || a.city, state: a.mailing_state || a.state, zip: a.mailing_zip || a.zip_code, country: a.mailing_country });
+  const samePhysical = yesNo(a.physical_same_as_mailing);
+  const phys = (samePhysical === true)
+    ? mail
+    : pickAddr(a.physical_address, { line1: a.physical_address_line1, line2: a.physical_address_line2, city: a.physical_city, state: a.physical_state, zip: a.physical_zip, country: a.physical_country });
 
   // ===== Part 1 — Type of Application (render-verified, fillable AcroForm) =====
   // 1.a Initial (first-time) / 1.b Re-registration.
-  const appType = clean(a.tps_application_type || a.application_type || a.tps_type, 30).toLowerCase();
+  const appType = clean(a.initial_or_reregistration || a.tps_application_type || a.application_type || a.tps_type, 30).toLowerCase();
   if (/re-?reg|повтор|перереєстр/.test(appType)) v["Part1_Item1_ApplicationType[1]"] = true; // 1.b
   else v["Part1_Item1_ApplicationType[0]"] = true;                                            // 1.a Initial (default)
   // Item 3 — are you also filing Form I-765 (EAD)? Default Yes (filed together).
@@ -64,42 +84,46 @@ function i_821FieldValues(payload={}) {
   v["Part2_Item24_CountryofIssuance[0]"] = clean(a.passport_country_of_issuance, 60);
   v["Part2_Item24_PassportExpiration[0]"] = dateMdY(a.passport_expiration || '');
   v["Part2_Item22_I94[0]"]     = clean(a.i94_number, 20);
-  v["Part2_Item4_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.address_line1, 80);
-  v["Part2_Item4_AptSteFlrNumber[0]"] = addressLine2(a.mailing_address_line2 || a.address_unit);
-  Object.assign(v, unitRadio("Part2_Item4_Unit", a.mailing_address_line2 || a.address_unit));
-  v["Part2_Item4_CityOrTown[0]"] = clean(a.mailing_city || a.city, 60);
-  v["Part2_Item4_State[0]"] = stateCode(a.mailing_state || a.state || '');
-  v["Part2_Item4_ZipCode[0]"] = digits(a.mailing_zip || a.zip_code, 10);
-  v["Part2_Item6_StreetNumberName[0]"] = clean(a.physical_address_line1 || a.mailing_address_line1 || a.address_line1, 80);
-  v["Part2_Item6_AptSteFlrNumber[0]"] = addressLine2(a.physical_address_line2 || a.mailing_address_line2 || a.address_unit);
-  Object.assign(v, unitRadio("Part2_Item6_Unit", a.physical_address_line2 || a.mailing_address_line2 || a.address_unit));
-  v["Part2_Item6_CityOrTown[0]"] = clean(a.physical_city || a.mailing_city || a.city, 60);
-  v["Part2_Item6_State[0]"] = stateCode(a.physical_state || a.mailing_state || a.state || '');
-  v["Part2_Item6_ZipCode[0]"] = digits(a.physical_zip || a.mailing_zip || a.zip_code, 10);
+  v["Part2_Item4_StreetNumberName[0]"] = clean(mail.line1, 80);
+  v["Part2_Item4_AptSteFlrNumber[0]"] = addressLine2(mail.line2);
+  Object.assign(v, unitRadio("Part2_Item4_Unit", mail.line2));
+  v["Part2_Item4_CityOrTown[0]"] = clean(mail.city, 60);
+  v["Part2_Item4_State[0]"] = stateCode(mail.state);
+  v["Part2_Item4_ZipCode[0]"] = digits(mail.zip, 10);
+  v["Part2_Item6_StreetNumberName[0]"] = clean(phys.line1, 80);
+  v["Part2_Item6_AptSteFlrNumber[0]"] = addressLine2(phys.line2);
+  Object.assign(v, unitRadio("Part2_Item6_Unit", phys.line2));
+  v["Part2_Item6_CityOrTown[0]"] = clean(phys.city, 60);
+  v["Part2_Item6_State[0]"] = stateCode(phys.state);
+  v["Part2_Item6_ZipCode[0]"] = digits(phys.zip, 10);
   v["Part9_Item1_FamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Part9_Item1_GivenName[1]"] = clean(a.interpreter_given_name, 60);
   v["Part9_Item2_OrgName[0]"] = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
-  v["Part9_Item3_StreetNumberName[0]"] = clean(a.interpreter_address_line1 || a.mailing_address_line1, 80);
-  v["Part9_Item3_AptSteFlrNumber[0]"] = addressLine2(a.interpreter_address_line2 || a.mailing_address_line2);
-  v["Part9_Item3_CityOrTown[0]"] = clean(a.interpreter_city || a.mailing_city, 60);
-  v["Part9_Item3_State[0]"] = stateCode(a.interpreter_state || a.mailing_state || '');
-  v["Part9_Item3_ZipCode[0]"] = digits(a.interpreter_zip || a.mailing_zip, 10);
-  v["Part9_Item3_Country[0]"] = clean(a.interpreter_country || a.mailing_country, 60);
-  v["Part9_Item4_DaytimePhone[0]"] = usPhone(a.interpreter_phone || a.daytime_phone || c.phone);
-  v["Part9_Item5_Email[0]"] = clean(a.interpreter_email || a.email_address || c.email, 120);
+  // Interpreter fields use ONLY the interpreter's own data — never fall back to
+  // the applicant's address/phone/email (that would print the applicant's
+  // contact info as the interpreter's). Blank when there is no interpreter.
+  v["Part9_Item3_StreetNumberName[0]"] = clean(a.interpreter_address_line1, 80);
+  v["Part9_Item3_AptSteFlrNumber[0]"] = addressLine2(a.interpreter_address_line2);
+  v["Part9_Item3_CityOrTown[0]"] = clean(a.interpreter_city, 60);
+  v["Part9_Item3_State[0]"] = stateCode(a.interpreter_state || '');
+  v["Part9_Item3_ZipCode[0]"] = digits(a.interpreter_zip, 10);
+  v["Part9_Item3_Country[0]"] = clean(a.interpreter_country, 60);
+  v["Part9_Item4_DaytimePhone[0]"] = usPhone(a.interpreter_phone);
+  v["Part9_Item5_Email[0]"] = clean(a.interpreter_email, 120);
   v["Part9_Item6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Part10_Item1_FamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["Part10_Item1_GivenName[0]"] = clean(a.preparer_given_name, 60);
   v["Part10_Item2_OrgName[0]"] = clean(a.preparer_business_name, 80);
-  v["Part10_Item3_StreetNumberName[0]"] = clean(a.preparer_address_line1 || a.mailing_address_line1, 80);
-  v["Part10_Item3_AptSteFlrNumber[0]"] = addressLine2(a.preparer_address_line2 || a.mailing_address_line2);
-  v["Part10_Item3_CityOrTown[0]"] = clean(a.preparer_city || a.mailing_city, 60);
-  v["Part10_Item3_State[0]"] = stateCode(a.preparer_state || a.mailing_state || '');
-  v["Part10_Item3_ZipCode[0]"] = digits(a.preparer_zip || a.mailing_zip, 10);
-  v["Part10_Item3_Country[0]"] = clean(a.preparer_country || a.mailing_country, 60);
-  v["Part10_Item4_DaytimePhone[0]"] = usPhone(a.preparer_phone || a.daytime_phone || c.phone);
-  v["Part10_Item5_MobilePhone[0]"] = usPhone(a.preparer_mobile_phone || a.mobile_phone || c.phone);
-  v["Part10_Item6_Email[0]"] = clean(a.preparer_email || a.email_address || c.email, 120);
+  // Preparer fields use ONLY the preparer's own data — same anti-leak rule.
+  v["Part10_Item3_StreetNumberName[0]"] = clean(a.preparer_address_line1, 80);
+  v["Part10_Item3_AptSteFlrNumber[0]"] = addressLine2(a.preparer_address_line2);
+  v["Part10_Item3_CityOrTown[0]"] = clean(a.preparer_city, 60);
+  v["Part10_Item3_State[0]"] = stateCode(a.preparer_state || '');
+  v["Part10_Item3_ZipCode[0]"] = digits(a.preparer_zip, 10);
+  v["Part10_Item3_Country[0]"] = clean(a.preparer_country, 60);
+  v["Part10_Item4_DaytimePhone[0]"] = usPhone(a.preparer_phone);
+  v["Part10_Item5_MobilePhone[0]"] = usPhone(a.preparer_mobile_phone || a.mobile_phone);
+  v["Part10_Item6_Email[0]"] = clean(a.preparer_email, 120);
   v["Part10_Item8b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
