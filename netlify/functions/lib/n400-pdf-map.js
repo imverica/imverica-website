@@ -234,7 +234,10 @@ function n_400FieldValues(payload = {}) {
     Divorced: 'D', 'Single, never married': 'S', Widowed: 'W', Married: 'M',
     'Marriage annulled': 'A', Separated: 'E'
   };
-  if (maritalStates[a.marital_status]) setChoice(out, 'P10_Line1_MaritalStatus', maritalStates[a.marital_status]);
+  const spouseBasis = ['Spouse of U.S. Citizen', 'Spouse of U.S. Citizen in Qualified Employment Outside the United States']
+    .includes(a.basis_for_naturalization);
+  const maritalStatus = spouseBasis ? 'Married' : a.marital_status;
+  if (maritalStates[maritalStatus]) setChoice(out, 'P10_Line1_MaritalStatus', maritalStates[maritalStatus]);
   setYesNo(out, 'P7_Line2_Forces', a.n400_spouse_us_armed_forces);
   out['Part9Line3_TimesMarried[0]'] = digits(a.times_married, 2);
   out['P10_Line4a_FamilyName[0]'] = clean(a.spouse_family_name, 60);

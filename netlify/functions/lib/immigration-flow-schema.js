@@ -2084,7 +2084,7 @@ function i130aSpecificSteps() {
   ];
 }
 
-function i131SpecificSteps() {
+function i131LegacySpecificSteps() {
   const correctionActions = ['Renewal', 'Replacement', 'Correction', 'Record request'];
   const deliveryAwayFromApplicant = ['U.S. Embassy or Consulate', 'DHS office outside the United States', 'Attorney or accredited representative'];
   const forPersonOutsideTypes = ['Advance parole document for person outside the United States', 'Initial parole document'];
@@ -2350,7 +2350,249 @@ function i131SpecificSteps() {
   ];
 }
 
-function i589SpecificSteps() {
+function i131SpecificSteps() {
+  const reentry = ['1. Reentry Permit'];
+  const refugee = ['2. Refugee Travel Document for a refugee or asylee', '3. Refugee Travel Document for an LPR from refugee or asylee status'];
+  const advanceParole = ['5. Advance Parole Document for a person inside the United States'];
+  const parole = [
+    '6. Initial Parole Document under a specific program or process',
+    '7. Initial Parole Document not under a specific program or process',
+    '8. Initial Parole in Place under a specific program or process',
+    '9. Initial Parole in Place not under a specific program or process',
+    '10. Re-parole under a specific program or process',
+    '11. Re-parole not under a specific program or process'
+  ];
+  const outsideParole = parole.slice(0, 2);
+  const reParole = parole.slice(4);
+  const selfOrOtherParole = parole;
+  const refugeeYesQuestions = [
+    'i131_refugee_plan_country_travel', 'i131_refugee_returned_country', 'i131_refugee_passport_country',
+    'i131_refugee_benefit_country', 'i131_refugee_reacquired_nationality', 'i131_refugee_new_nationality',
+    'i131_refugee_status_other_country'
+  ];
+
+  return [
+    step('i131_application_type', 'Select the exact Form I-131 application type', 'Official Form I-131 (01/20/25), Part 1, Items 1-11. Select only one.', [
+      field('i131_application_type', 'Application type', 'radio', { required: true, options: [
+        ...reentry,
+        ...refugee,
+        '4. TPS Travel Authorization Document',
+        ...advanceParole,
+        ...parole
+      ] })
+    ]),
+    step('i131_tps_receipt', 'TPS travel authorization', 'Official Part 1, Item 4.', [
+      field('i131_tps_i821_receipt', 'Receipt number for the last approved Form I-821', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'i131_application_type', equals: '4. TPS Travel Authorization Document' }] })
+    ]),
+    step('i131_advance_parole_basis', 'Advance parole basis', 'Official Part 1, Item 5. Select the exact subcategory.', [
+      field('i131_advance_parole_basis', 'Advance parole basis', 'select', { required: true, options: [
+        'A. Pending Form I-485', 'B. Pending Form I-589', 'C. Pending initial Form I-821', 'D. Deferred Enforced Departure',
+        'E. Approved Form I-821D', 'F. Approved Form I-914 or I-914A', 'G. Approved Form I-918 or I-918A',
+        'H. Current parolee under INA 212(d)(5)', 'I. Approved Form I-817', 'J. Pending Form I-687',
+        'K. Approved V nonimmigrant status', 'L. CNMI long-term resident', 'M. Other'
+      ], showWhen: [{ id: 'i131_application_type', in: advanceParole }] }),
+      field('i131_advance_parole_receipt_or_class', 'Related receipt number or class of admission', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'i131_advance_parole_basis', in: [
+        'A. Pending Form I-485', 'B. Pending Form I-589', 'C. Pending initial Form I-821', 'E. Approved Form I-821D',
+        'F. Approved Form I-914 or I-914A', 'G. Approved Form I-918 or I-918A', 'H. Current parolee under INA 212(d)(5)',
+        'I. Approved Form I-817', 'J. Pending Form I-687', 'K. Approved V nonimmigrant status', 'L. CNMI long-term resident'
+      ] }] }),
+      field('i131_advance_parole_other_explanation', 'Explain the other advance-parole basis', 'textarea', { required: true, showWhen: [{ id: 'i131_advance_parole_basis', equals: 'M. Other' }] })
+    ]),
+    step('i131_initial_parole_program', 'Initial parole program or process', 'Official Part 1, Item 6.', [
+      field('i131_initial_parole_program', 'Specific initial-parole program or process', 'select', { required: true, options: [
+        'A. Filipino World War II Veterans Parole Program', 'B. Immigrant Military Members and Veterans Initiative',
+        'C. Intergovernmental Parole Referral', 'D. Family Reunification Task Force Process', 'E. Other'
+      ], showWhen: [{ id: 'i131_application_type', equals: parole[0] }] }),
+      field('i131_initial_parole_i130_receipt', 'Form I-130 receipt number', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'i131_initial_parole_program', equals: 'A. Filipino World War II Veterans Parole Program' }] }),
+      field('i131_initial_parole_immvi_relationship', 'IMMVI relationship', 'radio', { required: true, options: ['1. Current or former service member', '2. Spouse, child, unmarried son or daughter, or qualifying child', '3. Current legal guardian or surrogate'], showWhen: [{ id: 'i131_initial_parole_program', equals: 'B. Immigrant Military Members and Veterans Initiative' }] }),
+      field('i131_initial_parole_agency', 'U.S. Federal Executive Branch government agency', 'text', { required: true, showWhen: [{ id: 'i131_initial_parole_program', equals: 'C. Intergovernmental Parole Referral' }] }),
+      field('i131_initial_parole_agency_email', 'Agency representative official email address', 'email', { required: true, showWhen: [{ id: 'i131_initial_parole_program', equals: 'C. Intergovernmental Parole Referral' }] }),
+      field('i131_initial_parole_frtf_number', 'Family Reunification Task Force registration number', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'i131_initial_parole_program', equals: 'D. Family Reunification Task Force Process' }] }),
+      field('i131_initial_parole_other_program', 'Other specific parole program or process', 'text', { required: true, showWhen: [{ id: 'i131_initial_parole_program', equals: 'E. Other' }] })
+    ]),
+    step('i131_parole_in_place_program', 'Parole in place program or process', 'Official Part 1, Item 8.', [
+      field('i131_parole_in_place_program', 'Parole in place program or process', 'select', { required: true, options: ['A. Military Parole in Place', 'B. Family Reunification Task Force Process', 'C. Other'], showWhen: [{ id: 'i131_application_type', equals: parole[2] }] }),
+      field('i131_pip_military_relationship', 'Military parole-in-place relationship', 'radio', { required: true, options: ['1. Current or former service member', '2. Spouse, parent, son, or daughter of a current or former service member'], showWhen: [{ id: 'i131_parole_in_place_program', equals: 'A. Military Parole in Place' }] }),
+      field('i131_pip_frtf_number', 'Family Reunification Task Force registration number', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'i131_parole_in_place_program', equals: 'B. Family Reunification Task Force Process' }] }),
+      field('i131_pip_other_program', 'Other specific parole-in-place program or process', 'text', { required: true, showWhen: [{ id: 'i131_parole_in_place_program', equals: 'C. Other' }] })
+    ]),
+    step('i131_reparole_program', 'Re-parole program or process', 'Official Part 1, Item 10.', [
+      field('i131_reparole_program', 'Re-parole program or process', 'select', { required: true, options: [
+        'A. Family Reunification Parole Process', 'B. Certain Afghans paroled after July 31, 2021',
+        'C. Ukrainian re-parole process', 'D. Filipino World War II Veterans Parole Program',
+        'E. Immigrant Military Members and Veterans Initiative', 'F. Central American Minors Program',
+        'G. Family Reunification Task Force Process', 'H. Military Parole in Place', 'I. Other'
+      ], showWhen: [{ id: 'i131_application_type', equals: parole[4] }] }),
+      field('i131_reparole_immvi_relationship', 'IMMVI relationship', 'radio', { required: true, options: ['1. Current or former service member', '2. Spouse, child, unmarried son or daughter, or qualifying child', '3. Current legal guardian or surrogate'], showWhen: [{ id: 'i131_reparole_program', equals: 'E. Immigrant Military Members and Veterans Initiative' }] }),
+      field('i131_reparole_pip_relationship', 'Military parole-in-place relationship', 'radio', { required: true, options: ['1. Current or former service member', '2. Spouse, parent, son, or daughter of a current or former service member'], showWhen: [{ id: 'i131_reparole_program', equals: 'H. Military Parole in Place' }] }),
+      field('i131_reparole_other_program', 'Other specific re-parole program or process', 'text', { required: true, showWhen: [{ id: 'i131_reparole_program', equals: 'I. Other' }] })
+    ]),
+    step('i131_reparole_i94_refugee_status', 'Re-parole and refugee-status questions', 'Official Part 1, Items 12-13.', [
+      field('i131_reparole_admit_until', 'Admit Until Date / Parole shown on Form I-94', 'date', { required: true, showWhen: [{ id: 'i131_application_type', in: reParole }] }),
+      field('i131_refugee_status_yes_no', 'Do you hold refugee status, were you paroled as a refugee, or are you an LPR directly from refugee status?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+
+    step('i131_applicant_name', 'Applicant legal name', 'Official Part 2, Item 1. Use English (Latin) letters.', [
+      field('i131_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('i131_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('i131_middle_name', 'Middle name, if applicable', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('i131_other_names', 'Other names used', 'Official Part 2, Item 2. Add every prior name, maiden name, or alias.', [
+      field('i131_other_name1_family', 'Other name 1 family name', 'text'),
+      field('i131_other_name1_given', 'Other name 1 given name', 'text'),
+      field('i131_other_name1_middle', 'Other name 1 middle name', 'text'),
+      field('i131_other_name2_family', 'Other name 2 family name', 'text'),
+      field('i131_other_name2_given', 'Other name 2 given name', 'text'),
+      field('i131_other_name2_middle', 'Other name 2 middle name', 'text'),
+      field('i131_other_name3_family', 'Other name 3 family name', 'text'),
+      field('i131_other_name3_given', 'Other name 3 given name', 'text'),
+      field('i131_other_name3_middle', 'Other name 3 middle name', 'text'),
+      field('i131_additional_other_names', 'Additional other names for Part 13', 'textarea')
+    ]),
+    step('i131_mailing_address', 'Current mailing or safe address', 'Official Part 2, Item 3.', [
+      addressBlockField('i131_mailing_address', 'Current mailing or safe address', 'i131_mailing', { required: true })
+    ]),
+    step('i131_physical_address_match', 'Current physical address', 'Official Part 2, Item 4.', [
+      field('i131_physical_same_as_mailing', 'Is the physical address the same as the mailing address?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i131_physical_address', 'Different current physical address', 'Complete only when different from the mailing address.', [
+      addressBlockField('i131_physical_address', 'Current physical address', 'i131_physical', { required: true, showWhen: [{ id: 'i131_physical_same_as_mailing', equals: 'No' }] })
+    ]),
+    step('i131_applicant_identity', 'Applicant identity and USCIS numbers', 'Official Part 2, Items 5-11.', [
+      field('i131_alien_number', 'A-Number, if any', 'text', { maxLength: 9, inputmode: 'numeric', autocomplete: 'off' }),
+      field('i131_country_of_birth', 'Country of birth', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('i131_country_of_citizenship', 'Country of citizenship or nationality', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('i131_gender', 'Sex', 'radio', { required: true, options: ['Male', 'Female'] }),
+      field('i131_date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('i131_ssn', 'U.S. Social Security number, if any', 'text', { maxLength: 9, inputmode: 'numeric', autocomplete: 'off' }),
+      field('i131_uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i131_us_status', 'U.S. admission and parole information', 'Official Part 2, Items 12-15.', [
+      field('i131_class_of_admission', 'Class of admission, if any', 'text'),
+      field('i131_i94_number', 'Most recent I-94 number, if any', 'text', { autocomplete: 'off' }),
+      field('i131_i94_expiration_date', 'Expiration date of authorized stay shown on I-94, if any', 'date'),
+      field('i131_uspid', 'eMedical U.S. Parolee ID (USPID), if any', 'text', { autocomplete: 'off' })
+    ]),
+
+    step('i131_for_someone_else', 'Are you applying for another person?', 'Official Part 2, Items 16-27 apply only when requesting parole for someone else.', [
+      field('i131_for_beneficiary', 'Who will receive the requested parole document or record?', 'radio', { required: true, options: ['I am filing for myself', 'I am filing for someone else'], showWhen: [{ id: 'i131_application_type', in: selfOrOtherParole }] })
+    ]),
+    step('i131_beneficiary_identity', 'Other person’s identity', 'Official Part 2, Items 16-23. Use English (Latin) letters.', [
+      field('i131_beneficiary_family_name', 'Family name', 'text', { required: true, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_given_name', 'Given name', 'text', { required: true, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_middle_name', 'Middle name, if applicable', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name1_family', 'Other name 1 family name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name1_given', 'Other name 1 given name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name1_middle', 'Other name 1 middle name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name2_family', 'Other name 2 family name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name2_given', 'Other name 2 given name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name2_middle', 'Other name 2 middle name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name3_family', 'Other name 3 family name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name3_given', 'Other name 3 given name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_other_name3_middle', 'Other name 3 middle name', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_date_of_birth', 'Date of birth', 'date', { required: true, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_country_of_birth', 'Country of birth', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_country_of_citizenship', 'Country of citizenship or nationality', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_daytime_phone', 'Daytime phone', 'phone', { required: true, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_email', 'Email address, if any', 'email', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_alien_number', 'A-Number, if any', 'text', { maxLength: 9, inputmode: 'numeric', showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] })
+    ]),
+    step('i131_beneficiary_addresses', 'Other person’s current addresses', 'Official Part 2, Items 24-25.', [
+      addressBlockField('i131_beneficiary_mailing_address', 'Current mailing address', 'i131_beneficiary_mailing', { required: true, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      addressBlockField('i131_beneficiary_physical_address', 'Current physical address', 'i131_beneficiary_physical', { required: true, showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] })
+    ]),
+    step('i131_beneficiary_status', 'Other person’s admission information', 'Official Part 2, Items 26-27.', [
+      field('i131_beneficiary_class_of_admission', 'Class of admission, if any', 'text', { showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] }),
+      field('i131_beneficiary_i94_number', 'Most recent I-94 number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'i131_for_beneficiary', equals: 'I am filing for someone else' }] })
+    ]),
+
+    step('i131_biographic', 'Biographic information of the person receiving the document', 'Official Part 3, Items 1-6.', [
+      field('i131_ethnicity', 'Ethnicity', 'radio', { required: true, options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('i131_race', 'Race (select all that apply)', 'checkboxes', { required: true, options: ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White'] }),
+      field('i131_height_feet', 'Height feet', 'select', { required: true, options: ['3', '4', '5', '6', '7', '8'] }),
+      field('i131_height_inches', 'Height inches', 'select', { required: true, options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] }),
+      field('i131_weight_pounds', 'Weight in pounds', 'number', { required: true, inputmode: 'numeric' }),
+      field('i131_eye_color', 'Eye color', 'radio', { required: true, options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown/Other'] }),
+      field('i131_hair_color', 'Hair color', 'radio', { required: true, options: ['Bald (No hair)', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown/Other'] })
+    ]),
+
+    step('i131_processing_history', 'Processing and prior-document history', 'Official Part 4, Items 1-3.', [
+      field('i131_exclusion_deportation_or_removal', 'Has the document recipient been in exclusion, deportation, removal, or rescission proceedings?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i131_prior_reentry_or_refugee_document', 'Have you ever been issued a Reentry Permit or Refugee Travel Document?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i131_prior_reentry_or_refugee_date', 'Date the last document was issued', 'date', { required: true, showWhen: [{ id: 'i131_prior_reentry_or_refugee_document', equals: 'Yes' }] }),
+      field('i131_prior_reentry_or_refugee_disposition', 'Disposition of the last document', 'text', { required: true, showWhen: [{ id: 'i131_prior_reentry_or_refugee_document', equals: 'Yes' }] }),
+      field('i131_prior_advance_parole_document', 'Have you ever been issued an Advance Parole Document?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i131_prior_advance_parole_date', 'Date the last Advance Parole Document was issued', 'date', { required: true, showWhen: [{ id: 'i131_prior_advance_parole_document', equals: 'Yes' }] }),
+      field('i131_prior_advance_parole_disposition', 'Disposition of the last Advance Parole Document', 'text', { required: true, showWhen: [{ id: 'i131_prior_advance_parole_document', equals: 'Yes' }] })
+    ]),
+    step('i131_replacement', 'Replacement or correction request', 'Official Part 4, Items 4-6.', [
+      field('i131_requesting_replacement', 'Are you requesting a replacement travel or parole document?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i131_replacement_reason', 'Reason for replacement', 'radio', { required: true, options: ['Issued but never received', 'Lost, stolen, or damaged', 'Incorrect due to applicant error or changed information', 'Incorrect due to USCIS error'], showWhen: [{ id: 'i131_requesting_replacement', equals: 'Yes' }] }),
+      field('i131_correction_fields', 'Information that needs correction (select all that apply)', 'checkboxes', { options: ['Name', 'A-Number', 'Country of Birth/Citizenship', 'Terms and Conditions', 'Date of Birth', 'Sex', 'Validity Date', 'Photo'], showWhen: [{ id: 'i131_requesting_replacement', equals: 'Yes' }] }),
+      field('i131_replacement_explanation', 'Explain the replacement or correction', 'textarea', { required: true, showWhen: [{ id: 'i131_requesting_replacement', equals: 'Yes' }] }),
+      field('i131_replacement_receipt', 'Receipt number for the Form I-131 document being replaced', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'i131_requesting_replacement', equals: 'Yes' }] })
+    ]),
+    step('i131_document_delivery', 'Reentry or Refugee Travel Document delivery', 'Official Part 4, Items 7-9.', [
+      field('i131_delivery_option', 'Where should the document be sent?', 'radio', { required: true, options: ['U.S. mailing address in Part 2', 'U.S. Embassy, Consulate, USCIS international field office, or DHS office overseas'], showWhen: [{ id: 'i131_application_type', in: [...reentry, ...refugee] }] }),
+      field('i131_delivery_overseas_city', 'Overseas office city or town', 'text', { required: true, showWhen: [{ id: 'i131_delivery_option', equals: 'U.S. Embassy, Consulate, USCIS international field office, or DHS office overseas' }] }),
+      field('i131_delivery_overseas_country', 'Overseas office country', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: [{ id: 'i131_delivery_option', equals: 'U.S. Embassy, Consulate, USCIS international field office, or DHS office overseas' }] }),
+      field('i131_pickup_notice_to_part2', 'Send the pickup notice to the Part 2 mailing address?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_delivery_option', equals: 'U.S. Embassy, Consulate, USCIS international field office, or DHS office overseas' }] }),
+      addressBlockField('i131_pickup_notice_address', 'Different pickup-notice address', 'i131_pickup_notice', { required: true, showWhen: [{ id: 'i131_pickup_notice_to_part2', equals: 'No' }] }),
+      field('i131_pickup_notice_phone', 'Pickup-notice daytime phone', 'phone', { required: true, showWhen: [{ id: 'i131_pickup_notice_to_part2', equals: 'No' }] }),
+      field('i131_pickup_notice_email', 'Pickup-notice email', 'email', { showWhen: [{ id: 'i131_pickup_notice_to_part2', equals: 'No' }] })
+    ]),
+
+    step('i131_reentry_time_outside', 'Time outside the United States', 'Official Part 5, Item 1.', [
+      field('i131_expected_time_outside_us', 'Total time outside the United States since permanent residence or during the past five years, whichever is less', 'radio', { required: true, options: ['Less Than 6 Months', '6 Months to 1 Year', '1 to 2 Years', '2 to 3 Years', '3 to 4 Years', 'More Than 4 Years'], showWhen: [{ id: 'i131_application_type', in: reentry }] })
+    ]),
+    step('i131_refugee_travel_questions', 'Refugee Travel Document questions', 'Official Part 6, Items 1-5. Every Yes requires an explanation.', [
+      field('i131_country_of_refugee_status', 'Country from which you are a refugee or asylee', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_plan_country_travel', 'Do you plan to travel to that country?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_returned_country', 'Have you returned to that country since refugee admission or asylum grant?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_passport_country', 'Have you applied for or obtained a passport, renewal, or entry permit from that country?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_benefit_country', 'Have you applied for or received a benefit from that country?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_reacquired_nationality', 'Have you reacquired nationality of that country?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_new_nationality', 'Have you acquired a new nationality?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_status_other_country', 'Have you been granted refugee or asylee status in another country?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_filing_before_departure', 'Are you filing before departing the United States?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: refugee }] }),
+      field('i131_refugee_explanation', 'Explain every Yes answer above for Part 13', 'textarea', { required: true, rows: 8, showWhenAny: refugeeYesQuestions.map(id => ({ id, equals: 'Yes' })) })
+    ]),
+    step('i131_refugee_outside_us', 'Refugee Travel Document filed after departure', 'Official Part 6, Items 6.a-6.c.', [
+      field('i131_refugee_currently_outside_us', 'Are you currently outside the United States?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_refugee_filing_before_departure', equals: 'No' }] }),
+      field('i131_refugee_current_location', 'Current city/town and country', 'text', { required: true, showWhen: [{ id: 'i131_refugee_currently_outside_us', equals: 'Yes' }] }),
+      field('i131_refugee_countries_since_departure', 'Other countries traveled to since leaving the United States', 'textarea', { required: true, showWhen: [{ id: 'i131_refugee_currently_outside_us', equals: 'Yes' }] })
+    ]),
+    step('i131_advance_parole_trip', 'Proposed advance-parole travel', 'Official Part 7, Items 1-5.', [
+      field('i131_planned_departure_date', 'Date of intended departure', 'date', { required: true, showWhen: [{ id: 'i131_application_type', in: advanceParole }] }),
+      field('i131_purpose_of_travel', 'Purpose of trip', 'textarea', { required: true, showWhen: [{ id: 'i131_application_type', in: advanceParole }] }),
+      field('i131_countries_to_visit', 'Countries intended to visit', 'textarea', { required: true, showWhen: [{ id: 'i131_application_type', in: advanceParole }] }),
+      field('i131_number_of_trips', 'How many trips will use this document?', 'radio', { required: true, options: ['One Trip', 'More than one trip'], showWhen: [{ id: 'i131_application_type', in: advanceParole }] }),
+      field('i131_expected_trip_length_days', 'Expected length of trip in days', 'number', { required: true, inputmode: 'numeric', showWhen: [{ id: 'i131_application_type', in: advanceParole }] })
+    ]),
+    step('i131_parole_qualification', 'Initial parole, parole in place, or re-parole details', 'Official Part 8.', [
+      field('i131_parole_qualification_explanation', 'Explain how the person qualifies for parole, parole in place, or re-parole', 'textarea', { required: true, rows: 10, showWhen: [{ id: 'i131_application_type', in: parole }] }),
+      field('i131_expected_stay_us', 'Expected length of stay in the United States', 'text', { required: true, showWhen: [{ id: 'i131_application_type', in: parole }] }),
+      field('i131_intended_arrival_date_us', 'Date of intended arrival to the United States', 'date', { required: true, showWhen: [{ id: 'i131_application_type', in: outsideParole }] }),
+      field('i131_intended_arrival_city', 'City or town of embassy, consulate, or USCIS international field office to notify', 'text', { required: true, showWhen: [{ id: 'i131_application_type', in: outsideParole }] }),
+      field('i131_intended_arrival_country', 'Country of office to notify', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: [{ id: 'i131_application_type', in: outsideParole }] })
+    ]),
+    step('i131_reparole_ead', 'Employment authorization for a new period of parole', 'Official Part 9.', [
+      field('i131_request_reparole_ead', 'Request an Employment Authorization Document upon approval of re-parole?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i131_application_type', in: reParole }] })
+    ]),
+
+    step('i131_applicant_contact', 'Applicant contact information', 'Official Part 10.', [
+      field('i131_daytime_phone', 'Daytime phone', 'phone', { required: true, autocomplete: 'tel' }),
+      field('i131_mobile_phone', 'Mobile phone, if any', 'phone', { autocomplete: 'tel' }),
+      field('i131_email', 'Email address, if any', 'email', { autocomplete: 'email' })
+    ]),
+    step('i131_interpreter_preparer', 'Interpreter and preparer', 'Official Parts 11-12.', [
+      field('has_interpreter', 'Was an interpreter used?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('has_preparer', 'Did someone other than the applicant prepare this application?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ])
+  ];
+}
+
+function i589LegacySpecificSteps() {
   return [
     // I-589 Part A.I, page 1: applicant identity.
     step('i589_applicant_numbers', 'I-589 applicant numbers', 'Start with USCIS numbers exactly as shown, if any.', [
@@ -2578,47 +2820,372 @@ function i589SpecificSteps() {
   ];
 }
 
-function i864SpecificSteps() {
+function i589SpecificSteps() {
+  const married = [{ id: 'marital_status', equals: 'Married' }];
+  const spouseInUs = [{ id: 'i589_spouse_in_us', equals: 'Yes' }];
+  const childSteps = [];
+
+  for (let n = 1; n <= 4; n += 1) {
+    const childExists = [{ id: 'total_children', gte: n }];
+    const childInUs = [{ id: `child${n}_in_us`, equals: 'Yes' }];
+    childSteps.push(
+      step(`i589_child${n}_identity`, `Child ${n}: identity`, 'Official Form I-589 (01/20/25), Part A.II. List every child regardless of age, location, or marital status.', [
+        field(`child${n}_alien_number`, `Child ${n} A-Number, if any`, 'text', { maxLength: 9, inputmode: 'numeric', showWhen: childExists }),
+        field(`child${n}_passport_number`, `Child ${n} passport or ID card number, if any`, 'text', { autocomplete: 'off', showWhen: childExists }),
+        field(`child${n}_marital_status`, `Child ${n} marital status`, 'select', { required: true, options: ['Single', 'Married', 'Divorced', 'Widowed'], showWhen: childExists }),
+        field(`child${n}_ssn`, `Child ${n} U.S. Social Security number, if any`, 'text', { maxLength: 9, inputmode: 'numeric', autocomplete: 'off', showWhen: childExists })
+      ]),
+      step(`i589_child${n}_name_birth`, `Child ${n}: name and birth`, 'Use English (Latin) letters for the legal-name fields.', [
+        field(`child${n}_family_name`, `Child ${n} family name`, 'text', { required: true, autocomplete: 'family-name', showWhen: childExists }),
+        field(`child${n}_given_name`, `Child ${n} given name`, 'text', { required: true, autocomplete: 'given-name', showWhen: childExists }),
+        field(`child${n}_middle_name`, `Child ${n} middle name, if applicable`, 'text', { autocomplete: 'additional-name', showWhen: childExists }),
+        field(`child${n}_dob`, `Child ${n} date of birth`, 'date', { required: true, showWhen: childExists }),
+        field(`child${n}_city_of_birth`, `Child ${n} city or town of birth`, 'text', { required: true, showWhen: childExists }),
+        field(`child${n}_country_of_birth`, `Child ${n} country of birth`, 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: childExists })
+      ]),
+      step(`i589_child${n}_citizenship`, `Child ${n}: citizenship and biographic information`, 'Official Form I-589, Part A.II, Items 10-12.', [
+        field(`child${n}_country_of_citizenship`, `Child ${n} nationality or citizenship`, 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: childExists }),
+        field(`child${n}_ethnic_or_tribal_group`, `Child ${n} race, ethnic, or tribal group`, 'text', { required: true, showWhen: childExists }),
+        field(`child${n}_sex`, `Child ${n} sex`, 'radio', { required: true, options: ['Male', 'Female'], showWhen: childExists }),
+        field(`child${n}_in_us`, `Is child ${n} in the United States?`, 'radio', { required: true, options: ['Yes', 'No'], showWhen: childExists }),
+        field(`child${n}_outside_us_location`, `Child ${n} current city and country`, 'text', { required: true, showWhen: [{ id: `child${n}_in_us`, equals: 'No' }] })
+      ]),
+      step(`i589_child${n}_entry`, `Child ${n}: U.S. entry and status`, 'Complete Items 14-21 only when the child is in the United States.', [
+        field(`child${n}_place_entry`, `Child ${n} place of last U.S. entry`, 'text', { required: true, showWhen: childInUs }),
+        field(`child${n}_date_last_entered_us`, `Child ${n} date of last U.S. entry`, 'date', { required: true, showWhen: childInUs }),
+        field(`child${n}_i94_number`, `Child ${n} I-94 number, if any`, 'text', { autocomplete: 'off', showWhen: childInUs }),
+        field(`child${n}_status_last_admitted`, `Child ${n} status when last admitted`, 'text', { required: true, showWhen: childInUs }),
+        field(`child${n}_current_status`, `Child ${n} current status`, 'text', { required: true, showWhen: childInUs }),
+        field(`child${n}_authorized_stay_expires`, `Child ${n} authorized stay expiration date or D/S`, 'text', { showWhen: childInUs }),
+        field(`child${n}_in_immigration_court`, `Is child ${n} in Immigration Court proceedings?`, 'radio', { required: true, options: ['Yes', 'No'], showWhen: childInUs }),
+        field(`child${n}_included`, `Is child ${n} included in this application?`, 'radio', { required: true, options: ['Yes', 'No'], showWhen: childInUs })
+      ])
+    );
+  }
+
+  const relativeSteps = [];
+  ['Mother', 'Father', 'Sibling 1', 'Sibling 2', 'Sibling 3', 'Sibling 4'].forEach((label, index) => {
+    const n = index + 1;
+    relativeSteps.push(step(`i589_relative_${n}`, `${label} information`, 'Official Form I-589 (01/20/25), Part A.III, Item 5.', [
+      field(`i589_relative${n}_full_name`, `${label} full name`, 'text', { required: n <= 2 }),
+      field(`i589_relative${n}_birthplace`, `${label} city/town and country of birth`, 'text', { required: n <= 2 }),
+      field(`i589_relative${n}_current_location`, `${label} current location`, 'text', { required: n <= 2 }),
+      field(`i589_relative${n}_deceased`, `Is ${label.toLowerCase()} deceased?`, 'radio', { required: n <= 2, options: ['Yes', 'No'] })
+    ]));
+  });
+
   return [
-    // I-864 Part 1-2: basis and immigrant.
+    step('i589_applicant_numbers', 'Applicant identification numbers', 'Official Form I-589 (01/20/25), Part A.I, Items 1-3.', [
+      field('alien_number', 'A-Number, if any', 'text', { maxLength: 9, inputmode: 'numeric', autocomplete: 'off' }),
+      field('ssn', 'U.S. Social Security number, if any', 'text', { maxLength: 9, inputmode: 'numeric', autocomplete: 'off' }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i589_legal_name', 'Applicant legal name', 'Use English (Latin) letters exactly as the name should appear on the application.', [
+      field('applicant_family_name', 'Complete family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('applicant_middle_name', 'Middle name, if applicable', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('i589_other_names', 'Other names used', 'Official Form I-589, Part A.I, Item 7. Include maiden names and aliases.', [
+      field('other_names_used', 'Every other name used, if any', 'textarea')
+    ]),
+    step('i589_residential_address', 'Current U.S. residential address', 'You must be residing in the United States to submit this form.', [
+      addressBlockField('i589_residential_address', 'Current U.S. residential address', 'i589_residential', { required: true }),
+      field('daytime_phone', 'Daytime phone', 'phone', { required: true, autocomplete: 'tel' })
+    ]),
+    step('i589_mailing_address_match', 'Mailing address', 'Official Form I-589, Part A.I, Item 9.', [
+      field('physical_same_as_mailing', 'Is the mailing address the same as the current residential address?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i589_mailing_address', 'Separate U.S. mailing address', 'Complete only if different from the residential address.', [
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true, showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }] })
+    ]),
+    step('i589_birth_sex_marital', 'Birth, sex, and marital status', 'Official Form I-589, Part A.I, Items 10-15.', [
+      field('sex', 'Sex', 'radio', { required: true, options: ['Male', 'Female'] }),
+      field('marital_status', 'Marital status', 'radio', { required: true, options: ['Single', 'Married', 'Divorced', 'Widowed'] }),
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('city_of_birth', 'City or town of birth', 'text', { required: true }),
+      field('country_of_birth', 'Country of birth', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('country_of_citizenship', 'Present nationality or citizenship', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('i589_nationality_at_birth', 'Nationality at birth', 'select', { required: true, options: COUNTRY_OPTIONS })
+    ]),
+    step('i589_ethnicity_religion', 'Race, ethnic or tribal group, and religion', 'Official Form I-589, Part A.I, Items 16-17.', [
+      field('i589_ethnic_or_tribal_group', 'Race, ethnic, or tribal group', 'text', { required: true }),
+      field('i589_religion', 'Religion', 'text', { required: true })
+    ]),
+    step('i589_court_proceedings', 'Immigration Court proceedings', 'Official Form I-589, Part A.I, Item 18. Select exactly one.', [
+      field('i589_court_proceedings', 'Immigration Court history', 'radio', { required: true, options: [
+        'I have never been in Immigration Court proceedings',
+        'I am now in Immigration Court proceedings',
+        'I am not now in Immigration Court proceedings, but I have been in the past'
+      ] })
+    ]),
+    step('i589_last_left_country', 'Departure from your country', 'Official Form I-589, Part A.I, Item 19.a.', [
+      field('i589_date_last_left_country', 'Date you last left your country', 'date', { required: true }),
+      field('i94_number', 'Current I-94 number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    step('i589_entry_1', 'Most recent entry into the United States', 'Official Form I-589, Part A.I, Item 19.c.', [
+      field('date_last_entered_us', 'Date of most recent entry', 'date', { required: true }),
+      field('place_entry', 'Place of most recent entry', 'text', { required: true }),
+      field('current_immigration_status', 'Status at most recent entry', 'text', { required: true }),
+      field('authorized_stay_expires', 'Date status expires or D/S', 'text')
+    ]),
+    step('i589_earlier_entries', 'Earlier U.S. entries, if any', 'Official Form I-589, Part A.I, Item 19.c. The PDF provides space for two earlier entries.', [
+      field('i589_has_earlier_entries', 'Did you enter the United States before your most recent entry?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_entry2_date', 'Earlier entry 1 date', 'date', { required: true, showWhen: [{ id: 'i589_has_earlier_entries', equals: 'Yes' }] }),
+      field('i589_entry2_place', 'Earlier entry 1 place', 'text', { required: true, showWhen: [{ id: 'i589_has_earlier_entries', equals: 'Yes' }] }),
+      field('i589_entry2_status', 'Earlier entry 1 status', 'text', { required: true, showWhen: [{ id: 'i589_has_earlier_entries', equals: 'Yes' }] }),
+      field('i589_has_third_entry', 'Was there another earlier U.S. entry?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i589_has_earlier_entries', equals: 'Yes' }] }),
+      field('i589_entry3_date', 'Earlier entry 2 date', 'date', { required: true, showWhen: [{ id: 'i589_has_third_entry', equals: 'Yes' }] }),
+      field('i589_entry3_place', 'Earlier entry 2 place', 'text', { required: true, showWhen: [{ id: 'i589_has_third_entry', equals: 'Yes' }] }),
+      field('i589_entry3_status', 'Earlier entry 2 status', 'text', { required: true, showWhen: [{ id: 'i589_has_third_entry', equals: 'Yes' }] })
+    ]),
+    step('i589_passport', 'Passport or travel document', 'Official Form I-589, Part A.I, Items 20-22.', [
+      field('passport_country_of_issuance', 'Country that issued the last passport or travel document', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('passport_number', 'Passport number, if any', 'text', { autocomplete: 'off' }),
+      field('i589_travel_document_number', 'Travel document number, if any', 'text', { autocomplete: 'off' }),
+      field('passport_expiration', 'Passport or travel document expiration date, if any', 'date')
+    ]),
+    step('i589_languages', 'Languages', 'Official Form I-589, Part A.I, Items 23-25.', [
+      field('i589_native_language', 'Native language, including dialect', 'text', { required: true }),
+      field('i589_fluent_in_english', 'Are you fluent in English?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_other_fluent_languages', 'Other languages spoken fluently', 'textarea')
+    ]),
+
+    step('i589_spouse_identity', 'Spouse identity', 'This section appears only when current marital status is Married.', [
+      field('spouse_alien_number', 'Spouse A-Number, if any', 'text', { maxLength: 9, inputmode: 'numeric', showWhen: married }),
+      field('spouse_passport_number', 'Spouse passport or ID card number, if any', 'text', { autocomplete: 'off', showWhen: married }),
+      field('spouse_ssn', 'Spouse U.S. Social Security number, if any', 'text', { maxLength: 9, inputmode: 'numeric', autocomplete: 'off', showWhen: married }),
+      field('spouse_family_name', 'Spouse family name', 'text', { required: true, autocomplete: 'family-name', showWhen: married }),
+      field('spouse_given_name', 'Spouse given name', 'text', { required: true, autocomplete: 'given-name', showWhen: married }),
+      field('spouse_middle_name', 'Spouse middle name, if applicable', 'text', { autocomplete: 'additional-name', showWhen: married }),
+      field('spouse_other_names_used', 'Other names used by spouse, if any', 'textarea', { showWhen: married })
+    ]),
+    step('i589_spouse_marriage_birth', 'Spouse marriage and birth information', 'Official Form I-589, Part A.II, Items 3 and 9-14.', [
+      field('spouse_date_of_birth', 'Spouse date of birth', 'date', { required: true, showWhen: married }),
+      field('spouse_date_of_marriage', 'Date of marriage', 'date', { required: true, showWhen: married }),
+      field('spouse_place_of_marriage', 'Place of marriage', 'text', { required: true, showWhen: married }),
+      field('spouse_city_of_birth', 'Spouse city of birth', 'text', { required: true, showWhen: married }),
+      field('spouse_country_of_birth', 'Spouse country of birth', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: married }),
+      field('spouse_country_of_citizenship', 'Spouse nationality or citizenship', 'select', { required: true, options: COUNTRY_OPTIONS, showWhen: married }),
+      field('spouse_ethnic_or_tribal_group', 'Spouse race, ethnic, or tribal group', 'text', { required: true, showWhen: married }),
+      field('spouse_sex', 'Spouse sex', 'radio', { required: true, options: ['Male', 'Female'], showWhen: married })
+    ]),
+    step('i589_spouse_location', 'Spouse current location', 'If outside the United States, provide the current city and country.', [
+      field('i589_spouse_in_us', 'Is your spouse in the United States?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: married }),
+      field('i589_spouse_outside_us_location', 'Spouse current city and country', 'text', { required: true, showWhen: [{ id: 'i589_spouse_in_us', equals: 'No' }] })
+    ]),
+    step('i589_spouse_entry', 'Spouse U.S. entry and status', 'Complete Items 16-24 when spouse is in the United States.', [
+      field('spouse_place_entry', 'Spouse place of last U.S. entry', 'text', { required: true, showWhen: spouseInUs }),
+      field('spouse_date_last_entered_us', 'Spouse date of last U.S. entry', 'date', { required: true, showWhen: spouseInUs }),
+      field('spouse_i94_number', 'Spouse I-94 number, if any', 'text', { autocomplete: 'off', showWhen: spouseInUs }),
+      field('spouse_status_last_admitted', 'Spouse status when last admitted', 'text', { required: true, showWhen: spouseInUs }),
+      field('spouse_current_status', 'Spouse current status', 'text', { required: true, showWhen: spouseInUs }),
+      field('spouse_authorized_stay_expires', 'Spouse authorized stay expiration date or D/S', 'text', { showWhen: spouseInUs }),
+      field('spouse_in_immigration_court', 'Is spouse in Immigration Court proceedings?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: spouseInUs }),
+      field('i589_spouse_included', 'Is spouse included in this application?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: spouseInUs })
+    ]),
+    step('i589_children_summary', 'All children', 'List every child regardless of age, location, or marital status.', [
+      field('total_children', 'Total number of all children', 'number', { required: true, inputmode: 'numeric' })
+    ]),
+    ...childSteps,
+
+    step('i589_last_foreign_address', 'Last address before the United States', 'Official Form I-589, Part A.III, Item 1.', [
+      addressBlockField('i589_last_foreign_address', 'Last address before coming to the United States', 'i589_last_foreign', { required: true, countryDefault: '' }),
+      field('i589_last_foreign_from', 'From month/year', 'text', { required: true, placeholder: 'MM/YYYY' }),
+      field('i589_last_foreign_to', 'To month/year', 'text', { required: true, placeholder: 'MM/YYYY' })
+    ]),
+    step('i589_residences_5y', 'Residences during the past five years', 'List the present address first and cover the complete five-year period.', [
+      addressHistoryField('i589_residences_last_5_years', 'Five-year residence history', { entries: 5, required: true })
+    ]),
+    step('i589_residence_history_complete', 'Confirm the residence history', 'Do not continue until there are no unexplained gaps or reversed dates.', [
+      field('i589_residence_history_complete', 'I listed every residence for the required five-year period and checked the dates', 'radio', { required: true, options: ['Yes, the residence history is complete'] })
+    ]),
+    step('i589_education_history', 'Education history', 'List the most recent school first.', [
+      employmentHistoryField('i589_education_history', 'Education history', { entries: 4, required: true })
+    ]),
+    step('i589_employment_5y', 'Employment during the past five years', 'Include self-employment and every period of unemployment.', [
+      employmentHistoryField('i589_employment_last_5_years', 'Five-year employment history', { entries: 4, required: true })
+    ]),
+    step('i589_employment_history_complete', 'Confirm the employment history', 'Do not continue until there are no unexplained gaps or reversed dates.', [
+      field('i589_employment_history_complete', 'I listed all employment and unemployment for the required five-year period and checked the dates', 'radio', { required: true, options: ['Yes, the employment history is complete'] })
+    ]),
+    ...relativeSteps,
+
+    step('i589_asylum_basis', 'Asylum or withholding basis', 'Official Form I-589, Part B, Item 1. Select every applicable box.', [
+      field('asylum_basis', 'Basis described by applicant', 'checkboxes', { required: true, options: ['Race', 'Religion', 'Nationality', 'Political opinion', 'Membership in a particular social group', 'Torture Convention'] })
+    ]),
+    step('i589_partb_1a_past_harm', 'Past harm, mistreatment, or threats', 'Official Form I-589, Part B, Item 1.A.', [
+      field('i589_past_harm_yes_no', 'Have you, family, close friends, or colleagues experienced past harm, mistreatment, or threats?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_past_harm_details', 'Explain what happened, when, who caused it, and why', 'textarea', { required: true, rows: 10, showWhen: [{ id: 'i589_past_harm_yes_no', equals: 'Yes' }] })
+    ]),
+    step('i589_partb_1b_future_fear', 'Fear of future harm or mistreatment', 'Official Form I-589, Part B, Item 1.B.', [
+      field('i589_future_harm_yes_no', 'Do you fear harm or mistreatment if returned to your home country?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_future_harm_details', 'Explain what you fear, who would cause it, and why', 'textarea', { required: true, rows: 10, showWhen: [{ id: 'i589_future_harm_yes_no', equals: 'Yes' }] })
+    ]),
+    step('i589_partb_2_foreign_accusation', 'Foreign accusation, arrest, detention, conviction, or imprisonment', 'Official Form I-589, Part B, Item 2.', [
+      field('i589_foreign_accusation_yes_no', 'Have you or family members experienced any listed action outside the United States?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_foreign_accusation_details', 'Explain the circumstances and reasons', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_foreign_accusation_yes_no', equals: 'Yes' }] })
+    ]),
+    step('i589_partb_3a_organizations', 'Organizations or groups', 'Official Form I-589, Part B, Item 3.A.', [
+      field('i589_organization_membership_yes_no', 'Have you or family members belonged to or been associated with an organization or group?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_organization_membership_details', 'Describe each person, organization, role, participation, and dates', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_organization_membership_yes_no', equals: 'Yes' }] })
+    ]),
+    step('i589_partb_3b_current_participation', 'Current participation in organizations or groups', 'Official Form I-589, Part B, Item 3.B.', [
+      field('i589_current_organization_participation_yes_no', 'Do you or family members continue to participate in any such organization or group?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_current_organization_participation_details', 'Describe current participation, role, and duration', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_current_organization_participation_yes_no', equals: 'Yes' }] })
+    ]),
+    step('i589_partb_4_torture', 'Fear of torture', 'Official Form I-589, Part B, Item 4.', [
+      field('i589_torture_fear_yes_no', 'Are you afraid of being subjected to torture in a country to which you may be returned?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_torture_fear_details', 'Explain the feared torture, who would inflict it, and why', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_torture_fear_yes_no', equals: 'Yes' }] })
+    ]),
+    step('i589_partc_1_prior_applications', 'Prior refugee, asylum, or withholding applications', 'Official Form I-589, Part C, Item 1.', [
+      field('i589_prior_asylum_application', 'Have you, spouse, children, parents, or siblings ever applied to the U.S. Government for refugee status, asylum, or withholding?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_prior_asylum_details', 'Explain the decision, resulting status, inclusion, A-Number, and changed circumstances', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_prior_asylum_application', equals: 'Yes' }] })
+    ]),
+    step('i589_partc_2_third_country', 'Travel or lawful status in another country', 'Official Form I-589, Part C, Items 2.A-2.B.', [
+      field('i589_traveled_through_other_country', 'After leaving the country of claimed persecution, did you or included family travel through or reside in another country?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_other_country_lawful_status', 'Have you or family members applied for or received lawful status in another country?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_third_country_details', 'For each person: country, dates, status, reason for leaving, right to return, and protection application', 'textarea', { required: true, rows: 10, showWhenAny: [{ id: 'i589_traveled_through_other_country', equals: 'Yes' }, { id: 'i589_other_country_lawful_status', equals: 'Yes' }] })
+    ]),
+    step('i589_partc_3_persecution', 'Participation in persecution', 'Official Form I-589, Part C, Item 3.', [
+      field('i589_participated_in_persecution', 'Have you, spouse, or children ordered, incited, assisted, or participated in causing harm because of a protected ground?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_participated_in_persecution_details', 'Describe each incident and each person’s involvement', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_participated_in_persecution', equals: 'Yes' }] })
+    ]),
+    step('i589_partc_4_returned', 'Return to the country of feared harm', 'Official Form I-589, Part C, Item 4.', [
+      field('i589_returned_to_feared_country', 'After leaving the country where you were harmed or fear harm, did you return there?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_returned_to_feared_country_details', 'Explain every visit, dates, purpose, and length of stay', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_returned_to_feared_country', equals: 'Yes' }] })
+    ]),
+    step('i589_partc_5_one_year', 'One-year filing question', 'Official Form I-589, Part C, Item 5.', [
+      field('i589_filing_more_than_one_year_after_arrival', 'Are you filing more than one year after your last arrival in the United States?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_one_year_explanation', 'Explain why the application was not filed within the first year', 'textarea', { required: true, rows: 8, showWhen: [{ id: 'i589_filing_more_than_one_year_after_arrival', equals: 'Yes' }] })
+    ]),
+    step('i589_partc_6_us_crimes', 'Crimes or arrests in the United States', 'Official Form I-589, Part C, Item 6.', [
+      field('i589_us_crime_or_arrest', 'Have you or included family committed a crime or been arrested, charged, convicted, or sentenced in the United States?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_us_crime_or_arrest_details', 'For every incident, provide facts, dates, charges, location, detention, sentence, release, and documents', 'textarea', { required: true, rows: 10, showWhen: [{ id: 'i589_us_crime_or_arrest', equals: 'Yes' }] })
+    ]),
+
+    step('i589_native_alphabet_name', 'Write your name in your native alphabet', 'Official Form I-589, Part D. Non-Latin characters are expected in this field.', [
+      field('i589_name_native_alphabet', 'Name in native alphabet', 'text', { required: true, allowNonLatin: true, nativeScript: true })
+    ]),
+    step('i589_family_assistance', 'Family assistance completing the application', 'Official Form I-589, Part D.', [
+      field('i589_family_assisted', 'Did spouse, parent, or children assist in completing this application?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_family_assistance_details', 'Name and relationship of each assisting family member', 'textarea', { required: true, showWhen: [{ id: 'i589_family_assisted', equals: 'Yes' }] })
+    ]),
+    step('i589_preparer_and_low_cost_list', 'Preparation and legal-assistance list', 'Official Form I-589, Part D.', [
+      field('has_preparer', 'Did someone other than spouse, parent, or children prepare this application?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i589_received_low_cost_legal_list', 'Were you provided a list of people who may assist at little or no cost?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i589_preparer_details', 'Preparer information', 'Official Form I-589, Part E.', [
+      field('preparer_family_name', 'Preparer family name', 'text', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_given_name', 'Preparer given name', 'text', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_daytime_phone', 'Preparer daytime phone', 'phone', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      addressBlockField('i589_preparer_address', 'Preparer address', 'i589_preparer', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] })
+    ])
+  ];
+}
+
+function i864SpecificSteps() {
+  const sponsorBasisOptions = [
+    '1.a. I am the petitioner. I filed or am filing for the immigration of my relative.',
+    '1.b. I filed an alien worker petition for the intending immigrant, who is related to me.',
+    '1.c. I have a 5 percent or more ownership interest in the business that filed the alien worker petition.',
+    '1.d. I am the only joint sponsor.',
+    '1.e. I am the first or second of two joint sponsors.',
+    '1.f. The original petitioner is deceased. I am the substitute sponsor.'
+  ];
+  const familyTimingOptions = [
+    'No additional family members',
+    'At the same time or within six months of the principal immigrant',
+    'More than six months after the principal immigrant'
+  ];
+  const familyTimingShow = [
+    { id: 'i864_sponsored_family_timing', equals: familyTimingOptions[1] },
+    { id: 'i864_sponsored_family_timing', equals: familyTimingOptions[2] }
+  ];
+  const familyMemberFields = (number) => [
+    field(`i864_family${number}_family_name`, `Family member ${number} family name`, 'text', { required: number === 1, showWhenAny: familyTimingShow }),
+    field(`i864_family${number}_given_name`, `Family member ${number} given name`, 'text', { required: number === 1, showWhenAny: familyTimingShow }),
+    field(`i864_family${number}_middle_name`, `Family member ${number} middle name, if any`, 'text', { showWhenAny: familyTimingShow }),
+    field(`i864_family${number}_relationship`, `Family member ${number} relationship to principal immigrant`, 'text', { required: number === 1, showWhenAny: familyTimingShow }),
+    field(`i864_family${number}_date_of_birth`, `Family member ${number} date of birth`, 'date', { required: number === 1, showWhenAny: familyTimingShow }),
+    field(`i864_family${number}_alien_number`, `Family member ${number} A-number, if any`, 'text', { showWhenAny: familyTimingShow }),
+    field(`i864_family${number}_uscis_online_account_number`, `Family member ${number} USCIS online account number, if any`, 'text', { showWhenAny: familyTimingShow })
+  ];
+  const incomeMemberFields = (number) => [
+    field(`i864_household_income_person${number}_name`, `Household income person ${number} name`, 'text'),
+    field(`i864_household_income_person${number}_relationship`, `Household income person ${number} relationship`, 'text'),
+    field(`i864_household_income_person${number}_income`, `Household income person ${number} current annual income`, 'text', { inputmode: 'decimal' })
+  ];
+
+  return [
+    // I-864 Part 1: basis.
     step('i864_sponsor_basis', 'Sponsor basis', 'Start with why this sponsor is submitting Form I-864.', [
       field('i864_sponsor_basis', 'Sponsor basis', 'select', {
         required: true,
-        options: [
-          'Petitioner filing for the intending immigrant',
-          'Joint sponsor',
-          'Substitute sponsor',
-          'First joint sponsor',
-          'Second joint sponsor',
-          'Not sure'
-        ]
+        options: sponsorBasisOptions
       }),
-      field('joint_sponsor_needed', 'Is a joint sponsor needed?', 'radio', { options: ['Yes', 'No', 'Not sure'] })
+      field('i864_employment_petition_relationship', 'If 1.b., relationship to the intending immigrant', 'text', {
+        required: true,
+        showWhen: [{ id: 'i864_sponsor_basis', equals: sponsorBasisOptions[1] }]
+      }),
+      field('i864_ownership_business_name', 'If 1.c., name of business or organization', 'text', {
+        required: true,
+        showWhen: [{ id: 'i864_sponsor_basis', equals: sponsorBasisOptions[2] }]
+      }),
+      field('i864_ownership_relationship', 'If 1.c., relationship to the intending immigrant', 'text', {
+        required: true,
+        showWhen: [{ id: 'i864_sponsor_basis', equals: sponsorBasisOptions[2] }]
+      }),
+      field('i864_joint_sponsor_number', 'If 1.e., are you the first or second joint sponsor?', 'radio', {
+        required: true,
+        options: ['First joint sponsor', 'Second joint sponsor'],
+        showWhen: [{ id: 'i864_sponsor_basis', equals: sponsorBasisOptions[4] }]
+      }),
+      field('i864_substitute_sponsor_relationship', 'If 1.f., relationship to the intending immigrant', 'text', {
+        required: true,
+        showWhen: [{ id: 'i864_sponsor_basis', equals: sponsorBasisOptions[5] }]
+      })
     ]),
+
+    // I-864 Part 3: principal immigrant.
     step('i864_principal_immigrant', 'Principal immigrant', 'The intending immigrant listed first on the affidavit.', [
       field('principal_immigrant_family_name', 'Principal immigrant family name', 'text', { required: true, autocomplete: 'family-name' }),
-      field('principal_immigrant_given_name', 'Principal immigrant given name', 'text', { required: true, autocomplete: 'given-name' })
+      field('principal_immigrant_given_name', 'Principal immigrant given name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('principal_immigrant_middle_name', 'Principal immigrant middle name, if any', 'text', { autocomplete: 'additional-name' })
     ]),
     step('i864_principal_numbers', 'Principal immigrant numbers', 'Use A-number, USCIS account number, and receipt number if available.', [
       field('principal_immigrant_alien_number', 'Principal immigrant A-number, if any', 'text', { autocomplete: 'off' }),
-      field('principal_immigrant_receipt_number', 'Related USCIS receipt number, if any', 'text', { autocomplete: 'off' })
+      field('principal_immigrant_uscis_online_account_number', 'Principal immigrant USCIS online account number, if any', 'text', { autocomplete: 'off' }),
+      field('principal_immigrant_daytime_phone', 'Principal immigrant daytime telephone number, if any', 'phone', { autocomplete: 'tel' })
+    ]),
+    step('i864_principal_birth_citizenship', 'Principal immigrant birth and citizenship', 'These fields go in Part 3 of Form I-864.', [
+      field('principal_immigrant_country_of_citizenship', 'Principal immigrant country of citizenship or nationality', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('principal_immigrant_date_of_birth', 'Principal immigrant date of birth', 'date', { required: true, autocomplete: 'bday' })
     ]),
     step('i864_principal_address', 'Principal immigrant mailing address', 'Complete the intending immigrant mailing address.', [
       addressBlockField('principal_immigrant_mailing_address', 'Principal immigrant mailing address', 'principal_immigrant_mailing', { required: true })
     ]),
-    step('i864_other_immigrants', 'Other immigrants sponsored', 'List other family members immigrating with the principal immigrant.', [
-      field('i864_other_immigrants_count', 'Number of other immigrants included', 'number', { inputmode: 'numeric' }),
-      field('i864_other_immigrants_details', 'Other immigrants names and relationships', 'textarea')
+
+    // I-864 Part 4: immigrants sponsored.
+    step('i864_sponsoring_principal', 'Principal immigrant sponsored by this affidavit', 'Answer Part 4, Item 1 exactly.', [
+      field('i864_sponsor_principal_immigrant', 'Are you sponsoring the principal immigrant named in Part 3?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i864_other_immigrants', 'Other immigrants sponsored', 'Use this only for family members immigrating with or after the principal immigrant.', [
+      field('i864_sponsored_family_timing', 'Are you sponsoring additional family members?', 'radio', { required: true, options: familyTimingOptions }),
+      field('i864_total_number_of_immigrants', 'Total number of immigrants you are sponsoring on this affidavit', 'number', { required: true, inputmode: 'numeric' })
+    ]),
+    step('i864_family_member_1', 'Family member 1', 'Part 4, Item 4. Required if you selected additional family members.', familyMemberFields(1)),
+    step('i864_family_member_2', 'Family member 2', 'Part 4, Item 5.', familyMemberFields(2)),
+    step('i864_family_member_3', 'Family member 3', 'Part 4, Item 6.', familyMemberFields(3)),
+    step('i864_family_member_4', 'Family member 4', 'Part 4, Item 7.', familyMemberFields(4)),
+    step('i864_additional_immigrants', 'Additional sponsored immigrants', 'If more immigrants are sponsored than fit in Part 4, capture them for Part 11.', [
+      field('i864_additional_immigrants_details', 'Additional immigrants beyond the four printed rows', 'textarea', { rows: 5 })
     ]),
 
-    // I-864 Part 4: sponsor.
+    // I-864 Part 2: sponsor.
     step('i864_sponsor_name', 'Sponsor legal name', 'Enter sponsor name exactly as shown on tax and identity records.', [
       field('sponsor_family_name', 'Sponsor family name', 'text', { required: true, autocomplete: 'family-name' }),
-      field('sponsor_given_name', 'Sponsor given name', 'text', { required: true, autocomplete: 'given-name' })
-    ]),
-    step('i864_sponsor_full_name', 'Sponsor full name and organization', 'Use this when a full-name line or organization name is needed.', [
-      field('sponsor_full_name', 'Sponsor full legal name', 'text', { required: true, autocomplete: 'name' }),
-      field('sponsor_organization_name', 'Sponsor organization name, if any', 'text', { autocomplete: 'organization' })
+      field('sponsor_given_name', 'Sponsor given name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('sponsor_middle_name', 'Sponsor middle name, if any', 'text', { autocomplete: 'additional-name' })
     ]),
     step('i864_sponsor_mailing_address', 'Sponsor mailing address', 'Complete sponsor mailing address as a structured block.', [
       addressBlockField('sponsor_mailing_address', 'Sponsor mailing address', 'sponsor_mailing', { required: true })
@@ -2631,19 +3198,22 @@ function i864SpecificSteps() {
     ]),
     step('i864_sponsor_physical_address', 'Sponsor physical address details', 'Complete only if physical address differs from mailing.', [
       addressBlockField('sponsor_physical_address', 'Sponsor physical address', 'sponsor_physical', {
+        required: true,
         showWhen: [{ id: 'sponsor_physical_same_as_mailing', equals: 'No' }]
       })
     ]),
-    step('i864_sponsor_birth', 'Sponsor birth and citizenship', 'Sponsor date of birth, country of birth, and citizenship/residency status.', [
+    step('i864_sponsor_birth', 'Sponsor birth and domicile', 'Sponsor date of birth, country of birth, and country of domicile.', [
       field('sponsor_date_of_birth', 'Sponsor date of birth', 'date', { required: true, autocomplete: 'bday' }),
-      field('sponsor_country_of_birth', 'Sponsor country of birth', 'select', { options: COUNTRY_OPTIONS })
+      field('sponsor_country_of_birth', 'Sponsor country of birth', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('sponsor_country_of_domicile', 'Sponsor country of domicile', 'select', { required: true, options: COUNTRY_OPTIONS })
     ]),
     step('i864_sponsor_status', 'Sponsor immigration status', 'Status must match the I-864 sponsor eligibility section.', [
       field('sponsor_status', 'Sponsor status', 'select', {
         required: true,
-        options: ['U.S. citizen', 'Lawful permanent resident', 'U.S. national', 'Not sure']
+        options: ['U.S. citizen', 'U.S. national', 'Lawful permanent resident']
       }),
       field('sponsor_alien_number', 'Sponsor A-number, if LPR', 'text', {
+        required: true,
         autocomplete: 'off',
         showWhen: [{ id: 'sponsor_status', equals: 'Lawful permanent resident' }]
       })
@@ -2652,55 +3222,117 @@ function i864SpecificSteps() {
       field('sponsor_ssn', 'Sponsor Social Security number', 'text', { required: true, inputmode: 'numeric', autocomplete: 'off', placeholder: '9 digits' }),
       field('sponsor_uscis_online_account_number', 'Sponsor USCIS online account number, if any', 'text', { autocomplete: 'off' })
     ]),
+    step('i864_sponsor_active_duty', 'Sponsor active duty status', 'Part 2 asks petitioner sponsors about active duty in the U.S. Armed Forces or U.S. Coast Guard.', [
+      field('sponsor_active_duty', 'Are you currently on active duty in the U.S. Armed Forces or U.S. Coast Guard?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
 
     // I-864 Part 5-6: household and income.
     step('i864_household_size', 'Household size', 'Calculate household size in the same order as the form.', [
-      field('household_size', 'Household size', 'number', { required: true, inputmode: 'numeric' }),
-      field('i864_household_size_notes', 'Household size notes', 'textarea')
+      field('i864_household_spouse_count', 'If you are currently married, enter 1 for your spouse or 0 if already counted', 'number', { required: true, inputmode: 'numeric' }),
+      field('i864_household_dependent_children_count', 'Dependent children count not already counted', 'number', { required: true, inputmode: 'numeric' }),
+      field('i864_household_other_dependents_count', 'Other dependents count not already counted', 'number', { required: true, inputmode: 'numeric' }),
+      field('i864_household_other_sponsored_count', 'People sponsored on any other Form I-864 who are still sponsored', 'number', { required: true, inputmode: 'numeric' }),
+      field('i864_household_same_residence_count', 'Household members whose income will be included and who are not already counted', 'number', { required: true, inputmode: 'numeric' }),
+      field('household_size', 'Total household size', 'number', { required: true, inputmode: 'numeric' })
     ]),
     step('i864_employment_status', 'Sponsor employment status', 'Current employment or self-employment.', [
-      field('sponsor_employment_status', 'Sponsor employment status', 'select', {
-        options: ['Employed', 'Self-employed', 'Retired', 'Unemployed', 'Student', 'Other']
+      field('sponsor_employment_statuses', 'Sponsor current employment status', 'checkboxes', {
+        required: true,
+        options: ['Employed', 'Self-employed', 'Retired', 'Unemployed']
       }),
-      field('sponsor_employer_name', 'Current employer or business name', 'text', { autocomplete: 'organization' })
+      field('sponsor_occupation', 'If employed, occupation', 'text', { showWhen: [{ id: 'sponsor_employment_statuses', includes: 'Employed' }] }),
+      field('sponsor_employer_name', 'If employed, employer 1', 'text', { autocomplete: 'organization', showWhen: [{ id: 'sponsor_employment_statuses', includes: 'Employed' }] }),
+      field('sponsor_employer2_name', 'If employed, employer 2, if any', 'text', { autocomplete: 'organization', showWhen: [{ id: 'sponsor_employment_statuses', includes: 'Employed' }] }),
+      field('sponsor_self_employed_as', 'If self-employed, occupation or business type', 'text', { showWhen: [{ id: 'sponsor_employment_statuses', includes: 'Self-employed' }] }),
+      field('sponsor_retired_since', 'If retired, retired since', 'date', { showWhen: [{ id: 'sponsor_employment_statuses', includes: 'Retired' }] }),
+      field('sponsor_unemployed_since', 'If unemployed, unemployed since', 'date', { showWhen: [{ id: 'sponsor_employment_statuses', includes: 'Unemployed' }] })
     ]),
     step('i864_current_income', 'Sponsor current annual income', 'Use current annual income before optional assets.', [
-      field('current_annual_income', 'Current annual income', 'text', { required: true, inputmode: 'decimal' }),
-      field('sponsor_income_source_details', 'Income source details', 'textarea')
+      field('current_annual_income', 'Sponsor current individual annual income', 'text', { required: true, inputmode: 'decimal' })
     ]),
-    step('i864_household_member_income', 'Household member income', 'Use only when household member income will be included.', [
-      field('include_household_member_income', 'Will household member income be included?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('household_member_income_details', 'Household member names, relationship, and income', 'textarea', {
-        showWhenAny: [
-          { id: 'include_household_member_income', equals: 'Yes' },
-          { id: 'include_household_member_income', equals: 'Not sure' }
-        ]
-      })
+    step('i864_household_income_people', 'Household member income', 'List household members whose income will be included in Part 6.', [
+      field('include_household_member_income', 'Will household member income be included?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i864_household_income_person_1', 'Household income person 1', 'Part 6, Item 8.', incomeMemberFields(1)),
+    step('i864_household_income_person_2', 'Household income person 2', 'Part 6, Item 9.', incomeMemberFields(2)),
+    step('i864_household_income_person_3', 'Household income person 3', 'Part 6, Item 10.', incomeMemberFields(3)),
+    step('i864_household_income_person_4', 'Household income person 4', 'Part 6, Item 11.', incomeMemberFields(4)),
+    step('i864_household_income_total', 'Total household income', 'Part 6, Item 12 and I-864A questions.', [
+      field('i864_total_household_income', 'Current annual household income total', 'text', { required: true, inputmode: 'decimal' }),
+      field('i864_household_members_completed_i864a', 'Have household income people completed Form I-864A?', 'radio', { required: true, options: ['Yes', 'No', 'Not applicable'] }),
+      field('i864_household_member_i864a_not_needed', 'Does anyone listed not need I-864A because they are the intending immigrant and have no accompanying dependents?', 'radio', { required: true, options: ['Yes', 'No', 'Not applicable'] }),
+      field('i864_household_member_i864a_not_needed_name', 'Name of person who does not need I-864A', 'text', { showWhen: [{ id: 'i864_household_member_i864a_not_needed', equals: 'Yes' }] })
     ]),
     step('i864_tax_returns', 'Federal tax returns', 'List tax return years and available proof.', [
-      field('tax_returns_available', 'Federal tax returns available', 'checkboxes', {
-        options: ['Most recent year', 'Last 2 years', 'Last 3 years', 'W-2/1099', 'Pay stubs', 'Employment letter']
+      field('i864_filed_three_recent_tax_returns', 'Have you filed a Federal income tax return for each of the three most recent tax years?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i864_not_required_to_file_taxes', 'If no, were you not required to file?', 'radio', {
+        required: true,
+        options: ['Yes', 'No'],
+        showWhen: [{ id: 'i864_filed_three_recent_tax_returns', equals: 'No' }]
       }),
-      field('i864_most_recent_tax_year_income', 'Most recent tax year total income', 'text', { inputmode: 'decimal' })
+      field('i864_tax_not_filed_explanation', 'If any required tax return was not filed, explain for Part 11', 'textarea', {
+        required: true,
+        showWhen: [{ id: 'i864_filed_three_recent_tax_returns', equals: 'No' }]
+      }),
+      field('i864_tax_year1', 'Most recent tax year', 'text', { required: true, inputmode: 'numeric' }),
+      field('i864_tax_income1', 'Most recent tax year total income', 'text', { required: true, inputmode: 'decimal' }),
+      field('i864_tax_year2', 'Second most recent tax year', 'text', { required: true, inputmode: 'numeric' }),
+      field('i864_tax_income2', 'Second most recent tax year total income', 'text', { required: true, inputmode: 'decimal' }),
+      field('i864_tax_year3', 'Third most recent tax year', 'text', { required: true, inputmode: 'numeric' }),
+      field('i864_tax_income3', 'Third most recent tax year total income', 'text', { required: true, inputmode: 'decimal' })
     ]),
     step('i864_assets', 'Assets', 'Use assets only if income may not meet the guideline.', [
-      field('i864_assets_used', 'Will assets be used?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('i864_asset_details', 'Asset details and approximate values', 'textarea', {
-        showWhenAny: [
-          { id: 'i864_assets_used', equals: 'Yes' },
-          { id: 'i864_assets_used', equals: 'Not sure' }
-        ]
-      })
+      field('i864_sponsor_cash_assets', 'Sponsor cash, savings, and checking account balance', 'text', { inputmode: 'decimal' }),
+      field('i864_sponsor_real_estate_assets', 'Sponsor real estate net value', 'text', { inputmode: 'decimal' }),
+      field('i864_sponsor_stock_bond_assets', 'Sponsor stocks, bonds, certificates of deposit, and other assets', 'text', { inputmode: 'decimal' }),
+      field('i864_sponsor_total_assets', 'Sponsor total assets', 'text', { inputmode: 'decimal' }),
+      field('i864_household_member_total_assets', 'Household member total assets, if any', 'text', { inputmode: 'decimal' }),
+      field('i864_immigrant_cash_assets', 'Principal immigrant cash, savings, and checking account balance', 'text', { inputmode: 'decimal' }),
+      field('i864_immigrant_real_estate_assets', 'Principal immigrant real estate net value', 'text', { inputmode: 'decimal' }),
+      field('i864_immigrant_stock_bond_assets', 'Principal immigrant stocks, bonds, certificates of deposit, and other assets', 'text', { inputmode: 'decimal' }),
+      field('i864_immigrant_total_assets', 'Principal immigrant total assets', 'text', { inputmode: 'decimal' }),
+      field('i864_total_value_assets', 'Total value of assets', 'text', { inputmode: 'decimal' })
     ]),
 
     // I-864 Part 8-10: contact, interpreter, preparer.
+    step('i864_sponsor_statement', 'Sponsor statement', 'Choose whether the sponsor read the affidavit in English or used an interpreter.', [
+      field('i864_sponsor_statement', 'Sponsor statement', 'radio', {
+        required: true,
+        options: ['I can read and understand English, and I have read and understand every question and instruction', 'An interpreter read every question and instruction to me']
+      }),
+      field('i864_sponsor_statement_language', 'Language used by interpreter', 'text', {
+        required: true,
+        showWhen: [{ id: 'i864_sponsor_statement', equals: 'An interpreter read every question and instruction to me' }]
+      })
+    ]),
     step('i864_sponsor_contact', 'Sponsor contact information', 'Phone and email for the sponsor signature/contact section.', [
-      field('daytime_phone', 'Sponsor daytime phone', 'phone', { autocomplete: 'tel' }),
+      field('daytime_phone', 'Sponsor daytime phone', 'phone', { required: true, autocomplete: 'tel' }),
+      field('mobile_phone', 'Sponsor mobile phone, if any', 'phone', { autocomplete: 'tel' }),
       field('email_address', 'Sponsor email address', 'email', { autocomplete: 'email' })
     ]),
     step('i864_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
-      field('has_interpreter', 'Will an interpreter be used for this affidavit?', 'radio', { options: ['Yes', 'No'] }),
-      field('has_preparer', 'Will someone prepare this affidavit for the sponsor?', 'radio', { options: ['Yes', 'No'] })
+      field('has_interpreter', 'Will an interpreter be used for this affidavit?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('has_preparer', 'Will someone prepare this affidavit for the sponsor?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i864_interpreter_details', 'Interpreter information', 'Complete Part 9 only if an interpreter was used.', [
+      field('interpreter_family_name', 'Interpreter family name', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_given_name', 'Interpreter given name', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_business_name', 'Interpreter business or organization name, if any', 'text', { showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_daytime_phone', 'Interpreter daytime phone', 'phone', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_mobile_phone', 'Interpreter mobile phone, if any', 'phone', { showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_email', 'Interpreter email, if any', 'email', { showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_language', 'Interpreter language', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] })
+    ]),
+    step('i864_preparer_details', 'Preparer information', 'Complete Part 10 only if someone prepared this affidavit.', [
+      field('preparer_family_name', 'Preparer family name', 'text', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_given_name', 'Preparer given name', 'text', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_business_name', 'Preparer business or organization name, if any', 'text', { showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_daytime_phone', 'Preparer daytime phone', 'phone', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_mobile_phone', 'Preparer mobile phone, if any', 'phone', { showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_email', 'Preparer email, if any', 'email', { showWhen: [{ id: 'has_preparer', equals: 'Yes' }] })
+    ]),
+    step('i864_additional_information', 'Additional information', 'Use Part 11 for explanations that do not fit the printed fields.', [
+      field('i864_additional_information', 'Additional information for Part 11', 'textarea', { rows: 6 })
     ])
   ];
 }
@@ -2798,121 +3430,164 @@ function i912SpecificSteps() {
   ];
 }
 
-function i751SpecificSteps() {
+function i751ChildSteps(number) {
+  const show = [{ id: 'total_children', gte: number }];
   return [
-    // I-751 Part 1-2: conditional resident and filing basis.
-    step('i751_filing_type', 'I-751 filing basis', 'Start with the exact filing basis selected on the form.', [
-      field('i751_filing_type', 'Filing type', 'select', {
-        required: true,
-        options: ['Joint filing with spouse', 'Divorce waiver', 'Abuse or extreme cruelty waiver', 'Hardship waiver', 'Death of spouse waiver', 'Not sure']
-      }),
-      field('conditional_green_card_expiration', 'Conditional green card expiration date', 'date', { required: true })
+    step(`i751_child${number}_identity`, `Child ${number} identity`, 'Official Part 5. Provide every child, whether or not the child lives with or applies with the petitioner.', [
+      field(`i751_child${number}_family_name`, `Child ${number} family name`, 'text', { required: true, autocomplete: 'family-name', showWhen: show }),
+      field(`i751_child${number}_given_name`, `Child ${number} given name`, 'text', { required: true, autocomplete: 'given-name', showWhen: show }),
+      field(`i751_child${number}_middle_name`, `Child ${number} middle name`, 'text', { autocomplete: 'additional-name', showWhen: show }),
+      field(`i751_child${number}_dob`, `Child ${number} date of birth`, 'date', { required: true, showWhen: show }),
+      field(`i751_child${number}_alien_number`, `Child ${number} A-Number, if any`, 'text', { inputmode: 'numeric', maxLength: 9, showWhen: show })
     ]),
-    step('i751_conditional_resident_numbers', 'Conditional resident numbers', 'Use A-number and USCIS account number if available.', [
-      field('alien_number', 'Conditional resident A-number', 'text', { required: true, autocomplete: 'off', placeholder: '9 digits' }),
-      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { autocomplete: 'off' })
+    step(`i751_child${number}_status`, `Child ${number} residence and filing status`, 'Answer both official Yes/No questions.', [
+      field(`i751_child${number}_lives_with_you`, `Does child ${number} live with you?`, 'radio', { required: true, options: ['Yes', 'No'], showWhen: show }),
+      field(`i751_child${number}_applying_with_you`, `Is child ${number} applying with you?`, 'radio', { required: true, options: ['Yes', 'No'], showWhen: show })
     ]),
-    step('i751_conditional_resident_name', 'Conditional resident legal name', 'Enter the conditional resident name exactly as shown on documents.', [
+    step(`i751_child${number}_address`, `Child ${number} physical address`, 'Official Part 5 address. Enter Apt, Suite, or Floor before a unit number.', [
+      addressBlockField(`i751_child${number}_address`, `Child ${number} physical address`, `i751_child${number}`, { required: true, showWhen: show })
+    ])
+  ];
+}
+
+function i751SpecificSteps() {
+  const jointOptions = ['Joint petition with my spouse', "Joint petition with my parent's spouse", 'Waiver or individual filing request'];
+  return [
+    step('i751_filing_type', 'I-751 filing basis', 'Official Part 3. Select the exact joint or individual filing basis.', [
+      field('i751_filing_type', 'Filing type', 'radio', { required: true, options: jointOptions }),
+      field('i751_waiver_bases', 'Waiver or individual filing basis (select all that apply)', 'checkboxes', { required: true, options: [
+        'My spouse is deceased', 'Good-faith marriage ended by divorce or annulment',
+        'Good-faith marriage and battery or extreme cruelty by spouse',
+        "Parent's good-faith marriage and battery or extreme cruelty by parent, parent's spouse, or both",
+        'Termination of status and removal would result in extreme hardship'
+      ], showWhen: [{ id: 'i751_filing_type', equals: 'Waiver or individual filing request' }] })
+    ]),
+    step('i751_conditional_resident_name', 'Conditional resident legal name', 'Official Part 1, Item 1. Use English (Latin) letters.', [
       field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
-      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' })
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('applicant_middle_name', 'Middle name, if applicable', 'text', { autocomplete: 'additional-name' })
     ]),
-    step('i751_middle_other_names', 'Middle and other names', 'Leave middle name blank if none. Add prior names only if used.', [
-      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' }),
-      field('other_names_used', 'Other names used, if any', 'textarea')
+    step('i751_other_names', 'Other names used', 'Official Part 1, Items 2-3.', [
+      field('i751_other_name1_family', 'Other name 1 family name', 'text'), field('i751_other_name1_given', 'Other name 1 given name', 'text'), field('i751_other_name1_middle', 'Other name 1 middle name', 'text'),
+      field('i751_other_name2_family', 'Other name 2 family name', 'text'), field('i751_other_name2_given', 'Other name 2 given name', 'text'), field('i751_other_name2_middle', 'Other name 2 middle name', 'text')
     ]),
-    step('i751_birth_sex', 'Birth and sex', 'Date of birth, country of birth, and sex.', [
+    step('i751_conditional_resident_numbers', 'Birth and identifying numbers', 'Official Part 1, Items 4-9.', [
       field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
-      field('sex', 'Sex', 'radio', { options: ['Male', 'Female'] })
+      field('country_of_birth', 'Country of birth', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      field('alien_number', 'Conditional resident A-Number', 'text', { required: true, inputmode: 'numeric', maxLength: 9, autocomplete: 'off' }),
+      field('ssn', 'U.S. Social Security number, if any', 'text', { inputmode: 'numeric', maxLength: 9 }),
+      field('uscis_online_account_number', 'USCIS online account number, if any', 'text', { inputmode: 'numeric', maxLength: 12, autocomplete: 'off' })
     ]),
-    step('i751_birth_country', 'Country of birth and citizenship', 'Country fields from the conditional resident section.', [
-      field('country_of_birth', 'Country of birth', 'select', { options: COUNTRY_OPTIONS }),
-      field('country_of_citizenship', 'Country of citizenship or nationality', 'select', { options: COUNTRY_OPTIONS })
+    step('i751_marriage_status', 'Marriage and conditional residence dates', 'Official Part 1, Items 10-14.', [
+      field('marriage_status_now', 'Current marital status', 'radio', { required: true, options: ['Single', 'Married', 'Divorced', 'Widowed'] }),
+      field('current_marriage_date', 'Date of the marriage through which conditional residence was gained', 'date', { required: true }),
+      field('i751_place_of_marriage', 'Place of marriage', 'text', { required: true, placeholder: 'City, state/province, and country' }),
+      field('i751_marriage_end_date', 'Date that marriage ended, if applicable', 'date', { required: true, showWhenAny: [{ id: 'marriage_status_now', equals: 'Divorced' }, { id: 'marriage_status_now', equals: 'Widowed' }] }),
+      field('conditional_green_card_expiration', 'Conditional residence expiration date', 'date', { required: true })
     ]),
-    step('i751_mailing_address', 'Conditional resident mailing address', 'Complete the mailing address as a structured address block.', [
-      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })
+    step('i751_mailing_address', 'Mailing address', 'Official Part 1, Item 15.', [addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true })]),
+    step('i751_physical_address_match', 'Physical address', 'Official Part 1, Item 16 asks whether it differs from mailing.', [
+      field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', { required: true, options: ['Yes', 'No'] })
     ]),
-    step('i751_physical_address_match', 'Conditional resident physical address', 'USCIS asks whether physical address differs from mailing address.', [
-      field('physical_same_as_mailing', 'Is physical address the same as mailing address?', 'radio', {
-        required: true,
-        options: ['Yes', 'No']
-      })
+    step('i751_physical_address', 'Different physical address', 'Official Part 1, Item 17.', [
+      addressBlockField('physical_address', 'Physical address', 'physical', { required: true, showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }] })
     ]),
-    step('i751_physical_address', 'Physical address details', 'Complete only if physical address differs from mailing address.', [
-      addressBlockField('physical_address', 'Physical address', 'physical', {
-        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
-      })
+    step('i751_part1_questions', 'Additional information about the conditional resident', 'Official Part 1, Items 18-23.', [
+      field('i751_in_removal_proceedings', 'Are you in removal, deportation, or rescission proceedings?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_nonattorney_fee_paid', 'Was a fee paid to anyone other than an attorney in connection with this petition?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_criminal_history', 'Have you ever been arrested, detained, charged, indicted, fined, imprisoned, or committed an unarrested crime?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_different_current_marriage', 'If married, is this a different marriage from the one through which you gained conditional residence?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'marriage_status_now', equals: 'Married' }] }),
+      field('i751_other_residences_since_lpr', 'Have you lived at another address since becoming a permanent resident?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_spouse_government_abroad', "Is your spouse or parent's spouse serving with or employed by the U.S. Government outside the United States?", 'radio', { required: true, options: ['Yes', 'No'] })
     ]),
-
-    // I-751 relationship and spouse.
-    step('i751_marriage_status', 'Current marriage status', 'Marriage status drives joint filing or waiver facts.', [
-      field('marriage_status_now', 'Current marriage status', 'select', {
-        required: true,
-        options: ['Married living together', 'Married but separated', 'Divorced', 'Widowed', 'Annulled', 'Other']
-      }),
-      field('conditional_residence_basis', 'How did you receive conditional residence?', 'select', {
-        options: ['Marriage to U.S. citizen', 'Marriage to lawful permanent resident', 'Entrepreneur/investor', 'Dependent child', 'Not sure']
-      })
+    step('i751_residence_history', 'Other residences since permanent residence', 'Required when Part 1, Item 22 is Yes.', [
+      addressHistoryField('residence_history', 'All other residences since becoming a permanent resident', { entries: 6, required: true, showWhen: [{ id: 'i751_other_residences_since_lpr', equals: 'Yes' }] })
     ]),
-    step('i751_spouse_name', 'Spouse or former spouse name', 'Use the spouse connected to the conditional residence.', [
-      field('spouse_family_name', 'Spouse/former spouse family name', 'text', { required: true, autocomplete: 'family-name' }),
-      field('spouse_given_name', 'Spouse/former spouse given name', 'text', { required: true, autocomplete: 'given-name' })
+    step('i751_part1_explanations', 'Required explanations for Yes answers', 'These facts are placed in Part 11 Additional Information.', [
+      field('i751_removal_details', 'Removal, deportation, or rescission details', 'textarea', { required: true, showWhen: [{ id: 'i751_in_removal_proceedings', equals: 'Yes' }] }),
+      field('i751_nonattorney_fee_details', 'Who received the fee and what service was provided?', 'textarea', { required: true, showWhen: [{ id: 'i751_nonattorney_fee_paid', equals: 'Yes' }] }),
+      field('i751_criminal_history_details', 'Criminal history details and disposition', 'textarea', { required: true, showWhen: [{ id: 'i751_criminal_history', equals: 'Yes' }] })
     ]),
-    step('i751_spouse_status', 'Spouse status and birth', 'Spouse citizenship/status and basic identity.', [
-      field('spouse_status', 'Spouse/former spouse status', 'select', { options: ['U.S. citizen', 'Lawful permanent resident', 'Other', 'Not sure'] }),
-      field('spouse_date_of_birth', 'Spouse/former spouse date of birth', 'date')
+    step('i751_biographic', 'Biographic information', 'Official Part 2.', [
+      field('i751_ethnicity', 'Ethnicity', 'radio', { required: true, options: ['Hispanic or Latino', 'Not Hispanic or Latino'] }),
+      field('i751_race', 'Race (select all that apply)', 'checkboxes', { required: true, options: ['White', 'Asian', 'Black or African American', 'American Indian or Alaska Native', 'Native Hawaiian or Other Pacific Islander'] }),
+      field('i751_height_feet', 'Height feet', 'select', { required: true, options: ['3', '4', '5', '6', '7', '8'] }),
+      field('i751_height_inches', 'Height inches', 'select', { required: true, options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] }),
+      field('i751_weight_pounds', 'Weight in pounds', 'number', { required: true, inputmode: 'numeric' }),
+      field('i751_eye_color', 'Eye color', 'radio', { required: true, options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown/Other'] }),
+      field('i751_hair_color', 'Hair color', 'radio', { required: true, options: ['Bald (No hair)', 'Black', 'Blond', 'Brown', 'Gray', 'Red', 'Sandy', 'White', 'Unknown/Other'] })
     ]),
-    step('i751_marriage_details', 'Marriage details', 'Marriage date and place from the I-751 relationship section.', [
-      field('current_marriage_date', 'Date of marriage', 'date', { required: true }),
-      field('current_marriage_city', 'City or town of marriage', 'text')
+    step('i751_spouse_relationship', 'Spouse or stepparent relationship', 'Official Part 4, Item 1.', [
+      field('i751_part4_relationship', 'Person through whom conditional residence was gained', 'radio', { required: true, options: ['Spouse or former spouse', "Parent's spouse or former spouse"] })
     ]),
-    step('i751_marriage_place', 'Marriage state and country', 'State/province and country where the marriage occurred.', [
-      field('current_marriage_state', 'State or province of marriage', 'text'),
-      field('current_marriage_country', 'Country of marriage', 'select', { options: COUNTRY_OPTIONS })
+    step('i751_spouse_name', 'Spouse or stepparent identity', 'Official Part 4, Items 2-5. Use English (Latin) letters.', [
+      field('spouse_family_name', 'Family name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('spouse_given_name', 'Given name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('spouse_middle_name', 'Middle name, if applicable', 'text', { autocomplete: 'additional-name' }),
+      field('spouse_date_of_birth', 'Date of birth', 'date', { required: true }),
+      field('spouse_ssn', 'U.S. Social Security number, if any', 'text', { inputmode: 'numeric', maxLength: 9 }),
+      field('spouse_alien_number', 'A-Number, if any', 'text', { inputmode: 'numeric', maxLength: 9 })
     ]),
-    step('i751_divorce_or_waiver', 'Waiver or divorce details', 'Complete when this is not a joint living-together filing.', [
-      field('i751_waiver_details', 'Divorce, abuse, hardship, death, or separation facts', 'textarea', {
-        showWhenAny: [
-          { id: 'i751_filing_type', equals: 'Divorce waiver' },
-          { id: 'i751_filing_type', equals: 'Abuse or extreme cruelty waiver' },
-          { id: 'i751_filing_type', equals: 'Hardship waiver' },
-          { id: 'i751_filing_type', equals: 'Death of spouse waiver' },
-          { id: 'i751_filing_type', equals: 'Not sure' }
-        ]
-      })
+    step('i751_spouse_address', 'Spouse or stepparent physical address', 'Official Part 4, Item 6.', [
+      addressBlockField('i751_spouse_address', 'Physical address', 'i751_spouse', { required: true })
     ]),
-
-    // I-751 children, addresses, criminal history, evidence, contact.
-    step('i751_children', 'Children included', 'List children included as dependents, if any.', [
-      field('total_children', 'Number of children included', 'number', { inputmode: 'numeric' }),
-      field('children_details', 'Children details', 'textarea', {
-        placeholder: 'For each child: full name, A-number if any, DOB, relationship.',
-        showWhen: [{ id: 'total_children', gte: 1 }]
-      })
+    step('i751_children', 'All children', 'Official Part 5 requires every child, whether or not included.', [
+      field('total_children', 'Total number of children', 'number', { required: true, inputmode: 'numeric' }),
+      field('i751_more_than_five_children', 'Do you have more than five children?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_additional_children', 'Children 6 and above for Part 11', 'textarea', { required: true, showWhen: [{ id: 'i751_more_than_five_children', equals: 'Yes' }] })
     ]),
-    step('i751_residence_history', 'Residence history', 'Use this when the case needs a relationship/residence timeline.', [
-      addressHistoryField('residence_history', 'Residence history during conditional residence', { entries: 3 })
+    ...i751ChildSteps(1), ...i751ChildSteps(2), ...i751ChildSteps(3), ...i751ChildSteps(4), ...i751ChildSteps(5),
+    step('i751_accommodations', 'Disability accommodations', 'Official Part 6. Answer independently for petitioner, spouse, and included children.', [
+      field('i751_accommodation_for_self', 'Accommodation requested for the petitioner?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_accommodation_for_spouse', 'Accommodation requested for the spouse?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_accommodation_for_children', 'Accommodation requested for included children?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('i751_accommodation_types', 'Accommodation type (select all that apply)', 'checkboxes', { required: true, options: ['Deaf or hard of hearing', 'Blind or low vision', 'Other disability or impairment'], showWhenAny: [{ id: 'i751_accommodation_for_self', equals: 'Yes' }, { id: 'i751_accommodation_for_spouse', equals: 'Yes' }, { id: 'i751_accommodation_for_children', equals: 'Yes' }] }),
+      field('i751_deaf_accommodation', 'Requested deaf/hard-of-hearing accommodation, if selected', 'text', { showWhenAny: [{ id: 'i751_accommodation_for_self', equals: 'Yes' }, { id: 'i751_accommodation_for_spouse', equals: 'Yes' }, { id: 'i751_accommodation_for_children', equals: 'Yes' }] }),
+      field('i751_visual_accommodation', 'Requested blind/low-vision accommodation, if selected', 'text', { showWhenAny: [{ id: 'i751_accommodation_for_self', equals: 'Yes' }, { id: 'i751_accommodation_for_spouse', equals: 'Yes' }, { id: 'i751_accommodation_for_children', equals: 'Yes' }] }),
+      field('i751_other_accommodation', 'Describe other disability and requested accommodation, if selected', 'textarea', { showWhenAny: [{ id: 'i751_accommodation_for_self', equals: 'Yes' }, { id: 'i751_accommodation_for_spouse', equals: 'Yes' }, { id: 'i751_accommodation_for_children', equals: 'Yes' }] })
     ]),
-    step('i751_criminal_history', 'Criminal history', 'Any arrest, charge, citation, conviction, or immigration problem needs review.', [
-      field('i751_arrested_or_convicted', 'Have you ever been arrested, charged, cited, convicted, or detained?', 'radio', { options: ['Yes', 'No', 'Not sure'] }),
-      field('i751_criminal_history_details', 'Criminal or immigration issue details', 'textarea', {
-        showWhenAny: [
-          { id: 'i751_arrested_or_convicted', equals: 'Yes' },
-          { id: 'i751_arrested_or_convicted', equals: 'Not sure' }
-        ]
-      })
+    step('i751_applicant_statement', 'Petitioner statement and contact', 'Official Part 7. Signature and date remain blank for signing.', [
+      field('i751_applicant_statement', 'Petitioner statement', 'radio', { required: true, options: ['I can read and understand English', 'An interpreter read every question and answer to me'] }),
+      field('i751_applicant_statement_language', 'Interpreter language', 'text', { required: true, showWhen: [{ id: 'i751_applicant_statement', equals: 'An interpreter read every question and answer to me' }] }),
+      field('i751_preparer_name_for_statement', 'Name of preparer, if someone prepared this petition', 'text'),
+      field('daytime_phone', 'Daytime phone', 'phone', { required: true, autocomplete: 'tel' }),
+      field('mobile_phone', 'Mobile phone, if any', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address, if any', 'email', { autocomplete: 'email' })
     ]),
-    step('i751_relationship_evidence', 'Relationship evidence', 'Evidence for bona fide marriage or waiver basis.', [
-      field('joint_evidence_available', 'Joint evidence available', 'textarea', {
-        placeholder: 'Lease, mortgage, taxes, bank accounts, insurance, children, photos, affidavits.'
-      })
+    step('i751_spouse_statement', 'Spouse or stepparent statement and contact', 'Official Part 8, required for a joint petition.', [
+      field('i751_spouse_statement', 'Spouse/stepparent statement', 'radio', { required: true, options: ['I can read and understand English', 'An interpreter read every question and answer to me'], showWhen: [{ id: 'i751_filing_type', in: jointOptions.slice(0, 2) }] }),
+      field('i751_spouse_statement_language', 'Interpreter language for spouse/stepparent', 'text', { required: true, showWhen: [{ id: 'i751_spouse_statement', equals: 'An interpreter read every question and answer to me' }] }),
+      field('i751_spouse_daytime_phone', 'Spouse/stepparent daytime phone', 'phone', { required: true, showWhen: [{ id: 'i751_filing_type', in: jointOptions.slice(0, 2) }] }),
+      field('i751_spouse_mobile_phone', 'Spouse/stepparent mobile phone, if any', 'phone', { showWhen: [{ id: 'i751_filing_type', in: jointOptions.slice(0, 2) }] }),
+      field('i751_spouse_email', 'Spouse/stepparent email, if any', 'email', { showWhen: [{ id: 'i751_filing_type', in: jointOptions.slice(0, 2) }] })
     ]),
-    step('i751_applicant_contact', 'Applicant contact information', 'Phone and email for the signature/contact section.', [
-      field('daytime_phone', 'Daytime phone', 'phone', { autocomplete: 'tel' }),
-      field('email_address', 'Email address', 'email', { autocomplete: 'email' })
+    step('i751_interpreter_preparer_choice', 'Interpreter and preparer', 'Controls official Parts 9-10.', [
+      field('has_interpreter', 'Was an interpreter used?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      field('has_preparer', 'Did someone other than the petitioner prepare this petition?', 'radio', { required: true, options: ['Yes', 'No'] })
     ]),
-    step('i751_interpreter_preparer_choice', 'Interpreter and preparer sections', 'These answers control whether interpreter/preparer sections must be completed.', [
-      field('has_interpreter', 'Will an interpreter be used for this petition?', 'radio', { options: ['Yes', 'No'] }),
-      field('has_preparer', 'Will someone prepare this petition for the applicant?', 'radio', { options: ['Yes', 'No'] })
+    step('i751_interpreter', 'Interpreter information', 'Official Part 9.', [
+      field('interpreter_family_name', 'Interpreter family name', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_given_name', 'Interpreter given name', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_business_name', 'Interpreter business or organization, if any', 'text', { showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      addressBlockField('i751_interpreter_address', 'Interpreter mailing address', 'i751_interpreter', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_daytime_phone', 'Interpreter daytime phone', 'phone', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_email', 'Interpreter email, if any', 'email', { showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
+      field('interpreter_language', 'Language interpreted', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] })
+    ]),
+    step('i751_preparer', 'Preparer information', 'Official Part 10.', [
+      field('preparer_family_name', 'Preparer family name', 'text', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_given_name', 'Preparer given name', 'text', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_business_name', 'Preparer business or organization, if any', 'text', { showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      addressBlockField('i751_preparer_address', 'Preparer mailing address', 'i751_preparer', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_daytime_phone', 'Preparer daytime phone', 'phone', { required: true, showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_fax', 'Preparer fax, if any', 'phone', { showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('preparer_email', 'Preparer email, if any', 'email', { showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('i751_preparer_is_attorney', 'Is the preparer an attorney or accredited representative?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'has_preparer', equals: 'Yes' }] }),
+      field('i751_preparer_representation_extends', 'Does representation extend beyond preparation of this petition?', 'radio', { required: true, options: ['Yes', 'No'], showWhen: [{ id: 'i751_preparer_is_attorney', equals: 'Yes' }] })
+    ]),
+    step('i751_additional_information', 'Additional information', 'Official Part 11. Use this for waiver facts, criminal history, residences, or children that do not fit above.', [
+      field('i751_additional_information', 'Additional information', 'textarea')
     ])
   ];
 }
@@ -3454,8 +4129,12 @@ function n400Part9Steps() {
 }
 
 function n400SpecificSteps() {
-  const married = [{ id: 'marital_status', in: ['Married', 'Separated'] }];
   const spouseBasis = [{ id: 'basis_for_naturalization', in: ['Spouse of U.S. Citizen', 'Spouse of U.S. Citizen in Qualified Employment Outside the United States'] }];
+  const nonSpouseBasis = [{ id: 'basis_for_naturalization', in: ['General Provision', 'VAWA', 'Military Service During Period of Hostilities', 'At Least One Year of Honorable Military Service at Any Time', 'Other Reason for Filing Not Listed Above'] }];
+  const spouseInformationApplies = [
+    { id: 'basis_for_naturalization', in: ['Spouse of U.S. Citizen', 'Spouse of U.S. Citizen in Qualified Employment Outside the United States'] },
+    { id: 'marital_status', in: ['Married', 'Separated'] }
+  ];
   const childSteps = [];
   for (let n = 1; n <= 3; n += 1) {
     const visible = [{ id: 'total_children_under_18', gte: n }];
@@ -3559,20 +4238,29 @@ function n400SpecificSteps() {
       addressBlockField('n400_mailing_address', 'Current mailing address', 'n400_mailing', { required: true, showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }] })
     ]),
     step('n400_marital_status', 'What is your current marital status?', 'Official Form N-400 (01/20/25), Part 5, Item 1.', [
-      field('marital_status', 'Current marital status', 'radio', { required: true, options: ['Single, never married', 'Married', 'Divorced', 'Widowed', 'Separated', 'Marriage annulled'] })
+      field('n400_spouse_basis_marital_confirmation', 'I am currently married to the U.S. citizen whose citizenship is the basis for this application', 'radio', {
+        required: true,
+        options: ['Yes, I am currently married to this U.S. citizen'],
+        showWhen: spouseBasis
+      }),
+      field('marital_status', 'Current marital status', 'radio', {
+        required: true,
+        options: ['Single, never married', 'Married', 'Divorced', 'Widowed', 'Separated', 'Marriage annulled'],
+        showWhen: nonSpouseBasis
+      })
     ]),
-    n400RadioStep('n400_spouse_us_armed_forces', 5, '2', 'If you are currently married, is your spouse a current member of the U.S. armed forces?', { showWhen: married }),
+    n400RadioStep('n400_spouse_us_armed_forces', 5, '2', 'If you are currently married, is your spouse a current member of the U.S. armed forces?', { showWhenAny: spouseInformationApplies }),
     step('n400_times_married', 'How many times have you been married?', 'Official Form N-400 (01/20/25), Part 5, Item 3.', [
-      field('times_married', 'Number of marriages', 'number', { required: true, inputmode: 'numeric', showWhen: [{ id: 'marital_status', in: ['Married', 'Divorced', 'Widowed', 'Separated', 'Marriage annulled'] }] })
+      field('times_married', 'Number of marriages', 'number', { required: true, inputmode: 'numeric', showWhenAny: spouseInformationApplies })
     ]),
     step('n400_spouse_identity', 'Current spouse information', 'Official Form N-400 (01/20/25), Part 5, Items 4.a-4.c.', [
-      field('spouse_family_name', 'Spouse family name', 'text', { required: true, showWhen: married }),
-      field('spouse_given_name', 'Spouse given name', 'text', { required: true, showWhen: married }),
-      field('spouse_middle_name', 'Spouse middle name, if applicable', 'text', { showWhen: married }),
-      field('spouse_date_of_birth', 'Spouse date of birth', 'date', { required: true, showWhen: married }),
-      field('current_marriage_date', 'Date you entered into the current marriage', 'date', { required: true, showWhen: married })
+      field('spouse_family_name', 'Spouse family name', 'text', { required: true, showWhenAny: spouseInformationApplies }),
+      field('spouse_given_name', 'Spouse given name', 'text', { required: true, showWhenAny: spouseInformationApplies }),
+      field('spouse_middle_name', 'Spouse middle name, if applicable', 'text', { showWhenAny: spouseInformationApplies }),
+      field('spouse_date_of_birth', 'Spouse date of birth', 'date', { required: true, showWhenAny: spouseInformationApplies }),
+      field('current_marriage_date', 'Date you entered into the current marriage', 'date', { required: true, showWhenAny: spouseInformationApplies })
     ]),
-    n400RadioStep('n400_spouse_same_address', 5, '4.d', 'Is your current spouse’s present physical address the same as your physical address?', { showWhen: married }),
+    n400RadioStep('n400_spouse_same_address', 5, '4.d', 'Is your current spouse’s present physical address the same as your physical address?', { showWhenAny: spouseInformationApplies }),
     step('n400_spouse_different_address', 'Current spouse physical address', 'Provide this because the spouse address is different; it will be carried to Part 14.', [
       addressBlockField('n400_spouse_physical_address', 'Current spouse physical address', 'n400_spouse_physical', { required: true, showWhen: [{ id: 'n400_spouse_same_address', equals: 'No' }] })
     ]),
@@ -3592,6 +4280,10 @@ function n400SpecificSteps() {
     ]),
     step('n400_employment_history', 'Employment and school history', 'Official Form N-400 (01/20/25), Part 7. Cover the complete applicable period, including self-employment, unemployment, and retirement.', [
       employmentHistoryField('employment_school_last_five_years', 'Employment and schools', { required: true, entries: 5 })
+    ]),
+    step('n400_history_confirmation', 'Confirm complete residence and employment histories', 'Confirm only after checking every date and every gap for the period required by the filing basis.', [
+      field('n400_residence_history_complete', 'I listed every required residence and checked that the dates have no unexplained gaps or overlaps', 'radio', { required: true, options: ['Yes, the residence history is complete'] }),
+      field('n400_employment_history_complete', 'I listed every job, school, self-employment, unemployment, and retirement period with no unexplained gaps', 'radio', { required: true, options: ['Yes, the employment history is complete'] })
     ]),
     step('n400_trips_outside_us', 'Every trip outside the United States', 'Official Form N-400 (01/20/25), Part 8. Do not include trips completed within 24 hours.', [
       field('trips_outside_us', 'Trips outside the United States', 'travelHistory', { countryOptions: COUNTRY_OPTIONS })

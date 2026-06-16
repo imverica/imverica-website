@@ -166,17 +166,18 @@ async function main() {
   const i131Order = i131.body.steps.map((step) => step.id);
   assert(i131Order.indexOf('i131_application_type') < i131Order.indexOf('i131_applicant_name'), 'I-131: application type must come before applicant information');
   assert(i131Order.indexOf('i131_applicant_name') < i131Order.indexOf('i131_beneficiary_status'), 'I-131: applicant information must come before beneficiary information');
-  assert(i131Order.indexOf('i131_beneficiary_status') < i131Order.indexOf('i131_biographic_ethnicity_race'), 'I-131: beneficiary information must come before biographic information');
-  assert(i131Order.indexOf('i131_biographic_colors') < i131Order.indexOf('i131_prior_document_history'), 'I-131: biographic information must come before prior document history');
+  assert(i131Order.indexOf('i131_beneficiary_status') < i131Order.indexOf('i131_biographic'), 'I-131: beneficiary information must come before biographic information');
+  assert(i131Order.indexOf('i131_biographic') < i131Order.indexOf('i131_processing_history'), 'I-131: biographic information must come before processing history');
   assert(i131Order.indexOf('i131_advance_parole_trip') < i131Order.indexOf('i131_applicant_contact'), 'I-131: travel details must come before applicant contact');
   const i131Fields = i131.body.steps.flatMap((step) => step.fields || []);
   assert(i131Fields.find((field) => field.id === 'i131_mailing_address')?.type === 'addressBlock', 'I-131: mailing address should be structured');
-  assert(i131Fields.find((field) => field.id === 'i131_beneficiary_address')?.type === 'addressBlock', 'I-131: beneficiary address should be structured');
+  assert(i131Fields.find((field) => field.id === 'i131_beneficiary_mailing_address')?.type === 'addressBlock', 'I-131: beneficiary address should be structured');
   assert(i131Fields.find((field) => field.id === 'i131_daytime_phone')?.type === 'phone', 'I-131: daytime phone should be US 10-digit phone field');
-  assert(i131Fields.find((field) => field.id === 'i131_delivery_address')?.showWhen?.[0]?.id === 'i131_delivery_option', 'I-131: delivery address should only show when document is not mailed to applicant');
-  assert(i131Fields.find((field) => field.id === 'i131_person_outside_us_explanation')?.showWhen?.[0]?.id === 'i131_application_type', 'I-131: person-outside questions should be conditional by application type');
+  assert(i131Fields.find((field) => field.id === 'i131_pickup_notice_address')?.showWhen?.[0]?.id === 'i131_pickup_notice_to_part2', 'I-131: pickup address should only show when Part 2 address is not used');
+  assert(i131Fields.find((field) => field.id === 'i131_parole_qualification_explanation')?.showWhen?.[0]?.id === 'i131_application_type', 'I-131: parole qualification must be conditional by application type');
   assert(i131Fields.find((field) => field.id === 'i131_purpose_of_travel')?.showWhen?.[0]?.id === 'i131_application_type', 'I-131: travel purpose should only show for travel/parole application types');
-  assert(i131Fields.find((field) => field.id === 'i131_prior_document_number')?.showWhen?.[0]?.id === 'i131_document_action', 'I-131: prior document number should only show for prior-document actions');
+  assert(i131Fields.find((field) => field.id === 'i131_initial_parole_agency_email')?.type === 'email', 'I-131: official agency email should be validated');
+  assert(i131Fields.find((field) => field.id === 'i131_reparole_immvi_relationship')?.showWhen?.[0]?.id === 'i131_reparole_program', 'I-131: IMMVI relationship must be conditional on the selected re-parole program');
 
   const i90 = await callFlow('I-90', 'en');
   const i90Order = i90.body.steps.map((step) => step.id);
@@ -197,19 +198,35 @@ async function main() {
   const i589Order = i589.body.steps.map((step) => step.id);
   assert(i589Order.indexOf('i589_applicant_numbers') < i589Order.indexOf('i589_legal_name'), 'I-589: numbers must come before applicant name');
   assert(i589Order.indexOf('i589_legal_name') < i589Order.indexOf('i589_residential_address'), 'I-589: applicant identity must come before address');
-  assert(i589Order.indexOf('i589_contact') < i589Order.indexOf('i589_birth_sex_marital'), 'I-589: contact must come before birth/status fields');
-  assert(i589Order.indexOf('i589_last_entry') < i589Order.indexOf('i589_spouse_included'), 'I-589: entry/status must come before spouse/children');
+  assert(i589Order.indexOf('i589_residential_address') < i589Order.indexOf('i589_birth_sex_marital'), 'I-589: address/contact must come before birth/status fields');
+  assert(i589Order.indexOf('i589_entry_1') < i589Order.indexOf('i589_spouse_identity'), 'I-589: entry/status must come before spouse/children');
   assert(i589Order.indexOf('i589_children_summary') < i589Order.indexOf('i589_asylum_basis'), 'I-589: family information must come before asylum basis');
-  assert(i589Order.indexOf('i589_asylum_basis') < i589Order.indexOf('i589_harm_summary'), 'I-589: basis must come before harm narrative');
-  assert(i589Order.indexOf('i589_prior_applications') < i589Order.indexOf('i589_statement_contact'), 'I-589: prior applications/security must come before statement');
+  assert(i589Order.indexOf('i589_asylum_basis') < i589Order.indexOf('i589_partb_1a_past_harm'), 'I-589: basis must come before Part B narratives');
+  assert(i589Order.indexOf('i589_partc_1_prior_applications') < i589Order.indexOf('i589_native_alphabet_name'), 'I-589: Part C must come before Part D native-name field');
   const i589Fields = i589.body.steps.flatMap((step) => step.fields || []);
+  const i589ById = Object.fromEntries(i589Fields.map((field) => [field.id, field]));
   assert(i589Fields.find((field) => field.id === 'i589_residential_address')?.type === 'addressBlock', 'I-589: residential address should be structured');
   assert(i589Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-589: mailing address should be structured');
   assert(i589Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-589: daytime phone should be US 10-digit phone field');
   assert(i589Fields.find((field) => field.id === 'asylum_basis')?.type === 'checkboxes', 'I-589: asylum basis should be checkboxes');
-  assert(i589Fields.find((field) => field.id === 'child1_family_name')?.showWhen?.[0]?.id === 'total_children', 'I-589: child fields should only show when total children is at least 1');
-  assert(i589Fields.find((field) => field.id === 'family_members_included')?.showWhen?.[0]?.id === 'total_children', 'I-589: included family details should only show when there are children');
-  assert(i589Fields.find((field) => field.id === 'applicant_statement_language')?.showWhen?.[0]?.id === 'applicant_statement', 'I-589: interpreter language should only show when interpreter read the application');
+  assert(i589ById.i589_residences_last_5_years?.type === 'addressHistory', 'I-589: five-year residence history should be structured');
+  assert(i589ById.i589_employment_last_5_years?.type === 'employmentHistory', 'I-589: five-year employment history should be structured');
+  assert(i589ById.spouse_family_name?.showWhen?.[0]?.id === 'marital_status', 'I-589: spouse identity must be tied to Married status');
+  for (let number = 1; number <= 4; number += 1) {
+    assert(i589ById[`child${number}_family_name`]?.showWhen?.[0]?.id === 'total_children', `I-589: child ${number} fields should depend on total children`);
+    assert(i589ById[`child${number}_included`], `I-589: child ${number} included/not-included question is missing`);
+  }
+  assert(i589ById.i589_name_native_alphabet?.allowNonLatin === true, 'I-589: native-alphabet name must explicitly allow non-Latin characters');
+  [
+    'i589_past_harm_yes_no', 'i589_future_harm_yes_no', 'i589_foreign_accusation_yes_no',
+    'i589_organization_membership_yes_no', 'i589_current_organization_participation_yes_no',
+    'i589_torture_fear_yes_no', 'i589_prior_asylum_application', 'i589_traveled_through_other_country',
+    'i589_other_country_lawful_status', 'i589_participated_in_persecution',
+    'i589_returned_to_feared_country', 'i589_filing_more_than_one_year_after_arrival',
+    'i589_us_crime_or_arrest'
+  ].forEach((id) => assert(i589ById[id]?.type === 'radio' && i589ById[id].required, `I-589: missing required official question ${id}`));
+  ['i589_harm_summary', 'i589_family_harmed_or_threatened', 'i589_safe_relocation', 'family_members_included']
+    .forEach((id) => assert(!i589ById[id], `I-589: deprecated aggregate/non-form question must not return: ${id}`));
 
   const i864 = await callFlow('I-864', 'en');
   const i864Order = i864.body.steps.map((step) => step.id);
@@ -240,16 +257,17 @@ async function main() {
   const i751 = await callFlow('I-751', 'en');
   const i751Order = i751.body.steps.map((step) => step.id);
   assert(i751Order.indexOf('i751_filing_type') < i751Order.indexOf('i751_conditional_resident_name'), 'I-751: filing type must come before resident name');
-  assert(i751Order.indexOf('i751_mailing_address') < i751Order.indexOf('i751_marriage_status'), 'I-751: resident address must come before relationship details');
+  assert(i751Order.indexOf('i751_marriage_status') < i751Order.indexOf('i751_mailing_address'), 'I-751: marital status must follow official Part 1 order before addresses');
   assert(i751Order.indexOf('i751_marriage_status') < i751Order.indexOf('i751_spouse_name'), 'I-751: marriage status must come before spouse details');
-  assert(i751Order.indexOf('i751_marriage_details') < i751Order.indexOf('i751_children'), 'I-751: marriage details must come before children');
-  assert(i751Order.indexOf('i751_criminal_history') < i751Order.indexOf('i751_relationship_evidence'), 'I-751: criminal history must come before evidence');
+  assert(i751Order.indexOf('i751_part1_questions') < i751Order.indexOf('i751_biographic'), 'I-751: Part 1 questions must come before biographic information');
+  assert(i751Order.indexOf('i751_spouse_address') < i751Order.indexOf('i751_children'), 'I-751: spouse/stepparent information must come before children');
   const i751Fields = i751.body.steps.flatMap((step) => step.fields || []);
   assert(i751Fields.find((field) => field.id === 'mailing_address')?.type === 'addressBlock', 'I-751: mailing address should be structured');
   assert(i751Fields.find((field) => field.id === 'physical_address')?.type === 'addressBlock', 'I-751: physical address should be structured');
   assert(i751Fields.find((field) => field.id === 'residence_history')?.type === 'addressHistory', 'I-751: residence history should be structured');
   assert(i751Fields.find((field) => field.id === 'daytime_phone')?.type === 'phone', 'I-751: daytime phone should be US 10-digit phone field');
-  assert(i751Fields.find((field) => field.id === 'children_details')?.showWhen?.[0]?.id === 'total_children', 'I-751: children details should only show when at least one child is included');
+  assert(i751Fields.find((field) => field.id === 'i751_child1_address')?.showWhen?.[0]?.id === 'total_children', 'I-751: child address should only show when at least one child is reported');
+  assert(i751Fields.find((field) => field.id === 'i751_waiver_bases')?.type === 'checkboxes', 'I-751: waiver bases must allow multiple official selections');
 
   const i539 = await callFlow('I-539', 'en');
   const i539Order = i539.body.steps.map((step) => step.id);

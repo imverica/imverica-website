@@ -3,6 +3,7 @@ const path = require("path");
 
 const { incrementalFillPdf } = require("./lib/pdf-incremental-fill");
 const { originGuard, throttleOrReject } = require("./lib/abuse-guard");
+const { validateImmigrationAnswers } = require("./lib/immigration-answer-validation");
 
 function normalizeFormCode(value) {
   return String(value || "")
@@ -129,6 +130,19 @@ exports.handler = async function(event) {
         statusCode: 400,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ error: "Missing formType or formCode" })
+      };
+    }
+
+    const answerErrors = validateImmigrationAnswers(formCode, payload);
+    if (answerErrors.length) {
+      return {
+        statusCode: 422,
+        headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+        body: JSON.stringify({
+          error: "Form answers contain contradictions or invalid dates",
+          formCode,
+          fields: answerErrors
+        })
       };
     }
 
