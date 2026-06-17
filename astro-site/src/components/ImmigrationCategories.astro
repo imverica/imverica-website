@@ -161,7 +161,8 @@ const cats = [
             <span aria-hidden="true">{c.flag}</span>
           </div>
           <div class="imm-cat-title">{c.title}</div>
-          <div class="imm-cat-desc">{c.desc}{priceForTitle(c.title) && <span class="tile-price">{priceForTitle(c.title)} · flat fee</span>}</div>
+          <div class="imm-cat-desc">{c.desc}</div>
+          <div class="imm-cat-price">{priceForTitle(c.title) && <span class="tile-price">{priceForTitle(c.title)} · flat fee</span>}</div>
         </a>
       ))}
     </div>
@@ -206,7 +207,7 @@ const cats = [
   @media (max-width: 520px) { .imm-cats-grid { grid-template-columns: 1fr; } }
   .imm-cat {
     display: block;
-    grid-row: span 3;
+    grid-row: span 4;
     background: #fff;
     border: 1px solid rgba(40,30,20,0.10);
     border-radius: 14px;
@@ -262,8 +263,11 @@ const cats = [
     margin-bottom: 8px;
     line-height: 1.25;
   }
-  .tile-price { display: inline-block; margin-top: 10px; padding: 3px 10px; border-radius: 999px; background: rgba(219,168,95,.14); border: 1px solid rgba(219,168,95,.45); color: #7a5a18; font-size: 11.5px; font-weight: 700; letter-spacing: .3px; }
   .imm-cat-desc {
     font-size: 13px; line-height: 1.6; color: #4a5a6e;
   }
+  /* Price chip pinned bottom-right of every tile (4th subgrid row), uniform
+     across the grid. Block fallback right-aligns via text-align. */
+  .imm-cat-price { width: 100%; margin-top: auto; justify-self: end; text-align: right; padding-top: 14px; }
+  .tile-price { display: inline-block; padding: 3px 10px; border-radius: 999px; background: rgba(219,168,95,.14); border: 1px solid rgba(219,168,95,.45); color: #7a5a18; font-size: 11.5px; font-weight: 700; letter-spacing: .3px; }
 </style>
