@@ -1,61 +1,17 @@
 ---
-// Client reviews — REAL reviews from the Imverica Google Business Profile
-// (lightly trimmed to complete sentences; meaning unchanged). First names
-// only, as requested. UPL-safe: feedback is about document-preparation
-// service quality, never legal advice or guaranteed outcomes.
+// Homepage reviews — shows the freshest 6 (3×2) and rotates them; the full
+// pool (including older reviews) lives on the /testimonials page behind the
+// "Read more reviews" button. Data is shared from ~/data/reviews.ts so the
+// homepage and the full page never drift apart.
 //
 // The client-side script shuffles the pool and rotates batches of 6 every
-// 60 seconds (adaptive: with 11 reviews it cycles a 6-card and a 5-card
-// batch). The first batch is server-rendered so search engines see content.
-//
-// When the live Google reviews endpoint (/api/google-reviews) is configured,
-// it overrides this pool automatically; until then these real reviews show.
+// 60 seconds. The first batch is server-rendered so search engines see content.
+// When /api/google-reviews is configured it overrides this pool automatically.
 
-interface Review {
-  body: string;
-  name: string;
-  meta: string;
-  stars: 4 | 5;
-}
+import { REVIEWS, GOOGLE_REVIEWS_URL, type Review } from '~/data/reviews';
 
-const ALL: Review[] = [
-  { stars: 5, name: 'Elena',
-    meta: 'Immigration documents',
-    body: 'I’m very satisfied with the service. Always quick, clear, and worth it.' },
-  { stars: 5, name: 'Pavlo',
-    meta: 'USCIS · U4U re-parole',
-    body: 'Huge thanks to Imverica Legal Solutions for their invaluable help with our U4U re-parole application! They are true professionals who genuinely care about their clients and were always in touch.' },
-  { stars: 5, name: 'Mikhail',
-    meta: 'USCIS · Immigration documents',
-    body: 'I would like to thank the Imverica team for their professionalism and excellent service. Throughout the entire process, everything was handled clearly, efficiently, and in a timely manner.' },
-  { stars: 5, name: 'Olga',
-    meta: 'USCIS · Immigration documents',
-    body: 'I’d like to express my gratitude to the Imverica team for their professional assistance and attentive attitude. All issues were resolved quickly, competently, and without unnecessary complications.' },
-  { stars: 5, name: 'Aleks',
-    meta: 'USCIS N-400 · Citizenship',
-    body: 'I used Imverica to help with my citizenship application. Everything was prepared quickly, communication was easy, and the process went smoothly from start to finish. Very happy with the service.' },
-  { stars: 5, name: 'Vladimir',
-    meta: 'USCIS N-400 · Citizenship',
-    body: 'Thank you for your help with completing my citizenship application. Everything was clear and professional.' },
-  { stars: 5, name: 'Eva',
-    meta: 'USCIS · Green card',
-    body: 'Thank you for helping us prepare documents for our immigration case. Our green-card application had been pending with USCIS for over three years, and we didn’t know how to properly submit a status update.' },
-  { stars: 5, name: 'Vitalii',
-    meta: 'USCIS · Immigration documents',
-    body: 'A really great company — they helped with so much! Highly recommended.' },
-  { stars: 5, name: 'Aleksandr',
-    meta: 'USCIS · Immigration forms',
-    body: 'Thank you — the company helped me fill out the necessary immigration forms quickly and professionally! To anyone in need of this type of service, I recommend this company 10 out of 10.' },
-  { stars: 5, name: 'Valentin',
-    meta: 'USCIS · Immigration paperwork',
-    body: 'Really happy I chose Imverica Legal Solutions for my immigration paperwork. They moved quickly, kept things on track, and delivered the results I was looking for — all at a price that felt reasonable for the quality of work.' },
-  { stars: 5, name: 'Shroomly LLC',
-    meta: 'Business · Employment green card',
-    body: 'This company helped our employee prepare green-card application forms. The entire process was fast, affordable, and efficient. We highly recommend them.' }
-];
-
-// Server-render the first 6 so search engines see real content. The
-// client script swaps them out for a random 6 on every visit.
+const ALL: Review[] = REVIEWS;
+// Server-render the first 6 so search engines (and no-JS visitors) see content.
 const initial: Review[] = ALL.slice(0, 6);
 ---
 <section class="testimonials-section" id="testimonials">
@@ -79,12 +35,18 @@ const initial: Review[] = ALL.slice(0, 6);
         </article>
       ))}
     </div>
+
+    <div class="testimonials-actions">
+      <a class="testimonials-more" href="/testimonials">Read more reviews <span aria-hidden="true">→</span></a>
+      <a class="testimonials-google" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
+        <span class="testimonials-google-stars" aria-hidden="true">★★★★★</span> See all reviews on Google
+      </a>
+    </div>
   </div>
 
-  <!-- Full pool serialized so the client script can pick 3 random batches
-       of 6 on every visit and rotate them every 60s without a server
-       round-trip. Hidden from a11y so screen readers don't re-read the
-       same content twice. -->
+  <!-- Full pool serialized so the client script can rotate the visible 6 every
+       60s without a server round-trip. Hidden from a11y so screen readers don't
+       re-read the same content twice. -->
   <script id="testimonialsData" type="application/json">{JSON.stringify(ALL)}</script>
   <script>
     (function () {
@@ -131,12 +93,14 @@ const initial: Review[] = ALL.slice(0, 6);
 
       function start(pool: Review[]) {
         if (!Array.isArray(pool) || pool.length === 0) return; // keep SSR content
+        // Homepage stays fresh: only rotate the newest dozen; the rest live on
+        // the /testimonials page.
+        pool = pool.slice(0, 12);
         // Fisher-Yates shuffle so two visitors rarely see the same order.
         for (var i = pool.length - 1; i > 0; i--) {
           var j = Math.floor(Math.random() * (i + 1));
           var t = pool[i]; pool[i] = pool[j]; pool[j] = t;
         }
-        // Adaptive batches of 6 (Google may return fewer than the demo pool).
         var size = 6;
         var n = Math.min(3, Math.max(1, Math.ceil(pool.length / size)));
         var batches: Review[][] = [];
@@ -157,9 +121,7 @@ const initial: Review[] = ALL.slice(0, 6);
       }
 
       // Prefer LIVE Google reviews; fall back to the built-in pool if the
-      // Google integration isn't configured yet (or returns nothing). The
-      // server-rendered cards stay visible until one of these runs, so the
-      // section is never empty and never breaks.
+      // Google integration isn't configured yet (or returns nothing).
       var done = false;
       function fallback() { if (done) return; done = true; start(embedded); }
       try {
@@ -212,9 +174,6 @@ const initial: Review[] = ALL.slice(0, 6);
     text-wrap: balance;
   }
 
-  /* Keep the testimonials lead on a single line on desktop so the
-     "in the language they speak" tail doesn't orphan. The line is long
-     enough to wrap on narrow viewports — that's intentional. */
   .testimonials-heading p {
     color: #3a4a5e;
     font-size: 15px;
@@ -249,8 +208,6 @@ const initial: Review[] = ALL.slice(0, 6);
     letter-spacing: 2px;
     margin-bottom: 12px;
   }
-  /* Dim the trailing stars on 4-star reviews so the rating is visually
-     readable without a numeric badge. Same letter, dimmer tone. */
   .testimonial-stars-dim {
     color: #e0a64a;
     opacity: 0.28;
@@ -283,13 +240,47 @@ const initial: Review[] = ALL.slice(0, 6);
     margin-top: 2px;
   }
 
-  @media (max-width: 820px) {
-    .testimonials-section {
-      padding: var(--space-section) 1.25rem;
-    }
+  .testimonials-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px 22px;
+    margin-top: 30px;
+  }
 
-    .testimonials-grid {
-      grid-template-columns: 1fr;
-    }
+  .testimonials-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14.5px;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: 1px solid var(--navy);
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+  .testimonials-more:hover { background: var(--navy-dark); transform: translateY(-1px); }
+  .testimonials-more span { color: var(--gold); }
+
+  .testimonials-google {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #3a4a5e;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .testimonials-google:hover { color: var(--navy-dark); border-bottom-color: var(--gold); }
+  .testimonials-google-stars { color: #e0a64a; letter-spacing: 1px; }
+
+  @media (max-width: 820px) {
+    .testimonials-section { padding: var(--space-section) 1.25rem; }
+    .testimonials-grid { grid-template-columns: 1fr; }
   }
 </style>

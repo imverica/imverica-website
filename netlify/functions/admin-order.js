@@ -33,7 +33,7 @@ const PII_PATHS = ['contact.name', 'contact.email', 'contact.phone', 'serviceLab
 // review — in their language, once per order. Fire-and-forget: never blocks
 // the status update; skips cleanly without RESEND_API_KEY.
 const REVIEW_URL = () => process.env.GOOGLE_REVIEW_URL
-  || 'https://www.google.com/search?q=Imverica+Legal+Solutions+Sacramento+reviews';
+  || 'https://maps.app.goo.gl/gEGYUtF817aDtW6U7';
 
 const REVIEW_COPY = {
   en: {
