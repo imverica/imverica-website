@@ -4,7 +4,7 @@ import Hero from '~/components/Hero.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'Pricing — Flat-Fee Document Preparation | Imverica Legal Solutions';
-const description = 'Transparent flat-fee pricing for USCIS, EOIR, California family law, small claims, probate, record cleanup, and business document preparation. Simple forms from $49. Probate from $249. Record cleanup from $349. Complex cases by custom quote. Imverica is not a law firm.';
+const description = 'Transparent flat-fee pricing for USCIS, EOIR, California family law, small claims, probate, record cleanup, and business document preparation. Simple forms from $49. Probate from $249. Record clearing from $349. Complex cases by custom quote. Imverica is not a law firm.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -26,7 +26,7 @@ const schema = {
     { '@type': 'Offer', name: 'SC-100 Small Claims Package',   priceCurrency: 'USD', price: '249' },
     { '@type': 'Offer', name: 'FL-100 Simple Divorce',         priceCurrency: 'USD', price: '349' },
     { '@type': 'Offer', name: 'Probate Starter / Small Estate', priceCurrency: 'USD', price: '249' },
-    { '@type': 'Offer', name: 'CR-180 Record Cleanup Packet',   priceCurrency: 'USD', price: '349' },
+    { '@type': 'Offer', name: 'CR-180 Record Cleanup Packet',   priceCurrency: 'USD', price: '449' },
     { '@type': 'Offer', name: 'LLC Launch Package',            priceCurrency: 'USD', price: '449' }
   ]
 };
@@ -209,15 +209,15 @@ const schema = {
             <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Court fee*</th></tr>
           </thead>
           <tbody>
-            <tr data-prefill="I need a misdemeanor expungement / dismissal (Penal Code 1203.4, CR-180 / CR-181)" data-formcode="CR-180"><td><strong>Misdemeanor expungement</strong> dismissal · PC §1203.4 (CR-180/181)</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need a DUI / wet-reckless expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>DUI / wet-reckless expungement</strong> PC §1203.4</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need a felony expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>Felony expungement</strong> dismissal · PC §1203.4</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need an infraction dismissal" data-formcode="CR-180"><td><strong>Infraction dismissal</strong></td><td class="num"><span class="price">from $249</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need to reduce a felony wobbler to a misdemeanor (Penal Code 17(b))" data-formcode="CR-180"><td><strong>Felony → misdemeanor</strong> reduction · PC §17(b)</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need to terminate probation early (Penal Code 1203.3)"><td><strong>Early termination of probation</strong> PC §1203.3</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need to seal an arrest record (Penal Code 851.91, CR-409 / CR-410)" data-formcode="CR-409"><td><strong>Arrest record sealing</strong> PC §851.91 (CR-409/410)</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need to seal a juvenile record (Welfare & Institutions Code 781, JV-595)" data-formcode="JV-595"><td><strong>Juvenile record sealing</strong> W&amp;I §781 (JV-595)</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need Prop 64 cannabis relief — redesignate or dismiss a conviction (Penal Code 11361.8)"><td><strong>Prop 64 cannabis relief</strong> redesignate / dismiss · PC §11361.8</td><td class="num"><span class="price">from $299</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need a misdemeanor expungement / dismissal (Penal Code 1203.4, CR-180 / CR-181)" data-formcode="CR-180"><td><strong>Misdemeanor expungement</strong> dismissal · PC §1203.4 (CR-180/181)</td><td class="num"><span class="price">from $449</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need a DUI / wet-reckless expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>DUI / wet-reckless expungement</strong> PC §1203.4</td><td class="num"><span class="price">from $449</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need a felony expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>Felony expungement</strong> dismissal · PC §1203.4</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need an infraction dismissal" data-formcode="CR-180"><td><strong>Infraction dismissal</strong></td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to reduce a felony wobbler to a misdemeanor (Penal Code 17(b))" data-formcode="CR-180"><td><strong>Felony → misdemeanor</strong> reduction · PC §17(b)</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to terminate probation early (Penal Code 1203.3)"><td><strong>Early termination of probation</strong> PC §1203.3</td><td class="num"><span class="price">from $449</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to seal an arrest record (Penal Code 851.91, CR-409 / CR-410)" data-formcode="CR-409"><td><strong>Arrest record sealing</strong> PC §851.91 (CR-409/410)</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to seal a juvenile record (Welfare & Institutions Code 781, JV-595)" data-formcode="JV-595"><td><strong>Juvenile record sealing</strong> W&amp;I §781 (JV-595)</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need Prop 64 cannabis relief — redesignate or dismiss a conviction (Penal Code 11361.8)"><td><strong>Prop 64 cannabis relief</strong> redesignate / dismiss · PC §11361.8</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
             <tr data-prefill="I need help with a large record-clearing case with multiple convictions or a big docket" data-formcode="CR-180"><td><strong>Complex record clearing</strong> multiple cases / large docket</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
           </tbody>
         </table>
