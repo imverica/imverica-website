@@ -42,10 +42,32 @@ function ud_110FieldValues(payload = {}) {
   // Title + item 1 — by default (the most common UD path) and, when the
   // landlord only seeks possession, a clerk's judgment for possession only.
   const byDefault = !/trial|contest/.test(lc(pick(a, 'judgment_basis')));
+  const possessionOnly = /possession.?only|possession only/.test(lc(pick(a, 'judgment_scope'))) || byDefault;
+  // CCP § 1169: the clerk may enter a default judgment for possession only.
+  const clerksJudgment = byDefault && possessionOnly;
   if (byDefault) { v[C + 'FormTitle[0].RB2Choices[0]'] = true; v[P1 + 'List1[0].CheckBox1[0]'] = true; }
-  if (/possession.?only|possession only/.test(lc(pick(a, 'judgment_scope'))) || byDefault) {
-    v[C + 'FormTitle[0].RB2Choices[1]'] = true;
-    v[P1 + 'List1[0].Lid[0].CheckBox10[0]'] = true;
+  if (possessionOnly) v[C + 'FormTitle[0].RB2Choices[1]'] = true;        // possession only
+  if (clerksJudgment) {
+    v[C + 'FormTitle[0].Ch91[0]'] = true;                                // by clerk (title)
+    v[P1 + 'List1[0].Lid[0].CheckBox10[0]'] = true;                      // 1d clerk's judgment
+    v[P2 + 'Title2[0].Ch91[0]'] = true;                                  // entered by the clerk (page 2)
+  }
+
+  // Items 3–5 — the operative possession judgment (landlord prepares; clerk
+  // enters). Judgment is FOR plaintiff and AGAINST the defendant(s); the
+  // plaintiff is entitled to possession of the premises; and it binds all
+  // occupants. Money (item 6) is left blank — a clerk's judgment under § 1169
+  // is for possession (and costs) only; damages need a separate hearing.
+  if (byDefault) {
+    if (plaintiff) {
+      v[P2 + 'List3[0].Lia[0].CheckBox41[0]'] = true;                    // 3a judgment for plaintiff
+      v[P2 + 'List3[0].Lia[0].FillText12[0]'] = plaintiff;
+    }
+    if (defList.length) v[P2 + 'List3[0].Lia[0].FillText11[0]'] = defList.join('; ');  // against defendant(s)
+    v[P2 + 'List4[0].item4[0].RB2Choice29[0]'] = true;                   // 4 possession → plaintiff (item 3a)
+    const premises = clean(pick(a, 'premises_address', 'rental_property_address'), 200);
+    if (premises) v[P2 + 'List4[0].item4[0].FillText4[0]'] = premises;
+    v[P2 + 'List5[0].item5[0].CBChoice26[0]'] = true;                    // 5 applies to all occupants
   }
 
   return Object.fromEntries(Object.entries(v).filter(([, val]) => val === true || (typeof val === 'string' && val !== '')));

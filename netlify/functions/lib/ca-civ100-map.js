@@ -43,8 +43,19 @@ function civ_100FieldValues(payload = {}) {
   v[P3 + 'pXHeader[0].TitlePartyName[0].Party1[0]'] = plaintiff;
   v[P3 + 'pXHeader[0].TitlePartyName[0].Party2[0]'] = defList[0] || '';
 
-  // Form title — Entry of Default.
-  v[C + 'FormTitle[0].CheckBox12436234346[0]'] = true;
+  // Form title — request BOTH Entry of Default and Clerk's Judgment (the UD
+  // default-for-possession path: clerk enters the default, then a clerk's
+  // judgment for restitution of the premises under CCP § 1169).
+  v[C + 'FormTitle[0].CheckBox12436234346[0]'] = true;   // Entry of Default
+  v[C + 'FormTitle[0].CheckBox12345125q[0]'] = true;     // Clerk's Judgment
+  // Item 1 — instructions to the clerk.
+  // 1b — name of the party who filed the complaint (the plaintiff).
+  if (plaintiff) v[P1 + 'List1[0].Lib[0].FillText99[0]'] = plaintiff;
+  // 1c — enter default of the named defendant(s).
+  if (defList.length) {
+    v[P1 + 'List1[0].Lic[0].CheckBox9[0]'] = true;
+    v[P1 + 'List1[0].Lic[0].TextField6[0]'] = defList.join('; ');
+  }
   // Item 1e — enter clerk's judgment for restitution of the premises (possession)
   // + include all tenants/subtenants/occupants (UD default for possession).
   v[P1 + 'List1[0].Lie[0].CheckBox7[0]'] = true;

@@ -13,6 +13,8 @@ const { clean } = _fmt;
 const C = 'UD-105[0].Page1[0].P1Caption[0].';
 const P1 = 'UD-105[0].Page1[0].';
 const P2 = 'UD-105[0].Page2[0].';
+const P3 = 'UD-105[0].Page3[0].';
+const P4 = 'UD-105[0].Page4[0].';
 function pick(a, ...k) { for (const x of k) if (a[x] != null && a[x] !== '') return a[x]; return ''; }
 function money(v) { return Number(String(v == null ? '' : v).replace(/[^0-9.]/g, '')) || 0; }
 
@@ -47,12 +49,32 @@ function ud_105FieldValues(payload = {}) {
   v[C + 'CourtInfo[0].CrtBranch[0]'] = clean(pick(a, 'court_branch_name'), 80);
   v[C + 'TitlePartyName[0].Party1[0]'] = plaintiff;
   v[C + 'TitlePartyName[0].Party2[0]'] = tenant;
-  v[P2 + 'PxCaption[0].TitlePartyName[0].Party1[0]'] = plaintiff;
-  v[P2 + 'PxCaption[0].TitlePartyName[0].Party2[0]'] = tenant;
+  // Running caption header on pages 2, 3 & 4.
+  for (const P of [P2, P3, P4]) {
+    v[P + 'PxCaption[0].TitlePartyName[0].Party1[0]'] = plaintiff;
+    v[P + 'PxCaption[0].TitlePartyName[0].Party2[0]'] = tenant;
+  }
 
-  // Item 2 — General Denial: ONLY if the complaint demands ≤ $1,000.
+  // Item 1 — name every defendant for whom this answer is filed.
+  const defList = Array.isArray(a.defendants) && a.defendants.length
+    ? a.defendants.map((d) => clean(typeof d === 'string' ? d : (d && d.name), 120)).filter(Boolean)
+    : [tenant].filter(Boolean);
+  if (defList.length) v[P1 + 'List1[0].item1[0].FillField1[0]'] = defList.join('; ');
+
+  // Item 2 — DENIALS (check ONLY one). General Denial (2a) is allowed ONLY
+  // when the complaint demands ≤ $1,000; otherwise the tenant must use
+  // Specific Denials (2b). Default to 2b when the demand is unknown — it is
+  // always permitted, whereas 2a is the restricted box. The disputed
+  // paragraph numbers in 2b(1) come from the wizard (the tenant states which
+  // allegations are false — we never decide that for them).
   const demand = money(pick(a, 'rent_due_amount', 'amount_demanded', 'complaint_demand'));
-  if (demand && demand <= 1000) v[P1 + 'List2[0].Lia[0].Check1[0]'] = true;
+  if (demand && demand <= 1000) {
+    v[P1 + 'List2[0].Lia[0].Check1[0]'] = true;                  // 2a General Denial
+  } else {
+    v[P1 + 'List2[0].Lib[0].Check1[0]'] = true;                  // 2b Specific Denials
+    const disputed = clean(pick(a, 'denied_paragraphs', 'disputed_paragraphs', 'specific_denials'), 600);
+    if (disputed) v[P1 + 'List2[0].Lib[0].SubListb[0].Li1[0].Subitem1[0].Lia[0].FillField2[0]'] = disputed;
+  }
 
   // Item 3 — affirmative defenses the tenant asserts (from the wizard).
   const defenses = Array.isArray(a.defenses) ? a.defenses : String(pick(a, 'defenses') || '').split(',').map((s) => s.trim()).filter(Boolean);

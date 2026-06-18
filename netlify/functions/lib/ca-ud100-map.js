@@ -20,6 +20,7 @@ const { clean } = _fmt;
 const P1 = 'UD-100[0].Page1[0].';
 const P2 = 'UD-100[0].Page2[0].';
 const P3 = 'UD-100[0].Page3[0].';
+const P4 = 'UD-100[0].Page4[0].';
 
 function pick(a, ...keys) { for (const k of keys) if (a[k] != null && a[k] !== '') return a[k]; return ''; }
 function money(v) { const s = String(v == null ? '' : v).replace(/[^0-9.]/g, ''); return s || ''; }
@@ -74,16 +75,18 @@ function ud_100FieldValues(payload = {}) {
     : [clean(pick(a, 'defendant_name', 'tenant_name', 'respondent_name'), 120)].filter(Boolean);
   const defenInline = defList.slice(0, 2).join('; ');
 
-  // ── Caption party names + running header on pages 2 & 3. ──
+  // ── Caption party names + running header on pages 2, 3 & 4. ──
   if (plaintiff) {
     v[P1 + 'List1[0].item1[0].FillText1[0]'] = plaintiff;
     v[P2 + 'Header[0].TitlePartyName[0].Party1_ft[0]'] = plaintiff;
     v[P3 + 'Header[0].TitlePartyName[0].Party1_ft[0]'] = plaintiff;
+    v[P4 + 'Header[0].TitlePartyName[0].Party1_ft[0]'] = plaintiff;
   }
   if (defenInline) {
     v[P1 + 'List1[0].item1[0].FillText2[0]'] = defenInline + (defList.length > 2 ? '; et al. (see Attachment)' : '');
     v[P2 + 'Header[0].TitlePartyName[0].Party2_ft[0]'] = defList[0];
     v[P3 + 'Header[0].TitlePartyName[0].Party2_ft[0]'] = defList[0];
+    v[P4 + 'Header[0].TitlePartyName[0].Party2_ft[0]'] = defList[0];
   }
   // DOES 1 to N (true names unknown).
   if (a.doe_defendants || defList.length > 2) {
@@ -143,6 +146,7 @@ function ud_100FieldValues(payload = {}) {
   const occ = clean(pick(a, 'other_occupants'), 80);
   if (occ) {
     v[P2 + 'List6[0].Lic[0].SixC[0]'] = true;
+    v[P2 + 'List6[0].Lic[0].SubListc[0].Li3[0].SixC13[0]'] = true;       // (3) Other
     v[P2 + 'List6[0].Lic[0].SubListc[0].Li3[0].FillText113[0]'] = occ;   // Other (specify)
   }
   // 6e attached vs 6f not attached. Default residential nonpayment → 6f(2).
@@ -167,6 +171,13 @@ function ud_100FieldValues(payload = {}) {
   else if (/no.?fault/.test(jc)) v[P2 + 'List8[0].Lib[0].#area[0].TwoAb[0]'] = true;
 
   // ── Item 9 — the notice. ──
+  // 9a — name the defendant(s) served + check the lead box. The "(name each)"
+  //      text field carries a literal period in its partial name
+  //      (fl1001.324), which pdf-lib expects backslash-escaped.
+  if (defenInline) {
+    v[P2 + 'List9[0].Lia[0].#area[0].Seven[0]'] = true;
+    v[P2 + 'List9[0].Lia[0].#area[0].fl1001\\.324[0]'] = defenInline + (defList.length > 2 ? '; et al. (see Attachment 10c)' : '');
+  }
   const nk = noticeKey(pick(a, 'notice_type'));
   if (nk && NOTICE_FIELD[nk]) v[NOTICE_FIELD[nk]] = true;
   const expired = clean(pick(a, 'notice_expired_date'), 30);
@@ -176,7 +187,10 @@ function ud_100FieldValues(payload = {}) {
 
   // ── Item 10 — how served. ──
   const sk = serviceKey(pick(a, 'service_method'));
-  if (sk && SERVICE_FIELD[sk]) v[SERVICE_FIELD[sk]] = true;
+  if (sk && SERVICE_FIELD[sk]) {
+    v[P3 + 'List10[0].Lia[0].#area[0].EightA[0]'] = true;   // 10a lead box
+    v[SERVICE_FIELD[sk]] = true;
+  }
   const served = clean(pick(a, 'notice_served_date', 'service_date'), 30);
   if (served && sk === 'personal') v[P3 + 'List10[0].Lia[0].SubLista[0].Li1[0].DateField21[0]'] = served;
 
@@ -190,11 +204,35 @@ function ud_100FieldValues(payload = {}) {
     v[P3 + 'List11[0].Lid[0].#area[0].After2[1]'] = true;       // 11d does NOT have
   }
 
-  // ── Items 13/14 — amounts. ──
+  // ── Items 13/14 — amounts (check the lead box too). ──
   const due = money(pick(a, 'rent_due_amount', 'amount_owed'));
-  if (due) v[P3 + 'List13[0].item12[0].#area[0].FillText209[0]'] = due;
+  if (due) {
+    v[P3 + 'List13[0].item12[0].#area[0].Ten[0]'] = true;
+    v[P3 + 'List13[0].item12[0].#area[0].FillText209[0]'] = due;
+  }
   const daily = money(pick(a, 'daily_rental_value', 'fair_rental_value_per_day'));
-  if (daily) v[P3 + 'List14[0].item13[0].#area[0].FillText208[0]'] = daily;
+  if (daily) {
+    v[P3 + 'List14[0].item13[0].#area[0].Eleven[0]'] = true;
+    v[P3 + 'List14[0].item13[0].#area[0].FillText208[0]'] = daily;
+  }
+
+  // ── Item 20 — PLAINTIFF REQUESTS (prayer). Possession (a) and costs (b)
+  //    have no checkbox — always requested. The rest follow facts the landlord
+  //    already entered: past-due rent (c), forfeiture (e, when the notice
+  //    elected forfeiture), and per-diem holdover damages (g, at the item-13
+  //    rate from the date the notice expired). Attorney fees (d), waived-rent
+  //    damages (f) and statutory damages (h) are left for the filer — they
+  //    depend on a fee clause / no-fault relocation / a malicious-holdover
+  //    claim that aren't part of a routine nonpayment intake. ──
+  if (nonpayment && due) {
+    v[P4 + 'List20[0].Lic[0].Seventeenc2[0]'] = true;        // c. past-due rent
+    v[P4 + 'List20[0].Lic[0].FillText36[0]'] = due;
+  }
+  if (!falsy(a.notice_election_forfeiture)) v[P4 + 'List20[0].Lie[0].Seventeene[0]'] = true;  // e. forfeiture
+  if (daily) {
+    v[P4 + 'List20[0].Lig[0].Seventeenf[0]'] = true;         // g. damages at item-13 rate
+    if (expired) v[P4 + 'List20[0].Lig[0].DateField51[0]'] = expired;   // from the date the notice expired
+  }
 
   // ── OVERFLOW → Attachment 10c. ──
   const differ = truthy(pick(a, 'notices_differ_per_defendant'));

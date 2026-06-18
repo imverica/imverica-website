@@ -45,6 +45,11 @@ function cm_010FieldValues(payload = {}) {
   // ── Case name (CM-010 has a single "CASE NAME:" line: Plaintiff v. Defendant). ──
   v[C + 'TitlePartyName[0].Party1[0]'] = plaintiff + (defList[0] ? ' v. ' + defList[0] : '');
 
+  // ── Limited vs Unlimited (same threshold as UD-100 jurisdiction): demand
+  //    ≤ $35,000 → Limited; otherwise Unlimited. ──
+  const demand = Number(String(pick(a, 'amount_demanded', 'rent_due_amount', 'amount_owed') || '').replace(/[^0-9.]/g, '')) || 0;
+  v[C + 'FormTitle[0].Civil[0].limited1[' + (demand > 35000 ? '0' : '1') + ']'] = true;
+
   // ── Item 1 — case type: Unlawful Detainer (Residential 32 / Commercial 31). ──
   if (/commercial/.test(lc(pick(a, 'property_type')))) v[L1 + 'CheckBox31[0]'] = true;
   else v[L1 + 'CheckBox32[0]'] = true;  // residential (default)
