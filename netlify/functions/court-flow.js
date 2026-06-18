@@ -71,8 +71,16 @@ exports.handler = async function (event) {
     if (category === 'family-law') return json(200, { ok: true, ...getFamilyLawCatalog() });
     if (category === 'unlawful-detainer' || category === 'ud') {
       // The eviction packet, grouped by stage (file → serve → respond →
-      // default → trial → enforce) with live availability per form.
-      return json(200, { ok: true, category: 'unlawful-detainer', ...buildUdPacket(getAllCourtForm) });
+      // default → trial → enforce) with live availability per form, PLUS the
+      // shared curated intakes: ONE landlord questionnaire feeds every
+      // landlord-side form (via formAnswers + the hand-maps); the tenant
+      // questionnaire feeds the Answer (UD-105).
+      return json(200, {
+        ok: true,
+        category: 'unlawful-detainer',
+        ...buildUdPacket(getAllCourtForm),
+        intake: { landlord: getCourtSchema('ud-100'), tenant: getCourtSchema('ud-105') }
+      });
     }
     if (category === 'all') {
       const q = (event.queryStringParameters && event.queryStringParameters.q) || '';

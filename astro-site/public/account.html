@@ -756,13 +756,13 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <div class="qt-sub" data-i18n="tileRoSub">DV, civil harassment & elder abuse</div>
     </a>
 
-    <a class="qt" href="/california-unlawful-detainer" aria-label="Eviction (unlawful detainer)">
+    <button class="qt" type="button" onclick="openUdPacket()" aria-label="Eviction (unlawful detainer) packet">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileEvTitle">Eviction</div>
-      <div class="qt-sub" data-i18n="tileEvSub">Unlawful detainer for landlords</div>
-    </a>
+      <div class="qt-sub" data-i18n="tileEvSub">Unlawful detainer packet for landlords</div>
+    </button>
 
     <a class="qt" href="/california-probate" aria-label="California probate">
       <div class="qt-icon-wrap">
@@ -954,6 +954,25 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
     <div class="sc-footer">
       <button type="button" id="sc-back" onclick="smallClaimsBack()" data-i18n="scBack">Back</button>
       <button class="primary" type="button" id="sc-next" onclick="smallClaimsNext()" data-i18n="scNext">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Unlawful Detainer (eviction) packet wizard ===== -->
+<div class="sc-overlay hidden" id="ud-overlay" onclick="if(event.target===this) closeUdPacket()">
+  <div class="sc-modal" role="dialog" aria-modal="true" aria-labelledby="ud-title">
+    <div class="sc-head">
+      <div>
+        <h3 id="ud-title">California Eviction (Unlawful Detainer) packet</h3>
+        <p>Answer once about your case; we prepare the matching Judicial Council forms for each stage. Document preparation only · no legal advice · not a law firm.</p>
+      </div>
+      <button class="sc-close" type="button" aria-label="Close" onclick="closeUdPacket()">×</button>
+    </div>
+    <div class="sc-progress" id="ud-progress"></div>
+    <div class="sc-body" id="ud-body"></div>
+    <div class="sc-footer">
+      <button type="button" id="ud-back" onclick="udBack()">Back</button>
+      <button class="primary" type="button" id="ud-next" onclick="udNext()">Next</button>
     </div>
   </div>
 </div>
@@ -2716,6 +2735,155 @@ async function generateSmallClaimsPdf(){
     next.disabled = false;
     next.textContent = T.scGenerate;
   }
+}
+
+// ===== Unlawful Detainer (eviction) packet =====
+// One landlord intake (curated ca-court-flow-schema) → formAnswers → every
+// packet form generated via the hand-maps (generate-court-pdf, no directFields),
+// shown grouped by stage from court-flow?category=unlawful-detainer.
+var udState = { packet:null, intake:null, stepIndex:0, answers:{}, view:'intake' };
+
+function setUdFooter(showBack, showNext, nextLabel){
+  var back=document.getElementById('ud-back'), next=document.getElementById('ud-next');
+  back.style.display = showBack ? '' : 'none';
+  next.style.display = showNext ? '' : 'none';
+  if (nextLabel) next.textContent = nextLabel;
+}
+function udProgress(text){ document.getElementById('ud-progress').textContent = text; }
+function udStatus(kind, msg){ var s=document.getElementById('ud-status'); if(!s)return; s.className='sc-status '+kind; s.style.display='block'; s.textContent=msg; }
+
+async function openUdPacket(){
+  udState = { packet:null, intake:null, stepIndex:0, answers:{}, view:'intake' };
+  document.getElementById('ud-overlay').classList.remove('hidden');
+  document.getElementById('ud-body').innerHTML = '<div class="sc-status info" style="display:block">Loading…</div>';
+  setUdFooter(false, false);
+  try {
+    var r = await fetch('/api/court-flow?category=unlawful-detainer', { credentials:'include', headers:{Accept:'application/json'} });
+    if (r.status === 401){ closeUdPacket(); show('step-email'); return; }
+    var data = await r.json();
+    if (!data || !data.ok) throw new Error((data && data.error) || 'Could not load the packet');
+    udState.packet = data;
+    udState.intake = data.intake && data.intake.landlord;
+    if (!udState.intake || !udState.intake.steps) throw new Error('Intake unavailable');
+    renderUdIntake();
+  } catch(e){
+    document.getElementById('ud-body').innerHTML = '<div class="sc-status error" style="display:block">'+escText(e.message||'Could not load')+'</div>';
+  }
+}
+function closeUdPacket(){ document.getElementById('ud-overlay').classList.add('hidden'); }
+
+// showWhen: { fieldId: value } — render only when the answer matches.
+function udFieldVisible(field){
+  if (!field.showWhen) return true;
+  return Object.keys(field.showWhen).every(function(k){ return udState.answers[k] === field.showWhen[k]; });
+}
+function udVisibleFields(step){ return (step.fields||[]).filter(udFieldVisible); }
+
+function renderUdField(field){
+  var saved = udState.answers[field.id];
+  var name = scAttr(field.id);
+  var label = escText(field.label) + (field.required ? ' <span style="color:#b3261e">*</span>' : '');
+  if (field.type === 'select'){
+    var opts = (field.options||[]).map(function(o){ return '<option value="'+scAttr(o.value)+'"'+(saved===o.value?' selected':'')+'>'+escText(o.label)+'</option>'; }).join('');
+    return '<div class="sc-field"><label>'+label+'</label><select data-ud-field="'+name+'"><option value=""></option>'+opts+'</select></div>';
+  }
+  if (field.type === 'checkboxes'){
+    var arr = Array.isArray(saved)?saved:[];
+    var boxes = (field.options||[]).map(function(o){ return '<div class="sc-check"><input type="checkbox" data-ud-check="'+name+'" value="'+scAttr(o.value)+'"'+(arr.indexOf(o.value)>=0?' checked':'')+'><label>'+escText(o.label)+'</label></div>'; }).join('');
+    return '<div class="sc-field full"><label>'+label+'</label><div class="sc-check-list">'+boxes+'</div></div>';
+  }
+  if (field.type === 'textarea'){
+    return '<div class="sc-field full"><label>'+label+'</label><textarea data-ud-field="'+name+'">'+escText(saved||'')+'</textarea></div>';
+  }
+  var itype = field.type==='email' ? 'email' : (field.type==='tel' ? 'tel' : 'text');
+  var extra = field.type==='date' ? ' placeholder="MM/DD/YYYY"' : (field.type==='money' ? ' inputmode="decimal" placeholder="0.00"' : '');
+  return '<div class="sc-field"><label>'+label+'</label><input type="'+itype+'" data-ud-field="'+name+'"'+extra+' value="'+scAttr(saved||'')+'"></div>';
+}
+
+function renderUdIntake(){
+  udState.view='intake';
+  var schema = udState.intake;
+  var step = schema.steps[udState.stepIndex];
+  udProgress(schema.title + ' · ' + (udState.stepIndex+1) + '/' + schema.steps.length);
+  document.getElementById('ud-body').innerHTML =
+    '<div class="sc-intro">'+escText(step.title)+' — document preparation only · no legal advice.</div>' +
+    '<div class="sc-fields">'+udVisibleFields(step).map(renderUdField).join('')+'</div>' +
+    '<div class="sc-status" id="ud-status"></div>';
+  setUdFooter(udState.stepIndex>0, true, udState.stepIndex===schema.steps.length-1 ? 'Review packet →' : 'Next');
+}
+
+function collectUdPage(){
+  document.querySelectorAll('#ud-body [data-ud-field]').forEach(function(input){
+    var key=input.getAttribute('data-ud-field'); var v=String(input.value||'').trim();
+    if (v) udState.answers[key]=v; else delete udState.answers[key];
+  });
+  var groups={};
+  document.querySelectorAll('#ud-body [data-ud-check]').forEach(function(input){
+    var key=input.getAttribute('data-ud-check'); groups[key]=groups[key]||[]; if (input.checked) groups[key].push(input.value);
+  });
+  Object.keys(groups).forEach(function(k){ if (groups[k].length) udState.answers[k]=groups[k]; else delete udState.answers[k]; });
+}
+
+function udBack(){
+  if (udState.view==='packet'){ renderUdIntake(); return; }
+  if (udState.stepIndex>0){ collectUdPage(); udState.stepIndex--; renderUdIntake(); }
+}
+function udNext(){
+  if (udState.view==='packet') return;
+  collectUdPage();
+  var step = udState.intake.steps[udState.stepIndex];
+  var missing = udVisibleFields(step).filter(function(f){ return f.required && !udState.answers[f.id]; });
+  if (missing.length){ udStatus('error', 'Please complete: '+missing.map(function(f){return f.label;}).join(', ')); return; }
+  if (udState.stepIndex < udState.intake.steps.length-1){ udState.stepIndex++; renderUdIntake(); }
+  else renderUdPacket();
+}
+
+function udFormRow(f){
+  var who = (f.who && f.who!=='landlord') ? ' · '+escText(f.who) : '';
+  var cond = f.condition ? '<div style="color:#64748b;font-size:12px;margin-top:2px">'+escText(f.condition)+'</div>' : '';
+  var action = f.generatable
+    ? '<button class="primary" type="button" style="padding:6px 14px;font-size:13px;white-space:nowrap" onclick="udGenerate(\''+scAttr(f.code)+'\',this)">Generate</button>'
+    : '<span style="color:#94a3b8;font-size:13px">not available</span>';
+  return '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid #f1f5f9">'
+    + '<div><strong>'+escText(f.code)+'</strong> '+escText(f.title||'')+who+cond+'</div>'+action+'</div>';
+}
+function renderUdPacket(){
+  udState.view='packet';
+  // Fill schema defaults for anything still unset so the maps get them.
+  (udState.intake.steps||[]).forEach(function(st){ (st.fields||[]).forEach(function(f){ if (f.default!=null && udState.answers[f.id]==null) udState.answers[f.id]=f.default; }); });
+  udProgress('Your eviction packet · grouped by stage');
+  var html = '<div class="sc-intro">One answer set fills every form. Forms are grouped by stage — you file the first group to open the case; later stages apply only if the case proceeds. Document preparation only · not legal advice.</div>';
+  (udState.packet.stages||[]).forEach(function(st){
+    html += '<div style="margin:14px 0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">'
+      + '<div style="background:#f8fafc;padding:8px 14px;font-weight:700;font-size:13px">'+escText(st.label)+'</div>'
+      + (st.forms||[]).map(udFormRow).join('') + '</div>';
+  });
+  if (udState.packet.situational && udState.packet.situational.length){
+    html += '<div style="margin:14px 0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">'
+      + '<div style="background:#f8fafc;padding:8px 14px;font-weight:700;font-size:13px">Sometimes needed</div>'
+      + udState.packet.situational.map(udFormRow).join('') + '</div>';
+  }
+  html += '<div class="sc-status" id="ud-status"></div>';
+  document.getElementById('ud-body').innerHTML = html;
+  setUdFooter(true, false);
+}
+
+async function udGenerate(code, btn){
+  var orig = btn.textContent; btn.disabled=true; btn.textContent='Generating…';
+  try {
+    var r = await fetch('/api/generate-court-pdf', { method:'POST', credentials:'include', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ formCode:code, formAnswers:udState.answers, flatten:false }) });
+    if (r.status===401){ closeUdPacket(); show('step-email'); return; }
+    if (!r.ok){ var d=await r.json().catch(function(){return {};}); throw new Error(d.error||('Could not generate '+code)); }
+    var blob = await r.blob();
+    var fileName = code+'-draft.pdf';
+    var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download=fileName; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    try { await saveGeneratedDraft(blob, { name:fileName, formCode:code, title:code, category:'california-court' }); } catch(e){}
+    udStatus('ok', code+' ready — downloaded and saved to My Documents.');
+  } catch(e){
+    udStatus('error', e.message||('Could not generate '+code));
+  } finally { btn.disabled=false; btn.textContent=orig; }
 }
 
 function maybeOpenSmallClaimsFromUrl(){
