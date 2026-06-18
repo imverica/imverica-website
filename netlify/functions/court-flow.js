@@ -23,6 +23,7 @@ const {
   searchLocalCourtForms
 } = require('./lib/ca-local-court-catalog');
 const { loadLocalCourtTemplate } = require('./lib/ca-local-court-template');
+const { buildUdPacket } = require('./lib/ud-packet-spec');
 const { sessionFromEvent } = require('./lib/session-auth');
 
 const HEADERS = { 'Cache-Control': 'private, no-store' };
@@ -68,6 +69,11 @@ exports.handler = async function (event) {
   // so existing cabinet behavior is unchanged.
   if (!code) {
     if (category === 'family-law') return json(200, { ok: true, ...getFamilyLawCatalog() });
+    if (category === 'unlawful-detainer' || category === 'ud') {
+      // The eviction packet, grouped by stage (file → serve → respond →
+      // default → trial → enforce) with live availability per form.
+      return json(200, { ok: true, category: 'unlawful-detainer', ...buildUdPacket(getAllCourtForm) });
+    }
     if (category === 'all') {
       const q = (event.queryStringParameters && event.queryStringParameters.q) || '';
       const localForms = county ? searchLocalCourtForms(county, q) : [];
