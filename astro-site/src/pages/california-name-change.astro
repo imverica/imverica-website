@@ -1,0 +1,88 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Name Change Petition (NC-100) Document Preparation | Imverica';
+const description = 'California Registered LDA prepares adult and minor legal name-change petitions you file yourself — NC-100 petition, NC-120 order to show cause, publication coordination, and NC-130 decree. Flat fee. Document preparation only — not a law firm.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Name Change Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: "Self-represented California name-change petition preparation at the client's direction — NC-100, NC-120, publication, and NC-130 decree. No legal advice; not a law firm."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/california-name-change"
+  slug="/california-name-change" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Civil · Name Change · NC-100"
+    heading="California name-change petition — prepared for you to file"
+    sub="We prepare the full California name-change packet so you can petition the court yourself — adult or minor. Flat fee. Document preparation only — we do not give legal advice, decide eligibility, or appear in court."
+    ctaPrimary={{ href: '/#get-started?form=NC-100', text: 'Start my name-change packet' }}
+  />
+
+  <CategoryTiles
+    kicker="What we prepare · flat fee"
+    heading="California name-change forms"
+    intro="You give us the current and proposed names and the case facts; we prepare a clean, court-ready packet for you to file. The court filing fee is separate and can be waived with FW-001."
+    tiles={[
+      { icon: '🪪', title: 'NC-100', desc: 'Petition for Change of Name — the core petition (adult or, with NC-110, a minor).', price: 'from $399', href: '/#get-started?form=NC-100', color: 'var(--navy)' },
+      { icon: '📢', title: 'NC-120', desc: 'Order to Show Cause for Change of Name, set for hearing and published in a newspaper.', price: 'included', href: '/#get-started?form=NC-100', color: 'var(--terracotta-deep)' },
+      { icon: '🧒', title: 'NC-110 / NC-130G', desc: 'Attachments for a minor or a gender/sex-identity name change when applicable.', price: 'included', href: '/#get-started?form=NC-100', color: 'var(--sage)' },
+      { icon: '📜', title: 'NC-130 + FW-001', desc: 'Decree Changing Name for the judge to sign, plus a fee-waiver request when you want one.', price: 'included', href: '/fw-001-fee-waiver', color: 'var(--gold)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/sc', label: 'California Small Claims & Civil forms' },
+    { href: '/fw-001-fee-waiver', label: 'FW-001 — California court fee waiver' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      A California name change is a civil court petition you are allowed to file
+      yourself. We prepare the whole packet from the names and facts you give us
+      so it is complete and court-ready. You choose what name you want; we do
+      not decide whether the court will grant it or give legal advice.
+    </p>
+
+    <h2>How the process works</h2>
+    <ol>
+      <li><strong>NC-100</strong> — Petition for Change of Name (your current name, the proposed name, and the reason).</li>
+      <li><strong>NC-120</strong> — Order to Show Cause: the court sets a hearing date and you publish the order in an approved newspaper, usually once a week for four weeks.</li>
+      <li><strong>Hearing</strong> — if no one objects, many courts grant the change without you having to argue anything.</li>
+      <li><strong>NC-130</strong> — Decree Changing Name, signed by the judge — your proof to update ID, Social Security, and other records.</li>
+    </ol>
+
+    <h2>Adults and minors</h2>
+    <p>
+      We prepare both adult and minor name-change packets. A minor's petition
+      adds NC-110 and requires notice to the other parent; a gender/sex-identity
+      change uses the confidential NC-200/NC-300 series, which we can prepare at
+      your direction. We do not decide custody or parental-notice questions for
+      you — those are legal questions for the parties or an attorney.
+    </p>
+
+    <h2>What we are — and are not</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant. We are
+      <strong>not a law firm and have no attorneys on staff</strong>. We cannot
+      give legal advice, decide eligibility, appear at the hearing, or guarantee
+      that the court will grant your petition. If your name change relates to
+      safety, immigration status, or a contested family matter, review it with
+      an attorney first.
+    </p>
+
+    <cite>
+      <strong>Official sources:</strong> California Courts Self-Help Guide,
+      “Change your name”; Code of Civil Procedure §§ 1275–1279.6; Judicial
+      Council forms NC-100, NC-110, NC-120, NC-130. Document preparation only —
+      not legal advice, not a law firm.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?form=NC-100" primaryText="Begin my name-change intake" />
+</BaseLayout>

@@ -15,6 +15,8 @@ interface Tile {
   desc: string;
   href: string;
   color?: string;
+  /** Explicit price-chip text (e.g. "from $449"). Falls back to priceForTitle(title). */
+  price?: string;
 }
 interface Props {
   kicker?: string;
@@ -38,7 +40,7 @@ const { kicker, heading, intro, tiles } = Astro.props as Props;
           </div>
           <div class="cat-tile-title">{t.title}</div>
           <div class="cat-tile-desc">{t.desc}</div>
-          <div class="cat-tile-price">{priceForTitle(t.title) && <span class="tile-price">{priceForTitle(t.title)} · flat fee</span>}</div>
+          <div class="cat-tile-price">{(t.price || priceForTitle(t.title)) && <span class="tile-price">{t.price || priceForTitle(t.title)} · flat fee</span>}</div>
         </a>
       ))}
     </div>

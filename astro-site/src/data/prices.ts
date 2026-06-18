@@ -36,6 +36,7 @@ export const PRICES: Record<string, PublishedPrice> = {
   'FL-150': { amount: 199 },
   'FL-160': { amount: 199 },
   'SC-100': { amount: 249 },
+  'NC-100': { amount: 399, from: true }, // name change petition packet (NC-100/110/120/130)
   'WG-001': { amount: 199 },
   'EJ-001': { amount: 199 },
   'DE-111': { amount: 799, from: true },
