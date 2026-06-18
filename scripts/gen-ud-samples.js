@@ -43,7 +43,11 @@ const forms = [
   ['ca-civ100', 'civ-100.pdf', 'CIV-100_RequestForDefault'],
   ['ca-ud110', 'ud-110.pdf', 'UD-110_Judgment'],
   ['ca-ud105', 'ud-105.pdf', 'UD-105_Answer_Tenant'],
-  ['ca-pos030', 'pos-030.pdf', 'POS-030_ProofByMail']
+  ['ca-pos030', 'pos-030.pdf', 'POS-030_ProofByMail'],
+  ['ca-ud120', 'ud-120.pdf', 'UD-120_RentalAssistanceVerification'],
+  ['ca-cp105', 'cp10-5.pdf', 'CP10.5_PrejudgmentClaim'],
+  ['ca-ud116', 'ud-116.pdf', 'UD-116_DefaultJudgmentDecl'],
+  ['ca-ej130', 'ej-130.pdf', 'EJ-130_WritOfPossession']
 ];
 
 (async () => {
