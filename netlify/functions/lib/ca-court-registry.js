@@ -33,7 +33,9 @@ const REGISTRY = {
   'pos-030': () => require('./ca-pos030-map').pos_030FieldValues, // Proof of Service by Mail
   'ej-130': () => require('./ca-ej130-map').ej_130FieldValues,   // Writ of Execution / Possession
   // Small claims
-  'sc-100': () => require('./ca-sc100-map').sc_100FieldValues    // Plaintiff's Claim
+  'sc-100': () => require('./ca-sc100-map').sc_100FieldValues,   // Plaintiff's Claim
+  // Generic attachment used as SC-100 item 3 overflow (and other declarations)
+  'mc-031': () => require('./ca-mc031-map').mc_031FieldValues    // Attached Declaration
 };
 
 function normalizeSlug(formCode) {

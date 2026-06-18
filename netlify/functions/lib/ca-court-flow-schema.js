@@ -254,6 +254,7 @@ const SCHEMAS = {
           { id: 'case_number', label: 'Case number (if assigned)', type: 'text' },
           { id: 'plaintiff_name', label: 'Your full name or business name', type: 'text', required: true },
           { id: 'plaintiff_phone', label: 'Your phone', type: 'tel' },
+          { id: 'plaintiff_email', label: 'Your email (if available)', type: 'email' },
           { id: 'plaintiff_address_line1', label: 'Your street address', type: 'text' },
           { id: 'plaintiff_city', label: 'City', type: 'text' },
           { id: 'plaintiff_state', label: 'State', type: 'text', default: 'CA' },
@@ -261,7 +262,20 @@ const SCHEMAS = {
         ]
       },
       {
-        title: 'Defendant & claim',
+        title: 'Second plaintiff (if any)',
+        fields: [
+          { id: 'has_second_plaintiff', label: 'Is there a second plaintiff (e.g., a co-tenant or spouse suing with you)?', type: 'select', default: 'no', options: [{ value: 'no', label: 'No — just me' }, { value: 'yes', label: 'Yes' }] },
+          { id: 'plaintiff2_name', label: 'Second plaintiff — full name', type: 'text', showWhen: { has_second_plaintiff: 'yes' } },
+          { id: 'plaintiff2_phone', label: 'Second plaintiff phone', type: 'tel', showWhen: { has_second_plaintiff: 'yes' } },
+          { id: 'plaintiff2_email', label: 'Second plaintiff email', type: 'email', showWhen: { has_second_plaintiff: 'yes' } },
+          { id: 'plaintiff2_address_line1', label: 'Second plaintiff street address', type: 'text', showWhen: { has_second_plaintiff: 'yes' } },
+          { id: 'plaintiff2_city', label: 'City', type: 'text', showWhen: { has_second_plaintiff: 'yes' } },
+          { id: 'plaintiff2_state', label: 'State', type: 'text', default: 'CA', showWhen: { has_second_plaintiff: 'yes' } },
+          { id: 'plaintiff2_zip', label: 'ZIP', type: 'text', showWhen: { has_second_plaintiff: 'yes' } }
+        ]
+      },
+      {
+        title: 'Defendant',
         fields: [
           { id: 'defendant_name', label: 'Defendant — full name or business', type: 'text', required: true },
           { id: 'defendant_phone', label: 'Defendant phone', type: 'tel' },
@@ -269,8 +283,24 @@ const SCHEMAS = {
           { id: 'defendant_city', label: 'Defendant city', type: 'text' },
           { id: 'defendant_state', label: 'Defendant state', type: 'text', default: 'CA' },
           { id: 'defendant_zip', label: 'Defendant ZIP', type: 'text' },
+          { id: 'defendant_agent_name', label: 'If the defendant is a company/LLC: person authorized for service (agent)', type: 'text' },
+          { id: 'defendant_agent_title', label: 'Agent job title (if known)', type: 'text' }
+        ]
+      },
+      {
+        title: 'Your claim',
+        fields: [
           { id: 'claim_amount', label: 'Amount you are claiming (USD)', type: 'money', required: true },
-          { id: 'claim_reason', label: 'Why does the defendant owe you this money?', type: 'textarea', required: true }
+          { id: 'claim_reason', label: 'Why does the defendant owe you this money? (full explanation — long answers move to an MC-031 attachment automatically)', type: 'textarea', required: true },
+          { id: 'claim_date_started', label: 'Date the problem started (MM/DD/YYYY)', type: 'date' },
+          { id: 'claim_date_through', label: 'Through date (MM/DD/YYYY)', type: 'date' },
+          { id: 'claim_calculation', label: 'How did you calculate the amount? (do not include court costs/fees)', type: 'textarea' },
+          { id: 'asked_to_pay', label: 'Did you ask the defendant to pay before suing?', type: 'select', default: 'yes', options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }] },
+          { id: 'asked_to_pay_explain', label: 'If no, explain why not', type: 'textarea', showWhen: { asked_to_pay: 'no' } },
+          { id: 'venue_zip', label: 'ZIP code of where the defendant lives/does business (or where the problem happened)', type: 'text' },
+          { id: 'suing_public_entity', label: 'Are you suing a public entity (city, county, state agency)?', type: 'select', default: 'no', options: [{ value: 'no', label: 'No' }, { value: 'yes', label: 'Yes' }] },
+          { id: 'public_entity_claim_date', label: 'Date you filed a written claim with the public entity', type: 'date', showWhen: { suing_public_entity: 'yes' } },
+          { id: 'filed_over_12_claims', label: 'Have you filed more than 12 small claims in California in the last 12 months?', type: 'select', default: 'no', options: [{ value: 'no', label: 'No' }, { value: 'yes', label: 'Yes' }] }
         ]
       }
     ]

@@ -49,9 +49,16 @@ async function main() {
   const schemaForms = listCourtSchemas();
   const registryForms = listForms();
 
-  // Every form with a map should have an intake schema, and vice-versa.
+  // Packet members + attachments are fed by ONE shared intake (the UD packet
+  // forms read the ud-100 landlord answers; mc-031 carries SC-100 item 3), so
+  // they intentionally have no per-form intake schema — exempt them.
+  const SHARED_INTAKE = new Set([
+    'sum-130', 'ud-101', 'cm-010', 'cp10-5', 'pos-010', 'civ-100', 'ud-116', 'ud-110', 'ud-120', 'pos-030', 'ej-130', 'mc-031'
+  ]);
+
+  // Every standalone form with a map should have an intake schema.
   for (const slug of registryForms) {
-    if (getCourtSchema(slug)) ok(`registry form ${slug} has an intake schema`);
+    if (getCourtSchema(slug) || SHARED_INTAKE.has(slug)) ok(`registry form ${slug} has an intake schema (or is packet-fed)`);
     else bad(`registry form ${slug} has NO intake schema`);
   }
   for (const slug of schemaForms) {
