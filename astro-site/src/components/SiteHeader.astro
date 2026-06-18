@@ -28,6 +28,7 @@ function activeNav() {
   if (slug.startsWith('/about') || slug.startsWith('/lda')) return 'about';
   if (slug.startsWith('/business') || slug.startsWith('/llc') || slug.startsWith('/fbn')) return 'business';
   if (slug.startsWith('/sc') || slug.startsWith('/civil')) return 'civil';
+  if (slug.startsWith('/criminal') || slug.startsWith('/california-expungement') || slug.startsWith('/expungement') || slug.startsWith('/record-clearing')) return 'criminal';
   if (slug.startsWith('/fl') || slug.startsWith('/family') || slug.startsWith('/california-divorce')) return 'family';
   if (slug.startsWith('/i-') || slug.startsWith('/n-') || slug.startsWith('/g-') || slug.startsWith('/immigration') || slug.startsWith('/eoir') || slug.startsWith('/uscis')) return 'uscis';
   return '';
@@ -58,6 +59,7 @@ function localeHref(locale: Locale) {
       <a href={localizedPathSafe(lang, '/immigration')} data-nav="uscis" aria-current={active === 'uscis' ? 'page' : undefined}>{t.uscis}</a>
       <a href={localizedPathSafe(lang, '/fl')} data-nav="family" aria-current={active === 'family' ? 'page' : undefined}>{t.family}</a>
       <a href={localizedPathSafe(lang, '/sc')} data-nav="civil" aria-current={active === 'civil' ? 'page' : undefined}>{t.civil}</a>
+      <a href={localizedPathSafe(lang, '/criminal')} data-nav="criminal" aria-current={active === 'criminal' ? 'page' : undefined}>{t.criminal}</a>
       <a href={localizedPathSafe(lang, '/business')} data-nav="business" aria-current={active === 'business' ? 'page' : undefined}>{t.business}</a>
       <a href={localizedPathSafe(lang, '/pricing')} data-nav="pricing" aria-current={active === 'pricing' ? 'page' : undefined}>{t.pricing}</a>
       <a href={localizedPathSafe(lang, '/for-attorneys')} data-nav="for-attorneys" class="site-nav-accent" aria-current={active === 'for-attorneys' ? 'page' : undefined}>{t.forAttorneys}</a>
@@ -87,6 +89,7 @@ function localeHref(locale: Locale) {
     <a href={localizedPathSafe(lang, '/immigration')}>{t.uscis}</a>
     <a href={localizedPathSafe(lang, '/fl')}>{t.family}</a>
     <a href={localizedPathSafe(lang, '/sc')}>{t.civil}</a>
+    <a href={localizedPathSafe(lang, '/criminal')}>{t.criminal}</a>
     <a href={localizedPathSafe(lang, '/business')}>{t.business}</a>
     <a href={localizedPathSafe(lang, '/pricing')}>{t.pricing}</a>
     <a href={localizedPathSafe(lang, '/for-attorneys')}>{t.forAttorneys}</a>

@@ -1,0 +1,107 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CategoryTiles from '~/components/CategoryTiles.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+const title = 'California Record Clearing — Expungement & Dismissal Forms | Imverica';
+const description = 'California Registered LDA prepares record-clearing petitions you file yourself: expungement / dismissal (PC 1203.4), felony reduction (PC 17(b)), early probation termination (PC 1203.3), arrest sealing (PC 851.91), juvenile sealing, and Prop 64 cannabis relief. Flat fees. Document preparation only — not a law firm.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'California Criminal Record Clearing Document Preparation',
+  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  description: "Self-represented California record-clearing petition preparation at the client's direction — expungement/dismissal, reduction, probation termination, arrest and juvenile sealing, and Prop 64 relief. No legal advice; not a law firm."
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/criminal"
+  slug="/criminal" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero
+    eyebrow="California Record Clearing · In Pro Per"
+    heading="Clear your California record — done yourself, prepared by us"
+    sub="We prepare the court petitions so you can clear your own California record without an attorney. Flat fees, no hidden costs. Document preparation only — we do not give legal advice, decide eligibility, or appear in court."
+    ctaPrimary={{ href: '/#get-started?service=record-clearing', text: 'Start my record-clearing packet' }}
+  />
+
+  <CategoryTiles
+    kicker="What we prepare · flat fees"
+    heading="Record-clearing petitions for self-represented filers"
+    intro="You tell us your case facts and choose the relief you want; we prepare a clean, court-ready petition packet for you to file. Court filing fees, if any, are separate (and often waivable with FW-001). Prices are flat — never any hidden fees."
+    tiles={[
+      { icon: '🧹', title: 'Misdemeanor expungement', desc: 'Petition for dismissal under Penal Code § 1203.4 (CR-180 / CR-181). From $349 · flat fee.', href: '/california-expungement', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'Felony expungement', desc: 'PC § 1203.4 dismissal for eligible felony probation cases (CR-180 / CR-181). From $399 · flat fee.', href: '/california-expungement', color: 'var(--terracotta-deep)' },
+      { icon: '🚗', title: 'DUI / wet-reckless expungement', desc: 'PC § 1203.4 dismissal for a DUI or wet-reckless conviction. From $349 · flat fee.', href: '/california-expungement', color: 'var(--sage)' },
+      { icon: '📄', title: 'Infraction dismissal', desc: 'Petition to dismiss an eligible infraction. From $249 · flat fee.', href: '/#get-started?service=record-clearing', color: 'var(--gold)' },
+      { icon: '↩️', title: 'Felony → misdemeanor reduction', desc: 'Petition to reduce an eligible “wobbler” felony to a misdemeanor under PC § 17(b) (CR-180). From $399 · flat fee.', href: '/#get-started?service=record-clearing', color: 'var(--navy)' },
+      { icon: '⏱️', title: 'Early termination of probation', desc: 'Petition to end probation early under PC § 1203.3, often the first step before a dismissal. From $349 · flat fee.', href: '/#get-started?service=record-clearing', color: 'var(--terracotta-deep)' },
+      { icon: '🔒', title: 'Arrest record sealing', desc: 'Petition to seal an arrest that did not lead to a conviction under PC § 851.91 (CR-409 / CR-410). From $399 · flat fee.', href: '/#get-started?service=record-clearing', color: 'var(--sage)' },
+      { icon: '🧒', title: 'Juvenile record sealing', desc: 'Petition to seal juvenile records under Welf. & Inst. Code § 781 (JV-595). From $399 · flat fee.', href: '/#get-started?service=record-clearing', color: 'var(--gold)' },
+      { icon: '🌿', title: 'Prop 64 cannabis relief', desc: 'Redesignate or dismiss an eligible cannabis conviction under PC § 11361.8. From $299 · flat fee.', href: '/#get-started?service=record-clearing', color: 'var(--navy)' }
+    ]}
+  />
+
+  <LandingBody related={[
+    { href: '/california-expungement', label: 'Expungement / dismissal detail (CR-180 · CR-181)' },
+    { href: '/fw-001-fee-waiver', label: 'FW-001 — California court fee waiver' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Many California convictions and arrests can be cleaned up by petition —
+      and you are allowed to file these petitions yourself, without a lawyer.
+      We prepare the petition packet from your case facts and instructions so
+      it is complete and court-ready. You choose the relief you want; we do not
+      decide whether you qualify or promise a court result.
+    </p>
+
+    <h2>What you give us</h2>
+    <p>
+      For most record-clearing petitions the court needs exact case
+      information: county, case number, conviction or arrest date, the offense
+      code, whether probation was granted and completed, and whether any new
+      case is pending. We turn that into a clean filing packet — the petition,
+      the proposed order, any declaration or attachment, proof of service, and
+      a fee-waiver request (FW-001) when you want one.
+    </p>
+
+    <h2>What we do not prepare (talk to a criminal-defense attorney)</h2>
+    <p>
+      Some record-clearing matters involve a contested hearing where the
+      district attorney can argue against you, a background investigation, or
+      complex legal analysis. Those are <strong>not</strong> a self-help,
+      document-preparation matter and we do not handle them — a criminal-defense
+      attorney should:
+    </p>
+    <ul>
+      <li><strong>Certificate of Rehabilitation</strong> and <strong>Governor's Pardon</strong> — contested, investigated proceedings.</li>
+      <li><strong>Ending sex-offender (PC 290) registration</strong> — petition the DA can oppose at a hearing.</li>
+      <li><strong>Restoring firearm rights</strong> — turns on overlapping state and federal law.</li>
+      <li>Any matter where you want someone to appear and argue for you in court.</li>
+    </ul>
+    <p>
+      Also: a “background-check database update” is something you should
+      <strong>never pay anyone for</strong> — agencies update their records
+      after the court grants relief.
+    </p>
+
+    <h2>What we are — and are not</h2>
+    <p>
+      Imverica is a registered California Legal Document Assistant. We are
+      <strong>not a law firm and have no attorneys on staff</strong>. We cannot
+      appear in criminal court, negotiate with the district attorney, decide
+      whether you are eligible, advise on immigration consequences, or guarantee
+      that the court will grant your petition. If you are not a U.S. citizen,
+      review immigration consequences with an attorney before filing.
+    </p>
+
+    <cite>
+      <strong>Official sources:</strong> California Courts Self-Help Guide,
+      “Clean your record”; Penal Code §§ 1203.4, 1203.3, 17(b), 851.91, 11361.8;
+      Welfare &amp; Institutions Code § 781. Document preparation only — not
+      legal advice, not a law firm.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip primaryHref="/#get-started?service=record-clearing" primaryText="Start my record-clearing packet" />
+</BaseLayout>

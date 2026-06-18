@@ -154,7 +154,7 @@ const schema = {
           <div>
             <div class="price-card-kicker">California state courts only</div>
             <h2>California court forms</h2>
-            <p class="price-card-sub">Family law, small claims, civil, eviction defense, probate, and record-cleanup packets. Packages bundle the common combinations.</p>
+            <p class="price-card-sub">Family law, small claims, civil, eviction, and probate packets. Packages bundle the common combinations. (Record clearing has its own section below.)</p>
           </div>
         </div>
         <table class="price-table">
@@ -184,12 +184,45 @@ const schema = {
             <tr data-prefill="I need a DE-111 probate petition" data-formcode="DE-111"><td><strong>DE-111 Probate</strong> petition</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
             <tr data-prefill="I need the full California probate package (DE-111 / 121 / 160 / 221)" data-formcode="DE-111"><td><strong>Full Probate</strong> package (DE-111/121/160/221)</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$435+</td></tr>
             <tr data-prefill="I need help closing probate / final distribution / DE-295 final discharge" data-formcode="DE-295"><td><strong>Probate closing</strong> final distribution / DE-295</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need a simple California expungement / record cleanup packet (CR-180 / CR-181), possibly for DUI" data-formcode="CR-180"><td><strong>CR-180 / CR-181</strong> single-case record-cleanup packet</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need help with a large California expungement / record cleanup case with multiple convictions or a big docket" data-formcode="CR-180"><td><strong>Complex record cleanup</strong> multiple cases / large docket</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
           Document preparation under your direction. We do not give legal advice, choose the form for you, or represent you in court. <em>Cal. Bus. & Prof. Code §§6400–6415.</em>
+        </p>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────
+           CATEGORY 4b — Criminal record clearing (terracotta)
+           ───────────────────────────────────────────────────────────── -->
+      <div class="price-card price-card--terracotta">
+        <div class="price-card-stripe"></div>
+        <div class="price-card-head">
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I want to clear my California record myself and need the petition prepared." aria-label="Start record-clearing intake"><span aria-hidden="true">🧹</span></button>
+          <div>
+            <div class="price-card-kicker">Clear your own record · In Pro Per</div>
+            <h2>California record clearing</h2>
+            <p class="price-card-sub">Petitions you file yourself, prepared by us. Flat fees, no hidden costs. Court filing fees, if any, are separate and often waivable (FW-001).</p>
+          </div>
+        </div>
+        <table class="price-table">
+          <thead>
+            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Court fee*</th></tr>
+          </thead>
+          <tbody>
+            <tr data-prefill="I need a misdemeanor expungement / dismissal (Penal Code 1203.4, CR-180 / CR-181)" data-formcode="CR-180"><td><strong>Misdemeanor expungement</strong> dismissal · PC §1203.4 (CR-180/181)</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need a DUI / wet-reckless expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>DUI / wet-reckless expungement</strong> PC §1203.4</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need a felony expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>Felony expungement</strong> dismissal · PC §1203.4</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need an infraction dismissal" data-formcode="CR-180"><td><strong>Infraction dismissal</strong></td><td class="num"><span class="price">from $249</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to reduce a felony wobbler to a misdemeanor (Penal Code 17(b))" data-formcode="CR-180"><td><strong>Felony → misdemeanor</strong> reduction · PC §17(b)</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to terminate probation early (Penal Code 1203.3)"><td><strong>Early termination of probation</strong> PC §1203.3</td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to seal an arrest record (Penal Code 851.91, CR-409 / CR-410)" data-formcode="CR-409"><td><strong>Arrest record sealing</strong> PC §851.91 (CR-409/410)</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need to seal a juvenile record (Welfare & Institutions Code 781, JV-595)" data-formcode="JV-595"><td><strong>Juvenile record sealing</strong> W&amp;I §781 (JV-595)</td><td class="num"><span class="price">from $399</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need Prop 64 cannabis relief — redesignate or dismiss a conviction (Penal Code 11361.8)"><td><strong>Prop 64 cannabis relief</strong> redesignate / dismiss · PC §11361.8</td><td class="num"><span class="price">from $299</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I need help with a large record-clearing case with multiple convictions or a big docket" data-formcode="CR-180"><td><strong>Complex record clearing</strong> multiple cases / large docket</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
+          </tbody>
+        </table>
+        <p class="price-card-disclaimer">
+          Self-help document preparation under your direction. We do not decide eligibility, give legal advice, or appear in court. We do <strong>not</strong> handle Certificates of Rehabilitation, Governor's Pardons, ending PC 290 registration, or firearm-rights restoration — those need a criminal-defense attorney. <em>Cal. Bus. & Prof. Code §§6400–6415.</em>
         </p>
       </div>
 

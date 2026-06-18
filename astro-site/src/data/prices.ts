@@ -41,6 +41,8 @@ export const PRICES: Record<string, PublishedPrice> = {
   'DE-111': { amount: 799, from: true },
   'CR-180': { amount: 349, from: true },
   'CR-181': { amount: 349, from: true },
+  'CR-409': { amount: 399, from: true }, // arrest record sealing (PC 851.91)
+  'JV-595': { amount: 399, from: true }, // juvenile record sealing (W&I 781)
   'DEMAND': { amount: 149 },
   // Business
   'LLC-1': { amount: 199 },
