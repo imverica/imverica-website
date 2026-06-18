@@ -137,6 +137,7 @@ const SCHEMAS = {
           { id: 'defendant_name', label: 'Tenant #1 — full name (the main tenant on the lease)', type: 'text', required: true },
           { id: 'additional_defendants', label: 'Every OTHER tenant and occupant — one name per line (list everyone, even if not on the lease — leaving someone out can stop the eviction)', type: 'textarea' },
           { id: 'doe_defendants', label: 'Include "DOES 1 to 10" for unknown occupants?', type: 'select', default: 'yes', options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }] },
+          { id: 'doe_count', label: 'How many DOES? (defaults to 10)', type: 'text', default: '10', showWhen: { doe_defendants: 'yes' } },
           { id: 'premises_address', label: 'Rental property street address you are recovering', type: 'text', required: true },
           { id: 'premises_city', label: 'Rental property city', type: 'text' }
         ]
@@ -180,6 +181,8 @@ const SCHEMAS = {
             ] },
           { id: 'notice_served_date', label: 'Date the notice was served', type: 'date' },
           { id: 'notice_expired_date', label: 'Date the notice period expired', type: 'date' },
+          { id: 'notice_election_forfeiture', label: 'Did the notice declare a forfeiture of the lease/rental agreement?', type: 'select', default: 'yes', options: [{ value: 'yes', label: 'Yes — the notice elected forfeiture' }, { value: 'no', label: 'No' }] },
+          { id: 'notice_attached', label: 'Attach a copy of the notice to the complaint as an exhibit?', type: 'select', default: 'yes', options: [{ value: 'yes', label: 'Yes (required for residential)' }, { value: 'no', label: 'No' }] },
           { id: 'service_method', label: 'How was the notice delivered?', type: 'select',
             options: [{ value: 'personal', label: 'Personal (handed to the tenant)' }, { value: 'substituted', label: 'Substituted (left with someone + mailed)' }, { value: 'posting', label: 'Posted on the premises + mailed' }, { value: 'mail', label: 'Certified/registered mail' }] },
           { id: 'notices_differ_per_defendant', label: 'Were DIFFERENT notices (or dates/manner) served on different tenants?', type: 'select', default: 'no', options: [{ value: 'no', label: 'No — same for all' }, { value: 'yes', label: 'Yes (an attachment will be added)' }] }
