@@ -15,7 +15,7 @@
  */
 
 const { buildCaption, _fmt } = require('./ca-caption');
-const { clean } = _fmt;
+const { clean, money } = _fmt;   // money(): "1,234.56" for display
 
 const P1 = 'UD-100[0].Page1[0].';
 const P2 = 'UD-100[0].Page2[0].';
@@ -23,7 +23,7 @@ const P3 = 'UD-100[0].Page3[0].';
 const P4 = 'UD-100[0].Page4[0].';
 
 function pick(a, ...keys) { for (const k of keys) if (a[k] != null && a[k] !== '') return a[k]; return ''; }
-function money(v) { const s = String(v == null ? '' : v).replace(/[^0-9.]/g, ''); return s || ''; }
+function amount(v) { return Number(String(v == null ? '' : v).replace(/[^0-9.\-]/g, '')) || 0; }  // numeric, for comparisons
 function lc(v) { return String(v || '').toLowerCase(); }
 function truthy(v) { return /^(y|yes|true|1|да|так)/.test(lc(v)); }
 function falsy(v) { return /^(n|no|false|0|нет|ні)/.test(lc(v)); }
@@ -99,7 +99,7 @@ function ud_100FieldValues(payload = {}) {
   else v[P1 + 'p1Caption[0].FormTitle[0].Complaint[0]'] = true;
 
   // ── Jurisdiction (item: limited ≤ $35k / unlimited). Demand drives the box. ──
-  const demand = Number(money(pick(a, 'amount_demanded', 'rent_due_amount', 'amount_owed'))) || 0;
+  const demand = amount(pick(a, 'amount_demanded', 'rent_due_amount', 'amount_owed'));
   if (demand > 35000) v[P1 + 'CheckAll[0].Action[1]'] = true;        // unlimited
   else {
     v[P1 + 'CheckAll[0].Action[0]'] = true;                          // limited

@@ -37,6 +37,13 @@ function stateCode(v) {
   return m ? m[1].toUpperCase() : t.slice(0, 2).toUpperCase();
 }
 function digits(v, max = 20) { return clean(v, 80).replace(/\D/g, '').slice(0, max); }
+// Money for court forms: "1,234.56" — comma thousands, period before cents,
+// always 2 decimals. Returns '' when there is no numeric value.
+function money(v) {
+  const n = Number(String(v == null ? '' : v).replace(/[^0-9.\-]/g, ''));
+  if (!isFinite(n) || String(v).replace(/[^0-9.]/g, '') === '') return '';
+  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
 function usPhone(v) {
   const d = digits(v, 11);
   const x = d.length === 11 && d.startsWith('1') ? d.slice(1) : d;
@@ -188,5 +195,5 @@ function dissolutionTitleFields(formTitleBase, answers = {}) {
 
 module.exports = {
   buildCaption, dissolutionTitleFields, REG,
-  _fmt: { clean, stateCode, digits, usPhone, partyName }
+  _fmt: { clean, stateCode, digits, usPhone, partyName, money }
 };

@@ -7,13 +7,12 @@
  * County-agnostic. Field names VERBATIM from extract-ca-fields.js civ-100.
  */
 const { _fmt } = require('./ca-caption');
-const { clean } = _fmt;
+const { clean, money } = _fmt;   // money(): "1,234.56" for display
 const C = 'CIV-100[0].Page1[0].P1Caption[0].';
 const P1 = 'CIV-100[0].Page1[0].';
 const P2 = 'CIV-100[0].Page2[0].';
 const P3 = 'CIV-100[0].Page3[0].';
 function pick(a, ...k) { for (const x of k) if (a[x] != null && a[x] !== '') return a[x]; return ''; }
-function money(v) { const s = String(v == null ? '' : v).replace(/[^0-9.]/g, ''); return s || ''; }
 
 function civ_100FieldValues(payload = {}) {
   const a = payload.formAnswers || payload.answers || {};
