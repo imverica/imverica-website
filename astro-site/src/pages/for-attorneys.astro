@@ -245,6 +245,15 @@ const schema = {
         white-space: nowrap;
       }
     }
+    /* The sub is a long B2B paragraph; the global 640px cap left it a narrow,
+       ragged centered column under the wide one-line headline. Widen to a
+       comfortable measure and balance the line lengths so it reads as a tidy
+       block (no stray short last line) instead of "sticking out". */
+    .for-attorneys-hero .hero-wrap .hero .hero-sub {
+      max-width: 720px;
+      text-align: left;
+      text-wrap: pretty;
+    }
   </style>
 
   <style>
