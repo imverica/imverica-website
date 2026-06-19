@@ -126,7 +126,10 @@ async function main() {
       assert(actual.scope === 'local', `${label}: expected local scope`);
       return 'local';
     }
-    if (reliefType === 'record-cleanup') {
+    // Record-clearing services we offer (dismissal, early probation termination,
+    // resentencing) fall back to the statewide CR-180 intake so they never
+    // dead-end; relief we don't prepare (warrant recall) stays no-local-form.
+    if (['record-cleanup', 'probation-motion', 'resentencing'].includes(reliefType)) {
       assert(actual.formCode === 'CR-180', `${label}: expected statewide CR-180 fallback, got ${actual.formCode || 'none'}`);
       assert(!actual.localFormId, `${label}: statewide fallback must not carry a localFormId`);
       return 'fallback';

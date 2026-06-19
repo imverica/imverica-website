@@ -133,8 +133,8 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['CR-180', 'CR-181', 'POS-030', 'FW-001'],
     confidence: 0.92,
-    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes)/i],
-    reason: 'California record-cleanup / expungement language maps to CR-180 / CR-181 packet.'
+    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning|seal)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|early\s+termination\s+of\s+probation|terminat\w*\s+(my\s+)?probation|end\s+(my\s+)?probation\s+early|1203\.[34]|reduce\s+(my\s+)?felony|felony\s+to\s+(a\s+)?misdemeanor|17\s*\(?\s*b\s*\)?|wobbler|seal\s+(my\s+|an?\s+)?(arrest|juvenile|record)|arrest\s+(record\s+)?seal|juvenile\s+(record\s+)?seal|851\.91|\bwic\s*781\b|prop(osition)?\s*64|11361\.8|redesignat\w*|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|досрочн\w*\s+(прекращ|окончан)|прекрат\w*\s+испытат|опечат\w*\s+арест|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes|terminaci[oó]n\s+anticipada|sellar\s+(mi\s+)?(arresto|registro))/i],
+    reason: 'California record-clearing language (expungement/dismissal, early termination of probation, felony reduction, arrest/juvenile sealing, Prop 64) maps to the CR-180 record-cleanup intake.'
   },
 
   // ===== EOIR (immigration court) — most specific first =====
@@ -1043,11 +1043,21 @@ function routeCriminalRelief(originalQuery, lang, reliefType, requestedCounty) {
     };
   }
 
-  if (reliefType === 'record-cleanup') {
+  // No county-specific form indexed → for the record-clearing services we
+  // actually offer (expungement/dismissal, early termination of probation,
+  // felony reduction / Prop 64 resentencing), fall back to the statewide
+  // CR-180 / CR-181 intake so they never dead-end on a scary "no form listed"
+  // message. Other relief (e.g. warrant recall) we don't prepare — keep the
+  // honest no-local-form result.
+  const RECORD_CLEARING_RELIEF = new Set(['record-cleanup', 'probation-motion', 'resentencing']);
+  if (RECORD_CLEARING_RELIEF.has(reliefType)) {
     const row = findByCode('CR-180');
+    const reasonTxt = reliefType === 'record-cleanup'
+      ? `No matching local record-cleanup form was indexed for ${county.name}; showing the statewide CR-180 option.`
+      : `No county-specific ${reliefType} form is indexed for ${county.name}; we prepare this as a statewide record-clearing petition at your direction.`;
     return finalizeCountyRoute({
       ok: true, query: originalQuery, language: lang,
-      route: routeFromForm(row, lang, 0.82, `No matching local record-cleanup form was indexed for ${county.name}; showing the statewide CR-180 option.`, ['CR-180', 'CR-181'])
+      route: routeFromForm(row, lang, reliefType === 'record-cleanup' ? 0.82 : 0.78, reasonTxt, ['CR-180', 'CR-181'])
     }, originalQuery, county.slug);
   }
 
@@ -1224,7 +1234,7 @@ function routeQuery(queryValue, options = {}) {
     return intentPrompt(originalQuery, lang);
   }
 
-  const explicitProbationMotion = /(?:modify|modification|terminate|termination|end|shorten|reduce|early)[\s\S]{0,35}probation|probation[\s\S]{0,35}(?:modify|modification|terminate|termination|end|shorten|reduce|early)|dui[\s\S]{0,35}probation|пробаци|испытательн\w*\s+срок|досрочн\w*\s+прекращ[\s\S]{0,30}(?:срок|пробаци)|libertad\s+condicional/i.test(originalQuery);
+  const explicitProbationMotion = /(?:modify|modification|terminate|termination|end|shorten|reduce|early)[\s\S]{0,35}probation|probation[\s\S]{0,35}(?:modify|modification|terminate|termination|end|shorten|reduce|early)|dui[\s\S]{0,35}probation|пробаци|пробаці|испытательн[\wа-яё]*\s+срок|умовн[\wа-яії]*\s+(?:строк|термін)|досрочн[\wа-яё]*\s+прекращ|дострокове\s+припинен|libertad\s+condicional/i.test(originalQuery);
   if (explicitProbationMotion) {
     return routeCriminalRelief(originalQuery, lang, 'probation-motion', options.county);
   }
