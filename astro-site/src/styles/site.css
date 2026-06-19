@@ -188,7 +188,7 @@ img { max-width: 100%; height: auto; }
   color: var(--navy-dark);
   font-weight: 600;
   white-space: nowrap;
-  padding: 7px 9px;
+  padding: 7px 7px;
   border-radius: 7px;
   text-decoration: none;
   transition: color 0.18s ease, background 0.18s ease;
@@ -1074,13 +1074,12 @@ img { max-width: 100%; height: auto; }
     padding-right: 16px;
   }
 }
-@media (max-width: 1340px) {
+@media (max-width: 1380px) {
   /* Mobile/tablet/small-desktop header: logo + compact flag-only language
      pills + hamburger, all on one row. Nav links and the Quote button move
-     into the menu. Raised 1280 → 1340 because the 6-item English nav at
-     readable size (≥13px / weight 600) was colliding with the logo and
-     language switcher around 1280-1400px windows — common MacBook Air
-     viewport (1440 useable ≈ 1380). Burger kicks in earlier; full nav
+     into the menu. Raised 1280 → 1340 → 1380 as nav items were added
+     (now 8, incl. Record Clearing). The full nav was colliding with the
+     logo around 1340-1460px; the burger kicks in earlier so the full nav
      only shows when there's real room. */
   .site-nav { display: none; }
   .site-burger { display: flex; }

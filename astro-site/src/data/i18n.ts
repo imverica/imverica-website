@@ -147,7 +147,7 @@ export const NAV: Record<Locale, {
   en: {
     uscis: 'USCIS | EOIR',
     family: 'Family Law',
-    civil: 'Small Claims & Civil',
+    civil: 'Civil',
     criminal: 'Record Clearing',
     business: 'Business',
     pricing: 'Pricing',
@@ -162,7 +162,7 @@ export const NAV: Record<Locale, {
   ru: {
     uscis: 'USCIS | EOIR',
     family: 'Семейное право',
-    civil: 'Малые иски и гражданские дела',
+    civil: 'Гражданские',
     criminal: 'Очистка судимости',
     business: 'Бизнес',
     pricing: 'Цены',
@@ -177,7 +177,7 @@ export const NAV: Record<Locale, {
   uk: {
     uscis: 'USCIS | EOIR',
     family: 'Сімейне право',
-    civil: 'Малі позови та цивільні справи',
+    civil: 'Цивільні',
     criminal: 'Очищення судимості',
     business: 'Бізнес',
     pricing: 'Ціни',
@@ -192,7 +192,7 @@ export const NAV: Record<Locale, {
   es: {
     uscis: 'USCIS | EOIR',
     family: 'Familia',
-    civil: 'Reclamos menores',
+    civil: 'Civil',
     criminal: 'Limpieza de antecedentes',
     business: 'Negocios',
     pricing: 'Precios',
