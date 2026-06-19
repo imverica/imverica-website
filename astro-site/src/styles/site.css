@@ -217,13 +217,17 @@ img { max-width: 100%; height: auto; }
 .site-nav a[data-nav="family"]:hover        { background: rgba(224,138,93,0.14); color: var(--terracotta-deep); }
 .site-nav a[data-nav="civil"]:hover         { background: rgba(125,156,122,0.18); color: #3a5a44; }
 .site-nav a[data-nav="business"]:hover      { background: rgba(212,175,86,0.20); color: #7a5a18; }
+.site-nav a[data-nav="criminal"]:hover      { background: rgba(164,91,52,0.12);  color: var(--terracotta-deep); }
+.site-nav a[data-nav="pricing"]:hover       { background: rgba(26,46,74,0.08);   color: var(--navy); }
 .site-nav a[data-nav="for-attorneys"]:hover { background: rgba(164,91,52,0.12);  color: var(--terracotta-deep); }
 .site-nav a[data-nav="about"]:hover         { background: rgba(26,46,74,0.08);   color: var(--navy); }
 
 .site-nav a[data-nav="uscis"]:hover::after         { background: rgba(26,46,74,0.55); }
 .site-nav a[data-nav="family"]:hover::after        { background: rgba(164,91,52,0.65); }
 .site-nav a[data-nav="civil"]:hover::after         { background: rgba(58,90,68,0.65); }
+.site-nav a[data-nav="criminal"]:hover::after      { background: rgba(164,91,52,0.65); }
 .site-nav a[data-nav="business"]:hover::after      { background: rgba(122,90,24,0.65); }
+.site-nav a[data-nav="pricing"]:hover::after       { background: rgba(26,46,74,0.55); }
 .site-nav a[data-nav="for-attorneys"]:hover::after { background: rgba(164,91,52,0.65); }
 .site-nav a[data-nav="about"]:hover::after         { background: rgba(26,46,74,0.55); }
 
@@ -239,6 +243,7 @@ img { max-width: 100%; height: auto; }
 }
 .site-nav a[aria-current="page"][data-nav="family"]::after         { background: var(--terracotta-deep); }
 .site-nav a[aria-current="page"][data-nav="civil"]::after          { background: #3a5a44; }
+.site-nav a[aria-current="page"][data-nav="criminal"]::after       { background: var(--terracotta-deep); }
 .site-nav a[aria-current="page"][data-nav="business"]::after       { background: #7a5a18; }
 .site-nav a[aria-current="page"][data-nav="for-attorneys"]::after  { background: var(--terracotta-deep); }
 .site-lang {
