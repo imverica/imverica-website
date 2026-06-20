@@ -2,6 +2,17 @@
 
 Issues and PRDs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
 
+## Prerequisite: authenticate `gh`
+
+These commands require an authenticated `gh`. If a command fails with
+`To get started with GitHub CLI, please run: gh auth login`, the CLI is installed but
+not logged in. Authenticate once (interactive — run it yourself, an agent can't):
+
+```
+gh auth login          # or: export GH_TOKEN=<token>
+gh auth status         # verify
+```
+
 ## Conventions
 
 - **Create an issue**: `gh issue create --title "..." --body "..."`. Use a heredoc for multi-line bodies.
