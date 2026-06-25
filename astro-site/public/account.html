@@ -58,20 +58,20 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .hidden{display:none !important;}
 
 /* ===== Quick-action tiles (dashboard top) ===== */
-.quick-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.8rem;}
-@media (max-width:980px){.quick-tiles{grid-template-columns:repeat(4,1fr);gap:10px;}}
-@media (max-width:760px){.quick-tiles{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:420px){.quick-tiles{grid-template-columns:1fr;}}
-.qt{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px 20px;text-align:left;cursor:pointer;transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s, border-color .22s;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:12px;font-family:var(--font-system);position:relative;min-height:150px;overflow:hidden;}
-.qt:before{content:"";position:absolute;left:0;top:0;height:4px;width:100%;background:var(--qt-accent,var(--navy));opacity:.9;transition:height .22s;}
-.qt:hover{transform:translateY(-6px);box-shadow:0 22px 38px -18px rgba(16,28,47,0.45);border-color:transparent;}
-.qt:hover:before{height:6px;}
-.qt-icon-wrap{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--navy),var(--navy-light));display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 18px -8px rgba(0,0,0,0.35);transition:transform .22s;}
-.qt:hover .qt-icon-wrap{transform:scale(1.08) rotate(-4deg);}
-.qt-icon-wrap svg{width:30px;height:30px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
-.qt-title{font-size:16.5px;font-weight:700;color:var(--navy-dark);line-height:1.25;}
-.qt-sub{font-size:12.7px;color:var(--muted);line-height:1.5;}
-.qt-badge{position:absolute;top:18px;right:18px;min-width:22px;height:22px;padding:0 6px;background:var(--terracotta-deep);color:#fff;border-radius:11px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;z-index:2;}
+/* Professional landscape tiles (width > height): icon left, text right, a color
+   accent on the left edge (per-tile, set by the nth-child rules below). Restrained
+   hover — befits a law firm, no playful rotate/scale. */
+.quick-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:1.8rem;}
+@media (max-width:1024px){.quick-tiles{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.quick-tiles{grid-template-columns:1fr;}}
+.qt{background:#fff;border:1px solid var(--border);border-left:4px solid var(--qt-accent,var(--navy));border-radius:12px;padding:20px 22px;text-align:left;cursor:pointer;transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease;text-decoration:none;color:inherit;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:16px;row-gap:3px;align-items:center;font-family:var(--font-system);position:relative;min-height:104px;overflow:hidden;}
+.qt:hover{transform:translateY(-2px);box-shadow:0 16px 34px -18px rgba(16,28,47,0.45);}
+.qt:focus-visible{outline:2px solid var(--qt-accent,var(--navy));outline-offset:2px;}
+.qt-icon-wrap{grid-row:1 / span 2;grid-column:1;width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--navy-light));display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px -8px rgba(0,0,0,0.35);}
+.qt-icon-wrap svg{width:27px;height:27px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.qt-title{grid-column:2;align-self:end;font-size:17px;font-weight:700;color:var(--navy-dark);line-height:1.2;letter-spacing:-0.005em;}
+.qt-sub{grid-column:2;align-self:start;font-size:13px;color:var(--muted);line-height:1.45;}
+.qt-badge{position:absolute;top:14px;right:14px;min-width:22px;height:22px;padding:0 6px;background:var(--terracotta-deep);color:#fff;border-radius:11px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;z-index:2;}
 /* per-tile color accents (markup-free: by position, cycling a 6-hue palette —
    navy · terracotta · sage · gold · plum · teal — so any number of tiles
    stays colored without per-index rules). */
@@ -235,8 +235,9 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .dash-head{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;margin-bottom:1.8rem;gap:0;
   background:linear-gradient(135deg,#1a2e4a 0%,#243d60 55%,#2c4a72 100%);border-radius:20px;padding:30px 34px;
   box-shadow:0 18px 40px -18px rgba(16,28,47,.55);}
-.dash-head .who{font-size:14px;color:#c5d2e2;z-index:2;max-width:62%;}
+.dash-head .who{font-size:14px;color:#c5d2e2;z-index:2;max-width:100%;}
 .dash-head .who strong{color:#fff;font-weight:700;}
+.dash-greeting .dash-bang{color:var(--gold);}
 .dash-kicker{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
 .dash-greeting{font-family:var(--font-display);font-size:30px;font-weight:700;color:#fff;line-height:1.15;margin-bottom:8px;letter-spacing:-0.005em;}
 .dash-greeting strong{color:var(--gold);}
@@ -682,11 +683,10 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
   <div class="dash-head">
     <div class="who">
       <div class="dash-kicker" data-i18n="dashKicker">Imverica · Personal account</div>
-      <div class="dash-greeting"><span data-i18n="dashWelcomeBack">Welcome back,</span> <strong id="dash-name"></strong></div>
+      <div class="dash-greeting"><span data-i18n="dashWelcomeBack">Welcome back,</span> <strong id="dash-name"></strong><span class="dash-bang">!</span></div>
       <div class="dash-sub" data-i18n="dashSub">Upload documents, message us, and track your requests — all in one place.</div>
       <span id="dash-email" hidden></span>
     </div>
-    <div class="dash-scene" data-mascot aria-hidden="true"></div>
   </div>
   <div class="msg" id="dash-msg"></div>
 
@@ -732,53 +732,53 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <div class="qt-sub" data-i18n="tileAllCourtSub">Browse official forms and prepare fillable drafts</div>
     </button>
 
-    <a class="qt" href="/business" aria-label="Business formation services">
+    <button class="qt" type="button" onclick="focusChat()" aria-label="Business formation services">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileBizTitle">Business</div>
-      <div class="qt-sub" data-i18n="tileBizSub">LLC, EIN, DBA & corporate filings</div>
-    </a>
+      <div class="qt-sub" data-i18n="tileBizSub">LLC, EIN, DBA &amp; corporate filings</div>
+    </button>
 
-    <a class="qt" href="/eoir-immigration-court" aria-label="Immigration Court (EOIR)">
+    <button class="qt" type="button" onclick="focusChat()" aria-label="Immigration Court (EOIR)">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10M19 21V10M4 10h16L12 4 4 10zM9 21v-7M15 21v-7"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileEoirTitle">Immigration Court</div>
-      <div class="qt-sub" data-i18n="tileEoirSub">EOIR appeals & cancellation</div>
-    </a>
+      <div class="qt-sub" data-i18n="tileEoirSub">EOIR appeals &amp; cancellation</div>
+    </button>
 
-    <a class="qt" href="/california-restraining-orders" aria-label="Restraining orders">
+    <button class="qt" type="button" onclick="openCabinetForms('restraining order')" aria-label="Restraining orders">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileRoTitle">Restraining Orders</div>
-      <div class="qt-sub" data-i18n="tileRoSub">DV, civil harassment & elder abuse</div>
-    </a>
+      <div class="qt-sub" data-i18n="tileRoSub">DV, civil harassment &amp; elder abuse</div>
+    </button>
 
     <button class="qt" type="button" onclick="openUdPacket()" aria-label="Eviction (unlawful detainer) packet">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileEvTitle">Eviction</div>
-      <div class="qt-sub" data-i18n="tileEvSub">Unlawful detainer packet for landlords</div>
+      <div class="qt-sub" data-i18n="tileEvSub">Unlawful detainer — landlord or tenant</div>
     </button>
 
-    <a class="qt" href="/california-probate" aria-label="California probate">
+    <button class="qt" type="button" onclick="openCabinetForms('probate')" aria-label="California probate">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileProbTitle">Probate</div>
-      <div class="qt-sub" data-i18n="tileProbSub">Estate & inheritance filings</div>
-    </a>
+      <div class="qt-sub" data-i18n="tileProbSub">Estate &amp; inheritance filings</div>
+    </button>
 
-    <a class="qt" href="/california-expungement" aria-label="California expungement">
+    <button class="qt" type="button" onclick="openCabinetForms('dismissal')" aria-label="California expungement">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileExpTitle">Expungement</div>
-      <div class="qt-sub" data-i18n="tileExpSub">Clear & seal criminal records</div>
-    </a>
+      <div class="qt-sub" data-i18n="tileExpSub">Clear &amp; seal criminal records</div>
+    </button>
 
     <button class="qt" type="button" onclick="quickUpload()" aria-label="Upload documents">
       <div class="qt-icon-wrap">
@@ -831,7 +831,7 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
       <span class="qt-badge" id="qt-notif-badge" style="display:none;">0</span>
     </button>
 
-    <a class="qt" href="/lda" aria-label="Help and what is an LDA">
+    <a class="qt" href="/lda" target="_blank" rel="noopener" aria-label="Help and what is an LDA">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </div>
@@ -1072,7 +1072,7 @@ const STRINGS = {
     tileBizTitle: 'Business', tileBizSub: 'LLC, EIN, DBA & corporate filings',
     tileEoirTitle: 'Immigration Court', tileEoirSub: 'EOIR appeals & cancellation',
     tileRoTitle: 'Restraining Orders', tileRoSub: 'DV, civil harassment & elder abuse',
-    tileEvTitle: 'Eviction', tileEvSub: 'Unlawful detainer for landlords',
+    tileEvTitle: 'Eviction', tileEvSub: 'Unlawful detainer — landlord or tenant',
     tileProbTitle: 'Probate', tileProbSub: 'Estate & inheritance filings',
     tileExpTitle: 'Expungement', tileExpSub: 'Clear & seal criminal records',
     tileHelpTitle: 'Help & FAQ', tileHelpSub: 'What is a California LDA?',
@@ -1138,7 +1138,7 @@ const STRINGS = {
     profNameHint: 'English letters only (A–Z, a–z) — as on your passport.',
     errPhoneShort: 'Please enter a valid phone number.',
     errServerUnreach: 'Could not reach the server.',
-    errFileBig: 'File too large (max 4 MB).',
+    errFileBig: 'File too large (max 25 MB).',
     errUploadFail: 'Upload failed.',
     errUploadFailRetry: 'Upload failed. Try again.',
     okUploaded: 'Uploaded.',
@@ -1208,7 +1208,7 @@ const STRINGS = {
     tileBizTitle: 'Бизнес', tileBizSub: 'LLC, EIN, DBA и корпоративные документы',
     tileEoirTitle: 'Иммиграционный суд', tileEoirSub: 'Апелляции и отмена депортации (EOIR)',
     tileRoTitle: 'Запретительные приказы', tileRoSub: 'Насилие в семье и преследование',
-    tileEvTitle: 'Выселение', tileEvSub: 'Unlawful detainer для арендодателей',
+    tileEvTitle: 'Выселение', tileEvSub: 'Unlawful detainer — арендодатель или арендатор',
     tileProbTitle: 'Наследство (Probate)', tileProbSub: 'Оформление наследства и имущества',
     tileExpTitle: 'Очистка судимости', tileExpSub: 'Снятие и опечатывание судимостей',
     tileHelpTitle: 'Помощь и FAQ', tileHelpSub: 'Кто такой California LDA?',
@@ -1274,7 +1274,7 @@ const STRINGS = {
     profNameHint: 'Только латиница (A–Z, a–z) — как в паспорте.',
     errPhoneShort: 'Пожалуйста, введите корректный номер телефона.',
     errServerUnreach: 'Не удалось связаться с сервером.',
-    errFileBig: 'Файл слишком большой (максимум 4 МБ).',
+    errFileBig: 'Файл слишком большой (максимум 25 МБ).',
     errUploadFail: 'Не удалось загрузить.',
     errUploadFailRetry: 'Не удалось загрузить. Попробуйте ещё раз.',
     okUploaded: 'Загружено.',
@@ -1344,7 +1344,7 @@ const STRINGS = {
     tileBizTitle: 'Бізнес', tileBizSub: 'LLC, EIN, DBA та корпоративні документи',
     tileEoirTitle: 'Імміграційний суд', tileEoirSub: 'Апеляції та скасування депортації (EOIR)',
     tileRoTitle: 'Заборонні приписи', tileRoSub: 'Домашнє насильство та переслідування',
-    tileEvTitle: 'Виселення', tileEvSub: 'Unlawful detainer для орендодавців',
+    tileEvTitle: 'Виселення', tileEvSub: 'Unlawful detainer — орендодавець або орендар',
     tileProbTitle: 'Спадщина (Probate)', tileProbSub: 'Оформлення спадщини та майна',
     tileExpTitle: 'Очищення судимості', tileExpSub: 'Зняття та опечатування судимостей',
     tileHelpTitle: 'Допомога і FAQ', tileHelpSub: 'Хто такий California LDA?',
@@ -1410,7 +1410,7 @@ const STRINGS = {
     profNameHint: 'Тільки латиниця (A–Z, a–z) — як у паспорті.',
     errPhoneShort: 'Будь ласка, введіть коректний номер телефону.',
     errServerUnreach: 'Не вдалося зв\'язатися з сервером.',
-    errFileBig: 'Файл задовгий (максимум 4 МБ).',
+    errFileBig: 'Файл задовгий (максимум 25 МБ).',
     errUploadFail: 'Не вдалося завантажити.',
     errUploadFailRetry: 'Не вдалося завантажити. Спробуйте ще раз.',
     okUploaded: 'Завантажено.',
@@ -1480,7 +1480,7 @@ const STRINGS = {
     tileBizTitle: 'Negocios', tileBizSub: 'LLC, EIN, DBA y trámites corporativos',
     tileEoirTitle: 'Corte de Inmigración', tileEoirSub: 'Apelaciones y cancelación (EOIR)',
     tileRoTitle: 'Órdenes de Restricción', tileRoSub: 'Violencia doméstica y acoso',
-    tileEvTitle: 'Desalojo', tileEvSub: 'Unlawful detainer para arrendadores',
+    tileEvTitle: 'Desalojo', tileEvSub: 'Unlawful detainer — arrendador o inquilino',
     tileProbTitle: 'Sucesiones (Probate)', tileProbSub: 'Herencias y bienes',
     tileExpTitle: 'Eliminación de Antecedentes', tileExpSub: 'Borrar y sellar antecedentes',
     tileHelpTitle: 'Ayuda y FAQ', tileHelpSub: '¿Qué es un California LDA?',
@@ -1546,7 +1546,7 @@ const STRINGS = {
     profNameHint: 'Solo letras inglesas (A–Z, a–z) — como en su pasaporte.',
     errPhoneShort: 'Por favor, ingrese un número de teléfono válido.',
     errServerUnreach: 'No se pudo contactar al servidor.',
-    errFileBig: 'Archivo demasiado grande (máx. 4 MB).',
+    errFileBig: 'Archivo demasiado grande (máx. 25 MB).',
     errUploadFail: 'La carga falló.',
     errUploadFailRetry: 'La carga falló. Inténtelo de nuevo.',
     okUploaded: 'Cargado.',
@@ -1843,21 +1843,46 @@ async function loadFiles(orderId){
   }catch(e){}
 }
 
-function uploadFile(orderId, file, msgEl){
+const UPLOAD_MAX_BYTES = 25 * 1024 * 1024;     // total file ceiling
+const UPLOAD_CHUNK_BYTES = 3.5 * 1024 * 1024;  // ~4.8MB base64 — under the ~6MB function-body limit
+function readBlobAsBase64(blob){
+  return new Promise(function(resolve, reject){
+    const r = new FileReader();
+    r.onload = function(){ resolve(String(r.result).replace(/^data:[^;]+;base64,/, '')); };
+    r.onerror = function(){ reject(new Error('read failed')); };
+    r.readAsDataURL(blob);
+  });
+}
+async function uploadFile(orderId, file, msgEl){
   msgEl.className='doc-msg';
-  if(file.size>4*1024*1024){ msgEl.className='doc-msg err'; msgEl.textContent= T.errFileBig; return; }
+  if(file.size > UPLOAD_MAX_BYTES){ msgEl.className='doc-msg err'; msgEl.textContent= T.errFileBig; return; }
   msgEl.textContent= T.msgUploading + ' ' + file.name + '…';
-  const reader=new FileReader();
-  reader.onload=async()=>{
-    try{
-      const r=await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64:String(reader.result)})});
-      const d=await r.json();
+  try{
+    if (file.size <= UPLOAD_CHUNK_BYTES){
+      // Small file → one request (the original path).
+      const dataBase64 = await readBlobAsBase64(file);
+      const r = await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64})});
+      const d = await r.json();
       if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error || T.errUploadFail; return; }
-      msgEl.className='doc-msg ok'; msgEl.textContent= T.okUploaded; loadFiles(orderId);
-    }catch(e){ msgEl.className='doc-msg err'; msgEl.textContent= T.errUploadFailRetry; }
-  };
-  reader.readAsDataURL(file);
+    } else {
+      // Large file (up to 25 MB) → sequential chunks the server reassembles,
+      // so we never exceed the ~6MB serverless request-body limit.
+      const totalChunks = Math.ceil(file.size / UPLOAD_CHUNK_BYTES);
+      const uploadId = Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+      for (let i = 0; i < totalChunks; i++){
+        const slice = file.slice(i * UPLOAD_CHUNK_BYTES, Math.min(file.size, (i+1) * UPLOAD_CHUNK_BYTES));
+        const dataBase64 = await readBlobAsBase64(slice);
+        msgEl.textContent = T.msgUploading + ' ' + file.name + ' (' + (i+1) + '/' + totalChunks + ')…';
+        const r = await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64, uploadId, chunkIndex:i, totalChunks})});
+        const d = await r.json();
+        if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error || T.errUploadFail; return; }
+      }
+    }
+    msgEl.className='doc-msg ok'; msgEl.textContent= T.okUploaded;
+    if (orderId !== 'general') loadFiles(orderId);
+  }catch(e){ msgEl.className='doc-msg err'; msgEl.textContent= T.errUploadFailRetry; }
 }
 
 async function removeFile(orderId, fileId){
@@ -1964,7 +1989,7 @@ function onChatFiles(input){
   const files = Array.from(input.files||[]);
   for(const f of files){
     if(chatPending.length>=CHAT_MAX_FILES){ chatErr(T.attTooMany||'Up to 3 files per message.'); break; }
-    if(f.size>CHAT_MAX_BYTES){ chatErr(T.errFileBig||'File too large (max 4 MB).'); continue; }
+    if(f.size>CHAT_MAX_BYTES){ chatErr('File too large (max 4 MB).'); continue; }
     const reader=new FileReader();
     reader.onload=()=>{ chatPending.push({name:f.name, type:f.type, size:f.size, dataBase64:String(reader.result)}); renderChatPending(); };
     reader.readAsDataURL(f);
@@ -2164,18 +2189,27 @@ function scrollToOrders(){
 }
 
 function quickUpload(){
-  // Clicks the first order's "+ Attach a document" if any; otherwise nudges
-  // the user to create a request first (files are always tied to a request).
+  // If a request already exists, attach to its uploader.
   const firstAdd = document.querySelector('#orders .doc-add');
   if (firstAdd){ firstAdd.click(); scrollToOrders(); return; }
-  const orders = document.getElementById('orders');
-  if (orders){
-    orders.scrollIntoView({behavior:'smooth', block:'start'});
-    orders.style.outline = '2px dashed var(--terracotta-deep)';
-    setTimeout(() => { orders.style.outline = ''; }, 2400);
+  // No request yet → upload to the client's personal documents bucket
+  // ("general") so upload works WITHOUT first opening a request.
+  let input = document.getElementById('general-upload-input');
+  if (!input){
+    input = document.createElement('input');
+    input.type = 'file'; input.id = 'general-upload-input'; input.style.display = 'none';
+    input.accept = '.pdf,.jpg,.jpeg,.png,.docx,application/pdf,image/jpeg,image/png,application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    input.addEventListener('change', function(){
+      if (input.files[0]){
+        const m = document.getElementById('dash-msg');
+        if (m){ m.style.display = 'block'; }
+        uploadFile('general', input.files[0], m || document.createElement('div'));
+      }
+      input.value = '';
+    });
+    document.body.appendChild(input);
   }
-  msg('dash-msg','info', T.nudgeNoFiles);
-  setTimeout(() => clearMsg('dash-msg'), 4000);
+  input.click();
 }
 
 function openProfilePanel(){
@@ -2244,6 +2278,19 @@ async function loadMyDocuments(){
           scope: 'generated',
           orderId: 'generated-drafts',
           orderLabel: T.mdGeneratedLabel,
+          file: f
+        }));
+      }
+    } catch(e){}
+    // The client's personal "general" bucket — files uploaded without a request.
+    try {
+      const gr = await fetch('/api/upload?orderId=general', { credentials:'include' });
+      const gd = await gr.json();
+      if (gd && gd.ok && Array.isArray(gd.files)){
+        gd.files.forEach(f => allFiles.push({
+          scope: 'general',
+          orderId: 'general',
+          orderLabel: (T.mdGeneralLabel || 'My uploads'),
           file: f
         }));
       }
@@ -2551,6 +2598,16 @@ function collectSmallClaimsPage(){
 
 // ===== "All California forms" mode — searchable 345-form catalog =====
 function openAllCourtFormsWizard(){ return openSmallClaimsWizard('all'); }
+// In-cabinet category entry: opens the All-CA-Court-Forms wizard and pre-seeds
+// its search so each dashboard tile (Restraining Orders, Probate, Expungement…)
+// lands on ITS OWN forms — inside the account, never a redirect to the public site.
+async function openCabinetForms(term){
+  await openSmallClaimsWizard('all');
+  setTimeout(function(){
+    var q = document.getElementById('all-forms-q');
+    if (q && term){ q.value = term; if (typeof fetchAllForms === 'function') fetchAllForms(term); }
+  }, 80);
+}
 
 function maybeOpenRequestedCourtForm(){
   if (smallClaimsState.category !== 'all' || smallClaimsState.requestedRouteOpened) return;
@@ -2741,7 +2798,7 @@ async function generateSmallClaimsPdf(){
 // One landlord intake (curated ca-court-flow-schema) → formAnswers → every
 // packet form generated via the hand-maps (generate-court-pdf, no directFields),
 // shown grouped by stage from court-flow?category=unlawful-detainer.
-var udState = { packet:null, intake:null, stepIndex:0, answers:{}, view:'intake' };
+var udState = { packet:null, intake:null, role:null, stepIndex:0, answers:{}, view:'intake' };
 
 function setUdFooter(showBack, showNext, nextLabel){
   var back=document.getElementById('ud-back'), next=document.getElementById('ud-next');
@@ -2763,14 +2820,42 @@ async function openUdPacket(){
     var data = await r.json();
     if (!data || !data.ok) throw new Error((data && data.error) || 'Could not load the packet');
     udState.packet = data;
-    udState.intake = data.intake && data.intake.landlord;
-    if (!udState.intake || !udState.intake.steps) throw new Error('Intake unavailable');
-    renderUdIntake();
+    if (!data.intake || (!data.intake.landlord && !data.intake.tenant)) throw new Error('Intake unavailable');
+    renderUdRoleChoice();
   } catch(e){
     document.getElementById('ud-body').innerHTML = '<div class="sc-status error" style="display:block">'+escText(e.message||'Could not load')+'</div>';
   }
 }
 function closeUdPacket(){ document.getElementById('ud-overlay').classList.add('hidden'); }
+
+// Landlord (plaintiff) vs tenant (defendant) decide which forms you prepare:
+// the landlord files the Complaint (UD-100) + staged packet; the tenant files
+// the Answer (UD-105). Each side has its own intake so UD-105 is filled with the
+// TENANT's answers, never the landlord's.
+function renderUdRoleChoice(){
+  udState.view='role'; udState.role=null; udState.answers={}; udState.stepIndex=0;
+  udProgress('Eviction (unlawful detainer) · choose your side');
+  var intake = udState.packet.intake || {};
+  var btn = function(role, title, desc){
+    return '<button type="button" onclick="udChooseRole(\''+role+'\')" '
+      + 'style="display:block;width:100%;text-align:left;border:1px solid #e5e7eb;border-radius:12px;padding:16px 18px;margin:10px 0;background:#fff;cursor:pointer">'
+      + '<div style="font-weight:700;font-size:15px">'+title+'</div>'
+      + '<div style="color:#64748b;font-size:13px;margin-top:3px">'+desc+'</div></button>';
+  };
+  document.getElementById('ud-body').innerHTML =
+    '<div class="sc-intro">Are you the landlord filing the eviction, or the tenant responding to one? This decides which forms you prepare. Document preparation only · no legal advice.</div>'
+    + (intake.landlord ? btn('landlord', 'I am the landlord — filing the eviction', 'Open the case: Complaint (UD-100), Summons, mandatory cover sheet, and the later-stage forms (default, judgment, writ).') : '')
+    + (intake.tenant ? btn('tenant', 'I am the tenant — responding to an eviction', 'Respond to a Complaint you were served: the Answer (UD-105), due within 5 days of service.') : '')
+    + '<div class="sc-status" id="ud-status"></div>';
+  setUdFooter(false, false);
+}
+function udChooseRole(role){
+  udState.role = role;
+  udState.intake = role==='tenant' ? udState.packet.intake.tenant : udState.packet.intake.landlord;
+  udState.answers={}; udState.stepIndex=0;
+  if (!udState.intake || !udState.intake.steps){ udStatus('error', 'Intake unavailable for this role.'); return; }
+  renderUdIntake();
+}
 
 // showWhen: { fieldId: value } — render only when the answer matches.
 function udFieldVisible(field){
@@ -2826,7 +2911,8 @@ function collectUdPage(){
 
 function udBack(){
   if (udState.view==='packet'){ renderUdIntake(); return; }
-  if (udState.stepIndex>0){ collectUdPage(); udState.stepIndex--; renderUdIntake(); }
+  if (udState.stepIndex>0){ collectUdPage(); udState.stepIndex--; renderUdIntake(); return; }
+  renderUdRoleChoice();
 }
 function udNext(){
   if (udState.view==='packet') return;
@@ -2847,10 +2933,32 @@ function udFormRow(f){
   return '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid #f1f5f9">'
     + '<div><strong>'+escText(f.code)+'</strong> '+escText(f.title||'')+who+cond+'</div>'+action+'</div>';
 }
+// Tenant-side forms only (who === 'tenant', i.e. the Answer UD-105) — never the
+// landlord's staged complaint packet.
+function udTenantForms(){
+  var out=[];
+  (udState.packet.stages||[]).forEach(function(st){ (st.forms||[]).forEach(function(f){ if (f.who==='tenant') out.push(f); }); });
+  (udState.packet.situational||[]).forEach(function(f){ if (f.who==='tenant') out.push(f); });
+  return out;
+}
+function renderUdTenantPacket(){
+  udProgress('Your eviction response · tenant');
+  var forms = udTenantForms();
+  var html = '<div class="sc-intro">Your response to the eviction. The Answer (UD-105) is generally due within 5 days of being served with the Complaint. Document preparation only · not legal advice.</div>'
+    + '<div style="margin:14px 0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">'
+    + '<div style="background:#f8fafc;padding:8px 14px;font-weight:700;font-size:13px">Your response</div>'
+    + (forms.length ? forms.map(udFormRow).join('') : '<div style="padding:10px 14px;color:#64748b;font-size:13px">No tenant form is available.</div>')
+    + '</div>'
+    + '<div class="sc-intro" style="margin-top:6px">If you cannot afford the filing fee, ask the court about a fee waiver (Request to Waive Court Fees, FW-001).</div>'
+    + '<div class="sc-status" id="ud-status"></div>';
+  document.getElementById('ud-body').innerHTML = html;
+  setUdFooter(true, false);
+}
 function renderUdPacket(){
   udState.view='packet';
   // Fill schema defaults for anything still unset so the maps get them.
   (udState.intake.steps||[]).forEach(function(st){ (st.fields||[]).forEach(function(f){ if (f.default!=null && udState.answers[f.id]==null) udState.answers[f.id]=f.default; }); });
+  if (udState.role==='tenant'){ renderUdTenantPacket(); return; }
   udProgress('Your eviction packet · grouped by stage');
   var html = '<div class="sc-intro">One answer set fills every form. Forms are grouped by stage — you file the first group to open the case; later stages apply only if the case proceeds. Document preparation only · not legal advice.</div>';
   (udState.packet.stages||[]).forEach(function(st){

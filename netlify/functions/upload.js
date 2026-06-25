@@ -29,7 +29,9 @@ const CORS = {
   'Access-Control-Allow-Credentials': 'true'
 };
 
-const MAX_FILE_BYTES = 4 * 1024 * 1024; // 4 MB raw (function body limit ~6MB)
+const MAX_FILE_BYTES = 4 * 1024 * 1024;    // per-request body cap (Netlify fn body ~6MB)
+const MAX_TOTAL_BYTES = 25 * 1024 * 1024;  // assembled file cap — large files arrive chunked
+const MAX_CHUNKS = 12;                      // ceiling on chunk count (25MB / ~2MB+)
 const MAX_FILES_PER_ORDER = 20;
 // Strict upload validation lives in lib/file-validator.js — it checks
 // magic bytes, MIME allow-list, filename ban-list, and double-extension
@@ -265,9 +267,14 @@ exports.handler = async function (event) {
   if (!session) return json(401, { ok: false, error: 'Not signed in' });
 
   const q = event.queryStringParameters || {};
-  const orderId = safeId(q.orderId || (event.body ? (() => { try { return JSON.parse(event.body).orderId; } catch { return ''; } })() : ''));
+  const rawOrderId = String(q.orderId || (event.body ? (() => { try { return JSON.parse(event.body).orderId; } catch { return ''; } })() : ''));
+  // "general" = each signed-in client's own document bucket, NOT tied to a formal
+  // request — so they can upload before opening one. It maps to a per-user id
+  // derived from the session (HMAC of the email), owned by definition.
+  const isGeneral = rawOrderId === 'general';
+  const orderId = isGeneral ? ('gen-' + safeId(emailHash(session.email, event))) : safeId(rawOrderId);
   if (!orderId) return json(400, { ok: false, error: 'Missing orderId' });
-  if (!(await ownsOrder(session.email, orderId, event))) return json(403, { ok: false, error: 'Not your order' });
+  if (!isGeneral && !(await ownsOrder(session.email, orderId, event))) return json(403, { ok: false, error: 'Not your order' });
 
   const filesStore = await store('imverica-files');
   const metaKey = `meta/${orderId}.json`;
@@ -337,38 +344,16 @@ exports.handler = async function (event) {
     return json(200, { ok: true });
   }
 
-  if (event.httpMethod === 'POST') {
-    let body;
-    try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
-    const name = sanitizeName(body.name);
-    const type = String(body.type || '').toLowerCase();
-    const data = String(body.dataBase64 || '').replace(/^data:[^;]+;base64,/, '');
-    if (!data) return json(400, { ok: false, error: 'No file data' });
-    // Quick MIME pre-check; the full magic-byte / filename / signature
-    // verification happens after the body is decoded (see validateUpload
-    // below). Returning a fast 415 here saves us decoding multi-MB junk.
-    if (!ALLOWED_MIME.includes(String(type || '').toLowerCase())) {
-      return json(415, { ok: false, error: 'Only PDF, JPG, PNG, or DOCX files are accepted.' });
-    }
-    let buf;
-    try { buf = Buffer.from(data, 'base64'); } catch { return json(400, { ok: false, error: 'Invalid file data' }); }
+  // Take a COMPLETE file buffer (single-shot or reassembled from chunks) and run
+  // it through the full security pipeline: magic-byte validation → VirusTotal
+  // hash scan → encrypt-at-rest → store + metadata → best-effort Drive mirror.
+  async function finalizeUpload(buf, name, type) {
     if (!buf.length) return json(400, { ok: false, error: 'Empty file' });
-    if (buf.length > MAX_FILE_BYTES) return json(413, { ok: false, error: 'File too large (max 4 MB).' });
+    if (buf.length > MAX_TOTAL_BYTES) return json(413, { ok: false, error: 'File too large (max 25 MB).' });
 
-    // Strict server-side validation — confirm the body actually matches
-    // the claimed MIME (magic bytes), reject dangerous filenames /
-    // extensions, and refuse anything outside the PDF/JPG/PNG/DOCX
-    // allow-list. The client may lie about `type`; the file body cannot.
     const validation = validateUpload(buf, name, type);
-    if (!validation.ok) {
-      return json(415, { ok: false, error: validation.error, code: validation.code });
-    }
+    if (!validation.ok) return json(415, { ok: false, error: validation.error, code: validation.code });
 
-    // VirusTotal hash lookup (best-effort). Privacy-safe: we never upload
-    // the file, only its SHA-256. Hard rejects only when an AV engine has
-    // already flagged this exact hash as malicious or several engines
-    // call it suspicious. Falls back to allow if VT is unconfigured or
-    // unreachable so a third-party outage cannot block client uploads.
     const scan = await scanBuffer(buf);
     if (scan.verdict === 'malicious') {
       console.warn('upload: blocked by VT, hash flagged as malicious by', scan.stats?.malicious, 'engines');
@@ -383,14 +368,13 @@ exports.handler = async function (event) {
     if (meta.files.length >= MAX_FILES_PER_ORDER) return json(409, { ok: false, error: 'Too many files on this request.' });
 
     const fileId = crypto.randomBytes(8).toString('hex');
-    // Encrypt the file body at rest. iv||tag||ciphertext is stored as one
-    // blob; entry.enc=true tells the GET path it needs decryptBuffer.
+    // Encrypt the file body at rest. iv||tag||ciphertext is one blob;
+    // entry.enc=true tells the GET path it needs decryptBuffer.
     const encBuf = encryptBuffer(buf, event);
     await writeBlob(filesStore, `blob/${orderId}/${fileId}`, encBuf, FILES_DIR);
     meta.files.push({
       fileId,
-      // Filename + mime are PII (often contain client names, doc category)
-      // so they are stored encrypted in the metadata blob too.
+      // Filename + mime are PII (client names, doc category) → encrypted too.
       name: encryptString(name, event),
       type: encryptString(type || 'application/octet-stream', event),
       size: buf.length,
@@ -400,18 +384,11 @@ exports.handler = async function (event) {
     });
     await writeJson(filesStore, metaKey, meta, FILES_DIR);
 
-    // Best-effort: also push a copy to the Imverica Google Drive so the team
-    // sees incoming docs in a per-client/per-date folder. If Drive is not
-    // configured (no env vars) or the API fails, the upload still succeeds.
     try {
       const record = await loadOrderRecord(orderId, event);
       const driveRes = await mirrorToDrive({
-        orderId,
-        fileName: name,
-        buffer: buf,
-        mimeType: type || 'application/octet-stream',
-        clientName: record && record.contact ? record.contact.name : '',
-        clientEmail: session.email
+        orderId, fileName: name, buffer: buf, mimeType: type || 'application/octet-stream',
+        clientName: record && record.contact ? record.contact.name : '', clientEmail: session.email
       });
       if (driveRes && driveRes.id) {
         meta.files[meta.files.length - 1].driveFileId = driveRes.id;
@@ -421,6 +398,53 @@ exports.handler = async function (event) {
     } catch (e) { console.error('mirrorToDrive threw', e && e.message ? e.message : e); }
 
     return json(200, { ok: true, fileId, name, size: buf.length });
+  }
+
+  if (event.httpMethod === 'POST') {
+    let body;
+    try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false, error: 'Invalid JSON' }); }
+    const name = sanitizeName(body.name);
+    const type = String(body.type || '').toLowerCase();
+    const data = String(body.dataBase64 || '').replace(/^data:[^;]+;base64,/, '');
+    if (!data) return json(400, { ok: false, error: 'No file data' });
+    // Quick MIME pre-check; full magic-byte verification happens in
+    // finalizeUpload once the whole file is in hand.
+    if (!ALLOWED_MIME.includes(type)) {
+      return json(415, { ok: false, error: 'Only PDF, JPG, PNG, or DOCX files are accepted.' });
+    }
+    let part;
+    try { part = Buffer.from(data, 'base64'); } catch { return json(400, { ok: false, error: 'Invalid file data' }); }
+    if (!part.length) return json(400, { ok: false, error: 'Empty file' });
+    // Each request body must stay under the function limit — large files are
+    // split client-side into chunks of this size or less.
+    if (part.length > MAX_FILE_BYTES) return json(413, { ok: false, error: 'Upload chunk too large.' });
+
+    // ---- Chunked upload (files larger than one ~6MB function body) ----
+    // Client sends sequential chunks sharing an uploadId; we buffer each in
+    // Blobs and reassemble on the final chunk, then run the full pipeline.
+    const uploadId = safeId(body.uploadId);
+    const totalChunks = parseInt(body.totalChunks, 10) || 0;
+    if (uploadId && totalChunks > 1) {
+      if (totalChunks > MAX_CHUNKS) return json(413, { ok: false, error: 'File too large (max 25 MB).' });
+      const chunkIndex = parseInt(body.chunkIndex, 10);
+      if (!(chunkIndex >= 0 && chunkIndex < totalChunks)) return json(400, { ok: false, error: 'Bad chunk index' });
+      await writeBlob(filesStore, `chunks/${orderId}/${uploadId}/${chunkIndex}`, part, FILES_DIR);
+      if (chunkIndex < totalChunks - 1) return json(200, { ok: true, received: chunkIndex }); // wait for the rest
+      // Final chunk → reassemble in order, then clean up the temp chunks.
+      const parts = [];
+      let total = 0;
+      for (let i = 0; i < totalChunks; i++) {
+        const p = await readBlob(filesStore, `chunks/${orderId}/${uploadId}/${i}`, FILES_DIR);
+        if (!p) return json(409, { ok: false, error: 'A piece of the upload was lost in transit. Please try again.' });
+        parts.push(p); total += p.length;
+      }
+      for (let i = 0; i < totalChunks; i++) await deleteBlob(filesStore, `chunks/${orderId}/${uploadId}/${i}`, FILES_DIR);
+      if (total > MAX_TOTAL_BYTES) return json(413, { ok: false, error: 'File too large (max 25 MB).' });
+      return await finalizeUpload(Buffer.concat(parts), name, type);
+    }
+
+    // ---- Single-shot (files that fit in one request body) ----
+    return await finalizeUpload(part, name, type);
   }
 
   return json(405, { ok: false, error: 'Method not allowed' });
