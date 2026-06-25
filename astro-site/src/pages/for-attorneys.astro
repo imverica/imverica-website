@@ -25,7 +25,8 @@ const schema = {
   <div class="for-attorneys-hero">
     <Hero
       eyebrow="For attorneys · USCIS & EOIR nationwide · California state court"
-      heading="Affordable paralegal support — under your direction"
+      heading="Affordable paralegal support under your direction"
+      headingHtml="Affordable paralegal support<br />under your direction"
       sub="Your full-service paralegal partner. We handle USCIS petitions and EOIR immigration court work for attorneys in any state, and California state-court matters (family law, small claims, unlawful detainer, probate, business) for California attorneys. You stay counsel of record. We prepare the paperwork — accurately, on time, on your firm's templates. We're ready to partner with you on a single matter or a steady book of work."
       ctaPrimary={{ href: '#fees', text: 'See fee structures' }}
     />
@@ -109,8 +110,9 @@ const schema = {
 
     <h2 id="fees">Fee structures — pick what fits how you bill</h2>
 
+    <p class="fee-grid-hint">Click any plan to see the full scope of what we prepare under it.</p>
     <div class="fee-grid">
-      <div class="fee-card">
+      <div class="fee-card" data-fee="project" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="fee-card-icon" aria-hidden="true">📐</div>
         <h3>Pay by project</h3>
         <p class="fee-card-lead">A fixed quote for each defined matter.</p>
@@ -121,9 +123,10 @@ const schema = {
           within the same business day. You approve, we deliver. No
           surprises and no hourly creep.
         </p>
+        <span class="fee-card-more" aria-hidden="true">See everything included →</span>
       </div>
 
-      <div class="fee-card">
+      <div class="fee-card" data-fee="hourly" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="fee-card-icon" aria-hidden="true">⏱️</div>
         <h3>Pay as you go</h3>
         <p class="fee-card-lead">Hourly billing — no monthly commitment.</p>
@@ -134,9 +137,10 @@ const schema = {
           paralegal capacity on tap without signing up for retainer hours
           they may not use.
         </p>
+        <span class="fee-card-more" aria-hidden="true">See everything included →</span>
       </div>
 
-      <div class="fee-card fee-card-highlight">
+      <div class="fee-card fee-card-highlight" data-fee="retainer" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="fee-card-icon" aria-hidden="true">⭐</div>
         <h3>Monthly retainer</h3>
         <p class="fee-card-lead">10+ hours/month at a discounted rate.</p>
@@ -147,9 +151,10 @@ const schema = {
           also bill at the discounted rate. Most attorney-clients pick
           this option once they've worked with us for a quarter.
         </p>
+        <span class="fee-card-more" aria-hidden="true">See everything included →</span>
       </div>
 
-      <div class="fee-card">
+      <div class="fee-card" data-fee="discounts" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="fee-card-icon" aria-hidden="true">🤝</div>
         <h3>Discounts &amp; referrals</h3>
         <p class="fee-card-lead">New-client and referral pricing.</p>
@@ -160,6 +165,30 @@ const schema = {
           months of continuous engagement) move to our top-tier rate
           automatically.
         </p>
+        <span class="fee-card-more" aria-hidden="true">See everything included →</span>
+      </div>
+    </div>
+
+    <!-- Full-scope modal opened by clicking any fee card -->
+    <div class="fee-modal" id="feeModal" role="dialog" aria-modal="true" aria-labelledby="feeModalTitle" hidden>
+      <div class="fee-modal-backdrop" data-fee-close></div>
+      <div class="fee-modal-panel" role="document">
+        <button class="fee-modal-x" type="button" aria-label="Close" data-fee-close>&times;</button>
+        <div class="fee-modal-kicker" id="feeModalKicker"></div>
+        <h3 id="feeModalTitle"></h3>
+        <p class="fee-modal-lead" id="feeModalLead"></p>
+        <p class="fee-modal-desc" id="feeModalDesc"></p>
+        <div class="fee-modal-scope-title">Full scope — everything we can prepare for your firm</div>
+        <div class="fee-modal-scope" id="feeModalScope"></div>
+        <p class="fee-modal-foot">
+          Document preparation under your direction · you stay counsel of record ·
+          not legal advice and not a law firm. USCIS &amp; EOIR (federal) for attorneys
+          in any US state; California state-court matters for California attorneys.
+        </p>
+        <div class="fee-modal-cta">
+          <a class="btn btn-accent" href="tel:+19163993992">📞 +1 (916) 399-3992</a>
+          <button class="btn btn-ghost" type="button" data-fee-close>Close</button>
+        </div>
       </div>
     </div>
 
@@ -224,36 +253,47 @@ const schema = {
   />
 
   <style is:global>
-    /* Keep the hero headline on ONE LINE on desktop and tablet.
-       Global .hero is max-width: 1040px and h1 is max-width: 820px,
-       which wraps "Affordable paralegal support — under your direction"
-       mid-sentence. Scoped to .for-attorneys-hero so it only affects
-       this page's hero. We widen the container, clear the h1 max-width,
-       and cap the font-size with clamp() so it fits cleanly at any
-       common breakpoint. At ≥980px we force nowrap; on narrower screens
-       text-wrap: balance distributes the line break gracefully. */
+    /* The whole hero reads as ONE tidy LEFT-ALIGNED block: the eyebrow, the
+       two-line headline ("Affordable paralegal support" / "under your
+       direction" — the line break is explicit in headingHtml, no em-dash), the
+       B2B paragraph, and the action buttons all share the SAME left edge and a
+       common measure, so the block lines up cleanly on the left and is bounded
+       on the right (no centered, ragged, "sticking-out" lines). The global
+       .hero centers everything; these scoped overrides flip this one page's
+       hero to left-aligned within a shared 760px column. */
     .for-attorneys-hero .hero-wrap .hero {
-      max-width: 1240px;
+      max-width: 880px;
+      margin-inline: auto;
+      text-align: left;
+    }
+    .for-attorneys-hero .hero-wrap .hero .hero-eyebrow {
+      text-align: left;
+      margin-left: 0;
     }
     .for-attorneys-hero .hero-wrap .hero h1 {
-      max-width: none;
-      font-size: clamp(26px, 4.4vw, 50px);
+      max-width: 760px;
+      margin-left: 0;
+      font-size: clamp(26px, 4.4vw, 48px);
+      line-height: 1.08;
+      text-align: left;
       text-wrap: balance;
     }
-    @media (min-width: 980px) {
-      .for-attorneys-hero .hero-wrap .hero h1 {
-        white-space: nowrap;
-      }
-    }
-    /* The sub is a long B2B paragraph; the global 640px cap left it a narrow,
-       ragged centered column under the wide one-line headline. Widen to a
-       comfortable measure and balance the line lengths so it reads as a tidy
-       block (no stray short last line) instead of "sticking out". */
     .for-attorneys-hero .hero-wrap .hero .hero-sub {
-      max-width: 720px;
+      max-width: 760px;
+      margin-left: 0;
+      margin-right: 0;
       text-align: left;
       text-wrap: pretty;
     }
+    .for-attorneys-hero .hero-wrap .hero .hero-actions {
+      justify-content: flex-start;
+    }
+    /* Fee-modal scope rows are injected by JS, so they must be GLOBAL (scoped
+       styles don't reach runtime-inserted nodes). Icon left, text right. */
+    #feeModalScope .fee-scope-row { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid #f4f6f9; align-items: flex-start; }
+    #feeModalScope .fee-scope-ic { font-size: 20px; flex: none; width: 26px; text-align: center; }
+    #feeModalScope .fee-scope-h { font-weight: 700; font-size: 14px; color: #16233a; }
+    #feeModalScope .fee-scope-i { color: #475569; font-size: 13px; line-height: 1.5; margin-top: 2px; }
   </style>
 
   <style>
@@ -316,5 +356,129 @@ const schema = {
       line-height: 1.65;
       margin: 24px 0 8px;
     }
+
+    /* Fee cards are clickable → open the full-scope modal. */
+    .fee-grid-hint { font-size: 13px; color: #64748b; margin: 0 0 12px; }
+    .fee-card {
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .fee-card:hover, .fee-card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(40,30,20,0.10);
+      border-color: var(--gold);
+      outline: none;
+    }
+    .fee-card-more {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--terracotta-deep);
+    }
+    /* Modal */
+    .fee-modal[hidden] { display: none; }
+    .fee-modal {
+      position: fixed; inset: 0; z-index: 1200;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 5vh 16px;
+    }
+    .fee-modal-backdrop { position: absolute; inset: 0; background: rgba(15,23,42,0.55); }
+    .fee-modal-panel {
+      position: relative; background: #fff; border-radius: 18px;
+      max-width: 760px; width: 100%; max-height: 90vh; overflow: auto;
+      padding: 26px 28px 24px; box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    }
+    .fee-modal-x {
+      position: absolute; top: 12px; right: 16px; border: none; background: none;
+      font-size: 28px; line-height: 1; color: #64748b; cursor: pointer;
+    }
+    .fee-modal-kicker {
+      font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--terracotta-deep); font-weight: 700;
+    }
+    .fee-modal-panel h3 {
+      font-family: var(--font-display); margin: 4px 0 4px;
+      font-size: clamp(22px, 3vw, 28px); color: var(--navy-dark);
+    }
+    .fee-modal-lead { font-weight: 700; color: #1e293b; margin: 0 0 8px; }
+    .fee-modal-desc { color: #3a4a5e; line-height: 1.65; margin: 0 0 4px; }
+    .fee-modal-scope-title {
+      font-weight: 800; font-size: 15px; margin: 16px 0 10px;
+      padding-top: 16px; border-top: 1px solid #eef2f7; color: var(--navy-dark);
+    }
+    /* .fee-scope-* rows are injected by JS (innerHTML) → scoped CSS can't reach
+       them; they live in the is:global block above. */
+    .fee-modal-foot { margin-top: 16px; font-size: 12px; color: #94a3b8; line-height: 1.5; }
+    .fee-modal-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
   </style>
+
+  <script>
+    const FEE_PLANS = {
+      project: {
+        kicker: 'Fee structure', title: 'Pay by project',
+        lead: 'A fixed quote for each defined matter.',
+        desc: "Best when the scope is clear up front (I-485 adjustment package, FL-100 petition + summons + UCCJEA, SC-100 + service, etc.). We send a written quote after a short intake call — usually within the same business day. You approve, we deliver. No surprises and no hourly creep."
+      },
+      hourly: {
+        kicker: 'Fee structure', title: 'Pay as you go',
+        lead: 'Hourly billing — no monthly commitment.',
+        desc: "For attorneys with unpredictable volume or quick one-off requests. Flat hourly rate, billed in tenth-of-an-hour increments, invoiced monthly. Great for firms that just want paralegal capacity on tap without signing up for retainer hours they may not use."
+      },
+      retainer: {
+        kicker: 'Fee structure · most popular', title: 'Monthly retainer',
+        lead: '10+ hours/month at a discounted rate.',
+        desc: "For firms that consistently use 10 or more paralegal hours each month. Pay in advance, lock in a lower hourly rate, and reserve priority turnaround. Any hours beyond the committed minimum also bill at the discounted rate. Most attorney-clients pick this option once they've worked with us for a quarter."
+      },
+      discounts: {
+        kicker: 'Fee structure', title: 'Discounts & referrals',
+        lead: 'New-client and referral pricing.',
+        desc: "New attorney clients get a discounted introductory rate on the first matter. Referring another attorney to Imverica earns both firms a credit on the next invoice. Long-term partners (12+ months of continuous engagement) move to our top-tier rate automatically."
+      }
+    };
+    const FEE_SCOPE = [
+      { icon: '🛂', title: 'USCIS petitions · nationwide', items: 'I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864 packages, RFE responses, evidence indexes' },
+      { icon: '⚖️', title: 'EOIR filings · nationwide', items: 'EOIR-29 / 42A / 42B / 40, motions to reopen / reconsider, evidence packets, country-conditions exhibits, witness declarations' },
+      { icon: '👨‍👩‍👧', title: 'Family law · CA', items: 'FL-100 / 110 / 120 / 150 / 160 / 300, custody packets, UCCJEA, judgment papers, post-judgment modifications' },
+      { icon: '📃', title: 'Small claims & civil · CA', items: 'SC-100 / 120 / 104 / 133 / 140, demand letters, wage garnishment, abstract of judgment, civil cover sheets, proof of service' },
+      { icon: '🏠', title: 'Unlawful detainer · CA', items: 'UD-100 / 101 / 105 / 110 / 116 / 120, SUM-130, CP10.5, three-day notices, default packets, post-judgment writs (EJ-130)' },
+      { icon: '🏛️', title: 'Probate · CA', items: 'DE-111 / 121 / 160 / 221 / 295 series, small-estate affidavits, probate notice, inventory, final distribution, discharge packets' },
+      { icon: '🧾', title: 'Record cleanup · CA', items: 'CR-180 / 181 petition-for-dismissal packets, DUI record-cleanup support, declarations, proof of service, fee waivers' },
+      { icon: '🏢', title: 'Business filings · CA', items: 'LLC-1 / LLC-12, ARTS-GS, SI-550, FBN / DBA, SS-4 EIN support, operating agreements, foreign-LLC registration' },
+      { icon: '🌐', title: 'Translation & notary', items: 'Russian / Ukrainian / Spanish certified translations, apostille coordination, mobile-notary referrals' }
+    ];
+
+    function openFeeModal(key) {
+      const plan = FEE_PLANS[key];
+      if (!plan) return;
+      document.getElementById('feeModalKicker').textContent = plan.kicker;
+      document.getElementById('feeModalTitle').textContent = plan.title;
+      document.getElementById('feeModalLead').textContent = plan.lead;
+      document.getElementById('feeModalDesc').textContent = plan.desc;
+      document.getElementById('feeModalScope').innerHTML = FEE_SCOPE.map(function (c) {
+        return '<div class="fee-scope-row"><div class="fee-scope-ic" aria-hidden="true">' + c.icon + '</div>'
+          + '<div><div class="fee-scope-h">' + c.title + '</div>'
+          + '<div class="fee-scope-i">' + c.items + '</div></div></div>';
+      }).join('');
+      const m = document.getElementById('feeModal');
+      m.hidden = false;
+      document.body.style.overflow = 'hidden';
+      const x = m.querySelector('.fee-modal-x');
+      if (x) x.focus();
+    }
+    function closeFeeModal() {
+      document.getElementById('feeModal').hidden = true;
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('[data-fee]').forEach(function (el) {
+      el.addEventListener('click', function () { openFeeModal(el.getAttribute('data-fee')); });
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeeModal(el.getAttribute('data-fee')); }
+      });
+    });
+    document.querySelectorAll('[data-fee-close]').forEach(function (el) {
+      el.addEventListener('click', closeFeeModal);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeFeeModal(); });
+  </script>
 </BaseLayout>

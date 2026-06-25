@@ -27,7 +27,8 @@ const schema = {
     <Hero
       lang={lang}
       eyebrow="Para abogados · USCIS y EOIR nacional · Corte estatal de California"
-      heading="Apoyo paralegal accesible — bajo su dirección"
+      heading="Apoyo paralegal accesible bajo su dirección"
+      headingHtml="Apoyo paralegal accesible<br />bajo su dirección"
       sub="Su socio paralegal de servicio completo. Manejamos peticiones USCIS y trabajo en cortes de inmigración EOIR para abogados de cualquier estado, y asuntos de corte estatal de California (derecho familiar, reclamos menores, desalojo, sucesiones, empresas) para abogados de California. Usted permanece counsel of record. Nosotros preparamos los papeles — con precisión, a tiempo, en las plantillas de su firma. Listos para colaborar en un solo asunto o en un flujo constante de trabajo."
       ctaPrimary={{ href: '#fees', text: 'Ver estructuras de tarifas' }}
     />
@@ -236,15 +237,27 @@ const schema = {
   />
 
   <style is:global>
-    .for-attorneys-hero .hero-wrap .hero { max-width: 1240px; }
+    /* Todo el hero es UN bloque alineado a la IZQUIERDA (eyebrow, título de dos
+       líneas, párrafo, botones) con el mismo borde izquierdo y ancho común.
+       Ver la versión EN. */
+    .for-attorneys-hero .hero-wrap .hero {
+      max-width: 880px;
+      margin-inline: auto;
+      text-align: left;
+    }
+    .for-attorneys-hero .hero-wrap .hero .hero-eyebrow { text-align: left; margin-left: 0; }
     .for-attorneys-hero .hero-wrap .hero h1 {
-      max-width: none;
+      max-width: 760px;
+      margin-left: 0;
       font-size: clamp(22px, 3.6vw, 44px);
+      line-height: 1.08;
+      text-align: left;
       text-wrap: balance;
     }
-    @media (min-width: 1100px) {
-      .for-attorneys-hero .hero-wrap .hero h1 { white-space: nowrap; }
+    .for-attorneys-hero .hero-wrap .hero .hero-sub {
+      max-width: 760px; margin-left: 0; margin-right: 0; text-align: left; text-wrap: pretty;
     }
+    .for-attorneys-hero .hero-wrap .hero .hero-actions { justify-content: flex-start; }
   </style>
 
   <style>

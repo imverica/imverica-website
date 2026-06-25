@@ -27,7 +27,8 @@ const schema = {
     <Hero
       lang={lang}
       eyebrow="Для адвокатов · USCIS и EOIR по всей территории США · Суды штата Калифорния"
-      heading="Доступная paralegal-поддержка — под вашим руководством"
+      heading="Доступная paralegal-поддержка под вашим руководством"
+      headingHtml="Доступная paralegal-поддержка<br />под вашим руководством"
       sub="Ваш paralegal-партнёр полного цикла. Берём на себя петиции USCIS и работу в иммиграционных судах EOIR для адвокатов любого штата, а также дела в судах штата Калифорния (семейное право, малые иски, выселения, наследственные дела, бизнес) для калифорнийских адвокатов. Вы остаётесь counsel of record. Мы готовим документы — точно, в срок, на шаблонах вашей фирмы. Готовы сотрудничать на одно дело или на регулярный поток."
       ctaPrimary={{ href: '#fees', text: 'Тарифы и условия' }}
     />
@@ -227,17 +228,26 @@ const schema = {
   />
 
   <style is:global>
-    /* Held на одной строке на десктопе и планшете — см. EN-версию для
-       подробной мотивации. */
-    .for-attorneys-hero .hero-wrap .hero { max-width: 1240px; }
+    /* Весь hero — единый ЛЕВОвыровненный блок (eyebrow, двухстрочный заголовок,
+       абзац, кнопки) с общим левым краем и единой шириной. См. EN-версию. */
+    .for-attorneys-hero .hero-wrap .hero {
+      max-width: 880px;
+      margin-inline: auto;
+      text-align: left;
+    }
+    .for-attorneys-hero .hero-wrap .hero .hero-eyebrow { text-align: left; margin-left: 0; }
     .for-attorneys-hero .hero-wrap .hero h1 {
-      max-width: none;
+      max-width: 760px;
+      margin-left: 0;
       font-size: clamp(22px, 3.6vw, 44px);
+      line-height: 1.08;
+      text-align: left;
       text-wrap: balance;
     }
-    @media (min-width: 1100px) {
-      .for-attorneys-hero .hero-wrap .hero h1 { white-space: nowrap; }
+    .for-attorneys-hero .hero-wrap .hero .hero-sub {
+      max-width: 760px; margin-left: 0; margin-right: 0; text-align: left; text-wrap: pretty;
     }
+    .for-attorneys-hero .hero-wrap .hero .hero-actions { justify-content: flex-start; }
   </style>
 
   <style>

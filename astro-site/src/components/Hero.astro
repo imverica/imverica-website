@@ -4,6 +4,9 @@ import { CTA as CTA_STRINGS, type Locale } from '~/data/i18n';
 interface Props {
   eyebrow?: string;
   heading: string;
+  /** Optional HTML heading (e.g. an explicit two-line break). Takes precedence
+   *  over `heading` for rendering; `heading` stays the plain-text fallback. */
+  headingHtml?: string;
   sub?: string;
   ctaPrimary?: { href: string; text: string };
   ctaSecondary?: { href: string; text: string };
@@ -12,7 +15,7 @@ interface Props {
   /** Social-proof pill rendered above the eyebrow (CourtLinked-style). */
   trustPill?: string;
 }
-const { eyebrow, heading, sub, ctaPrimary, ctaSecondary, lang = 'en', showActions = true, trustPill } = Astro.props;
+const { eyebrow, heading, headingHtml, sub, ctaPrimary, ctaSecondary, lang = 'en', showActions = true, trustPill } = Astro.props;
 // Defaults pulled from the i18n table when caller omits CTAs.
 const defaultPrimary = { href: '/#get-started', text: CTA_STRINGS[lang].startBtn };
 const defaultSecondary = { href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' };
@@ -23,7 +26,7 @@ const secondary = ctaSecondary || defaultSecondary;
   <div class="hero">
     {trustPill && <div class="hero-pill"><span aria-hidden="true">★</span> {trustPill} <span aria-hidden="true">★</span></div>}
     {eyebrow && <div class="hero-eyebrow">{eyebrow}</div>}
-    <h1>{heading}</h1>
+    {headingHtml ? <h1 set:html={headingHtml} /> : <h1>{heading}</h1>}
     {sub && <p class="hero-sub">{sub}</p>}
     {showActions && (
       <div class="hero-actions">
