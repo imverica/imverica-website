@@ -115,7 +115,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-120'],
     confidence: 0.85,
-    patterns: [/(i\s+was\s+sued|got\s+sued|been\s+sued|i\s+was\s+served|served\s+(with\s+)?(a\s+)?(lawsuit|small\s+claims|complaint|summons|court\s+papers)|need\s+to\s+(file\s+a\s+)?respon(d|se)\s+(to\s+)?(small\s+claims|lawsuit|claim)|меня\s+подали\s+в\s+суд|против\s+меня\s+(подали\s+)?иск|подали\s+иск\s+против|мне\s+вручили\s+(иск|повестк))/i],
+    patterns: [/(i\s+was\s+sued|got\s+sued|been\s+sued|i\s+was\s+served(?![\s\S]{0,30}(unlawful|evict|detainer))|served\s+(with\s+)?(a\s+)?(lawsuit|small\s+claims|complaint|summons|court\s+papers)|need\s+to\s+(file\s+a\s+)?respon(d|se)\s+(to\s+)?(small\s+claims|lawsuit|claim)|меня\s+подали\s+в\s+суд|против\s+меня\s+(подали\s+)?иск|подали\s+иск\s+против|мне\s+вручили\s+(иск|повестк))/i],
     reason: 'Generic "I was sued / file a response" → SC-120 defendant counter.'
   },
   {
@@ -501,6 +501,32 @@ const PACKAGE_RULES = [
     patterns: [/restraining\s+order|protective\s+order|harass|stalk|domestic\s+(violence|abuse)|hits?\s+me|beat(s|en|ing)?\s+me|abus(e|ed|ing)\s+(me|by\s+my)|afraid\s+of\s+my\s+(husband|wife|partner|boyfriend|girlfriend|ex)|need\s+protection\s+from|рестре[ий]нинг|ристре[ий]нинг|защитн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ордер|охоронн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+наказ|угрож|преслед[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+меня|бьёт|бьет|избива|побои|домашн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+насил|нужна\s+защит|боюсь\s+(муж|парт|сожит|бывш)|orden\s+(de\s+)?(restricci[oó]n|protecci[oó]n|alejamiento)|acoso|violencia\s+(dom[eé]stica|de\s+pareja|familiar)|me\s+(pega|golpea)/i],
     reason: 'Restraining-order / harassment language maps to the DV-100/CH-100 family.'
   },
+  // Tenant / DEFENDANT side of an eviction — MUST fire BEFORE the broad
+  // unlawful_detainer rule below (which defaults to the landlord's UD-100
+  // complaint). A tenant who is "being evicted", was "served", or wants to
+  // "respond/answer" needs UD-105 (the Answer), NOT the landlord's complaint.
+  // Patterns require a clear defendant-side signal, so landlord phrasing
+  // ("evict my tenant" / "выселить жильца") still falls through to UD-100.
+  {
+    id: 'unlawful_detainer_tenant',
+    formCode: 'UD-105',
+    service: 'ud',
+    packageForms: ['UD-105', 'FW-001'],
+    confidence: 0.9,
+    patterns: [
+      /\bbeing\s+evicted\b/i,
+      /\bmy\s+landlord\b/i,
+      /\b(respond|reply|answer|fight|contest|dispute|oppose)\b[\s\S]{0,40}\b(evict|unlawful\s+detainer|ud-?105|eviction)\b/i,
+      /\b(served|summons)\b[\s\S]{0,25}\b(evict|unlawful\s+detainer|eviction)\b|\b(evict|unlawful\s+detainer|eviction)\b[\s\S]{0,25}\b(served|summons)\b/i,
+      /\bud-?105\b/i,
+      /(меня|мене|нас|нам|мне|мені)[\s\S]{0,25}(высел|висел)/i,
+      /(мо[йя]|мій)\s+(арендодател|хозяин|лендлорд|орендодав|господар)/i,
+      /(ответ\w*|відповіст\w*|оспор\w*|оскарж\w*)[\s\S]{0,30}(высел|висел|иск|позов)/i,
+      /(получил\w*|пришл\w*|отримав\w*)[\s\S]{0,25}(повестк|повістк)[\s\S]{0,30}(высел|висел|оренд|аренд|квартир)/i,
+      /me\s+est[aá]n?\s+desaloj|responder[\s\S]{0,30}desalojo|mi\s+(arrendador|casero|propietario)[\s\S]{0,25}desaloj|recib[ií][\s\S]{0,20}desalojo/i
+    ],
+    reason: 'Tenant/defendant side of an eviction (being evicted / served / responding) → UD-105 Answer, not the landlord complaint.'
+  },
   {
     id: 'unlawful_detainer',
     formCode: 'UD-100',
@@ -508,7 +534,7 @@ const PACKAGE_RULES = [
     packageForms: ['UD-100', 'UD-105', 'UD-110'],
     confidence: 0.92,
     patterns: [/unlawful\s+detainer|eviction|evicted|высел[\wа-яёіїєґА-ЯЁІЇЄҐ]*|эвикш|tenant|landlord|арендатор|арендодател|орендар|висел[\wа-яёіїєґА-ЯЁІЇЄҐ]*|выгон[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+из\s+квартир|desalojo|inquilino|propietario|3-?day\s+notice|30-?day\s+notice|notice\s+to\s+(quit|vacate|pay)/i],
-    reason: 'Eviction / unlawful detainer language maps to UD-100.'
+    reason: 'Eviction / unlawful detainer language maps to UD-100 (landlord/plaintiff side).'
   },
 
   // ===== Small Claims / Civil =====
@@ -836,7 +862,17 @@ function flowEndpointFor(catalogKey) {
   return catalogKey === 'immigration' ? '/api/immigration-flow' : '';
 }
 
+// CR-180/CR-181 are the statewide criminal record-clearing forms we hand-map and
+// can generate, so mark them schema-ready from public search — consistent with
+// the local criminal forms (CR-9/CRM-319) that already return schema-ready via
+// the relief path. Small-claims/family/UD intentionally stay catalog-only from
+// public search (they generate via their own cabinet wizards), and the 345-form
+// statewide catalog stays catalog-only (search/download, not fill).
+const { normalizeSlug: normalizeCourtSlug } = require('./lib/ca-court-registry');
+const CRIMINAL_GENERATABLE_SLUGS = new Set(['cr-180', 'cr-181']);
+
 function routeFromForm(row, lang, confidence, reason, packageForms = []) {
+  const generatable = row.catalogKey === 'immigration' || CRIMINAL_GENERATABLE_SLUGS.has(normalizeCourtSlug(row.code));
   return {
     service: row.service,
     catalog: row.catalogKey,
@@ -844,8 +880,8 @@ function routeFromForm(row, lang, confidence, reason, packageForms = []) {
     formCode: row.code,
     formTitle: formTitle(row.form, lang),
     officialEndpoint: officialEndpointFor(row.catalogKey),
-    flowEndpoint: flowEndpointFor(row.catalogKey),
-    flowStatus: row.catalogKey === 'immigration' ? 'schema-ready' : 'catalog-only',
+    flowEndpoint: row.catalogKey === 'immigration' ? '/api/immigration-flow' : (generatable ? '/api/court-flow' : ''),
+    flowStatus: generatable ? 'schema-ready' : 'catalog-only',
     packageForms: packageForms.length ? packageForms : [row.code],
     confidence,
     reason
@@ -907,6 +943,69 @@ function resolveCounty(value) {
   return LOCAL_COUNTY_BY_SLUG.get(slug) || LOCAL_COUNTY_BY_SLUG.get(COUNTY_ALIASES.get(slug)) || null;
 }
 
+// Russian / Ukrainian (Cyrillic) county-name aliases → slug. countyFromQuery's
+// Latin matcher strips non-[a-z0-9], so a Cyrillic county name ("сакраменто")
+// never matched and RU/UA queries fell to "awaiting-county". Curated common
+// renderings for the counties this clientele files in; whole-token matched so
+// short names ("напа","юба") don't false-positive. Spanish queries are written
+// in Latin script and already resolve via the Latin matcher. Verified spellings
+// only — rural counties with no common Cyrillic form are left to the Latin path.
+const COUNTY_NL_ALIASES = [
+  ['sacramento', ['сакраменто']],
+  ['placer', ['плейсер', 'пласер']],
+  ['los-angeles', ['лос анджелес', 'лос анжелес']],
+  ['san-francisco', ['сан франциско', 'сан франсиско']],
+  ['san-diego', ['сан диего', 'сан дієго']],
+  ['orange', ['ориндж', 'орандж', 'оранж']],
+  ['riverside', ['риверсайд']],
+  ['san-bernardino', ['сан бернардино']],
+  ['santa-clara', ['санта клара']],
+  ['alameda', ['аламеда', 'аламида']],
+  ['contra-costa', ['контра коста']],
+  ['san-mateo', ['сан матео']],
+  ['sonoma', ['сонома']],
+  ['solano', ['солано']],
+  ['fresno', ['фресно', 'фрезно']],
+  ['kern', ['керн']],
+  ['yolo', ['йоло']],
+  ['san-joaquin', ['сан хоакин', 'сан жоакин']],
+  ['stanislaus', ['станислаус']],
+  ['ventura', ['вентура']],
+  ['santa-barbara', ['санта барбара']],
+  ['monterey', ['монтерей']],
+  ['santa-cruz', ['санта круз']],
+  ['marin', ['марин']],
+  ['napa', ['напа']],
+  ['el-dorado', ['эль дорадо', 'эльдорадо']],
+  ['sutter', ['саттер']],
+  ['yuba', ['юба']],
+  ['butte', ['бьютт', 'бьют']],
+  ['san-luis-obispo', ['сан луис обиспо']]
+];
+
+function countyBySlug(slug) {
+  const fromLocal = LOCAL_COUNTY_BY_SLUG.get(slug);
+  if (fromLocal) return fromLocal;
+  const relief = CRIMINAL_RELIEF_BY_COUNTY.get(slug);
+  return relief ? { name: relief.name, slug } : null;
+}
+
+function countyFromCyrillic(query) {
+  const q = ` ${String(query || '').toLowerCase().replace(/[^а-яёіїєґa-z0-9]+/g, ' ').trim()} `;
+  for (const [slug, aliases] of COUNTY_NL_ALIASES) {
+    for (const al of aliases) {
+      // Long, distinctive names (last word ≥6 chars) match left-bounded but
+      // suffix-open so Russian/Ukrainian case endings resolve ("риверсайде",
+      // "плейсере", "лос анджелесе"). Short names stay whole-token to avoid
+      // false positives ("напе"≠"напа", "оранжевый"≠"оранж").
+      const lastWord = al.slice(al.lastIndexOf(' ') + 1);
+      const hit = lastWord.length >= 6 ? q.includes(` ${al}`) : q.includes(` ${al} `);
+      if (hit) return countyBySlug(slug);
+    }
+  }
+  return null;
+}
+
 function countyFromQuery(query) {
   const normalized = ` ${normalizeText(query).replace(/[^a-z0-9]+/g, ' ')} `;
   for (const county of [...LOCAL_COUNTIES].sort((a, b) => b.name.length - a.name.length)) {
@@ -914,7 +1013,8 @@ function countyFromQuery(query) {
     if (normalized.includes(` ${name} county `) || normalized.includes(` ${name} `)) return county;
   }
   const aliasMatch = normalized.match(/\b(?:la|l a|sf|s f|oc|o c)\s+county\b/);
-  return aliasMatch ? resolveCounty(aliasMatch[0]) : null;
+  if (aliasMatch) return resolveCounty(aliasMatch[0]);
+  return countyFromCyrillic(query);
 }
 
 function findLocalByCode(originalQuery) {

@@ -35,7 +35,12 @@ const REGISTRY = {
   // Small claims
   'sc-100': () => require('./ca-sc100-map').sc_100FieldValues,   // Plaintiff's Claim
   // Generic attachment used as SC-100 item 3 overflow (and other declarations)
-  'mc-031': () => require('./ca-mc031-map').mc_031FieldValues    // Attached Declaration
+  'mc-031': () => require('./ca-mc031-map').mc_031FieldValues,   // Attached Declaration
+
+  // Criminal record cleanup (statewide expungement — the 49 counties with no
+  // county-local dismissal form route here).
+  'cr-180': () => require('./ca-cr180-map').cr_180FieldValues,   // Petition for Dismissal
+  'cr-181': () => require('./ca-cr180-map').cr_181FieldValues    // Order for Dismissal (proposed)
 };
 
 function normalizeSlug(formCode) {

@@ -39,7 +39,8 @@ async function main() {
   await check('FL-300 custody support', { formCode: 'FL-300', service: 'family', flowStatus: 'catalog-only' });
   await check('CH-100 restraining order', { formCode: 'CH-100', service: 'restraining', flowStatus: 'catalog-only' });
   await check('UD-100 eviction tenant', { formCode: 'UD-100', service: 'ud', flowStatus: 'catalog-only' });
-  await check('CR-180', { formCode: 'CR-180', service: 'civil', flowStatus: 'catalog-only' });
+  // CR-180 is hand-mapped + registry-wired (statewide expungement) → generatable.
+  await check('CR-180', { formCode: 'CR-180', service: 'civil', flowStatus: 'schema-ready' });
   await check('закрыть probate final distribution', { formCode: 'DE-295', service: 'probate', flowStatus: 'catalog-only' });
   await check('DE-295', { formCode: 'DE-295', service: 'probate', flowStatus: 'catalog-only' });
 
