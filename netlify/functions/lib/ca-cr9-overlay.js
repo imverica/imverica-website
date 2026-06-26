@@ -41,9 +41,9 @@ const CR9_COORDS = {
   executed_on: { x: 130, y: 322, size: 9 },
   print_name: { x: 470, y: 292, size: 9 }
 };
-// Raley exemplar left a stray "Attorney for" name baked into the source blank;
+// The source blank had a stray "Attorney for" name baked into its text layer;
 // white it out defensively even if the cached template was already cleaned.
-const RALEY_REDACT = { x: 95, y: 634, width: 78, height: 16 };
+const STRAY_NAME_REDACT = { x: 95, y: 634, width: 78, height: 16 };
 
 function pick(a, ...k) { for (const x of k) if (a[x] != null && a[x] !== '') return a[x]; return ''; }
 function lc(v) { return String(v || '').toLowerCase(); }
@@ -106,7 +106,7 @@ async function cr_9FillFlat(blankBytes, payload = {}) {
   const helv = await doc.embedFont(StandardFonts.Helvetica);
   const helvB = await doc.embedFont(StandardFonts.HelveticaBold);
   const page = doc.getPage(0);
-  page.drawRectangle({ ...RALEY_REDACT, color: rgb(1, 1, 1) });
+  page.drawRectangle({ ...STRAY_NAME_REDACT, color: rgb(1, 1, 1) });
   const overlays = cr_9Overlays(payload);
   for (const o of overlays) {
     page.drawText(o.text, { x: o.x, y: o.y, size: o.size, font: o.kind === 'check' ? helvB : helv, color: rgb(0, 0, 0) });
