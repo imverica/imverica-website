@@ -142,6 +142,20 @@ const finalKicker = kicker || 'California document preparation services';
 const finalHeading = heading || 'USCIS, immigration court, and California civil document preparation';
 const finalIntro = intro || 'Imverica Legal Solutions provides document preparation through California registered Legal Document Assistant and Immigration Consultant services. We prepare documents at the client’s direction across the categories below. We are not a law firm and do not provide legal advice.';
 
+// Short mono kicker shown above each catalog card's title (design system).
+const KICKERS: Record<string, string> = {
+  'immigration-consultant-california': 'USCIS petitions',
+  'eoir-documents': 'EOIR · immigration court',
+  'document-translation-california': 'Translations · notary · support',
+  'family-law-documents-california': 'Family law',
+  'unlawful-detainer-document-preparation-california': 'Landlord · tenant',
+  'small-claims-document-preparation-california': 'Small claims · civil',
+  'restraining-orders-california': 'Protective orders',
+  'probate-document-preparation-california': 'Probate · estates',
+  'expungement-record-clearance-california': 'Record clearing',
+  'business-filings': 'Business filings'
+};
+
 // Each bullet inside a service card becomes a clickable link to that
 // form's prep page (or, when no dedicated page exists yet, the intake
 // wizard preset to that form code). The splitItem helper understands:
@@ -254,47 +268,32 @@ function pageHref(dest: string): string {
 }
 ---
 
-<section class="svc-section" id="services-detail">
+<section class="svc-band" id="services-detail">
+  <div class="svc-band-inner">
+    <div class="svc-band-kicker">{finalKicker}</div>
+    <div class="svc-band-cols">
+      <h2>{finalHeading}</h2>
+      <p>{finalIntro}</p>
+    </div>
+  </div>
+</section>
+
+<section class="svc-catalog">
   <div class="svc-inner">
-    <div class="svc-kicker">{finalKicker}</div>
-    <h2>{finalHeading}</h2>
-    <p>{finalIntro}</p>
     <div class="svc-grid">
       {visible.map((service) => (
         <article class="svc-card" id={service.id}>
+          <div class="svc-card-kicker">{KICKERS[service.id] || finalKicker}</div>
           <h3>{service.title}</h3>
           <p>{service.text}</p>
           <ul class="svc-card-forms">
             {service.items.map((item) => {
-              const { codes, rest } = splitItem(item);
-              if (!codes.length) {
-                return (
-                  <li class="svc-card-plain">
-                    <a href={pageHref(SERVICE_HREF[service.id])}>{item}</a>
-                  </li>
-                );
-              }
-              if (codes.length === 1) {
-                const code = codes[0];
-                return (
-                  <li>
-                    <a href={pageHref(FORM_LINKS[code])}>
-                      <span class="svc-card-code">{code}</span>
-                      {rest && <span class="svc-card-rest">{rest}</span>}
-                    </a>
-                  </li>
-                );
-              }
+              const { codes } = splitItem(item);
+              const dest = (codes.length && FORM_LINKS[codes[0]]) || SERVICE_HREF[service.id] || '/#get-started';
+              const label = item.replace(/\s+[—–]\s+/, ' ');
               return (
-                <li class="svc-card-multi">
-                  <span class="svc-card-multi-chips">
-                    {codes.map((c) => (
-                      <a href={pageHref(FORM_LINKS[c])} class="svc-card-pill">
-                        <span class="svc-card-code">{c}</span>
-                      </a>
-                    ))}
-                  </span>
-                  {rest && <span class="svc-card-rest">{rest}</span>}
+                <li>
+                  <a href={pageHref(dest)}>{label}</a>
                 </li>
               );
             })}
