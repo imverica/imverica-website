@@ -1,0 +1,656 @@
+---
+/**
+ * Imverica landing-page REDESIGN — preview route (/redesign).
+ *
+ * Self-contained, pixel-faithful rebuild of the Claude Design handoff
+ * (Imverica.dc.html). It intentionally does NOT use BaseLayout or the
+ * global site.css, and renders its own <html> document, so it has zero
+ * effect on the live homepage or the ~250 other pages. This lets the
+ * design be reviewed live before any site-wide brand rollout.
+ *
+ * Everything is scoped under `.rd` and the three webfonts load only here.
+ * Data arrays mirror the handoff copy verbatim; legal text in the footer
+ * is compliance-sensitive and reproduced exactly.
+ */
+
+const navItems = [
+  'USCIS · EOIR', 'Family Law', 'Civil', 'Record Clearing',
+  'Business', 'Pricing', 'For Attorneys', 'About Us'
+];
+
+const languages = [
+  { code: 'EN', active: true },
+  { code: 'RU', active: false },
+  { code: 'UA', active: false },
+  { code: 'ES', active: false }
+];
+
+const quickChips = ['Family petition', 'Response to divorce', 'Small claims', 'Expungement'];
+
+const stats = [
+  { target: 746, suffix: '+', label: 'USCIS, EOIR & California forms supported' },
+  { target: 18, suffix: '+', label: 'Priority forms with curated flows' },
+  { target: 4, suffix: '', label: 'Languages — EN · RU · UA · ES' },
+  { target: 10, suffix: '+', label: 'Years preparing California & USCIS forms' }
+];
+
+const services = [
+  { num: '01', kicker: 'USCIS | EOIR', title: 'Immigration Forms & Petitions', desc: 'Adjustment of status, work permits, green card, asylum, TPS, U visa, naturalization, travel documents, and removal-defense document preparation.', scope: 'Remote · worldwide', ca: false },
+  { num: '02', kicker: 'Family Law', title: 'Divorce & Family Forms', desc: 'Dissolution of marriage, summary dissolution, legal separation, child custody, and child support forms. Per Cal. Family Code §2320 et seq.', scope: 'California residents only', ca: true },
+  { num: '03', kicker: 'Small Claims', title: 'California Court Forms', desc: 'Small claims document preparation (current CA limit: $12,500 for individuals per CCP §116.221) and Superior Court civil forms.', scope: 'California residents only', ca: true },
+  { num: '04', kicker: 'Unlawful Detainer', title: 'Landlord & Tenant Documents', desc: 'Eviction document preparation for landlords and tenants — complaints, responses, and related California court forms. Per CCP §1161 et seq.', scope: 'California residents only', ca: true },
+  { num: '05', kicker: 'Restraining Orders', title: 'Protective Order Packets', desc: 'Domestic violence, civil harassment, elder-abuse, gun-violence, and workplace-violence restraining-order packages.', scope: 'California residents only', ca: true },
+  { num: '06', kicker: 'Probate', title: 'Estates & Record-Cleanup Forms', desc: 'Probate opening and closing packets, final distribution documents, small-estate affidavits, and California expungement/dismissal packets.', scope: 'California residents only', ca: true },
+  { num: '07', kicker: 'LDA basics', title: 'What is a California LDA?', desc: 'How a registered Legal Document Assistant and Immigration Consultant can help you — and the legal limits we work within.', scope: 'Learn more', ca: false },
+  { num: '08', kicker: 'Name Change', title: 'Name Change Court Packets', desc: 'Legal name-change document preparation, NC-100 series court packets, gender-marker updates, and supporting identity paperwork.', scope: 'California residents only', ca: true },
+  { num: '09', kicker: 'Traffic · DMV', title: 'Ticket, Title & Judgment Forms', desc: 'Traffic ticket paperwork, DMV title and license forms, fee waivers, and post-judgment collection packets such as EJ-001 and WG-001.', scope: 'California residents only', ca: true }
+];
+
+const news = [
+  { date: 'Jun 26', source: 'USCIS', title: 'Important Notice for Clients of Former Immigration Attorney Alexandra Lozano' },
+  { date: 'Jun 26', source: 'Yahoo', title: 'Newsom signs executive order to accelerate statewide public transit technology' },
+  { date: 'Jun 26', source: 'Connect CRE', title: 'Newsom Signs Bill Putting $11B Housing Bond on November Ballot' },
+  { date: 'Jun 26', source: 'UN News', title: 'Deaths in US immigration custody must be investigated: UN rights chief' },
+  { date: 'Jun 26', source: 'Daily Gazette', title: "'Best by'? 'Sell by'? New California law clears up food-label confusion" },
+  { date: 'Jun 26', source: 'SCOTUSblog', title: 'Court rules on gun rights, immigration, and pesticide labels' }
+];
+
+const reviews = [
+  { initial: 'S', name: 'Serdar', tag: 'USCIS I-765 · I-589 · Family', text: 'Thank you so much for helping our entire family! We contacted Imverica to prepare immigration forms — including I-765 and I-589 — for me, my wife, and our children. Every document was prepared carefully.' },
+  { initial: 'M', name: 'Meilis', tag: 'USCIS I-589 · I-765', text: 'I had a great experience working with Imverica. Everything was explained clearly, the paperwork was completed carefully, and the process was much easier than expected.' },
+  { initial: 'M', name: 'Mike', tag: 'USCIS · Green card', text: 'Thank you very much for your help with the green-card forms. Everything was professional, honest, and fast. I will recommend you to my friends.' },
+  { initial: 'E', name: 'Ekaterina', tag: 'USCIS · U visa', text: 'Thank you for helping me prepare and organize my U-visa forms and supporting documents. The service was professional, high quality, affordable, and fast.' },
+  { initial: 'A', name: 'Alex', tag: 'USCIS · Immigration documents', text: 'A great experience with Imverica Legal Solutions. They guided me through the entire process and made everything much easier than I expected.' },
+  { initial: 'L', name: 'Lili', tag: 'USCIS · Immigration documents', text: 'I am extremely satisfied with Imverica Legal Solutions. I have used their services more than once, and every time the experience has been outstanding.' }
+];
+
+const abouts = [
+  { icon: '§', title: 'California Registered LDA', desc: 'Registered and bonded Legal Document Assistant under Cal. Bus. & Prof. Code §§6400-6415 — authorized to prepare court and agency documents at your direction.' },
+  { icon: '✦', title: 'Immigration Consultant', desc: 'Registered Immigration Consultant for USCIS and EOIR document preparation under Cal. Bus. & Prof. Code §§22440-22448. Remote service worldwide.' },
+  { icon: '✓', title: 'Flat fee, no surprises', desc: "A written §6410 contract and a flat fee disclosed before we start. We are not a law firm and do not give legal advice — we prepare the documents you decide to file." }
+];
+
+const footerServices = ['USCIS · EOIR Immigration', 'Family Law', 'Small Claims & Civil', 'Record Clearing', 'For Attorneys'];
+const footerConnect = ['Instagram', 'Facebook', 'Telegram', 'Client Portal'];
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Imverica Legal Solutions — Redesign Preview</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="rd">
+
+  <!-- UTILITY BAR -->
+  <div class="rd-utility">
+    <div class="rd-utility-inner">
+      <div class="rd-utility-left">
+        <a href="tel:+19163993992" class="rd-utility-strong"><span class="rd-dot-gold">●</span> Call · +1 (916) 399-3992</a>
+        <span class="rd-pipe">|</span>
+        <a href="#">Text us</a>
+        <span class="rd-pipe">|</span>
+        <a href="#">Schedule appointment</a>
+      </div>
+      <div class="rd-utility-right">
+        <div class="rd-langs">
+          {languages.map((l) => (
+            <button type="button" class={`rd-lang${l.active ? ' is-active' : ''}`} data-lang={l.code}>{l.code}</button>
+          ))}
+        </div>
+        <a href="#" class="rd-utility-strong rd-portal"><span class="rd-portal-glyph">◔</span> Client Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="rd-header">
+    <div class="rd-header-inner">
+      <a href="#" class="rd-brand" aria-label="Imverica Legal Solutions">
+        <img class="rd-brand-logo" src="/logo-nav.png" width="279" height="92" alt="Imverica Legal Solutions" />
+      </a>
+      <nav class="rd-nav">
+        {navItems.map((item) => <a href="#">{item}</a>)}
+      </nav>
+      <a href="#" class="rd-cta">Start Your Case →</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="rd-hero">
+    <div class="rd-hero-dots" aria-hidden="true"></div>
+    <div class="rd-hero-inner">
+      <div class="rd-hero-pill"><span class="rd-dot-gold">★</span> California · Registered LDA · Immigration Consultant</div>
+      <h1 class="rd-hero-h1">What document do you need <span class="rd-italic-gold">prepared?</span></h1>
+      <p class="rd-hero-sub">Describe your situation or enter a form number. We prepare USCIS, EOIR, and California court documents at your direction — for clients across California and worldwide.</p>
+
+      <form class="rd-search" id="rdSearch">
+        <span class="rd-search-icon" aria-hidden="true">⌕</span>
+        <input id="rdSearchInput" class="rd-search-input" type="text" placeholder="Enter a form number or describe what you need prepared…" />
+        <button type="submit" class="rd-search-submit" aria-label="Search">→</button>
+      </form>
+
+      <div class="rd-chips">
+        {quickChips.map((c) => <button type="button" class="rd-chip" data-chip={c}>{c}</button>)}
+      </div>
+
+      <div class="rd-trust">
+        <span><span class="rd-trust-dot"></span>Document preparation only</span>
+        <span><span class="rd-trust-dot"></span>No legal advice</span>
+        <span><span class="rd-trust-dot"></span>EN · RU · UA · ES</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <section class="rd-stats" data-stats-band>
+    <div class="rd-stats-inner">
+      {stats.map((s) => (
+        <div class="rd-stat">
+          <div class="rd-stat-num"><span data-count={s.target}>{s.target}</span>{s.suffix}</div>
+          <div class="rd-stat-label">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="rd-services">
+    <div class="rd-container">
+      <div class="rd-services-head">
+        <div>
+          <div class="rd-kicker">What we do</div>
+          <h2 class="rd-h2">Our Services</h2>
+        </div>
+        <p class="rd-services-intro">We handle the paperwork — accurately, on time, and without surprises.</p>
+      </div>
+      <div class="rd-grid-3">
+        {services.map((s) => (
+          <div class="rd-svc rd-reveal">
+            <div class="rd-svc-top">
+              <span class="rd-svc-num">{s.num}</span>
+              <span class="rd-svc-kicker">{s.kicker}</span>
+            </div>
+            <h3 class="rd-svc-title">{s.title}</h3>
+            <p class="rd-svc-desc">{s.desc}</p>
+            <div class="rd-svc-foot">
+              <span class={`rd-svc-scope${s.ca ? ' is-ca' : ''}`}>{s.scope}</span>
+              <span class="rd-svc-arrow">→</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section class="rd-news">
+    <div class="rd-container rd-news-grid">
+      <div class="rd-news-aside">
+        <div class="rd-kicker">Auto-updated news</div>
+        <h2 class="rd-h2 rd-h2--news">Latest immigration &amp; California legal updates</h2>
+        <p class="rd-news-lead">Official headlines from USCIS, the immigration courts (EOIR), and California — refreshed automatically. We republish links only.</p>
+        <div class="rd-news-status"><span class="rd-live-dot"></span>Updated automatically · 6/26/2026</div>
+      </div>
+      <div class="rd-news-list">
+        {news.map((n) => (
+          <a href="#" class="rd-news-row rd-reveal">
+            <span class="rd-news-date">{n.date}</span>
+            <span class="rd-news-main">
+              <span class="rd-news-source">{n.source}</span>
+              <span class="rd-news-title">{n.title}</span>
+            </span>
+            <span class="rd-news-ext">↗</span>
+          </a>
+        ))}
+        <p class="rd-news-note">Headlines are republished for convenience only. Imverica does not summarize or interpret these announcements and does not provide legal advice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISA BULLETIN -->
+  <section class="rd-visa">
+    <div class="rd-container">
+      <div class="rd-visa-panel rd-reveal">
+        <div class="rd-visa-ring rd-visa-ring--lg" aria-hidden="true"></div>
+        <div class="rd-visa-ring rd-visa-ring--sm" aria-hidden="true"></div>
+        <div class="rd-visa-copy">
+          <div class="rd-kicker rd-kicker--gold">Current or waiting?</div>
+          <h2 class="rd-h2 rd-h2--onDark">Visa Bulletin tracker</h2>
+          <p class="rd-visa-lead">Priority-date movement changes every month. This panel links clients to the current official U.S. Department of State bulletin before they rely on category timing.</p>
+          <a href="#" class="rd-visa-btn">Open official Visa Bulletin →</a>
+        </div>
+        <div class="rd-visa-card">
+          <div class="rd-visa-meta">U.S. Department of State · updated 6/26/2026</div>
+          <div class="rd-visa-title">Visa Bulletin For June 2026</div>
+          <div class="rd-visa-legend">
+            <div class="rd-visa-legrow"><span class="rd-visa-chip rd-visa-chip--c">C</span><span>means <strong>current</strong></span></div>
+            <div class="rd-visa-legrow"><span class="rd-visa-chip rd-visa-chip--u">U</span><span>means <strong>unavailable</strong></span></div>
+          </div>
+          <p class="rd-visa-foot">Check both <strong>Final Action Dates</strong> and <strong>Dates for Filing</strong> before relying on priority-date movement. Dates vary by category and country.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="rd-reviews">
+    <div class="rd-container">
+      <div class="rd-reviews-head">
+        <div class="rd-kicker">Client reviews</div>
+        <h2 class="rd-h2">What clients say</h2>
+        <p class="rd-reviews-intro">Recent feedback from clients across immigration and California court document preparation — in the language they speak.</p>
+      </div>
+      <div class="rd-grid-3">
+        {reviews.map((r) => (
+          <div class="rd-review rd-reveal">
+            <div class="rd-review-stars">★★★★★</div>
+            <p class="rd-review-text">{r.text}</p>
+            <div class="rd-review-foot">
+              <div class="rd-review-avatar">{r.initial}</div>
+              <div>
+                <div class="rd-review-name">{r.name}</div>
+                <div class="rd-review-tag">{r.tag}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="rd-reviews-cta">
+        <a href="#" class="rd-ghost-btn">★★★★★ &nbsp;See all reviews on Google →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="rd-about">
+    <div class="rd-container">
+      <div class="rd-about-head">
+        <div class="rd-kicker">Who we are</div>
+        <h2 class="rd-h2 rd-h2--balance">A California Registered LDA &amp; Immigration Consultant</h2>
+        <p class="rd-about-intro">Imverica Legal Solutions prepares immigration and California court documents accurately, on time, and at your direction — multilingual intake in English, Russian, Ukrainian, and Spanish.</p>
+      </div>
+      <div class="rd-grid-3">
+        {abouts.map((a) => (
+          <div class="rd-aboutcard rd-reveal">
+            <div class="rd-aboutcard-icon">{a.icon}</div>
+            <h3 class="rd-aboutcard-title">{a.title}</h3>
+            <p class="rd-aboutcard-desc">{a.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="rd-footer">
+    <div class="rd-container">
+      <div class="rd-footer-grid">
+        <div>
+          <div class="rd-footer-brand">
+            <div class="rd-footer-mark">I</div>
+            <div class="rd-footer-brandname">Imverica Legal Solutions</div>
+          </div>
+          <p class="rd-footer-tag">Legal Document Assistant · Immigration Consultant · California. Remote service worldwide.</p>
+          <div class="rd-footer-contact">+1 (916) 399-3992<br />info@imverica.com<br />imverica.com</div>
+        </div>
+        <div>
+          <div class="rd-footer-coltitle">Services</div>
+          <div class="rd-footer-links">
+            {footerServices.map((s) => <a href="#">{s}</a>)}
+          </div>
+        </div>
+        <div>
+          <div class="rd-footer-coltitle">Connect</div>
+          <div class="rd-footer-links">
+            {footerConnect.map((s) => <a href="#">{s}</a>)}
+          </div>
+        </div>
+      </div>
+      <div class="rd-footer-legal">
+        <p>© 2026 Imverica LLC, dba Imverica Legal Solutions — a California limited liability company; a registered &amp; bonded California Legal Document Assistant and Immigration Consultant (Cal. Bus. &amp; Prof. Code §§6400-6415 and §§22440-22448).</p>
+        <p>Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice, and no attorney-client relationship is created by use of this site. Documents are prepared solely at the client's direction. If you need legal advice, consult a licensed attorney.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<style is:global>
+  /* Preview page is fully self-contained — reset only inside its own scope. */
+  html, body { margin: 0; padding: 0; }
+  body { background: #F4F0E8; }
+  .rd *, .rd *::before, .rd *::after { box-sizing: border-box; }
+  .rd ::selection { background: #1b2a3d; color: #f0d9a6; }
+
+  .rd {
+    /* Palette (from the handoff design tokens) */
+    --paper: #F4F0E8;
+    --paper-alt: #FBF8F2;
+    --ink: #11202E;
+    --ink-deep: #0D1925;
+    --gold: #B98C3E;
+    --gold-deep: #9C7430;
+    --gold-light: #D7A24E;
+    --gold-tint: #F1E7D4;
+    --text: #16232F;
+    --text-2: #4A5764;
+    --text-3: #5A6671;
+    --muted: #7C8794;
+    --border: #E7DFD0;
+    --ca: #9A6B6B;
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --sans: 'Archivo', system-ui, -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+    font-family: var(--sans);
+    color: var(--text);
+    background: var(--paper);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  .rd a { text-decoration: none; }
+  .rd-container { max-width: 1220px; margin: 0 auto; padding: 0 32px; }
+
+  /* Shared section pieces */
+  .rd-kicker { font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 12px; }
+  .rd-kicker--gold { color: var(--gold-light); letter-spacing: .16em; }
+  .rd-h2 { font-family: var(--serif); font-weight: 500; font-size: 42px; line-height: 1.06; letter-spacing: -.02em; margin: 0; color: #13202E; }
+  .rd-h2--news { font-size: 34px; line-height: 1.1; margin-bottom: 16px; }
+  .rd-h2--onDark { color: #F1E9DA; font-size: 36px; line-height: 1.08; margin-bottom: 14px; }
+  .rd-h2--balance { text-wrap: balance; line-height: 1.08; margin-bottom: 16px; }
+  .rd-italic-gold { font-style: italic; color: var(--gold-deep); }
+  .rd-dot-gold { color: var(--gold); }
+
+  /* UTILITY BAR */
+  .rd-utility { background: var(--ink); color: #C9D2DC; font-size: 12.5px; letter-spacing: .01em; }
+  .rd-utility-inner { max-width: 1220px; margin: 0 auto; padding: 9px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .rd-utility-left { display: flex; align-items: center; gap: 18px; }
+  .rd-utility-left a { color: #C9D2DC; }
+  .rd-utility-strong { color: #EBE2CE; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+  .rd-pipe { opacity: .35; }
+  .rd-utility-right { display: flex; align-items: center; gap: 14px; }
+  .rd-langs { display: flex; align-items: center; gap: 3px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 999px; padding: 3px; }
+  .rd-lang { font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .04em; border: none; cursor: pointer; border-radius: 999px; padding: 5px 11px; background: transparent; color: #9AA8B4; }
+  .rd-lang.is-active { background: var(--gold); color: var(--ink); }
+  .rd-portal { gap: 6px; }
+  .rd-portal-glyph { font-size: 13px; }
+
+  /* HEADER */
+  .rd-header { position: sticky; top: 0; z-index: 50; background: rgba(244,240,232,.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E4DCCB; }
+  .rd-header-inner { max-width: 1220px; margin: 0 auto; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .rd-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; color: #16232F; }
+  .rd-brand-mark { width: 38px; height: 38px; border: 1.5px solid #16232F; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 21px; background: #16232F; color: #EBE2CE; }
+  .rd-brand-text { line-height: 1.05; }
+  .rd-brand-name { font-family: var(--serif); font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+  .rd-brand-tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: #8B7B5C; margin-top: 1px; }
+  .rd-nav { display: flex; align-items: center; gap: 22px; font-size: 14px; font-weight: 500; color: #3C4A57; }
+  .rd-nav a { color: #3C4A57; white-space: nowrap; transition: color .18s ease; }
+  .rd-nav a:hover { color: var(--gold); }
+  .rd-cta { flex-shrink: 0; background: #16232F; color: var(--paper); font-weight: 600; font-size: 14px; padding: 11px 20px; border-radius: 9px; white-space: nowrap; transition: background .18s ease; }
+  .rd-cta:hover { background: #0c1722; }
+  .rd-brand-logo { height: 42px; width: auto; display: block; }
+
+  /* Scroll-reveal — tiles fade + rise as they enter the viewport. The
+     hidden state only applies once JS adds `rd-anim` to the root, so the
+     content stays visible with JS disabled or reduced-motion on. */
+  .rd.rd-anim .rd-reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; will-change: opacity, transform; }
+  .rd.rd-anim .rd-reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .rd.rd-anim .rd-reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* HERO */
+  .rd-hero { background: var(--paper); position: relative; overflow: hidden; }
+  .rd-hero-dots { position: absolute; inset: 0; background-image: radial-gradient(#dcd2bd 1px, transparent 1px); background-size: 26px 26px; opacity: .5; pointer-events: none; }
+  .rd-hero-inner { position: relative; max-width: 900px; margin: 0 auto; padding: 68px 32px 56px; text-align: center; }
+  .rd-hero-pill { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .13em; text-transform: uppercase; color: #8B7B5C; border: 1px solid #DDD3BF; background: rgba(255,255,255,.5); padding: 7px 15px; border-radius: 999px; }
+  .rd-hero-h1 { font-family: var(--serif); font-weight: 500; font-size: 62px; line-height: 1.04; letter-spacing: -.02em; margin: 24px 0 0; color: #13202E; text-wrap: balance; }
+  .rd-hero-sub { font-size: 18px; line-height: 1.6; color: var(--text-2); max-width: 620px; margin: 20px auto 0; text-wrap: pretty; }
+
+  .rd-search { margin: 34px auto 0; max-width: 680px; display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #E0D7C5; border-radius: 16px; padding: 8px 8px 8px 20px; box-shadow: 0 18px 40px -20px rgba(20,32,46,.28); }
+  .rd-search-icon { color: #B0A488; font-size: 18px; flex-shrink: 0; }
+  .rd-search-input { flex: 1; border: none; outline: none; background: transparent; font-family: var(--sans); font-size: 16px; color: #16232F; padding: 10px 4px; }
+  .rd-search-submit { flex-shrink: 0; width: 48px; height: 48px; border: none; border-radius: 11px; background: var(--gold); color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .18s ease; }
+  .rd-search-submit:hover { background: #a67d33; }
+
+  .rd-chips { margin: 16px auto 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .rd-chip { font-family: var(--sans); font-size: 13.5px; font-weight: 500; color: #46535F; background: rgba(255,255,255,.6); border: 1px solid #DED4C0; border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: border-color .18s, color .18s; }
+  .rd-chip:hover { border-color: var(--gold); color: #16232F; }
+
+  .rd-trust { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 7px 18px; justify-content: center; align-items: center; font-size: 12.5px; color: var(--muted); font-family: var(--mono); letter-spacing: .02em; }
+  .rd-trust span { display: flex; align-items: center; gap: 6px; }
+  .rd-trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+  /* STATS BAND */
+  .rd-stats { background: var(--ink); color: #EAE2D3; }
+  .rd-stats-inner { max-width: 1220px; margin: 0 auto; padding: 46px 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .rd-stat { padding: 4px 8px; border-left: 1px solid rgba(255,255,255,.14); }
+  .rd-stat-num { font-family: var(--serif); font-size: 46px; font-weight: 500; line-height: 1; color: var(--gold-light); letter-spacing: -.02em; }
+  .rd-stat-label { font-size: 13.5px; line-height: 1.45; color: #A9B4BF; margin-top: 10px; max-width: 220px; }
+
+  /* SERVICES */
+  .rd-services { background: var(--paper); padding: 78px 0 80px; }
+  .rd-services-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 38px; }
+  .rd-services-intro { font-size: 16px; color: var(--text-3); max-width: 380px; margin: 0; line-height: 1.6; text-wrap: pretty; }
+  .rd-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .rd-svc { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 24px 24px 26px; display: flex; flex-direction: column; min-height: 212px; transition: transform .18s, box-shadow .18s; }
+  .rd-svc:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -26px rgba(20,32,46,.4); }
+  .rd-svc-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+  .rd-svc-num { font-family: var(--mono); font-size: 12px; color: var(--gold); letter-spacing: .04em; }
+  .rd-svc-kicker { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: #9AA3AD; border: 1px solid var(--border); border-radius: 999px; padding: 3px 9px; }
+  .rd-svc-title { font-family: var(--serif); font-weight: 500; font-size: 23px; line-height: 1.12; letter-spacing: -.01em; margin: 0 0 10px; color: #15222E; }
+  .rd-svc-desc { font-size: 14px; line-height: 1.55; color: var(--text-3); margin: 0 0 16px; flex: 1; }
+  .rd-svc-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #EFE8DB; padding-top: 13px; }
+  .rd-svc-scope { font-size: 11.5px; font-weight: 600; color: var(--gold-deep); }
+  .rd-svc-scope.is-ca { color: var(--ca); }
+  .rd-svc-arrow { color: var(--gold); font-size: 15px; }
+
+  /* NEWS */
+  .rd-news { background: var(--paper-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 72px 0; }
+  .rd-news-grid { display: grid; grid-template-columns: 340px 1fr; gap: 56px; align-items: start; }
+  .rd-news-aside { position: sticky; top: 96px; }
+  .rd-news-lead { font-size: 15px; line-height: 1.6; color: var(--text-3); margin: 0 0 16px; text-wrap: pretty; }
+  .rd-news-status { font-family: var(--mono); font-size: 11px; color: #9AA3AD; display: flex; align-items: center; gap: 7px; }
+  .rd-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #3C9A6B; }
+  .rd-news-row { display: flex; align-items: baseline; gap: 18px; padding: 18px 4px; border-bottom: 1px solid #EAE1D2; transition: background .15s ease; }
+  .rd-news-row:hover { background: rgba(185,140,62,.05); }
+  .rd-news-date { font-family: var(--mono); font-size: 11px; color: #9AA3AD; white-space: nowrap; width: 62px; flex-shrink: 0; letter-spacing: .02em; }
+  .rd-news-main { flex: 1; }
+  .rd-news-source { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+  .rd-news-title { display: block; font-size: 16px; line-height: 1.4; color: #1B2833; font-weight: 500; }
+  .rd-news-ext { color: #C5BBA6; font-size: 14px; }
+  .rd-news-note { font-size: 12px; color: #94928a; margin: 18px 4px 0; line-height: 1.5; font-style: italic; }
+
+  /* VISA BULLETIN */
+  .rd-visa { background: var(--paper); padding: 72px 0; }
+  .rd-visa-panel { background: var(--ink); border-radius: 20px; padding: 46px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; overflow: hidden; position: relative; }
+  .rd-visa-ring { position: absolute; border-radius: 50%; }
+  .rd-visa-ring--lg { right: -40px; top: -40px; width: 240px; height: 240px; border: 1px solid rgba(215,162,78,.18); }
+  .rd-visa-ring--sm { right: 10px; top: 10px; width: 160px; height: 160px; border: 1px solid rgba(215,162,78,.12); }
+  .rd-visa-copy { position: relative; }
+  .rd-visa-lead { font-size: 15px; line-height: 1.6; color: #AEB9C3; margin: 0 0 22px; text-wrap: pretty; }
+  .rd-visa-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--gold-light); color: var(--ink); font-weight: 600; font-size: 14.5px; padding: 12px 22px; border-radius: 10px; transition: background .18s ease; }
+  .rd-visa-btn:hover { background: #e6b258; }
+  .rd-visa-card { position: relative; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 24px; }
+  .rd-visa-meta { font-family: var(--mono); font-size: 11px; color: #8FA0AE; letter-spacing: .04em; margin-bottom: 6px; }
+  .rd-visa-title { font-family: var(--serif); font-size: 24px; color: #F1E9DA; font-weight: 500; margin-bottom: 18px; }
+  .rd-visa-legend { display: flex; flex-direction: column; gap: 11px; }
+  .rd-visa-legrow { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: #C4CDD6; }
+  .rd-visa-legrow strong { color: #EAE2D3; }
+  .rd-visa-chip { width: 30px; height: 30px; border-radius: 7px; color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 600; font-size: 14px; flex-shrink: 0; }
+  .rd-visa-chip--c { background: #3C9A6B; }
+  .rd-visa-chip--u { background: #9A4242; }
+  .rd-visa-foot { font-size: 12.5px; color: #8FA0AE; line-height: 1.5; margin: 18px 0 0; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; }
+  .rd-visa-foot strong { color: #C4CDD6; }
+
+  /* REVIEWS */
+  .rd-reviews { background: var(--paper-alt); border-top: 1px solid var(--border); padding: 78px 0; }
+  .rd-reviews-head { text-align: center; margin-bottom: 42px; }
+  .rd-reviews-intro { font-size: 16px; color: var(--text-3); max-width: 560px; margin: 14px auto 0; line-height: 1.6; text-wrap: pretty; }
+  .rd-review { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; }
+  .rd-review-stars { color: var(--gold-light); font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+  .rd-review-text { font-size: 14.5px; line-height: 1.6; color: #3C4A55; margin: 0 0 18px; flex: 1; }
+  .rd-review-foot { display: flex; align-items: center; gap: 12px; border-top: 1px solid #EFE8DB; padding-top: 14px; }
+  .rd-review-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--ink); color: var(--gold-light); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 17px; font-weight: 600; flex-shrink: 0; }
+  .rd-review-name { font-weight: 600; font-size: 14px; color: #16232F; }
+  .rd-review-tag { font-family: var(--mono); font-size: 10.5px; color: #9AA3AD; letter-spacing: .03em; margin-top: 2px; }
+  .rd-reviews-cta { text-align: center; margin-top: 34px; }
+  .rd-ghost-btn { display: inline-flex; align-items: center; gap: 9px; color: #16232F; font-weight: 600; font-size: 14.5px; border: 1px solid #D8CDB8; border-radius: 10px; padding: 12px 22px; transition: border-color .18s ease; }
+  .rd-ghost-btn:hover { border-color: var(--gold); }
+
+  /* ABOUT */
+  .rd-about { background: var(--paper); padding: 80px 0; }
+  .rd-about-head { text-align: center; max-width: 720px; margin: 0 auto 46px; }
+  .rd-about-intro { font-size: 16.5px; color: var(--text-2); margin: 0; line-height: 1.65; text-wrap: pretty; }
+  .rd-aboutcard { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+  .rd-aboutcard-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--gold-tint); color: var(--gold-deep); display: flex; align-items: center; justify-content: center; font-size: 19px; margin-bottom: 18px; }
+  .rd-aboutcard-title { font-family: var(--serif); font-weight: 500; font-size: 21px; letter-spacing: -.01em; margin: 0 0 10px; color: #15222E; }
+  .rd-aboutcard-desc { font-size: 14px; line-height: 1.6; color: var(--text-3); margin: 0; }
+
+  /* FOOTER */
+  .rd-footer { background: var(--ink-deep); color: #B9C3CD; }
+  .rd-footer .rd-container { padding-top: 56px; padding-bottom: 36px; }
+  .rd-footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .rd-footer-brand { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+  .rd-footer-mark { width: 34px; height: 34px; border-radius: 7px; background: #16232F; border: 1px solid rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 19px; color: var(--gold-light); }
+  .rd-footer-brandname { font-family: var(--serif); font-size: 18px; font-weight: 600; color: #EAE2D3; }
+  .rd-footer-tag { font-size: 13px; line-height: 1.6; color: #8B96A1; margin: 0 0 18px; max-width: 340px; }
+  .rd-footer-contact { font-family: var(--mono); font-size: 12.5px; color: #C4CDD6; line-height: 1.9; }
+  .rd-footer-coltitle { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #6E7B87; margin-bottom: 14px; }
+  .rd-footer-links { display: flex; flex-direction: column; gap: 9px; font-size: 13.5px; }
+  .rd-footer-links a { color: #B9C3CD; transition: color .18s ease; }
+  .rd-footer-links a:hover { color: var(--gold-light); }
+  .rd-footer-legal { padding-top: 24px; font-size: 11.5px; line-height: 1.7; color: #6E7B87; }
+  .rd-footer-legal p { margin: 0 0 10px; }
+  .rd-footer-legal p:last-child { margin: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1080px) {
+    .rd-nav { display: none; }
+    .rd-grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .rd-news-grid { grid-template-columns: 1fr; gap: 32px; }
+    .rd-news-aside { position: static; }
+    .rd-visa-panel { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 760px) {
+    .rd-container, .rd-utility-inner, .rd-header-inner, .rd-stats-inner, .rd-hero-inner { padding-left: 20px; padding-right: 20px; }
+    .rd-hero-h1 { font-size: 40px; }
+    .rd-hero-sub { font-size: 16px; }
+    .rd-h2, .rd-h2--onDark { font-size: 30px; }
+    .rd-h2--news { font-size: 26px; }
+    .rd-stats-inner { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+    .rd-grid-3 { grid-template-columns: 1fr; }
+    .rd-services-head { flex-direction: column; align-items: flex-start; }
+    .rd-visa-panel { padding: 30px; }
+    .rd-footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .rd-utility-left { gap: 10px; flex-wrap: wrap; }
+    .rd-utility { font-size: 11.5px; }
+  }
+  @media (max-width: 460px) {
+    .rd-stats-inner { grid-template-columns: 1fr; }
+    .rd-utility-left .rd-pipe { display: none; }
+  }
+</style>
+
+<script>
+  // Stats count-up — animates 0 → target when the band enters the viewport.
+  // Mirrors the handoff interaction: 1400ms, ease-out cubic, runs once.
+  (function () {
+    const band = document.querySelector<HTMLElement>('[data-stats-band]');
+    if (!band) return;
+    const bandEl = band;
+    let counted = false;
+
+    function run() {
+      if (counted) return;
+      counted = true;
+      const nums = Array.from(bandEl.querySelectorAll<HTMLElement>('[data-count]'));
+      const dur = 1400;
+      const start = performance.now();
+      const targets = nums.map((el) => Number(el.getAttribute('data-count')) || 0);
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        nums.forEach((el, i) => { el.textContent = String(Math.round(targets[i] * eased)); });
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach((e) => { if (e.isIntersecting) { run(); observer.disconnect(); } });
+      }, { threshold: 0.35 });
+      obs.observe(bandEl);
+    } else {
+      run();
+    }
+  })();
+
+  // Hero search — quick chips fill the input; submit is a no-op in the
+  // preview (production wires this to the intake / forms-search route).
+  (function () {
+    const input = document.getElementById('rdSearchInput') as HTMLInputElement | null;
+    const form = document.getElementById('rdSearch') as HTMLFormElement | null;
+    if (input) {
+      const inputEl = input;
+      document.querySelectorAll<HTMLElement>('[data-chip]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          inputEl.value = btn.getAttribute('data-chip') || '';
+          inputEl.focus();
+        });
+      });
+    }
+    if (form) form.addEventListener('submit', (e) => { e.preventDefault(); });
+  })();
+
+  // Scroll-reveal — tiles fade + rise into view, staggered within each row.
+  (function () {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const root = document.querySelector<HTMLElement>('.rd');
+    if (!root || reduce || !('IntersectionObserver' in window)) return;
+    const els = Array.from(root.querySelectorAll<HTMLElement>('.rd-reveal'));
+    if (!els.length) return;
+    root.classList.add('rd-anim');
+
+    // Stagger each tile by its position within its own parent container.
+    const counts = new Map<Element, number>();
+    els.forEach((el) => {
+      const parent = el.parentElement;
+      if (!parent) return;
+      const i = counts.get(parent) || 0;
+      counts.set(parent, i + 1);
+      el.style.transitionDelay = Math.min(i, 6) * 70 + 'ms';
+    });
+
+    const obs = new IntersectionObserver((entries, observer) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+    els.forEach((el) => obs.observe(el));
+  })();
+
+  // Language pills — visual active state only in the preview (production
+  // wires these to the real EN/RU/UA/ES locale routing).
+  (function () {
+    const pills = document.querySelectorAll<HTMLElement>('.rd-lang');
+    pills.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        pills.forEach((b) => { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
