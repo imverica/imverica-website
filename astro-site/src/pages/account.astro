@@ -1,0 +1,253 @@
+---
+/**
+ * Client Portal — split-screen sign-in (Claude Design "Account / Portal").
+ *
+ * Standalone page: no site header/footer. Left = navy brand panel; right =
+ * paper auth panel with a Sign in / Create account tab toggle. The form is
+ * visual only here (local state) — wire the inputs to the real auth backend.
+ *
+ * Copy fixes per stakeholder: no "Welcome back" (a first-time visitor may
+ * land here), and "matters" → "cases" everywhere (clearer wording).
+ *
+ * The live portal app still lives at /account.html; this is the redesigned
+ * sign-in screen and does not change those links until auth is wired.
+ */
+const perks = [
+  { icon: '📂', title: 'Track your cases', desc: 'See status and next steps for every document package.' },
+  { icon: '🔁', title: 'Exchange documents', desc: 'Upload securely and download your prepared forms.' },
+  { icon: '💬', title: 'Message the team', desc: 'Ask questions in your language and keep everything in one thread.' }
+];
+const languages = ['EN', 'RU', 'UA', 'ES'];
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Portal — Imverica Legal Solutions</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="acct">
+
+  <!-- LEFT: BRAND PANEL -->
+  <div class="acct-brand">
+    <div class="acct-ring acct-ring--lg" aria-hidden="true"></div>
+    <div class="acct-ring acct-ring--sm" aria-hidden="true"></div>
+
+    <a class="acct-logo" href="/" aria-label="Imverica Legal Solutions">
+      <span class="acct-logochip"><img src="/logo-nav.png" width="279" height="92" alt="Imverica Legal Solutions" /></span>
+    </a>
+
+    <div class="acct-brand-copy">
+      <div class="acct-kicker">Client Portal</div>
+      <h1>Your cases, documents, and messages — in one place.</h1>
+      <div class="acct-perks">
+        {perks.map((p) => (
+          <div class="acct-perk">
+            <div class="acct-perk-icon" aria-hidden="true">{p.icon}</div>
+            <div>
+              <div class="acct-perk-title">{p.title}</div>
+              <div class="acct-perk-desc">{p.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="acct-contact">
+      Multilingual support · EN · RU · UA · ES<br />
+      +1 (916) 399-3992 · info@imverica.com
+    </div>
+  </div>
+
+  <!-- RIGHT: AUTH PANEL -->
+  <div class="acct-auth">
+    <div class="acct-auth-dots" aria-hidden="true"></div>
+
+    <div class="acct-auth-top">
+      <div class="acct-langs">
+        {languages.map((code, i) => (
+          <button type="button" class={`acct-lang${i === 0 ? ' is-active' : ''}`} data-lang={code}>{code}</button>
+        ))}
+      </div>
+      <a class="acct-back" href="/">← Back to imverica.com</a>
+    </div>
+
+    <div class="acct-auth-body">
+      <form class="acct-card" id="acctForm">
+        <div class="acct-tabs">
+          <button type="button" class="acct-tab is-active" data-mode="signin">Sign in</button>
+          <button type="button" class="acct-tab" data-mode="create">Create account</button>
+        </div>
+
+        <h2 id="acctHeading">Sign in to your portal</h2>
+        <p id="acctSub">Sign in to track your cases and documents.</p>
+
+        <div class="acct-field" id="acctNameField" hidden>
+          <label for="acctName">Full name</label>
+          <input id="acctName" name="name" type="text" placeholder="Your full name" autocomplete="name" />
+        </div>
+
+        <div class="acct-field">
+          <label for="acctEmail">Email</label>
+          <input id="acctEmail" name="email" type="email" placeholder="you@email.com" autocomplete="email" />
+        </div>
+
+        <div class="acct-field">
+          <div class="acct-field-row">
+            <label for="acctPassword">Password</label>
+            <a class="acct-forgot" id="acctForgot" href="#">Forgot?</a>
+          </div>
+          <input id="acctPassword" name="password" type="password" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+
+        <button type="submit" class="acct-submit" id="acctCta">Sign in →</button>
+
+        <div class="acct-or"><span class="acct-or-line"></span><span class="acct-or-text">or</span><span class="acct-or-line"></span></div>
+
+        <a class="acct-magic" href="#"><span aria-hidden="true">✉️</span> Email me a sign-in link</a>
+
+        <p class="acct-disclaimer">Protected client area. Submitting documents does not create an attorney-client relationship. Imverica is not a law firm and does not provide legal advice.</p>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<style is:global>
+  html, body { margin: 0; padding: 0; }
+  body { background: #11202E; }
+  .acct *, .acct *::before, .acct *::after { box-sizing: border-box; }
+  .acct ::selection { background: #1b2a3d; color: #f0d9a6; }
+  .acct input::placeholder { color: #9AA8B4; }
+
+  .acct {
+    font-family: 'Archivo', system-ui, sans-serif;
+    color: #16232F;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+  }
+
+  /* LEFT brand panel */
+  .acct-brand {
+    background: #11202E;
+    color: #EAE2D3;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 38px 56px 44px;
+  }
+  .acct-ring { position: absolute; border-radius: 50%; pointer-events: none; }
+  .acct-ring--lg { right: -120px; top: -80px; width: 360px; height: 360px; border: 1px solid rgba(215,162,78,.14); }
+  .acct-ring--sm { right: -30px; top: 30px; width: 230px; height: 230px; border: 1px solid rgba(215,162,78,.1); }
+  .acct-logo { position: relative; display: inline-flex; }
+  .acct-logochip { display: inline-flex; background: #FBF8F2; border-radius: 10px; padding: 9px 14px; box-shadow: 0 8px 22px rgba(0,0,0,.25); }
+  .acct-logochip img { height: 34px; width: auto; display: block; }
+  .acct-brand-copy { position: relative; max-width: 430px; }
+  .acct-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: #D7A24E; margin-bottom: 18px; }
+  .acct-brand-copy h1 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 38px; line-height: 1.12; letter-spacing: -.02em; margin: 0 0 26px; color: #F1E9DA; text-wrap: balance; }
+  .acct-perks { display: flex; flex-direction: column; gap: 16px; }
+  .acct-perk { display: flex; gap: 14px; align-items: flex-start; }
+  .acct-perk-icon { width: 34px; height: 34px; border-radius: 9px; background: rgba(215,162,78,.12); border: 1px solid rgba(215,162,78,.34); color: #D7A24E; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .acct-perk-title { font-family: 'Newsreader', serif; font-size: 17px; color: #F1E9DA; line-height: 1.25; }
+  .acct-perk-desc { font-size: 13px; color: #9FAAB5; line-height: 1.45; margin-top: 2px; }
+  .acct-contact { position: relative; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7E8A95; letter-spacing: .02em; line-height: 1.7; }
+
+  /* RIGHT auth panel */
+  .acct-auth { background: #F4F0E8; display: flex; flex-direction: column; position: relative; }
+  .acct-auth-dots { position: absolute; inset: 0; background-image: radial-gradient(#dcd2bd 1px, transparent 1px); background-size: 26px 26px; opacity: .4; pointer-events: none; }
+  .acct-auth-top { position: relative; display: flex; align-items: center; justify-content: flex-end; gap: 14px; padding: 24px 48px; }
+  .acct-langs { display: flex; align-items: center; gap: 3px; background: #fff; border: 1px solid #E4DCCB; border-radius: 999px; padding: 3px; }
+  .acct-lang { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .04em; border: none; cursor: pointer; border-radius: 999px; padding: 5px 11px; background: transparent; color: #7C8794; }
+  .acct-lang.is-active { background: #B98C3E; color: #11202E; }
+  .acct-back { font-size: 13px; color: #5A6671; text-decoration: none; font-weight: 500; }
+  .acct-back:hover { color: #9C7430; }
+  .acct-auth-body { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px 48px 48px; }
+  .acct-card { width: 100%; max-width: 400px; }
+  .acct-tabs { display: flex; gap: 4px; background: #EBE3D3; border-radius: 11px; padding: 4px; margin-bottom: 28px; }
+  .acct-tab { flex: 1; border: none; cursor: pointer; border-radius: 8px; padding: 10px; font-family: 'Archivo', sans-serif; font-size: 13.5px; font-weight: 600; background: transparent; color: #7C8794; }
+  .acct-tab.is-active { background: #fff; color: #16232F; box-shadow: 0 1px 2px rgba(20,32,46,.12); }
+  .acct-card h2 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 30px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 6px; color: #13202E; }
+  .acct-card > p { font-size: 14.5px; color: #5A6671; margin: 0 0 26px; line-height: 1.55; }
+  .acct-field { margin-bottom: 16px; }
+  .acct-field label { display: block; font-size: 12.5px; font-weight: 600; color: #3C4A55; margin-bottom: 7px; }
+  .acct-field input { width: 100%; border: 1px solid #E0D7C5; background: #fff; border-radius: 10px; padding: 13px 15px; font-family: 'Archivo', sans-serif; font-size: 15px; color: #16232F; outline: none; transition: border-color .15s ease; }
+  .acct-field input:focus { border-color: #B98C3E; }
+  .acct-field-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+  .acct-field-row label { margin-bottom: 0; }
+  .acct-forgot { font-size: 12px; color: #9C7430; text-decoration: none; font-weight: 600; }
+  .acct-submit { width: 100%; background: #16232F; color: #F4F0E8; border: none; border-radius: 10px; padding: 14px; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background .18s ease; }
+  .acct-submit:hover { background: #0c1722; }
+  .acct-or { display: flex; align-items: center; gap: 14px; margin: 22px 0; }
+  .acct-or-line { flex: 1; height: 1px; background: #E4DCCB; }
+  .acct-or-text { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: #9AA3AD; }
+  .acct-magic { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #fff; border: 1px solid #E0D7C5; border-radius: 10px; padding: 13px; text-decoration: none; color: #283742; font-size: 14.5px; font-weight: 500; transition: border-color .18s ease; }
+  .acct-magic:hover { border-color: #B98C3E; }
+  .acct-disclaimer { font-size: 12px; line-height: 1.6; color: #94928a; margin: 24px 0 0; text-align: center; text-wrap: pretty; }
+
+  @media (max-width: 860px) {
+    .acct { grid-template-columns: 1fr; }
+    .acct-brand { padding: 28px 28px 32px; gap: 28px; }
+    .acct-brand-copy h1 { font-size: 30px; }
+    .acct-auth-top { padding: 18px 24px; }
+    .acct-auth-body { padding: 8px 24px 40px; }
+  }
+</style>
+
+<script>
+  (function () {
+    const form = document.getElementById('acctForm') as HTMLFormElement | null;
+    if (!form) return;
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.acct-tab'));
+    const heading = document.getElementById('acctHeading');
+    const sub = document.getElementById('acctSub');
+    const cta = document.getElementById('acctCta');
+    const nameField = document.getElementById('acctNameField');
+    const forgot = document.getElementById('acctForgot');
+
+    const COPY = {
+      signin: {
+        heading: 'Sign in to your portal',
+        sub: 'Sign in to track your cases and documents.',
+        cta: 'Sign in →'
+      },
+      create: {
+        heading: 'Create your account',
+        sub: 'Set up a secure portal to start and manage your case.',
+        cta: 'Create account →'
+      }
+    } as const;
+
+    function setMode(mode: 'signin' | 'create') {
+      tabs.forEach((t) => t.classList.toggle('is-active', t.getAttribute('data-mode') === mode));
+      const c = COPY[mode];
+      if (heading) heading.textContent = c.heading;
+      if (sub) sub.textContent = c.sub;
+      if (cta) cta.textContent = c.cta;
+      if (nameField) nameField.hidden = mode !== 'create';
+      if (forgot) forgot.style.display = mode === 'signin' ? '' : 'none';
+    }
+
+    tabs.forEach((t) => t.addEventListener('click', () => setMode((t.getAttribute('data-mode') as 'signin' | 'create') || 'signin')));
+
+    const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('.acct-lang'));
+    pills.forEach((p) => p.addEventListener('click', () => {
+      pills.forEach((x) => x.classList.remove('is-active'));
+      p.classList.add('is-active');
+    }));
+
+    // Visual only — wire to the real auth backend.
+    form.addEventListener('submit', (e) => { e.preventDefault(); });
+  })();
+</script>
+</body>
+</html>
