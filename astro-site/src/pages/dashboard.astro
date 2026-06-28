@@ -1,0 +1,244 @@
+---
+/**
+ * Client Portal dashboard ("Personal account") — Claude Design.
+ *
+ * Standalone logged-in view: app header (real logo, language pills, user +
+ * sign out), navy welcome banner, and three card sections. Placeholder user
+ * data (Frank / Good afternoon) and links — wire to the real auth + routes.
+ *
+ * Layout note: every section uses a 3-column grid so the rows always fill
+ * evenly (3, 9, 6 items → 1/3/2 full rows) — no orphan tile in a last row.
+ * The user name in the welcome heading is the gold-italic emphasis word.
+ */
+const userName = 'Frank';
+const greeting = 'Good afternoon';
+const initial = (userName.trim()[0] || 'F').toUpperCase();
+const languages = ['EN', 'RU', 'UA', 'ES'];
+
+type Card = { glyph: string; title: string; sub: string; href: string; primary?: boolean };
+const sections: { kicker: string; items: Card[] }[] = [
+  {
+    kicker: 'Start a request',
+    items: [
+      { glyph: '+', title: 'New request', sub: 'Start a document package', href: '/#get-started', primary: true },
+      { glyph: '🔍', title: 'All CA Court Forms', sub: 'Browse official forms & fillable drafts', href: '#' },
+      { glyph: '📤', title: 'Upload documents', sub: 'Drop files into a request', href: '#' }
+    ]
+  },
+  {
+    kicker: 'Service areas',
+    items: [
+      { glyph: '⚖️', title: 'Small Claims', sub: 'Prepare California court forms', href: '/sc' },
+      { glyph: '💍', title: 'Family Law', sub: 'Divorce, custody & support forms', href: '/fl' },
+      { glyph: '🛂', title: 'USCIS', sub: 'Generate immigration PDFs', href: '/immigration' },
+      { glyph: '🏛️', title: 'Immigration Court', sub: 'EOIR appeals & cancellation', href: '/eoir-immigration-court' },
+      { glyph: '🏢', title: 'Business', sub: 'LLC, EIN, DBA & corporate filings', href: '/business' },
+      { glyph: '🛡️', title: 'Restraining Orders', sub: 'DV, civil harassment & elder abuse', href: '/california-restraining-orders' },
+      { glyph: '🏠', title: 'Eviction', sub: 'Unlawful detainer — landlord or tenant', href: '/california-unlawful-detainer' },
+      { glyph: '📜', title: 'Probate', sub: 'Estate & inheritance filings', href: '/california-probate' },
+      { glyph: '🧹', title: 'Expungement', sub: 'Clear & seal criminal records', href: '/california-expungement' }
+    ]
+  },
+  {
+    kicker: 'Your account',
+    items: [
+      { glyph: '📂', title: 'My documents', sub: 'All files across requests', href: '#' },
+      { glyph: '💬', title: 'Message us', sub: 'Ask about your documents', href: '#' },
+      { glyph: '📞', title: 'Call us', sub: '+1 (916) 399-3992', href: 'tel:+19163993992' },
+      { glyph: '👤', title: 'Profile', sub: 'Name, phone, settings', href: '#' },
+      { glyph: '🔔', title: 'Notifications', sub: 'Replies & status updates', href: '#' },
+      { glyph: '❓', title: 'Help & FAQ', sub: 'What is a California LDA?', href: '/lda' }
+    ]
+  }
+];
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal account — Imverica Legal Solutions</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="dash">
+
+  <!-- APP HEADER -->
+  <header class="dash-header">
+    <div class="dash-header-inner">
+      <a class="dash-logo" href="/" aria-label="Imverica Legal Solutions">
+        <img src="/logo-nav.png" width="279" height="92" alt="Imverica Legal Solutions" />
+      </a>
+      <div class="dash-header-right">
+        <div class="dash-langs">
+          {languages.map((code, i) => (
+            <button type="button" class={`dash-lang${i === 0 ? ' is-active' : ''}`} data-lang={code}>{code}</button>
+          ))}
+        </div>
+        <span class="dash-hdiv" aria-hidden="true"></span>
+        <div class="dash-user">
+          <span class="dash-avatar" aria-hidden="true">{initial}</span>
+          <span class="dash-username">{userName}</span>
+        </div>
+        <a class="dash-signout" href="/account">Sign out</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="dash-main">
+
+    <!-- WELCOME BANNER -->
+    <div class="dash-welcome">
+      <div class="dash-ring dash-ring--lg" aria-hidden="true"></div>
+      <div class="dash-ring dash-ring--sm" aria-hidden="true"></div>
+      <div class="dash-welcome-row">
+        <div class="dash-welcome-copy">
+          <div class="dash-welcome-kicker">Imverica · Personal account</div>
+          <h1>{greeting}, <em class="dash-em">{userName}</em>!</h1>
+          <p>Securely upload documents, message our team, and track every request — all in one place.</p>
+        </div>
+        <div class="dash-welcome-actions">
+          <a class="dash-btn dash-btn--gold" href="/#get-started">+ New request</a>
+          <a class="dash-btn dash-btn--ghost" href="#">Upload documents</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIONS -->
+    {sections.map((sec) => (
+      <section class="dash-section">
+        <div class="dash-sechead">
+          <span class="dash-seckicker">{sec.kicker}</span>
+          <span class="dash-secline" aria-hidden="true"></span>
+        </div>
+        <div class="dash-grid">
+          {sec.items.map((it) => (
+            <a class={`dash-card${it.primary ? ' is-primary' : ''}`} href={it.href}>
+              <div class="dash-chip" aria-hidden="true">{it.glyph}</div>
+              <div class="dash-cardbody">
+                <div class="dash-cardtitle">{it.title}</div>
+                <div class="dash-cardsub">{it.sub}</div>
+              </div>
+              <span class="dash-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+
+  </div>
+
+  <footer class="dash-footer">
+    <div class="dash-footer-inner">
+      <div class="dash-footer-contact">+1 (916) 399-3992 · info@imverica.com</div>
+      <div class="dash-footer-legal">Imverica is not a law firm and does not provide legal advice. Documents are prepared solely at the client's direction.</div>
+    </div>
+  </footer>
+
+</div>
+
+<style is:global>
+  html, body { margin: 0; padding: 0; }
+  body { background: #F4F0E8; }
+  .dash *, .dash *::before, .dash *::after { box-sizing: border-box; }
+  .dash ::selection { background: #1b2a3d; color: #f0d9a6; }
+
+  .dash {
+    font-family: 'Archivo', system-ui, sans-serif;
+    color: #16232F;
+    background: #F4F0E8;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* APP HEADER */
+  .dash-header { position: sticky; top: 0; z-index: 50; background: rgba(244,240,232,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #E4DCCB; }
+  .dash-header-inner { max-width: 1220px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .dash-logo { display: inline-flex; flex-shrink: 0; }
+  .dash-logo img { height: 38px; width: auto; display: block; }
+  .dash-header-right { display: flex; align-items: center; gap: 16px; }
+  .dash-langs { display: flex; align-items: center; gap: 3px; background: #fff; border: 1px solid #E4DCCB; border-radius: 999px; padding: 3px; }
+  .dash-lang { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .04em; border: none; cursor: pointer; border-radius: 999px; padding: 5px 11px; background: transparent; color: #9AA8B4; }
+  .dash-lang.is-active { background: #B98C3E; color: #11202E; }
+  .dash-hdiv { width: 1px; height: 24px; background: #E0D7C5; }
+  .dash-user { display: flex; align-items: center; gap: 10px; }
+  .dash-avatar { width: 34px; height: 34px; border-radius: 50%; background: #11202E; color: #D7A24E; display: flex; align-items: center; justify-content: center; font-family: 'Newsreader', serif; font-size: 16px; font-weight: 600; }
+  .dash-username { font-size: 14px; font-weight: 600; color: #16232F; }
+  .dash-signout { font-size: 13px; font-weight: 600; color: #5A6671; text-decoration: none; border: 1px solid #D8CDB8; border-radius: 9px; padding: 8px 14px; transition: border-color .18s, color .18s; }
+  .dash-signout:hover { border-color: #B98C3E; color: #16232F; }
+
+  .dash-main { max-width: 1220px; margin: 0 auto; padding: 28px 32px 72px; }
+
+  /* WELCOME BANNER */
+  .dash-welcome { background: #11202E; border-radius: 20px; padding: 40px 44px; position: relative; overflow: hidden; }
+  .dash-ring { position: absolute; border-radius: 50%; pointer-events: none; }
+  .dash-ring--lg { right: -70px; top: -70px; width: 300px; height: 300px; border: 1px solid rgba(215,162,78,.16); }
+  .dash-ring--sm { right: 30px; top: 36px; width: 180px; height: 180px; border: 1px solid rgba(215,162,78,.1); }
+  .dash-welcome-row { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .dash-welcome-copy { max-width: 640px; }
+  .dash-welcome-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #D7A24E; margin-bottom: 16px; }
+  .dash-welcome-copy h1 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 42px; line-height: 1.05; letter-spacing: -.02em; margin: 0; color: #F1E9DA; }
+  .dash-em { font-style: italic; color: #D7A24E; }
+  .dash-welcome-copy p { font-size: 16px; line-height: 1.6; color: #AEB9C3; margin: 14px 0 0; max-width: 520px; text-wrap: pretty; }
+  .dash-welcome-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .dash-btn { text-decoration: none; font-weight: 600; font-size: 14.5px; padding: 13px 22px; border-radius: 10px; white-space: nowrap; transition: background .18s; }
+  .dash-btn--gold { background: #B98C3E; color: #11202E; }
+  .dash-btn--gold:hover { background: #e6b258; }
+  .dash-btn--ghost { background: rgba(255,255,255,.06); color: #EAE2D3; border: 1px solid rgba(255,255,255,.16); }
+  .dash-btn--ghost:hover { background: rgba(255,255,255,.12); }
+
+  /* SECTIONS */
+  .dash-section { margin-top: 38px; }
+  .dash-sechead { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .dash-seckicker { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #9C7430; }
+  .dash-secline { flex: 1; height: 1px; background: #E4DCCB; }
+  /* 3 columns everywhere → 3, 9, 6 items fill evenly (no orphan last-row tile). */
+  .dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 860px) { .dash-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .dash-grid { grid-template-columns: 1fr; } }
+
+  .dash-card { display: flex; align-items: center; gap: 15px; text-decoration: none; background: #fff; border: 1px solid #E7DFD0; border-radius: 14px; padding: 18px 20px; min-height: 96px; transition: transform .18s, box-shadow .18s, border-color .18s; }
+  .dash-card:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -26px rgba(20,32,46,.42); border-color: #D8C8A4; }
+  .dash-chip { width: 44px; height: 44px; flex-shrink: 0; border-radius: 11px; background: #F4EDDC; border: 1px solid #EADFC6; display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 1; }
+  .dash-cardbody { flex: 1; min-width: 0; }
+  .dash-cardtitle { font-family: 'Newsreader', serif; font-weight: 500; font-size: 18px; letter-spacing: -.01em; color: #15222E; line-height: 1.15; }
+  .dash-cardsub { font-size: 12.5px; line-height: 1.4; color: #7C8794; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dash-arrow { color: #C5BBA6; font-size: 15px; flex-shrink: 0; }
+
+  .dash-card.is-primary { background: #16232F; border-color: #16232F; }
+  .dash-card.is-primary .dash-chip { background: rgba(215,162,78,.16); border-color: rgba(215,162,78,.4); color: #D7A24E; font-family: 'Newsreader', serif; font-size: 24px; }
+  .dash-card.is-primary .dash-cardtitle { color: #F1E9DA; }
+  .dash-card.is-primary .dash-cardsub { color: #A9B4BF; }
+  .dash-card.is-primary .dash-arrow { color: #D7A24E; }
+
+  /* FOOTER */
+  .dash-footer { border-top: 1px solid #E4DCCB; background: #F4F0E8; }
+  .dash-footer-inner { max-width: 1220px; margin: 0 auto; padding: 22px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .dash-footer-contact { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8B7B5C; letter-spacing: .02em; }
+  .dash-footer-legal { font-size: 11.5px; color: #94928a; line-height: 1.5; max-width: 760px; text-wrap: pretty; }
+
+  @media (max-width: 860px) {
+    .dash-header-inner { padding: 12px 20px; gap: 14px; }
+    .dash-username { display: none; }
+    .dash-main { padding: 22px 20px 56px; }
+    .dash-welcome { padding: 30px 26px; }
+    .dash-welcome-copy h1 { font-size: 32px; }
+  }
+</style>
+
+<script>
+  (function () {
+    const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('.dash-lang'));
+    pills.forEach((p) => p.addEventListener('click', () => {
+      pills.forEach((x) => x.classList.remove('is-active'));
+      p.classList.add('is-active');
+    }));
+  })();
+</script>
+</body>
+</html>
