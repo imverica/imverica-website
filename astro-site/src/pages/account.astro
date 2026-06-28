@@ -44,7 +44,7 @@ const languages = ['EN', 'RU', 'UA', 'ES'];
 
     <div class="acct-brand-copy">
       <div class="acct-kicker">Client Portal</div>
-      <h1>Your cases, documents, and messages — in one place.</h1>
+      <h1>Your cases, documents, and messages — <em class="acct-em">in one place</em>.</h1>
       <div class="acct-perks">
         {perks.map((p) => (
           <div class="acct-perk">
@@ -155,6 +155,7 @@ const languages = ['EN', 'RU', 'UA', 'ES'];
   .acct-brand-copy { position: relative; max-width: 430px; }
   .acct-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: #D7A24E; margin-bottom: 18px; }
   .acct-brand-copy h1 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 38px; line-height: 1.12; letter-spacing: -.02em; margin: 0 0 26px; color: #F1E9DA; text-wrap: balance; }
+  .acct-brand-copy h1 .acct-em { font-style: italic; color: #D7A24E; }
   .acct-perks { display: flex; flex-direction: column; gap: 16px; }
   .acct-perk { display: flex; gap: 14px; align-items: flex-start; }
   .acct-perk-icon { width: 34px; height: 34px; border-radius: 9px; background: rgba(215,162,78,.12); border: 1px solid rgba(215,162,78,.34); color: #D7A24E; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
