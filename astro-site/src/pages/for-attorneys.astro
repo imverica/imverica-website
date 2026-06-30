@@ -253,40 +253,33 @@ const schema = {
   />
 
   <style is:global>
-    /* The whole hero reads as ONE tidy LEFT-ALIGNED block: the eyebrow, the
-       two-line headline ("Affordable paralegal support" / "under your
-       direction" — the line break is explicit in headingHtml, no em-dash), the
-       B2B paragraph, and the action buttons all share the SAME left edge and a
-       common measure, so the block lines up cleanly on the left and is bounded
-       on the right (no centered, ragged, "sticking-out" lines). The global
-       .hero centers everything; these scoped overrides flip this one page's
-       hero to left-aligned within a shared 760px column. */
+    /* The hero reads as one CENTERED block — eyebrow, two-line headline, B2B
+       paragraph, and action buttons all share a common measure and center
+       within the column, matching the other section heroes. */
     .for-attorneys-hero .hero-wrap .hero {
       max-width: 880px;
       margin-inline: auto;
-      text-align: left;
+      text-align: center;
     }
     .for-attorneys-hero .hero-wrap .hero .hero-eyebrow {
-      text-align: left;
-      margin-left: 0;
+      text-align: center;
     }
     .for-attorneys-hero .hero-wrap .hero h1 {
       max-width: 760px;
-      margin-left: 0;
+      margin-inline: auto;
       font-size: clamp(26px, 4.4vw, 48px);
       line-height: 1.08;
-      text-align: left;
+      text-align: center;
       text-wrap: balance;
     }
     .for-attorneys-hero .hero-wrap .hero .hero-sub {
       max-width: 760px;
-      margin-left: 0;
-      margin-right: 0;
-      text-align: left;
+      margin-inline: auto;
+      text-align: center;
       text-wrap: pretty;
     }
     .for-attorneys-hero .hero-wrap .hero .hero-actions {
-      justify-content: flex-start;
+      justify-content: center;
     }
     /* Fee-modal scope rows are injected by JS, so they must be GLOBAL (scoped
        styles don't reach runtime-inserted nodes). Icon left, text right. */

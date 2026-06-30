@@ -57,7 +57,7 @@ const COPY = {
   }
 } as const;
 const t = COPY[lang];
-const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
+const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'];
 ---
 
 {TURNSTILE_SITE_KEY && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>}
@@ -239,7 +239,11 @@ const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM
   .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
   .field.full, .schedule-form > .full { grid-column: 1 / -1; }
   .field > span { color: var(--navy-dark); font-size: 14px; font-weight: 700; }
-  .field input, .field select, .field textarea { width: 100%; border: 1px solid #cbd2dc; border-radius: 10px; padding: 12px 13px; background: #fff; color: var(--navy-dark); font: inherit; }
+  .field input, .field select, .field textarea { width: 100%; min-width: 0; max-width: 100%; border: 1px solid #cbd2dc; border-radius: 10px; padding: 12px 13px; background: #fff; color: var(--navy-dark); font: inherit; }
+  /* iOS renders native date inputs at an intrinsic min-width that ignores
+     width:100% and spills past the card edge — neutralize the native chrome
+     so the field respects its container. */
+  .field input[type="date"] { -webkit-appearance: none; appearance: none; }
   .field textarea { resize: vertical; }
   .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,46,74,.11); }
   .field small { color: #6b7280; font-size: 12px; }
