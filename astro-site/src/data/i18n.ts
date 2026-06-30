@@ -157,7 +157,7 @@ export const NAV: Record<Locale, {
     quote: 'Start Your Case',
     start: 'Start document preparation',
     phoneCta: '📞 +1 (916) 399-3992',
-    schedule: 'Schedule Appointment'
+    schedule: 'Schedule a Consultation'
   },
   ru: {
     uscis: 'USCIS | EOIR',
