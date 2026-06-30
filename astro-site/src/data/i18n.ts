@@ -251,26 +251,32 @@ export const FOOTER: Record<Locale, {
 export const HERO: Record<Locale, {
   eyebrow: string;
   heading: string;
+  /** Heading with the closing word emphasized (gold italic) to match the brand hero. */
+  headingHtml: string;
   sub: string;
 }> = {
   en: {
     eyebrow: 'California · Registered LDA · Immigration Consultant',
     heading: 'What document do you need prepared?',
+    headingHtml: 'What document do you need <em class="hero-em">prepared?</em>',
     sub: 'Describe your situation or enter a form number. We prepare USCIS petitions (I-485, I-130, I-765, I-589, N-400, I-131, I-90), EOIR immigration court documents, California family law forms (FL-100, FL-300), small claims (SC-100), unlawful detainer, restraining orders, probate, and fee waivers — for clients across California and worldwide.'
   },
   ru: {
     eyebrow: 'Калифорния · Лицензированный LDA · Иммиграционный консультант',
     heading: 'Какой документ нужно подготовить?',
+    headingHtml: 'Какой документ нужно <em class="hero-em">подготовить?</em>',
     sub: 'Опишите свою ситуацию или введите номер формы. Мы готовим петиции USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90), документы иммиграционного суда EOIR, калифорнийские формы семейного права (FL-100, FL-300), малые иски (SC-100), unlawful detainer (выселение), защитные ордера, наследственные дела и заявления об освобождении от пошлины — для клиентов по всей Калифорнии и по всему миру.'
   },
   uk: {
     eyebrow: 'Каліфорнія · Ліцензований LDA · Імміграційний консультант',
     heading: 'Який документ потрібно підготувати?',
+    headingHtml: 'Який документ потрібно <em class="hero-em">підготувати?</em>',
     sub: 'Опишіть свою ситуацію або введіть номер форми. Ми готуємо петиції USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90), документи імміграційного суду EOIR, каліфорнійські форми сімейного права (FL-100, FL-300), малі позови (SC-100), unlawful detainer (виселення), захисні ордери, спадкові справи та заяви про звільнення від мита — для клієнтів по всій Каліфорнії та по всьому світу.'
   },
   es: {
     eyebrow: 'California · LDA con licencia · Consultor de inmigración',
     heading: '¿Qué documento necesita preparar?',
+    headingHtml: '¿Qué documento necesita <em class="hero-em">preparar?</em>',
     sub: 'Describa su situación o ingrese un número de formulario. Preparamos peticiones de USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90), documentos del tribunal de inmigración EOIR, formularios de derecho familiar de California (FL-100, FL-300), reclamos menores (SC-100), unlawful detainer (desalojo), órdenes de restricción, sucesiones y exenciones de tasas — para clientes en todo California y en todo el mundo.'
   }
 };

@@ -21,23 +21,22 @@ const schema = {
   <Hero
     eyebrow="California Family Law · Family Code §2330 et seq."
     heading="California Family Law Forms"
+    headingHtml={'California <em class="hero-em">Family Law</em> Forms'}
     sub="Document preparation for self-represented family-law parties: divorce and response packets, custody and support requests, financial disclosures, property declarations, UCCJEA forms, fee waivers, and related FL/FW court documents."
     ctaPrimary={{ href: '/#get-started?form=FL-100', text: 'Start my family-law package' }}
   />
 
   <CategoryTiles
     kicker="Pick a Family Law matter"
-    heading="California Family Law"
-    intro="Start with the family-law matter first. The form-specific packets are listed below."
     tiles={[
-      { icon: '💍', title: 'FL-100 — Dissolution',       desc: 'Divorce petition (no-fault), summons, and service.', href: '/fl-100-divorce',  color: 'var(--navy)' },
-      { icon: '👶', title: 'FL-300 — Custody / Support',  desc: 'Request for Order: temporary orders, modification.', href: '/fl-300-request-for-order',  color: 'var(--terracotta)' },
-      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'Financial disclosures for support and judgment.',    href: '/fl-150-income-expense-declaration',  color: 'var(--sage)' },
-      { icon: '🏠', title: 'FL-160 — Property',           desc: 'Community / separate property declaration.',         href: '/fl-160-property-declaration',  color: 'var(--gold)' },
-      { icon: '🛡️', title: 'DV-100 — Restraining order', desc: 'Domestic-violence TRO + RO After Hearing.',         href: '/california-restraining-orders', color: 'var(--terracotta-deep)' },
-      { icon: '📑', title: 'FL-105 / UCCJEA',              desc: 'Child-custody jurisdiction declaration.',            href: '/fl-105-uccjea', color: 'var(--navy-light)' },
-      { icon: '📝', title: 'FL-120 — Response',           desc: 'Respondent answer within 30 days of service.',       href: '/fl-120-divorce-response', color: 'var(--navy)' },
-      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Court-fee waiver if you qualify.',                   href: '/fw-001-fee-waiver', color: 'var(--sage)' }
+      { icon: '💍', title: 'FL-100 — Dissolution',       desc: 'Divorce petition (no-fault), summons, and service.', href: '/fl-100-divorce', price: 'from $799' },
+      { icon: '👶', title: 'FL-300 — Custody / Support',  desc: 'Request for Order: temporary orders, modification.', href: '/fl-300-request-for-order', price: '$349' },
+      { icon: '💰', title: 'FL-150 — Income & Expense',   desc: 'Financial disclosures for support and judgment.',    href: '/fl-150-income-expense-declaration', price: '$199' },
+      { icon: '🏠', title: 'FL-160 — Property',           desc: 'Community / separate property declaration.',         href: '/fl-160-property-declaration', price: '$199' },
+      { icon: '🛡️', title: 'DV-100 — Restraining order', desc: 'Domestic-violence TRO + RO After Hearing.',         href: '/california-restraining-orders' },
+      { icon: '📑', title: 'FL-105 — UCCJEA',             desc: 'Child-custody jurisdiction declaration.',            href: '/fl-105-uccjea' },
+      { icon: '📝', title: 'FL-120 — Response',           desc: 'Respondent answer within 30 days of service.',       href: '/fl-120-divorce-response' },
+      { icon: '🧾', title: 'FW-001 — Fee waiver',         desc: 'Court-fee waiver if you qualify.',                   href: '/fw-001-fee-waiver' }
     ]}
   />
 

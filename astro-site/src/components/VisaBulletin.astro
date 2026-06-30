@@ -99,107 +99,118 @@ const {
 
 <style>
   .visa-section {
-    background: #fffaf2;
-    border-top: 1px solid rgba(40, 30, 20, 0.08);
+    background: var(--paper);
     padding: var(--space-section) 1.5rem;
   }
 
   .visa-inner {
-    max-width: 1200px;
+    position: relative;
+    overflow: hidden;
+    max-width: 1220px;
     margin: 0 auto;
+    background: var(--navy-dark);
+    border-radius: 20px;
+    padding: 46px;
     display: grid;
-    grid-template-columns: minmax(280px, 0.85fr) minmax(360px, 1.15fr);
-    gap: 28px;
-    align-items: stretch;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
   }
+  /* Decorative concentric gold rings, top-right. */
+  .visa-inner::before,
+  .visa-inner::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .visa-inner::before { right: -40px; top: -40px; width: 240px; height: 240px; border: 1px solid rgba(215, 162, 78, 0.18); }
+  .visa-inner::after { right: 10px; top: 10px; width: 160px; height: 160px; border: 1px solid rgba(215, 162, 78, 0.12); }
 
+  .visa-copy { position: relative; }
   .visa-kicker {
-    color: var(--terracotta-deep);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.6px;
+    font-family: var(--font-mono);
+    color: var(--gold-light);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
-
   .visa-copy h2 {
     font-family: var(--font-display);
     font-size: var(--fs-h2);
-    font-weight: 700;
-    letter-spacing: -0.005em;
+    font-weight: 500;
+    color: #F1E9DA;
+    letter-spacing: -0.02em;
     margin-bottom: 14px;
   }
-
-  .visa-copy p,
-  .visa-panel p {
-    color: #3a4a5e;
+  .visa-copy p {
+    color: #AEB9C3;
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.6;
     margin: 0;
   }
 
   .visa-panel {
-    background: #fff;
-    border: 1px solid rgba(40, 30, 20, 0.1);
-    border-radius: 12px;
-    padding: 28px;
-    box-shadow: 0 8px 22px rgba(40, 30, 20, 0.05);
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 24px;
   }
-
+  .visa-panel p { color: #8FA0AE; font-size: 12.5px; line-height: 1.5; margin: 0; }
   .visa-meta {
-    color: #6b7a90;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    font-family: var(--font-mono);
+    color: #8FA0AE;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    margin-bottom: 6px;
   }
-
   .visa-panel h3 {
-    font-family: var(--font-system);
-    font-size: 22px;
-    font-weight: 700;
-    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 500;
+    color: #F1E9DA;
+    margin: 0 0 18px;
   }
-
-  .visa-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 18px 0;
-  }
-
+  .visa-legend { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 4px; }
   .visa-legend span {
-    border: 1px solid rgba(26, 46, 74, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 999px;
-    color: var(--navy);
-    background: #f5f8fb;
+    color: #C4CDD6;
+    background: rgba(255, 255, 255, 0.04);
+    font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 700;
-    padding: 6px 10px;
+    font-weight: 500;
+    padding: 6px 12px;
   }
-
   .visa-link {
     display: inline-flex;
-    color: var(--navy);
-    font-weight: 700;
-    margin-top: 2px;
+    align-items: center;
+    gap: 9px;
+    background: var(--gold-light);
+    color: var(--navy-dark);
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    margin-top: 16px;
+    transition: background 0.18s ease;
   }
-
+  .visa-link:hover { background: #e6b258; color: var(--navy-dark); }
   .visa-disclaimer {
-    border-top: 1px solid rgba(40, 30, 20, 0.08);
-    font-size: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #8FA0AE;
+    font-size: 12.5px !important;
     margin-top: 18px !important;
     padding-top: 14px;
   }
 
   @media (max-width: 820px) {
-    .visa-section {
-      padding: var(--space-section) 1.25rem;
-    }
-
-    .visa-inner {
-      grid-template-columns: 1fr;
-    }
+    .visa-section { padding: var(--space-section) 1.25rem; }
+    .visa-inner { grid-template-columns: 1fr; gap: 28px; padding: 30px; }
   }
 </style>

@@ -58,6 +58,15 @@ const STRINGS = {
 } as const;
 const T = STRINGS[lang];
 
+// Right-hand mono meta block in the hero.
+const META: Record<Lang, { num: string; flows: string; fee: string; intake: string }> = {
+  en: { num: '12', flows: 'priority flows', fee: 'Flat-fee · disclosed upfront', intake: 'EN · RU · UA · ES intake' },
+  ru: { num: '12', flows: 'приоритетных форм', fee: 'Фикс. цена · заранее', intake: 'Приём на EN · RU · UA · ES' },
+  uk: { num: '12', flows: 'пріоритетних форм', fee: 'Фікс. ціна · наперед', intake: 'Прийом на EN · RU · UA · ES' },
+  es: { num: '12', flows: 'formas prioritarias', fee: 'Tarifa fija · informada', intake: 'Atención EN · RU · UA · ES' }
+};
+const M = META[lang];
+
 const TITLES = {
   en: {
     u4u: { title: 'U4U — Uniting for Ukraine', desc: 'Humanitarian parole, I-765 work permit (c)(11) and TPS re-registration support for Ukrainian parolees.' },
@@ -149,22 +158,43 @@ const cats = [
   { ...N.vawa,  href: `${lp}/vawa-self-petition`,     flag: '🛡️', color: 'var(--terracotta)' }
 ];
 ---
-<section class="imm-cats-section">
-  <div class="imm-cats-inner">
-    <div class="imm-cats-kicker">{T.kicker}</div>
-    <h2>{T.h2}</h2>
-    <p>{T.intro}</p>
+<section class="imm-hero">
+  <div class="imm-hero-inner">
+    <div class="imm-hero-grid">
+      <div class="imm-hero-copy">
+        <div class="imm-hero-eyebrow">{T.kicker}</div>
+        <h1 set:html={T.h2.replace('EOIR', '<em class="imm-hero-em">EOIR</em>')} />
+        <p>{T.intro}</p>
+      </div>
+      <div class="imm-hero-meta">
+        <div class="imm-hero-meta-row"><span class="imm-hero-meta-num">{M.num}</span> {M.flows}</div>
+        <div class="imm-hero-meta-row">{M.fee}</div>
+        <div class="imm-hero-meta-row">{M.intake}</div>
+      </div>
+    </div>
+
     <div class="imm-cats-grid">
-      {cats.map((c) => (
-        <a class="imm-cat" href={c.href}>
-          <div class="imm-cat-icon" style={`background:${c.color};`}>
-            <span aria-hidden="true">{c.flag}</span>
-          </div>
-          <div class="imm-cat-title">{c.title}</div>
-          <div class="imm-cat-desc">{c.desc}</div>
-          <div class="imm-cat-price">{priceForTitle(c.title) && <span class="tile-price">{priceForTitle(c.title)} · flat fee</span>}</div>
-        </a>
-      ))}
+      {cats.map((c) => {
+        const [code, ...rest] = c.title.split(' — ');
+        const name = rest.join(' — ') || c.title;
+        const price = priceForTitle(c.title);
+        return (
+          <a class="imm-cat" href={c.href}>
+            <div class="imm-cat-top">
+              <span class="imm-cat-emoji" aria-hidden="true">{c.flag}</span>
+              <span class="imm-cat-code">{code}</span>
+            </div>
+            <div class="imm-cat-title">{name}</div>
+            <div class="imm-cat-desc">{c.desc}</div>
+            <div class="imm-cat-foot">
+              {price
+                ? <span class="imm-cat-price">{price} · flat fee</span>
+                : <span class="imm-cat-price imm-cat-price--ask">Flat fee · ask</span>}
+              <span class="imm-cat-arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
+        );
+      })}
     </div>
 
     <div class="imm-cats-footnote">
@@ -177,97 +207,102 @@ const cats = [
 </section>
 
 <style>
-  .imm-cats-section {
-    padding: var(--space-section) 1.5rem 0;
-    background: #fff;
+  .imm-hero {
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+    padding: 58px 1.5rem var(--space-section);
   }
-  .imm-cats-inner { max-width: 1200px; margin: 0 auto; }
-  .imm-cats-kicker {
-    font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
-    text-transform: uppercase; color: var(--terracotta-deep); margin-bottom: 10px;
+  .imm-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(#dcd2bd 1px, transparent 1px);
+    background-size: 26px 26px;
+    opacity: 0.45;
+    pointer-events: none;
   }
-  /* Header block centered to match the site's centered heroes. */
-  .imm-cats-kicker, .imm-cats-section h2 { text-align: center; }
-  .imm-cats-section h2 { font-size: var(--fs-h2); font-weight: 700; margin-bottom: 14px; }
-  .imm-cats-section > .imm-cats-inner > p {
-    color: #3a4a5e; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 780px;
-    text-align: center; margin-left: auto; margin-right: auto;
+  .imm-hero-inner { position: relative; max-width: 1220px; margin: 0 auto; }
+  .imm-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 40px;
   }
-  .imm-cats-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  .imm-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: #8B7B5C;
+    border: 1px solid #DDD3BF;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 7px 15px;
+    border-radius: 999px;
+    margin-bottom: 18px;
   }
-  /* Align icon / title / description rows ACROSS tiles: each tile becomes a
-     3-row subgrid, so a 2-line title in one card pushes the whole row's
-     descriptions to the same baseline. No-subgrid browsers keep block flow. */
-  @supports (grid-template-rows: subgrid) {
-    .imm-cats-grid { grid-auto-rows: auto; }
-    .imm-cats-grid > .imm-cat { display: grid; grid-template-rows: subgrid; align-content: start; justify-items: start; }
+  .imm-hero-eyebrow::before { content: "\2605"; color: var(--gold); }
+  .imm-hero-copy h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(34px, 2.2vw + 22px, 54px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: #13202E;
+    margin: 0 0 16px;
   }
+  .imm-hero-em { font-style: italic; color: var(--gold-deep); }
+  .imm-hero-copy p { font-size: 17px; line-height: 1.6; color: var(--text-2); margin: 0; max-width: 640px; text-wrap: pretty; }
+  .imm-hero-meta {
+    justify-self: end;
+    text-align: right;
+    border-left: 1px solid var(--border);
+    padding-left: 28px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--meta);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .imm-hero-meta-num { color: var(--gold-deep); font-weight: 600; }
+  @media (max-width: 860px) {
+    .imm-hero-grid { grid-template-columns: 1fr; gap: 22px; }
+    .imm-hero-meta { justify-self: start; text-align: left; border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 18px; flex-direction: row; flex-wrap: wrap; gap: 6px 18px; }
+  }
+
+  .imm-cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   @media (max-width: 980px) { .imm-cats-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .imm-cats-grid { grid-template-columns: 1fr; } }
   .imm-cat {
-    display: block;
-    grid-row: span 4;
+    display: flex;
+    flex-direction: column;
+    min-height: 182px;
     background: #fff;
-    border: 1px solid rgba(40,30,20,0.10);
+    border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 22px 20px;
+    padding: 20px;
     text-decoration: none;
     color: inherit;
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    position: relative;
-    overflow: hidden;
   }
-  .imm-cat:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 32px rgba(40,30,20,0.10);
-    border-color: rgba(26,46,74,0.20);
-  }
-  .imm-cat-icon {
-    width: 60px; height: 60px; border-radius: 14px;
-    display: inline-flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 32px;
-    margin-bottom: 14px;
-    box-shadow: 0 8px 18px rgba(26,46,74,0.22);
-  }
-  .imm-cats-footnote {
-    margin-top: 28px;
-    padding: 18px 22px;
-    background: #fffaf2;
-    border: 1px solid rgba(40,30,20,0.08);
-    border-radius: 12px;
-    text-align: center;
-  }
-  .imm-cats-footnote p {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #3a4a5e;
-  }
-  .imm-cats-footnote a {
-    color: var(--navy);
-    font-weight: 600;
-    text-decoration: underline;
-  }
-  .imm-cats-footnote a:hover { color: var(--terracotta-deep); }
-  .imm-cats-footnote .imm-cats-source {
-    margin: 14px 0 0;
-    font-size: 11.5px;
-    line-height: 1.55;
-    color: #6b7a90;
-  }
-  .imm-cat-title {
-    font-family: var(--font-display);
-    font-size: 17px; font-weight: 700;
-    color: var(--navy-dark);
-    margin-bottom: 8px;
-    line-height: 1.25;
-  }
-  .imm-cat-desc {
-    font-size: 13px; line-height: 1.6; color: #4a5a6e;
-  }
-  /* Price chip pinned bottom-right of every tile (4th subgrid row), uniform
-     across the grid. Block fallback right-aligns via text-align. */
-  .imm-cat-price { width: 100%; margin-top: auto; justify-self: end; text-align: right; padding-top: 14px; }
-  .tile-price { display: inline-block; padding: 3px 10px; border-radius: 999px; background: rgba(219,168,95,.14); border: 1px solid rgba(219,168,95,.45); color: #7a5a18; font-size: 11.5px; font-weight: 700; letter-spacing: .3px; }
+  .imm-cat:hover { transform: translateY(-3px); box-shadow: 0 22px 40px -26px rgba(20, 32, 46, 0.42); border-color: #D8C8A4; }
+  .imm-cat-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+  .imm-cat-emoji { font-size: 24px; line-height: 1; }
+  .imm-cat-code { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--gold-deep); }
+  .imm-cat-title { font-family: var(--font-display); font-size: 19px; font-weight: 500; line-height: 1.14; letter-spacing: -0.01em; color: var(--navy-dark); margin-bottom: 8px; }
+  .imm-cat-desc { font-size: 13px; line-height: 1.5; color: var(--text-3); flex: 1; }
+  .imm-cat-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #EFE8DB; padding-top: 12px; margin-top: 14px; }
+  .imm-cat-price { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--gold-deep); }
+  .imm-cat-price--ask { color: #9AA3AD; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; }
+  .imm-cat-arrow { color: var(--gold); font-size: 15px; }
+
+  .imm-cats-footnote { margin-top: 28px; text-align: center; }
+  .imm-cats-footnote p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-2); }
+  .imm-cats-footnote a { color: var(--gold-deep); font-weight: 600; text-decoration: underline; text-decoration-color: rgba(156, 116, 48, 0.4); text-underline-offset: 2px; }
+  .imm-cats-footnote a:hover { text-decoration-color: var(--gold-deep); }
 </style>
