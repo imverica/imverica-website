@@ -8,7 +8,7 @@ const { lang = 'en' } = Astro.props;
 
 const STRINGS = {
   en: {
-    placeholder: 'Form # or your situation…',
+    placeholder: 'Type “divorce” or “I-130”…',
     aria: 'Describe the document you need prepared',
     submit: 'Find possible forms',
     examplesLabel: 'Common document preparation examples',
@@ -20,7 +20,7 @@ const STRINGS = {
     seeServices: 'See services'
   },
   ru: {
-    placeholder: 'Номер формы или ваша ситуация…',
+    placeholder: 'Напишите «развод» или I-130…',
     aria: 'Опишите документ, который нужно подготовить',
     submit: 'Найти подходящие формы',
     examplesLabel: 'Примеры запросов',
@@ -32,7 +32,7 @@ const STRINGS = {
     seeServices: 'Услуги'
   },
   uk: {
-    placeholder: 'Номер форми або ваша ситуація…',
+    placeholder: 'Напишіть «розлучення» або I-130…',
     aria: 'Опишіть документ, який потрібно підготувати',
     submit: 'Знайти відповідні форми',
     examplesLabel: 'Приклади запитів',
@@ -44,7 +44,7 @@ const STRINGS = {
     seeServices: 'Послуги'
   },
   es: {
-    placeholder: 'Formulario o su situación…',
+    placeholder: 'Escriba “divorcio” o I-130…',
     aria: 'Describa el documento que necesita preparar',
     submit: 'Encontrar formularios posibles',
     examplesLabel: 'Ejemplos comunes',
@@ -85,7 +85,9 @@ const t = STRINGS[lang] || STRINGS.en;
 <div class="ai-finder-meta">
   <span>{t.metaA}</span>
   <span>{t.metaB}</span>
-  <span>{t.metaC}</span>
+  {/* Languages get one span each so every item carries the same gold dot
+      (a single span left the inner separators as plain dark middots). */}
+  {t.metaC.split(' · ').map((language) => <span>{language}</span>)}
 </div>
 
 <div class="ai-hero-contact">
