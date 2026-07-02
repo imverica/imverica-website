@@ -1,20 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <!-- Imverica app icon: the brand scales-of-justice mark, white on navy.
-       Same geometry as the site's auth-screen logo (24x24 grid scaled). -->
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#16273f"/>
-      <stop offset="1" stop-color="#2a4060"/>
-    </linearGradient>
-  </defs>
-  <rect width="1024" height="1024" fill="url(#bg)"/>
-  <!-- 24x24 logo grid scaled x30 and centered: offset = (1024-720)/2 = 152 -->
-  <g transform="translate(152,152) scale(30)" fill="none" stroke="#f7f4ec"
-     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 3v18"/>
-    <path d="M5 21h14"/>
-    <path d="M5 7l-3 5a3 3 0 0 0 6 0L5 7Z"/>
-    <path d="M19 7l-3 5a3 3 0 0 0 6 0L19 7Z"/>
-    <path d="M3 7h18"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Imverica app icon — scales of justice from the brand mark, redrawn as
+       vector for crisp rendering at every size. Navy #143254, cream #F5F1E6. -->
+  <rect width="1024" height="1024" fill="#143254"/>
+  <g stroke="#F5F1E6" stroke-width="34" stroke-linecap="round" fill="none">
+    <line x1="512" y1="215" x2="512" y2="780"/>
+    <line x1="232" y1="322" x2="792" y2="322"/>
+    <line x1="277" y1="322" x2="182" y2="505"/>
+    <line x1="277" y1="322" x2="372" y2="505"/>
+    <line x1="747" y1="322" x2="652" y2="505"/>
+    <line x1="747" y1="322" x2="842" y2="505"/>
   </g>
+  <circle cx="512" cy="170" r="36" fill="#F5F1E6"/>
+  <path d="M160 505 H394 Q391 648 277 648 Q163 648 160 505 Z" fill="#F5F1E6"/>
+  <path d="M630 505 H864 Q861 648 747 648 Q633 648 630 505 Z" fill="#F5F1E6"/>
+  <rect x="447" y="768" width="130" height="30" rx="15" fill="#F5F1E6"/>
+  <rect x="380" y="824" width="264" height="36" rx="18" fill="#F5F1E6"/>
 </svg>
