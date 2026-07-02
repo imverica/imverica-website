@@ -439,7 +439,8 @@ img { max-width: 100%; height: auto; }
   border-radius: 999px;
   margin-bottom: 1.2rem;
 }
-.hero-eyebrow::before { content: "\2605"; color: var(--gold); }
+.hero-eyebrow::before,
+.hero-eyebrow::after { content: "\2605"; color: var(--gold); }
 /* Gold italic emphasis on the closing word of the hero headline. */
 .hero h1 .hero-em { font-style: italic; color: var(--gold-deep); }
 .hero h1 {
@@ -1172,6 +1173,10 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 880px) {
   .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
   .news-inner { grid-template-columns: 1fr; }
+  /* Single-column: the intro copy sits above the panel, so center it like
+     every other stacked section heading on phones. */
+  .news-copy { text-align: center; }
+  .news-copy p { margin-inline: auto; max-width: 560px; }
   .ai-examples { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stat-number { font-size: 42px; }
   .site-footer-inner { grid-template-columns: 1fr 1fr; }
