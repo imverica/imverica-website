@@ -7,6 +7,7 @@
 #iw-content{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;}
 .iw-header{background:#1a2e4a;color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;}
 .iw-header-title{font-weight:500;font-size:15px;}
+.iw-header-sub{font-size:11px;opacity:.65;margin-top:2px;}
 .iw-close{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:0;}
 .iw-langs{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid #eee;background:#f8f8f6;}
 .iw-lang{flex:1;padding:6px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:12px;color:#444;font-family:inherit;}
@@ -51,7 +52,10 @@
 
 <div id="iw-window">
   <div class="iw-header">
-    <div class="iw-header-title">Imverica Legal Solutions</div>
+    <div>
+      <div class="iw-header-title">Ask Imverica <span aria-hidden="true" style="color:#D7A24E;">✦</span></div>
+      <div class="iw-header-sub">Imverica Legal Solutions</div>
+    </div>
     <button class="iw-close" id="iw-close">×</button>
   </div>
   <div class="iw-langs">
@@ -71,7 +75,7 @@
   const T = {
     en: {
       menuTitle: 'How can we help you?',
-      ai: 'Chat with our assistant', aiSub: 'Get instant answers',
+      ai: 'Ask Imverica', aiSub: 'Get instant answers',
       msg: 'Send us a message', msgSub: 'We reply within 1 business day',
       tg: 'Telegram', tgSub: 'Chat on Telegram',
       call: 'Call us', callSub: '+1 (916) 399-3992',
@@ -87,7 +91,7 @@
     },
     ru: {
       menuTitle: 'Как мы можем помочь?',
-      ai: 'Чат с ассистентом', aiSub: 'Мгновенные ответы',
+      ai: 'Ask Imverica', aiSub: 'Мгновенные ответы',
       msg: 'Отправить сообщение', msgSub: 'Ответим в течение 1 рабочего дня',
       tg: 'Telegram', tgSub: 'Чат в Telegram',
       call: 'Позвонить', callSub: '+1 (916) 399-3992',
@@ -103,7 +107,7 @@
     },
     uk: {
       menuTitle: 'Як ми можемо допомогти?',
-      ai: 'Чат з асистентом', aiSub: 'Миттєві відповіді',
+      ai: 'Ask Imverica', aiSub: 'Миттєві відповіді',
       msg: 'Надіслати повідомлення', msgSub: 'Відповімо протягом 1 робочого дня',
       tg: 'Telegram', tgSub: 'Чат у Telegram',
       call: 'Зателефонувати', callSub: '+1 (916) 399-3992',
@@ -119,7 +123,7 @@
     },
     es: {
       menuTitle: '¿Cómo podemos ayudarle?',
-      ai: 'Chat con asistente', aiSub: 'Respuestas instantáneas',
+      ai: 'Ask Imverica', aiSub: 'Respuestas instantáneas',
       msg: 'Enviar mensaje', msgSub: 'Respondemos en 1 día hábil',
       tg: 'Telegram', tgSub: 'Chat en Telegram',
       call: 'Llamar', callSub: '+1 (916) 399-3992',
