@@ -472,9 +472,28 @@ img { max-width: 100%; height: auto; }
   margin-top: 1.5rem;
   flex-wrap: wrap;
 }
+/* "Ask Imverica" lockup above the finder — brand pill in the site's
+   gold-italic voice, mirroring the Ask-<Brand> assistant pattern. */
+.ai-finder-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 26px auto 0;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--navy-dark);
+  border: 1px solid #DDD3BF;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  padding: 8px 20px;
+}
+.ai-finder-brand em { font-style: italic; color: var(--gold-deep); }
+.ai-brand-spark { color: var(--gold); font-size: 15px; }
 .ai-finder {
   max-width: 700px;
-  margin: 28px auto 0;
+  margin: 14px auto 0;
 }
 .ai-finder-form {
   display: flex;
@@ -1234,8 +1253,10 @@ img { max-width: 100%; height: auto; }
     min-height: 0;
     height: 40px;
     padding: 9px 4px;
-    font-size: 16px;
+    font-size: 16px; /* >=16px so iOS doesn't zoom on focus */
   }
+  /* Hint can render smaller than typed text — keeps the example on one line. */
+  .ai-finder textarea::placeholder { font-size: 14px; }
   .ai-finder-submit {
     position: static;
     right: auto;

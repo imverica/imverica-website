@@ -8,7 +8,7 @@ const { lang = 'en' } = Astro.props;
 
 const STRINGS = {
   en: {
-    placeholder: 'Type “green card” or “I-485”…',
+    placeholder: 'Try “green card” or I-485…',
     aria: 'Describe the document you need prepared',
     submit: 'Find possible forms',
     examplesLabel: 'Common document preparation examples',
@@ -20,7 +20,7 @@ const STRINGS = {
     seeServices: 'See services'
   },
   ru: {
-    placeholder: 'Напишите «грин-карта» или I-485…',
+    placeholder: '«Грин-карта» или I-485…',
     aria: 'Опишите документ, который нужно подготовить',
     submit: 'Найти подходящие формы',
     examplesLabel: 'Примеры запросов',
@@ -32,7 +32,7 @@ const STRINGS = {
     seeServices: 'Услуги'
   },
   uk: {
-    placeholder: 'Напишіть «грін-карта» або I-485…',
+    placeholder: '«Грін-карта» або I-485…',
     aria: 'Опишіть документ, який потрібно підготувати',
     submit: 'Знайти відповідні форми',
     examplesLabel: 'Приклади запитів',
@@ -44,7 +44,7 @@ const STRINGS = {
     seeServices: 'Послуги'
   },
   es: {
-    placeholder: 'Escriba “green card” o I-485…',
+    placeholder: '“Green card” o I-485…',
     aria: 'Describa el documento que necesita preparar',
     submit: 'Encontrar formularios posibles',
     examplesLabel: 'Ejemplos comunes',
@@ -59,6 +59,10 @@ const STRINGS = {
 
 const t = STRINGS[lang] || STRINGS.en;
 ---
+
+{/* Branded assistant lockup (the "Ask Macy's / Ask Turo" pattern) — the
+    finder below IS the AI assistant, this pill just names it. */}
+<div class="ai-finder-brand">Ask <em>Imverica</em> <span class="ai-brand-spark" aria-hidden="true">✦</span></div>
 
 <div class="ai-finder" id="aiFinder">
   <form class="ai-finder-form" id="aiFinderForm">
