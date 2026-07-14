@@ -37,6 +37,7 @@ const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guar
 const { getStore } = require('@netlify/blobs');
 const { uploadAttachmentsToClientFolder, DriveDisabled } = require('./lib/google-drive');
 const { makeOrderId } = require('./lib/order-id');
+const { sendClientAck } = require('./lib/intake-ack');
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -345,18 +346,22 @@ exports.handler = async function (event) {
     return json(500, { ok: false, error: 'Could not save your request. Please try again or call us.' });
   }
 
-  // Email the owner (best-effort — request succeeds even if mail bounces).
-  let emailStatus;
-  try { emailStatus = await notifyOwner(record, attachments, driveResult); }
-  catch (err) {
-    console.error('[quick-intake] notify failed', err);
-    emailStatus = { sent: false, error: String(err && err.message || err) };
-  }
+  // Email the owner (best-effort — request succeeds even if mail bounces)
+  // and, in parallel, the client's "we received your request" acknowledgment
+  // in the language they wrote in (lib/intake-ack.js — never throws).
+  const [ownerRes, ackRes] = await Promise.allSettled([
+    notifyOwner(record, attachments, driveResult),
+    sendClientAck(record)
+  ]);
+  if (ownerRes.status === 'rejected') console.error('[quick-intake] notify failed', ownerRes.reason);
+  const emailStatus = ownerRes.status === 'fulfilled' ? ownerRes.value : { sent: false, error: String(ownerRes.reason && ownerRes.reason.message || ownerRes.reason) };
+  const ackStatus = ackRes.status === 'fulfilled' ? ackRes.value : { sent: false };
 
   return json(200, {
     ok: true,
     orderId,
     emailed: !!(emailStatus && emailStatus.sent),
+    clientAcked: !!(ackStatus && ackStatus.sent),
     attachmentCount: attachments.length,
     driveFolderUrl: driveResult && driveResult.orderFolder ? driveResult.orderFolder.webViewLink : null
   });

@@ -268,6 +268,7 @@ function summarizeRecord(record) {
 // See lib/admin-auth.js for the contract and how to provision the
 // ADMIN_TOTP_SECRET env variable.
 const { isAdmin } = require('./lib/admin-auth');
+const { sendClientAck } = require('./lib/intake-ack');
 
 // Owner notification — completed guided intakes are saved to the blob store
 // (admin console) but the operator should ALSO get an email so leads aren't
@@ -349,8 +350,15 @@ exports.handler = async function (event) {
 
     try {
       const saved = await saveRecord(record, event);
-      // Notify both owner inboxes (does not block or fail the submission).
-      notifyOwner(record).catch((e) => console.error('[intake] notify:', e && e.message));
+      // Notify both owner inboxes AND send the client their "we received
+      // your request" acknowledgment (language auto-detected from the
+      // situation text). Awaited so the emails actually leave before the
+      // lambda freezes, but allSettled — mail trouble never fails the
+      // submission itself.
+      await Promise.allSettled([
+        notifyOwner(record),
+        sendClientAck(record)
+      ]);
       return json(200, {
         ok: true,
         orderId: record.id,
