@@ -92,6 +92,8 @@ for (const lang of ['en', 'ru', 'uk', 'es']) {
   assert(`${lang} text has order id`, text.includes(ORDER));
   assert(`${lang} html has order id`, html.includes(ORDER));
   assert(`${lang} text has phone`, text.includes('+1 (916) 399-3992'));
+  assert(`${lang} signed by Fa Koch`, text.includes('Fa Koch') && html.includes('Fa Koch'));
+  assert(`${lang} sig title UPL-safe`, text.includes('Client Care · Imverica Legal Solutions') && !/attorney|lawyer/i.test('Fa Koch Client Care'));
   for (const needle of MUST_CONTAIN[lang]) {
     assert(`${lang} contains ${JSON.stringify(needle)}`, text.includes(needle) || html.includes(needle));
   }
@@ -121,6 +123,7 @@ assert('subject has short order id', reply.subject.includes(ORDER));
 assert('text quotes each line with >', reply.text.includes('> I need help with my re-parole application.')
   && reply.text.includes('> My parole expires in February 2027.'));
 assert('text has "you wrote" + PT date', reply.text.includes('On July 14, 2026, you wrote:'));
+assert('signoff before signature', reply.text.indexOf('Best regards,') < reply.text.indexOf('Fa Koch'));
 assert('html has blockquote with request', reply.html.includes('<blockquote') && reply.html.includes('re-parole application.'));
 
 // Bad/missing date → label without date; no quote block when situation empty.

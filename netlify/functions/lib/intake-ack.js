@@ -22,6 +22,13 @@ const REPLY_TO = 'info@imverica.com';
 const PHONE = '+1 (916) 399-3992';
 const SITE = 'https://imverica.com';
 
+// Personal signature (owner request 2026-07-14): the ack reads like a reply
+// from a real person, not a robot. Title deliberately UPL-safe — never
+// "attorney"/"lawyer"/"legal advisor"; Imverica is a registered LDA.
+const SIGN_NAME = 'Fa Koch';
+const SIGN_TITLE = 'Client Care · Imverica Legal Solutions';
+const SIGN_EMAIL = 'info@imverica.com';
+
 const SUPPORTED = ['en', 'ru', 'uk', 'es'];
 
 // Spanish vs English separation for Latin-script text. Only distinctive
@@ -76,6 +83,7 @@ const COPY = {
     received: 'Thank you for contacting Imverica Legal Solutions. Your request has been received, and our team will get back to you shortly — usually within one business day.',
     orderLabel: 'Your request number',
     addMore: `Want to add details or documents? Simply reply to this email or call ${PHONE}.`,
+    signoff: 'Best regards,',
     youWrote: (date) => (date ? `On ${date}, you wrote:` : 'You wrote:'),
     disclaimer: 'Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice. Documents are prepared solely at the client’s direction.'
   },
@@ -85,6 +93,7 @@ const COPY = {
     received: 'Спасибо, что обратились в Imverica Legal Solutions. Ваш запрос получен — мы свяжемся с вами в ближайшее время, обычно в течение одного рабочего дня.',
     orderLabel: 'Номер вашего запроса',
     addMore: `Хотите что-то добавить или приложить документы? Просто ответьте на это письмо или позвоните ${PHONE}.`,
+    signoff: 'С уважением,',
     youWrote: (date) => (date ? `${date} вы написали:` : 'Вы написали:'),
     disclaimer: 'Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций. Документы готовятся исключительно по поручению клиента.'
   },
@@ -94,6 +103,7 @@ const COPY = {
     received: 'Дякуємо, що звернулися до Imverica Legal Solutions. Ваш запит отримано — ми зв’яжемося з вами найближчим часом, зазвичай протягом одного робочого дня.',
     orderLabel: 'Номер вашого запиту',
     addMore: `Хочете щось додати чи прикласти документи? Просто дайте відповідь на цей лист або зателефонуйте ${PHONE}.`,
+    signoff: 'З повагою,',
     youWrote: (date) => (date ? `${date} ви написали:` : 'Ви написали:'),
     disclaimer: 'Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій. Документи готуються виключно за дорученням клієнта.'
   },
@@ -103,6 +113,7 @@ const COPY = {
     received: 'Gracias por contactar a Imverica Legal Solutions. Hemos recibido su solicitud y nuestro equipo se pondrá en contacto con usted en breve, normalmente dentro de un día hábil.',
     orderLabel: 'Número de su solicitud',
     addMore: `¿Desea agregar algo o adjuntar documentos? Simplemente responda a este correo o llame al ${PHONE}.`,
+    signoff: 'Atentamente,',
     youWrote: (date) => (date ? `El ${date}, usted escribió:` : 'Usted escribió:'),
     disclaimer: 'Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal. Los documentos se preparan únicamente bajo la dirección del cliente.'
   }
@@ -138,7 +149,11 @@ function ackCopy(lang, { name, orderId, situation, createdAt }) {
     '',
     t.addMore,
     '',
-    `Imverica Legal Solutions · ${PHONE}`,
+    t.signoff,
+    '',
+    SIGN_NAME,
+    SIGN_TITLE,
+    `${PHONE} · ${SIGN_EMAIL}`,
     SITE,
     '',
     t.disclaimer,
@@ -158,8 +173,12 @@ function ackCopy(lang, { name, orderId, situation, createdAt }) {
     <p style="margin:0 0 12px;">${escHtml(t.received)}</p>
     <p style="margin:0 0 12px;background:#f5f7fa;border-radius:6px;padding:10px 14px;"><strong>${escHtml(t.orderLabel)}:</strong> ${escHtml(orderId)}</p>
     <p style="margin:0 0 16px;">${escHtml(t.addMore)}</p>
-    <p style="margin:0 0 4px;color:#0f1c2f;"><strong>Imverica Legal Solutions</strong> · ${escHtml(PHONE)}</p>
-    <p style="margin:0 0 16px;"><a href="${SITE}" style="color:#0f1c2f;">imverica.com</a></p>
+    <p style="margin:0 0 14px;">${escHtml(t.signoff)}</p>
+    <div style="border-left:3px solid #c9a227;padding-left:14px;margin:0 0 18px;">
+      <p style="margin:0;font-size:15px;font-weight:600;color:#0f1c2f;">${escHtml(SIGN_NAME)}</p>
+      <p style="margin:2px 0 6px;font-size:13px;color:#6b7280;">${escHtml(SIGN_TITLE)}</p>
+      <p style="margin:0;font-size:13px;">${escHtml(PHONE)} · <a href="mailto:${SIGN_EMAIL}" style="color:#0f1c2f;">${SIGN_EMAIL}</a> · <a href="${SITE}" style="color:#0f1c2f;">imverica.com</a></p>
+    </div>
     <p style="margin:0;font-size:12px;color:#6b7280;">${escHtml(t.disclaimer)}</p>${quoteHtml}
   </div>`;
 
