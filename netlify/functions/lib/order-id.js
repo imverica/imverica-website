@@ -16,19 +16,22 @@ const crypto = require('crypto');
  * `counters/day-<stamp>.json` (never clashes with `order/` / `orders/`
  * record prefixes).
  *
- * Two hazards, both PROVEN on prod 2026-07-14 (two sequential test intakes
- * both minted -25, the second overwrote the first order record):
- *   1. Netlify Blobs reads are EVENTUALLY consistent by default — a read
- *      minutes after a write can return the stale cached value. Fix: the
- *      store is opened with consistency:'strong'.
- *   2. @netlify/blobs 8.x has no compare-and-swap, so read-modify-write
- *      alone can double-allocate under concurrency. Fix: each sequence
- *      number is CLAIMED via a token blob (`counters/claim-<stamp>-<n>`)
- *      that is written then read back; if the read-back shows another
- *      submission's token, we lost the race and walk to the next number.
+ * Allocation hazard, PROVEN on prod 2026-07-14 (two sequential test intakes
+ * both minted -25, the second overwrote the first order record): Netlify
+ * Blobs reads are EVENTUALLY consistent — a read minutes after a write can
+ * return a stale cached value, so read-modify-write double-allocates. And
+ * strong consistency is NOT available in this runtime: connectLambda()
+ * (lib/abuse-guard ensureBlobs) configures only edgeURL, no uncachedEdgeURL,
+ * so consistency:'strong' throws BlobsConsistencyError.
+ *
+ * The fix relies on none of that: each sequence number is CLAIMED with an
+ * ATOMIC conditional write — setJSON(claimKey, …, { onlyIfNew: true })
+ * (@netlify/blobs v10) — which the origin enforces regardless of read
+ * staleness. `modified: false` means the number is taken → walk to the
+ * next one. The day-pointer blob is only an advisory starting point.
  */
 const SEQ_START = 25;
-const MAX_CLAIM_WALK = 12;
+const MAX_CLAIM_WALK = 40;
 
 function ptDateStamp(now = new Date()) {
   // en-CA locale renders YYYY-MM-DD; strip dashes → 20260714.
@@ -38,20 +41,28 @@ function ptDateStamp(now = new Date()) {
 async function nextDailySeq(stamp) {
   if (process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT) {
     const { getStore } = require('@netlify/blobs');
-    const store = getStore({ name: 'imverica-intakes', consistency: 'strong' });
+    const store = getStore('imverica-intakes');
     const dayKey = `counters/day-${stamp}.json`;
     const cur = await store.get(dayKey, { type: 'json' }).catch(() => null);
     let n = (cur && Number(cur.n) >= SEQ_START ? Number(cur.n) : SEQ_START - 1) + 1;
     const token = crypto.randomBytes(8).toString('hex');
     for (let walk = 0; walk < MAX_CLAIM_WALK; walk += 1, n += 1) {
       const claimKey = `counters/claim-${stamp}-${n}.json`;
-      const taken = await store.get(claimKey, { type: 'json' }).catch(() => null);
-      if (taken) continue; // already claimed (stale day pointer) — walk on
-      await store.setJSON(claimKey, { token });
-      const check = await store.get(claimKey, { type: 'json' }).catch(() => null);
-      if (!check || check.token !== token) continue; // lost a race — walk on
-      // The day pointer is advisory (a starting point for the walk); the
-      // claim blob above is what actually owns the number.
+      // NB: store.set(), NOT setJSON — @netlify/blobs 10.7.9 has a bug where
+      // setJSON spreads the conditions object into the request options
+      // (`...conditions` instead of `conditions`), silently DROPPING
+      // onlyIfNew. set() passes it correctly. Verified against the local
+      // BlobsServer; re-check when upgrading the package.
+      const res = await store.set(claimKey, JSON.stringify({ token }), { onlyIfNew: true });
+      if (!res || res.modified !== true) continue; // number taken — walk on
+      // Belt and suspenders: read the claim back and make sure it holds OUR
+      // token. Guards the TOCTOU window of non-atomic conditional writes
+      // (the local dev BlobsServer has one; prod enforces at the origin).
+      // The claim key is brand-new, so this read cannot be a stale cache hit.
+      const own = await store.get(claimKey, { type: 'json' }).catch(() => null);
+      if (!own || own.token !== token) continue; // lost the race — walk on
+      // Claimed atomically. The day pointer is advisory; being eventually
+      // consistent (or lost) only costs future requests a longer walk.
       await store.setJSON(dayKey, { n, updatedAt: new Date().toISOString() }).catch(() => {});
       return n;
     }
