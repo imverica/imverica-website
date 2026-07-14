@@ -280,7 +280,7 @@ exports.handler = async function (event) {
   // Build the order record. Stored encrypted at rest in the existing
   // imverica-intakes blob store — same schema as the long wizard creates,
   // so the admin console picks it up without changes.
-  const orderId = makeOrderId();
+  const orderId = await makeOrderId();
   const now = Date.now();
   const record = {
     id: orderId,

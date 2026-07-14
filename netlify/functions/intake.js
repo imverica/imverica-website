@@ -105,13 +105,13 @@ function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clean(value));
 }
 
-function normalizePayload(body, event) {
+async function normalizePayload(body, event) {
   const headers = event.headers || {};
   const contact = body.contact || {};
   const i765 = body.i765 || {};
   const officialForm = body.officialForm || {};
   const routeResult = body.routeResult || {};
-  const id = makeOrderId();
+  const id = await makeOrderId();
   const now = new Date().toISOString();
 
   return {
@@ -338,7 +338,7 @@ exports.handler = async function (event) {
       return json(400, { ok: false, error: 'Invalid JSON' });
     }
 
-    const record = normalizePayload(body, event);
+    const record = await normalizePayload(body, event);
     const errors = validateRecord(record);
     if (errors.length) {
       return json(422, {

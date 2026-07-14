@@ -78,7 +78,7 @@ check('missing UI tag → en', detectAckLanguage('ok', undefined), 'en');
 
 // --- 2. Copy rendering -----------------------------------------------------
 
-const ORDER = 'IMV-260713-2RRL6HZY';
+const ORDER = 'IMVERICA-20260714-25';
 const MUST_CONTAIN = {
   en: ['Hello Anastasiia,', 'not a law firm', 'within one business day'],
   ru: ['Здравствуйте, Anastasiia!', 'не является юридической фирмой', 'рабочего дня'],
@@ -106,6 +106,34 @@ assert('no-name greeting en', ackCopy('en', { name: '', orderId: ORDER }).text.s
 // HTML injection in the name is escaped in the html body.
 const evil = ackCopy('en', { name: '<img src=x onerror=alert(1)>', orderId: ORDER }).html;
 assert('html escapes name', !evil.includes('<img') && evil.includes('&lt;img'));
+
+// --- 3. Reply styling: "Re:" subject + the client's own request quoted ---
+
+const SITUATION = 'I need help with my re-parole application.\nMy parole expires in February 2027.';
+const reply = ackCopy('en', {
+  name: 'Anastasiia Bila',
+  orderId: ORDER,
+  situation: SITUATION,
+  createdAt: '2026-07-14T18:40:00.000Z' // 11:40 AM PT
+});
+assert('en subject starts with Re:', reply.subject.startsWith('Re: '));
+assert('subject has short order id', reply.subject.includes(ORDER));
+assert('text quotes each line with >', reply.text.includes('> I need help with my re-parole application.')
+  && reply.text.includes('> My parole expires in February 2027.'));
+assert('text has "you wrote" + PT date', reply.text.includes('On July 14, 2026, you wrote:'));
+assert('html has blockquote with request', reply.html.includes('<blockquote') && reply.html.includes('re-parole application.'));
+
+// Bad/missing date → label without date; no quote block when situation empty.
+assert('no date → plain "You wrote:"', ackCopy('en', { name: 'A B', orderId: ORDER, situation: 'Help me' }).text.includes('You wrote:'));
+const noSituation = ackCopy('en', { name: 'A B', orderId: ORDER, situation: '', createdAt: Date.now() });
+assert('empty situation → no quote block', !noSituation.text.includes('>') && !noSituation.html.includes('<blockquote'));
+
+// HTML in the quoted request is escaped.
+const evilQuote = ackCopy('en', { name: 'A B', orderId: ORDER, situation: '<script>alert(1)</script>' }).html;
+assert('html escapes quoted request', !evilQuote.includes('<script>') && evilQuote.includes('&lt;script&gt;'));
+
+// numeric createdAt (quick-intake uses Date.now()) works too.
+assert('numeric createdAt ok', ackCopy('en', { name: 'A B', orderId: ORDER, situation: 'x', createdAt: 1784054400000 }).text.includes('you wrote:'));
 
 console.log(`\nqa-intake-ack: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

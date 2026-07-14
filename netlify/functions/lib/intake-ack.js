@@ -5,11 +5,13 @@
  * (quick-intake and the guided wizard). The owner-notification emails
  * live in the endpoints themselves; this module only talks to the client.
  *
- * Language: the site UI language tag is only a hint (a Ukrainian speaker
- * often submits from the English homepage), so we detect the language the
- * client actually WROTE the situation in and fall back to the UI tag when
- * the text is too short or ambiguous. Supported: en / ru / uk / es — the
- * same four the rest of the site speaks.
+ * Owner decision 2026-07-14: the ack is ALWAYS sent in ENGLISH — official
+ * correspondence of a California business — regardless of the language the
+ * client wrote in. The email is styled like a human reply: subject starts
+ * with "Re:" and the client's own message is quoted at the bottom the way
+ * mail clients quote the original. The ru/uk/es copy and the language
+ * detector below are kept intact so flipping back to localized acks is a
+ * one-line change in sendClientAck.
  *
  * Fire-and-forget contract: never throws, never blocks a submission.
  * Skips cleanly when RESEND_API_KEY is unset (dev) or the email is bad.
@@ -69,11 +71,12 @@ function detectAckLanguage(text, fallback) {
 // involvement, never promise legal advice.
 const COPY = {
   en: {
-    subject: (id) => `Imverica — we received your request (${id})`,
+    subject: (id) => `Re: Your request to Imverica (${id})`,
     greeting: (n) => (n ? `Hello ${n},` : 'Hello,'),
     received: 'Thank you for contacting Imverica Legal Solutions. Your request has been received, and our team will get back to you shortly — usually within one business day.',
     orderLabel: 'Your request number',
     addMore: `Want to add details or documents? Simply reply to this email or call ${PHONE}.`,
+    youWrote: (date) => (date ? `On ${date}, you wrote:` : 'You wrote:'),
     disclaimer: 'Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice. Documents are prepared solely at the client’s direction.'
   },
   ru: {
@@ -82,6 +85,7 @@ const COPY = {
     received: 'Спасибо, что обратились в Imverica Legal Solutions. Ваш запрос получен — мы свяжемся с вами в ближайшее время, обычно в течение одного рабочего дня.',
     orderLabel: 'Номер вашего запроса',
     addMore: `Хотите что-то добавить или приложить документы? Просто ответьте на это письмо или позвоните ${PHONE}.`,
+    youWrote: (date) => (date ? `${date} вы написали:` : 'Вы написали:'),
     disclaimer: 'Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций. Документы готовятся исключительно по поручению клиента.'
   },
   uk: {
@@ -90,6 +94,7 @@ const COPY = {
     received: 'Дякуємо, що звернулися до Imverica Legal Solutions. Ваш запит отримано — ми зв’яжемося з вами найближчим часом, зазвичай протягом одного робочого дня.',
     orderLabel: 'Номер вашого запиту',
     addMore: `Хочете щось додати чи прикласти документи? Просто дайте відповідь на цей лист або зателефонуйте ${PHONE}.`,
+    youWrote: (date) => (date ? `${date} ви написали:` : 'Ви написали:'),
     disclaimer: 'Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій. Документи готуються виключно за дорученням клієнта.'
   },
   es: {
@@ -98,6 +103,7 @@ const COPY = {
     received: 'Gracias por contactar a Imverica Legal Solutions. Hemos recibido su solicitud y nuestro equipo se pondrá en contacto con usted en breve, normalmente dentro de un día hábil.',
     orderLabel: 'Número de su solicitud',
     addMore: `¿Desea agregar algo o adjuntar documentos? Simplemente responda a este correo o llame al ${PHONE}.`,
+    youWrote: (date) => (date ? `El ${date}, usted escribió:` : 'Usted escribió:'),
     disclaimer: 'Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal. Los documentos se preparan únicamente bajo la dirección del cliente.'
   }
 };
@@ -108,11 +114,20 @@ function escHtml(s) {
   ));
 }
 
+/** "July 14, 2026" in Pacific time; empty string when the date is bad. */
+function ptLongDate(createdAt) {
+  const d = new Date(createdAt || NaN);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('en-US', { timeZone: 'America/Los_Angeles', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
 /** Build { subject, text, html } for one language. Exported for QA. */
-function ackCopy(lang, { name, orderId }) {
+function ackCopy(lang, { name, orderId, situation, createdAt }) {
   const t = COPY[lang] || COPY.en;
   const firstName = String(name || '').trim().split(/\s+/)[0] || '';
   const subject = t.subject(orderId);
+  const quoted = String(situation || '').trim();
+  const wroteLine = quoted ? t.youWrote(ptLongDate(createdAt)) : '';
 
   const text = [
     t.greeting(firstName),
@@ -126,8 +141,17 @@ function ackCopy(lang, { name, orderId }) {
     `Imverica Legal Solutions · ${PHONE}`,
     SITE,
     '',
-    t.disclaimer
+    t.disclaimer,
+    ...(quoted ? [
+      '',
+      wroteLine,
+      ...quoted.split('\n').map((line) => `> ${line}`)
+    ] : [])
   ].join('\n');
+
+  const quoteHtml = quoted ? `
+    <p style="margin:20px 0 6px;font-size:13px;color:#6b7280;">${escHtml(wroteLine)}</p>
+    <blockquote style="margin:0;padding:8px 14px;border-left:3px solid #d6d9df;color:#4b5563;font-size:13px;white-space:pre-wrap;">${escHtml(quoted)}</blockquote>` : '';
 
   const html = `<div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6;color:#1c2c40;max-width:560px;">
     <p style="margin:0 0 12px;">${escHtml(t.greeting(firstName))}</p>
@@ -136,7 +160,7 @@ function ackCopy(lang, { name, orderId }) {
     <p style="margin:0 0 16px;">${escHtml(t.addMore)}</p>
     <p style="margin:0 0 4px;color:#0f1c2f;"><strong>Imverica Legal Solutions</strong> · ${escHtml(PHONE)}</p>
     <p style="margin:0 0 16px;"><a href="${SITE}" style="color:#0f1c2f;">imverica.com</a></p>
-    <p style="margin:0;font-size:12px;color:#6b7280;">${escHtml(t.disclaimer)}</p>
+    <p style="margin:0;font-size:12px;color:#6b7280;">${escHtml(t.disclaimer)}</p>${quoteHtml}
   </div>`;
 
   return { subject, text, html };
@@ -157,8 +181,15 @@ async function sendClientAck(record) {
   if (!c.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email)) {
     return { sent: false, error: 'no-email' };
   }
-  const lang = detectAckLanguage(record.situation, record.language);
-  const { subject, text, html } = ackCopy(lang, { name: c.name, orderId: record.id });
+  // Always English (owner decision 2026-07-14). To go back to localized
+  // acks: const lang = detectAckLanguage(record.situation, record.language);
+  const lang = 'en';
+  const { subject, text, html } = ackCopy(lang, {
+    name: c.name,
+    orderId: record.id,
+    situation: record.situation,
+    createdAt: record.createdAt
+  });
   try {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
