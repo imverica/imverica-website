@@ -4,41 +4,15 @@ import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import QuickFacts from '~/components/QuickFacts.astro';
 
 const lang = 'es' as const;
 const title = 'Sobre Imverica — California LDA y Consultor de Inmigración | Imverica Legal Solutions';
 const description = 'Imverica Legal Solutions es un Legal Document Assistant y Consultor de Inmigración multilingüe (inglés, ruso, ucraniano, español) con sede en Sacramento. Preparamos documentos de USCIS, EOIR y cortes del estado de California en todo el país y en todo el estado — a tarifas accesibles y transparentes. No somos un bufete de abogados y no damos asesoría legal.';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'LegalService',
-  name: 'Imverica Legal Solutions',
-  legalName: 'Imverica LLC',
-  alternateName: ['Imverica', 'Imverica LLC'],
-  url: 'https://imverica.com/mx/about',
-  telephone: '+1-916-399-3992',
-  email: 'info@imverica.com',
-  areaServed: [
-    { '@type': 'Country', name: 'United States' },
-    { '@type': 'State', name: 'California' }
-  ],
-  knowsLanguage: ['en', 'ru', 'uk', 'es'],
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Sacramento',
-    addressRegion: 'CA',
-    addressCountry: 'US'
-  },
-  sameAs: [
-    'https://www.instagram.com/imverica',
-    'https://www.facebook.com/imverica/',
-    'https://t.me/imverica'
-  ],
-  description: 'Imverica Legal Solutions es la marca comercial de Imverica LLC, una sociedad de responsabilidad limitada de California. California Legal Document Assistant y Consultor de Inmigración registrado. Preparación de documentos multilingüe (EN/RU/UK/ES) y accesible para USCIS, EOIR y cortes del estado de California.'
-};
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/about"
-  slug="/about" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  slug="/about" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} >
   <Hero
     lang={lang}
     eyebrow="Sobre Imverica Legal Solutions"
@@ -241,6 +215,8 @@ const schema = {
       { icon: '📚', title: '¿Qué es un LDA?',        desc: 'Cal. Bus. & Prof. Code §§6400–6415 en lenguaje sencillo.', href: '/mx/lda', color: 'var(--navy)' }
     ]}
   />
+
+  <QuickFacts lang="es" />
 
   <CTAStrip
     heading="Listos cuando usted lo esté."

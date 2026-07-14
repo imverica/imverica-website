@@ -3,27 +3,54 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
 
 const lang = 'ru' as const;
-const title = 'U4U — подготовка документов Uniting for Ukraine | Imverica';
-const description = 'California Registered LDA готовит пакеты Uniting for Ukraine (U4U) — гуманитарный parole, I-765 (c)(11) разрешение на работу, I-131 advance parole, повторная регистрация TPS, I-485 при наличии оснований.';
+const title = 'U4U re-parole — русскоязычная подготовка документов Uniting for Ukraine | Imverica Legal Solutions';
+const description = 'Русскоязычная помощь с re-parole по программе U4U и полным пакетом Uniting for Ukraine — I-765 (c)(11) разрешение на работу, I-131 advance parole, перерегистрация TPS, I-485 при наличии оснований. Дистанционно по всем штатам США. California Registered LDA — не адвокатская фирма.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'U4U Uniting for Ukraine Document Preparation',
+  serviceType: 'U4U Uniting for Ukraine re-parole document preparation',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Подготовка документов для украинских гуманитарных parolees по программе Uniting for Ukraine по поручению клиента.'
+  areaServed: { '@type': 'Country', name: 'United States' },
+  availableLanguage: ['ru', 'uk', 'en'],
+  description: 'Подготовка документов для украинских гуманитарных parolees по программе Uniting for Ukraine — re-parole, разрешения на работу, проездные документы — по поручению клиента.'
 };
+
+const faq: FaqItem[] = [
+  {
+    q: 'Помогаете ли вы с re-parole по программе U4U?',
+    a: 'Да. Мы готовим полный пакет для запроса re-parole — заявление, текущие документы пароля, подтверждающие материалы — по вашему поручению и проверяем всё перед подачей. Приём на русском, украинском и английском, полностью дистанционно в любом штате США.'
+  },
+  {
+    q: 'Разрешение на работу для U4U — бесплатное?',
+    a: 'USCIS сейчас не берёт пошлину за I-765 для U4U parolees по категории (c)(11) — государственная подача разрешения на работу бесплатна. Наш фиксированный тариф за подготовку указан на imverica.com/pricing.'
+  },
+  {
+    q: 'Вы работаете с украинцами не из Калифорнии?',
+    a: 'Да. Формы USCIS — федеральные, поэтому мы работаем дистанционно во всех штатах: анкета, загрузка документов, проверка и выдача — всё онлайн, на русском, украинском или английском.'
+  },
+  {
+    q: 'Вы адвокаты?',
+    a: 'Нет. Imverica Legal Solutions — зарегистрированный и застрахованный в Калифорнии Legal Document Assistant и Immigration Consultant, не адвокатская фирма. Мы готовим документы по вашему поручению и не даём юридических консультаций. Если делу нужна юридическая стратегия (отказы, депортационные разбирательства, судимости) — направим к лицензированному иммиграционному адвокату.'
+  },
+  {
+    q: 'А если я уже заполнил(а) формы сам(а)?',
+    a: 'Есть отдельная услуга проверки документов: мы проверяем ваши готовые формы и приложения на полноту и согласованность перед подачей. Фиксированная цена — на imverica.com/pricing.'
+  }
+];
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/u4u"
-  slug="/u4u" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  slug="/u4u" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema, faqSchema(faq)]}>
   <Hero
     lang={lang}
     eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
-    heading="U4U — подготовка документов Uniting for Ukraine"
-    sub="Если вы приехали по программе Uniting for Ukraine, вы имеете право на разрешение на работу, travel-документы и повторную регистрацию TPS. Готовим каждую подачу аккуратно по вашему поручению — фиксированная цена, многоязычная анкета (укр./рус./англ.)."
+    heading="U4U re-parole и документы Uniting for Ukraine"
+    sub="Если вы приехали по программе Uniting for Ukraine, мы подготовим ваш запрос re-parole, разрешение на работу, travel-документы и перерегистрацию TPS — аккуратно, по вашему поручению. Фиксированная цена, дистанционно по всем штатам США, анкета на русском, украинском и английском."
     ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Начать пакет U4U' }}
   />
 
@@ -91,6 +118,8 @@ const schema = {
       подготовка документов — не юридические консультации.
     </cite>
   </LandingBody>
+
+  <FaqBlock heading="U4U и re-parole — частые вопросы" items={faq} />
 
   <CTAStrip primaryHref="/#get-started?topic=U4U" primaryText="Начать анкету U4U" />
 </BaseLayout>

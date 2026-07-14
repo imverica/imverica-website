@@ -4,41 +4,15 @@ import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import QuickFacts from '~/components/QuickFacts.astro';
 
 const lang = 'ru' as const;
 const title = 'О компании Imverica — California LDA и Immigration Consultant | Imverica Legal Solutions';
 const description = 'Imverica Legal Solutions — мультиязычный (английский, русский, украинский, испанский) Legal Document Assistant и Immigration Consultant из Сакраменто. Готовим документы USCIS, EOIR и судов Калифорнии по всему США и штату — по доступным, прозрачным тарифам. Мы не юридическая фирма и не даём юридических консультаций.';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'LegalService',
-  name: 'Imverica Legal Solutions',
-  legalName: 'Imverica LLC',
-  alternateName: ['Imverica', 'Imverica LLC'],
-  url: 'https://imverica.com/ru/about',
-  telephone: '+1-916-399-3992',
-  email: 'info@imverica.com',
-  areaServed: [
-    { '@type': 'Country', name: 'United States' },
-    { '@type': 'State', name: 'California' }
-  ],
-  knowsLanguage: ['en', 'ru', 'uk', 'es'],
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Sacramento',
-    addressRegion: 'CA',
-    addressCountry: 'US'
-  },
-  sameAs: [
-    'https://www.instagram.com/imverica',
-    'https://www.facebook.com/imverica/',
-    'https://t.me/imverica'
-  ],
-  description: 'Imverica Legal Solutions — торговая марка Imverica LLC, компании с ограниченной ответственностью в штате Калифорния. Зарегистрированный California Legal Document Assistant и Immigration Consultant. Мультиязычная (EN/RU/UK/ES) подготовка документов для USCIS, EOIR и судов штата Калифорния по доступным тарифам.'
-};
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/about"
-  slug="/about" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  slug="/about" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} >
   <Hero
     lang={lang}
     eyebrow="О Imverica Legal Solutions"
@@ -231,6 +205,8 @@ const schema = {
       { icon: '📚', title: 'Что такое LDA?',       desc: 'Cal. Bus. & Prof. Code §§6400–6415 простыми словами.', href: '/ru/lda', color: 'var(--navy)' }
     ]}
   />
+
+  <QuickFacts lang="ru" />
 
   <CTAStrip
     heading="Готовы — когда вы готовы."

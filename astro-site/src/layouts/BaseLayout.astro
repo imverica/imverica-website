@@ -6,6 +6,7 @@ import IntakeWizard from '~/components/IntakeWizard.astro';
 import QuickIntakeModal from '~/components/QuickIntakeModal.astro';
 import ChatWidget from '~/components/ChatWidget.astro';
 import { LOCALES, localizedPath, type Locale } from '~/data/i18n';
+import { organizationSchema } from '~/data/orgSchema';
 
 interface Props {
   title: string;
@@ -83,7 +84,9 @@ const alternates = slug && availableLocales.length > 1
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
 
-  {jsonLd.map((schema) => (
+  {/* Canonical organization facts on EVERY page (single source:
+      src/data/orgSchema.ts) + whatever page-specific schemas were passed. */}
+  {[organizationSchema, ...jsonLd].map((schema) => (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   ))}
 </head>

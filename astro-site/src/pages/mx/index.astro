@@ -11,37 +11,11 @@ const description =
   'LDA con licencia de California y consultor de inmigración. Preparación de documentos para USCIS, EOIR, derecho familiar, reclamos menores, probate closing y California expungement / record-cleanup packets. Servicio remoto en todo el mundo.';
 
 
-const legalServiceSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'LegalService',
-  name: 'Imverica Legal Solutions',
-  url: 'https://imverica.com',
-  telephone: '+1-916-399-3992',
-  areaServed: [
-    { '@type': 'State', name: 'California' },
-    { '@type': 'Country', name: 'United States' }
-  ],
-  address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
-  description: 'Asistente de Documentos Legales con licencia de California y Consultor de Inmigración. Preparación de documentos USCIS, EOIR, derecho familiar, reclamos menores, desalojo, sucesiones, probate closing y California record-cleanup packets.',
-  knowsLanguage: ['en', 'ru', 'uk', 'es'],
-  serviceType: [
-    'Preparación de formularios de inmigración USCIS',
-    'Preparación de documentos EOIR',
-    'Preparación de formularios de derecho familiar de California',
-    'Preparación de documentos de reclamos menores',
-    'Preparación de documentos de desalojo',
-    'Preparación de documentos de sucesión',
-    'Preparación de documentos para cerrar probate y final discharge',
-    'Preparación de California expungement y record-cleanup documents'
-  ],
-  disambiguatingDescription: 'Imverica Legal Solutions no es un bufete de abogados y no brinda asesoría legal. Los documentos se preparan bajo la dirección del cliente.'
-};
 ---
 <BaseLayout
   title={title}
   description={description}
   canonical="https://imverica.com/mx/"
-  jsonLd={[legalServiceSchema]}
   lang={lang}
   slug="/"
   availableLocales={['en', 'ru', 'uk', 'es']}

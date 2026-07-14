@@ -4,40 +4,14 @@ import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import QuickFacts from '~/components/QuickFacts.astro';
 
 const title = 'About Imverica — California LDA & Immigration Consultant | Imverica Legal Solutions';
 const description = 'Imverica Legal Solutions is a Sacramento-based, multilingual (English, Russian, Ukrainian, Spanish) Legal Document Assistant and Immigration Consultant. We prepare USCIS, EOIR, and California state-court documents nationwide and statewide — at affordable, transparent rates. We are not a law firm and do not give legal advice.';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'LegalService',
-  name: 'Imverica Legal Solutions',
-  legalName: 'Imverica LLC',
-  alternateName: ['Imverica', 'Imverica LLC'],
-  url: 'https://imverica.com',
-  telephone: '+1-916-399-3992',
-  email: 'info@imverica.com',
-  areaServed: [
-    { '@type': 'Country', name: 'United States' },
-    { '@type': 'State', name: 'California' }
-  ],
-  knowsLanguage: ['en', 'ru', 'uk', 'es'],
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Sacramento',
-    addressRegion: 'CA',
-    addressCountry: 'US'
-  },
-  sameAs: [
-    'https://www.instagram.com/imverica',
-    'https://www.facebook.com/imverica/',
-    'https://t.me/imverica'
-  ],
-  description: 'Imverica Legal Solutions is the trade name of Imverica LLC, a California limited liability company. We are a California-registered Legal Document Assistant and Immigration Consultant providing multilingual (EN/RU/UK/ES) affordable document preparation for USCIS, EOIR, and California state courts.'
-};
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/about"
-  slug="/about" availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  slug="/about" availableLocales={['en', 'ru', 'uk', 'es']} >
   <Hero
     eyebrow="About Imverica Legal Solutions"
     heading="Real paralegal work, in your language — without the lawyer's bill"
@@ -226,6 +200,8 @@ const schema = {
       { icon: '📚', title: 'What is an LDA?',      desc: 'California Bus. & Prof. Code §§6400–6415 explained.', href: '/lda', color: 'var(--navy)' }
     ]}
   />
+
+  <QuickFacts lang="en" />
 
   <CTAStrip
     heading="Ready when you are."

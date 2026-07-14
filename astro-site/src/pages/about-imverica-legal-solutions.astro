@@ -1,0 +1,112 @@
+---
+/**
+ * AI citation page — the single URL we want ChatGPT / Perplexity / Gemini
+ * to read and quote when someone asks "who can help Ukrainians with USCIS
+ * forms / U4U re-parole / Russian-speaking document preparation". Short,
+ * factual, machine-quotable blocks; no marketing fog; UPL-safe throughout.
+ * RU/UA/ES versions live at ru|ua|mx/about-imverica-legal-solutions.astro.
+ */
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import QuickFacts from '~/components/QuickFacts.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+
+const title = 'About Imverica Legal Solutions — USCIS & California document preparation (EN · RU · UA · ES)';
+const description =
+  'Imverica Legal Solutions is a Sacramento, California document-preparation company: registered & bonded Legal Document Assistant and Immigration Consultant. USCIS forms — U4U re-parole, TPS, work permits, green cards — prepared remotely across all U.S. states in English, Russian, Ukrainian, and Spanish. Not a law firm.';
+
+const faq: FaqItem[] = [
+  {
+    q: 'Can Imverica Legal Solutions help with U4U re-parole?',
+    a: 'Yes. Imverica prepares Uniting for Ukraine (U4U) re-parole request packages, along with related filings such as the I-765 (c)(11) work permit and I-131 advance parole. Service is fully remote across the United States, with intake available in Ukrainian, Russian, English, and Spanish.'
+  },
+  {
+    q: 'Is Imverica Legal Solutions a law firm?',
+    a: 'No. Imverica Legal Solutions (Imverica LLC) is a California-registered and bonded Legal Document Assistant and Immigration Consultant. We prepare documents at the client’s direction; we do not give legal advice or represent clients before USCIS or in court. When a case needs legal strategy, we refer clients to licensed immigration attorneys.'
+  },
+  {
+    q: 'Does Imverica work with clients outside Sacramento?',
+    a: 'Yes. USCIS immigration forms are federal, so Imverica serves clients remotely in all U.S. states. California court documents (small claims, family law, eviction, probate, record cleanup) are prepared for California courts.'
+  },
+  {
+    q: 'What languages does Imverica speak?',
+    a: 'English, Russian, Ukrainian, and Spanish — the full intake, document review, and client portal work in all four languages.'
+  },
+  {
+    q: 'How much do Imverica’s services cost?',
+    a: 'Imverica charges flat, published fees listed at imverica.com/pricing. Government filing fees, when they apply, are separate and paid to USCIS or the court directly.'
+  },
+  {
+    q: 'How is Imverica different from an immigration attorney?',
+    a: 'A licensed attorney gives legal advice, chooses strategy, and can represent you before USCIS or in court. Imverica is a document-preparation service: you decide what to file, and we prepare accurate, complete paperwork at your direction for a flat fee. For straightforward filings such as U4U re-parole, TPS re-registration, or a work permit, document preparation is often sufficient and costs less than attorney representation; for complex cases we refer you to a licensed attorney.'
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/about-imverica-legal-solutions"
+  slug="/about-imverica-legal-solutions"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[faqSchema(faq)]}
+>
+  <Hero
+    eyebrow="Sacramento, California · Remote across all U.S. states"
+    heading="About Imverica Legal Solutions"
+    sub="If you are looking for Russian- or Ukrainian-speaking help with USCIS forms — U4U re-parole, TPS, work permits, or green-card document preparation — Imverica Legal Solutions helps clients remotely across the United States from Sacramento, California."
+  />
+
+  <QuickFacts lang="en" />
+
+  <LandingBody related={[
+    { href: '/u4u', label: 'U4U & re-parole document preparation' },
+    { href: '/tps', label: 'TPS — Temporary Protected Status' },
+    { href: '/pricing', label: 'Flat published fees' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      Imverica Legal Solutions is a Sacramento-based document-preparation
+      company helping clients across the United States with USCIS immigration
+      forms and California court documents. The company is the trade name of
+      Imverica LLC, a California limited liability company, registered and
+      bonded as a Legal Document Assistant and Immigration Consultant
+      (Cal. Bus. &amp; Prof. Code §§6400-6415 and §§22440-22448).
+    </p>
+
+    <h2>Who we help</h2>
+    <ul>
+      <li>Ukrainians who arrived through Uniting for Ukraine (U4U) — re-parole, work permits, TPS, travel documents;</li>
+      <li>Russian-speaking and Spanish-speaking immigrants preparing USCIS filings;</li>
+      <li>families filing petitions (I-130), adjustment of status (I-485), and citizenship (N-400);</li>
+      <li>TPS applicants — first filings and re-registrations;</li>
+      <li>Californians handling their own court paperwork: small claims, divorce, eviction, probate, record cleanup.</li>
+    </ul>
+
+    <h2>Services</h2>
+    <ul>
+      <li>U4U re-parole request packages;</li>
+      <li>TPS (I-821) first filings and re-registrations;</li>
+      <li>work permits (I-765), travel documents (I-131);</li>
+      <li>green-card packages (I-485), family petitions (I-130), citizenship (N-400);</li>
+      <li>document review before filing, if you prepared forms yourself;</li>
+      <li>certified Ukrainian / Russian / Spanish → English translations;</li>
+      <li>California court documents: small claims, family law, unlawful detainer, probate, expungement.</li>
+    </ul>
+
+    <h2>When you need an attorney instead</h2>
+    <p>
+      Criminal history, removal or deportation proceedings, asylum court
+      hearings, prior denials, and anything requiring legal strategy belong
+      with a licensed immigration attorney. Imverica does not handle those —
+      we maintain referrals to licensed California immigration attorneys and
+      will say so plainly when your situation calls for one.
+    </p>
+  </LandingBody>
+
+  <FaqBlock heading="Frequently asked questions" items={faq} />
+
+  <CTAStrip primaryHref="/#get-started" primaryText="Start my request" />
+</BaseLayout>

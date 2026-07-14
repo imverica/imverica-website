@@ -3,25 +3,52 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
 
-const title = 'U4U — Uniting for Ukraine document preparation | Imverica';
-const description = 'California Registered LDA prepares Uniting for Ukraine (U4U) document packages — humanitarian parole, I-765 (c)(11) work permit, I-131 advance parole, TPS re-registration, I-485 adjustment of status when eligible.';
+const title = 'U4U re-parole & Uniting for Ukraine document preparation | Imverica Legal Solutions';
+const description = 'Ukrainian-speaking help with U4U re-parole applications and the full Uniting for Ukraine package — I-765 (c)(11) work permit, I-131 advance parole, TPS re-registration, I-485 when eligible. Remote across all U.S. states. California Registered LDA — not a law firm.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'U4U Uniting for Ukraine Document Preparation',
+  serviceType: 'U4U Uniting for Ukraine re-parole document preparation',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Document preparation for Ukrainian humanitarian parolees under the Uniting for Ukraine program at the client direction.'
+  areaServed: { '@type': 'Country', name: 'United States' },
+  availableLanguage: ['en', 'ru', 'uk'],
+  description: 'Document preparation for Ukrainian humanitarian parolees under the Uniting for Ukraine program — re-parole requests, work permits, travel documents — at the client direction.'
 };
+
+const faq: FaqItem[] = [
+  {
+    q: 'Can Imverica prepare my U4U re-parole application?',
+    a: 'Yes. We prepare complete U4U re-parole request packages — the application, current parole and identity documents, and supporting evidence — at your direction, and review everything before you file. Intake works in Ukrainian, Russian, and English, fully remote in any U.S. state.'
+  },
+  {
+    q: 'Is the work permit free for U4U parolees?',
+    a: 'USCIS currently waives the I-765 filing fee for U4U parolees applying under the (c)(11) category, so the work-permit application itself costs nothing in government fees. Our flat preparation fee is listed at imverica.com/pricing.'
+  },
+  {
+    q: 'Do you work with Ukrainians outside California?',
+    a: 'Yes. USCIS forms are federal, so we serve U4U parolees remotely in every U.S. state — intake, document upload, review, and delivery all happen online, in Ukrainian, Russian, or English.'
+  },
+  {
+    q: 'Are you attorneys?',
+    a: 'No. Imverica Legal Solutions is a California-registered and bonded Legal Document Assistant and Immigration Consultant — not a law firm. We prepare documents at your direction and do not give legal advice. If your case needs legal strategy (prior denials, removal proceedings, criminal history), we refer you to a licensed immigration attorney.'
+  },
+  {
+    q: 'What if I already filled out the forms myself?',
+    a: 'We offer document review as a separate service: we check your prepared forms and supporting documents for completeness and consistency before you file. See imverica.com/pricing for the flat fee.'
+  }
+];
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/u4u"
-  slug="/u4u" jsonLd={[schema]}>
+  slug="/u4u" jsonLd={[schema, faqSchema(faq)]}>
   <Hero
     eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
-    heading="U4U — Uniting for Ukraine document preparation"
-    sub="If you arrived under Uniting for Ukraine, you're eligible for work authorization, travel documents, and TPS re-registration. We prepare each filing accurately at your direction — fixed fee, multilingual intake (Ukrainian, Russian, English)."
+    heading="U4U re-parole & Uniting for Ukraine documents"
+    sub="If you arrived under Uniting for Ukraine, we prepare your re-parole application, work permit, travel documents, and TPS re-registration — accurately, at your direction. Fixed fee, remote in all U.S. states, Ukrainian-, Russian- and English-speaking intake."
     ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Start my U4U package' }}
   />
 
@@ -91,6 +118,8 @@ const schema = {
       only — not legal advice.
     </cite>
   </LandingBody>
+
+  <FaqBlock heading="U4U & re-parole — frequently asked questions" items={faq} />
 
   <CTAStrip primaryHref="/#get-started?topic=U4U" primaryText="Begin my U4U intake" />
 </BaseLayout>

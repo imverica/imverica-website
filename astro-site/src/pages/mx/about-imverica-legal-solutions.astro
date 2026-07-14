@@ -1,0 +1,108 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import QuickFacts from '~/components/QuickFacts.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+
+const lang = 'es' as const;
+const title = 'Sobre Imverica Legal Solutions — preparación de formularios de USCIS en español';
+const description =
+  'Imverica Legal Solutions es una empresa de preparación de documentos en Sacramento, California: Legal Document Assistant e Immigration Consultant registrado y afianzado. Formularios de USCIS — permisos de trabajo, green card, peticiones familiares, TPS — preparados de forma remota en todos los estados de EE. UU., en español, inglés, ruso y ucraniano. No es un bufete de abogados.';
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Imverica ayuda con permisos de trabajo y green card?',
+    a: 'Sí. Imverica prepara paquetes de documentos de USCIS: permisos de trabajo (I-765), ajuste de estatus (I-485), peticiones familiares (I-130), ciudadanía (N-400) y TPS. El servicio es totalmente remoto en todos los estados de EE. UU., con atención en español.'
+  },
+  {
+    q: '¿Imverica es un bufete de abogados?',
+    a: 'No. Imverica Legal Solutions (Imverica LLC) es un Legal Document Assistant e Immigration Consultant registrado y afianzado en California. Preparamos documentos bajo la dirección del cliente; no brindamos asesoría legal ni representamos a clientes ante USCIS o en corte. Cuando un caso necesita estrategia legal, referimos a abogados de inmigración con licencia.'
+  },
+  {
+    q: '¿Trabajan solo en Sacramento?',
+    a: 'No. Los formularios de USCIS son federales, así que atendemos a clientes de forma remota en todos los estados. Los documentos judiciales (reclamos menores, derecho familiar, desalojo, sucesiones, limpieza de antecedentes) se preparan para las cortes de California.'
+  },
+  {
+    q: '¿En qué idiomas atienden?',
+    a: 'Español, inglés, ruso y ucraniano — la admisión, la revisión de documentos y el portal del cliente funcionan en los cuatro idiomas.'
+  },
+  {
+    q: '¿Cuánto cuestan los servicios?',
+    a: 'Imverica cobra tarifas fijas publicadas en imverica.com/pricing. Las tarifas del gobierno, cuando aplican, se pagan por separado directamente a USCIS o a la corte.'
+  },
+  {
+    q: '¿En qué se diferencia Imverica de un abogado de inmigración?',
+    a: 'Un abogado con licencia da asesoría legal, elige la estrategia y puede representarlo ante USCIS o en corte. Imverica es un servicio de preparación de documentos: usted decide qué presentar y nosotros preparamos papeleo preciso y completo bajo su dirección por una tarifa fija. Para trámites estándar — permiso de trabajo, reinscripción de TPS — la preparación de documentos suele ser suficiente y cuesta menos que un abogado; para casos complejos lo referimos a un abogado con licencia.'
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/mx/about-imverica-legal-solutions"
+  slug="/about-imverica-legal-solutions"
+  lang={lang}
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[faqSchema(faq)]}
+>
+  <Hero
+    lang={lang}
+    eyebrow="Sacramento, California · Remoto en todo EE. UU."
+    heading="Sobre Imverica Legal Solutions"
+    sub="Si busca ayuda en español con formularios de USCIS — permisos de trabajo, green card, peticiones familiares o TPS — Imverica Legal Solutions atiende a clientes de forma remota en todo Estados Unidos desde Sacramento, California."
+  />
+
+  <QuickFacts lang={lang} />
+
+  <LandingBody lang={lang} related={[
+    { href: '/mx/tps', label: 'TPS — Estatus de Protección Temporal' },
+    { href: '/mx/i-765-work-permit-help', label: 'Permiso de trabajo I-765' },
+    { href: '/pricing', label: 'Tarifas fijas' },
+    { href: '/mx/lda', label: '¿Qué es un Legal Document Assistant de California?' }
+  ]}>
+    <p class="lead">
+      Imverica Legal Solutions es una empresa de preparación de documentos con
+      sede en Sacramento que ayuda a clientes en todo Estados Unidos con
+      formularios de inmigración de USCIS y documentos para las cortes de
+      California. Es el nombre comercial de Imverica LLC, una sociedad de
+      responsabilidad limitada de California, registrada y afianzada como
+      Legal Document Assistant e Immigration Consultant (Cal. Bus. &amp;
+      Prof. Code §§6400-6415 y §§22440-22448).
+    </p>
+
+    <h2>A quién ayudamos</h2>
+    <ul>
+      <li>inmigrantes hispanohablantes con trámites de USCIS;</li>
+      <li>familias con peticiones I-130, green card I-485 y ciudadanía N-400;</li>
+      <li>solicitantes de TPS — primeras solicitudes y reinscripciones;</li>
+      <li>solicitantes de permisos de trabajo (I-765) y documentos de viaje (I-131);</li>
+      <li>residentes de California con documentos judiciales: reclamos menores, divorcio, desalojo, sucesiones, limpieza de antecedentes.</li>
+    </ul>
+
+    <h2>Servicios</h2>
+    <ul>
+      <li>permisos de trabajo (I-765) y documentos de viaje (I-131);</li>
+      <li>TPS (I-821) — primeras solicitudes y reinscripciones;</li>
+      <li>paquetes de green card (I-485), peticiones familiares (I-130), ciudadanía (N-400);</li>
+      <li>revisión de documentos antes de presentar, si usted llenó los formularios;</li>
+      <li>traducciones certificadas de español / ruso / ucraniano al inglés;</li>
+      <li>documentos para cortes de California: reclamos menores, derecho familiar, desalojo, sucesiones, expungement.</li>
+    </ul>
+
+    <h2>Cuándo necesita un abogado</h2>
+    <p>
+      Antecedentes penales, procedimientos de deportación, audiencias de asilo
+      en corte, negaciones previas y todo lo que requiera estrategia legal
+      corresponde a un abogado de inmigración con licencia. Imverica no maneja
+      esos casos: mantenemos referencias de abogados con licencia en
+      California y se lo diremos claramente si su situación lo requiere.
+    </p>
+  </LandingBody>
+
+  <FaqBlock heading="Preguntas frecuentes" items={faq} />
+
+  <CTAStrip lang={lang} primaryHref="/#get-started" primaryText="Comenzar mi solicitud" />
+</BaseLayout>

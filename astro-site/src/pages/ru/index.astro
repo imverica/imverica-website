@@ -11,37 +11,11 @@ const description =
   'Калифорнийский лицензированный LDA и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков, probate closing и California expungement / record-cleanup packets. Удалённый сервис по всему миру.';
 
 
-const legalServiceSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'LegalService',
-  name: 'Imverica Legal Solutions',
-  url: 'https://imverica.com',
-  telephone: '+1-916-399-3992',
-  areaServed: [
-    { '@type': 'State', name: 'California' },
-    { '@type': 'Country', name: 'United States' }
-  ],
-  address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' },
-  description: 'Калифорнийский лицензированный помощник по юридическим документам и иммиграционный консультант. Подготовка документов USCIS, EOIR, семейного права, малых исков, выселения, наследственных дел, probate closing и California record-cleanup packets.',
-  knowsLanguage: ['en', 'ru', 'uk', 'es'],
-  serviceType: [
-    'Подготовка иммиграционных форм USCIS',
-    'Подготовка документов EOIR',
-    'Подготовка калифорнийских форм семейного права',
-    'Подготовка документов малых исков',
-    'Подготовка документов unlawful detainer',
-    'Подготовка документов по наследственным делам',
-    'Подготовка документов для закрытия probate и final discharge',
-    'Подготовка California expungement и record-cleanup документов'
-  ],
-  disambiguatingDescription: 'Imverica Legal Solutions не является юридической фирмой и не предоставляет юридических консультаций. Документы готовятся по поручению клиента.'
-};
 ---
 <BaseLayout
   title={title}
   description={description}
   canonical="https://imverica.com/ru/"
-  jsonLd={[legalServiceSchema]}
   lang={lang}
   slug="/"
   availableLocales={['en', 'ru', 'uk', 'es']}

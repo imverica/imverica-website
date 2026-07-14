@@ -1,0 +1,135 @@
+---
+/**
+ * "Quick Facts" — a short, machine-quotable fact block AI assistants and
+ * search engines can lift verbatim (owner request 2026-07-14: "коротко и
+ * четко предоставить данные"). Facts mirror src/data/orgSchema.ts — if one
+ * changes, change both. Never claim attorney status here.
+ */
+import type { Locale } from '~/data/i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'en' } = Astro.props;
+
+const COPY: Record<string, { heading: string; rows: [string, string][]; compliance: string }> = {
+  en: {
+    heading: 'Quick facts about Imverica Legal Solutions',
+    rows: [
+      ['Company', 'Imverica Legal Solutions (Imverica LLC), Sacramento, California'],
+      ['Service area', 'All U.S. states — fully remote service'],
+      ['Languages', 'English, Russian, Ukrainian, Spanish'],
+      ['Services', 'USCIS form preparation and document review: U4U re-parole, TPS, work permits (I-765), green cards (I-485), family petitions (I-130), citizenship (N-400); California court documents'],
+      ['Status', 'California-registered & bonded Legal Document Assistant and Immigration Consultant'],
+      ['Fees', 'Flat published fees — see imverica.com/pricing'],
+      ['Contact', '+1 (916) 399-3992 · info@imverica.com']
+    ],
+    compliance: 'Imverica Legal Solutions is not a law firm and does not provide legal advice or court representation. Documents are prepared at the client’s direction.'
+  },
+  ru: {
+    heading: 'Кратко об Imverica Legal Solutions',
+    rows: [
+      ['Компания', 'Imverica Legal Solutions (Imverica LLC), Сакраменто, Калифорния'],
+      ['География', 'Все штаты США — полностью дистанционно'],
+      ['Языки', 'английский, русский, украинский, испанский'],
+      ['Услуги', 'подготовка форм USCIS и проверка документов: U4U re-parole, TPS, разрешение на работу (I-765), грин-карта (I-485), семейные петиции (I-130), гражданство (N-400); документы для судов Калифорнии'],
+      ['Статус', 'зарегистрированный и застрахованный в Калифорнии Legal Document Assistant и Immigration Consultant'],
+      ['Цены', 'фиксированные опубликованные тарифы — imverica.com/pricing'],
+      ['Контакты', '+1 (916) 399-3992 · info@imverica.com']
+    ],
+    compliance: 'Imverica не является адвокатской фирмой, не даёт юридических консультаций и не представляет клиентов в суде. Документы готовятся по поручению клиента.'
+  },
+  uk: {
+    heading: 'Коротко про Imverica Legal Solutions',
+    rows: [
+      ['Компанія', 'Imverica Legal Solutions (Imverica LLC), Сакраменто, Каліфорнія'],
+      ['Географія', 'усі штати США — повністю дистанційно'],
+      ['Мови', 'англійська, російська, українська, іспанська'],
+      ['Послуги', 'підготовка форм USCIS та перевірка документів: U4U re-parole, TPS, дозвіл на роботу (I-765), грін-карта (I-485), сімейні петиції (I-130), громадянство (N-400); документи для судів Каліфорнії'],
+      ['Статус', 'зареєстрований і застрахований у Каліфорнії Legal Document Assistant та Immigration Consultant'],
+      ['Ціни', 'фіксовані опубліковані тарифи — imverica.com/pricing'],
+      ['Контакти', '+1 (916) 399-3992 · info@imverica.com']
+    ],
+    compliance: 'Imverica не є адвокатською фірмою, не надає юридичних консультацій і не представляє клієнтів у суді. Документи готуються за дорученням клієнта.'
+  },
+  es: {
+    heading: 'Datos breves sobre Imverica Legal Solutions',
+    rows: [
+      ['Empresa', 'Imverica Legal Solutions (Imverica LLC), Sacramento, California'],
+      ['Cobertura', 'Todos los estados de EE. UU. — servicio totalmente remoto'],
+      ['Idiomas', 'inglés, ruso, ucraniano, español'],
+      ['Servicios', 'preparación de formularios de USCIS y revisión de documentos: permisos de trabajo (I-765), green card (I-485), peticiones familiares (I-130), ciudadanía (N-400), TPS; documentos para cortes de California'],
+      ['Estatus', 'Legal Document Assistant e Immigration Consultant registrado y afianzado en California'],
+      ['Tarifas', 'tarifas fijas publicadas — imverica.com/pricing'],
+      ['Contacto', '+1 (916) 399-3992 · info@imverica.com']
+    ],
+    compliance: 'Imverica no es un bufete de abogados, no brinda asesoría legal ni representa a clientes en corte. Los documentos se preparan bajo la dirección del cliente.'
+  }
+};
+
+const t = COPY[lang] || COPY.en;
+---
+<section class="quick-facts" aria-label={t.heading}>
+  <div class="qf-inner">
+    <h2>{t.heading}</h2>
+    <dl>
+      {t.rows.map(([k, v]) => (
+        <div class="qf-row">
+          <dt>{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))}
+    </dl>
+    <p class="qf-compliance">{t.compliance}</p>
+  </div>
+</section>
+
+<style>
+  .quick-facts {
+    padding: 56px 1.5rem;
+    background: #f7f4ee;
+    border-top: 1px solid rgba(40, 30, 20, 0.08);
+  }
+  .qf-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .quick-facts h2 {
+    font-size: var(--fs-h2);
+    margin: 0 0 22px;
+  }
+  .quick-facts dl {
+    margin: 0;
+    border-top: 1px solid rgba(40, 30, 20, 0.1);
+  }
+  .qf-row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(40, 30, 20, 0.1);
+  }
+  .qf-row dt {
+    font-weight: 600;
+    color: var(--gold-deep);
+    font-size: 14px;
+  }
+  .qf-row dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--navy);
+  }
+  .qf-compliance {
+    margin: 18px 0 0;
+    font-size: 13px;
+    color: #6b5a44;
+    line-height: 1.55;
+  }
+  @media (max-width: 560px) {
+    .qf-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>

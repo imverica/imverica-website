@@ -18,6 +18,21 @@ interface SitemapEntry {
 
 const URLS: SitemapEntry[] = [
   { slug: '/', priority: 1.0, changefreq: 'weekly', translatedLocales: ['ru', 'uk', 'es'] },
+  // High-intent pages that were MISSING from the sitemap entirely (found
+  // 2026-07-14 during the AI-search audit — /u4u and /tps are the exact
+  // pages RU/UA leads land on, and they were invisible to crawlers).
+  { slug: '/u4u', priority: 0.95, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/tps', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/about-imverica-legal-solutions', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/immigration', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/pricing', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/about', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/testimonials', priority: 0.7, changefreq: 'weekly', translatedLocales: [] },
+  { slug: '/business', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/criminal', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/california-name-change', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
+  { slug: '/for-attorneys', priority: 0.6, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/schedule', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/i-485-help', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/i-589-asylum-help', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/n-400-citizenship-help', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },

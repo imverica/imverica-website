@@ -1,4 +1,45 @@
+# imverica.com — everything public is crawlable.
+# AI search / assistant crawlers are EXPLICITLY welcome: being easy to
+# retrieve and cite is how clients find us through ChatGPT, Perplexity,
+# Claude, and Gemini. See also /llms.txt for a structured site summary.
+
+# OpenAI (ChatGPT Search retrieval, in-chat browsing, model training)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google (Gemini / AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Everyone else. The client cabinet / admin console are empty app shells
+# behind sign-in — not content worth indexing.
 User-agent: *
 Allow: /
+Disallow: /account.html
+Disallow: /admin.html
+Disallow: /portal.html
 
 Sitemap: https://imverica.com/sitemap.xml
