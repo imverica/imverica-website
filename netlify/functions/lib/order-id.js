@@ -14,12 +14,21 @@ const crypto = require('crypto');
  *
  * The counter lives in the imverica-intakes blob store under
  * `counters/day-<stamp>.json` (never clashes with `order/` / `orders/`
- * record prefixes). Read-modify-write is NOT atomic — @netlify/blobs 8.x
- * has no conditional writes — so two truly simultaneous submissions could
- * mint the same id. At the current volume that risk is accepted; revisit
- * with onlyIfMatch once the store client supports it.
+ * record prefixes).
+ *
+ * Two hazards, both PROVEN on prod 2026-07-14 (two sequential test intakes
+ * both minted -25, the second overwrote the first order record):
+ *   1. Netlify Blobs reads are EVENTUALLY consistent by default — a read
+ *      minutes after a write can return the stale cached value. Fix: the
+ *      store is opened with consistency:'strong'.
+ *   2. @netlify/blobs 8.x has no compare-and-swap, so read-modify-write
+ *      alone can double-allocate under concurrency. Fix: each sequence
+ *      number is CLAIMED via a token blob (`counters/claim-<stamp>-<n>`)
+ *      that is written then read back; if the read-back shows another
+ *      submission's token, we lost the race and walk to the next number.
  */
 const SEQ_START = 25;
+const MAX_CLAIM_WALK = 12;
 
 function ptDateStamp(now = new Date()) {
   // en-CA locale renders YYYY-MM-DD; strip dashes → 20260714.
@@ -29,12 +38,24 @@ function ptDateStamp(now = new Date()) {
 async function nextDailySeq(stamp) {
   if (process.env.NETLIFY || process.env.NETLIFY_BLOBS_CONTEXT) {
     const { getStore } = require('@netlify/blobs');
-    const store = getStore('imverica-intakes');
-    const key = `counters/day-${stamp}.json`;
-    const cur = await store.get(key, { type: 'json' }).catch(() => null);
-    const n = (cur && Number(cur.n) >= SEQ_START ? Number(cur.n) : SEQ_START - 1) + 1;
-    await store.setJSON(key, { n, updatedAt: new Date().toISOString() });
-    return n;
+    const store = getStore({ name: 'imverica-intakes', consistency: 'strong' });
+    const dayKey = `counters/day-${stamp}.json`;
+    const cur = await store.get(dayKey, { type: 'json' }).catch(() => null);
+    let n = (cur && Number(cur.n) >= SEQ_START ? Number(cur.n) : SEQ_START - 1) + 1;
+    const token = crypto.randomBytes(8).toString('hex');
+    for (let walk = 0; walk < MAX_CLAIM_WALK; walk += 1, n += 1) {
+      const claimKey = `counters/claim-${stamp}-${n}.json`;
+      const taken = await store.get(claimKey, { type: 'json' }).catch(() => null);
+      if (taken) continue; // already claimed (stale day pointer) — walk on
+      await store.setJSON(claimKey, { token });
+      const check = await store.get(claimKey, { type: 'json' }).catch(() => null);
+      if (!check || check.token !== token) continue; // lost a race — walk on
+      // The day pointer is advisory (a starting point for the walk); the
+      // claim blob above is what actually owns the number.
+      await store.setJSON(dayKey, { n, updatedAt: new Date().toISOString() }).catch(() => {});
+      return n;
+    }
+    throw new Error(`could not claim a sequence number after ${MAX_CLAIM_WALK} attempts`);
   }
   // Local dev — a tmpdir counter file keeps the sequence behaving the same.
   const dir = path.join(os.tmpdir(), 'imverica-intakes');
