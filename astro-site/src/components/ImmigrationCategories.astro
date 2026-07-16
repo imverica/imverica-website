@@ -58,15 +58,6 @@ const STRINGS = {
 } as const;
 const T = STRINGS[lang];
 
-// Right-hand mono meta block in the hero.
-const META: Record<Lang, { num: string; flows: string; fee: string; intake: string }> = {
-  en: { num: '12', flows: 'priority flows', fee: 'Flat-fee · disclosed upfront', intake: 'EN · RU · UA · ES intake' },
-  ru: { num: '12', flows: 'приоритетных форм', fee: 'Фикс. цена · заранее', intake: 'Приём на EN · RU · UA · ES' },
-  uk: { num: '12', flows: 'пріоритетних форм', fee: 'Фікс. ціна · наперед', intake: 'Прийом на EN · RU · UA · ES' },
-  es: { num: '12', flows: 'formas prioritarias', fee: 'Tarifa fija · informada', intake: 'Atención EN · RU · UA · ES' }
-};
-const M = META[lang];
-
 const TITLES = {
   en: {
     u4u: { title: 'U4U — Uniting for Ukraine', desc: 'Humanitarian parole, I-765 work permit (c)(11) and TPS re-registration support for Ukrainian parolees.' },
@@ -166,11 +157,6 @@ const cats = [
         <h1 set:html={T.h2.replace('EOIR', '<em class="imm-hero-em">EOIR</em>')} />
         <p>{T.intro}</p>
       </div>
-      <div class="imm-hero-meta">
-        <div class="imm-hero-meta-row"><span class="imm-hero-meta-num">{M.num}</span> {M.flows}</div>
-        <div class="imm-hero-meta-row">{M.fee}</div>
-        <div class="imm-hero-meta-row">{M.intake}</div>
-      </div>
     </div>
 
     <div class="imm-cats-grid">
@@ -225,7 +211,7 @@ const cats = [
   .imm-hero-inner { position: relative; max-width: 1220px; margin: 0 auto; }
   .imm-hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 680px) 1fr;
+    grid-template-columns: minmax(0, 680px);
     gap: 40px;
     align-items: start;
     margin-bottom: 40px;
@@ -257,22 +243,8 @@ const cats = [
   }
   .imm-hero-em { font-style: italic; color: var(--gold-deep); }
   .imm-hero-copy p { font-size: 17px; line-height: 1.6; color: var(--text-2); margin: 0; max-width: 640px; text-wrap: pretty; }
-  .imm-hero-meta {
-    justify-self: end;
-    text-align: right;
-    border-left: 1px solid var(--border);
-    padding-left: 28px;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    color: var(--meta);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .imm-hero-meta-num { color: var(--gold-deep); font-weight: 600; }
   @media (max-width: 860px) {
     .imm-hero-grid { grid-template-columns: 1fr; gap: 22px; }
-    .imm-hero-meta { justify-self: start; text-align: left; border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 18px; flex-direction: row; flex-wrap: wrap; gap: 6px 18px; }
   }
 
   .imm-cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
