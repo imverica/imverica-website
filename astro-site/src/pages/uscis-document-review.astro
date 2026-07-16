@@ -1,0 +1,121 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+
+const title = 'USCIS Document Review — check your application before filing | Imverica';
+const description =
+  'Prepared your USCIS forms yourself? We review the completed package before you file — completeness, consistency, current form editions, signatures, and supporting-document checklist. Remote across the U.S., in English, Russian, Ukrainian, and Spanish.';
+
+const faqs: FaqItem[] = [
+  {
+    q: 'What is a USCIS document review?',
+    a: 'You prepare your USCIS application yourself; we go through the completed package before filing and flag missing answers, inconsistencies between forms, outdated form editions, missing signatures, and gaps in the supporting-document checklist. You receive a written list of findings to fix.'
+  },
+  {
+    q: 'Is a document review the same as legal advice?',
+    a: 'No. The review is clerical, not legal: we check completeness, consistency, and formatting against USCIS filing requirements. We do not assess your eligibility, predict outcomes, or recommend legal strategy — for those questions we refer clients to licensed immigration attorneys.'
+  },
+  {
+    q: 'Which applications can Imverica review?',
+    a: 'Any USCIS package we also prepare: U4U re-parole requests, I-765 work permits, I-131 travel documents, I-821 TPS, I-485 adjustment of status, I-130 family petitions, N-400 naturalization, I-90 green-card renewal, and supporting evidence sets.'
+  },
+  {
+    q: 'How fast is the review?',
+    a: 'Most single-form reviews are returned within 1–2 business days. Multi-form packages (for example I-485 + I-765 + I-131) usually take 2–3 business days.'
+  },
+  {
+    q: 'How much does a document review cost?',
+    a: 'Review is quoted flat after we see the size of your package — one form with evidence costs less than a full adjustment-of-status set. Published preparation fees are listed at imverica.com/pricing; reviews are quoted below the corresponding preparation fee.'
+  },
+  {
+    q: 'Can you review documents in Russian or Ukrainian?',
+    a: 'Yes. Intake and communication are available in English, Russian, Ukrainian, and Spanish, and we provide certified translations of civil documents (birth or marriage certificates, records) when the package needs them.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'USCIS Document Review',
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  availableLanguage: ['en', 'ru', 'uk', 'es'],
+  description: 'Pre-filing review of self-prepared USCIS application packages: completeness, consistency, current form editions, signatures, and supporting-document checklist. Document review only — not legal advice.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/uscis-document-review"
+  slug="/uscis-document-review" availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[serviceSchema, faqSchema(faqs)]}>
+  <Hero
+    eyebrow="USCIS · Pre-filing check · EN | RU | UA | ES"
+    heading="USCIS document review before you file"
+    sub="You prepared the forms yourself — we check the package before it goes to USCIS. Completeness, consistency, current editions, signatures, and the supporting-document checklist. Fully remote, flat quote, findings in writing."
+    ctaPrimary={{ href: '/#get-started?topic=REVIEW', text: 'Request a document review' }}
+  />
+
+  <LandingBody related={[
+    { href: '/u4u', label: 'U4U re-parole document preparation' },
+    { href: '/tps', label: 'TPS — Temporary Protected Status' },
+    { href: '/pricing', label: 'Published flat fees' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' }
+  ]}>
+    <p class="lead">
+      A rejected or delayed USCIS filing usually fails on mechanics: a missed
+      question, an outdated form edition, a signature in the wrong place, or
+      evidence that does not match what the form says. A document review is a
+      second set of trained eyes on your self-prepared package — before the
+      filing fee and months of waiting are at stake.
+    </p>
+
+    <h2>Who this is for</h2>
+    <ul>
+      <li>You prepared your own U4U re-parole, TPS, work-permit, green-card, or naturalization package and want it checked before filing.</li>
+      <li>You used a translation tool or a template and are not sure every answer landed where USCIS expects it.</li>
+      <li>Your previous filing was rejected for a missing signature, wrong edition, or incomplete answer and you don't want a repeat.</li>
+      <li>You want a professional check but do not need (or want to pay for) full preparation from scratch.</li>
+    </ul>
+
+    <h2>What we check</h2>
+    <ul>
+      <li><strong>Completeness</strong> — every required item answered; "None"/"N/A" used where USCIS requires it instead of blanks.</li>
+      <li><strong>Consistency</strong> — names, dates, addresses, and A-numbers match across every form in the package and the supporting evidence.</li>
+      <li><strong>Form edition</strong> — the edition date on each form is the one USCIS currently accepts.</li>
+      <li><strong>Signatures and dates</strong> — every signature block that must be signed, is; nothing is signed where it must stay blank.</li>
+      <li><strong>Supporting documents</strong> — a checklist of what your package includes versus what the filing type commonly requires, including certified translations.</li>
+      <li><strong>Fees and mailing</strong> — correct filing fee (or fee-exempt category, like I-765 (c)(11) for U4U parolees) and the current USCIS filing address for your case type.</li>
+    </ul>
+
+    <h2>Documents usually reviewed</h2>
+    <p>
+      U4U re-parole request packages, I-765 work permit applications, I-131
+      travel documents, I-821 TPS registrations and re-registrations, I-485
+      adjustment-of-status sets, I-130 family petitions, N-400 naturalization
+      applications, I-90 green-card renewals — plus the evidence sets behind
+      them: civil documents, translations, status documents, and photos.
+    </p>
+
+    <h2>How the process works</h2>
+    <ul>
+      <li><strong>1. Upload.</strong> Send your completed forms and evidence through the secure client portal — files are encrypted at rest.</li>
+      <li><strong>2. Flat quote.</strong> We confirm the package size and quote a flat review fee before any work starts.</li>
+      <li><strong>3. Review.</strong> A trained document preparer goes through every page against the current USCIS requirements.</li>
+      <li><strong>4. Written findings.</strong> You receive an itemized list of what to fix, what is missing, and what is ready — in your language.</li>
+    </ul>
+
+    <cite>
+      Imverica Legal Solutions is a California-registered Legal Document
+      Assistant and Immigration Consultant, not a law firm. A document review
+      checks completeness and consistency; it is not legal advice, an
+      eligibility assessment, or a prediction of the outcome. If your case
+      needs legal strategy, consult a licensed immigration attorney.
+    </cite>
+  </LandingBody>
+
+  <FaqBlock heading="Frequently asked questions" items={faqs} />
+
+  <CTAStrip primaryHref="/#get-started?topic=REVIEW" primaryText="Request a document review" />
+</BaseLayout>

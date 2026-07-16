@@ -24,6 +24,7 @@ const URLS: SitemapEntry[] = [
   { slug: '/u4u', priority: 0.95, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/tps', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/about-imverica-legal-solutions', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/uscis-document-review', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/immigration', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/pricing', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/about', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },

@@ -1,0 +1,125 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+
+const lang = 'es' as const;
+const title = 'Revisión de documentos USCIS antes de presentar | Imverica';
+const description =
+  '¿Preparó sus formularios de USCIS por su cuenta? Revisamos el paquete antes de presentarlo: respuestas completas, consistencia entre formularios, ediciones vigentes, firmas y lista de evidencias. Remoto en todo EE. UU., en español.';
+
+const faqs: FaqItem[] = [
+  {
+    q: '¿Qué es una revisión de documentos USCIS?',
+    a: 'Usted prepara su solicitud por su cuenta; nosotros revisamos el paquete completo antes de presentarlo: respuestas faltantes, inconsistencias entre formularios, ediciones desactualizadas, firmas ausentes y huecos en las evidencias. Recibe una lista escrita de observaciones para corregir.'
+  },
+  {
+    q: '¿Es lo mismo que asesoría legal?',
+    a: 'No. La revisión es técnica, no legal: integridad, consistencia y formato según los requisitos de USCIS. No evaluamos su elegibilidad, no predecimos resultados ni elegimos estrategia — para eso referimos a abogados de inmigración con licencia.'
+  },
+  {
+    q: '¿Qué solicitudes revisan?',
+    a: 'Cualquier paquete de USCIS que también preparamos: permisos de trabajo I-765, documentos de viaje I-131, TPS (I-821), ajuste de estatus I-485, peticiones familiares I-130, naturalización N-400, renovación de green card I-90 y los juegos de evidencias.'
+  },
+  {
+    q: '¿Cuánto tarda la revisión?',
+    a: 'La revisión de un formulario suele devolverse en 1–2 días hábiles. Los paquetes de varios formularios (por ejemplo, I-485 + I-765 + I-131) tardan 2–3 días hábiles.'
+  },
+  {
+    q: '¿Cuánto cuesta la revisión de documentos?',
+    a: 'La cotización fija se da después de ver el tamaño del paquete: un formulario con evidencias cuesta menos que un juego completo de ajuste de estatus. Las tarifas publicadas de preparación están en imverica.com/pricing; la revisión cuesta menos que la preparación correspondiente.'
+  },
+  {
+    q: '¿Puedo comunicarme y enviar documentos en español?',
+    a: 'Sí. El formulario de admisión y la comunicación están disponibles en español, inglés, ruso y ucraniano, y cuando el paquete lo requiere hacemos traducciones certificadas de actas y constancias.'
+  }
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'USCIS Document Review (Spanish-speaking)',
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  availableLanguage: ['es', 'en', 'ru', 'uk'],
+  description: 'Revisión de paquetes USCIS preparados por el propio solicitante antes de presentarlos: integridad, consistencia, ediciones vigentes, firmas y lista de evidencias. Solo revisión de documentos — no asesoría legal.'
+};
+---
+<BaseLayout title={title} description={description} canonical="https://imverica.com/mx/uscis-document-review"
+  slug="/uscis-document-review" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[serviceSchema, faqSchema(faqs)]}>
+  <Hero
+    lang={lang}
+    eyebrow="USCIS · Revisión antes de presentar · ES | EN"
+    heading="Revisión de documentos USCIS antes de presentar"
+    sub="Usted llenó los formularios — nosotros revisamos el paquete antes de enviarlo a USCIS. Integridad, consistencia, ediciones vigentes, firmas y lista de evidencias. Remoto, cotización fija, observaciones por escrito y en español."
+    ctaPrimary={{ href: '/#get-started?topic=REVIEW', text: 'Solicitar una revisión' }}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: '/mx/i-765-work-permit-help', label: 'I-765 — permiso de trabajo' },
+    { href: '/mx/tps', label: 'TPS — Estatus de Protección Temporal' },
+    { href: '/pricing', label: 'Tarifas publicadas' },
+    { href: '/mx/lda', label: '¿Qué es un Legal Document Assistant de California?' }
+  ]}>
+    <p class="lead">
+      Los rechazos y retrasos de USCIS casi siempre son mecánicos: una pregunta
+      sin responder, una edición desactualizada del formulario, una firma en el
+      lugar equivocado o evidencias que no coinciden con lo que dice el
+      formulario. La revisión de documentos es un segundo par de ojos
+      profesionales sobre su paquete — antes de arriesgar la tarifa de
+      presentación y meses de espera.
+    </p>
+
+    <h2>Para quién es</h2>
+    <ul>
+      <li>Preparó por su cuenta su paquete de permiso de trabajo, TPS, green card o naturalización y quiere revisarlo antes de presentarlo.</li>
+      <li>Llenó los formularios con una plantilla o un traductor y no está seguro de que cada respuesta quedó donde USCIS la espera.</li>
+      <li>Su presentación anterior fue rechazada por una firma faltante, una edición incorrecta o una respuesta incompleta — y no quiere repetirlo.</li>
+      <li>Quiere una revisión profesional pero no necesita la preparación completa desde cero.</li>
+    </ul>
+
+    <h2>Qué revisamos</h2>
+    <ul>
+      <li><strong>Integridad</strong> — cada punto obligatorio respondido; donde USCIS exige «None»/«N/A», no quedan campos vacíos.</li>
+      <li><strong>Consistencia</strong> — nombres, fechas, direcciones y A-numbers coinciden en todos los formularios del paquete y en las evidencias.</li>
+      <li><strong>Edición del formulario</strong> — la fecha de edición de cada formulario es la que USCIS acepta actualmente.</li>
+      <li><strong>Firmas y fechas</strong> — está firmado todo lo que debe firmarse, y no está firmado lo que debe quedar en blanco.</li>
+      <li><strong>Evidencias</strong> — lista de verificación: qué contiene su paquete y qué se requiere comúnmente para su tipo de trámite, incluidas traducciones certificadas.</li>
+      <li><strong>Tarifas y dirección</strong> — la tarifa correcta (o la exención que aplique) y la dirección de presentación vigente de USCIS para su caso.</li>
+    </ul>
+
+    <h2>Documentos que solemos revisar</h2>
+    <p>
+      Solicitudes I-765 de permiso de trabajo, documentos de viaje I-131,
+      registros y reinscripciones de TPS (I-821), juegos I-485 de ajuste de
+      estatus, peticiones familiares I-130, solicitudes N-400 de
+      naturalización, renovaciones I-90 — y las evidencias que los acompañan:
+      actas, traducciones, documentos de estatus, fotografías.
+    </p>
+
+    <h2>Cómo funciona</h2>
+    <ul>
+      <li><strong>1. Suba sus archivos.</strong> Envíe los formularios llenos y las evidencias por el portal seguro del cliente — los archivos se cifran en reposo.</li>
+      <li><strong>2. Cotización fija.</strong> Confirmamos el tamaño del paquete y damos un precio fijo antes de empezar.</li>
+      <li><strong>3. Revisión.</strong> Un preparador de documentos capacitado revisa cada página según los requisitos vigentes de USCIS.</li>
+      <li><strong>4. Observaciones por escrito.</strong> Recibe una lista detallada: qué corregir, qué falta y qué está listo — en español.</li>
+    </ul>
+
+    <cite>
+      Imverica Legal Solutions es un Legal Document Assistant e Immigration
+      Consultant registrado en California; no es un bufete de abogados. La
+      revisión de documentos verifica integridad y consistencia; no es
+      asesoría legal, evaluación de elegibilidad ni predicción del resultado.
+      Si su caso necesita estrategia legal, consulte a un abogado de
+      inmigración con licencia.
+    </cite>
+  </LandingBody>
+
+  <FaqBlock heading="Preguntas frecuentes" items={faqs} />
+
+  <CTAStrip lang={lang} primaryHref="/#get-started?topic=REVIEW" primaryText="Solicitar una revisión" />
+</BaseLayout>
