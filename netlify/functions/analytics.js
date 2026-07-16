@@ -3,11 +3,18 @@
  * Search analytics — what visitors type into the hero finder and whether
  * they act on the answer.
  *
- *   POST /api/analytics   { type: 'search'|'start', query, lang, formCode,
- *                           confidence }            (public, origin-guarded,
- *                           throttled, fire-and-forget from the browser)
+ *   POST /api/analytics   { type: 'search'|'start'|'lead'|'call'|'email',
+ *                           query, lang, formCode, confidence, page }
+ *                           (public, origin-guarded, throttled,
+ *                           fire-and-forget from the browser)
  *   GET  /api/analytics?days=7                      (admin token required)
- *     → { ok, events: [...], summary: { byForm, byLang, searches, starts } }
+ *     → { ok, events: [...], summary: { byForm, byLang, searches, starts,
+ *          leads, calls, emails, conversionsByPage } }
+ *
+ * Conversion events (2026-07 SEO push): 'lead' fires on a successful
+ * quick-intake / appointment submission, 'call' on a tel: click, 'email'
+ * on a mailto: click — all carry `page` so we can see which landing pages
+ * actually produce contacts, not just traffic.
  *
  * Storage: imverica-analytics Blobs store, one JSON per event under
  * events/YYYY-MM-DD/<ts>-<rand>.json — no reads on the hot path, the GET
@@ -48,16 +55,21 @@ exports.handler = async function (event) {
 
     let body;
     try { body = JSON.parse(event.body || '{}'); } catch { return json(400, { ok: false }); }
-    const type = body.type === 'start' ? 'start' : 'search';
+    const TYPES = ['search', 'start', 'lead', 'call', 'email'];
+    const type = TYPES.includes(body.type) ? body.type : 'search';
     const entry = {
       ts: new Date().toISOString(),
       type,
       query: clean(body.query, 200),
       lang: clean(body.lang, 8),
       formCode: clean(body.formCode, 24).toUpperCase(),
-      confidence: Number(body.confidence) || null
+      confidence: Number(body.confidence) || null,
+      page: clean(body.page, 200)
     };
-    if (!entry.query && !entry.formCode) return json(400, { ok: false });
+    // Search events are meaningless without a query/form; conversion
+    // events (lead/call/email) are meaningful with just the page.
+    const isConversion = type === 'lead' || type === 'call' || type === 'email';
+    if (!isConversion && !entry.query && !entry.formCode) return json(400, { ok: false });
 
     const store = await getStore();
     if (store) {
@@ -87,11 +99,18 @@ exports.handler = async function (event) {
     }
     events.sort((a, b) => String(b.ts).localeCompare(String(a.ts)));
 
-    const summary = { searches: 0, starts: 0, byForm: {}, byLang: {} };
+    const summary = { searches: 0, starts: 0, leads: 0, calls: 0, emails: 0, byForm: {}, byLang: {}, conversionsByPage: {} };
     for (const e of events) {
-      if (e.type === 'start') summary.starts++; else summary.searches++;
+      if (e.type === 'start') summary.starts++;
+      else if (e.type === 'lead') summary.leads++;
+      else if (e.type === 'call') summary.calls++;
+      else if (e.type === 'email') summary.emails++;
+      else summary.searches++;
       if (e.formCode) summary.byForm[e.formCode] = (summary.byForm[e.formCode] || 0) + 1;
       if (e.lang) summary.byLang[e.lang] = (summary.byLang[e.lang] || 0) + 1;
+      if ((e.type === 'lead' || e.type === 'call' || e.type === 'email') && e.page) {
+        summary.conversionsByPage[e.page] = (summary.conversionsByPage[e.page] || 0) + 1;
+      }
     }
     return json(200, { ok: true, events: events.slice(0, 400), summary });
   }

@@ -701,6 +701,9 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
           if (submit) { submit.disabled = false; if (label) label.textContent = dict.submit; }
           return;
         }
+        // Conversion beacon — confirmed lead (see BaseLayout imvTrack).
+        const trackFn = (window as any).imvTrack;
+        if (typeof trackFn === 'function') trackFn('lead', { formCode: formCode || undefined });
         // Switch to the success pane (don't auto-close) so the visitor
         // sees their order id and a clear path to the long wizard in
         // the cabinet — hybrid flow per /for-attorneys homepage spec.

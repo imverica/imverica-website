@@ -77,6 +77,21 @@ const alternates = slug && availableLocales.length > 1
     <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
   )}
 
+  {/* Google Search Console + GA4 — both env-driven so enabling them is a
+      Netlify env change + redeploy, no code edit:
+        PUBLIC_GSC_VERIFICATION — content of the google-site-verification meta
+        PUBLIC_GA4_ID           — G-XXXXXXX measurement id
+      Absent env → nothing is rendered (zero third-party JS by default). */}
+  {import.meta.env.PUBLIC_GSC_VERIFICATION && (
+    <meta name="google-site-verification" content={import.meta.env.PUBLIC_GSC_VERIFICATION} />
+  )}
+  {import.meta.env.PUBLIC_GA4_ID && (
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA4_ID}`}></script>
+  )}
+  {import.meta.env.PUBLIC_GA4_ID && (
+    <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${import.meta.env.PUBLIC_GA4_ID}',{anonymize_ip:true});`}></script>
+  )}
+
   <!-- Typography: editorial brand system — Newsreader (serif) for display
        headings, Archivo (sans) for body/UI, IBM Plex Mono for kickers and
        labels. display=swap keeps text visible while the webfonts load. -->
@@ -164,6 +179,35 @@ const alternates = slug && availableLocales.length > 1
         setupReveal();
       }
       document.addEventListener('astro:after-swap', setupReveal);
+    })();
+  </script>
+  <script>
+    /* Conversion beacons (SEO push 2026-07): window.imvTrack(type, extra)
+       posts to our own /api/analytics AND mirrors to GA4 when gtag is
+       present. tel:/mailto: clicks are tracked automatically here;
+       form-submit 'lead' events are fired by the forms themselves
+       (QuickIntakeModal, AppointmentScheduler) on confirmed success. */
+    (function () {
+      function track(type: string, extra?: Record<string, unknown>) {
+        try {
+          const payload = JSON.stringify(Object.assign({
+            type,
+            page: location.pathname,
+            lang: document.documentElement.lang || 'en'
+          }, extra || {}));
+          if (navigator.sendBeacon) navigator.sendBeacon('/api/analytics', new Blob([payload], { type: 'application/json' }));
+          else fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(() => {});
+          const g = (window as any).gtag;
+          if (typeof g === 'function') g('event', type === 'lead' ? 'generate_lead' : type + '_click', { page_path: location.pathname });
+        } catch { /* tracking must never break the page */ }
+      }
+      (window as any).imvTrack = track;
+      document.addEventListener('click', (e) => {
+        const t = e.target as HTMLElement | null;
+        const a = t && t.closest ? (t.closest('a[href^="tel:"], a[href^="mailto:"]') as HTMLAnchorElement | null) : null;
+        if (!a) return;
+        track((a.getAttribute('href') || '').startsWith('tel:') ? 'call' : 'email');
+      }, true);
     })();
   </script>
 </body>

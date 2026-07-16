@@ -212,6 +212,9 @@ const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 P
         });
         const data = await response.json().catch(() => ({}));
         if (!response.ok || !data.ok) throw new Error(data.error || 'request failed');
+        // Conversion beacon — confirmed lead (see BaseLayout imvTrack).
+        const trackFn = (window as any).imvTrack;
+        if (typeof trackFn === 'function') trackFn('lead', { formCode: 'APPOINTMENT' });
         form.hidden = true;
         (document.getElementById('appointmentReference') as HTMLElement).textContent = data.orderId || '—';
         (document.getElementById('appointmentSuccess') as HTMLElement).hidden = false;
