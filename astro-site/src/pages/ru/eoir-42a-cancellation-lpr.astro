@@ -5,7 +5,7 @@ import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'ru' as const;
-const title = 'EOIR-42A — Cancellation of Removal для LPR | Imverica';
+const title = 'EOIR-42A — Cancellation of Removal для LPR: подготовка формы | Imverica';
 const description = 'California Registered LDA готовит форму EOIR-42A — Application for Cancellation of Removal для постоянных резидентов под INA §240A(a). 7 лет резидентуры, 5 лет LPR, нет aggravated felony. По поручению клиента — представительство требует адвоката.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-42a-cancellation-lpr"
@@ -77,5 +77,5 @@ const description = 'California Registered LDA готовит форму EOIR-42
     </cite>
   </LandingBody>
 
-  <CTAStrip primaryHref="/#get-started?form=EOIR-42A" primaryText="Начать анкету EOIR-42A" />
+  <CTAStrip lang="ru" primaryHref="/#get-started?form=EOIR-42A" primaryText="Начать анкету EOIR-42A" />
 </BaseLayout>
