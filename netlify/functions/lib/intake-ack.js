@@ -22,6 +22,15 @@ const REPLY_TO = 'info@imverica.com';
 const PHONE = '+1 (916) 399-3992';
 const SITE = 'https://imverica.com';
 
+// Owner's permanent Zoom room (2026-07-17) — included in the ack for VIDEO
+// appointment requests and in the owner's calendar event. Env-overridable
+// so rotating the room/passcode is a Netlify env change, not a deploy.
+const ZOOM_MEETING = {
+  url: process.env.ZOOM_MEETING_URL || 'https://us05web.zoom.us/j/7315124254?pwd=6hwjCnwC0JNgObFvaNvI0bgmtwSZmK.1',
+  id: process.env.ZOOM_MEETING_ID || '731 512 4254',
+  passcode: process.env.ZOOM_PASSCODE || 'zW7m6n'
+};
+
 // Personal signature (owner request 2026-07-14): the ack reads like a reply
 // from a real person, not a robot. Title deliberately UPL-safe — never
 // "attorney"/"lawyer"/"legal advisor"; Imverica is a registered LDA.
@@ -132,13 +141,43 @@ function ptLongDate(createdAt) {
   return d.toLocaleDateString('en-US', { timeZone: 'America/Los_Angeles', year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+/** "2026-07-21" → "July 21, 2026" — pure string math, no timezone drift. */
+function plainDate(ymd) {
+  const m = String(ymd || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return String(ymd || '');
+  return `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`;
+}
+
+/**
+ * Meeting-details lines for an appointment ack (English — the ack language).
+ * Video meetings get the Zoom room; the time stays "requested" until the
+ * owner's confirmation email, and the copy says so.
+ */
+function appointmentLines(a) {
+  if (!a || !a.date || !a.time) return [];
+  const lines = [
+    `Your requested meeting: ${a.typeLabel || 'appointment'} — ${plainDate(a.date)} at ${a.time} (Pacific Time).`,
+    'We will confirm this time by email.'
+  ];
+  if (String(a.type || '').toLowerCase() === 'video') {
+    lines.push(
+      '',
+      `Join Zoom Meeting: ${ZOOM_MEETING.url}`,
+      `Meeting ID: ${ZOOM_MEETING.id} · Passcode: ${ZOOM_MEETING.passcode}`
+    );
+  }
+  return lines;
+}
+
 /** Build { subject, text, html } for one language. Exported for QA. */
-function ackCopy(lang, { name, orderId, situation, createdAt }) {
+function ackCopy(lang, { name, orderId, situation, createdAt, appointment }) {
   const t = COPY[lang] || COPY.en;
   const firstName = String(name || '').trim().split(/\s+/)[0] || '';
   const subject = t.subject(orderId);
   const quoted = String(situation || '').trim();
   const wroteLine = quoted ? t.youWrote(ptLongDate(createdAt)) : '';
+  const apptLines = appointmentLines(appointment);
 
   const text = [
     t.greeting(firstName),
@@ -147,6 +186,7 @@ function ackCopy(lang, { name, orderId, situation, createdAt }) {
     '',
     `${t.orderLabel}: ${orderId}`,
     '',
+    ...(apptLines.length ? [...apptLines, ''] : []),
     t.addMore,
     '',
     t.signoff,
@@ -168,10 +208,20 @@ function ackCopy(lang, { name, orderId, situation, createdAt }) {
     <p style="margin:20px 0 6px;font-size:13px;color:#6b7280;">${escHtml(wroteLine)}</p>
     <blockquote style="margin:0;padding:8px 14px;border-left:3px solid #d6d9df;color:#4b5563;font-size:13px;white-space:pre-wrap;">${escHtml(quoted)}</blockquote>` : '';
 
+  const a = appointment;
+  const isVideo = a && String(a.type || '').toLowerCase() === 'video';
+  const apptHtml = apptLines.length ? `
+    <div style="margin:0 0 14px;background:#f5f7fa;border-radius:6px;padding:12px 14px;">
+      <p style="margin:0 0 4px;"><strong>${escHtml(a.typeLabel || 'Appointment')}</strong> — ${escHtml(plainDate(a.date))} at ${escHtml(a.time)} (Pacific Time)</p>
+      <p style="margin:0;font-size:13px;color:#6b7280;">We will confirm this time by email.</p>${isVideo ? `
+      <p style="margin:10px 0 0;"><a href="${ZOOM_MEETING.url}" style="color:#0f1c2f;font-weight:600;">Join Zoom Meeting</a><br/>
+      <span style="font-size:13px;color:#4b5563;">Meeting ID: ${escHtml(ZOOM_MEETING.id)} · Passcode: ${escHtml(ZOOM_MEETING.passcode)}</span></p>` : ''}
+    </div>` : '';
+
   const html = `<div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6;color:#1c2c40;max-width:560px;">
     <p style="margin:0 0 12px;">${escHtml(t.greeting(firstName))}</p>
     <p style="margin:0 0 12px;">${escHtml(t.received)}</p>
-    <p style="margin:0 0 12px;background:#f5f7fa;border-radius:6px;padding:10px 14px;"><strong>${escHtml(t.orderLabel)}:</strong> ${escHtml(orderId)}</p>
+    <p style="margin:0 0 12px;background:#f5f7fa;border-radius:6px;padding:10px 14px;"><strong>${escHtml(t.orderLabel)}:</strong> ${escHtml(orderId)}</p>${apptHtml}
     <p style="margin:0 0 16px;">${escHtml(t.addMore)}</p>
     <p style="margin:0 0 14px;">${escHtml(t.signoff)}</p>
     <div style="border-left:3px solid #c9a227;padding-left:14px;margin:0 0 18px;">
@@ -207,7 +257,8 @@ async function sendClientAck(record) {
     name: c.name,
     orderId: record.id,
     situation: record.situation,
-    createdAt: record.createdAt
+    createdAt: record.createdAt,
+    appointment: record.appointment || null
   });
   try {
     const res = await fetch('https://api.resend.com/emails', {
@@ -228,4 +279,4 @@ async function sendClientAck(record) {
   }
 }
 
-module.exports = { sendClientAck, detectAckLanguage, ackCopy };
+module.exports = { sendClientAck, detectAckLanguage, ackCopy, ZOOM_MEETING };

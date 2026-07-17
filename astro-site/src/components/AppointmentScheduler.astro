@@ -14,7 +14,7 @@ const COPY = {
     name: 'Your name', email: 'Email', phoneLabel: 'Phone', notes: 'What would you like to discuss?',
     notesHint: 'Briefly describe the document, filing, or partnership question.', submit: 'Request an appointment', sending: 'Sending…',
     confirm: 'This is a scheduling request. Your appointment is confirmed only after you receive our confirmation email.',
-    required: 'Please complete all required fields and select a time.', weekend: 'Please choose a weekday.',
+    required: 'Please complete all required fields and select a time.', weekend: 'We are closed on Sundays — please choose another day.',
     error: 'Could not send the request. Please try again or call +1 (916) 399-3992.',
     success: 'Appointment request received', successText: 'We will confirm the time by email. Your reference is',
     another: 'Request another time'
@@ -27,7 +27,7 @@ const COPY = {
     name: 'Ваше имя', email: 'Email', phoneLabel: 'Телефон', notes: 'Что вы хотите обсудить?',
     notesHint: 'Кратко опишите документ, подачу или вопрос о сотрудничестве.', submit: 'Запросить встречу', sending: 'Отправляем…',
     confirm: 'Это запрос на запись. Встреча считается подтвержденной только после нашего письма.',
-    required: 'Заполните обязательные поля и выберите время.', weekend: 'Выберите рабочий день.',
+    required: 'Заполните обязательные поля и выберите время.', weekend: 'По воскресеньям закрыто — выберите другой день.',
     error: 'Не удалось отправить запрос. Попробуйте снова или позвоните +1 (916) 399-3992.',
     success: 'Запрос на встречу получен', successText: 'Мы подтвердим время по email. Ваш номер', another: 'Выбрать другое время'
   },
@@ -39,7 +39,7 @@ const COPY = {
     name: 'Ваше ім’я', email: 'Email', phoneLabel: 'Телефон', notes: 'Що ви хочете обговорити?',
     notesHint: 'Коротко опишіть документ, подання або питання співпраці.', submit: 'Запросити зустріч', sending: 'Надсилаємо…',
     confirm: 'Це запит на запис. Зустріч підтверджена лише після нашого листа.',
-    required: 'Заповніть обов’язкові поля та оберіть час.', weekend: 'Оберіть робочий день.',
+    required: 'Заповніть обов’язкові поля та оберіть час.', weekend: 'У неділю зачинено — оберіть інший день.',
     error: 'Не вдалося надіслати запит. Спробуйте ще раз або зателефонуйте +1 (916) 399-3992.',
     success: 'Запит на зустріч отримано', successText: 'Ми підтвердимо час електронною поштою. Ваш номер', another: 'Обрати інший час'
   },
@@ -51,7 +51,7 @@ const COPY = {
     name: 'Su nombre', email: 'Email', phoneLabel: 'Teléfono', notes: '¿Qué desea conversar?',
     notesHint: 'Describa brevemente el documento, trámite o colaboración.', submit: 'Solicitar cita', sending: 'Enviando…',
     confirm: 'Esta es una solicitud. La cita queda confirmada únicamente después de nuestro email.',
-    required: 'Complete los campos obligatorios y elija una hora.', weekend: 'Seleccione un día hábil.',
+    required: 'Complete los campos obligatorios y elija una hora.', weekend: 'Los domingos está cerrado — elija otro día.',
     error: 'No pudimos enviar la solicitud. Intente de nuevo o llame al +1 (916) 399-3992.',
     success: 'Solicitud de cita recibida', successText: 'Confirmaremos la hora por email. Su referencia es', another: 'Solicitar otra hora'
   }
@@ -106,7 +106,7 @@ const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 P
       </label>
       <label class="field full">
         <span>{t.notes} *</span>
-        <textarea id="appointmentNotes" rows="4" minlength="5" maxlength="1800" required></textarea>
+        <textarea id="appointmentNotes" rows="4" minlength="7" maxlength="1800" required></textarea>
         <small>{t.notesHint}</small>
       </label>
 
@@ -152,9 +152,10 @@ const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 P
       const d = String(date.getDate()).padStart(2, '0');
       return `${y}-${m}-${d}`;
     };
+    // Open Monday–Saturday; only Sunday is unavailable (owner 2026-07-17).
     const nextBusinessDay = () => {
       const d = new Date(); d.setDate(d.getDate() + 1);
-      while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
+      while (d.getDay() === 0) d.setDate(d.getDate() + 1);
       return d;
     };
     const min = nextBusinessDay();
@@ -179,7 +180,7 @@ const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 P
     dateInput.addEventListener('change', () => {
       const parts = dateInput.value.split('-').map(Number);
       const day = new Date(parts[0], parts[1] - 1, parts[2]).getDay();
-      if (day === 0 || day === 6) { dateInput.value = ''; show(copy.weekend); }
+      if (day === 0) { dateInput.value = ''; show(copy.weekend); }
     });
 
     form.addEventListener('submit', async (event) => {
@@ -207,7 +208,17 @@ const slots = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 P
           body: JSON.stringify({
             name: name.value.trim(), email: email.value.trim(), phone: phone.value.trim(),
             situation, formCode: 'APPOINTMENT', language: lang, files: [],
-            website: website.value, turnstileToken: turnstile.value
+            website: website.value, turnstileToken: turnstile.value,
+            // Structured copy of the meeting request so the server can
+            // build the calendar event + Zoom details without parsing the
+            // localized situation text.
+            appointment: {
+              type: type.value,
+              typeLabel,
+              date: dateInput.value,
+              time: selectedTime,
+              durationMin: parseInt((typeLabel.match(/(\d+)/) || [])[1] || '30', 10)
+            }
           })
         });
         const data = await response.json().catch(() => ({}));

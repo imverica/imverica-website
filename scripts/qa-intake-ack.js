@@ -138,5 +138,25 @@ assert('html escapes quoted request', !evilQuote.includes('<script>') && evilQuo
 // numeric createdAt (quick-intake uses Date.now()) works too.
 assert('numeric createdAt ok', ackCopy('en', { name: 'A B', orderId: ORDER, situation: 'x', createdAt: 1784054400000 }).text.includes('you wrote:'));
 
+// --- 4. Appointment block: requested time always, Zoom only for video ---
+
+const APPT_VIDEO = { type: 'video', typeLabel: 'Video meeting · 30 minutes', date: '2026-07-21', time: '2:00 PM', durationMin: 30 };
+const vid = ackCopy('en', { name: 'Farruh K', orderId: ORDER, situation: 'testвывы', appointment: APPT_VIDEO });
+assert('video: meeting line with plain date', vid.text.includes('Video meeting · 30 minutes — July 21, 2026 at 2:00 PM (Pacific Time)'));
+assert('video: confirm-by-email line', vid.text.includes('We will confirm this time by email.'));
+assert('video: zoom url in text', vid.text.includes('https://us05web.zoom.us/j/7315124254'));
+assert('video: meeting id + passcode', vid.text.includes('731 512 4254') && vid.text.includes('zW7m6n'));
+assert('video: html has zoom link', vid.html.includes('Join Zoom Meeting') && vid.html.includes('us05web.zoom.us'));
+
+const phoneAppt = ackCopy('en', { name: 'Farruh K', orderId: ORDER, situation: 'x', appointment: { ...APPT_VIDEO, type: 'phone', typeLabel: 'Phone call · 20 minutes' } });
+assert('phone: meeting line present', phoneAppt.text.includes('Phone call · 20 minutes — July 21, 2026'));
+assert('phone: NO zoom', !phoneAppt.text.includes('zoom.us') && !phoneAppt.html.includes('zoom.us'));
+
+const noAppt = ackCopy('en', { name: 'A B', orderId: ORDER, situation: 'regular intake, no meeting' });
+assert('no appointment → no zoom, no meeting line', !noAppt.text.includes('zoom.us') && !noAppt.text.includes('requested meeting'));
+
+// Date string must not drift a day (the classic UTC-midnight bug).
+assert('date has no tz drift', vid.text.includes('July 21, 2026') && !vid.text.includes('July 20, 2026'));
+
 console.log(`\nqa-intake-ack: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

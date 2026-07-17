@@ -37,7 +37,8 @@ const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guar
 const { getStore } = require('@netlify/blobs');
 const { uploadAttachmentsToClientFolder, DriveDisabled } = require('./lib/google-drive');
 const { makeOrderId } = require('./lib/order-id');
-const { sendClientAck } = require('./lib/intake-ack');
+const { sendClientAck, ZOOM_MEETING } = require('./lib/intake-ack');
+const { createAppointmentEvent } = require('./lib/google-calendar');
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -248,6 +249,21 @@ exports.handler = async function (event) {
   if (!situation || situation.length < 5) errors.push('situation');
   if (errors.length) return json(422, { ok: false, error: 'Please fill all required fields.', fields: errors });
 
+  // Structured meeting request (sent by AppointmentScheduler alongside the
+  // human-readable situation text) — drives the owner-calendar event and
+  // the Zoom details in the client acknowledgment. Ignored unless the
+  // submission is actually an appointment.
+  const apptRaw = body.appointment;
+  const appointment = formCode === 'APPOINTMENT' && apptRaw && typeof apptRaw === 'object'
+    ? {
+        type: clean(apptRaw.type, 20).toLowerCase(),
+        typeLabel: clean(apptRaw.typeLabel, 80),
+        date: /^\d{4}-\d{2}-\d{2}$/.test(String(apptRaw.date || '')) ? String(apptRaw.date) : '',
+        time: clean(apptRaw.time, 20),
+        durationMin: Number(apptRaw.durationMin) || 30
+      }
+    : null;
+
   // Files (optional). Each must pass our normal upload validator —
   // magic-byte signature + extension allow-list + RTL/macro rejection.
   const rawFiles = Array.isArray(body.files) ? body.files.slice(0, MAX_FILES) : [];
@@ -291,7 +307,10 @@ exports.handler = async function (event) {
     formCode,
     service: '',
     contact: { name, email, phone },
-    situation
+    situation,
+    // Non-PII scheduling details; stays plaintext next to the encrypted
+    // fields so the admin console can show the slot without decrypting.
+    appointment
   };
 
   // Upload attachments to Google Drive (best-effort — Drive failure
@@ -349,19 +368,25 @@ exports.handler = async function (event) {
   // Email the owner (best-effort — request succeeds even if mail bounces)
   // and, in parallel, the client's "we received your request" acknowledgment
   // in the language they wrote in (lib/intake-ack.js — never throws).
-  const [ownerRes, ackRes] = await Promise.allSettled([
+  const [ownerRes, ackRes, calRes] = await Promise.allSettled([
     notifyOwner(record, attachments, driveResult),
-    sendClientAck(record)
+    sendClientAck(record),
+    // Appointment intakes also land on the owner's Google Calendar with a
+    // 1-hour reminder (lib/google-calendar.js — no-ops cleanly when the
+    // service account / calendar sharing isn't configured).
+    appointment ? createAppointmentEvent(record, ZOOM_MEETING) : Promise.resolve({ created: false, reason: 'not-appointment' })
   ]);
   if (ownerRes.status === 'rejected') console.error('[quick-intake] notify failed', ownerRes.reason);
   const emailStatus = ownerRes.status === 'fulfilled' ? ownerRes.value : { sent: false, error: String(ownerRes.reason && ownerRes.reason.message || ownerRes.reason) };
   const ackStatus = ackRes.status === 'fulfilled' ? ackRes.value : { sent: false };
+  const calStatus = calRes.status === 'fulfilled' ? calRes.value : { created: false };
 
   return json(200, {
     ok: true,
     orderId,
     emailed: !!(emailStatus && emailStatus.sent),
     clientAcked: !!(ackStatus && ackStatus.sent),
+    calendarEvent: !!(calStatus && calStatus.created),
     attachmentCount: attachments.length,
     driveFolderUrl: driveResult && driveResult.orderFolder ? driveResult.orderFolder.webViewLink : null
   });
