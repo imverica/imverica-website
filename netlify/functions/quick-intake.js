@@ -122,6 +122,8 @@ async function notifyOwner(record, attachments, driveResult, extraAttachments = 
       ${c.phone ? `<p style="margin:0 0 4px;"><strong>Phone:</strong> <a href="tel:${escapeHtml(c.phone)}">${escapeHtml(c.phone)}</a></p>` : ''}
       ${record.formCode ? `<p style="margin:0 0 4px;"><strong>Form hint:</strong> ${escapeHtml(record.formCode)}</p>` : ''}
       <p style="margin:0 0 4px;"><strong>Language:</strong> ${escapeHtml(record.language || 'en')}</p>
+      ${(extraAttachments || []).some((a) => /\.ics$/.test(a.filename)) ? `<hr style="border:none;border-top:1px solid #d6d9df;margin:16px 0;" />
+      <p style="margin:0;background:#eef7ee;border-left:3px solid #2e7d32;border-radius:6px;padding:10px 14px;">📅 <strong>Calendar invite attached.</strong> Tap “Add to calendar” above to place this appointment on your calendar with a 1-hour reminder.</p>` : ''}
       <hr style="border:none;border-top:1px solid #d6d9df;margin:16px 0;" />
       <h3 style="margin:0 0 8px;color:#0f1c2f;">Situation</h3>
       <p style="margin:0;white-space:pre-wrap;">${escapeHtml(record.situation || '')}</p>
