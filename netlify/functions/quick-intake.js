@@ -39,6 +39,7 @@ const { uploadAttachmentsToClientFolder, DriveDisabled } = require('./lib/google
 const { makeOrderId } = require('./lib/order-id');
 const { sendClientAck, ZOOM_MEETING } = require('./lib/intake-ack');
 const { createAppointmentEvent } = require('./lib/google-calendar');
+const { buildAppointmentIcs } = require('./lib/ics');
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -92,7 +93,7 @@ function escapeHtml(s) {
   ));
 }
 
-async function notifyOwner(record, attachments, driveResult) {
+async function notifyOwner(record, attachments, driveResult, extraAttachments = []) {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     console.log('[quick-intake] DEV — no RESEND_API_KEY, skipping owner email', record.id);
@@ -153,7 +154,12 @@ async function notifyOwner(record, attachments, driveResult) {
     subject: `[Imverica] ${record.id} — ${c.name}${record.formCode ? ' · ' + record.formCode : ''}`,
     html,
     text,
-    attachments: attachments.map((a) => ({ filename: a.filename, content: a.contentBase64 }))
+    // File uploads + any pre-shaped extras (e.g. the appointment .ics so
+    // Gmail shows an "Add to calendar" card with the 1-hour reminder).
+    attachments: [
+      ...attachments.map((a) => ({ filename: a.filename, content: a.contentBase64 })),
+      ...(extraAttachments || [])
+    ]
   };
 
   const res = await fetch('https://api.resend.com/emails', {
@@ -365,21 +371,39 @@ exports.handler = async function (event) {
     return json(500, { ok: false, error: 'Could not save your request. Please try again or call us.' });
   }
 
+  // Appointment intakes go on the owner's Google Calendar with a 1-hour
+  // reminder. Two paths, awaited FIRST so we know which fallback to use:
+  //   • If the service account + calendar sharing is configured, the API
+  //     creates the event directly (fully automatic).
+  //   • Otherwise (current setup) createAppointmentEvent no-ops and we
+  //     attach an .ics invite to the owner email — Gmail then shows an
+  //     "Add to calendar" card that carries the same 1-hour reminder.
+  let calStatus = { created: false, reason: 'not-appointment' };
+  const extraOwnerAttachments = [];
+  if (appointment) {
+    try { calStatus = await createAppointmentEvent(record, ZOOM_MEETING); }
+    catch (e) { console.error('[quick-intake] calendar error', e && e.message); calStatus = { created: false, reason: 'error' }; }
+    if (!calStatus.created) {
+      const ics = buildAppointmentIcs(record, ZOOM_MEETING);
+      if (ics) {
+        extraOwnerAttachments.push({
+          filename: `appointment-${orderId}.ics`,
+          content: Buffer.from(ics, 'utf8').toString('base64'),
+          contentType: 'text/calendar; method=REQUEST; charset=utf-8'
+        });
+      }
+    }
+  }
+
   // Email the owner (best-effort — request succeeds even if mail bounces)
-  // and, in parallel, the client's "we received your request" acknowledgment
-  // in the language they wrote in (lib/intake-ack.js — never throws).
-  const [ownerRes, ackRes, calRes] = await Promise.allSettled([
-    notifyOwner(record, attachments, driveResult),
-    sendClientAck(record),
-    // Appointment intakes also land on the owner's Google Calendar with a
-    // 1-hour reminder (lib/google-calendar.js — no-ops cleanly when the
-    // service account / calendar sharing isn't configured).
-    appointment ? createAppointmentEvent(record, ZOOM_MEETING) : Promise.resolve({ created: false, reason: 'not-appointment' })
+  // and, in parallel, the client's "we received your request" acknowledgment.
+  const [ownerRes, ackRes] = await Promise.allSettled([
+    notifyOwner(record, attachments, driveResult, extraOwnerAttachments),
+    sendClientAck(record)
   ]);
   if (ownerRes.status === 'rejected') console.error('[quick-intake] notify failed', ownerRes.reason);
   const emailStatus = ownerRes.status === 'fulfilled' ? ownerRes.value : { sent: false, error: String(ownerRes.reason && ownerRes.reason.message || ownerRes.reason) };
   const ackStatus = ackRes.status === 'fulfilled' ? ackRes.value : { sent: false };
-  const calStatus = calRes.status === 'fulfilled' ? calRes.value : { created: false };
 
   return json(200, {
     ok: true,
@@ -387,6 +411,7 @@ exports.handler = async function (event) {
     emailed: !!(emailStatus && emailStatus.sent),
     clientAcked: !!(ackStatus && ackStatus.sent),
     calendarEvent: !!(calStatus && calStatus.created),
+    calendarInvite: extraOwnerAttachments.length > 0,
     attachmentCount: attachments.length,
     driveFolderUrl: driveResult && driveResult.orderFolder ? driveResult.orderFolder.webViewLink : null
   });
