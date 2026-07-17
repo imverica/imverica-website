@@ -3,8 +3,8 @@
  * QA — owner-calendar event for appointment intakes (lib/google-calendar.js).
  *
  * Stubs fetch (OAuth + Calendar API) and a fake service-account key to
- * assert: correct calendar URL, PT dateTime start/end, 60-minute popup+email
- * reminders, Zoom in description/location for video, graceful no-op when the
+ * assert: correct calendar URL, PT dateTime start/end, two popup reminders
+ * (1 day + 1 hour), Zoom in description/location for video, no-op when the
  * key env is absent, and the 12-hour → 24-hour time conversion table.
  *
  * Run: node scripts/qa-google-calendar.js
@@ -79,9 +79,9 @@ function check(label, cond, extra) {
   check('targets imverica@gmail.com', calendarUrl && calendarUrl.includes('/calendars/imverica%40gmail.com/events'), calendarUrl);
   check('start is PT 14:00', eventBody.start.dateTime === '2026-07-21T14:00:00' && eventBody.start.timeZone === 'America/Los_Angeles', JSON.stringify(eventBody.start));
   check('end is PT 14:30', eventBody.end.dateTime === '2026-07-21T14:30:00', JSON.stringify(eventBody.end));
-  check('60-min popup+email reminders', !eventBody.reminders.useDefault
-    && eventBody.reminders.overrides.some((o) => o.method === 'popup' && o.minutes === 60)
-    && eventBody.reminders.overrides.some((o) => o.method === 'email' && o.minutes === 60));
+  check('two reminders: 1 day + 1 hour popups', !eventBody.reminders.useDefault
+    && eventBody.reminders.overrides.some((o) => o.method === 'popup' && o.minutes === 1440)
+    && eventBody.reminders.overrides.some((o) => o.method === 'popup' && o.minutes === 60));
   check('summary has client + order', eventBody.summary.includes('Farruh K') && eventBody.summary.includes('IMVERICA-20260717-25'));
   check('zoom in location', eventBody.location === zoom.url);
   check('zoom + contacts in description', eventBody.description.includes(zoom.url) && eventBody.description.includes('client@example.com'));

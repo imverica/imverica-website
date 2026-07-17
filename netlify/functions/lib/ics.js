@@ -147,9 +147,17 @@ function buildAppointmentIcs(record, zoom, opts = {}) {
     `ATTENDEE;CN=Imverica;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE:mailto:${attendee}`,
     'STATUS:CONFIRMED',
     'SEQUENCE:0',
+    // Two alerts (owner ask 2026-07-17): 1 day before + 1 hour before.
+    // ACTION:DISPLAY = an on-screen alert in iOS/macOS Calendar and a popup
+    // in Google Calendar; both honor multiple VALARMs.
     'BEGIN:VALARM',
     'ACTION:DISPLAY',
-    'DESCRIPTION:Reminder',
+    'DESCRIPTION:Reminder — 1 day',
+    'TRIGGER:-P1D',
+    'END:VALARM',
+    'BEGIN:VALARM',
+    'ACTION:DISPLAY',
+    'DESCRIPTION:Reminder — 1 hour',
     'TRIGGER:-PT1H',
     'END:VALARM',
     'END:VEVENT',

@@ -42,7 +42,9 @@ assert('video: BEGIN/END VCALENDAR', vics.startsWith('BEGIN:VCALENDAR') && vics.
 assert('video: METHOD REQUEST', vics.includes('METHOD:REQUEST'));
 assert('video: DTSTART Pacific 2pm', vics.includes('DTSTART;TZID=America/Los_Angeles:20260721T140000'), 'no DTSTART');
 assert('video: DTEND +30min', vics.includes('DTEND;TZID=America/Los_Angeles:20260721T143000'), 'no DTEND');
-assert('video: 1-hour VALARM', vics.includes('BEGIN:VALARM') && vics.includes('TRIGGER:-PT1H'));
+assert('video: two VALARMs (1 day + 1 hour)',
+  (vics.match(/BEGIN:VALARM/g) || []).length === 2 && vics.includes('TRIGGER:-P1D') && vics.includes('TRIGGER:-PT1H'),
+  'alarm count ' + (vics.match(/BEGIN:VALARM/g) || []).length);
 assert('video: has VTIMEZONE', vics.includes('BEGIN:VTIMEZONE') && vics.includes('TZID:America/Los_Angeles'));
 assert('video: Zoom in description', vics.includes('us05web.zoom.us') && vics.includes('zW7m6n'));
 assert('video: order id in summary', vics.includes('IMVERICA-20260721-25'));

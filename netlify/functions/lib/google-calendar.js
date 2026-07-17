@@ -139,9 +139,8 @@ async function createAppointmentEvent(record, zoom) {
     start: { dateTime: `${a.date}T${start}:00`, timeZone: TIMEZONE },
     end: { dateTime: `${a.date}T${addMinutes(start, duration)}:00`, timeZone: TIMEZONE },
     location: isVideo && zoom ? zoom.url : undefined,
-    // Owner asked for a 1-hour heads-up. Popup + email so it lands on the
-    // phone AND in the inbox.
-    reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 60 }, { method: 'email', minutes: 60 }] }
+    // Owner asked for two heads-ups: 1 day and 1 hour before (2026-07-17).
+    reminders: { useDefault: false, overrides: [{ method: 'popup', minutes: 1440 }, { method: 'popup', minutes: 60 }] }
   };
 
   try {
