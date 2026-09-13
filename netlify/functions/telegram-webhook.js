@@ -18,6 +18,11 @@
  *     email with /link). /orders — full list. /help — command list.
  *   - /chat — kicks the conversation into pass-through mode where every
  *     message forwards to the owner's Telegram and replies route back.
+ *     Attachments travel both ways: a client's document, photo or voice
+ *     note is described in the notification and copied along with it, and
+ *     a file the operator sends as a Reply is copied back to the client.
+ *     The operator answers with Reply, the inline button, or
+ *     /reply <chat_id> <text>; /who <chat_id> looks a client up.
  *
  * State per chat is stored in Netlify Blobs under
  *   imverica-telegram-sessions/chat/<chat_id>.json
@@ -504,7 +509,50 @@ async function ownerReplyTarget(messageId) {
   } catch (e) { return ''; }
 }
 
-async function notifyOwnerFromClient({ heading, chatId, lang, from, body }) {
+// A one-line description of whatever non-text payload a message carries, or
+// '' for a plain text message. The operator gets this line *and* a copy of
+// the payload itself — a description of a document nobody can open is no
+// better than the silence we used to answer attachments with.
+function describeAttachment(msg) {
+  if (!msg) return '';
+  if (msg.animation) return '🎬 Анимация';
+  if (msg.document) {
+    const name = cleanTelegramName(msg.document.file_name);
+    return name ? '📎 Файл: ' + name : '📎 Файл';
+  }
+  if (msg.photo && msg.photo.length) return '🖼 Фото';
+  if (msg.video_note) return '🎥 Видеосообщение';
+  if (msg.video) return '🎬 Видео';
+  if (msg.voice) return '🎤 Голосовое сообщение' + (msg.voice.duration ? ' (' + msg.voice.duration + ' сек)' : '');
+  if (msg.audio) return '🎵 Аудио' + (msg.audio.file_name ? ': ' + cleanTelegramName(msg.audio.file_name) : '');
+  if (msg.sticker) return '🔖 Стикер ' + cleanTelegramName(msg.sticker.emoji);
+  if (msg.contact) {
+    const c = msg.contact;
+    return ('👤 Контакт: ' + [cleanTelegramName(c.first_name), cleanTelegramName(c.last_name)].filter(Boolean).join(' ') +
+      ' ' + cleanTelegramName(c.phone_number)).trim();
+  }
+  if (msg.location) return '📍 Геолокация: ' + msg.location.latitude + ', ' + msg.location.longitude;
+  return '';
+}
+
+// Copy a message verbatim into another chat. copyMessage keeps the payload
+// and its caption without re-uploading anything and works for every media
+// type — unlike getFile, which is capped at 20 MB.
+async function copyMessageTo(toChatId, fromChatId, messageId) {
+  return tgCall('copyMessage', { chat_id: toChatId, from_chat_id: fromChatId, message_id: messageId });
+}
+
+// Put a client's attachment in front of the operator and make that copy
+// answerable by Reply, exactly like the identity header above it.
+async function relayClientAttachment(clientChatId, messageId) {
+  const owner = ownerChatId();
+  if (!owner || !messageId) return null;
+  const copied = await copyMessageTo(owner, clientChatId, messageId);
+  await rememberOwnerReply(copied?.result?.message_id, clientChatId);
+  return copied;
+}
+
+async function notifyOwnerFromClient({ heading, chatId, lang, from, body, attachmentMessageId }) {
   const profile = telegramProfile(from, chatId);
   const lines = [
     heading,
@@ -527,11 +575,15 @@ async function notifyOwnerFromClient({ heading, chatId, lang, from, body }) {
     reply_markup: { inline_keyboard: buttons }
   });
   await rememberOwnerReply(sent?.result?.message_id, chatId);
+  if (attachmentMessageId) await relayClientAttachment(chatId, attachmentMessageId);
   return sent;
 }
 
 async function handleOwnerMessage(msg) {
-  const text = String(msg.text || '').trim();
+  // A caption counts as the operator's text — that is how Telegram sends a
+  // file with a note attached to it.
+  const text = String(msg.text || msg.caption || '').trim();
+  const attachment = describeAttachment(msg);
 
   const whoCommand = text.match(/^\/who(?:@\w+)?\s+(-?\d+)$/i);
   if (whoCommand) {
@@ -561,16 +613,22 @@ async function handleOwnerMessage(msg) {
 
   let clientChatId = '';
   let replyText = text;
+  let mediaMessageId = attachment ? msg.message_id : 0;
+  let droppedAttachment = false;
 
   const command = text.match(/^\/reply(?:@\w+)?\s+(-?\d+)\s+([\s\S]+)$/i);
   if (command) {
     clientChatId = command[1];
     replyText = command[2].trim();
+    // Here the caption *is* the command, so copying the file would paste
+    // "/reply 123 …" into the client's chat as its caption. Send the text.
+    droppedAttachment = Boolean(mediaMessageId);
+    mediaMessageId = 0;
   } else if (msg.reply_to_message?.message_id) {
     clientChatId = await ownerReplyTarget(msg.reply_to_message.message_id);
   }
 
-  if (!clientChatId || !replyText) {
+  if (!clientChatId || (!replyText && !mediaMessageId)) {
     await sendMessage(
       msg.chat.id,
       'Чтобы ответить клиенту, нажмите Reply на его уведомление или используйте: /reply CHAT_ID текст\n' +
@@ -587,11 +645,32 @@ async function handleOwnerMessage(msg) {
     uk: '💬 Відповідь Imverica:',
     es: '💬 Respuesta de Imverica:'
   };
-  const prefix = replyLabels[clientSession?.lang] || replyLabels.en;
-  const sent = await sendMessage(clientChatId, `${prefix}\n\n${replyText}`, { parse_mode: undefined });
+  const fileLabels = {
+    en: '💬 Imverica sent you a file:',
+    ru: '💬 Imverica прислала вам файл:',
+    uk: '💬 Imverica надіслала вам файл:',
+    es: '💬 Imverica le envió un archivo:'
+  };
+  let sent;
+  if (mediaMessageId) {
+    // Announce the file only when it carries no note of its own, so it does
+    // not land on the client out of nowhere.
+    if (!replyText) {
+      await sendMessage(clientChatId, fileLabels[clientSession?.lang] || fileLabels.en, { parse_mode: undefined });
+    }
+    sent = await copyMessageTo(clientChatId, msg.chat.id, mediaMessageId);
+  } else {
+    const prefix = replyLabels[clientSession?.lang] || replyLabels.en;
+    sent = await sendMessage(clientChatId, `${prefix}\n\n${replyText}`, { parse_mode: undefined });
+  }
   await sendMessage(
     msg.chat.id,
-    sent?.ok ? `✅ Ответ отправлен клиенту ${clientChatId}.` : `⚠️ Не удалось отправить ответ клиенту ${clientChatId}.`,
+    sent?.ok
+      ? `✅ Ответ отправлен клиенту ${clientChatId}.` +
+        (droppedAttachment
+          ? '\n⚠️ Файл НЕ отправлен: в /reply подпись — это сама команда. Нажмите Reply на уведомление клиента, чтобы переслать файл.'
+          : '')
+      : `⚠️ Не удалось отправить ответ клиенту ${clientChatId}.`,
     { parse_mode: undefined }
   );
 }
@@ -886,17 +965,36 @@ async function handleUpdate(update) {
     }
   }
 
-  // Chat-with-staff pass-through.
-  if (session.step === 'chat' && text) {
-    await notifyOwnerFromClient({
-      heading: '💬 Сообщение клиента',
-      chatId,
-      lang,
-      from: msg.from,
-      body: `${session.linkedEmail ? 'Привязанный email: ' + session.linkedEmail + '\n\n' : ''}${text}`
-    });
-    await sendMessage(chatId, t(lang, 'chatFwdToOwner'));
-    return;
+  // Chat-with-staff pass-through — text, files, photos, voice notes, all of it.
+  if (session.step === 'chat') {
+    const attachment = describeAttachment(msg);
+    const body = text || String(msg.caption || '').trim();
+    if (attachment || body) {
+      // An album arrives as one update per item; repeat the identity header
+      // only for the first of them.
+      const groupId = msg.media_group_id ? String(msg.media_group_id) : '';
+      const withHeader = !groupId || session.lastMediaGroup !== groupId;
+      if (groupId && withHeader) {
+        session.lastMediaGroup = groupId;
+        await saveSession(chatId, session);
+      }
+      if (withHeader) {
+        await notifyOwnerFromClient({
+          heading: '💬 Сообщение клиента',
+          chatId,
+          lang,
+          from: msg.from,
+          body:
+            `${session.linkedEmail ? 'Привязанный email: ' + session.linkedEmail + '\n\n' : ''}` +
+            `${[attachment, body].filter(Boolean).join('\n')}`,
+          attachmentMessageId: attachment ? msg.message_id : 0
+        });
+      } else if (attachment) {
+        await relayClientAttachment(chatId, msg.message_id);
+      }
+      await sendMessage(chatId, t(lang, 'chatFwdToOwner'));
+      return;
+    }
   }
 
   // Default / unknown.
@@ -943,3 +1041,7 @@ exports.handler = async function (event) {
 
   return ok();
 };
+
+// Test hooks (see scripts/qa-telegram-relay.js).
+exports._describeAttachment = describeAttachment;
+exports._handleUpdate = handleUpdate;
