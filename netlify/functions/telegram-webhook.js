@@ -456,10 +456,144 @@ async function clearSession(chatId) {
 // Owner notifications
 // ============================================================
 function ownerChatId() { return process.env.TELEGRAM_OWNER_CHAT_ID || ''; }
-async function notifyOwner(text) {
+async function notifyOwner(text, opts) {
   const id = ownerChatId();
-  if (!id) return;
-  await sendMessage(id, text);
+  if (!id) return null;
+  return sendMessage(id, text, opts);
+}
+
+function cleanTelegramName(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+}
+
+function telegramProfile(from, chatId) {
+  const firstName = cleanTelegramName(from?.first_name);
+  const lastName = cleanTelegramName(from?.last_name);
+  const username = /^[A-Za-z0-9_]{5,32}$/.test(String(from?.username || ''))
+    ? String(from.username)
+    : '';
+  return {
+    displayName: [firstName, lastName].filter(Boolean).join(' ') || 'Имя не указано',
+    username,
+    userId: String(from?.id || chatId)
+  };
+}
+
+function ownerReplyKey(messageId) {
+  return 'owner-reply/' + String(messageId) + '.json';
+}
+
+async function rememberOwnerReply(messageId, clientChatId) {
+  if (!messageId || !clientChatId) return;
+  try {
+    await sessionsStore().setJSON(ownerReplyKey(messageId), {
+      clientChatId: String(clientChatId),
+      createdAt: Date.now()
+    });
+  } catch (e) {}
+}
+
+async function ownerReplyTarget(messageId) {
+  if (!messageId) return '';
+  try {
+    const route = await sessionsStore().get(ownerReplyKey(messageId), { type: 'json' });
+    if (!route || !route.clientChatId) return '';
+    // Do not retain a usable reply route forever if the blob is not cleaned up.
+    if (route.createdAt && Date.now() - Number(route.createdAt) > 30 * 24 * 60 * 60 * 1000) return '';
+    return String(route.clientChatId);
+  } catch (e) { return ''; }
+}
+
+async function notifyOwnerFromClient({ heading, chatId, lang, from, body }) {
+  const profile = telegramProfile(from, chatId);
+  const lines = [
+    heading,
+    `Имя в Telegram: ${profile.displayName}`,
+    `Username: ${profile.username ? '@' + profile.username : 'не указан'}`,
+    `Chat ID: ${chatId}`,
+    `Язык: ${lang}`,
+    '',
+    String(body || '').slice(0, 3200),
+    '',
+    'Чтобы ответить клиенту, нажмите Reply на это сообщение или кнопку ниже.'
+  ];
+  const buttons = [[{ text: '↩️ Ответить клиенту', callback_data: `staff_reply:${chatId}` }]];
+  if (profile.username) {
+    buttons.push([{ text: `👤 Открыть @${profile.username}`, url: `https://t.me/${profile.username}` }]);
+  }
+  // Client-provided names and text must not be parsed as Telegram Markdown.
+  const sent = await notifyOwner(lines.join('\n'), {
+    parse_mode: undefined,
+    reply_markup: { inline_keyboard: buttons }
+  });
+  await rememberOwnerReply(sent?.result?.message_id, chatId);
+  return sent;
+}
+
+async function handleOwnerMessage(msg) {
+  const text = String(msg.text || '').trim();
+
+  const whoCommand = text.match(/^\/who(?:@\w+)?\s+(-?\d+)$/i);
+  if (whoCommand) {
+    const requestedChatId = whoCommand[1];
+    const chat = await tgCall('getChat', { chat_id: requestedChatId });
+    if (!chat?.ok || !chat.result) {
+      await sendMessage(msg.chat.id, `⚠️ Не удалось получить профиль клиента ${requestedChatId}.`, { parse_mode: undefined });
+      return;
+    }
+    const profile = telegramProfile(chat.result, requestedChatId);
+    const details = [
+      '👤 Профиль клиента',
+      `Имя: ${profile.displayName}`,
+      `Username: ${profile.username ? '@' + profile.username : 'не указан'}`,
+      `Chat ID: ${requestedChatId}`
+    ];
+    if (chat.result.bio) details.push(`Bio: ${cleanTelegramName(chat.result.bio)}`);
+    const opts = { parse_mode: undefined };
+    if (profile.username) {
+      opts.reply_markup = {
+        inline_keyboard: [[{ text: `Открыть @${profile.username}`, url: `https://t.me/${profile.username}` }]]
+      };
+    }
+    await sendMessage(msg.chat.id, details.join('\n'), opts);
+    return;
+  }
+
+  let clientChatId = '';
+  let replyText = text;
+
+  const command = text.match(/^\/reply(?:@\w+)?\s+(-?\d+)\s+([\s\S]+)$/i);
+  if (command) {
+    clientChatId = command[1];
+    replyText = command[2].trim();
+  } else if (msg.reply_to_message?.message_id) {
+    clientChatId = await ownerReplyTarget(msg.reply_to_message.message_id);
+  }
+
+  if (!clientChatId || !replyText) {
+    await sendMessage(
+      msg.chat.id,
+      'Чтобы ответить клиенту, нажмите Reply на его уведомление или используйте: /reply CHAT_ID текст\n' +
+        'Чтобы посмотреть профиль по старому сообщению: /who CHAT_ID',
+      { parse_mode: undefined }
+    );
+    return;
+  }
+
+  const clientSession = await getSession(clientChatId);
+  const replyLabels = {
+    en: '💬 Reply from Imverica:',
+    ru: '💬 Ответ Imverica:',
+    uk: '💬 Відповідь Imverica:',
+    es: '💬 Respuesta de Imverica:'
+  };
+  const prefix = replyLabels[clientSession?.lang] || replyLabels.en;
+  const sent = await sendMessage(clientChatId, `${prefix}\n\n${replyText}`, { parse_mode: undefined });
+  await sendMessage(
+    msg.chat.id,
+    sent?.ok ? `✅ Ответ отправлен клиенту ${clientChatId}.` : `⚠️ Не удалось отправить ответ клиенту ${clientChatId}.`,
+    { parse_mode: undefined }
+  );
 }
 
 // ============================================================
@@ -497,7 +631,7 @@ async function startIntake(chatId, session, lang) {
   await sendMessage(chatId, t(lang, 'askSituation'));
 }
 
-async function submitIntake(chatId, session, lang) {
+async function submitIntake(chatId, session, lang, from) {
   await sendMessage(chatId, t(lang, 'submitting'));
   const intake = session.intake || {};
   const body = {
@@ -535,10 +669,15 @@ async function submitIntake(chatId, session, lang) {
     session.lastOrderId = res.orderId;
     await saveSession(chatId, session);
     await sendMessage(chatId, t(lang, 'submitOk', { id: res.orderId, email: intake.email }), mainMenu(lang));
-    await notifyOwner(
-      `🆕 Intake from Telegram\nOrder: ${res.orderId}\nName: ${intake.name}\nEmail: ${intake.email}\n` +
-      `Phone: ${intake.phone || '-'}\nLang: ${lang}\nFiles: ${(intake.files || []).length}\n\n${(intake.situation || '').slice(0, 500)}`
-    );
+    await notifyOwnerFromClient({
+      heading: '🆕 Новая заявка из Telegram',
+      chatId,
+      lang,
+      from,
+      body:
+        `Заказ: ${res.orderId}\nИмя из заявки: ${intake.name}\nEmail: ${intake.email}\n` +
+        `Телефон: ${intake.phone || '-'}\nФайлы: ${(intake.files || []).length}\n\n${(intake.situation || '').slice(0, 500)}`
+    });
   } else {
     await sendMessage(chatId, t(lang, 'submitFail'), mainMenu(lang));
   }
@@ -555,6 +694,21 @@ async function handleUpdate(update) {
     if (!chatId) return;
     const data = String(cb.data || '');
     await tgCall('answerCallbackQuery', { callback_query_id: cb.id });
+    if (data.startsWith('staff_reply:')) {
+      if (String(chatId) !== String(ownerChatId())) return;
+      const clientChatId = data.slice('staff_reply:'.length);
+      if (!/^-?\d+$/.test(clientChatId)) return;
+      const prompt = await sendMessage(
+        chatId,
+        `Введите ответ клиенту ${clientChatId}:`,
+        {
+          parse_mode: undefined,
+          reply_markup: { force_reply: true, selective: true }
+        }
+      );
+      await rememberOwnerReply(prompt?.result?.message_id, clientChatId);
+      return;
+    }
     if (data.startsWith('lang:')) {
       const lang = data.slice(5);
       if (!SUPPORTED.includes(lang)) return;
@@ -570,13 +724,16 @@ async function handleUpdate(update) {
   const msg = update.message;
   if (!msg || !msg.chat) return;
   const chatId = msg.chat.id;
+  const text = (msg.text || '').trim();
+  if (String(chatId) === String(ownerChatId())) {
+    await handleOwnerMessage(msg);
+    return;
+  }
   const fromLang = msg.from?.language_code || '';
   let session = (await getSession(chatId)) || { step: 'idle' };
   let lang = session.lang || detectLang(msg.text || msg.caption || '', fromLang);
   if (!session.lang) { session.lang = lang; await saveSession(chatId, session); }
   const dict = T[lang] || T.en;
-
-  const text = (msg.text || '').trim();
 
   // ----- COMMANDS -----
   if (text.startsWith('/start')) {
@@ -650,7 +807,7 @@ async function handleUpdate(update) {
       await sendMessage(chatId, t(lang, 'unknown'));
       return;
     }
-    await submitIntake(chatId, session, lang);
+    await submitIntake(chatId, session, lang, msg.from);
     return;
   }
   if (text === t(lang, 'cancel')) {
@@ -731,7 +888,13 @@ async function handleUpdate(update) {
 
   // Chat-with-staff pass-through.
   if (session.step === 'chat' && text) {
-    await notifyOwner(`💬 From client (chat ${chatId}, ${lang}):\n${text}`);
+    await notifyOwnerFromClient({
+      heading: '💬 Сообщение клиента',
+      chatId,
+      lang,
+      from: msg.from,
+      body: `${session.linkedEmail ? 'Привязанный email: ' + session.linkedEmail + '\n\n' : ''}${text}`
+    });
     await sendMessage(chatId, t(lang, 'chatFwdToOwner'));
     return;
   }
