@@ -1,0 +1,494 @@
+---
+/**
+ * v2 homepage body: an apple.com-style scroll story.
+ *
+ * index.astro renders this inside a <template> and swaps it in before first
+ * paint only when <html class="v2"> (the per-browser preview flag), so
+ * regular visitors and crawlers keep the current homepage until cutover.
+ *
+ * The hero keeps the real Ask Imverica finder (HomeSearch) untouched: it is
+ * the Claude-backed bot and must stay. Motion is opt-in: html.hv2-motion is
+ * set by the swap script only when IntersectionObserver exists and the
+ * visitor has not asked for reduced motion; without it every section renders
+ * in its final state. Testimonials sit between two .hv2 roots so the shared
+ * reviews component keeps its own typography.
+ */
+import HomeSearch from '~/components/HomeSearch.astro';
+import Testimonials from '~/components/Testimonials.astro';
+import { STATS } from '~/data/i18n';
+import { PRICES } from '~/data/prices';
+import { formsSupported, priorityForms } from '~/data/stats';
+
+function price(code: string): string {
+  const hit = PRICES[code];
+  return hit ? `${hit.from ? 'from ' : ''}$${hit.amount.toLocaleString('en-US')}` : '';
+}
+const priceLabels = Object.fromEntries(Object.keys(PRICES).map((code) => [code, price(code)]));
+const forms = formsSupported();
+const priority = priorityForms();
+const statLabels = STATS.en;
+
+// Form numbers for the marquee: only forms we prepare (nav + pricing).
+const rowA = ['I-485', 'N-400', 'I-130', 'I-765', 'I-589', 'EOIR-42B', 'FL-100', 'FL-120', 'FL-300', 'FW-001', 'SC-100', 'WG-001', 'LLC-1', 'LLC-12'];
+const rowB = ['I-90', 'I-751', 'I-864', 'I-131', 'I-539', 'EOIR-29', 'FL-150', 'FL-160', 'FL-105', 'SC-120', 'SC-104', 'EJ-001', 'SI-550', 'I-693'];
+---
+<div class="hv2">
+  <section class="hv2-hero" aria-labelledby="hv2-title">
+    <div class="hv2-pin">
+      <div class="hv2-dim" aria-hidden="true"></div>
+      <div class="hv2-copy hv2-wrap">
+        <p class="hv2-eyebrow">California · Registered LDA · Immigration Consultant</p>
+        <h1 class="hv2-h1" id="hv2-title"><span class="w" style="--i: 0">Paperwork,</span><br /><span class="w" style="--i: 1">done</span> <span class="w" style="--i: 2">right.</span></h1>
+        <p class="hv2-sub">Describe your situation or enter a form number. We prepare USCIS, EOIR, and California court documents at your direction, for clients across California and worldwide.</p>
+        <div class="hv2-finder">
+          <HomeSearch />
+        </div>
+      </div>
+
+      <div class="hv2-stack-move" aria-hidden="true">
+        <div class="hv2-stack-in">
+          <div class="hv2-stack">
+            <div class="hv2-sheet hv2-sheet--l"><img src="/img/forms/sc-100-page-1.webp" alt="" width="330" height="427" decoding="async" /></div>
+            <div class="hv2-sheet hv2-sheet--r"><img src="/img/forms/fl-100-page-1.webp" alt="" width="330" height="427" decoding="async" /></div>
+            <div class="hv2-sheet hv2-sheet--c"><img src="/img/forms/i-485-page-1.webp" alt="" width="380" height="492" decoding="async" /></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="hv2-cap hv2-wrap" aria-hidden="true">Official USCIS and California court forms.<br /><span>Current editions, prepared at your direction.</span></p>
+      <div class="hv2-hint" aria-hidden="true">
+        Scroll
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="hv2-statement">
+    <div class="hv2-wrap">
+      <p class="hv2-eyebrow">Imverica Legal Solutions</p>
+      <p class="hv2-reveal" data-hv2-reveal>We prepare USCIS, EOIR and California court documents accurately, on time, and at your direction. In English, Russian, Ukrainian and Spanish.</p>
+    </div>
+  </section>
+
+  <section class="hv2-forms">
+    <div class="hv2-wrap hv2-rise">
+      <h2 class="hv2-h2">{forms}+ forms.<br /><span class="hv2-tone">One search.</span></h2>
+      <p class="hv2-lede">USCIS, EOIR and California court forms, from green cards to small claims.</p>
+    </div>
+    <div class="hv2-mq" aria-hidden="true">
+      <div class="hv2-mq-row" data-hv2-mq="1">{[...rowA, ...rowA].map((code) => <span>{code}</span>)}</div>
+      <div class="hv2-mq-row hv2-mq-row--outline" data-hv2-mq="2">{[...rowB, ...rowB].map((code) => <span>{code}</span>)}</div>
+    </div>
+  </section>
+
+  <section class="hv2-cases" id="services">
+    <div class="hv2-wrap">
+      <h2 class="hv2-h2 hv2-rise">Choose your case.</h2>
+      <p class="hv2-lede hv2-rise" style="--d: 0.08s">Every package is a flat fee, confirmed before we start.</p>
+      <div class="hv2-bento">
+        <a class="hv2-tile hv2-tile--navy hv2-tile--wide hv2-rise" href="/immigration">
+          <p class="hv2-t-eye">USCIS · EOIR</p>
+          <p class="hv2-t-title">Immigration.</p>
+          <p class="hv2-t-body">Green cards, citizenship, work permits, asylum and immigration court.</p>
+          <span class="hv2-t-btn">Learn more</span>
+          <p class="hv2-t-giant" data-hv2-parallax="220" aria-hidden="true">I-485</p>
+          <p class="hv2-t-price"><strong>{price('I-485')}</strong>Green card (I-485), single applicant</p>
+        </a>
+        <div class="hv2-tile hv2-tile--sky hv2-rise" style="--d: 0.1s">
+          <p class="hv2-t-eye">Four languages</p>
+          <div class="hv2-greet">
+            <p lang="en" style="--i: 0">Hello.</p>
+            <p lang="ru" style="--i: 1">Привет.</p>
+            <p lang="uk" style="--i: 2">Привіт.</p>
+            <p lang="es" style="--i: 3">Hola.</p>
+          </div>
+          <p class="hv2-t-body">Intake, questions and filing instructions in the language you think in.</p>
+        </div>
+
+        <a class="hv2-tile hv2-tile--gray hv2-rise" href="/fl">
+          <p class="hv2-t-eye">California courts</p>
+          <p class="hv2-t-title">Family Law.</p>
+          <p class="hv2-t-body">Divorce, custody, support and fee waivers.</p>
+          <div class="hv2-tags"><span>FL-100</span><span>FL-120</span><span>FL-300</span><span>FL-150</span></div>
+        </a>
+        <a class="hv2-tile hv2-tile--gray hv2-rise" href="/sc" style="--d: 0.1s">
+          <p class="hv2-t-eye">Civil</p>
+          <p class="hv2-t-title">Small Claims.</p>
+          <p class="hv2-t-body">Small claims, demand letters, evictions, name changes and probate.</p>
+          <div class="hv2-tags"><span>SC-100</span><span>SC-120</span><span>WG-001</span><span>EJ-001</span></div>
+        </a>
+        <a class="hv2-tile hv2-tile--spark hv2-rise" href="/criminal" style="--d: 0.2s">
+          <p class="hv2-t-eye">Record clearing</p>
+          <p class="hv2-t-title">A fresh start, on paper.</p>
+          <p class="hv2-t-body">Expungement, felony reductions and record sealing. Petitions you file yourself.</p>
+          <svg class="hv2-t-icon" viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 2.6V11c0 4.6-3 8-7 10-4-2-7-5.4-7-10V5.6z"></path><path d="M9 12l2 2 4-4.5"></path></svg>
+        </a>
+
+        <a class="hv2-tile hv2-tile--gray hv2-rise" href="/business">
+          <p class="hv2-t-eye">California SOS · IRS</p>
+          <p class="hv2-t-title">Business Filings.</p>
+          <p class="hv2-t-body">LLCs, corporations, DBAs, EINs and annual statements.</p>
+          <div class="hv2-tags"><span>LLC-1</span><span>LLC-12</span><span>FBN</span><span>SS-4</span></div>
+        </a>
+        <a class="hv2-tile hv2-tile--dark hv2-rise" href="/pricing" style="--d: 0.1s">
+          <p class="hv2-t-eye">Flat fees</p>
+          <p class="hv2-t-big">{price('I-765')}</p>
+          <p class="hv2-t-body">Work permit (I-765) or green card renewal (I-90). Every price confirmed before we start.</p>
+          <span class="hv2-t-more">See all prices ›</span>
+        </a>
+        <a class="hv2-tile hv2-tile--deep hv2-rise" href="/for-attorneys" style="--d: 0.2s">
+          <p class="hv2-t-eye">For attorneys</p>
+          <p class="hv2-t-title hv2-t-title--sm">Your overflow desk for document preparation.</p>
+          <span class="hv2-t-more">Send a sample matter ›</span>
+        </a>
+
+        <div class="hv2-tile hv2-tile--gray hv2-tile--full hv2-rise">
+          <p class="hv2-t-eye">How it works</p>
+          <ol class="hv2-steps">
+            <li><b>1</b><strong>Tell us</strong><span>A short intake. We confirm the form you choose and the fee.</span></li>
+            <li><b>2</b><strong>We prepare</strong><span>Typed, formatted and checked against current instructions.</span></li>
+            <li><b>3</b><strong>You sign &amp; file</strong><span>A ready-to-sign packet with filing steps.</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hv2-ask" id="ask">
+    <div class="hv2-wrap hv2-ask-grid">
+      <div class="hv2-ask-copy hv2-rise">
+        <p class="hv2-eyebrow">Ask Imverica</p>
+        <h2 class="hv2-h2">Ask in your language.<br />Find your form.</h2>
+        <p class="hv2-lede">Describe your situation in English, Russian, Ukrainian or Spanish. See which USCIS, EOIR or California court forms are commonly used, and we prepare the one you choose.</p>
+      </div>
+      <div class="hv2-chat hv2-rise" style="--d: 0.12s" data-hv2-chat data-prices={JSON.stringify(priceLabels)}>
+        <div class="hv2-chat-head">
+          <p>Ask Imverica</p>
+          <div class="hv2-seg" role="group" aria-label="Example language">
+            <button type="button" data-hv2-lang="en" aria-pressed="false">EN</button>
+            <button type="button" data-hv2-lang="ru" aria-pressed="true">RU</button>
+            <button type="button" data-hv2-lang="ua" aria-pressed="false">UA</button>
+            <button type="button" data-hv2-lang="es" aria-pressed="false">ES</button>
+          </div>
+        </div>
+        <p class="hv2-chat-tag" data-hv2-chat-tag>Example conversation</p>
+        <div class="hv2-thread" data-hv2-thread aria-live="polite">
+          <p class="hv2-m-q" data-hv2-ex="q" lang="ru">Мне нужно продлить грин-карту, срок истекает в марте.</p>
+          <div class="hv2-m-typing" data-hv2-ex="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="hv2-m-a" data-hv2-ex="a">
+            <p data-hv2-ex="a-text" lang="ru">Для подобных ситуаций часто используют форму I-90 — Обновление green card. Какую форму подавать — решаете вы; Imverica готовит её по вашему поручению.</p>
+            <a class="hv2-m-card" href="/#get-started?form=I-90" data-hv2-ex="card">
+              <span><small>I-90 · USCIS</small><strong data-hv2-ex="card-title">Обновление green card</strong></span>
+              <span class="hv2-m-card-r"><b>{price('I-90')}</b><span data-hv2-ex="card-start">Начать</span></span>
+            </a>
+          </div>
+        </div>
+        <form class="hv2-chat-form" data-hv2-chat-form>
+          <label class="hv2-vh" for="hv2-chat-q">Describe your situation</label>
+          <input id="hv2-chat-q" type="text" autocomplete="off" maxlength="300" placeholder="Describe your situation…" />
+          <button class="hv2-send" type="submit" aria-label="Send">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg>
+          </button>
+        </form>
+        <p class="hv2-chat-legal">General information, not legal advice. You decide which form to file.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<Testimonials />
+
+<div class="hv2">
+  <section class="hv2-numbers" aria-label="Imverica in numbers">
+    <div class="hv2-wrap hv2-num-grid">
+      <div class="hv2-rise"><p class="hv2-num" data-hv2-count={forms} data-suffix="+">{forms}+</p><p class="hv2-num-label">{statLabels[0]}</p></div>
+      <div class="hv2-rise" style="--d: 0.08s"><p class="hv2-num" data-hv2-count={priority} data-suffix="+">{priority}+</p><p class="hv2-num-label">{statLabels[1]}</p></div>
+      <div class="hv2-rise" style="--d: 0.16s"><p class="hv2-num" data-hv2-count="4">4</p><p class="hv2-num-label">{statLabels[2]}</p></div>
+      <div class="hv2-rise" style="--d: 0.24s"><p class="hv2-num" data-hv2-count="10" data-suffix="+">10+</p><p class="hv2-num-label">{statLabels[3]}</p></div>
+    </div>
+  </section>
+
+  <section class="hv2-cta">
+    <div class="hv2-wrap hv2-rise">
+      <h2 class="hv2-h2">Start your case.</h2>
+      <p class="hv2-lede">The flat fee is confirmed before any work begins. Document preparation only, no legal advice.</p>
+      <div class="hv2-btns">
+        <a class="hv2-btn" href="/#get-started">Start Your Case</a>
+        <a class="hv2-btn hv2-btn--ghost" href="tel:+19163993992">Call +1 (916) 399-3992</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style is:global>
+  .hv2 {
+    --ink: #1d1d1f;
+    --ink-2: #424245;
+    --muted: #6e6e73;
+    --ghost: #c7c7cc;
+    --line: #d2d2d7;
+    --paper: #ffffff;
+    --tile: #f5f5f7;
+    --navy: #143254;
+    --navy-deep: #0b1626;
+    --night: #07111f;
+    --spark: #2d6cdf;
+    --spark-soft: #9fc0ff;
+    --sky: #dfe8f4;
+    --sky-ink: #3d5679;
+    --sky-deep: #0f2440;
+    --on-dark: #ffffff;
+    --on-dark-2: rgba(255, 255, 255, 0.74);
+    --on-dark-3: rgba(255, 255, 255, 0.6);
+    --eyebrow-dark: #9fb9de;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --bar-h: 48px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--ink);
+    letter-spacing: -0.022em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hv2 p { margin: 0; }
+  .hv2 .hv2-wrap {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .hv2 .hv2-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .hv2 .hv2-eyebrow { font-size: 17px; font-weight: 600; color: var(--muted); }
+  .hv2 .hv2-h2 { margin: 0; font-size: clamp(40px, 5.6vw, 88px); line-height: 0.98; font-weight: 700; letter-spacing: -0.032em; color: inherit; text-wrap: balance; }
+  .hv2 .hv2-tone { color: var(--navy); }
+  .hv2 .hv2-lede { margin-top: 18px; max-width: 560px; font-size: 21px; line-height: 1.381; letter-spacing: 0.011em; color: var(--ink-2); }
+
+  /* ---- hero ---- */
+  .hv2 .hv2-hero { position: relative; background: var(--night); color: var(--on-dark); }
+  .hv2 .hv2-pin { position: relative; overflow: hidden; padding-top: 64px; }
+  .hv2 .hv2-dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+  .hv2 .hv2-copy { position: relative; z-index: 2; text-align: center; will-change: transform, opacity; }
+  .hv2 .hv2-hero .hv2-eyebrow { color: var(--eyebrow-dark); }
+  .hv2 .hv2-h1 { margin: 16px 0 0; font-size: clamp(52px, 7.4vw, 108px); line-height: 0.98; font-weight: 700; letter-spacing: -0.028em; color: var(--on-dark); }
+  .hv2 .hv2-h1 .w { display: inline-block; }
+  .hv2 .hv2-sub { max-width: 680px; margin: 22px auto 0; font-size: 21px; line-height: 1.381; letter-spacing: 0.011em; color: var(--on-dark-2); }
+  /* The Ask Imverica finder keeps its own look (white field, navy arrow);
+     only the pieces around it are recoloured for the dark ground. */
+  .hv2 .hv2-finder .ai-finder { margin-top: 30px; }
+  .hv2 .hv2-finder .ai-finder-form { box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); border-color: transparent; }
+  .hv2 .hv2-finder .ai-result { color: var(--ink-2); }
+  html.v2 .hv2 .hv2-finder .ai-example {
+    min-height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--on-dark);
+  }
+  html.v2 .hv2 .hv2-finder .ai-example:hover { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.4); color: var(--on-dark); }
+  html.v2 .hv2 .hv2-finder .ai-finder-meta { margin-top: 20px; color: var(--on-dark-3); }
+  .hv2 .hv2-finder .ai-finder-meta span::before { background: var(--eyebrow-dark); }
+  .hv2 .hv2-finder .hero-phone, .hv2 .hv2-finder .hero-phone:hover { color: var(--on-dark); }
+  html.v2 .hv2 .hv2-finder .ai-services-link, html.v2 .hv2 .hv2-finder .ai-services-link:hover { color: var(--on-dark-2); border-bottom-color: rgba(255, 255, 255, 0.3); }
+
+  .hv2 .hv2-stack-move { position: relative; height: 500px; margin-top: 40px; transform-origin: 50% 0; will-change: transform; }
+  .hv2 .hv2-stack-in { position: absolute; inset: 0; }
+  .hv2 .hv2-stack { --fan: 270; --rot: 9; position: absolute; inset: 0; }
+  .hv2 .hv2-sheet {
+    position: absolute; left: 50%; top: 70px; width: 330px; height: 427px; border-radius: 6px; overflow: hidden;
+    background: var(--paper); box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+  }
+  .hv2 .hv2-sheet img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .hv2 .hv2-sheet--l { transform: translateX(calc(-50% - var(--fan) * 1px)) rotate(calc(var(--rot) * -1deg)); }
+  .hv2 .hv2-sheet--r { transform: translateX(calc(-50% + var(--fan) * 1px)) rotate(calc(var(--rot) * 1deg)); }
+  .hv2 .hv2-sheet--l img, .hv2 .hv2-sheet--r img { filter: brightness(0.93); }
+  .hv2 .hv2-sheet--c { top: 0; width: 380px; height: 492px; transform: translateX(-50%); box-shadow: 0 50px 110px rgba(0, 0, 0, 0.6); }
+  .hv2 .hv2-cap {
+    position: absolute; left: 0; right: 0; top: 72px; z-index: 1; text-align: center; opacity: 0; pointer-events: none;
+    font-size: clamp(32px, 3.6vw, 52px); line-height: 1.08; font-weight: 700; letter-spacing: -0.022em; color: var(--on-dark);
+  }
+  .hv2 .hv2-cap span { color: var(--eyebrow-dark); }
+  .hv2 .hv2-hint {
+    position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); display: none; flex-direction: column;
+    align-items: center; gap: 4px; font-size: 12px; color: var(--on-dark-3); pointer-events: none;
+  }
+  .hv2 .hv2-hint svg { animation: hv2-nudge 1.8s ease-in-out infinite; }
+  @media (max-width: 733px) {
+    .hv2 .hv2-stack-move { height: 330px; margin-top: 32px; }
+    .hv2 .hv2-stack { transform: scale(0.6); transform-origin: 50% 0; }
+    .hv2 .hv2-h1 { font-size: clamp(48px, 13vw, 64px); }
+    .hv2 .hv2-sub { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; }
+  }
+
+  /* ---- statement ---- */
+  .hv2 .hv2-statement { background: #000; color: var(--on-dark); padding-block: 150px 160px; }
+  .hv2 .hv2-statement .hv2-eyebrow { margin-bottom: 22px; color: var(--eyebrow-dark); }
+  .hv2 .hv2-reveal { max-width: 1020px; font-size: clamp(32px, 4.6vw, 64px); line-height: 1.12; font-weight: 700; letter-spacing: -0.022em; }
+
+  /* ---- forms marquee ---- */
+  .hv2 .hv2-forms { padding-block: 120px 40px; background: var(--paper); }
+  .hv2 .hv2-mq { margin-top: 56px; overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding-block: 22px; display: flex; flex-direction: column; gap: 14px; }
+  .hv2 .hv2-mq-row { display: flex; width: max-content; gap: 44px; font-size: clamp(36px, 4vw, 56px); line-height: 1; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; will-change: transform; }
+  .hv2 .hv2-mq-row span:nth-child(even) { color: var(--ghost); }
+  .hv2 .hv2-mq-row--outline span { color: transparent; -webkit-text-stroke: 1.4px var(--ink); }
+  .hv2 .hv2-mq-row--outline span:nth-child(even) { color: transparent; -webkit-text-stroke: 1.4px var(--ghost); }
+
+  /* ---- cases (bento) ---- */
+  .hv2 .hv2-cases { padding-block: 72px 120px; background: var(--paper); }
+  .hv2 .hv2-bento { margin-top: 44px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .hv2 .hv2-tile {
+    position: relative; overflow: hidden; min-width: 0; min-height: 420px; padding: 40px; border-radius: 32px;
+    display: flex; flex-direction: column; text-decoration: none;
+    transition: scale 0.6s var(--ease);
+  }
+  .hv2 a.hv2-tile:hover { scale: 1.012; }
+  .hv2 .hv2-tile--wide { grid-column: span 2; min-height: 520px; }
+  .hv2 .hv2-tile--full { grid-column: 1 / -1; min-height: 0; }
+  .hv2 .hv2-tile--navy, .hv2 .hv2-tile--navy:hover { background: var(--navy); color: var(--on-dark); }
+  .hv2 .hv2-tile--sky { background: var(--sky); color: var(--sky-deep); }
+  .hv2 .hv2-tile--dark, .hv2 .hv2-tile--dark:hover { background: var(--ink); color: var(--on-dark); }
+  .hv2 .hv2-tile--gray, .hv2 .hv2-tile--gray:hover { background: var(--tile); color: var(--ink); }
+  .hv2 .hv2-tile--spark, .hv2 .hv2-tile--spark:hover { background: var(--spark); color: var(--on-dark); }
+  .hv2 .hv2-tile--deep, .hv2 .hv2-tile--deep:hover { background: var(--navy-deep); color: var(--on-dark); }
+  .hv2 .hv2-t-eye { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .hv2 :is(.hv2-tile--navy, .hv2-tile--dark, .hv2-tile--deep) .hv2-t-eye { color: var(--on-dark-3); }
+  .hv2 .hv2-tile--spark .hv2-t-eye { color: rgba(255, 255, 255, 0.84); }
+  .hv2 .hv2-tile--sky .hv2-t-eye, .hv2 .hv2-tile--sky .hv2-t-body { color: var(--sky-ink); }
+  .hv2 .hv2-t-title { margin-top: 8px; font-size: 40px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
+  .hv2 .hv2-tile--wide .hv2-t-title { font-size: 56px; line-height: 1; letter-spacing: -0.025em; }
+  .hv2 .hv2-t-title--sm { margin-top: auto; font-size: 32px; line-height: 1.1; }
+  .hv2 .hv2-t-body { margin-top: 12px; max-width: 420px; font-size: 17px; line-height: 1.47; color: var(--ink-2); }
+  .hv2 :is(.hv2-tile--navy, .hv2-tile--dark, .hv2-tile--deep) .hv2-t-body { color: var(--on-dark-2); }
+  .hv2 .hv2-tile--spark .hv2-t-body { color: rgba(255, 255, 255, 0.88); }
+  .hv2 .hv2-t-btn { align-self: flex-start; margin-top: 24px; padding: 11px 22px; border-radius: 980px; background: var(--paper); color: var(--navy); font-size: 17px; }
+  .hv2 .hv2-t-more { margin-top: 16px; font-size: 17px; color: var(--spark-soft); }
+  .hv2 .hv2-t-giant {
+    position: absolute; right: -16px; bottom: -48px; font-size: clamp(140px, 17vw, 250px); line-height: 1;
+    font-weight: 700; letter-spacing: -0.05em; color: rgba(255, 255, 255, 0.1); pointer-events: none; will-change: transform;
+  }
+  .hv2 .hv2-t-price { position: relative; margin-top: auto; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 15px; color: var(--on-dark-2); }
+  .hv2 .hv2-t-price strong { font-size: 28px; color: var(--on-dark); }
+  .hv2 .hv2-greet { margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
+  .hv2 .hv2-greet p { font-size: 52px; line-height: 1.05; font-weight: 700; letter-spacing: -0.025em; }
+  .hv2 .hv2-greet p:nth-child(2) { color: var(--navy); }
+  .hv2 .hv2-greet p:nth-child(3) { color: var(--sky-ink); }
+  .hv2 .hv2-greet p:nth-child(4) { color: #5a7398; }
+  .hv2 .hv2-t-big { margin-top: auto; font-size: 112px; line-height: 0.9; font-weight: 700; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+  .hv2 .hv2-tags { margin-top: auto; padding-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .hv2 .hv2-tags span { padding: 8px 14px; border-radius: 980px; background: var(--paper); font-size: 13px; font-weight: 600; }
+  .hv2 .hv2-t-icon { margin-top: auto; }
+  .hv2 .hv2-steps { margin: 28px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .hv2 .hv2-steps b { display: block; font-size: 64px; line-height: 1; font-weight: 700; letter-spacing: -0.04em; color: var(--navy); }
+  .hv2 .hv2-steps strong { display: block; margin-top: 14px; font-size: 21px; font-weight: 600; letter-spacing: 0.011em; }
+  .hv2 .hv2-steps span { display: block; margin-top: 6px; font-size: 15px; line-height: 1.47; color: var(--ink-2); }
+  @media (max-width: 1000px) {
+    .hv2 .hv2-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .hv2 .hv2-bento { grid-template-columns: minmax(0, 1fr); }
+    .hv2 .hv2-tile--wide { grid-column: auto; }
+    .hv2 .hv2-tile { min-height: 340px; padding: 32px 28px; }
+    .hv2 .hv2-tile--wide .hv2-t-title { font-size: 44px; }
+    .hv2 .hv2-steps { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* ---- ask (chat) ---- */
+  .hv2 .hv2-ask { background: var(--navy); color: var(--on-dark); padding-block: 120px; }
+  .hv2 .hv2-ask-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 56px 72px; }
+  .hv2 .hv2-ask-copy { flex: 1 1 420px; min-width: 0; }
+  .hv2 .hv2-ask .hv2-eyebrow { color: var(--eyebrow-dark); margin-bottom: 16px; }
+  .hv2 .hv2-ask .hv2-h2 { font-size: clamp(40px, 5vw, 76px); line-height: 1.02; letter-spacing: -0.026em; }
+  .hv2 .hv2-ask .hv2-lede { color: var(--on-dark-2); }
+  .hv2 .hv2-chat {
+    flex: 1 1 480px; min-width: 0; padding: 24px; border-radius: 30px; background: var(--paper); color: var(--ink);
+    box-shadow: 0 50px 100px rgba(3, 10, 22, 0.45); display: flex; flex-direction: column; gap: 14px;
+  }
+  .hv2 .hv2-chat-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+  .hv2 .hv2-chat-head p { font-size: 17px; font-weight: 600; }
+  .hv2 .hv2-seg { display: flex; gap: 4px; padding: 3px; border-radius: 980px; background: #f0f0f3; }
+  .hv2 .hv2-seg button {
+    min-width: 46px; min-height: 36px; border: 0; border-radius: 980px; background: transparent; color: var(--ink-2);
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .hv2 .hv2-seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-dark); }
+  .hv2 .hv2-seg[hidden] { display: none; }
+  .hv2 .hv2-chat-tag { font-size: 12px; color: var(--muted); }
+  .hv2 .hv2-thread { min-height: 280px; max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-block: 4px; }
+  .hv2 .hv2-m-q {
+    align-self: flex-end; max-width: 80%; padding: 12px 16px; border-radius: 20px 20px 6px 20px;
+    background: var(--spark); color: var(--on-dark); font-size: 16px; line-height: 1.4; overflow-wrap: anywhere;
+  }
+  .hv2 .hv2-m-a { align-self: flex-start; max-width: 90%; display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 20px 20px 20px 6px; background: #f2f2f5; }
+  .hv2 .hv2-m-a p { font-size: 16px; line-height: 1.45; }
+  .hv2 .hv2-m-card, .hv2 .hv2-m-card:hover {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px;
+    border-radius: 16px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); text-decoration: none;
+  }
+  .hv2 .hv2-m-card small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .hv2 .hv2-m-card strong { display: block; font-size: 17px; font-weight: 600; }
+  .hv2 .hv2-m-card-r { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+  .hv2 .hv2-m-card-r b { font-size: 17px; color: var(--navy); }
+  .hv2 .hv2-m-card-r span { padding: 8px 14px; border-radius: 980px; background: var(--navy); color: var(--on-dark); font-size: 14px; }
+  .hv2 .hv2-m-btn {
+    align-self: flex-start; min-height: 40px; padding: 0 16px; border: 0; border-radius: 980px; background: var(--navy);
+    color: var(--on-dark); font: inherit; font-size: 14px; cursor: pointer;
+  }
+  .hv2 .hv2-m-typing { align-self: flex-start; display: none; gap: 5px; padding: 14px 16px; border-radius: 20px 20px 20px 6px; background: #f2f2f5; }
+  .hv2 .hv2-m-typing.is-on { display: flex; }
+  .hv2 .hv2-m-typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: hv2-blink 1s ease-in-out infinite; }
+  .hv2 .hv2-m-typing i:nth-child(2) { animation-delay: 0.15s; }
+  .hv2 .hv2-m-typing i:nth-child(3) { animation-delay: 0.3s; }
+  .hv2 .hv2-chat-form { position: relative; display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 18px; border: 1px solid var(--line); border-radius: 16px; }
+  .hv2 .hv2-chat-form:focus-within { border-color: var(--navy); box-shadow: 0 0 0 4px rgba(20, 50, 84, 0.12); }
+  .hv2 .hv2-chat-form input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 16px; color: var(--ink); padding: 10px 0; }
+  .hv2 .hv2-send { flex: 0 0 auto; width: 44px; height: 44px; border: 0; border-radius: 12px; background: var(--navy); color: var(--on-dark); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .hv2 .hv2-send:disabled { opacity: 0.5; cursor: default; }
+  .hv2 .hv2-chat-legal { font-size: 12px; color: var(--muted); }
+
+  /* ---- numbers + CTA ---- */
+  .hv2 .hv2-numbers { background: var(--tile); padding-block: 96px; }
+  .hv2 .hv2-num-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 32px; }
+  .hv2 .hv2-num { font-size: clamp(56px, 6vw, 88px); line-height: 1; font-weight: 700; letter-spacing: -0.04em; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .hv2 .hv2-num-label { margin-top: 12px; font-size: 15px; line-height: 1.43; color: var(--ink-2); }
+  .hv2 .hv2-cta { padding-block: 120px; text-align: center; background: var(--paper); }
+  .hv2 .hv2-cta .hv2-lede { margin-inline: auto; }
+  .hv2 .hv2-btns { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .hv2 .hv2-btn, .hv2 .hv2-btn:hover { padding: 13px 26px; border-radius: 980px; background: var(--navy); color: var(--on-dark); font-size: 17px; text-decoration: none; }
+  .hv2 .hv2-btn:hover { background: #1c4170; }
+  .hv2 .hv2-btn--ghost, .hv2 .hv2-btn--ghost:hover { padding: 12px 25px; background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+  .hv2 .hv2-btn--ghost:hover { background: var(--navy); color: var(--on-dark); }
+
+  /* ---- motion (only with html.hv2-motion) ---- */
+  @keyframes hv2-fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes hv2-word-up { from { opacity: 0; transform: translateY(0.42em); } to { opacity: 1; transform: none; } }
+  @keyframes hv2-stack-in { from { opacity: 0; transform: translateY(90px); } to { opacity: 1; transform: none; } }
+  @keyframes hv2-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+  @keyframes hv2-blink { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+  html.hv2-motion .hv2 .hv2-h1 .w { animation: hv2-word-up 1s var(--ease) both; animation-delay: calc(var(--i) * 90ms + 120ms); }
+  html.hv2-motion .hv2 .hv2-sub { animation: hv2-fade-up 0.9s var(--ease) 0.45s both; }
+  html.hv2-motion .hv2 .hv2-finder { animation: hv2-fade-up 0.9s var(--ease) 0.6s both; }
+  html.hv2-motion .hv2 .hv2-stack-in { animation: hv2-stack-in 1.3s var(--ease) 0.5s both; }
+  html.hv2-motion .hv2 .hv2-rise { opacity: 0; transform: translateY(56px); }
+  html.hv2-motion .hv2 .hv2-rise.in { opacity: 1; transform: none; }
+  .hv2 .hv2-rise { transition: opacity 0.9s ease, transform 1.1s var(--ease); transition-delay: var(--d, 0s); }
+  .hv2 .hv2-tile.hv2-rise { transition: opacity 0.9s ease, transform 1.1s var(--ease), scale 0.6s var(--ease); transition-delay: var(--d, 0s), var(--d, 0s), 0s; }
+  html.hv2-motion .hv2 .hv2-tile.in .hv2-greet p { animation: hv2-fade-up 0.7s var(--ease) both; animation-delay: calc(var(--i) * 0.12s + 0.35s); }
+  html.hv2-motion .hv2 [data-hv2-chat]:not(.is-live) :is(.hv2-m-q, .hv2-m-a, .hv2-m-card) { opacity: 0; transform: translateY(14px) scale(0.98); }
+  .hv2 :is(.hv2-m-q, .hv2-m-a, .hv2-m-card) { transition: opacity 0.45s ease, transform 0.55s var(--ease); }
+  html.hv2-motion .hv2 [data-hv2-chat].s1 .hv2-m-q,
+  html.hv2-motion .hv2 [data-hv2-chat].s3 .hv2-m-a,
+  html.hv2-motion .hv2 [data-hv2-chat].s4 .hv2-m-card { opacity: 1; transform: none; }
+  html.hv2-motion .hv2 [data-hv2-chat].s2 [data-hv2-ex="typing"] { display: flex; }
+  html.hv2-motion .hv2 .hv2-in { animation: hv2-fade-up 0.45s var(--ease) both; }
+  @media (min-width: 734px) {
+    html.hv2-motion .hv2 .hv2-hero:not(.is-static) { height: 225vh; }
+    html.hv2-motion .hv2 .hv2-hero:not(.is-static) .hv2-pin { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); height: calc(100svh - var(--bar-h)); }
+    html.hv2-motion .hv2 .hv2-hero:not(.is-static) .hv2-hint { display: flex; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hv2 *, .hv2 *::before, .hv2 *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<script>
+  import { initHomeV2 } from '~/scripts/home-v2';
+  initHomeV2();
+</script>

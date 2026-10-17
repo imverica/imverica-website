@@ -12,6 +12,9 @@
 /* ---- header swap (must apply to everyone, flag or not) ---------------- */
 html:not(.v2) .gn { display: none !important; }
 html.v2 .site-header { display: none !important; }
+/* Homepage: the v2 body is swapped in before paint (index.astro); keep the
+   old body from flashing while the parser reaches the swap script. */
+html.v2:not(.hv2-off) #home-v1 { display: none; }
 .v2-badge { display: none; }
 
 /* ---- tokens ----------------------------------------------------------- */

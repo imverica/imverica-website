@@ -1,5 +1,6 @@
 ---
 import { STATS, type Locale } from '~/data/i18n';
+import { formsSupported, priorityForms } from '~/data/stats';
 
 interface Props {
   lang?: Locale;
@@ -7,22 +8,9 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const labels = STATS[lang];
 
-/*
-  Auto-growing targets:
-  - "Forms supported"   — base 734, +2 every 7 days (1 week)
-  - "Priority forms"    — base 18,  +1 every 60 days (~2 months)
-  Baseline = 2026-05-25 (when the user set this rule). At build time we
-  bump the value forward by the elapsed weeks/2-month windows so the
-  numbers grow on their own without manual edits.
-*/
-const BASE_DATE = Date.UTC(2026, 4, 25); // May = month 4 (0-indexed)
-const now = Date.now();
-const days = Math.max(0, Math.floor((now - BASE_DATE) / (24 * 60 * 60 * 1000)));
-// Auto-growth: forms supported now ticks up by +1 every ~2.5 days
-// (5 forms every 12 days keeps the integer arithmetic clean), and the
-// priority-flows counter still gains +1 every two months.
-const formsTarget = 734 + Math.floor(days * 2 / 5);
-const priorityTarget = 18 + Math.floor(days / 60);
+// Auto-growing targets (rule and baseline live in ~/data/stats).
+const formsTarget = formsSupported();
+const priorityTarget = priorityForms();
 
 const items = [
   { target: formsTarget, suffix: '+', label: labels[0] },

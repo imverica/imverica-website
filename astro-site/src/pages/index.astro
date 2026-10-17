@@ -8,6 +8,7 @@ import OurServices from '~/components/OurServices.astro';
 import VisaBulletin from '~/components/VisaBulletin.astro';
 import Testimonials from '~/components/Testimonials.astro';
 import AboutStrip from '~/components/AboutStrip.astro';
+import HomeV2 from '~/components/HomeV2.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
@@ -21,6 +22,7 @@ const description =
   slug="/"
   availableLocales={['en', 'ru', 'uk', 'es']}
 >
+  <div id="home-v1">
   <Hero
     eyebrow={"California · Registered LDA · Immigration Consultant"}
     heading="What document do you need prepared?"
@@ -42,4 +44,26 @@ const description =
   <Testimonials />
 
   <AboutStrip />
+  </div>
+
+  {/* v2 preview body. Inert inside <template> (not rendered or indexed);
+      swapped in before first paint only when <html class="v2">. */}
+  <template id="home-v2"><HomeV2 /></template>
+  <script is:inline>
+    (function () {
+      var html = document.documentElement;
+      if (!html.classList.contains('v2')) return;
+      try {
+        var tpl = document.getElementById('home-v2');
+        var v1 = document.getElementById('home-v1');
+        var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!calm && 'IntersectionObserver' in window) html.classList.add('hv2-motion');
+        v1.replaceWith(tpl.content.cloneNode(true));
+        tpl.remove();
+      } catch (e) {
+        // Never leave a blank page: fall back to the current homepage body.
+        html.classList.add('hv2-off');
+      }
+    })();
+  </script>
 </BaseLayout>

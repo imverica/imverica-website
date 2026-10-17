@@ -180,7 +180,17 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     const panels = new Map<string, HTMLElement>();
     gn.querySelectorAll<HTMLElement>('[data-gn-panel]').forEach((p) => panels.set(p.dataset.gnPanel || '', p));
 
-    const desktop = window.matchMedia('(min-width: 1069px)');
+    const desktop = window.matchMedia('(min-width: 860px)');
+    const inner = gn.querySelector<HTMLElement>('.gn-inner')!;
+    // Bar mode = wide enough by the media query AND the labels really fit.
+    const barMode = () => desktop.matches && !gn.classList.contains('is-tight');
+    function fit() {
+      const was = gn.classList.contains('is-tight');
+      gn.classList.remove('is-tight');
+      const tight = desktop.matches && inner.scrollWidth > inner.clientWidth + 1;
+      gn.classList.toggle('is-tight', tight);
+      if (was !== tight) { close(); setMobile(false); }
+    }
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
     let openKey: string | null = null;
     // How the flyout was opened. Only hover-opened flyouts close when the
@@ -194,7 +204,7 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
       triggers.forEach((el) => el.setAttribute('aria-expanded', String(el.dataset.gnMenu === key)));
     }
     function show(key: string, via: 'hover' | 'focus' | 'tap' = 'hover') {
-      if (!desktop.matches) return;
+      if (!barMode()) return;
       const panel = panels.get(key);
       if (!panel) return;
       openedBy = via;
@@ -237,7 +247,7 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
         // button has no page of its own, so it always toggles.
         const isButton = el.tagName === 'BUTTON';
         if (isButton) { e.preventDefault(); openKey === key && openedBy !== 'focus' ? close() : show(key, 'tap'); return; }
-        if (!canHover.matches && desktop.matches && openKey !== key) { e.preventDefault(); show(key, 'tap'); }
+        if (!canHover.matches && barMode() && openKey !== key) { e.preventDefault(); show(key, 'tap'); }
       });
     });
 
@@ -297,6 +307,11 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     mobile.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).closest('a')) setMobile(false);
     });
+
+    fit();
+    window.addEventListener('resize', fit);
+    desktop.addEventListener('change', fit);
+    document.fonts?.ready.then(fit);
   })();
 </script>
 
@@ -316,7 +331,7 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
   .gn-bar {
     position: relative;
     z-index: 3;
-    background: rgba(250, 250, 252, 0.82);
+    background: rgba(250, 250, 252, 0.92);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -565,13 +580,31 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
   }
   .gn-m-col--big a { padding: 5px 0; font-size: 24px; line-height: 1.1667; letter-spacing: 0.009em; }
 
+  /* Like apple.com, the full bar stays down to tablet widths: tighter
+     spacing first, the portal icon moves into About / the mobile menu. */
+  /* Like apple.com, the full bar stays down to tablet widths: tighter
+     spacing first (the list is space-between, so short English labels
+     still breathe), the portal icon moves into About / the mobile menu.
+     If a long locale still does not fit, the script adds .is-tight and the
+     bar falls back to the burger instead of scrolling sideways. */
   @media (max-width: 1068px) {
+    .gn-inner { padding: 0 16px; }
+    .gn-list { margin: 0 8px; }
+    .gn-link { padding: 0 2px; }
+    .gn-tools a.gn-icon { display: none; }
+  }
+  @media (max-width: 859px) {
     .gn-list, .gn-lang-btn, .gn-cta, .gn-flyout, .gn-scrim { display: none; }
-    .gn-inner { justify-content: space-between; padding: 0 16px; }
+    .gn-inner { justify-content: space-between; }
+    .gn-tools a.gn-icon { display: inline-flex; }
     .gn-burger { display: inline-block; }
   }
-  @media (min-width: 1069px) {
-    .gn-mobile { display: none !important; }
+  .gn.is-tight :is(.gn-list, .gn-lang-btn, .gn-cta, .gn-flyout, .gn-scrim) { display: none; }
+  .gn.is-tight .gn-inner { justify-content: space-between; }
+  .gn.is-tight .gn-tools a.gn-icon { display: inline-flex; }
+  .gn.is-tight .gn-burger { display: inline-block; }
+  @media (min-width: 860px) {
+    .gn:not(.is-tight) .gn-mobile { display: none !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     .gn-flyout, .gn-scrim, .gn-bar { transition: none; }
