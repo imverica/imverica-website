@@ -1,0 +1,36 @@
+---
+/**
+ * Design-preview switch. Visiting /preview turns the v2 design on for this
+ * browser only (localStorage flag read by BaseLayout); /preview?off=1 turns
+ * it off and returns to the page the visitor came from, so old vs new can be
+ * compared on the same URL. Not linked anywhere, noindex, not in sitemap.
+ */
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Imverica — design preview</title>
+  <script is:inline>
+    (function () {
+      var off = /[?&]off=1\b/.test(location.search);
+      try {
+        if (off) localStorage.removeItem('imv-v2');
+        else localStorage.setItem('imv-v2', '1');
+      } catch (e) {}
+      var ref = document.referrer || '';
+      var sameSite = ref.indexOf(location.origin) === 0 && ref.indexOf('/preview') === -1;
+      location.replace(off && sameSite ? ref : '/');
+    })();
+  </script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 17px/1.4 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; color: #6e6e73; background: #fff; }
+  </style>
+</head>
+<body>
+  <noscript>Turn on JavaScript to switch the design preview.</noscript>
+  <p>Switching design preview…</p>
+</body>
+</html>

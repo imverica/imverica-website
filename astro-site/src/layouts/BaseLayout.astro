@@ -1,6 +1,8 @@
 ---
 import '~/styles/site.css';
+import '~/styles/site-v2.css';
 import SiteHeader from '~/components/SiteHeader.astro';
+import SiteHeaderV2 from '~/components/SiteHeaderV2.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
 import IntakeWizard from '~/components/IntakeWizard.astro';
 import QuickIntakeModal from '~/components/QuickIntakeModal.astro';
@@ -49,6 +51,9 @@ const alternates = slug && availableLocales.length > 1
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {/* v2 design preview: /preview stores a per-browser flag; applying the
+      class here, before first paint, avoids a flash of the old design. */}
+  <script is:inline>try{if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -107,6 +112,8 @@ const alternates = slug && availableLocales.length > 1
 </head>
 <body>
   <SiteHeader lang={lang} currentSlug={slug} availableLocales={availableLocales} />
+  <SiteHeaderV2 lang={lang} currentSlug={slug} availableLocales={availableLocales} />
+  <a class="v2-badge" href="/preview?off=1">New design preview <b>· Exit</b></a>
   <main>
     <slot />
   </main>

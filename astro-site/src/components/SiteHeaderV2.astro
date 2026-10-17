@@ -1,0 +1,579 @@
+---
+/**
+ * v2 global navigation — apple.com-style: one thin translucent bar, a
+ * full-width flyout per item on hover (page behind it blurs), and a
+ * full-screen drill-down menu on phones/tablets.
+ *
+ * Rendered on every page but hidden unless <html class="v2"> (set from the
+ * /preview flag), so the live site is untouched until cutover.
+ */
+import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPath, localizedPathSafe, type Locale } from '~/data/i18n';
+import { MEGA_NAV, type MegaKey, type MegaLink } from '~/data/megaNav';
+
+interface Props {
+  lang?: Locale;
+  currentSlug?: string;
+  availableLocales?: Locale[];
+}
+const { lang = 'en', currentSlug = '/', availableLocales = SUPPORTED_LOCALES } = Astro.props;
+
+const t = NAV[lang];
+const prefix = LOCALES[lang].prefix;
+const home = prefix + '/';
+
+const slug = String(currentSlug || '/').toLowerCase();
+function activeKey(): MegaKey | '' {
+  if (slug.startsWith('/pricing')) return 'pricing';
+  if (slug.startsWith('/for-attorneys')) return 'forAttorneys';
+  if (slug.startsWith('/about') || slug.startsWith('/lda') || slug.startsWith('/testimonials')) return 'about';
+  if (slug.startsWith('/business') || slug.startsWith('/llc') || slug.startsWith('/fbn') || slug.startsWith('/ss-4') || slug.startsWith('/si-550') || slug.startsWith('/arts-gs') || slug.startsWith('/operating')) return 'business';
+  if (slug.startsWith('/criminal') || slug.startsWith('/california-expungement')) return 'criminal';
+  if (slug.startsWith('/fl') || slug.startsWith('/california-restraining')) return 'family';
+  if (slug.startsWith('/sc') || slug.startsWith('/demand') || slug.startsWith('/california-') || slug.startsWith('/wg-') || slug.startsWith('/ej-')) return 'civil';
+  if (slug.startsWith('/i-') || slug.startsWith('/n-') || slug.startsWith('/immigration') || slug.startsWith('/eoir') || slug.startsWith('/uscis') || slug.startsWith('/u4u') || slug.startsWith('/tps') || slug.startsWith('/u-visa') || slug.startsWith('/vawa')) return 'uscis';
+  return '';
+}
+const active = activeKey();
+
+function resolve(link: MegaLink) {
+  if (link.slug) return localizedPathSafe(lang, link.slug);
+  const href = link.href || '/';
+  return href.startsWith('/#') ? prefix + href : href;
+}
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+
+function localeHref(locale: Locale) {
+  if (availableLocales.includes(locale)) return localizedPath(locale, currentSlug || '/');
+  return localizedPath(locale, '/');
+}
+const LANG_NAMES: Record<Locale, string> = { en: 'English', ru: 'Русский', uk: 'Українська', es: 'Español' };
+const CALL: Record<Locale, string> = { en: 'Call', ru: 'Позвонить', uk: 'Зателефонувати', es: 'Llamar' };
+const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написать нам', uk: 'Написати нам', es: 'Escríbanos' };
+---
+<header class="gn" data-gn>
+  <div class="gn-bar">
+    <nav class="gn-inner" aria-label="Main">
+      <a class="gn-logo" href={home} aria-label="Imverica Legal Solutions — home" data-gn-plain>
+        <img src="/logo-nav.png" alt="Imverica Legal Solutions" width="279" height="92" />
+      </a>
+
+      <ul class="gn-list">
+        {MEGA_NAV.map((section) => (
+          <li>
+            <a
+              class="gn-link"
+              href={localizedPathSafe(lang, section.slug)}
+              data-gn-menu={section.key}
+              aria-expanded="false"
+              aria-controls={`gn-panel-${section.key}`}
+              aria-current={active === section.key ? 'page' : undefined}
+            >{t[section.key]}</a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="gn-tools">
+        <button class="gn-icon gn-lang-btn" type="button" data-gn-menu="lang" aria-expanded="false" aria-controls="gn-panel-lang" aria-label={`Language: ${LANG_NAMES[lang]}`}>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
+        </button>
+        <a class="gn-icon" href="/account.html" aria-label={t.portal} data-gn-plain>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8.2" r="3.8" /><path d="M4.5 20.2c1.2-3.8 4.1-5.7 7.5-5.7s6.3 1.9 7.5 5.7" /></svg>
+        </a>
+        <a class="gn-cta" href={home + '#get-started'} data-gn-plain>{t.quote}</a>
+        <button class="gn-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="gn-mobile">
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <div class="gn-flyout" aria-hidden="true">
+    {MEGA_NAV.map((section) => (
+      <div class="gn-panel" id={`gn-panel-${section.key}`} data-gn-panel={section.key}>
+        <div class="gn-panel-inner">
+          {section.columns.map((col, i) => (
+            <div class={`gn-col${i === 0 ? ' gn-col--big' : ''}`}>
+              <h2 class="gn-col-h">{col.heading}</h2>
+              <ul>
+                {col.links.map((link) => {
+                  const href = resolve(link);
+                  return <li><a href={href} {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label}</a></li>;
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    <div class="gn-panel" id="gn-panel-lang" data-gn-panel="lang">
+      <div class="gn-panel-inner gn-panel-inner--end">
+        <div class="gn-col gn-col--big">
+          <h2 class="gn-col-h">Language</h2>
+          <ul>
+            {SUPPORTED_LOCALES.map((locale) => (
+              <li><a href={localeHref(locale)} lang={LOCALES[locale].htmlLang} aria-current={locale === lang ? 'true' : undefined}>{LANG_NAMES[locale]}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gn-scrim" aria-hidden="true"></div>
+
+  <div class="gn-mobile" id="gn-mobile" hidden>
+    <div class="gn-m-track">
+      <div class="gn-m-view" data-gn-mview="root">
+        <ul class="gn-m-list">
+          {MEGA_NAV.map((section) => (
+            <li>
+              <button type="button" class="gn-m-item" data-gn-mopen={section.key}>
+                <span>{t[section.key]}</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <a class="gn-m-cta" href={home + '#get-started'}>{t.quote}</a>
+        <ul class="gn-m-tools">
+          <li><a href="/account.html">{t.portal}</a></li>
+          <li><a href={localizedPath(lang, '/schedule')}>{t.schedule}</a></li>
+          <li><a href="tel:+19163993992">{CALL[lang]} +1 (916) 399-3992</a></li>
+          <li><a href="sms:+19163993992">{MESSAGE[lang]}</a></li>
+        </ul>
+        <div class="gn-m-langs" aria-label="Language">
+          {SUPPORTED_LOCALES.map((locale) => (
+            <a href={localeHref(locale)} lang={LOCALES[locale].htmlLang} aria-current={locale === lang ? 'true' : undefined}>{LANG_NAMES[locale]}</a>
+          ))}
+        </div>
+      </div>
+
+      {MEGA_NAV.map((section) => (
+        <div class="gn-m-view" data-gn-mview={section.key} hidden>
+          <button type="button" class="gn-m-back" data-gn-mback aria-label="Back">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          {section.columns.map((col, i) => (
+            <div class={`gn-m-col${i === 0 ? ' gn-m-col--big' : ''}`}>
+              <h2 class="gn-col-h">{col.heading}</h2>
+              <ul>
+                {col.links.map((link) => {
+                  const href = resolve(link);
+                  return <li><a href={href} {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label}</a></li>;
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    const root = document.querySelector<HTMLElement>('[data-gn]');
+    if (!root) return;
+    const gn = root;
+    const flyout = gn.querySelector<HTMLElement>('.gn-flyout')!;
+    const scrim = gn.querySelector<HTMLElement>('.gn-scrim')!;
+    const triggers = Array.from(gn.querySelectorAll<HTMLElement>('.gn-bar [data-gn-menu]'));
+    const panels = new Map<string, HTMLElement>();
+    gn.querySelectorAll<HTMLElement>('[data-gn-panel]').forEach((p) => panels.set(p.dataset.gnPanel || '', p));
+
+    const desktop = window.matchMedia('(min-width: 1069px)');
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+    let openKey: string | null = null;
+    // How the flyout was opened. Only hover-opened flyouts close when the
+    // pointer reaches the scrim: a keyboard-opened one would otherwise shut
+    // instantly whenever the mouse happens to rest on the page.
+    let openedBy: 'hover' | 'focus' | 'tap' = 'hover';
+    let openTimer = 0;
+    let closeTimer = 0;
+
+    function setExpanded(key: string | null) {
+      triggers.forEach((el) => el.setAttribute('aria-expanded', String(el.dataset.gnMenu === key)));
+    }
+    function show(key: string, via: 'hover' | 'focus' | 'tap' = 'hover') {
+      if (!desktop.matches) return;
+      const panel = panels.get(key);
+      if (!panel) return;
+      openedBy = via;
+      window.clearTimeout(closeTimer);
+      panels.forEach((p) => p.classList.toggle('is-active', p === panel));
+      flyout.style.height = panel.scrollHeight + 'px';
+      flyout.setAttribute('aria-hidden', 'false');
+      gn.classList.add('is-open');
+      openKey = key;
+      setExpanded(key);
+    }
+    function close() {
+      window.clearTimeout(openTimer);
+      if (!openKey) return;
+      gn.classList.remove('is-open');
+      flyout.style.height = '0px';
+      flyout.setAttribute('aria-hidden', 'true');
+      openKey = null;
+      setExpanded(null);
+    }
+    function scheduleClose(delay: number) {
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(close, delay);
+    }
+
+    triggers.forEach((el) => {
+      const key = el.dataset.gnMenu || '';
+      el.addEventListener('mouseenter', () => {
+        if (!canHover.matches) return;
+        window.clearTimeout(closeTimer);
+        window.clearTimeout(openTimer);
+        if (openKey) show(key);
+        else openTimer = window.setTimeout(() => show(key), 110);
+      });
+      el.addEventListener('mouseleave', () => window.clearTimeout(openTimer));
+      el.addEventListener('focus', () => { if (openKey !== key) show(key, 'focus'); });
+      el.addEventListener('click', (e) => {
+        // Touch screens wide enough for the bar: first tap opens the flyout,
+        // a second tap on the same item follows the link. The language
+        // button has no page of its own, so it always toggles.
+        const isButton = el.tagName === 'BUTTON';
+        if (isButton) { e.preventDefault(); openKey === key && openedBy !== 'focus' ? close() : show(key, 'tap'); return; }
+        if (!canHover.matches && desktop.matches && openKey !== key) { e.preventDefault(); show(key, 'tap'); }
+      });
+    });
+
+    gn.querySelectorAll<HTMLElement>('.gn-bar [data-gn-plain]').forEach((el) => {
+      el.addEventListener('mouseenter', () => { if (canHover.matches && openKey) scheduleClose(90); });
+    });
+    gn.addEventListener('mouseleave', () => { if (canHover.matches) scheduleClose(180); });
+    flyout.addEventListener('mouseenter', () => window.clearTimeout(closeTimer));
+    // The blurred scrim lives inside the header, so leaving the flyout for
+    // the page never fires the header's mouseleave — close from here.
+    scrim.addEventListener('mouseenter', () => { if (canHover.matches && openedBy === 'hover') scheduleClose(120); });
+    scrim.addEventListener('click', close);
+    gn.addEventListener('focusout', (e) => {
+      const next = (e as FocusEvent).relatedTarget as Node | null;
+      if (!next || !gn.contains(next)) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (openKey) {
+        const trigger = triggers.find((el) => el.dataset.gnMenu === openKey);
+        close();
+        trigger?.focus({ preventScroll: true });
+      }
+      if (mobileOpen) setMobile(false);
+    });
+    desktop.addEventListener('change', () => { close(); setMobile(false); });
+
+    // ---- phones / tablets: full-screen drill-down menu -------------------
+    const burger = gn.querySelector<HTMLButtonElement>('.gn-burger')!;
+    const mobile = gn.querySelector<HTMLElement>('.gn-mobile')!;
+    const views = Array.from(mobile.querySelectorAll<HTMLElement>('[data-gn-mview]'));
+    let mobileOpen = false;
+
+    function showView(key: string) {
+      views.forEach((v) => {
+        const on = v.dataset.gnMview === key;
+        v.hidden = !on;
+        v.classList.toggle('is-entering', on && key !== 'root');
+      });
+      mobile.scrollTop = 0;
+    }
+    function setMobile(open: boolean) {
+      mobileOpen = open;
+      mobile.hidden = !open;
+      burger.setAttribute('aria-expanded', String(open));
+      gn.classList.toggle('is-mobile-open', open);
+      document.documentElement.classList.toggle('gn-lock', open);
+      if (open) showView('root');
+    }
+    burger.addEventListener('click', () => setMobile(!mobileOpen));
+    mobile.querySelectorAll<HTMLElement>('[data-gn-mopen]').forEach((btn) => {
+      btn.addEventListener('click', () => showView(btn.dataset.gnMopen || 'root'));
+    });
+    mobile.querySelectorAll<HTMLElement>('[data-gn-mback]').forEach((btn) => {
+      btn.addEventListener('click', () => showView('root'));
+    });
+    mobile.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setMobile(false);
+    });
+  })();
+</script>
+
+<style>
+  .gn {
+    --gn-h: 48px;
+    --gn-ink: rgba(0, 0, 0, 0.8);
+    --gn-ink-strong: #1d1d1f;
+    --gn-soft: #6e6e73;
+    --gn-bg: #fafafc;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    letter-spacing: -0.01em;
+  }
+  .gn-bar {
+    position: relative;
+    z-index: 3;
+    background: rgba(250, 250, 252, 0.82);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: background-color 0.24s ease;
+  }
+  .gn.is-open .gn-bar,
+  .gn.is-mobile-open .gn-bar { background: var(--gn-bg); border-bottom-color: transparent; }
+  .gn-inner {
+    max-width: 1100px;
+    height: var(--gn-h);
+    margin: 0 auto;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+  }
+  .gn-logo { display: flex; align-items: center; flex: 0 0 auto; }
+  .gn-logo img { height: 30px; width: auto; display: block; }
+  .gn-list {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
+    padding: 0;
+    list-style: none;
+  }
+  .gn-link {
+    display: block;
+    padding: 0 8px;
+    line-height: var(--gn-h);
+    font-size: 12px;
+    color: var(--gn-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.24s ease;
+  }
+  .gn-link:hover,
+  .gn-link[aria-expanded="true"],
+  .gn-link[aria-current="page"] { color: #000; }
+  .gn-tools { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+  .gn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--gn-ink);
+    cursor: pointer;
+    transition: color 0.24s ease, background-color 0.24s ease;
+  }
+  .gn-icon:hover, .gn-icon[aria-expanded="true"] { color: #000; background: rgba(0, 0, 0, 0.05); }
+  .gn-icon svg, .gn-burger svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .gn-cta {
+    margin-left: 8px;
+    padding: 6px 14px;
+    border-radius: 980px;
+    background: #143254;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+  }
+  .gn-cta:hover { background: #1c4170; color: #fff; }
+  .gn-burger {
+    display: none;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .gn-burger span {
+    position: absolute;
+    left: 12px;
+    width: 17px;
+    height: 1.5px;
+    border-radius: 1px;
+    background: var(--gn-ink-strong);
+    transition: transform 0.28s ease, top 0.28s ease;
+  }
+  .gn-burger span:first-child { top: 16px; }
+  .gn-burger span:last-child { top: 23px; }
+  .gn.is-mobile-open .gn-burger span:first-child { top: 19.5px; transform: rotate(45deg); }
+  .gn.is-mobile-open .gn-burger span:last-child { top: 19.5px; transform: rotate(-45deg); }
+
+  /* ---- desktop flyout -------------------------------------------------- */
+  .gn-flyout {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--gn-h);
+    z-index: 2;
+    height: 0;
+    overflow: hidden;
+    background: var(--gn-bg);
+    transition: height 0.32s cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  .gn.is-open .gn-flyout { box-shadow: 0 18px 30px -24px rgba(0, 0, 0, 0.18); }
+  .gn-panel { display: none; }
+  .gn-panel.is-active { display: block; }
+  .gn-panel-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 38px 22px 70px;
+    display: flex;
+    gap: 56px;
+  }
+  .gn-panel-inner--end { justify-content: flex-end; }
+  .gn-panel.is-active .gn-col { animation: gn-in 0.32s ease 0.06s both; }
+  .gn-panel.is-active .gn-col + .gn-col { animation-delay: 0.1s; }
+  @keyframes gn-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  .gn-col-h {
+    margin: 0 0 14px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.01em;
+    color: var(--gn-soft);
+  }
+  .gn-col ul, .gn-m-col ul { margin: 0; padding: 0; list-style: none; }
+  .gn-col a {
+    display: inline-block;
+    padding: 4px 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.33;
+    color: #333336;
+    text-decoration: none;
+  }
+  .gn-col--big { min-width: 250px; }
+  .gn-col--big a {
+    padding: 3px 0;
+    font-size: 24px;
+    line-height: 1.17;
+    letter-spacing: 0.002em;
+  }
+  .gn-col a:hover, .gn-col a[aria-current="true"] { color: #000; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .gn-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(232, 232, 237, 0.4);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.32s ease, visibility 0.32s ease;
+  }
+  .gn.is-open .gn-scrim { opacity: 1; visibility: visible; }
+
+  /* ---- phones / tablets ------------------------------------------------ */
+  .gn-mobile {
+    position: fixed;
+    top: var(--gn-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--gn-bg);
+  }
+  .gn-mobile[hidden] { display: none; }
+  .gn-m-track { padding: 18px 32px 48px; max-width: 640px; margin: 0 auto; }
+  .gn-m-view[hidden] { display: none; }
+  .gn-m-view { animation: gn-m-fade 0.28s ease both; }
+  .gn-m-view.is-entering { animation-name: gn-m-slide; }
+  @keyframes gn-m-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes gn-m-slide { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+  .gn-m-list { margin: 0 0 26px; padding: 0; list-style: none; }
+  .gn-m-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: 0.004em;
+    color: #333336;
+    text-align: left;
+    cursor: pointer;
+  }
+  .gn-m-item svg { flex: 0 0 auto; fill: none; stroke: #86868b; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .gn-m-cta {
+    display: inline-block;
+    margin-bottom: 22px;
+    padding: 12px 22px;
+    border-radius: 980px;
+    background: #143254;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .gn-m-tools { margin: 0 0 24px; padding: 0; list-style: none; }
+  .gn-m-tools a {
+    display: block;
+    padding: 7px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333336;
+    text-decoration: none;
+  }
+  .gn-m-langs { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gn-m-langs a {
+    padding: 7px 14px;
+    border-radius: 980px;
+    background: #e8e8ed;
+    color: #1d1d1f;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .gn-m-langs a[aria-current="true"] { background: #143254; color: #fff; }
+  .gn-m-back {
+    display: inline-flex;
+    margin: -6px 0 14px -8px;
+    padding: 8px;
+    border: 0;
+    background: none;
+    color: #6e6e73;
+    cursor: pointer;
+  }
+  .gn-m-back svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .gn-m-col { margin-bottom: 30px; }
+  .gn-m-col a {
+    display: block;
+    padding: 6px 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #333336;
+    text-decoration: none;
+  }
+  .gn-m-col--big a { padding: 5px 0; font-size: 24px; line-height: 1.17; }
+
+  @media (max-width: 1068px) {
+    .gn-list, .gn-lang-btn, .gn-cta, .gn-flyout, .gn-scrim { display: none; }
+    .gn-inner { justify-content: space-between; padding: 0 16px; }
+    .gn-burger { display: inline-block; }
+  }
+  @media (min-width: 1069px) {
+    .gn-mobile { display: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gn-flyout, .gn-scrim, .gn-bar { transition: none; }
+    .gn-panel.is-active .gn-col, .gn-m-view { animation: none; }
+  }
+  :global(html.gn-lock), :global(html.gn-lock body) { overflow: hidden; }
+</style>
