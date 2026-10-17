@@ -347,6 +347,7 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     padding: 0 8px;
     line-height: var(--gn-h);
     font-size: 12px;
+    letter-spacing: -0.01em;
     color: var(--gn-ink);
     text-decoration: none;
     white-space: nowrap;
@@ -456,8 +457,8 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
   .gn-col--big a {
     padding: 3px 0;
     font-size: 24px;
-    line-height: 1.17;
-    letter-spacing: 0.002em;
+    line-height: 1.1667;
+    letter-spacing: 0.009em;
   }
   .gn-col a:hover, .gn-col a[aria-current="true"] { color: #000; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   .gn-scrim {
@@ -504,8 +505,8 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     font: inherit;
     font-size: 28px;
     font-weight: 600;
-    line-height: 1.14;
-    letter-spacing: 0.004em;
+    line-height: 1.1429;
+    letter-spacing: 0.007em;
     color: #333336;
     text-align: left;
     cursor: pointer;
@@ -558,10 +559,11 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     font-size: 17px;
     font-weight: 600;
     line-height: 1.25;
+    letter-spacing: -0.022em;
     color: #333336;
     text-decoration: none;
   }
-  .gn-m-col--big a { padding: 5px 0; font-size: 24px; line-height: 1.17; }
+  .gn-m-col--big a { padding: 5px 0; font-size: 24px; line-height: 1.1667; letter-spacing: 0.009em; }
 
   @media (max-width: 1068px) {
     .gn-list, .gn-lang-btn, .gn-cta, .gn-flyout, .gn-scrim { display: none; }
