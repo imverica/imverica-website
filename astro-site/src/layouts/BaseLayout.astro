@@ -51,9 +51,10 @@ const alternates = slug && availableLocales.length > 1
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  {/* v2 design preview: /preview stores a per-browser flag; applying the
-      class here, before first paint, avoids a flash of the old design. */}
-  <script is:inline>try{if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
+  {/* v2 design preview: ?v2=1 on any URL stores a per-browser flag and
+      ?v2=0 clears it (works even if a redirect swallows /preview). Applying
+      the class here, before first paint, avoids a flash of the old design. */}
+  <script is:inline>try{var m=location.search.match(/[?&]v2=([01])/);if(m){m[1]==='1'?localStorage.setItem('imv-v2','1'):localStorage.removeItem('imv-v2');var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -113,7 +114,7 @@ const alternates = slug && availableLocales.length > 1
 <body>
   <SiteHeader lang={lang} currentSlug={slug} availableLocales={availableLocales} />
   <SiteHeaderV2 lang={lang} currentSlug={slug} availableLocales={availableLocales} />
-  <a class="v2-badge" href="/preview?off=1">New design preview <b>· Exit</b></a>
+  <a class="v2-badge" href="?v2=0">New design preview <b>· Exit</b></a>
   <main>
     <slot />
   </main>

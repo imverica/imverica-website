@@ -4,6 +4,7 @@
  * browser only (localStorage flag read by BaseLayout); /preview?off=1 turns
  * it off and returns to the page the visitor came from, so old vs new can be
  * compared on the same URL. Not linked anywhere, noindex, not in sitemap.
+ * Any page also accepts ?v2=1 / ?v2=0 directly (see BaseLayout).
  */
 ---
 <!doctype html>
@@ -22,7 +23,9 @@
       } catch (e) {}
       var ref = document.referrer || '';
       var sameSite = ref.indexOf(location.origin) === 0 && ref.indexOf('/preview') === -1;
-      location.replace(off && sameSite ? ref : '/');
+      // The ?v2 param re-applies the flag on arrival, so this works even if
+      // localStorage writes are blocked on this page.
+      location.replace(off ? (sameSite ? ref : '/?v2=0') : '/?v2=1');
     })();
   </script>
   <style>
