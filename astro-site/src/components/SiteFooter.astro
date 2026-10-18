@@ -7,8 +7,8 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const f = FOOTER[lang];
 const year = new Date().getFullYear();
-// Two-line disclaimer: legal status on top, bond/citation below.
-// The `||` separator in the i18n string is the split point.
+// Disclaimer lines: legal status, registration and bond numbers, then the
+// not-a-law-firm notice (split on `||` in FOOTER.disclaimer).
 const disclaimerLines = f.disclaimer.replace('{year}', String(year)).split('||').map((s) => s.trim());
 ---
 <footer class="site-footer site-footer--lean">

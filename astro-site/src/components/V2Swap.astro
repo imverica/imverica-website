@@ -1,0 +1,28 @@
+---
+/**
+ * Preview flag swap. Every <template data-v2-new="x"> on the page replaces the
+ * element marked data-v2-old="x" before first paint, but only when
+ * <html class="v2"> (set from ?v2=1 / localStorage in BaseLayout). Regular
+ * visitors and crawlers never see the template content. Place after the
+ * last template on the page.
+ */
+---
+<script is:inline>
+  (function () {
+    var html = document.documentElement;
+    if (!html.classList.contains('v2')) return;
+    try {
+      var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!calm && 'IntersectionObserver' in window) html.classList.add('hv2-motion');
+      document.querySelectorAll('template[data-v2-new]').forEach(function (tpl) {
+        var old = document.querySelector('[data-v2-old="' + tpl.getAttribute('data-v2-new') + '"]');
+        if (!old) return;
+        old.replaceWith(tpl.content.cloneNode(true));
+        tpl.remove();
+      });
+    } catch (e) {
+      // Never leave a blank page: fall back to the current sections.
+      html.classList.add('hv2-off');
+    }
+  })();
+</script>

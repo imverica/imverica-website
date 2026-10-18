@@ -9,6 +9,7 @@ import VisaBulletin from '~/components/VisaBulletin.astro';
 import Testimonials from '~/components/Testimonials.astro';
 import AboutStrip from '~/components/AboutStrip.astro';
 import HeroV2 from '~/components/HeroV2.astro';
+import V2Swap from '~/components/V2Swap.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
@@ -22,7 +23,7 @@ const description =
   slug="/"
   availableLocales={['en', 'ru', 'uk', 'es']}
 >
-  <div id="home-v1">
+  <div data-v2-old="hero">
   <Hero
     eyebrow={"California · Registered LDA · Immigration Consultant"}
     heading="What document do you need prepared?"
@@ -33,29 +34,18 @@ const description =
     <HomeSearch />
   </Hero>
   </div>
-
-  {/* v2 preview opening (hero with the same finder, real form pages,
-      statement). Inert inside <template> (not rendered or indexed); swapped
-      in before first paint only when <html class="v2">. The sections below
-      are shared by both designs. */}
-  <template id="home-v2"><HeroV2 /></template>
-  <script is:inline>
-    (function () {
-      var html = document.documentElement;
-      if (!html.classList.contains('v2')) return;
-      try {
-        var tpl = document.getElementById('home-v2');
-        var v1 = document.getElementById('home-v1');
-        var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!calm && 'IntersectionObserver' in window) html.classList.add('hv2-motion');
-        v1.replaceWith(tpl.content.cloneNode(true));
-        tpl.remove();
-      } catch (e) {
-        // Never leave a blank hero: fall back to the current one.
-        html.classList.add('hv2-off');
-      }
-    })();
-  </script>
+  {/* v2 preview: hero (current copy + alternate line, the finder, real form
+      pages) and statement. Inert in <template>; V2Swap swaps it in before
+      first paint only under <html class="v2">. Sections below are shared. */}
+  <template data-v2-new="hero">
+    <HeroV2
+      lang="en"
+      eyebrow="California · Registered LDA · Immigration Consultant"
+      heading="What document do you need prepared?"
+      sub="Describe your situation or enter a form number. We prepare USCIS, EOIR, and California court documents at your direction — for clients across California and worldwide."
+    />
+  </template>
+  <V2Swap />
 
   <StatsStrip />
 

@@ -1,8 +1,8 @@
 /**
- * Scroll motion for the v2 homepage opening (components/HeroV2.astro): the
- * hero pins under the nav while the real form pages rise, scale and fan out
- * (the copy fades, the caption fades in), then the statement lights up word
- * by word.
+ * Motion for the v2 homepage opening (components/HeroV2.astro): the two
+ * headline variants take turns, the hero pins under the nav while the real
+ * form pages rise, scale and fan out (the copy fades, the caption fades in),
+ * then the statement lights up word by word.
  *
  * Does nothing unless the v2 hero was swapped in (index.astro, html.v2), and
  * only animates with html.hv2-motion (no reduced motion).
@@ -94,6 +94,20 @@ export function initHeroV2(): void {
 
   update();
   if (motion) revealSections();
+
+  // Headline: the current homepage copy and the alternate line take turns.
+  // Held still while someone types in the finder or reads its answer.
+  const variants = Array.from(hero.querySelectorAll<HTMLElement>('[data-hv2-swap] .hv2-variant'));
+  if (motion && variants.length > 1) {
+    let on = 0;
+    window.setInterval(() => {
+      const typing = document.activeElement?.id === 'aiFinderInput';
+      if (document.hidden || typing || hero.classList.contains('is-static')) return;
+      variants[on].classList.remove('is-on');
+      on = (on + 1) % variants.length;
+      variants[on].classList.add('is-on');
+    }, 6500);
+  }
 }
 
 // Section intros under the hero rise in as they enter the viewport (the
@@ -101,7 +115,8 @@ export function initHeroV2(): void {
 function revealSections(): void {
   const targets = document.querySelectorAll<HTMLElement>(
     '.stats-strip .stat-item, .ourserv-kicker, .ourserv-section h2, .ourserv-sub, ' +
-    '.news-copy, .news-panel, .visa-inner, .testimonials-heading, .about-head'
+    '.news-copy, .news-panel, .visa-inner, .testimonials-heading, .about-head, ' +
+    '.hf2-kicker, .hf2-h2, .hf2-lead, .hf2-tile'
   );
   const io = new IntersectionObserver((entries) => entries.forEach((entry) => {
     if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
@@ -109,6 +124,7 @@ function revealSections(): void {
   targets.forEach((el, i) => {
     el.classList.add('hv2-rise');
     if (el.classList.contains('stat-item')) el.style.transitionDelay = `${(i % 4) * 80}ms`;
+    if (el.classList.contains('hf2-tile')) el.style.transitionDelay = `${(i % 3) * 80}ms`;
     io.observe(el);
   });
 }

@@ -8,7 +8,7 @@
  * /preview flag), so the live site is untouched until cutover.
  */
 import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPath, localizedPathSafe, type Locale } from '~/data/i18n';
-import { MEGA_NAV, type MegaKey, type MegaLink } from '~/data/megaNav';
+import { MEGA_NAV, megaLabel, type MegaKey, type MegaLink } from '~/data/megaNav';
 
 interface Props {
   lang?: Locale;
@@ -49,6 +49,9 @@ function localeHref(locale: Locale) {
 const LANG_NAMES: Record<Locale, string> = { en: 'English', ru: 'Русский', uk: 'Українська', es: 'Español' };
 const CALL: Record<Locale, string> = { en: 'Call', ru: 'Позвонить', uk: 'Зателефонувати', es: 'Llamar' };
 const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написать нам', uk: 'Написати нам', es: 'Escríbanos' };
+// Flyout text: the main label, plus a quieter note with a form name's
+// translation on RU / UA / ES pages.
+const L = (text: string) => megaLabel(text, lang);
 ---
 <header class="gn" data-gn>
   <div class="gn-bar">
@@ -93,11 +96,11 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
         <div class="gn-panel-inner">
           {section.columns.map((col, i) => (
             <div class={`gn-col${i === 0 ? ' gn-col--big' : ''}`}>
-              <h2 class="gn-col-h">{col.heading}</h2>
+              <h2 class="gn-col-h">{L(col.heading).main}{L(col.heading).note && <span class="gn-tr"> {L(col.heading).note}</span>}</h2>
               <ul>
                 {col.links.map((link) => {
                   const href = resolve(link);
-                  return <li><a href={href} {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label}</a></li>;
+                  return <li><a href={href} {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{L(link.label).main}{L(link.label).note && <span class="gn-tr"> {L(link.label).note}</span>}</a></li>;
                 })}
               </ul>
             </div>
@@ -108,7 +111,7 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     <div class="gn-panel" id="gn-panel-lang" data-gn-panel="lang">
       <div class="gn-panel-inner gn-panel-inner--end">
         <div class="gn-col gn-col--big">
-          <h2 class="gn-col-h">Language</h2>
+          <h2 class="gn-col-h">{megaLabel('Language', lang).main}</h2>
           <ul>
             {SUPPORTED_LOCALES.map((locale) => (
               <li><a href={localeHref(locale)} lang={LOCALES[locale].htmlLang} aria-current={locale === lang ? 'true' : undefined}>{LANG_NAMES[locale]}</a></li>
@@ -154,11 +157,11 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
           </button>
           {section.columns.map((col, i) => (
             <div class={`gn-m-col${i === 0 ? ' gn-m-col--big' : ''}`}>
-              <h2 class="gn-col-h">{col.heading}</h2>
+              <h2 class="gn-col-h">{L(col.heading).main}{L(col.heading).note && <span class="gn-tr"> {L(col.heading).note}</span>}</h2>
               <ul>
                 {col.links.map((link) => {
                   const href = resolve(link);
-                  return <li><a href={href} {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label}</a></li>;
+                  return <li><a href={href} {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{L(link.label).main}{L(link.label).note && <span class="gn-tr"> {L(link.label).note}</span>}</a></li>;
                 })}
               </ul>
             </div>
@@ -469,6 +472,8 @@ const MESSAGE: Record<Locale, string> = { en: 'Message Us', ru: 'Написат�
     text-decoration: none;
   }
   .gn-col--big { min-width: 250px; }
+  .gn-tr { font-weight: 400; color: var(--gn-soft); }
+  :is(.gn-col--big, .gn-m-col--big) .gn-tr { display: block; margin-top: 1px; font-size: 14px; line-height: 1.3; letter-spacing: -0.01em; }
   .gn-col--big a {
     padding: 3px 0;
     font-size: 24px;

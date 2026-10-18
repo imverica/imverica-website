@@ -3,6 +3,9 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import HomeSearch from '~/components/HomeSearch.astro';
 import StatsStrip from '~/components/StatsStrip.astro';
+import HeroV2 from '~/components/HeroV2.astro';
+import HomeFormsV2 from '~/components/HomeFormsV2.astro';
+import V2Swap from '~/components/V2Swap.astro';
 import { HERO } from '~/data/i18n';
 
 const lang = 'es' as const;
@@ -20,6 +23,7 @@ const description =
   slug="/"
   availableLocales={['en', 'ru', 'uk', 'es']}
 >
+  <div data-v2-old="hero">
   <Hero
     lang={lang}
     eyebrow={HERO.es.eyebrow}
@@ -30,8 +34,16 @@ const description =
   >
     <HomeSearch lang={lang} />
   </Hero>
+  </div>
+  {/* v2 preview (see V2Swap): hero with the alternate line and real form
+      pages, statement, and the form grid as tiles. */}
+  <template data-v2-new="hero">
+    <HeroV2 lang={lang} eyebrow={HERO.es.eyebrow} heading={HERO.es.heading} sub={HERO.es.sub} />
+  </template>
+  <V2Swap />
   <StatsStrip lang={lang} />
 
+  <div data-v2-old="services">
   <section class="svc-section">
     <div class="svc-inner" style="text-align:center;">
       <div class="svc-kicker">Lo que hacemos</div>
@@ -57,6 +69,9 @@ const description =
       </p>
     </div>
   </section>
+  </div>
+  <template data-v2-new="services"><HomeFormsV2 lang={lang} /></template>
+  <V2Swap />
 
   <style>
     .es-form-grid {

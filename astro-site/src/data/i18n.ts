@@ -213,37 +213,37 @@ export const FOOTER: Record<Locale, {
   brandLine: string;
   disclaimer: string;
 }> = {
-  // The footer renders the disclaimer as two lines: legal status first,
-  // then the bonding/registration cite. The `||` marker is the split
-  // point — keeping it as one string lets each locale read naturally
-  // when the markers are removed.
+  // The footer renders the disclaimer as separate lines: legal status,
+  // registration and bond numbers, then the not-a-law-firm notice. The `||`
+  // marker is the split point — keeping it as one string lets each locale
+  // read naturally when the markers are removed.
   en: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'California Court',
     about: 'About',
     brandLine: 'Legal Document Assistant · Immigration Consultant · California',
-    disclaimer: '© {year} Imverica LLC, dba Imverica Legal Solutions — a California limited liability company; a registered & bonded California Legal Document Assistant and Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 and §§22440-22448).||Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice, and no attorney-client relationship is created by use of this site. Documents are prepared solely at the client\'s direction. If you need legal advice, consult a licensed attorney.'
+    disclaimer: '© {year} Imverica LLC, dba Imverica Legal Solutions — a California limited liability company; a registered & bonded California Legal Document Assistant and Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 and §§22440-22448).||Legal Document Assistant registration No. 2026-010, Sacramento County, expires 09/27/2028. Immigration Consultant bond No. 67347671 (Western Surety Company), on file with the California Secretary of State.||Imverica is not a law firm and is not a substitute for an attorney. We do not provide legal advice, and no attorney-client relationship is created by use of this site. Documents are prepared solely at the client\'s direction. If you need legal advice, consult a licensed attorney.'
   },
   ru: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Калифорнийский суд',
     about: 'О нас',
     brandLine: 'Помощник по юридическим документам · Иммиграционный консультант · Калифорния',
-    disclaimer: '© {year} Imverica LLC, под брендом Imverica Legal Solutions — компания с ограниченной ответственностью в штате Калифорния; зарегистрированный и застрахованный California Legal Document Assistant и Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 и §§22440-22448).||Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций; отношения «адвокат-клиент» не возникают при использовании этого сайта. Документы готовятся исключительно по поручению клиента. Если вам нужна юридическая консультация — обратитесь к лицензированному адвокату.'
+    disclaimer: '© {year} Imverica LLC, под брендом Imverica Legal Solutions — компания с ограниченной ответственностью в штате Калифорния; зарегистрированный и застрахованный California Legal Document Assistant и Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 и §§22440-22448).||Регистрация Legal Document Assistant № 2026-010, округ Sacramento, действительна до 09/27/2028. Бонд Immigration Consultant № 67347671 (Western Surety Company) зарегистрирован у Secretary of State Калифорнии.||Imverica не является юридической фирмой и не заменяет адвоката. Мы не предоставляем юридических консультаций; отношения «адвокат-клиент» не возникают при использовании этого сайта. Документы готовятся исключительно по поручению клиента. Если вам нужна юридическая консультация — обратитесь к лицензированному адвокату.'
   },
   uk: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Каліфорнійський суд',
     about: 'Про нас',
     brandLine: 'Помічник з юридичних документів · Імміграційний консультант · Каліфорнія',
-    disclaimer: '© {year} Imverica LLC, під брендом Imverica Legal Solutions — компанія з обмеженою відповідальністю штату Каліфорнія; зареєстрований і застрахований California Legal Document Assistant та Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 та §§22440-22448).||Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій; відносини «адвокат-клієнт» не виникають при використанні цього сайту. Документи готуються виключно за дорученням клієнта. Якщо вам потрібна юридична консультація — зверніться до ліцензованого адвоката.'
+    disclaimer: '© {year} Imverica LLC, під брендом Imverica Legal Solutions — компанія з обмеженою відповідальністю штату Каліфорнія; зареєстрований і застрахований California Legal Document Assistant та Immigration Consultant (Cal. Bus. & Prof. Code §§6400-6415 та §§22440-22448).||Реєстрація Legal Document Assistant № 2026-010, округ Sacramento, дійсна до 09/27/2028. Бонд Immigration Consultant № 67347671 (Western Surety Company) зареєстровано в Secretary of State Каліфорнії.||Imverica не є юридичною фірмою і не замінює адвоката. Ми не надаємо юридичних консультацій; відносини «адвокат-клієнт» не виникають при використанні цього сайту. Документи готуються виключно за дорученням клієнта. Якщо вам потрібна юридична консультація — зверніться до ліцензованого адвоката.'
   },
   es: {
     servicesUscis: 'USCIS / EOIR',
     servicesCivil: 'Corte de California',
     about: 'Sobre nosotros',
     brandLine: 'Asistente de Documentos Legales · Consultor de Inmigración · California',
-    disclaimer: '© {year} Imverica LLC, operando como Imverica Legal Solutions — sociedad de responsabilidad limitada de California; California Legal Document Assistant e Immigration Consultant registrado y afianzado (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal; no se crea relación abogado-cliente por el uso de este sitio. Los documentos se preparan únicamente bajo la dirección del cliente. Si necesita asesoría legal, consulte a un abogado con licencia.'
+    disclaimer: '© {year} Imverica LLC, operando como Imverica Legal Solutions — sociedad de responsabilidad limitada de California; California Legal Document Assistant e Immigration Consultant registrado y afianzado (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||Registro de Legal Document Assistant n.º 2026-010, condado de Sacramento, vence el 09/27/2028. Fianza de Immigration Consultant n.º 67347671 (Western Surety Company), registrada ante el Secretary of State de California.||Imverica no es un bufete de abogados ni un sustituto de un abogado. No brindamos asesoría legal; no se crea relación abogado-cliente por el uso de este sitio. Los documentos se preparan únicamente bajo la dirección del cliente. Si necesita asesoría legal, consulte a un abogado con licencia.'
   }
 };
 

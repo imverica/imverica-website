@@ -1,28 +1,84 @@
 ---
 /**
- * v2 homepage opening, as approved in the motion prototype: the hero with
- * the Ask Imverica finder (HomeSearch, the Claude-backed bot, unchanged),
- * page 1 of three real forms (I-485, SC-100, FL-100) that rise and fan out
- * on scroll, and a statement that lights up word by word. Everything below
- * it on the homepage is the current production sections.
+ * v2 homepage opening: the hero with the Ask Imverica finder (HomeSearch,
+ * the Claude-backed bot, unchanged), page 1 of three real forms (I-485,
+ * SC-100, FL-100) that rise and fan out on scroll, and a statement that
+ * lights up word by word. Everything below it on the homepage is the
+ * current production sections.
  *
- * index.astro renders this inside a <template> and swaps it in before first
+ * The headline alternates between the current homepage copy (A, the real
+ * <h1>) and the prototype line (B, decorative, aria-hidden). Form names stay
+ * in English everywhere; translations go in parentheses.
+ *
+ * Pages render this inside a <template> that V2Swap swaps in before first
  * paint only when <html class="v2"> (the per-browser preview flag), so
  * regular visitors and crawlers keep the current hero until cutover.
- * Motion is opt-in: html.hv2-motion is set by the swap script only when
- * IntersectionObserver exists and reduced motion is off.
  */
 import HomeSearch from '~/components/HomeSearch.astro';
+import type { Locale } from '~/data/i18n';
+
+interface Props {
+  lang?: Locale;
+  eyebrow: string;
+  heading: string;
+  sub: string;
+}
+const { lang = 'en', eyebrow, heading, sub } = Astro.props;
+
+const COPY: Record<Locale, { altHeading: string; altSub: string; capA: string; capB: string; statement: string; scroll: string }> = {
+  en: {
+    altHeading: 'Paperwork, done right.',
+    altSub: 'USCIS, EOIR and California court documents, prepared at your direction in English, Russian, Ukrainian and Spanish.',
+    capA: 'Official USCIS and California court forms.',
+    capB: 'Current editions, prepared at your direction.',
+    statement: 'We prepare USCIS, EOIR and California court documents accurately, on time, and at your direction. In English, Russian, Ukrainian and Spanish.',
+    scroll: 'Scroll'
+  },
+  ru: {
+    altHeading: 'Документы — по всем правилам.',
+    altSub: 'Документы USCIS, EOIR и судов Калифорнии, подготовленные по вашему поручению на английском, русском, украинском и испанском.',
+    capA: 'Официальные формы USCIS и судов Калифорнии.',
+    capB: 'Актуальные редакции, подготовленные по вашему поручению.',
+    statement: 'Мы готовим документы USCIS, EOIR и судов Калифорнии точно, в срок и по вашему поручению. На английском, русском, украинском и испанском.',
+    scroll: 'Листайте'
+  },
+  uk: {
+    altHeading: 'Документи — за всіма правилами.',
+    altSub: 'Документи USCIS, EOIR і судів Каліфорнії, підготовлені за вашим дорученням англійською, російською, українською та іспанською.',
+    capA: 'Офіційні форми USCIS і судів Каліфорнії.',
+    capB: 'Актуальні редакції, підготовлені за вашим дорученням.',
+    statement: 'Ми готуємо документи USCIS, EOIR і судів Каліфорнії точно, вчасно та за вашим дорученням. Англійською, російською, українською та іспанською.',
+    scroll: 'Гортайте'
+  },
+  es: {
+    altHeading: 'Su papeleo, bien hecho.',
+    altSub: 'Documentos de USCIS, EOIR y de los tribunales de California, preparados bajo su dirección en inglés, ruso, ucraniano y español.',
+    capA: 'Formularios oficiales de USCIS y de los tribunales de California.',
+    capB: 'Ediciones vigentes, preparadas bajo su dirección.',
+    statement: 'Preparamos documentos de USCIS, EOIR y de los tribunales de California con precisión, a tiempo y bajo su dirección. En inglés, ruso, ucraniano y español.',
+    scroll: 'Desplácese'
+  }
+};
+const t = COPY[lang] || COPY.en;
+const words = heading.split(/\s+/);
 ---
 <section class="hv2-hero" aria-labelledby="hv2-title">
   <div class="hv2-pin">
     <div class="hv2-dim" aria-hidden="true"></div>
     <div class="hv2-copy">
-      <p class="hv2-eyebrow">California Registered LDA &amp; Immigration Consultant</p>
-      <h1 class="hv2-h1" id="hv2-title"><span class="w" style="--i: 0">Paperwork,</span><br /><span class="w" style="--i: 1">done</span> <span class="w" style="--i: 2">right.</span></h1>
-      <p class="hv2-sub">USCIS, EOIR and California court documents, prepared at your direction in English, Russian, Ukrainian and Spanish.</p>
+      <p class="hv2-eyebrow">{eyebrow}</p>
+      <div class="hv2-swap" data-hv2-swap>
+        <div class="hv2-variant is-on">
+          <h1 class="hv2-h1" id="hv2-title">{words.map((word, i) => <><span class="w" style={`--i: ${i}`}>{word}</span>{i < words.length - 1 ? ' ' : ''}</>)}</h1>
+          <p class="hv2-sub">{sub}</p>
+        </div>
+        <div class="hv2-variant" aria-hidden="true">
+          <p class="hv2-h1">{t.altHeading}</p>
+          <p class="hv2-sub">{t.altSub}</p>
+        </div>
+      </div>
       <div class="hv2-finder">
-        <HomeSearch />
+        <HomeSearch lang={lang} />
       </div>
     </div>
 
@@ -36,9 +92,9 @@ import HomeSearch from '~/components/HomeSearch.astro';
       </div>
     </div>
 
-    <p class="hv2-cap" aria-hidden="true">Official USCIS and California court forms.<br /><span>Current editions, prepared at your direction.</span></p>
+    <p class="hv2-cap" aria-hidden="true">{t.capA}<br /><span>{t.capB}</span></p>
     <div class="hv2-hint" aria-hidden="true">
-      Scroll
+      {t.scroll}
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
     </div>
   </div>
@@ -47,7 +103,7 @@ import HomeSearch from '~/components/HomeSearch.astro';
 <section class="hv2-statement">
   <div class="hv2-statement-inner">
     <p class="hv2-statement-eyebrow">Imverica Legal Solutions</p>
-    <p class="hv2-reveal" data-hv2-reveal>We prepare USCIS, EOIR and California court documents accurately, on time, and at your direction. In English, Russian, Ukrainian and Spanish.</p>
+    <p class="hv2-reveal" data-hv2-reveal>{t.statement}</p>
   </div>
 </section>
 
@@ -78,14 +134,21 @@ import HomeSearch from '~/components/HomeSearch.astro';
     max-width: 1000px;
     margin: 16px auto 0;
     font-family: inherit;
-    font-size: clamp(52px, 7.4vw, 108px);
-    line-height: 0.98;
+    font-size: clamp(44px, 6vw, 88px);
+    line-height: 1;
     font-weight: 700;
     letter-spacing: -0.028em;
     color: #fff;
     text-wrap: balance;
   }
   .hv2-hero .hv2-h1 .w { display: inline-block; }
+  .hv2-hero .hv2-swap { display: grid; }
+  .hv2-hero .hv2-variant {
+    grid-area: 1 / 1;
+    align-self: center;
+    transition: opacity 0.9s ease, transform 1s var(--hv2-ease), filter 0.9s ease;
+  }
+  .hv2-hero .hv2-variant:not(.is-on) { opacity: 0; transform: translateY(14px); filter: blur(8px); pointer-events: none; }
   .hv2-hero .hv2-sub {
     max-width: 680px;
     margin: 22px auto 0;
@@ -183,7 +246,7 @@ import HomeSearch from '~/components/HomeSearch.astro';
     .hv2-statement { padding: 96px 0 104px; }
     .hv2-hero .hv2-stack-move { height: 330px; margin-top: 32px; }
     .hv2-hero .hv2-stack { transform: scale(0.6); transform-origin: 50% 0; }
-    html.v2 .hv2-hero .hv2-h1 { font-size: clamp(48px, 13vw, 64px); }
+    html.v2 .hv2-hero .hv2-h1 { font-size: clamp(36px, 10.5vw, 56px); }
     .hv2-hero .hv2-sub { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; }
   }
 
