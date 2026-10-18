@@ -48,6 +48,7 @@ const alternates = slug && availableLocales.length > 1
       href: 'https://imverica.com' + localizedPath(alt, slug)
     }))
   : [];
+const BRAND_FONTS = 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap';
 ---
 <!doctype html>
 <html lang={localeMeta.htmlLang}>
@@ -104,9 +105,12 @@ const alternates = slug && availableLocales.length > 1
   <!-- Typography: editorial brand system — Newsreader (serif) for display
        headings, Archivo (sans) for body/UI, IBM Plex Mono for kickers and
        labels. display=swap keeps text visible while the webfonts load. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+  {/* Brand web fonts for the current design. The v2 design uses the system
+      font, so it skips them entirely: no render-blocking third-party
+      stylesheet and no font downloads. The current design keeps loading
+      them render-blocking (blocking="render"), as before. */}
+  <script is:inline set:html={`(function(){if(document.documentElement.classList.contains('v2'))return;var h=document.head;function add(rel,href,attrs){var l=document.createElement('link');l.rel=rel;l.href=href;for(var k in attrs)l.setAttribute(k,attrs[k]);h.appendChild(l)}add('preconnect','https://fonts.googleapis.com',{});add('preconnect','https://fonts.gstatic.com',{crossorigin:''});add('stylesheet',${JSON.stringify(BRAND_FONTS)},{blocking:'render'})})()`} />
+  <noscript><link rel="stylesheet" href={BRAND_FONTS} /></noscript>
 
   {/* Canonical organization facts on EVERY page (single source:
       src/data/orgSchema.ts) + whatever page-specific schemas were passed. */}
