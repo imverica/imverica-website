@@ -181,13 +181,13 @@ async function sendOtpEmail(email, code) {
     `<p style="margin:0 0 12px;">Use this one-time code to sign in to your Imverica client portal:</p>` +
     `<div style="font-size:34px;font-weight:700;letter-spacing:8px;color:#0f1c2f;background:#f1f5f9;padding:18px 24px;border-radius:10px;text-align:center;margin:14px 0;font-family:ui-monospace,SFMono-Regular,monospace;">${code}</div>` +
     `<p style="margin:14px 0;font-size:13px;color:#4a5a6e;">The code expires in 10 minutes and can be used once. If you did not request this, you can ignore this email.</p>` +
-    `<p style="margin:14px 0;font-size:12px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:12px;">Imverica Legal Solutions — California Licensed LDA &amp; Immigration Consultant. Not a law firm; document preparation only.</p>` +
+    `<p style="margin:14px 0;font-size:12px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:12px;">Imverica Legal Solutions — California Registered LDA &amp; Immigration Consultant. Not a law firm; document preparation only.</p>` +
     `</div>`;
   const text =
     `Use this one-time code to sign in to your Imverica client portal:\n\n` +
     `   ${code}\n\n` +
     `It expires in 10 minutes and can be used once. If you did not request this, you can ignore this email.\n\n` +
-    `Imverica Legal Solutions — California Licensed LDA & Immigration Consultant. Not a law firm; document preparation only.`;
+    `Imverica Legal Solutions — California Registered LDA & Immigration Consultant. Not a law firm; document preparation only.`;
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',

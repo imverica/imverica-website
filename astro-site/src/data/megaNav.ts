@@ -155,10 +155,7 @@ export const MEGA_NAV: MegaSection[] = [
         heading: 'Petitions We Prepare',
         links: [
           { label: 'Misdemeanor & Felony Dismissal', slug: '/california-expungement' },
-          { label: 'Felony → Misdemeanor Reduction', slug: '/criminal' },
-          { label: 'Early Probation Termination', slug: '/criminal' },
-          { label: 'Arrest & Juvenile Record Sealing', slug: '/criminal' },
-          { label: 'Prop 64 Cannabis Relief', slug: '/criminal' }
+          { label: 'Early Probation Termination', slug: '/criminal' }
         ]
       },
       {
@@ -365,10 +362,7 @@ export const MEGA_I18N: Record<string, MegaTr> = {
   'Expungement': f('снятие судимости', 'зняття судимості', 'eliminación de antecedentes penales'),
   'Start a Record-Clearing Packet': x('Начать пакет по очистке судимости', 'Почати пакет з очищення судимості', 'Iniciar un paquete de limpieza de antecedentes'),
   'Misdemeanor & Felony Dismissal': f('прекращение дела о проступке или тяжком преступлении', 'закриття справи про проступок або тяжкий злочин', 'desestimación de delito menor o grave'),
-  'Felony → Misdemeanor Reduction': f('переквалификация тяжкого преступления в проступок', 'перекваліфікація тяжкого злочину на проступок', 'reducción de delito grave a menor'),
   'Early Probation Termination': f('досрочное прекращение пробации', 'дострокове припинення пробації', 'terminación anticipada de la libertad condicional'),
-  'Arrest & Juvenile Record Sealing': f('засекречивание записей об аресте и несовершеннолетних', 'засекречування записів про арешт і неповнолітніх', 'sellado de registros de arresto y de menores'),
-  'Prop 64 Cannabis Relief': f('смягчение по делам о каннабисе по Prop 64', 'пом’якшення у справах про канабіс за Prop 64', 'alivio por cannabis según la Prop 64'),
 
   // Business
   'All Business Filings': x('Все документы для бизнеса', 'Усі документи для бізнесу', 'Todos los trámites de negocios'),

@@ -1,8 +1,8 @@
 ---
 /**
  * v2 preview text pass (does nothing without html.v2):
- *  - keeps form numbers (I-485, EOIR-42B, SC-100 …) and the phone number on
- *    one line: each match is wrapped in <span class="v2-fno"> (white-space:
+ *  - keeps form numbers (I-485, EOIR-42B, SC-100 …), the phone number and
+ *    statute ranges (§§6400-6415) on one line: each match is wrapped in <span class="v2-fno"> (white-space:
  *    nowrap in site-v2.css);
  *  - swaps colour emoji (📞, 💬, 🛂 …) for the matching monochrome line icon
  *    from styles/v2-icons.css: <span class="v2-ico" data-ico="phone">. Emoji
@@ -15,7 +15,7 @@
 (function () {
   var root = document.documentElement;
   if (!root.classList.contains('v2') || !window.MutationObserver) return;
-  var FNO = /\b[A-Z]{1,5}-\d{1,4}[A-Z]{0,2}\b|\+1 \(\d{3}\) \d{3}-\d{4}/g;
+  var FNO = /\b[A-Z]{1,5}-\d{1,4}[A-Z]{0,2}\b|\+1 \(\d{3}\) \d{3}-\d{4}|§§?\s?\d{3,5}[-–]\d{3,5}/g;
   var EMO;
   try {
     EMO = new RegExp('\\p{Regional_Indicator}{2}|(?:\\p{Emoji_Presentation}|\\p{Extended_Pictographic}\\uFE0F|[\\u2709\\u2696\\u23F1\\u260E])(?:\\u200D\\p{Extended_Pictographic}\\uFE0F?|[\\u{1F3FB}-\\u{1F3FF}]|\\uFE0F)*', 'gu');

@@ -4,9 +4,11 @@ const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
 
 const SYSTEM_PROMPT = `You are the AI assistant for Imverica Legal Solutions, a registered Legal Document Assistant (LDA) and Immigration Consultant document-preparation service in Sacramento, California. Respond in the user's language (English, Russian, Ukrainian, or Spanish).
 
-WHO WE ARE: Imverica Legal Solutions — California Licensed LDA · Immigration Consultant. Phone: +1 (916) 399-3992. Telegram: t.me/imverica. We prepare documents — we do NOT give legal advice.
+WHO WE ARE: Imverica Legal Solutions (Imverica LLC) — California Registered LDA · Immigration Consultant. LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC. Immigration Consultant bond No. 67347671, Western Surety Company, on file with the California Secretary of State. Phone: +1 (916) 399-3992. Email: info@imverica.com. Telegram: t.me/imverica. We prepare documents — we do NOT give legal advice.
 
 WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, any EOIR immigration court documents, family law forms, small claims, civil court, unlawful detainer, probate opening and closing packets, California record-cleanup / petition-for-dismissal packets, translations, notary.
+
+WHAT WE DO NOT PREPARE: felony-to-misdemeanor reduction (PC 17(b), Prop 47), arrest or juvenile record sealing (PC 851.91, W&I 781), Prop 64 cannabis relief, Certificates of Rehabilitation, pardons, ending PC 290 registration, firearm-rights restoration. For these say plainly that Imverica does not prepare them and that they usually need a criminal-defense attorney. For record clearing we prepare only expungement / dismissal (PC 1203.4, 1203.4a) and early termination of probation (PC 1203.3).
 
 CRITICAL — UPL COMPLIANCE (do not violate): Never give legal advice. Never tell the user which form they "need", "should", or "must" file, and never call a form the "right" one for them — choosing the form for a client is prohibited unauthorized practice of law. Use ONLY neutral informational framing: "documents commonly used for this include…" / "forms associated with this topic are…". Never say whether someone qualifies or is eligible, never predict outcomes, never explain legal strategy or what to do. The client always decides which form to file; Imverica only prepares it at their direction. If asked for advice, say: "We prepare documents at your direction — for legal advice you'll need an attorney." Every reply that names a form must also state, in the user's language, that this is general information, not legal advice, and that Imverica is not a law firm/attorney.
 
@@ -29,6 +31,45 @@ function disclaimerLang(s) {
   if (/[ñ¿]|formulario|asesor|usted|presentar|preparamos/i.test(t)) return 'es';
   return 'en';
 }
+// Second safety net: the model is told never to pick a form, judge
+// eligibility or predict an outcome, but if a reply still reads like advice
+// ("you need to file I-485", "вы имеете право", "el formulario correcto es")
+// it is replaced with the neutral informational answer, keeping only the
+// form codes it named. Advice to consult an attorney is not caught.
+const ADVICE_PATTERNS = [
+  /\byou(?:'ll| will| would)?\s+(?:need to|should|must|have to|ought to)\s+(?:file|submit|use|fill(?: out)?|complete|apply|send|request|choose|select|sign|go with)\b/i,
+  /\byou\s+(?:need|require)\s+(?:form\s|an?\s+[A-Z]{1,5}-\d|the\s+[A-Z]{1,5}-\d|[A-Z]{1,5}-\d)/i,
+  /\bthe\s+(?:right|correct|best|appropriate|proper)\s+form\s+(?:for\s+you\s+|for\s+your\s+\w+\s+)?is\b/i,
+  /(?<!\b(?:whether|if|whether or not)\s)\byou(?:'re|\s+are)\s+(?:likely\s+|probably\s+|definitely\s+)?(?:eligible|qualified)\b/i,
+  /(?<!\b(?:whether|if|whether or not)\s)\byou\s+(?:likely\s+|probably\s+|definitely\s+)?qualify\b/i,
+  /\byou\s+will\s+(?:win|be approved|get approved|get your green card)\b/i,
+  /\b(?:I|we)\s+(?:recommend|suggest|advise)\s+(?:filing|that you file|you file|using|submitting)\b/i,
+  /вам\s+(?:нужно|надо|следует|необходимо|стоит|придётся|придется)\s+(?:подать|заполнить|использовать|подготовить|выбрать|отправить|оформить)/i,
+  /(?:^|[\s,.])вы\s+(?:имеете\s+право|подходите|соответствуете\s+требованиям|квалифицируетесь)/i,
+  /(?:правильная|нужная|подходящая|верная)\s+форма\s+(?:для\s+вас\s+)?(?:—|-|–|это)/i,
+  /(?:рекомендую|советую)\s+(?:подать|использовать|заполнить)/i,
+  /вам\s+(?:потрібно|треба|слід|необхідно|варто|доведеться)\s+(?:подати|заповнити|використати|підготувати|обрати|надіслати|оформити)/i,
+  /(?:^|[\s,.])ви\s+(?:маєте\s+право|підходите|відповідаєте\s+вимогам)/i,
+  /(?:правильна|потрібна|відповідна|вірна)\s+форма\s+(?:для\s+вас\s+)?(?:—|-|–|це)/i,
+  /(?:рекомендую|раджу)\s+(?:подати|використати|заповнити)/i,
+  /\b(?:usted\s+)?(?:necesita|debe|tiene que|deber[ií]a)\s+(?:presentar|llenar|usar|completar|enviar|solicitar|elegir)\b/i,
+  /(?<!\b(?:si|whether)\s(?:usted\s)?)\b(?:usted\s+)?(?:califica|es elegible|cumple (?:con )?los requisitos)\b/i,
+  /\bel\s+formulario\s+(?:correcto|adecuado|indicado|apropiado)\s+(?:para usted\s+)?es\b/i,
+  /\b(?:le\s+)?(?:recomiendo|aconsejo|sugiero)\s+(?:presentar|usar|llenar)\b/i
+];
+const NEUTRAL_ANSWER = {
+  en: (forms) => (forms ? `Documents commonly used in situations like this include ${forms}. ` : '') + 'We can’t tell you which form to file or whether you qualify — you decide, and Imverica prepares documents at your direction. General information, not legal advice; for advice about your case, consult a licensed attorney.',
+  ru: (forms) => (forms ? `В подобных ситуациях часто используют формы ${forms}. ` : '') + 'Мы не можем сказать, какую форму подавать и подходите ли вы, — решаете вы, а Imverica готовит документы по вашему поручению. Общая информация, не юридическая консультация; за советом по вашему делу обратитесь к лицензированному адвокату.',
+  uk: (forms) => (forms ? `У подібних ситуаціях часто використовують форми ${forms}. ` : '') + 'Ми не можемо сказати, яку форму подавати і чи ви підходите, — вирішуєте ви, а Imverica готує документи за вашим дорученням. Загальна інформація, не юридична консультація; за порадою щодо вашої справи зверніться до ліцензованого адвоката.',
+  es: (forms) => (forms ? `Los documentos que suelen usarse en situaciones así incluyen ${forms}. ` : '') + 'No podemos decirle qué formulario presentar ni si califica: usted decide, e Imverica prepara los documentos bajo su dirección. Información general, no asesoría legal; para asesoría sobre su caso, consulte a un abogado con licencia.'
+};
+function uplSafe(reply) {
+  const t = String(reply || '').trim();
+  if (!t || !ADVICE_PATTERNS.some((re) => re.test(t))) return { text: t, rewritten: false };
+  const codes = [...new Set(t.match(/\b[A-Z]{1,5}-\d{1,4}[A-Z]{0,2}\b/g) || [])].slice(0, 4);
+  return { text: NEUTRAL_ANSWER[disclaimerLang(t)](codes.join(', ')), rewritten: true };
+}
+
 function ensureDisclaimer(reply) {
   const t = String(reply || '').trim();
   if (!t) return t;
@@ -554,7 +595,9 @@ exports.handler = async function (event) {
         last = { reply: '', upstreamStatus: 200, ...(showDebug ? { stopReason: data.stop_reason || '', model: model.id } : {}) };
         continue;
       }
-      return json({ reply: ensureDisclaimer(text), ...(showDebug ? { model: model.id } : {}) });
+      const safe = uplSafe(text);
+      if (safe.rewritten) console.log('chat:upl-rewrite', model.id);
+      return json({ reply: ensureDisclaimer(safe.text), ...(showDebug ? { model: model.id, uplRewritten: safe.rewritten } : {}) });
     } catch (err) {
       // AbortError when the time budget runs out; ENETUNREACH / DNS issues if
       // Anthropic is unreachable. Either way — soft-fail to 200 so the chat

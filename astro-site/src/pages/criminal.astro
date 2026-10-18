@@ -6,14 +6,14 @@ import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'California Record Clearing — Expungement & Dismissal Forms | Imverica';
-const description = 'California Registered LDA prepares record-clearing petitions you file yourself: expungement / dismissal (PC 1203.4), felony reduction (PC 17(b)), early probation termination (PC 1203.3), arrest sealing (PC 851.91), juvenile sealing, and Prop 64 cannabis relief. Flat fees. Document preparation only — not a law firm.';
+const description = 'California Registered LDA prepares record-clearing petitions you file yourself: expungement / dismissal (PC 1203.4, 1203.4a) and early probation termination (PC 1203.3). Flat fees. Document preparation only — not a law firm.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California Criminal Record Clearing Document Preparation',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
-  description: "Self-represented California record-clearing petition preparation at the client's direction — expungement/dismissal, reduction, probation termination, arrest and juvenile sealing, and Prop 64 relief. No legal advice; not a law firm."
+  description: "Self-represented California record-clearing petition preparation at the client's direction — expungement/dismissal and early probation termination. No legal advice; not a law firm."
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/criminal"
@@ -35,11 +35,7 @@ const schema = {
       { icon: '⚖️', title: 'Felony expungement', desc: 'PC § 1203.4 dismissal for eligible felony probation cases (CR-180 / CR-181).', price: 'from $499', href: '/california-expungement', color: 'var(--terracotta-deep)' },
       { icon: '🚗', title: 'DUI / wet-reckless expungement', desc: 'PC § 1203.4 dismissal for a DUI or wet-reckless conviction.', price: 'from $449', href: '/california-expungement', color: 'var(--sage)' },
       { icon: '📄', title: 'Infraction dismissal', desc: 'Petition to dismiss an eligible infraction.', price: 'from $349', href: '/#get-started?service=record-clearing', color: 'var(--gold)' },
-      { icon: '↩️', title: 'Felony → misdemeanor reduction', desc: 'Petition to reduce an eligible “wobbler” felony to a misdemeanor under PC § 17(b) (CR-180).', price: 'from $499', href: '/#get-started?service=record-clearing', color: 'var(--navy)' },
       { icon: '⏱️', title: 'Early termination of probation', desc: 'Petition to end probation early under PC § 1203.3, often the first step before a dismissal.', price: 'from $449', href: '/#get-started?service=record-clearing', color: 'var(--terracotta-deep)' },
-      { icon: '🔒', title: 'Arrest record sealing', desc: 'Petition to seal an arrest that did not lead to a conviction under PC § 851.91 (CR-409 / CR-410).', price: 'from $499', href: '/#get-started?service=record-clearing', color: 'var(--sage)' },
-      { icon: '🧒', title: 'Juvenile record sealing', desc: 'Petition to seal juvenile records under Welf. & Inst. Code § 781 (JV-595).', price: 'from $499', href: '/#get-started?service=record-clearing', color: 'var(--gold)' },
-      { icon: '🌿', title: 'Prop 64 cannabis relief', desc: 'Redesignate or dismiss an eligible cannabis conviction under PC § 11361.8.', price: 'from $399', href: '/#get-started?service=record-clearing', color: 'var(--navy)' }
     ]}
   />
 
@@ -49,7 +45,7 @@ const schema = {
     { href: '/lda', label: 'What is a California Legal Document Assistant?' }
   ]}>
     <p class="lead">
-      Many California convictions and arrests can be cleaned up by petition —
+      Many California convictions can be cleared by petition —
       and you are allowed to file these petitions yourself, without a lawyer.
       We prepare the petition packet from your case facts and instructions so
       it is complete and court-ready. You choose the relief you want; we do not
@@ -75,6 +71,7 @@ const schema = {
       attorney should:
     </p>
     <ul>
+      <li><strong>Felony-to-misdemeanor reduction</strong> (PC 17(b), Prop 47), <strong>arrest and juvenile record sealing</strong> (PC 851.91, W&amp;I 781) and <strong>Prop 64 cannabis relief</strong>.</li>
       <li><strong>Certificate of Rehabilitation</strong> and <strong>Governor's Pardon</strong> — contested, investigated proceedings.</li>
       <li><strong>Ending sex-offender (PC 290) registration</strong> — petition the DA can oppose at a hearing.</li>
       <li><strong>Restoring firearm rights</strong> — turns on overlapping state and federal law.</li>
@@ -98,9 +95,8 @@ const schema = {
 
     <cite>
       <strong>Official sources:</strong> California Courts Self-Help Guide,
-      “Clean your record”; Penal Code §§ 1203.4, 1203.3, 17(b), 851.91, 11361.8;
-      Welfare &amp; Institutions Code § 781. Document preparation only — not
-      legal advice, not a law firm.
+      “Clean your record”; Penal Code §§ 1203.4, 1203.4a, 1203.3. Document
+      preparation only — not legal advice, not a law firm.
     </cite>
   </LandingBody>
 

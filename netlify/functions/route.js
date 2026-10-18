@@ -133,8 +133,8 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['CR-180', 'CR-181', 'POS-030', 'FW-001'],
     confidence: 0.92,
-    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning|seal)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|early\s+termination\s+of\s+probation|terminat\w*\s+(my\s+)?probation|end\s+(my\s+)?probation\s+early|1203\.[34]|reduce\s+(my\s+)?felony|felony\s+to\s+(a\s+)?misdemeanor|17\s*\(?\s*b\s*\)?|wobbler|seal\s+(my\s+|an?\s+)?(arrest|juvenile|record)|arrest\s+(record\s+)?seal|juvenile\s+(record\s+)?seal|851\.91|\bwic\s*781\b|prop(osition)?\s*64|11361\.8|redesignat\w*|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|досрочн\w*\s+(прекращ|окончан)|прекрат\w*\s+испытат|опечат\w*\s+арест|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes|terminaci[oó]n\s+anticipada|sellar\s+(mi\s+)?(arresto|registro))/i],
-    reason: 'California record-clearing language (expungement/dismissal, early termination of probation, felony reduction, arrest/juvenile sealing, Prop 64) maps to the CR-180 record-cleanup intake.'
+    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|early\s+termination\s+of\s+probation|terminat\w*\s+(my\s+)?probation|end\s+(my\s+)?probation\s+early|1203\.[34]|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|досрочн\w*\s+(прекращ|окончан)|прекрат\w*\s+испытат|опечат\w*\s+арест|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes|terminaci[oó]n\s+anticipada|sellar\s+(mi\s+)?(arresto|registro))/i],
+    reason: 'California record-clearing language (expungement/dismissal, early termination of probation) maps to the CR-180 record-cleanup intake.'
   },
 
   // ===== EOIR (immigration court) — most specific first =====
@@ -1093,6 +1093,35 @@ const INTENT_OPTIONS = {
   ]
 };
 
+// Record relief we no longer prepare: felony-to-misdemeanor reduction
+// (PC 17(b), Prop 47), arrest and juvenile record sealing (PC 851.91,
+// W&I 781) and Prop 64 cannabis relief. These usually need a
+// criminal-defense attorney, so the finder says so instead of routing them
+// into the CR-180 intake. Expungement and early probation termination are
+// still prepared.
+const ATTORNEY_ONLY_RELIEF = /\b17\s*\(\s*b\s*\)|wobbler|reduc\w*\s+(?:my\s+|a\s+|the\s+)?felony|felony\s+(?:reduction|to\s+(?:a\s+)?misdemeanor)|\bseal\w*\s+(?:my\s+|an?\s+|the\s+)?(?:arrest|juvenile|record)|(?:arrest|juvenile)\s+(?:record\s+)?seal|851\.91|\b(?:wic|w&i|w\s*&\s*i)\s*781\b|\bprop(?:osition)?\s*(?:64|47)\b|11361\.8|1170\.18|redesignat|resentenc|reclassif|cannabis\s+conviction|marijuana\s+conviction|\bCR-?409\b|\bCR-?410\b|\bJV-?595\b|запечат|засекре|переквалифик|сниз[а-яёіїєґ]*\s+(?:фелон|тяжк)|перекваліфік|зниз[а-яёіїєґ]*\s+(?:фелон|тяжк)|sell(?:ar|ado|o)\s+(?:de\s+|el\s+|mis\s+)?(?:antecedentes|arresto|record|registro)|reducir\s+(?:un\s+|mi\s+)?delito/i;
+const ATTORNEY_ONLY_MESSAGE = {
+  en: 'We don’t prepare felony reductions, arrest or juvenile record sealing, or Prop 64 petitions — these usually need a criminal-defense attorney. At your direction we can prepare an expungement (dismissal) or an early probation termination petition. General information, not legal advice.',
+  ru: 'Мы не готовим документы для снижения фелонии до мисдиминора, засекречивания записей об аресте или о несовершеннолетних и по Prop 64 — для этого обычно нужен адвокат по уголовным делам. По вашему поручению мы можем подготовить ходатайство о снятии судимости (expungement) или о досрочном прекращении probation. Общая информация, не юридическая консультация.',
+  uk: 'Ми не готуємо документи для зниження фелонії до мисдиминору, засекречування записів про арешт або неповнолітніх і за Prop 64 — для цього зазвичай потрібен адвокат з кримінальних справ. За вашим дорученням ми можемо підготувати клопотання про зняття судимості (expungement) або про дострокове припинення probation. Загальна інформація, не юридична консультація.',
+  es: 'No preparamos reducciones de delito grave a menor, sellado de antecedentes de arresto o juveniles, ni peticiones de la Prop 64: normalmente requieren un abogado penalista. Según sus instrucciones, podemos preparar una eliminación de antecedentes (expungement) o una terminación anticipada de la libertad condicional. Información general, no asesoría legal.'
+};
+function attorneyOnlyResult(originalQuery, lang) {
+  return {
+    ok: true,
+    query: originalQuery,
+    language: lang,
+    attorneyOnly: true,
+    message: ATTORNEY_ONLY_MESSAGE[lang] || ATTORNEY_ONLY_MESSAGE.en,
+    messages: ATTORNEY_ONLY_MESSAGE,
+    route: {
+      service: '', catalog: '', jurisdiction: '', formCode: '', formTitle: '',
+      officialEndpoint: '', flowEndpoint: '', flowStatus: 'attorney-only',
+      packageForms: [], confidence: 0, reason: 'Record relief Imverica does not prepare (felony reduction, record sealing, Prop 64) — refer to a criminal-defense attorney.'
+    }
+  };
+}
+
 function intentPrompt(originalQuery, lang) {
   return {
     ok: true,
@@ -1290,6 +1319,10 @@ function routeQuery(queryValue, options = {}) {
   const lang = detectLanguage(originalQuery);
   const forms = allForms();
 
+  if (options.intent === 'resentencing' || ATTORNEY_ONLY_RELIEF.test(originalQuery)) {
+    return attorneyOnlyResult(originalQuery, lang);
+  }
+
   const codeMatch = originalQuery.match(/\b(?:AR|I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC|CR|NC|EJ|WG|JV|APP|MC|ADM|MIL)-[A-Z0-9]+(?:\s+Supplement(?:\s+[A-Z])?)?(?:\([A-Z0-9]+\))?\b/i);
   if (codeMatch) {
     const row = findByCode(normalizeCode(codeMatch[0]));
@@ -1339,7 +1372,7 @@ function routeQuery(queryValue, options = {}) {
     return routeCriminalRelief(originalQuery, lang, 'probation-motion', options.county);
   }
 
-  const explicitRecordCleanup = /expung|record\s+(?:clean|clear)|clean\s+(?:my\s+)?record|petition\s+for\s+dismissal|dismiss\w*\s+(?:a\s+)?conviction|1203\.4|set\s+aside\s+(?:a\s+)?conviction|снят\w*\s+судимост|очист\w*\s+(?:запис|судимост)/i.test(originalQuery);
+  const explicitRecordCleanup = /expung|record\s+(?:clean|clear)|clean\s+(?:my\s+)?record|petition\s+for\s+dismissal|dismiss\w*\s+(?:a\s+)?conviction|1203\.4|set\s+aside\s+(?:a\s+)?conviction|снят\w*\s+судимост|очист\w*\s+(?:запис|судимост)|зня[а-яёіїєґ]*\s+судим|очищ[а-яёіїєґ]*\s+(?:запис|судим)|eliminar\w*\s+(?:mis\s+|los\s+)?antecedentes|borrar\s+(?:mis\s+|los\s+)?antecedentes|limpiar\s+(?:mi\s+)?(?:record|r[eé]cord|historial|antecedentes)|cancelaci[oó]n\s+de\s+antecedentes/i.test(originalQuery);
   if (explicitRecordCleanup) {
     return routeCriminalRelief(originalQuery, lang, 'record-cleanup', options.county);
   }

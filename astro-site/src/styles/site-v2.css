@@ -637,3 +637,26 @@ html.v2 body :is(a, button, summary, [role="button"], [tabindex]:not([tabindex="
 html.v2 body .ai-finder-form:has(:focus-visible) { box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.6); }
 html.v2 body .gn-link:focus-visible { outline-offset: -6px !important; border-radius: 10px; }
 html.v2 body .ai-finder-submit span { font-family: var(--font-display); }
+@media (min-width: 981px) { html.v2 body .cat-tiles-grid[data-count="5"] { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* footer legal text: one compact justified block in small type (was three
+   centred paragraphs at body size). The separate lines flow into one. */
+html.v2 body .site-footer.site-footer--lean { padding-top: 32px; padding-bottom: 20px; }
+html.v2 body .site-footer.site-footer--lean .site-footer-social { margin-bottom: 16px; }
+html.v2 body .site-footer.site-footer--lean .site-footer-bottom {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-top: 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: justify;
+  text-align-last: left;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+html.v2 body .site-footer.site-footer--lean .site-footer-bottom div { display: inline; text-wrap: wrap; }
+html.v2 body .site-footer.site-footer--lean .site-footer-bottom div + div { margin: 0; }
+html.v2 body .site-footer.site-footer--lean .site-footer-bottom div + div::before { content: " "; }
+/* keep the last footer lines clear of the floating chat button on phones */
+@media (max-width: 720px) { html.v2 body .site-footer.site-footer--lean { padding-bottom: 92px; } }

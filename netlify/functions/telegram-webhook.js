@@ -58,7 +58,7 @@ function ok(extra) {
 const T = {
   en: {
     welcome:
-      "👋 Welcome to *Imverica Legal Solutions* — California Licensed LDA & Immigration Consultant.\n\n" +
+      "👋 Welcome to *Imverica Legal Solutions* — California Registered LDA & Immigration Consultant.\n\n" +
       "We prepare documents at your direction. We do not give legal advice.\n\n" +
       "Pick a language to continue:",
     pickedLang: "Got it — English it is. ✅",
@@ -126,7 +126,7 @@ const T = {
   },
   ru: {
     welcome:
-      "👋 Добро пожаловать в *Imverica Legal Solutions* — California Licensed LDA и Immigration Consultant.\n\n" +
+      "👋 Добро пожаловать в *Imverica Legal Solutions* — California Registered LDA и Immigration Consultant.\n\n" +
       "Мы готовим документы по вашему поручению. Юридических консультаций не даём.\n\n" +
       "Выберите язык:",
     pickedLang: "Понял — продолжаем на русском. ✅",
@@ -194,7 +194,7 @@ const T = {
   },
   uk: {
     welcome:
-      "👋 Ласкаво просимо до *Imverica Legal Solutions* — California Licensed LDA та Immigration Consultant.\n\n" +
+      "👋 Ласкаво просимо до *Imverica Legal Solutions* — California Registered LDA та Immigration Consultant.\n\n" +
       "Готуємо документи за вашим дорученням. Юридичних консультацій не надаємо.\n\n" +
       "Оберіть мову:",
     pickedLang: "Зрозуміло — продовжуємо українською. ✅",
@@ -262,7 +262,7 @@ const T = {
   },
   es: {
     welcome:
-      "👋 Bienvenido a *Imverica Legal Solutions* — California Licensed LDA e Immigration Consultant.\n\n" +
+      "👋 Bienvenido a *Imverica Legal Solutions* — California Registered LDA e Immigration Consultant.\n\n" +
       "Preparamos documentos bajo su dirección. No damos asesoría legal.\n\n" +
       "Elija un idioma:",
     pickedLang: "Listo — seguimos en español. ✅",
