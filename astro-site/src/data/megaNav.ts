@@ -412,5 +412,9 @@ export const MEGA_I18N: Record<string, MegaTr> = {
 export function megaLabel(label: string, lang: Locale): { main: string; note: string } {
   const tr = lang === 'en' ? undefined : MEGA_I18N[label];
   if (!tr) return { main: label, note: '' };
-  return tr.kind === 'form' ? { main: label, note: `(${tr[lang]})` } : { main: tr[lang], note: '' };
+  if (tr.kind === 'form') return { main: label, note: `(${tr[lang]})` };
+  // "TPS (временный защищённый статус)": an English program name with its
+  // translation in parentheses gets the same quieter note as a form name.
+  const m = tr[lang].match(/^([A-Za-z][^()]*?)\s+(\([^()]+\))$/);
+  return m ? { main: m[1], note: m[2] } : { main: tr[lang], note: '' };
 }

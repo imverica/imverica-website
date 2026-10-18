@@ -553,3 +553,12 @@ html.v2 body .iw-header-title span[aria-hidden="true"] { color: #9fb9de !importa
 
 /* form numbers and the phone number never break at the hyphen (V2Nowrap) */
 html.v2 .v2-fno { white-space: nowrap; }
+
+/* responsive fixes: equal tile columns (long RU / ES words and nowrap form
+   numbers must not widen a column past the viewport at 1024px), and pill
+   buttons may wrap on phones instead of running off the screen */
+html.v2 body :is(.imm-cats-grid, .cat-tiles-grid) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 980px) { html.v2 body :is(.imm-cats-grid, .cat-tiles-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { html.v2 body :is(.imm-cats-grid, .cat-tiles-grid) { grid-template-columns: minmax(0, 1fr); } }
+html.v2 body :is(.imm-cat, .cat-tile) { min-width: 0; overflow-wrap: break-word; }
+@media (max-width: 520px) { html.v2 body .btn { max-width: 100%; white-space: normal; text-align: center; } }
