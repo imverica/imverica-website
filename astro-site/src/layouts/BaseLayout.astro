@@ -7,6 +7,8 @@ import SiteHeaderV2 from '~/components/SiteHeaderV2.astro';
 import V2Flag from '~/components/V2Flag.astro';
 import V2Text from '~/components/V2Text.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
+import SiteFooterV2 from '~/components/SiteFooterV2.astro';
+import V2Swap from '~/components/V2Swap.astro';
 import IntakeWizard from '~/components/IntakeWizard.astro';
 import QuickIntakeModal from '~/components/QuickIntakeModal.astro';
 import ChatWidget from '~/components/ChatWidget.astro';
@@ -132,6 +134,9 @@ const BRAND_FONTS = 'https://fonts.googleapis.com/css2?family=Newsreader:ital,op
     <slot />
   </main>
   <SiteFooter lang={lang} />
+  {/* v2: apple.com-style footer; inert template, swapped in before paint */}
+  <template data-v2-new="footer"><SiteFooterV2 lang={lang} slug={slug} availableLocales={availableLocales} /></template>
+  <V2Swap />
   <!-- IntakeWizard runs first and registers window.openIntakeModal for
        the long Q&A. QuickIntakeModal loads AFTER it and re-assigns the
        same global to the new one-screen form — this wins for every

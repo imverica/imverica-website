@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
 // not-a-law-firm notice (split on `||` in FOOTER.disclaimer).
 const disclaimerLines = f.disclaimer.replace('{year}', String(year)).split('||').map((s) => s.trim());
 ---
-<footer class="site-footer site-footer--lean">
+<footer class="site-footer site-footer--lean" data-v2-old="footer">
   <div class="site-footer-brand">
     <a class="site-brand-name" href={localizedPathSafe(lang, '/')}>Imverica Legal Solutions</a>
     <div class="site-footer-info">

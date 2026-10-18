@@ -10,6 +10,7 @@ import Testimonials from '~/components/Testimonials.astro';
 import AboutStrip from '~/components/AboutStrip.astro';
 import HeroV2 from '~/components/HeroV2.astro';
 import V2Swap from '~/components/V2Swap.astro';
+import HomeShowcaseV2 from '~/components/HomeShowcaseV2.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
@@ -49,7 +50,10 @@ const description =
 
   <StatsStrip />
 
-  <OurServices />
+  <div data-v2-old="services"><OurServices /></div>
+  {/* v2: apple.com-style tiles (USCIS | EOIR, California Courts) and slider */}
+  <template data-v2-new="services"><HomeShowcaseV2 lang="en" /></template>
+  <V2Swap />
 
   <LatestUpdates />
 

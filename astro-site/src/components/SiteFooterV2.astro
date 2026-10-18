@@ -1,0 +1,191 @@
+---
+/**
+ * v2 footer, laid out like apple.com: numbered legal notes in small type,
+ * a link directory (accordions on phones), "more ways to reach us" and a
+ * copyright bar with the language switch. Copy: data/footerV2.ts.
+ * Rendered inside <template data-v2-new="footer"> in BaseLayout, so the
+ * current footer stays what visitors without the flag (and crawlers) get.
+ */
+import { LOCALES, localizedPath, localizedPathSafe, type Locale } from '~/data/i18n';
+import { FOOTER_V2 } from '~/data/footerV2';
+
+interface Props {
+  lang: Locale;
+  slug?: string;
+  availableLocales?: Locale[];
+}
+const { lang, slug, availableLocales = ['en'] } = Astro.props;
+const f = FOOTER_V2[lang];
+const year = String(new Date().getFullYear());
+const href = (s: string) => (s.endsWith('.html') ? s : localizedPathSafe(lang, s));
+const LANGS: Array<[Locale, string]> = [['en', 'English'], ['ru', 'Русский'], ['uk', 'Українська'], ['es', 'Español']];
+// Same page in the other language when it exists, otherwise that language's homepage.
+const langHref = (l: Locale) => (slug && availableLocales.includes(l) ? localizedPath(l, slug) : LOCALES[l].prefix + '/');
+---
+<footer class="gf" lang={LOCALES[lang].htmlLang}>
+  <div class="gf-inner">
+    <ol class="gf-notes">
+      {f.notes.map((n) => <li><strong>{n.lead}</strong> {n.text}</li>)}
+    </ol>
+
+    <nav class="gf-dir" aria-label="Imverica">
+      {f.columns.map((c) => (
+        <details class="gf-col" open>
+          <summary><span>{c.title}</span></summary>
+          <ul>
+            {c.links.map(([s, label]) => <li><a href={href(s)}>{label}</a></li>)}
+          </ul>
+        </details>
+      ))}
+    </nav>
+
+    <p class="gf-reach">
+      {f.reach.lead} <a href="tel:+19163993992">{f.reach.call}</a>, <a href="mailto:info@imverica.com">{f.reach.email}</a> {f.reach.social}{' '}
+      <a href="https://t.me/imverica" target="_blank" rel="noopener noreferrer">Telegram</a>, <a href="https://www.instagram.com/imverica" target="_blank" rel="noopener noreferrer">Instagram</a>, <a href="https://www.facebook.com/imverica/" target="_blank" rel="noopener noreferrer">Facebook</a>.
+    </p>
+
+    <div class="gf-bar">
+      <p class="gf-copy">{f.copyright.replace('{year}', year)}</p>
+      <ul class="gf-legal">
+        {f.bottom.map(([s, label]) => <li><a href={href(s)}>{label}</a></li>)}
+      </ul>
+      <div class="gf-locale">
+        <span class="gf-region">{f.region}</span>
+        <ul class="gf-langs" aria-label={f.languages}>
+          {LANGS.map(([l, name]) => (
+            <li>{l === lang
+              ? <span aria-current="true">{name}</span>
+              : <a href={langHref(l)} lang={LOCALES[l].htmlLang} hreflang={LOCALES[l].htmlLang}>{name}</a>}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+<script is:inline>
+  // Phones: the directory starts collapsed, like apple.com; desktop shows it open.
+  (function () {
+    var cols = document.querySelectorAll('.gf-col');
+    if (!cols.length || !window.matchMedia) return;
+    var mq = window.matchMedia('(max-width: 833px)');
+    function sync() { cols.forEach(function (d) { d.open = !mq.matches; }); }
+    sync();
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+  })();
+</script>
+
+<style>
+  .gf {
+    background: #f5f5f7;
+    color: #6e6e73;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.34;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  .gf-inner {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 18px max(22px, env(safe-area-inset-right, 0px)) 22px max(22px, env(safe-area-inset-left, 0px));
+  }
+  .gf a { color: #424245; text-decoration: none; }
+  .gf a:hover { color: #1d1d1f; text-decoration: underline; }
+  .gf a:focus-visible, .gf summary:focus-visible { outline: 2px solid #3a7bd5; outline-offset: 2px; border-radius: 4px; }
+
+  .gf-notes {
+    margin: 0;
+    padding: 16px 0 16px 1.6em;
+    border-bottom: 1px solid #d2d2d7;
+    display: grid;
+    gap: 10px;
+  }
+  .gf-notes li {
+    padding-left: 0.2em;
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+  .gf-notes strong { color: #1d1d1f; font-weight: 600; }
+
+  .gf-dir {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0 24px;
+    padding: 20px 0 6px;
+  }
+  .gf-col summary {
+    list-style: none;
+    cursor: default;
+    color: #1d1d1f;
+    font-weight: 600;
+    margin-bottom: 8px;
+    pointer-events: none;
+  }
+  .gf-col summary::-webkit-details-marker { display: none; }
+  .gf-col ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 7px; }
+
+  .gf-reach { margin: 0; padding: 4px 0 12px; border-bottom: 1px solid #d2d2d7; }
+  .gf-reach a { color: #0b4f9c; text-decoration: underline; text-underline-offset: 2px; }
+
+  .gf-bar {
+    padding-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 30px;
+  }
+  .gf-copy { margin: 0; }
+  .gf-legal, .gf-langs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
+  .gf-legal li + li::before, .gf-langs li + li::before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 0.9em;
+    margin: 0 9px;
+    background: #d2d2d7;
+    vertical-align: -0.1em;
+  }
+  .gf-locale { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .gf-region { color: #1d1d1f; }
+  .gf-langs [aria-current] { color: #1d1d1f; font-weight: 600; }
+
+  @media (max-width: 833px) {
+    .gf-dir { grid-template-columns: minmax(0, 1fr); padding: 8px 0 12px; }
+    .gf-col { border-bottom: 1px solid #d2d2d7; }
+    .gf-col summary {
+      pointer-events: auto;
+      cursor: pointer;
+      margin: 0;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gf-col summary::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid #6e6e73;
+      border-bottom: 1.5px solid #6e6e73;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform 0.2s;
+    }
+    .gf-col[open] summary::after { transform: rotate(-135deg) translateY(-2px); }
+    .gf-col ul { margin: 0 0 14px 12px; gap: 10px; font-size: 13px; }
+    .gf-notes li { text-align: left; -webkit-hyphens: manual; hyphens: manual; }
+    .gf-legal { gap: 6px 16px; }
+    .gf-legal li + li::before { display: none; }
+    .gf-bar { flex-direction: column; gap: 8px; }
+    .gf-locale { margin-left: 0; }
+    /* keep the last lines clear of the floating chat button */
+    .gf-inner { padding-bottom: 92px; }
+  }
+  @media (min-width: 834px) {
+    :global(html.v2-pre) .gf-inner { padding-bottom: 64px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gf-col summary::after { transition: none; }
+  }
+</style>

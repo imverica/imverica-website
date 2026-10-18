@@ -1,0 +1,446 @@
+---
+/**
+ * v2 homepage showcase, after apple.com:
+ *  1. two big tiles — USCIS | EOIR and California Courts — each with its
+ *     sections underneath as smaller tiles;
+ *  2. a slider ("Endless entertainment" layout): wide slides that move
+ *     right to left with the neighbours peeking in, dots and a pause
+ *     button, then an endless row of form cards.
+ * Replaces the services block on the four homepages, inside
+ * <template data-v2-new="services"> (see V2Swap). Behaviour:
+ * scripts/showcase-v2.ts. Form names stay in English; other languages get
+ * the translation in parentheses.
+ */
+import { localizedPathSafe, type Locale } from '~/data/i18n';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const L = (en: string, ru: string, uk: string, es: string) => ({ en, ru, uk, es }[lang]);
+const path = (slug: string) => localizedPathSafe(lang, slug);
+const start = (q: string) => `#get-started${q ? '?' + q : ''}`;
+// English form name; elsewhere "English (translation)".
+const formName = (en: string, ru: string, uk: string, es: string) => (lang === 'en' ? en : `${en} (${L(en, ru, uk, es)})`);
+
+const T = {
+  more: L('Learn more', 'Подробнее', 'Детальніше', 'Más información'),
+  start: L('Start', 'Начать', 'Почати', 'Empezar'),
+  all: L('See all', 'Все разделы', 'Усі розділи', 'Ver todo')
+};
+
+const groups = [
+  {
+    id: 'hs-uscis',
+    dark: true,
+    title: 'USCIS | EOIR',
+    sub: L('Immigration forms, prepared at your direction.', 'Иммиграционные формы — по вашему поручению.', 'Імміграційні форми — за вашим дорученням.', 'Formularios de inmigración, preparados bajo su dirección.'),
+    note: L('Green card, work permit, citizenship, asylum, immigration court.', 'Грин-карта, разрешение на работу, гражданство, убежище, иммиграционный суд.', 'Грін-карта, дозвіл на роботу, громадянство, притулок, імміграційний суд.', 'Green card, permiso de trabajo, ciudadanía, asilo, corte de inmigración.'),
+    more: { href: path('/immigration'), label: T.more },
+    startQ: '',
+    images: ['/img/forms/i-485-page-1'],
+    sheets: ['N-400', 'I-765'],
+    tiles: [
+      { code: 'I-485', title: L('Green Card', 'Грин-карта', 'Грін-карта', 'Green Card'), sub: formName('Adjustment of Status', 'корректировка статуса', 'коригування статусу', 'ajuste de estatus'), href: path('/i-485-help'), q: 'form=I-485' },
+      { code: 'I-765', title: L('Work Permit | EAD', 'Разрешение на работу | EAD', 'Дозвіл на роботу | EAD', 'Permiso de trabajo | EAD'), sub: formName('Employment Authorization', 'разрешение на работу', 'дозвіл на роботу', 'autorización de empleo'), href: path('/i-765-work-permit-help'), q: 'form=I-765' },
+      { code: 'N-400', title: L('Citizenship', 'Гражданство', 'Громадянство', 'Ciudadanía'), sub: formName('Application for Naturalization', 'заявление о натурализации', 'заява про натуралізацію', 'solicitud de naturalización'), href: path('/n-400-citizenship-help'), q: 'form=N-400' },
+      { code: 'I-130', title: L('Family Petition', 'Семейная петиция', 'Сімейна петиція', 'Petición familiar'), sub: formName('Petition for Alien Relative', 'петиция для родственника', 'петиція для родича', 'petición para familiar'), href: path('/i-130-family-petition'), q: 'form=I-130' },
+      { code: 'I-589', title: L('Asylum', 'Убежище', 'Притулок', 'Asilo'), sub: formName('Application for Asylum', 'заявление об убежище', 'заява про притулок', 'solicitud de asilo'), href: path('/i-589-asylum-help'), q: 'form=I-589' },
+      { code: 'EOIR', title: L('Immigration Court', 'Иммиграционный суд', 'Імміграційний суд', 'Corte de inmigración'), sub: 'EOIR-28 | 42A | 42B', href: path('/eoir-immigration-court'), q: 'topic=EOIR' }
+    ]
+  },
+  {
+    id: 'hs-courts',
+    dark: false,
+    title: L('California Courts', 'Суды Калифорнии', 'Суди Каліфорнії', 'Tribunales de California'),
+    sub: L('Court forms you file yourself, prepared by us.', 'Судебные формы, которые вы подаёте сами, — готовим мы.', 'Судові форми, які ви подаєте самі, — готуємо ми.', 'Formularios judiciales que usted presenta; nosotros los preparamos.'),
+    note: L('Family law, restraining orders, small claims, eviction, probate, record clearing.', 'Семейное право, защитные ордера, малые иски, выселение, наследство, снятие судимости.', 'Сімейне право, захисні ордери, малі позови, виселення, спадщина, зняття судимості.', 'Derecho familiar, órdenes de restricción, reclamos menores, desalojo, sucesión, antecedentes penales.'),
+    more: { href: '#hs-courts-tiles', label: T.all },
+    startQ: '',
+    images: ['/img/forms/fl-100-page-1', '/img/forms/sc-100-page-1'],
+    sheets: [],
+    tiles: [
+      { code: 'FL-100', title: L('Divorce', 'Развод', 'Розлучення', 'Divorcio'), sub: formName('Dissolution of Marriage', 'расторжение брака', 'розірвання шлюбу', 'disolución del matrimonio'), href: path('/fl'), q: 'form=FL-100' },
+      { code: 'DV-100', title: L('Restraining Orders', 'Защитные ордера', 'Захисні ордери', 'Órdenes de restricción'), sub: formName('Domestic Violence Restraining Order', 'ордер о защите от домашнего насилия', 'захисний ордер від домашнього насильства', 'orden de restricción por violencia doméstica'), href: path('/california-restraining-orders'), q: 'form=DV-100' },
+      { code: 'SC-100', title: L('Small Claims', 'Малые иски', 'Малі позови', 'Reclamos menores'), sub: formName("Plaintiff's Claim", 'иск истца', 'позов позивача', 'reclamo del demandante'), href: path('/sc'), q: 'form=SC-100' },
+      { code: 'UD-100', title: L('Eviction', 'Выселение', 'Виселення', 'Desalojo'), sub: formName('Unlawful Detainer', 'иск о выселении', 'позов про виселення', 'demanda de desalojo'), href: path('/california-unlawful-detainer'), q: 'form=UD-100' },
+      { code: 'DE-111', title: L('Probate', 'Наследство', 'Спадщина', 'Sucesión'), sub: formName('Petition for Probate', 'заявление о наследовании', 'заява про спадкування', 'petición de sucesión'), href: path('/california-probate'), q: 'form=DE-111' },
+      { code: 'CR-180', title: L('Record Clearing', 'Снятие судимости', 'Зняття судимості', 'Limpiar antecedentes'), sub: formName('Petition for Dismissal', 'ходатайство о прекращении дела', 'клопотання про закриття справи', 'petición de desestimación'), href: lang === 'en' ? '/criminal' : path('/california-expungement'), q: 'form=CR-180' }
+    ]
+  }
+];
+
+const slides = [
+  { tone: 'navy', title: L('Green Card', 'Грин-карта', 'Грін-карта', 'Green Card'), images: ['/img/forms/i-485-page-1'], sheets: [], pill: `${T.start} | I-485`, q: 'form=I-485',
+    text: L('Green card | I-485: the full adjustment packet, assembled at your direction.', 'Грин-карта | I-485: полный пакет на корректировку статуса — по вашему поручению.', 'Грін-карта | I-485: повний пакет на коригування статусу — за вашим дорученням.', 'Green card | I-485: el paquete completo de ajuste, armado bajo su dirección.') },
+  { tone: 'slate', title: L('Divorce', 'Развод', 'Розлучення', 'Divorcio'), images: ['/img/forms/fl-100-page-1'], sheets: [], pill: `${T.start} | FL-100`, q: 'form=FL-100',
+    text: L('Divorce in California | FL-100: your papers, ready for you to file.', 'Развод в Калифорнии | FL-100: документы готовы, подаёте вы сами.', 'Розлучення в Каліфорнії | FL-100: документи готові, подаєте ви самі.', 'Divorcio en California | FL-100: sus documentos, listos para que usted los presente.') },
+  { tone: 'ink', title: L('Citizenship', 'Гражданство', 'Громадянство', 'Ciudadanía'), images: [], sheets: ['N-400'], pill: `${T.start} | N-400`, q: 'form=N-400',
+    text: L('Citizenship | N-400: the naturalization application, checked line by line.', 'Гражданство | N-400: заявление на натурализацию, выверенное построчно.', 'Громадянство | N-400: заява на натуралізацію, вивірена порядково.', 'Ciudadanía | N-400: la solicitud de naturalización, revisada línea por línea.') },
+  { tone: 'langs', title: L('Four languages', 'Четыре языка', 'Чотири мови', 'Cuatro idiomas'), images: [], sheets: [], pill: T.start, q: '',
+    text: L('English · Русский · Українська · Español: forms in English, help in your language.', 'English · Русский · Українська · Español: формы на английском, помощь на вашем языке.', 'English · Русский · Українська · Español: форми англійською, допомога вашою мовою.', 'English · Русский · Українська · Español: formularios en inglés, ayuda en su idioma.') },
+  { tone: 'steel', title: L('Small Claims', 'Малые иски', 'Малі позови', 'Reclamos menores'), images: ['/img/forms/sc-100-page-1'], sheets: [], pill: `${T.start} | SC-100`, q: 'form=SC-100',
+    text: L('Small claims | SC-100: your claim and proof of service, ready for court.', 'Малые иски | SC-100: иск и подтверждение вручения — готовы для суда.', 'Малі позови | SC-100: позов і підтвердження вручення — готові для суду.', 'Reclamos menores | SC-100: su reclamo y la prueba de entrega, listos para el tribunal.') },
+  { tone: 'deep', title: L('Immigration Court', 'Иммиграционный суд', 'Імміграційний суд', 'Corte de inmigración'), images: [], sheets: ['EOIR-42B', 'EOIR-28'], pill: `${T.start} | EOIR`, q: 'topic=EOIR',
+    text: L('Immigration court | EOIR: motions, declarations and evidence, organized.', 'Иммиграционный суд | EOIR: ходатайства, декларации и доказательства — в порядке.', 'Імміграційний суд | EOIR: клопотання, декларації та докази — впорядковано.', 'Corte de inmigración | EOIR: mociones, declaraciones y pruebas, en orden.') }
+];
+
+// [code, English name, ru, uk, es]
+const CARDS: Array<[string, string, string, string, string]> = [
+  ['I-485', 'Adjustment of Status', 'корректировка статуса', 'коригування статусу', 'ajuste de estatus'],
+  ['I-765', 'Employment Authorization', 'разрешение на работу', 'дозвіл на роботу', 'autorización de empleo'],
+  ['N-400', 'Naturalization', 'натурализация', 'натуралізація', 'naturalización'],
+  ['I-130', 'Petition for Alien Relative', 'петиция для родственника', 'петиція для родича', 'petición para familiar'],
+  ['I-589', 'Asylum', 'убежище', 'притулок', 'asilo'],
+  ['I-131', 'Travel Document', 'проездной документ', 'проїзний документ', 'documento de viaje'],
+  ['I-90', 'Green Card Renewal', 'замена грин-карты', 'заміна грін-карти', 'renovación de green card'],
+  ['I-751', 'Remove Conditions', 'снятие условий', 'зняття умов', 'eliminar condiciones'],
+  ['I-864', 'Affidavit of Support', 'спонсорство', 'спонсорство', 'declaración de patrocinio'],
+  ['EOIR-42B', 'Cancellation of Removal', 'отмена депортации', 'скасування депортації', 'cancelación de deportación'],
+  ['FL-100', 'Dissolution of Marriage', 'расторжение брака', 'розірвання шлюбу', 'disolución del matrimonio'],
+  ['FL-300', 'Request for Order', 'запрос о судебном приказе', 'запит про судовий наказ', 'solicitud de orden'],
+  ['DV-100', 'Restraining Order', 'защитный ордер', 'захисний ордер', 'orden de restricción'],
+  ['SC-100', "Plaintiff's Claim", 'малый иск', 'малий позов', 'reclamo menor'],
+  ['UD-100', 'Unlawful Detainer', 'выселение', 'виселення', 'desalojo'],
+  ['DE-111', 'Petition for Probate', 'наследство', 'спадщина', 'sucesión'],
+  ['CR-180', 'Petition for Dismissal', 'снятие судимости', 'зняття судимості', 'limpiar antecedentes'],
+  ['LLC-1', 'Articles of Organization', 'регистрация LLC', 'реєстрація LLC', 'constitución de LLC']
+];
+const cardName = (c: (typeof CARDS)[number]) => (lang === 'en' ? c[1] : `${c[1]} (${L(c[1], c[2], c[3], c[4])})`);
+
+const H = {
+  slider: L('Every form. In your language.', 'Любая форма. На вашем языке.', 'Будь-яка форма. Вашою мовою.', 'Cualquier formulario. En su idioma.'),
+  prev: L('Previous slide', 'Предыдущий слайд', 'Попередній слайд', 'Diapositiva anterior'),
+  next: L('Next slide', 'Следующий слайд', 'Наступний слайд', 'Diapositiva siguiente'),
+  pause: L('Pause', 'Пауза', 'Пауза', 'Pausa'),
+  play: L('Play', 'Воспроизвести', 'Відтворити', 'Reproducir'),
+  slide: L('Slide', 'Слайд', 'Слайд', 'Diapositiva'),
+  of: L('of', 'из', 'з', 'de'),
+  forms: L('Forms we prepare', 'Формы, которые мы готовим', 'Форми, які ми готуємо', 'Formularios que preparamos')
+};
+---
+<section class="hs" id="services" aria-label={L('Services', 'Услуги', 'Послуги', 'Servicios')}>
+  <div class="hs-groups">
+    {groups.map((g) => (
+      <div class="hs-group" id={g.id}>
+        <article class:list={['hs-big', g.dark && 'hs-big--dark']}>
+          <div class="hs-copy">
+            <h2 class="hs-big-title">{g.title}</h2>
+            <p class="hs-big-sub">{g.sub}</p>
+            <p class="hs-big-note">{g.note}</p>
+            <div class="hs-ctas">
+              <a class="hs-btn hs-btn--fill" href={g.more.href}>{g.more.label}</a>
+              <a class="hs-btn hs-btn--line" href={start(g.startQ)}>{T.start}</a>
+            </div>
+          </div>
+          <div class="hs-art" aria-hidden="true">
+            {g.sheets.map((code, i) => <span class={`hs-sheet hs-sheet--back hs-sheet--${i}`}><b>{code}</b><i></i><i></i><i></i><i></i></span>)}
+            {g.images.map((src, i) => (
+              <img class={`hs-page hs-page--${i}`} src={`${src}.webp`} srcset={`${src}-480.webp 480w, ${src}.webp 760w`} sizes="(max-width: 734px) 46vw, 260px" alt="" width="330" height="427" loading="lazy" decoding="async" />
+            ))}
+          </div>
+        </article>
+        <ul class="hs-tiles" id={g.id === 'hs-courts' ? 'hs-courts-tiles' : undefined}>
+          {g.tiles.map((t) => (
+            <li class="hs-tile">
+              <span class="hs-mini" aria-hidden="true"><b>{t.code}</b><i></i><i></i><i></i></span>
+              <h3 class="hs-tile-title"><a href={t.href}>{t.title}</a></h3>
+              <p class="hs-tile-sub">{t.sub}</p>
+              <div class="hs-ctas hs-ctas--sm">
+                <a class="hs-btn hs-btn--fill" href={t.href} aria-label={`${T.more}: ${t.title}`}>{T.more}</a>
+                <a class="hs-btn hs-btn--line" href={start(t.q)} aria-label={`${T.start}: ${t.code}`}>{T.start}</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="hs-slider" data-hs-slider aria-roledescription="carousel" aria-label={H.slider}>
+    <h2 class="hs-slider-title">{H.slider}</h2>
+    <div class="hs-viewport">
+      <ul class="hs-track" data-hs-track>
+        {slides.map((s, i) => (
+          <li class={`hs-slide hs-slide--${s.tone}`} data-hs-slide role="group" aria-roledescription="slide" aria-label={`${H.slide} ${i + 1} ${H.of} ${slides.length}`}>
+            <div class="hs-slide-art" aria-hidden="true">
+              {s.tone === 'langs' && <span class="hs-langs"><b>EN</b><b>RU</b><b>UA</b><b>ES</b></span>}
+              {s.sheets.map((code, k) => <span class={`hs-sheet hs-sheet--slide hs-sheet--${k}`}><b>{code}</b><i></i><i></i><i></i><i></i></span>)}
+              {s.images.map((src) => <img class="hs-slide-page" src={`${src}.webp`} srcset={`${src}-480.webp 480w, ${src}.webp 760w`} sizes="(max-width: 734px) 52vw, 340px" alt="" width="330" height="427" loading="lazy" decoding="async" />)}
+            </div>
+            <p class="hs-slide-title">{s.title}</p>
+            <div class="hs-cap">
+              <a class="hs-pill" href={start(s.q)}>{s.pill}</a>
+              <p class="hs-cap-text">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="hs-controls">
+      <button type="button" class="hs-arrow" data-hs-prev aria-label={H.prev}><span aria-hidden="true">‹</span></button>
+      <div class="hs-dots" role="group" aria-label={H.slider}>
+        {slides.map((_, i) => <button type="button" class="hs-dot" data-hs-dot={i} aria-label={`${H.slide} ${i + 1} ${H.of} ${slides.length}`}></button>)}
+      </div>
+      <button type="button" class="hs-arrow" data-hs-next aria-label={H.next}><span aria-hidden="true">›</span></button>
+      <button type="button" class="hs-play" data-hs-play data-label-pause={H.pause} data-label-play={H.play} aria-label={H.pause}>
+        <svg class="hs-ico-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="8" y="2" width="3" height="10" rx="1" fill="currentColor"/></svg>
+        <svg class="hs-ico-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.5v9l7.5-4.5z" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <div class="hs-marquee" aria-label={H.forms}>
+      <ul class="hs-belt">
+        {[0, 1].map((copy) => CARDS.map((c) => (
+          <li class="hs-card" aria-hidden={copy === 1 ? 'true' : undefined}>
+            <span class="hs-card-code">{c[0]}</span>
+            <span class="hs-card-name">{cardName(c)}</span>
+            <a class="hs-card-btn" href={start('form=' + c[0])} tabindex={copy === 1 ? -1 : undefined}>{T.start}</a>
+          </li>
+        )))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hs {
+    --hs-ink: #1d1d1f;
+    --hs-muted: #6e6e73;
+    --hs-tile: #f5f5f7;
+    --hs-navy: #143254;
+    --hs-blue: #0b4f9c;
+    background: #fff;
+    padding: 12px 0 72px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--hs-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .hs h2, .hs h3, .hs p { margin: 0; }
+
+  /* ---- tiles ---------------------------------------------------------- */
+  .hs-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px));
+  }
+  .hs-group { display: grid; gap: 12px; align-content: start; min-width: 0; }
+  .hs-big {
+    position: relative;
+    overflow: hidden;
+    background: var(--hs-tile);
+    min-height: 580px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    text-align: center;
+  }
+  .hs-big--dark { background: radial-gradient(120% 90% at 50% 100%, #1c4170 0%, #0d1f38 55%, #0a1628 100%); color: #f5f5f7; }
+  .hs-copy { padding: 52px 24px 0; display: grid; gap: 8px; justify-items: center; position: relative; z-index: 2; }
+  .hs-big-title { font-size: clamp(34px, 3.6vw, 48px); line-height: 1.08; font-weight: 600; letter-spacing: -0.015em; }
+  .hs-big-sub { font-size: clamp(19px, 1.7vw, 24px); line-height: 1.2; letter-spacing: 0.005em; }
+  .hs-big-note { font-size: 15px; line-height: 1.4; color: var(--hs-muted); max-width: 30em; }
+  .hs-big-title, .hs-tile-title, .hs-slider-title { color: var(--hs-ink); }
+  .hs-big--dark .hs-big-title, .hs-big--dark .hs-big-sub { color: #f5f5f7; }
+  .hs-big--dark .hs-big-note { color: rgba(245, 245, 247, 0.72); }
+  .hs-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 10px; }
+  .hs-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 40px; padding: 0 20px; border-radius: 980px;
+    font-size: 15px; font-weight: 500; text-decoration: none; white-space: nowrap;
+    border: 1px solid var(--hs-navy);
+    transition: background 0.2s, color 0.2s;
+  }
+  .hs-btn--fill { background: var(--hs-navy); color: #fff; }
+  .hs-btn--fill:hover { background: #1c4170; color: #fff; }
+  .hs-btn--line { color: var(--hs-navy); background: transparent; }
+  .hs-btn--line:hover { background: var(--hs-navy); color: #fff; }
+  .hs-big--dark .hs-btn--fill { background: #fff; border-color: #fff; color: var(--hs-navy); }
+  .hs-big--dark .hs-btn--fill:hover { background: #e8eef6; color: var(--hs-navy); }
+  .hs-big--dark .hs-btn--line { border-color: rgba(255, 255, 255, 0.85); color: #fff; }
+  .hs-big--dark .hs-btn--line:hover { background: #fff; color: var(--hs-navy); }
+  .hs-btn:focus-visible, .hs-pill:focus-visible, .hs-card-btn:focus-visible, .hs-tile-title a:focus-visible,
+  .hs-dot:focus-visible, .hs-arrow:focus-visible, .hs-play:focus-visible { outline: 2px solid #3a7bd5; outline-offset: 3px; }
+
+  .hs-art { position: relative; min-height: 280px; }
+  .hs-page {
+    position: absolute; bottom: -40px; left: 50%;
+    width: min(260px, 46%); height: auto;
+    background: #fff; border-radius: 6px;
+    box-shadow: 0 30px 60px -20px rgba(8, 20, 40, 0.45), 0 2px 6px rgba(8, 20, 40, 0.12);
+    transform: translateX(-50%) rotate(-2deg);
+  }
+  .hs-page--1 { transform: translateX(-12%) rotate(5deg); bottom: -70px; }
+  .hs-group:nth-child(2) .hs-page--0 { transform: translateX(-88%) rotate(-5deg); }
+  .hs-sheet {
+    position: absolute; aspect-ratio: 8.5 / 11; background: #fff; border-radius: 6px;
+    box-shadow: 0 24px 50px -22px rgba(8, 20, 40, 0.5), 0 1px 4px rgba(8, 20, 40, 0.14);
+    display: grid; align-content: start; gap: 9px; padding: 18px 16px;
+    color: #143254;
+  }
+  .hs-sheet b { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+  .hs-sheet i { display: block; height: 6px; border-radius: 3px; background: #e3e7ee; }
+  .hs-sheet i:nth-of-type(2) { width: 82%; }
+  .hs-sheet i:nth-of-type(3) { width: 64%; }
+  .hs-sheet i:nth-of-type(4) { width: 74%; }
+  .hs-sheet--back { width: min(230px, 40%); bottom: -60px; left: 50%; opacity: 0.94; }
+  .hs-sheet--back.hs-sheet--0 { transform: translateX(-118%) rotate(-9deg); }
+  .hs-sheet--back.hs-sheet--1 { transform: translateX(18%) rotate(8deg); }
+
+  .hs-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .hs-tile {
+    position: relative; overflow: hidden; background: var(--hs-tile);
+    min-height: 300px; padding: 34px 18px 120px; text-align: center;
+    display: grid; align-content: start; justify-items: center; gap: 6px;
+  }
+  .hs-tile-title { font-size: clamp(21px, 1.9vw, 28px); line-height: 1.12; font-weight: 600; letter-spacing: -0.01em; }
+  .hs-tile-title a { color: inherit; text-decoration: none; }
+  .hs-tile-sub { font-size: 14px; line-height: 1.38; color: var(--hs-muted); max-width: 22em; }
+  .hs-ctas--sm { gap: 8px; margin-top: 8px; }
+  .hs-ctas--sm .hs-btn { min-height: 32px; padding: 0 14px; font-size: 13px; }
+  .hs-mini {
+    position: absolute; left: 50%; bottom: -26px; width: 128px; aspect-ratio: 8.5 / 11;
+    transform: translateX(-50%) rotate(-3deg);
+    background: #fff; border-radius: 5px;
+    box-shadow: 0 18px 34px -16px rgba(8, 20, 40, 0.4), 0 1px 3px rgba(8, 20, 40, 0.12);
+    display: grid; align-content: start; gap: 7px; padding: 13px 12px;
+    color: #143254; transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .hs-tile:hover .hs-mini { transform: translateX(-50%) translateY(-8px) rotate(-1deg); }
+  .hs-mini b { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; text-align: left; }
+  .hs-mini i { display: block; height: 5px; border-radius: 3px; background: #e3e7ee; }
+  .hs-mini i:nth-of-type(2) { width: 78%; }
+  .hs-mini i:nth-of-type(3) { width: 58%; }
+
+  /* ---- slider --------------------------------------------------------- */
+  .hs-slider { margin-top: 12px; background: var(--hs-tile); padding: 56px 0 44px; overflow: hidden; }
+  .hs-slider-title { text-align: center; font-size: clamp(30px, 3.4vw, 48px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; padding: 0 16px 34px; }
+  .hs-viewport { --hs-sw: min(980px, 82vw); --hs-gap: 12px; position: relative; overflow: hidden; touch-action: pan-y; }
+  .hs-track {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; gap: var(--hs-gap);
+    transform: translate3d(calc((100vw - var(--hs-sw)) / 2), 0, 0);
+    will-change: transform;
+  }
+  .hs-track.is-anim { transition: transform 0.9s cubic-bezier(.45,.05,.25,1); }
+  .hs-slide {
+    flex: 0 0 var(--hs-sw); position: relative; overflow: hidden;
+    aspect-ratio: 16 / 8.4; border-radius: 0;
+    color: #fff; isolation: isolate;
+    transition: opacity 0.6s;
+  }
+  .hs-slide:not(.is-current) { opacity: 0.55; }
+  .hs-slide--navy { background: linear-gradient(135deg, #0d1f38 0%, #143254 55%, #1f4f86 100%); }
+  .hs-slide--slate { background: linear-gradient(135deg, #2b3440 0%, #46586d 60%, #6f8299 100%); }
+  .hs-slide--ink { background: radial-gradient(90% 120% at 70% 30%, #23466f 0%, #0b1628 70%); }
+  .hs-slide--langs { background: linear-gradient(120deg, #143254 0%, #3a5f8f 50%, #9db4d2 100%); }
+  .hs-slide--steel { background: linear-gradient(135deg, #1b2a3c 0%, #2e4a69 50%, #557aa3 100%); }
+  .hs-slide--deep { background: linear-gradient(160deg, #060d18 0%, #12294a 60%, #1d3d66 100%); }
+  .hs-slide-art { position: absolute; inset: 0; z-index: -1; }
+  .hs-slide-page {
+    position: absolute; right: 9%; top: 7%; width: min(300px, 30%); height: auto;
+    background: #fff; border-radius: 6px; transform: rotate(4deg);
+    box-shadow: 0 40px 80px -24px rgba(0, 0, 0, 0.6);
+  }
+  .hs-sheet--slide { width: min(300px, 30%); top: 10%; right: 12%; }
+  .hs-sheet--slide.hs-sheet--1 { right: 30%; top: 16%; transform: rotate(-7deg); opacity: 0.9; z-index: -1; }
+  .hs-sheet--slide.hs-sheet--0 { transform: rotate(5deg); }
+  .hs-langs { position: absolute; right: 8%; top: 50%; transform: translateY(-58%); display: grid; grid-template-columns: repeat(2, auto); gap: 14px; }
+  .hs-langs b {
+    display: grid; place-items: center; width: clamp(64px, 9vw, 120px); aspect-ratio: 1;
+    border-radius: 24%; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: clamp(22px, 3vw, 40px); font-weight: 600; letter-spacing: 0.02em; color: #fff;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .hs-slide-title {
+    position: absolute; left: 6%; top: 11%; max-width: 46%;
+    font-size: clamp(30px, 4.2vw, 56px); line-height: 1.04; font-weight: 600; letter-spacing: -0.02em;
+    color: #fff; text-wrap: balance;
+  }
+  .hs-cap {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    display: flex; align-items: center; gap: 14px; padding: 22px 26px;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.38) 100%);
+  }
+  .hs-pill {
+    flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 36px; padding: 0 16px;
+    border-radius: 980px; background: #fff; color: #1d1d1f; font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap;
+  }
+  .hs-pill:hover { background: #e8eef6; color: #1d1d1f; }
+  .hs-cap-text { font-size: 15px; line-height: 1.35; color: rgba(255, 255, 255, 0.92); min-width: 0; }
+
+  .hs-controls { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 20px 16px 0; }
+  .hs-dots { display: flex; gap: 2px; align-items: center; background: rgba(0, 0, 0, 0.06); border-radius: 980px; padding: 6px 10px; }
+  .hs-dot {
+    width: 24px; height: 24px; padding: 0; border: 0; background: transparent; cursor: pointer;
+    display: grid; place-items: center;
+  }
+  .hs-dot::before { content: ""; width: 8px; height: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.32); transition: width 0.35s, background 0.35s; }
+  .hs-dot[aria-current="true"]::before { width: 22px; background: #1d1d1f; }
+  .hs-arrow, .hs-play {
+    width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer;
+    background: rgba(0, 0, 0, 0.06); color: #1d1d1f; display: grid; place-items: center; font-size: 22px; line-height: 1;
+  }
+  .hs-arrow:hover, .hs-play:hover { background: rgba(0, 0, 0, 0.1); }
+  .hs-play .hs-ico-play { display: none; }
+  .hs-play.is-paused .hs-ico-play { display: block; }
+  .hs-play.is-paused .hs-ico-pause { display: none; }
+
+  .hs-marquee { margin-top: 30px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }
+  .hs-belt { list-style: none; margin: 0; padding: 0 0 4px; display: flex; gap: 12px; width: max-content; animation: hs-belt 70s linear infinite; }
+  .hs-marquee:hover .hs-belt, .hs-marquee:focus-within .hs-belt, .hs-slider.is-paused .hs-belt { animation-play-state: paused; }
+  @keyframes hs-belt { to { transform: translate3d(calc(-50% - 6px), 0, 0); } }
+  .hs-card {
+    flex: 0 0 auto; width: 236px; min-height: 132px; background: #fff; border-radius: 16px; padding: 16px 16px 14px;
+    display: grid; grid-template-rows: auto 1fr auto; gap: 4px; justify-items: start;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+  .hs-card-code { font-size: 21px; font-weight: 700; color: #143254; letter-spacing: -0.01em; white-space: nowrap; }
+  .hs-card-name { font-size: 13px; line-height: 1.35; color: var(--hs-muted); }
+  .hs-card-btn {
+    margin-top: 6px; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 980px;
+    border: 1px solid #143254; color: #143254; font-size: 12px; font-weight: 500; text-decoration: none;
+  }
+  .hs-card-btn:hover { background: #143254; color: #fff; }
+
+  /* ---- tablet / phone ---------------------------------------------- */
+  @media (max-width: 1068px) {
+    .hs-big { min-height: 520px; }
+    .hs-tile { min-height: 280px; }
+  }
+  @media (max-width: 834px) {
+    .hs-groups { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 734px) {
+    .hs-big { min-height: 500px; }
+    .hs-copy { padding-top: 42px; }
+    .hs-tiles { gap: 10px; }
+    .hs-tile { min-height: 246px; padding: 24px 12px 112px; }
+    .hs-tile-title { font-size: 17px; letter-spacing: -0.015em; -webkit-hyphens: auto; hyphens: auto; }
+    .hs-tile-sub { font-size: 12px; }
+    .hs-ctas--sm { flex-direction: column; align-items: center; gap: 6px; }
+    .hs-mini { width: 104px; bottom: -46px; }
+    .hs-mini b { font-size: 14px; }
+    .hs-viewport { --hs-sw: 86vw; --hs-gap: 10px; }
+    .hs-slide { aspect-ratio: 4 / 5; }
+    .hs-slide-title { left: 20px; right: 20px; top: 20px; max-width: none; font-size: 28px; }
+    .hs-slide-page { width: 46%; right: 50%; top: 24%; transform: translateX(50%) rotate(3deg); }
+    .hs-sheet--slide { width: 44%; right: 50%; top: 25%; }
+    .hs-sheet--slide.hs-sheet--0 { transform: translateX(50%) rotate(4deg); }
+    .hs-sheet--slide.hs-sheet--1 { right: 62%; top: 14%; transform: translateX(50%) rotate(-8deg); }
+    .hs-langs { right: 50%; top: 46%; transform: translate(50%, -50%); }
+    .hs-cap { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px; }
+    .hs-cap-text { font-size: 14px; }
+    .hs-card { width: 200px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hs-track.is-anim { transition: none; }
+    .hs-belt { animation: none; }
+    .hs-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .hs-belt > li[aria-hidden="true"] { display: none; }
+    .hs-mini, .hs-dot::before, .hs-slide { transition: none; }
+  }
+</style>
+
+<script>
+  import { initShowcase } from '~/scripts/showcase-v2';
+  initShowcase();
+</script>
