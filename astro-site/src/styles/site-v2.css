@@ -660,3 +660,5 @@ html.v2 body .site-footer.site-footer--lean .site-footer-bottom div + div { marg
 html.v2 body .site-footer.site-footer--lean .site-footer-bottom div + div::before { content: " "; }
 /* keep the last footer lines clear of the floating chat button on phones */
 @media (max-width: 720px) { html.v2 body .site-footer.site-footer--lean { padding-bottom: 92px; } }
+/* and clear of the "New design preview" badge while v2 is opt-in */
+@media (min-width: 721px) { html.v2.v2-pre body .site-footer.site-footer--lean { padding-bottom: 64px; } }
