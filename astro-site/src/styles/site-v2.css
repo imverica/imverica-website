@@ -603,3 +603,36 @@ html.v2 body .intake-account-card.active { background: #f1f5fa; }
 html.v2 body .intake-disclaimer { background: #f5f5f7; border-left: 0; border-radius: 12px; color: #6e6e73; }
 html.v2 body .intake-help-bar { background: #f5f5f7; border-radius: 16px; }
 html.v2 body :is(.qi-close, .intake-close, .iw-close, .iw-send) { font-family: var(--font-text, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif); }
+
+/* radii and shadows: one scale (pills · 12 small · 18/22 medium · 28/30
+   cards) and neutral shadows instead of warm-tinted or gold ones */
+html.v2 body .lb-cta-card { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05) !important; }
+html.v2 body .price-card-icon { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important; border-radius: 14px; }
+html.v2 body .compare-col { box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14) !important; }
+html.v2 body .time-slot { border-radius: 980px !important; }
+html.v2 body :is(#appointmentName, #appointmentEmail, #appointmentPhone, #appointmentDate, #appointmentType, #appointmentNotes) { border-radius: 12px !important; }
+html.v2 body .testimonials-more { border-radius: 980px !important; }
+
+/* WCAG AA (4.5:1) for small grey text */
+html.v2 body .site-footer-bottom, html.v2 body .site-footer-bottom > div { color: #6e6e73 !important; }
+html.v2 body cite { color: #6e6e73 !important; }
+html.v2 body .imm-cats-footnote :is(p, span) { color: #a1a1a6 !important; }
+html.v2 body .price-card :is(thead th, .price-card-disclaimer) { color: #5c5c61 !important; }
+html.v2 body .ourserv-note { color: #8e4b4b !important; border-top-color: #e5e5ea !important; }
+html.v2 body .price-row-meta { color: #5c5c61 !important; }
+html.v2 body .testimonial-meta { color: #6e6e73 !important; }
+html.v2 body :is(.visa-meta, [data-visa-note], .visa-disclaimer) { color: #a9b8c6 !important; }
+html.v2 body :is(.discounts-strip-head p, .compare-tier) { color: #6e6e73 !important; }
+/* chat menu before the terms box is ticked: readable grey instead of 40% opacity */
+html.v2 body .iw-menu-btn[style*="opacity: 0.4"] { opacity: 1 !important; background: #fafafc !important; }
+html.v2 body .iw-menu-btn[style*="opacity: 0.4"] :is(.iw-menu-title, .iw-menu-sub, .iw-menu-icon) { color: #6e6e73 !important; }
+html.v2 body .iw-menu-sub { color: #6e6e73 !important; }
+
+/* keyboard focus: one visible ring everywhere (≥3:1 on white, #f5f5f7, the
+   dark hero and navy cards); text fields keep their own border ring */
+html.v2 body :is(a, button, summary, [role="button"], [tabindex]:not([tabindex="-1"]), select):focus-visible {
+  outline: 2px solid #3a7bd5 !important;
+  outline-offset: 3px !important;
+}
+html.v2 body .ai-finder-form:has(:focus-visible) { box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.6); }
+html.v2 body .gn-link:focus-visible { outline-offset: -6px !important; border-radius: 10px; }

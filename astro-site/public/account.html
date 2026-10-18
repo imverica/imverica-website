@@ -555,6 +555,9 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
 /* v2 design preview (?v2=1): the site's palette on the portal. */
 html.v2{--navy:#143254;--navy-light:#1c4170;--navy-dark:#0b1626;--terracotta:#143254;--terracotta-deep:#143254;--gold:#143254;--sage:#6e6e73;--cream:#f5f5f7;--bg:#f5f5f7;--border:#d2d2d7;}
 html.v2 .btn{border-radius:980px;}
+html.v2 .auth-card{box-shadow:0 22px 64px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04);}
+html.v2 .auth-terms{color:#6e6e73;}
+html.v2 :is(a,button,[role="button"],select):focus-visible{outline:2px solid #3a7bd5;outline-offset:3px;}
 </style>
 </head>
 <body class="is-auth">
