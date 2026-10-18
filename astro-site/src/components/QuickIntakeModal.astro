@@ -84,6 +84,20 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
          so the owner sees what we predicted on the original screen. -->
     <input type="hidden" id="qiFormCode" name="formCode" />
     <input type="hidden" id="qiLanguage" name="language" />
+    <!-- Where the lead came from (filled on submit from window.imvLeadContext,
+         see BaseLayout): page, language, UTM tags, click ids, landing page
+         and external referrer. Shown in the notification email and admin. -->
+    <input type="hidden" name="lead_page" data-lead="page" />
+    <input type="hidden" name="lead_lang" data-lead="lang" />
+    <input type="hidden" name="lead_landing" data-lead="landing" />
+    <input type="hidden" name="lead_referrer" data-lead="referrer" />
+    <input type="hidden" name="lead_utm_source" data-lead="utm_source" />
+    <input type="hidden" name="lead_utm_medium" data-lead="utm_medium" />
+    <input type="hidden" name="lead_utm_campaign" data-lead="utm_campaign" />
+    <input type="hidden" name="lead_utm_term" data-lead="utm_term" />
+    <input type="hidden" name="lead_utm_content" data-lead="utm_content" />
+    <input type="hidden" name="lead_gclid" data-lead="gclid" />
+    <input type="hidden" name="lead_fbclid" data-lead="fbclid" />
 
     {TURNSTILE_SITE_KEY && (
       <div class="qi-row">
@@ -686,13 +700,23 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       const turnstileTokenEl = document.getElementById('qiTurnstileToken') as HTMLInputElement | null;
       const turnstileToken = turnstileTokenEl ? turnstileTokenEl.value : '';
 
+      const leadCtx = typeof (window as any).imvLeadContext === 'function'
+        ? (window as any).imvLeadContext()
+        : { page: location.pathname, lang: document.documentElement.lang || 'en' };
+      const tracking: Record<string, string> = {};
+      document.querySelectorAll<HTMLInputElement>('#quickIntakeForm input[data-lead]').forEach((el) => {
+        const key = el.dataset.lead || '';
+        el.value = String(leadCtx[key] || '');
+        if (el.value) tracking[key] = el.value;
+      });
+
       try {
         const res = await fetch('/.netlify/functions/quick-intake', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name, email, phone, situation, formCode, language, files,
-            website, turnstileToken
+            website, turnstileToken, tracking
           })
         });
         const data = await res.json().catch(() => ({ ok: false }));

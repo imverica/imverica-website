@@ -233,6 +233,8 @@
         <input type="tel" name="phone" placeholder="${t.formPhone}" required>
         <input type="email" name="email" placeholder="${t.formEmail}">
         <textarea name="message" placeholder="${t.formMsg}" required></textarea>
+        <input type="hidden" name="page"><input type="hidden" name="language"><input type="hidden" name="landing"><input type="hidden" name="referrer">
+        <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign"><input type="hidden" name="utm_term"><input type="hidden" name="utm_content"><input type="hidden" name="gclid"><input type="hidden" name="fbclid">
         <button type="submit">${t.send}</button>
       </form>
     `;
@@ -242,11 +244,22 @@
       const btn = e.target.querySelector('button[type=submit]');
       btn.disabled = true;
       btn.textContent = t.sending;
-      const fd = new FormData(e.target);
+      // Lead source into the hidden fields (see imvLeadContext in BaseLayout)
+      const ctx = typeof window.imvLeadContext === 'function' ? window.imvLeadContext() : { page: location.pathname, lang: document.documentElement.lang || 'en' };
+      const f = e.target;
+      ['page', 'landing', 'referrer', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach(function(k){ if (f.elements[k]) f.elements[k].value = ctx[k] || ''; });
+      f.elements.language.value = ctx.lang || currentLang;
+      const fd = new FormData(f);
+      const utm = [fd.get('utm_source'), fd.get('utm_medium'), fd.get('utm_campaign')].filter(Boolean).join(' | ');
       const payload = {
         name: fd.get('name'), phone: fd.get('phone'),
-        email: fd.get('email'), service: 'Chat widget',
-        message: fd.get('message')
+        email: fd.get('email'),
+        // One readable column even if the sheet ignores the extra ones
+        service: 'Chat widget | ' + fd.get('page') + ' | ' + fd.get('language') + (utm ? ' | utm: ' + utm : ''),
+        message: fd.get('message'),
+        page: fd.get('page'), language: fd.get('language'), landing: fd.get('landing'), referrer: fd.get('referrer'),
+        utm_source: fd.get('utm_source'), utm_medium: fd.get('utm_medium'), utm_campaign: fd.get('utm_campaign'),
+        utm_term: fd.get('utm_term'), utm_content: fd.get('utm_content'), gclid: fd.get('gclid'), fbclid: fd.get('fbclid')
       };
       try {
         await fetch(APPS_SCRIPT_URL, {

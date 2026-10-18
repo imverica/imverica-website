@@ -218,6 +218,33 @@ const BRAND_FONTS = 'https://fonts.googleapis.com/css2?family=Newsreader:ital,op
         } catch { /* tracking must never break the page */ }
       }
       (window as any).imvTrack = track;
+
+      // Lead source for the forms' hidden fields: UTM tags and ad click ids
+      // from the landing URL, the first page of the visit and an external
+      // referrer, kept for this tab's session; plus the current page and
+      // language when a form is sent.
+      const LEAD_KEY = 'imv-lead-src';
+      try {
+        const q = new URLSearchParams(location.search);
+        const fresh: Record<string, string> = {};
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'].forEach((k) => {
+          const v = q.get(k);
+          if (v) fresh[k] = v.slice(0, 200);
+        });
+        const saved = JSON.parse(sessionStorage.getItem(LEAD_KEY) || 'null');
+        if (!saved || Object.keys(fresh).length) {
+          const ref = document.referrer && !document.referrer.startsWith(location.origin) ? document.referrer.slice(0, 300) : '';
+          sessionStorage.setItem(LEAD_KEY, JSON.stringify(Object.assign({}, saved || {}, fresh, {
+            landing: location.pathname + location.search,
+            referrer: ref || (saved && saved.referrer) || ''
+          })));
+        }
+      } catch { /* storage may be blocked; the forms still send page + language */ }
+      (window as any).imvLeadContext = () => {
+        let saved: Record<string, string> = {};
+        try { saved = JSON.parse(sessionStorage.getItem(LEAD_KEY) || '{}') || {}; } catch { /* ignore */ }
+        return Object.assign({}, saved, { page: location.pathname, lang: document.documentElement.lang || 'en' });
+      };
       document.addEventListener('click', (e) => {
         const t = e.target as HTMLElement | null;
         const a = t && t.closest ? (t.closest('a[href^="tel:"], a[href^="mailto:"]') as HTMLAnchorElement | null) : null;

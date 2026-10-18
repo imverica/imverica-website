@@ -26,6 +26,8 @@
  *     formCode:  "I-589",            // optional — from /api/route hint
  *     language:  "ru",               // optional — UI language tag
  *     files:     [{ name, type, dataBase64 }], // 0-5 files, each ≤4 MB
+ *     tracking:  { page, lang, landing, referrer, utm_source, utm_medium,
+ *                  utm_campaign, utm_term, utm_content, gclid, fbclid }
  *     // Honeypot: if a bot fills this, we silently 200 without emailing.
  *     website:   ""                  // must be empty
  *   }
@@ -122,6 +124,7 @@ async function notifyOwner(record, attachments, driveResult, extraAttachments = 
       ${c.phone ? `<p style="margin:0 0 4px;"><strong>Phone:</strong> <a href="tel:${escapeHtml(c.phone)}">${escapeHtml(c.phone)}</a></p>` : ''}
       ${record.formCode ? `<p style="margin:0 0 4px;"><strong>Form hint:</strong> ${escapeHtml(record.formCode)}</p>` : ''}
       <p style="margin:0 0 4px;"><strong>Language:</strong> ${escapeHtml(record.language || 'en')}</p>
+      ${record.tracking && Object.keys(record.tracking).length ? `<p style="margin:8px 0 4px;"><strong>Source:</strong> ${Object.entries(record.tracking).map(([k, v]) => `${escapeHtml(k)}=${escapeHtml(v)}`).join(' · ')}</p>` : ''}
       ${(extraAttachments || []).some((a) => /\.ics$/.test(a.filename)) ? `<hr style="border:none;border-top:1px solid #d6d9df;margin:16px 0;" />
       <p style="margin:0;background:#eef7ee;border-left:3px solid #2e7d32;border-radius:6px;padding:10px 14px;">📅 <strong>Calendar invite attached.</strong> Tap “Add to calendar” above to place this appointment on your calendar with a 1-hour reminder.</p>` : ''}
       <hr style="border:none;border-top:1px solid #d6d9df;margin:16px 0;" />
@@ -145,7 +148,9 @@ async function notifyOwner(record, attachments, driveResult, extraAttachments = 
     `Email: ${c.email}\n` +
     (c.phone ? `Phone: ${c.phone}\n` : '') +
     (record.formCode ? `Form hint: ${record.formCode}\n` : '') +
-    `Language: ${record.language || 'en'}\n\n` +
+    `Language: ${record.language || 'en'}\n` +
+    (record.tracking && Object.keys(record.tracking).length ? `Source: ${Object.entries(record.tracking).map(([k, v]) => `${k}=${v}`).join(' | ')}\n` : '') +
+    `\n` +
     `--- SITUATION ---\n${record.situation || ''}\n\n` +
     `--- ATTACHMENTS ---\n${driveText}${fileList}\n`;
 
@@ -251,6 +256,12 @@ exports.handler = async function (event) {
   const situation = clean(body.situation, MAX_SITUATION);
   const formCode = clean(body.formCode, 30).toUpperCase();
   const language = clean(body.language, 5) || 'en';
+  // Lead source from the form's hidden fields: page, language, UTM tags,
+  // ad click ids, first page of the visit and the external referrer.
+  const TRACK_KEYS = ['page', 'lang', 'landing', 'referrer', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+  const rawTracking = body.tracking && typeof body.tracking === 'object' ? body.tracking : {};
+  const tracking = {};
+  for (const k of TRACK_KEYS) { const v = clean(rawTracking[k], 300); if (v) tracking[k] = v; }
   const errors = [];
   if (!name) errors.push('name');
   if (!isValidEmail(email)) errors.push('email');
@@ -316,6 +327,7 @@ exports.handler = async function (event) {
     service: '',
     contact: { name, email, phone },
     situation,
+    tracking,
     // Non-PII scheduling details; stays plaintext next to the encrypted
     // fields so the admin console can show the slot without decrypting.
     appointment
