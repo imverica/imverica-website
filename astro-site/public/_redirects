@@ -3,8 +3,10 @@
 
 # Clean URLs for the client cabinet. /login serves the OTP login screen
 # (account.html). 200 = rewrite (URL stays /login). /account → same.
+# 200! (forced): src/pages/account.astro builds a design mock at
+# /account/, and without the force that file would shadow this rewrite.
 /login                                                             /account.html                            200
-/account                                                           /account.html                            200
+/account                                                           /account.html                            200!
 
 # Old single-page anchor links (legacy index.html service cards) → new
 # dedicated landing pages. 301 = permanent, preserves SEO juice.

@@ -2358,6 +2358,9 @@ export function initIntakeWizard(): void {
     state.orderId = '';
     if (!prefill) {
       var restored = restoreIntakeProgress();
+      // Saved progress may come from a page in another language: the page
+      // the visitor is on now wins (the language pills still switch it).
+      state.lang = rememberedLang;
       // Language is inherited from the site, so skip step 0 (Language) and
       // open on the service-category tiles (step 1) — the welcoming first step.
       if (!restored && state.step === 0) state.step = 1;
