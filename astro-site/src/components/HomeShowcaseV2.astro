@@ -158,9 +158,9 @@ const H = {
   <div class="hs-slider" data-hs-slider aria-roledescription="carousel" aria-label={H.slider}>
     <h2 class="hs-slider-title">{H.slider}</h2>
     <div class="hs-viewport">
-      <ul class="hs-track" data-hs-track>
+      <div class="hs-track" data-hs-track>
         {slides.map((s, i) => (
-          <li class={`hs-slide hs-slide--${s.tone}`} data-hs-slide role="group" aria-roledescription="slide" aria-label={`${H.slide} ${i + 1} ${H.of} ${slides.length}`}>
+          <div class={`hs-slide hs-slide--${s.tone}`} data-hs-slide role="group" aria-roledescription="slide" aria-label={`${H.slide} ${i + 1} ${H.of} ${slides.length}`}>
             <div class="hs-slide-art" aria-hidden="true">
               {s.tone === 'langs' && <span class="hs-langs"><b>EN</b><b>RU</b><b>UA</b><b>ES</b></span>}
               {s.sheets.map((code, k) => <span class={`hs-sheet hs-sheet--slide hs-sheet--${k}`}><b>{code}</b><i></i><i></i><i></i><i></i></span>)}
@@ -171,9 +171,9 @@ const H = {
               <a class="hs-pill" href={start(s.q)}>{s.pill}</a>
               <p class="hs-cap-text">{s.text}</p>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
     <div class="hs-controls">
       <button type="button" class="hs-arrow" data-hs-prev aria-label={H.prev}><span aria-hidden="true">‹</span></button>
@@ -325,9 +325,12 @@ const H = {
     flex: 0 0 var(--hs-sw); position: relative; overflow: hidden;
     aspect-ratio: 16 / 8.4; border-radius: 0;
     color: #fff; isolation: isolate;
-    transition: opacity 0.6s;
   }
-  .hs-slide:not(.is-current) { opacity: 0.55; }
+  /* neighbours: dimmed art, caption hidden (it returns when the slide is centred) */
+  .hs-slide:not(.is-current) .hs-slide-art { opacity: 0.5; }
+  .hs-slide-art { transition: opacity 0.6s; }
+  .hs-cap { transition: opacity 0.5s, visibility 0.5s; }
+  .hs-slide:not(.is-current) .hs-cap { opacity: 0; visibility: hidden; }
   .hs-slide--navy { background: linear-gradient(135deg, #0d1f38 0%, #143254 55%, #1f4f86 100%); }
   .hs-slide--slate { background: linear-gradient(135deg, #2b3440 0%, #46586d 60%, #6f8299 100%); }
   .hs-slide--ink { background: radial-gradient(90% 120% at 70% 30%, #23466f 0%, #0b1628 70%); }
@@ -436,7 +439,7 @@ const H = {
     .hs-belt { animation: none; }
     .hs-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
     .hs-belt > li[aria-hidden="true"] { display: none; }
-    .hs-mini, .hs-dot::before, .hs-slide { transition: none; }
+    .hs-mini, .hs-dot::before, .hs-slide-art, .hs-cap { transition: none; }
   }
 </style>
 
