@@ -29,7 +29,7 @@ function activeKey(): MegaKey | '' {
   if (slug.startsWith('/business') || slug.startsWith('/llc') || slug.startsWith('/fbn') || slug.startsWith('/ss-4') || slug.startsWith('/si-550') || slug.startsWith('/arts-gs') || slug.startsWith('/operating')) return 'business';
   if (slug.startsWith('/criminal') || slug.startsWith('/california-expungement')) return 'criminal';
   if (slug.startsWith('/fl') || slug.startsWith('/california-restraining')) return 'family';
-  if (slug.startsWith('/sc') || slug.startsWith('/demand') || slug.startsWith('/california-') || slug.startsWith('/wg-') || slug.startsWith('/ej-')) return 'civil';
+  if (slug === '/sc' || slug.startsWith('/sc-') || slug.startsWith('/demand') || slug.startsWith('/california-') || slug.startsWith('/wg-') || slug.startsWith('/ej-')) return 'civil';
   if (slug.startsWith('/i-') || slug.startsWith('/n-') || slug.startsWith('/immigration') || slug.startsWith('/eoir') || slug.startsWith('/uscis') || slug.startsWith('/u4u') || slug.startsWith('/tps') || slug.startsWith('/u-visa') || slug.startsWith('/vawa')) return 'uscis';
   return '';
 }
@@ -315,6 +315,21 @@ const L = (text: string) => megaLabel(text, lang);
     window.addEventListener('resize', fit);
     desktop.addEventListener('change', fit);
     document.fonts?.ready.then(fit);
+
+    // Inner pages: section headings below the fold rise in as they scroll
+    // into view (the homepage hero runs its own motion).
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isV2 = document.documentElement.classList.contains('v2');
+    if (isV2 && !calm && 'IntersectionObserver' in window && !document.querySelector('.hv2-hero')) {
+      const io = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+      }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll<HTMLElement>('main h2, main .cat-tiles-kicker, main .svc-band-kicker, main .lb-article > p:first-child').forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) return;
+        el.classList.add('v2-rise');
+        io.observe(el);
+      });
+    }
   })();
 </script>
 
