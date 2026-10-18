@@ -128,6 +128,23 @@ const items = [
       }, 300);
     }), { threshold: 0.6 });
     nums.forEach((el) => io.observe(el));
+
+    // Coming back with the Back button restores the page from bfcache with
+    // the drums already stopped: spin them again from zero.
+    window.addEventListener('pageshow', (e) => {
+      if (!e.persisted) return;
+      nums.forEach((el) => {
+        el.querySelectorAll<HTMLElement>('.stat-odo-strip').forEach((strip) => {
+          const delay = strip.style.transitionDelay;
+          strip.style.transition = 'none';
+          strip.style.transform = '';
+          void strip.offsetHeight;
+          strip.style.transition = '';
+          strip.style.transitionDelay = delay;
+        });
+        io.observe(el);
+      });
+    });
   }
 
   runStatCounters();
