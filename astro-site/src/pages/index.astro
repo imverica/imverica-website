@@ -8,7 +8,7 @@ import OurServices from '~/components/OurServices.astro';
 import VisaBulletin from '~/components/VisaBulletin.astro';
 import Testimonials from '~/components/Testimonials.astro';
 import AboutStrip from '~/components/AboutStrip.astro';
-import HomeV2 from '~/components/HomeV2.astro';
+import HeroV2 from '~/components/HeroV2.astro';
 
 const title = 'Imverica Legal Solutions | USCIS · EOIR · California Forms';
 const description =
@@ -32,23 +32,13 @@ const description =
   >
     <HomeSearch />
   </Hero>
-
-  <StatsStrip />
-
-  <OurServices />
-
-  <LatestUpdates />
-
-  <VisaBulletin />
-
-  <Testimonials />
-
-  <AboutStrip />
   </div>
 
-  {/* v2 preview body. Inert inside <template> (not rendered or indexed);
-      swapped in before first paint only when <html class="v2">. */}
-  <template id="home-v2"><HomeV2 /></template>
+  {/* v2 preview opening (hero with the same finder, real form pages,
+      statement). Inert inside <template> (not rendered or indexed); swapped
+      in before first paint only when <html class="v2">. The sections below
+      are shared by both designs. */}
+  <template id="home-v2"><HeroV2 /></template>
   <script is:inline>
     (function () {
       var html = document.documentElement;
@@ -61,9 +51,21 @@ const description =
         v1.replaceWith(tpl.content.cloneNode(true));
         tpl.remove();
       } catch (e) {
-        // Never leave a blank page: fall back to the current homepage body.
+        // Never leave a blank hero: fall back to the current one.
         html.classList.add('hv2-off');
       }
     })();
   </script>
+
+  <StatsStrip />
+
+  <OurServices />
+
+  <LatestUpdates />
+
+  <VisaBulletin />
+
+  <Testimonials />
+
+  <AboutStrip />
 </BaseLayout>

@@ -1,0 +1,219 @@
+---
+/**
+ * v2 homepage opening, as approved in the motion prototype: the hero with
+ * the Ask Imverica finder (HomeSearch, the Claude-backed bot, unchanged),
+ * page 1 of three real forms (I-485, SC-100, FL-100) that rise and fan out
+ * on scroll, and a statement that lights up word by word. Everything below
+ * it on the homepage is the current production sections.
+ *
+ * index.astro renders this inside a <template> and swaps it in before first
+ * paint only when <html class="v2"> (the per-browser preview flag), so
+ * regular visitors and crawlers keep the current hero until cutover.
+ * Motion is opt-in: html.hv2-motion is set by the swap script only when
+ * IntersectionObserver exists and reduced motion is off.
+ */
+import HomeSearch from '~/components/HomeSearch.astro';
+---
+<section class="hv2-hero" aria-labelledby="hv2-title">
+  <div class="hv2-pin">
+    <div class="hv2-dim" aria-hidden="true"></div>
+    <div class="hv2-copy">
+      <p class="hv2-eyebrow">California Registered LDA &amp; Immigration Consultant</p>
+      <h1 class="hv2-h1" id="hv2-title"><span class="w" style="--i: 0">Paperwork,</span><br /><span class="w" style="--i: 1">done</span> <span class="w" style="--i: 2">right.</span></h1>
+      <p class="hv2-sub">USCIS, EOIR and California court documents, prepared at your direction in English, Russian, Ukrainian and Spanish.</p>
+      <div class="hv2-finder">
+        <HomeSearch />
+      </div>
+    </div>
+
+    <div class="hv2-stack-move" aria-hidden="true">
+      <div class="hv2-stack-in">
+        <div class="hv2-stack">
+          <div class="hv2-sheet hv2-sheet--l"><img src="/img/forms/sc-100-page-1.webp" alt="" width="330" height="427" decoding="async" /></div>
+          <div class="hv2-sheet hv2-sheet--r"><img src="/img/forms/fl-100-page-1.webp" alt="" width="330" height="427" decoding="async" /></div>
+          <div class="hv2-sheet hv2-sheet--c"><img src="/img/forms/i-485-page-1.webp" alt="" width="380" height="492" decoding="async" /></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hv2-cap" aria-hidden="true">Official USCIS and California court forms.<br /><span>Current editions, prepared at your direction.</span></p>
+    <div class="hv2-hint" aria-hidden="true">
+      Scroll
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+    </div>
+  </div>
+</section>
+
+<section class="hv2-statement">
+  <div class="hv2-statement-inner">
+    <p class="hv2-statement-eyebrow">Imverica Legal Solutions</p>
+    <p class="hv2-reveal" data-hv2-reveal>We prepare USCIS, EOIR and California court documents accurately, on time, and at your direction. In English, Russian, Ukrainian and Spanish.</p>
+  </div>
+</section>
+
+<style is:global>
+  .hv2-hero {
+    --hv2-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --hv2-bar: 48px;
+    position: relative;
+    background: #07111f;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hv2-hero p { margin: 0; }
+  .hv2-hero .hv2-pin { position: relative; overflow: hidden; padding-top: 64px; }
+  .hv2-hero .hv2-dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+  .hv2-hero .hv2-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px));
+    text-align: center;
+    will-change: transform, opacity;
+  }
+  .hv2-hero .hv2-eyebrow { font-size: 17px; font-weight: 600; letter-spacing: -0.022em; color: #9fb9de; }
+  html.v2 .hv2-hero .hv2-h1 {
+    max-width: 1000px;
+    margin: 16px auto 0;
+    font-family: inherit;
+    font-size: clamp(52px, 7.4vw, 108px);
+    line-height: 0.98;
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    color: #fff;
+    text-wrap: balance;
+  }
+  .hv2-hero .hv2-h1 .w { display: inline-block; }
+  .hv2-hero .hv2-sub {
+    max-width: 680px;
+    margin: 22px auto 0;
+    font-size: 21px;
+    line-height: 1.381;
+    letter-spacing: 0.011em;
+    color: rgba(255, 255, 255, 0.74);
+  }
+  /* The Ask Imverica finder keeps its own look (white field, navy arrow);
+     only the pieces around it are recoloured for the dark ground. */
+  .hv2-hero .hv2-finder .ai-finder { margin-top: 30px; }
+  .hv2-hero .hv2-finder .ai-finder-form { box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); border-color: transparent; }
+  html.v2 .hv2-hero .hv2-finder .ai-example {
+    min-height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+  html.v2 .hv2-hero .hv2-finder .ai-example:hover { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.4); color: #fff; }
+  html.v2 .hv2-hero .hv2-finder .ai-finder-meta { margin-top: 20px; color: rgba(255, 255, 255, 0.6); }
+  .hv2-hero .hv2-finder .ai-finder-meta span::before { background: #9fb9de; }
+  .hv2-hero .hv2-finder .hero-phone,
+  html.v2 .hv2-hero .hv2-finder .hero-phone:hover { color: #fff; }
+  html.v2 .hv2-hero .hv2-finder .ai-services-link,
+  html.v2 .hv2-hero .hv2-finder .ai-services-link:hover { color: rgba(255, 255, 255, 0.74); border-bottom-color: rgba(255, 255, 255, 0.3); }
+
+  .hv2-hero .hv2-stack-move { position: relative; height: 500px; margin-top: 40px; transform-origin: 50% 0; will-change: transform; }
+  .hv2-hero .hv2-stack-in { position: absolute; inset: 0; }
+  .hv2-hero .hv2-stack { --fan: 270; --rot: 9; position: absolute; inset: 0; }
+  .hv2-hero .hv2-sheet {
+    position: absolute;
+    left: 50%;
+    top: 70px;
+    width: 330px;
+    height: 427px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+  }
+  .hv2-hero .hv2-sheet img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .hv2-hero .hv2-sheet--l { transform: translateX(calc(-50% - var(--fan) * 1px)) rotate(calc(var(--rot) * -1deg)); }
+  .hv2-hero .hv2-sheet--r { transform: translateX(calc(-50% + var(--fan) * 1px)) rotate(calc(var(--rot) * 1deg)); }
+  .hv2-hero .hv2-sheet--l img, .hv2-hero .hv2-sheet--r img { filter: brightness(0.93); }
+  .hv2-hero .hv2-sheet--c { top: 0; width: 380px; height: 492px; transform: translateX(-50%); box-shadow: 0 50px 110px rgba(0, 0, 0, 0.6); }
+  .hv2-hero .hv2-cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 72px;
+    z-index: 1;
+    padding: 0 16px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    font-size: clamp(32px, 3.6vw, 52px);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    color: #fff;
+  }
+  .hv2-hero .hv2-cap span { color: #9fb9de; }
+  .hv2-hero .hv2-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+  }
+  .hv2-hero .hv2-hint svg { animation: hv2-nudge 1.8s ease-in-out infinite; }
+
+  .hv2-statement {
+    background: #000;
+    color: #fff;
+    padding: 150px 0 160px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hv2-statement-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px));
+  }
+  .hv2-statement p { margin: 0; }
+  .hv2-statement-eyebrow { margin-bottom: 22px !important; font-size: 17px; font-weight: 600; letter-spacing: -0.022em; color: #9fb9de; }
+  .hv2-statement .hv2-reveal { max-width: 1020px; font-size: clamp(32px, 4.6vw, 64px); line-height: 1.12; font-weight: 700; letter-spacing: -0.022em; }
+
+  @media (max-width: 733px) {
+    .hv2-statement { padding: 96px 0 104px; }
+    .hv2-hero .hv2-stack-move { height: 330px; margin-top: 32px; }
+    .hv2-hero .hv2-stack { transform: scale(0.6); transform-origin: 50% 0; }
+    html.v2 .hv2-hero .hv2-h1 { font-size: clamp(48px, 13vw, 64px); }
+    .hv2-hero .hv2-sub { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; }
+  }
+
+  @keyframes hv2-fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes hv2-word-up { from { opacity: 0; transform: translateY(0.42em); } to { opacity: 1; transform: none; } }
+  @keyframes hv2-stack-in { from { opacity: 0; transform: translateY(90px); } to { opacity: 1; transform: none; } }
+  @keyframes hv2-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+  html.hv2-motion .hv2-hero .hv2-h1 .w { animation: hv2-word-up 1s var(--hv2-ease) both; animation-delay: calc(var(--i) * 90ms + 120ms); }
+  html.hv2-motion .hv2-hero .hv2-sub { animation: hv2-fade-up 0.9s var(--hv2-ease) 0.5s both; }
+  html.hv2-motion .hv2-hero .hv2-finder { animation: hv2-fade-up 0.9s var(--hv2-ease) 0.65s both; }
+  html.hv2-motion .hv2-hero .hv2-stack-in { animation: hv2-stack-in 1.3s var(--hv2-ease) 0.5s both; }
+  @media (min-width: 734px) {
+    html.hv2-motion .hv2-hero:not(.is-static) { height: 225vh; }
+    html.hv2-motion .hv2-hero:not(.is-static) .hv2-hint { display: flex; }
+    html.hv2-motion .hv2-hero:not(.is-static) .hv2-pin {
+      position: sticky;
+      top: var(--hv2-bar);
+      height: calc(100vh - var(--hv2-bar));
+      height: calc(100svh - var(--hv2-bar));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hv2-hero *, .hv2-hero *::before, .hv2-hero *::after { animation: none !important; transition: none !important; }
+  }
+  /* The caption only exists inside the pinned scroll; without it, hide it. */
+  html:not(.hv2-motion) .hv2-hero .hv2-cap,
+  .hv2-hero.is-static .hv2-cap { display: none; }
+</style>
+
+<script>
+  import { initHeroV2 } from '~/scripts/hero-v2';
+  initHeroV2();
+</script>

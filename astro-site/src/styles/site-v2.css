@@ -12,8 +12,8 @@
 /* ---- header swap (must apply to everyone, flag or not) ---------------- */
 html:not(.v2) .gn { display: none !important; }
 html.v2 .site-header { display: none !important; }
-/* Homepage: the v2 body is swapped in before paint (index.astro); keep the
-   old body from flashing while the parser reaches the swap script. */
+/* Homepage: the v2 hero is swapped in before paint (index.astro); keep the
+   old hero from flashing while the parser reaches the swap script. */
 html.v2:not(.hv2-off) #home-v1 { display: none; }
 .v2-badge { display: none; }
 
@@ -317,3 +317,90 @@ html.v2 .v2-badge {
 }
 html.v2 .v2-badge:hover { color: #fff; background: #1d1d1f; }
 html.v2 .v2-badge b { font-weight: 600; opacity: 0.7; }
+
+/* ==== Homepage sections in the new design ================================
+   Same sections, copy, links and order as the current homepage; only the
+   look changes: big tight headlines, larger tiles with a couple of colour
+   accents, a light stats band under the dark hero, slower rise-in motion. */
+html.v2 :is(.ourserv-section, .news-section, .testimonials-section, .about-strip) {
+  padding-top: clamp(72px, 9vw, 120px);
+  padding-bottom: clamp(72px, 9vw, 120px);
+}
+html.v2 :is(.ourserv-section .ourserv-inner, .testimonials-section .testimonials-heading, .about-strip .about-head) h2 {
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+/* AboutStrip's scoped rule (.about-strip .about-h2 + two cid attributes)
+   outranks the shared selector above, so it gets its own. */
+html.v2 .about-strip .about-head h2.about-h2 {
+  font-size: clamp(36px, 4.6vw, 64px);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+html.v2 .visa-section .visa-copy h2 { color: #fff; }
+html.v2 :is(.news-section .news-copy, .visa-section .visa-copy) h2 {
+  font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.06;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+html.v2 :is(.ourserv-kicker, .about-kicker, .testimonials-kicker, .news-section .svc-kicker, .visa-kicker) {
+  font-size: 17px;
+  letter-spacing: -0.022em;
+}
+html.v2 :is(.ourserv-section .ourserv-sub, .about-strip .about-lead) {
+  font-size: 21px;
+  line-height: 1.381;
+  letter-spacing: 0.011em;
+  color: #424245;
+}
+
+/* stats: light band, big navy figures */
+html.v2 .stats-strip { background: var(--tile); }
+html.v2 .stats-strip .stat-item { border-left-color: var(--border); }
+html.v2 .stats-strip .stat-number {
+  color: var(--navy);
+  font-size: clamp(48px, 5.4vw, 80px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+html.v2 .stats-strip .stat-number span[style] { color: var(--navy) !important; }
+html.v2 .stats-strip .stat-label { color: #424245; font-size: 15px; }
+
+/* services: bigger tiles; the first and last carry colour like the bento */
+html.v2 .ourserv-section .ourserv-grid { gap: 20px; }
+html.v2 .ourserv-section .ourserv-card { border-radius: 30px; padding: 40px 34px 34px; }
+html.v2 .ourserv-section .ourserv-title { font-size: 28px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; }
+html.v2 .ourserv-section .ourserv-desc { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; color: #424245; }
+html.v2 .ourserv-section .ourserv-card:is(:first-child, :last-child) .ourserv-title { color: #fff; }
+html.v2 .ourserv-section .ourserv-card:first-child,
+html.v2 .ourserv-section .ourserv-card:first-child:hover { background: var(--navy); }
+html.v2 .ourserv-section .ourserv-card:last-child,
+html.v2 .ourserv-section .ourserv-card:last-child:hover { background: #1d1d1f; }
+html.v2 .ourserv-section .ourserv-card:is(:first-child, :last-child) :is(.ourserv-num, .ourserv-desc, .ourserv-note) { color: rgba(255, 255, 255, 0.74) !important; }
+html.v2 .ourserv-section .ourserv-card:is(:first-child, :last-child) .ourserv-note { border-top-color: rgba(255, 255, 255, 0.16); }
+
+/* news + visa bulletin */
+html.v2 .news-section .news-panel { border-radius: 28px; }
+html.v2 .visa-section .visa-inner { border-radius: 32px; }
+html.v2 .visa-legend, html.v2 .visa-legend * { color: rgba(255, 255, 255, 0.82); }
+
+/* about */
+html.v2 .about-strip .about-card { border-radius: 28px; padding: 34px 30px; }
+html.v2 .about-strip .about-card h3 { font-size: 24px; line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); }
+
+/* motion: section intros rise in (hero-v2.ts adds .hv2-rise), cards use
+   the site's reveal but with the slower Apple curve */
+html.hv2-motion .hv2-rise { opacity: 0; transform: translateY(48px); transition: opacity 0.9s ease, transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+html.hv2-motion .hv2-rise.in { opacity: 1; transform: none; }
+html.v2.reveal-init .reveal { transform: translateY(48px); transition: opacity 0.9s ease, transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+html.v2.reveal-init .reveal.in { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html.hv2-motion .hv2-rise { opacity: 1; transform: none; transition: none; }
+}
