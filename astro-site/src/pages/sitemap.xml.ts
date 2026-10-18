@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import fs from 'node:fs';
+import path from 'node:path';
 import { LOCALES, localizedPath } from '~/data/i18n';
 
 /**
@@ -12,8 +14,12 @@ interface SitemapEntry {
   slug: string;
   priority: number;
   changefreq: string;
-  /** Locales that actually have a translated page. English (en) is implicit. */
+  /** Kept for reference only: the languages listed in the sitemap are the
+   *  ones whose page file actually exists (see pageExists below), so this
+   *  list can no longer drift from the site. */
   translatedLocales: ('ru' | 'uk' | 'es')[];
+  /** false for pages that exist only in translation (e.g. /ru/sacramento). */
+  en?: boolean;
 }
 
 const URLS: SitemapEntry[] = [
@@ -86,23 +92,40 @@ const URLS: SitemapEntry[] = [
   { slug: '/eoir-29-notice-of-appeal', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/eoir-42a-cancellation-lpr', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/eoir-42b-cancellation-non-lpr', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/eoir-40-suspension-of-deportation', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] }
+  { slug: '/eoir-40-suspension-of-deportation', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  // Russian / Ukrainian community page with no English version
+  { slug: '/sacramento', priority: 0.6, changefreq: 'monthly', translatedLocales: ['ru', 'uk'], en: false },
+  { slug: '/terms.html', priority: 0.3, changefreq: 'yearly', translatedLocales: [] }
 ];
 
-function urlBlock(entry: SitemapEntry, lastmod: string, locale: 'en' | 'ru' | 'uk' | 'es'): string {
+type Loc = 'en' | 'ru' | 'uk' | 'es';
+const PAGES_DIR = path.join(process.cwd(), 'src/pages');
+const PUBLIC_DIR = path.join(process.cwd(), 'public');
+function pageExists(href: string): boolean {
+  if (!fs.existsSync(PAGES_DIR)) return true;
+  if (/\.html$/.test(href)) return fs.existsSync(path.join(PUBLIC_DIR, href));
+  const p = href.replace(/\/$/, '') || '/index';
+  return fs.existsSync(path.join(PAGES_DIR, p + '.astro')) || fs.existsSync(path.join(PAGES_DIR, p, 'index.astro'));
+}
+function localesFor(entry: SitemapEntry): Loc[] {
+  const all: Loc[] = entry.en === false ? ['ru', 'uk', 'es'] : ['en', 'ru', 'uk', 'es'];
+  return all.filter((l) => pageExists(localizedPath(l, entry.slug)));
+}
+
+function urlBlock(entry: SitemapEntry, lastmod: string, locale: Loc, locales: Loc[]): string {
   const loc = SITE + localizedPath(locale, entry.slug);
-  // hreflang alternates: include every available language variant for this entry
-  const availableLocales: ('en' | 'ru' | 'uk' | 'es')[] = ['en', ...entry.translatedLocales];
-  const alternates = availableLocales
+  // hreflang alternates: every language this page really exists in
+  const alternates = locales
     .map((alt) => `    <xhtml:link rel="alternate" hreflang="${LOCALES[alt].htmlLang}" href="${SITE + localizedPath(alt, entry.slug)}"/>`)
     .join('\n');
+  const xDefault = SITE + localizedPath(locales.includes('en') ? 'en' : locales[0], entry.slug);
   return `  <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority.toFixed(1)}</priority>
 ${alternates}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE + entry.slug}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${xDefault}"/>
   </url>`;
 }
 
@@ -110,12 +133,9 @@ export const GET: APIRoute = () => {
   const lastmod = new Date().toISOString().slice(0, 10);
   const blocks: string[] = [];
   for (const entry of URLS) {
-    // English root URL always listed
-    blocks.push(urlBlock(entry, lastmod, 'en'));
-    // Each translated locale variant listed separately
-    for (const locale of entry.translatedLocales) {
-      blocks.push(urlBlock(entry, lastmod, locale));
-    }
+    // One <url> per language the page exists in, each listing the others
+    const locales = localesFor(entry);
+    for (const locale of locales) blocks.push(urlBlock(entry, lastmod, locale, locales));
   }
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
