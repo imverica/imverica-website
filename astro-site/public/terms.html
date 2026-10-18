@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>try{var m=location.search.match(/[?&]v2=([01])/);if(m){m[1]==='1'?localStorage.setItem('imv-v2','1'):localStorage.removeItem('imv-v2');var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
+<script>var V2_DEFAULT=0;try{var c=document.documentElement.classList,m=location.search.match(/[?&]v2=([01])/);if(m){localStorage.setItem('imv-v2',m[1]);var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}var s=localStorage.getItem('imv-v2');if(s==='1'||(V2_DEFAULT&&s!=='0')){c.add('v2');if(!V2_DEFAULT)c.add('v2-pre')}}catch(e){if(V2_DEFAULT)document.documentElement.classList.add('v2')}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terms of Service — Imverica Legal Solutions</title>
 <link rel="canonical" href="https://imverica.com/terms.html">
