@@ -383,6 +383,11 @@ html.v2 .stats-strip .stat-number {
   font-variant-numeric: tabular-nums;
 }
 html.v2 .stats-strip .stat-number span[style] { color: var(--navy) !important; }
+/* odometer digits (StatsStrip script): one 1em-tall window per digit */
+html.v2 .stats-strip .stat-odo { display: inline-block; height: 1em; overflow: hidden; vertical-align: top; }
+html.v2 .stats-strip .stat-odo-strip { display: block; transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; }
+html.v2 .stats-strip .stat-odo-strip > span { display: block; height: 1em; line-height: 1em; text-align: center; }
+html.v2 .stats-strip .stat-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 html.v2 .stats-strip .stat-label { color: #424245; font-size: 15px; }
 
 /* services: bigger tiles; the first and last carry colour like the bento */
