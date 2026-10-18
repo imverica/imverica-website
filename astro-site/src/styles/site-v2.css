@@ -550,3 +550,6 @@ html.v2 body .iw-menu-btn { border-color: #e5e5ea !important; border-radius: 16p
 html.v2 body :is(.iw-input, .iw-form input, .iw-form textarea) { border-color: var(--border) !important; border-radius: 12px !important; }
 html.v2 body #iw-launcher { background: var(--navy) !important; }
 html.v2 body .iw-header-title span[aria-hidden="true"] { color: #9fb9de !important; }
+
+/* form numbers and the phone number never break at the hyphen (V2Nowrap) */
+html.v2 .v2-fno { white-space: nowrap; }

@@ -1,5 +1,6 @@
 ---
 import V2Flag from '~/components/V2Flag.astro';
+import V2Nowrap from '~/components/V2Nowrap.astro';
 import '~/styles/portal-v2.css';
 /**
  * Client Portal dashboard ("Personal account") — Claude Design.
@@ -243,5 +244,6 @@ const sections: { kicker: string; items: Card[] }[] = [
     }));
   })();
 </script>
+<V2Nowrap />
 </body>
 </html>

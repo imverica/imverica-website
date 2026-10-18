@@ -1,5 +1,6 @@
 ---
 import V2Flag from '~/components/V2Flag.astro';
+import V2Nowrap from '~/components/V2Nowrap.astro';
 import '~/styles/portal-v2.css';
 /**
  * Client Portal — split-screen sign-in (Claude Design "Account / Portal").
@@ -253,5 +254,6 @@ const languages = ['EN', 'RU', 'UA', 'ES'];
     form.addEventListener('submit', (e) => { e.preventDefault(); });
   })();
 </script>
+<V2Nowrap />
 </body>
 </html>

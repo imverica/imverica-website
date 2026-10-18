@@ -57,3 +57,6 @@ html.v2 .dash-card.is-primary .dash-chip { background: rgba(255, 255, 255, 0.12)
 html.v2 .dash-card.is-primary :is(.dash-cardtitle, .dash-arrow) { color: #fff !important; }
 html.v2 .dash-footer { background: #f5f5f7 !important; border-top-color: #d2d2d7 !important; }
 html.v2 .dash-footer-contact { color: #6e6e73 !important; }
+
+/* form numbers and the phone number never break at the hyphen (V2Nowrap) */
+html.v2 .v2-fno { white-space: nowrap; }
