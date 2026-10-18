@@ -4,6 +4,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <meta charset="UTF-8">
+<script>try{var m=location.search.match(/[?&]v2=([01])/);if(m){m[1]==='1'?localStorage.setItem('imv-v2','1'):localStorage.removeItem('imv-v2');var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Account — Imverica Legal Solutions</title>
 <meta name="robots" content="noindex">
@@ -550,6 +551,11 @@ html.in-app .auth-shell { min-height: calc(100vh - env(safe-area-inset-top) - en
 </style>
 
 <script src="/imverica-native.js"></script>
+<style>
+/* v2 design preview (?v2=1): the site's palette on the portal. */
+html.v2{--navy:#143254;--navy-light:#1c4170;--navy-dark:#0b1626;--terracotta:#143254;--terracotta-deep:#143254;--gold:#143254;--sage:#6e6e73;--cream:#f5f5f7;--bg:#f5f5f7;--border:#d2d2d7;}
+html.v2 .btn{border-radius:980px;}
+</style>
 </head>
 <body class="is-auth">
 

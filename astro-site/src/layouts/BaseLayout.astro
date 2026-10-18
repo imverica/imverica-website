@@ -3,6 +3,7 @@ import '~/styles/site.css';
 import '~/styles/site-v2.css';
 import SiteHeader from '~/components/SiteHeader.astro';
 import SiteHeaderV2 from '~/components/SiteHeaderV2.astro';
+import V2Flag from '~/components/V2Flag.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
 import IntakeWizard from '~/components/IntakeWizard.astro';
 import QuickIntakeModal from '~/components/QuickIntakeModal.astro';
@@ -54,7 +55,7 @@ const alternates = slug && availableLocales.length > 1
   {/* v2 design preview: ?v2=1 on any URL stores a per-browser flag and
       ?v2=0 clears it (works even if a redirect swallows /preview). Applying
       the class here, before first paint, avoids a flash of the old design. */}
-  <script is:inline>try{var m=location.search.match(/[?&]v2=([01])/);if(m){m[1]==='1'?localStorage.setItem('imv-v2','1'):localStorage.removeItem('imv-v2');var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
+  <V2Flag />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />

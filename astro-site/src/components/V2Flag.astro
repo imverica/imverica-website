@@ -1,0 +1,9 @@
+---
+/**
+ * Per-browser design-preview flag. ?v2=1 / ?v2=0 on any URL turns the v2
+ * design on or off for this browser (localStorage), strips the parameter,
+ * and sets <html class="v2"> before first paint. Goes in <head>.
+ * (The static portal pages in public/ carry a copy of this script.)
+ */
+---
+<script is:inline>try{var m=location.search.match(/[?&]v2=([01])/);if(m){m[1]==='1'?localStorage.setItem('imv-v2','1'):localStorage.removeItem('imv-v2');var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}if(localStorage.getItem('imv-v2')==='1')document.documentElement.classList.add('v2')}catch(e){}</script>
