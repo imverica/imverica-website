@@ -1,10 +1,11 @@
 ---
 import '~/styles/site.css';
 import '~/styles/site-v2.css';
+import '~/styles/v2-icons.css';
 import SiteHeader from '~/components/SiteHeader.astro';
 import SiteHeaderV2 from '~/components/SiteHeaderV2.astro';
 import V2Flag from '~/components/V2Flag.astro';
-import V2Nowrap from '~/components/V2Nowrap.astro';
+import V2Text from '~/components/V2Text.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
 import IntakeWizard from '~/components/IntakeWizard.astro';
 import QuickIntakeModal from '~/components/QuickIntakeModal.astro';
@@ -130,7 +131,7 @@ const alternates = slug && availableLocales.length > 1
   <IntakeWizard />
   <QuickIntakeModal />
   <ChatWidget />
-  <V2Nowrap />
+  <V2Text />
 
   <style is:global>
     /* Reveal-on-scroll. The hidden state is only applied once JS confirms

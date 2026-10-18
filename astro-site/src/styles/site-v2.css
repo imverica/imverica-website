@@ -551,8 +551,21 @@ html.v2 body :is(.iw-input, .iw-form input, .iw-form textarea) { border-color: v
 html.v2 body #iw-launcher { background: var(--navy) !important; }
 html.v2 body .iw-header-title span[aria-hidden="true"] { color: #9fb9de !important; }
 
-/* form numbers and the phone number never break at the hyphen (V2Nowrap) */
-html.v2 .v2-fno { white-space: nowrap; }
+/* form numbers and the phone number never break at the hyphen (V2Text) */
+html.v2 .v2-fno {
+  display: inline !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  font: inherit !important;
+  color: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+  opacity: 1 !important;
+  position: static !important;
+}
 
 /* responsive fixes: equal tile columns (long RU / ES words and nowrap form
    numbers must not widen a column past the viewport at 1024px), and pill
@@ -562,3 +575,31 @@ html.v2 body :is(.imm-cats-grid, .cat-tiles-grid) { grid-template-columns: repea
 @media (max-width: 520px) { html.v2 body :is(.imm-cats-grid, .cat-tiles-grid) { grid-template-columns: minmax(0, 1fr); } }
 html.v2 body :is(.imm-cat, .cat-tile) { min-width: 0; overflow-wrap: break-word; }
 @media (max-width: 520px) { html.v2 body .btn { max-width: 100%; white-space: normal; text-align: center; } }
+
+/* consistency: last warm text, icon colours */
+html.v2 body .lb-cta-card strong { color: #fff !important; }
+html.v2 body .pricing-legal :is(p, strong) { color: #424245 !important; }
+html.v2 body #iw-launcher { color: #fff; font-size: 24px; }
+html.v2 body :is(.lb-cta-phone, .btn) .v2-ico { margin-right: 0.1em; }
+
+/* long intake wizard (styles/wizard.css): same palette, radii and type as
+   the quick intake modal — navy instead of the navy→green gradient, neutral
+   greys instead of warm off-whites */
+html.v2 body .intake-shell { background: #fff; border-radius: 28px; }
+@media (max-width: 640px) { html.v2 body .intake-shell { border-radius: 22px; } }
+html.v2 body .intake-progress span { background: var(--navy); box-shadow: none; }
+html.v2 body .intake-progress { background: #e8e8ed; }
+html.v2 body .intake-card { border-radius: 18px; border-color: #e5e5ea; }
+html.v2 body .intake-option { background: #fff; border: 1px solid var(--border); border-radius: 14px; }
+html.v2 body .intake-option:hover { border-color: var(--navy); }
+html.v2 body .intake-option.active { border-color: var(--navy); background: #f1f5fa; box-shadow: 0 0 0 3px rgba(20, 50, 84, 0.12); }
+html.v2 body .intake-radio-options .intake-option { border-radius: 980px; }
+html.v2 body .intake-radio-options .intake-option.active { background: var(--navy); color: #fff; box-shadow: none; }
+html.v2 body :is(.intake-field input, .intake-field textarea, .intake-field select, .intake-phone-grid select) { border-color: var(--border); border-radius: 12px; }
+html.v2 body :is(.intake-field input, .intake-field textarea, .intake-field select):focus { border-color: var(--navy); box-shadow: 0 0 0 4px rgba(20, 50, 84, 0.12); outline: none; }
+html.v2 body :is(.intake-address-block, .intake-history, .intake-history-entry, .intake-account-card, .intake-complete-item, .intake-address-suggestions) { border-radius: 14px; }
+html.v2 body :is(.intake-history-add, .intake-history-remove, .intake-complete-actions a, .intake-complete-actions button) { border-radius: 980px; }
+html.v2 body .intake-account-card.active { background: #f1f5fa; }
+html.v2 body .intake-disclaimer { background: #f5f5f7; border-left: 0; border-radius: 12px; color: #6e6e73; }
+html.v2 body .intake-help-bar { background: #f5f5f7; border-radius: 16px; }
+html.v2 body :is(.qi-close, .intake-close, .iw-close, .iw-send) { font-family: var(--font-text, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif); }
