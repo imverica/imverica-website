@@ -1,0 +1,61 @@
+---
+/**
+ * 404 page body, one per language (src/pages/404.astro, ru/ua/mx/404.astro;
+ * _redirects sends unknown /ru/*, /ua/*, /mx/* paths to their own copy).
+ * Styled on its own in the v2 look so it reads the same with either design.
+ */
+import { LOCALES, type Locale } from '~/data/i18n';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const prefix = LOCALES[lang].prefix;
+const COPY: Record<Locale, { kicker: string; h: string; p: string; home: string; fl: string; call: string; other: string }> = {
+  en: { kicker: 'Error 404', h: 'This page doesn’t exist', p: 'The link may be old or mistyped. Start from the homepage or pick a section.', home: 'Go to the homepage', fl: 'Family law', call: 'Call +1 (916) 399-3992', other: 'Other languages' },
+  ru: { kicker: 'Ошибка 404', h: 'Такой страницы нет', p: 'Возможно, ссылка устарела или в ней опечатка. Начните с главной или выберите раздел.', home: 'На главную', fl: 'Семейное право', call: 'Позвонить +1 (916) 399-3992', other: 'Другие языки' },
+  uk: { kicker: 'Помилка 404', h: 'Такої сторінки немає', p: 'Можливо, посилання застаріло або містить помилку. Почніть з головної або оберіть розділ.', home: 'На головну', fl: 'Сімейне право', call: 'Зателефонувати +1 (916) 399-3992', other: 'Інші мови' },
+  es: { kicker: 'Error 404', h: 'Esta página no existe', p: 'Es posible que el enlace sea antiguo o tenga un error. Empiece por la página principal o elija una sección.', home: 'Ir al inicio', fl: 'Derecho familiar', call: 'Llamar +1 (916) 399-3992', other: 'Otros idiomas' }
+};
+const t = COPY[lang];
+const LANGS: [Locale, string][] = [['en', 'English'], ['ru', 'Русский'], ['uk', 'Українська'], ['es', 'Español']];
+---
+<section class="nf" aria-labelledby="nf-title">
+  <div class="nf-inner">
+    <p class="nf-kicker">{t.kicker}</p>
+    <h1 id="nf-title">{t.h}</h1>
+    <p class="nf-lead">{t.p}</p>
+    <div class="nf-actions">
+      <a class="nf-btn nf-btn--primary" href={prefix + '/'}>{t.home}</a>
+      <a class="nf-btn" href={prefix + '/immigration'}>USCIS | EOIR</a>
+      <a class="nf-btn" href={prefix + '/fl'}>{t.fl}</a>
+      <a class="nf-btn" href="tel:+19163993992">{t.call}</a>
+    </div>
+    <p class="nf-langs">
+      <span>{t.other}:</span>
+      {LANGS.filter(([l]) => l !== lang).map(([l, name]) => <a href={LOCALES[l].prefix + '/'} lang={LOCALES[l].htmlLang}>{name}</a>)}
+    </p>
+  </div>
+</section>
+
+<style>
+  .nf {
+    background: #fff;
+    color: #1d1d1f;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: clamp(80px, 14vw, 160px) 0 clamp(72px, 10vw, 120px);
+  }
+  .nf-inner { max-width: 760px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); text-align: center; }
+  .nf-kicker { margin: 0; font-size: 17px; font-weight: 600; color: #6e6e73; letter-spacing: -0.01em; }
+  .nf h1 { margin: 10px 0 0; font-family: inherit; font-size: clamp(40px, 6vw, 72px); line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; color: #1d1d1f; text-wrap: balance; }
+  .nf-lead { margin: 18px auto 0; max-width: 560px; font-size: 21px; line-height: 1.38; color: #424245; text-wrap: pretty; }
+  .nf-actions { margin-top: 34px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .nf-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 22px; border-radius: 980px; border: 1px solid #d2d2d7; color: #143254; font-size: 16px; font-weight: 500; text-decoration: none; }
+  .nf-btn:hover { background: #f5f5f7; }
+  .nf-btn--primary { background: #143254; border-color: #143254; color: #fff; }
+  .nf-btn--primary:hover { background: #1c4170; }
+  .nf-btn:focus-visible, .nf-langs a:focus-visible { outline: 2px solid #3a7bd5; outline-offset: 3px; }
+  .nf-langs { margin: 34px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 14px; color: #6e6e73; }
+  .nf-langs a { color: #143254; }
+</style>

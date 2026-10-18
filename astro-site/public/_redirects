@@ -45,10 +45,15 @@
 /i-130                                                             /i-130-family-petition                   301
 /i765                                                              /i-765-work-permit-help                  301
 /i-765                                                             /i-765-work-permit-help                  301
-/lda                                                               /california-legal-document-assistant     301
 /ud                                                                /california-unlawful-detainer            301
-/sc100                                                             /california-small-claims                 301
-/sc-100                                                            /california-small-claims                 301
+/sc100                                                             /sc                                      301
+/sc-100                                                            /sc                                      301
 
 # Existing Netlify functions stay as-is — proxy through.
 /.netlify/functions/*                                              /.netlify/functions/:splat               200
+
+# Unknown paths under a language prefix get that language's 404 page
+# (status stays 404). Not forced, so real files and the rules above win.
+/ru/*                                                              /ru/404/index.html                       404
+/ua/*                                                              /ua/404/index.html                       404
+/mx/*                                                              /mx/404/index.html                       404
