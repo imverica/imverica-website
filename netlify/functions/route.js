@@ -171,7 +171,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['EOIR-42B', 'EOIR-28'],
     confidence: 0.78,
-    patterns: [/removal\s+proceed|immigration\s+court|deportation\s+(hearing|case)|депортац[\wа-яёіїєґА-ЯЁІЇЄҐ]*|removal\s+depo|procedimiento\s+de\s+(removal|deportaci[oó]n)|nta|notice\s+to\s+appear|про\s+депорта|іммігр[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+суд/i],
+    patterns: [/removal\s+proceed|immigration\s+court|deportation\s+(hearing|case)|депортац[\wа-яёіїєґА-ЯЁІЇЄҐ]*|removal\s+depo|procedimiento\s+de\s+(removal|deportaci[oó]n)|\bnta\b|notice\s+to\s+appear|про\s+депорта|іммігр[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+суд/i],
     reason: 'Generic removal/deportation language defaults to EOIR-42B prep.'
   },
 
