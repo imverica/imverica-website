@@ -481,79 +481,88 @@ exports.handler = async function (event) {
     if (messages.length > 40) messages = messages.slice(-40);
   } catch { return { statusCode: 400, body: JSON.stringify({ error: 'Bad request' }) }; }
 
-  // Upgraded haiku-4-5 → opus-4-7 for nuanced query understanding (smarter
-  // routing, better multilingual nuance on USCIS/EOIR/CA-court questions).
+  // Model: Claude Opus 5.5, with Claude Opus 4.7 (the previous model) as an
+  // automatic fallback so the chat widget and the homepage finder keep
+  // answering if 5.5 errors out, refuses, or returns no text.
   //
-  // Opus 4.7 breaking-change checklist applied:
-  //   - No `temperature`/`top_p`/`top_k` (removed on 4.7 → would 400)
-  //   - No `budget_tokens` (removed on 4.7 → would 400)
-  //   - No assistant-turn prefills (removed on 4.7 → would 400)
-  //   - Adaptive thinking left OFF (default on 4.7); the widget needs
-  //     sub-10s round-trips, so we trade thinking quality for latency.
-  //   - max_tokens bumped 420 → 1024: 4.7 counts tokens differently and
-  //     short answers need more headroom than haiku
-  //   - timeout bumped 7s → 9s: opus is slower than haiku end-to-end
+  // Opus 5.5 migration checklist applied (from Opus 4.7):
+  //   - No `temperature`/`top_p`/`top_k`, no `budget_tokens`, no prefills,
+  //     no `thinking: {type:'disabled'}` (all rejected with a 400)
+  //   - Adaptive thinking is always on, so responses can START with
+  //     `thinking` blocks: the reply is read from the `text` blocks by type,
+  //     never from content[0]
+  //   - effort 'low': the widget needs sub-10s round-trips (5.5 defaults to
+  //     'medium'); max_tokens 1024 → 2048 because it now covers thinking + text
+  //   - Prompt caching: min cacheable prefix on 5.5 is 512 tokens, so the
+  //     cache_control on SYSTEM_WITH_FORMS now always applies
   //
-  // Prompt caching: system is now an array so we can cache_control the
-  // stable SYSTEM_WITH_FORMS prefix. After the first call, the cached
-  // portion replays at ~10% input cost. buildRoutingContext varies per
-  // request so it sits AFTER the breakpoint and stays uncached.
-  // Min cacheable prefix on Opus 4.7 is 4096 tokens — if SYSTEM_WITH_FORMS
-  // is smaller than that, caching silently no-ops (no error, just zero
-  // cache_read_input_tokens). Audit via response.usage if needed.
-  const MODEL = 'claude-opus-4-7';
+  // The 9s budget is shared: the fallback only runs with the time that is
+  // left (and at least 2.5s of it), so the function still answers inside
+  // Netlify's 10s limit.
+  const MODELS = [
+    { id: 'claude-opus-5-5', maxTokens: 2048, extra: { output_config: { effort: 'low' } } },
+    { id: 'claude-opus-4-7', maxTokens: 1024, extra: {} }
+  ];
+  const BUDGET_MS = 9000;
+  const started = Date.now();
+  const showDebug = (event.queryStringParameters || {}).debug === '1';
+  const json = (body) => ({ statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(body) });
 
-  const ac = new AbortController();
-  const timeoutId = setTimeout(() => ac.abort(), 9000);
-
-  let apiRes = null;
-  try {
-    apiRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      signal: ac.signal,
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 1024,
-        system: [
-          { type: 'text', text: SYSTEM_WITH_FORMS, cache_control: { type: 'ephemeral' } },
-          { type: 'text', text: buildRoutingContext(messages) }
-        ],
-        messages
-      })
-    });
-    clearTimeout(timeoutId);
-    if (!apiRes.ok) {
-      const t = await apiRes.text().catch(() => '');
-      console.error('chat:anthropic', apiRes.status, t.slice(0, 300));
-      // Debug parameter ?debug=1 surfaces the raw Anthropic body so the
-      // admin can curl/inspect the actual error during outages. Public
-      // callers (homepage / chat widget) still see the safe empty-reply
-      // shape with just a numeric status code.
-      const showDebug = (event.queryStringParameters || {}).debug === '1';
-      return {
-        statusCode: 200,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+  let last = null;
+  for (let i = 0; i < MODELS.length; i++) {
+    const model = MODELS[i];
+    const left = BUDGET_MS - (Date.now() - started);
+    if (i > 0 && left < 2500) break;
+    const ac = new AbortController();
+    const timeoutId = setTimeout(() => ac.abort(), left);
+    try {
+      const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+        signal: ac.signal,
         body: JSON.stringify({
-          reply: '',
-          upstreamStatus: apiRes.status,
-          ...(showDebug ? { upstreamBody: t.slice(0, 500), model: MODEL } : {})
+          model: model.id,
+          max_tokens: model.maxTokens,
+          ...model.extra,
+          system: [
+            { type: 'text', text: SYSTEM_WITH_FORMS, cache_control: { type: 'ephemeral' } },
+            { type: 'text', text: buildRoutingContext(messages) }
+          ],
+          messages
         })
-      };
+      });
+      clearTimeout(timeoutId);
+      if (!apiRes.ok) {
+        const t = await apiRes.text().catch(() => '');
+        console.error('chat:anthropic', model.id, apiRes.status, t.slice(0, 300));
+        // Debug parameter ?debug=1 surfaces the raw Anthropic body so the
+        // admin can curl/inspect the actual error during outages. Public
+        // callers (homepage / chat widget) still see the safe empty-reply
+        // shape with just a numeric status code.
+        last = { reply: '', upstreamStatus: apiRes.status, ...(showDebug ? { upstreamBody: t.slice(0, 500), model: model.id } : {}) };
+        continue;
+      }
+      const data = await apiRes.json();
+      const text = (Array.isArray(data.content) ? data.content : [])
+        .filter((b) => b && b.type === 'text' && typeof b.text === 'string')
+        .map((b) => b.text)
+        .join('')
+        .trim();
+      console.log('chat:ok', model.id, Date.now() - started + 'ms', data.stop_reason || '');
+      if (!text) {
+        // e.g. stop_reason 'refusal' or a reply cut off inside thinking
+        last = { reply: '', upstreamStatus: 200, ...(showDebug ? { stopReason: data.stop_reason || '', model: model.id } : {}) };
+        continue;
+      }
+      return json({ reply: ensureDisclaimer(text), ...(showDebug ? { model: model.id } : {}) });
+    } catch (err) {
+      // AbortError when the time budget runs out; ENETUNREACH / DNS issues if
+      // Anthropic is unreachable. Either way — soft-fail to 200 so the chat
+      // widget shows a friendly fallback instead of Cloudflare's raw 502.
+      try { clearTimeout(timeoutId); } catch (e) {}
+      console.error('chat:fetch-error', model.id, err && (err.name + ': ' + (err.message || '')));
+      last = { reply: '', upstreamStatus: 0, error: err && err.name === 'AbortError' ? 'timeout' : 'network' };
     }
-    const data = await apiRes.json();
-    const reply = ensureDisclaimer(data.content?.[0]?.text || '');
-    return { statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ reply }) };
-  } catch (err) {
-    // AbortError when our 9s timeout fires; ENETUNREACH / DNS issues if
-    // Anthropic is unreachable. Either way — soft-fail to 200 so the chat
-    // widget shows a friendly fallback instead of Cloudflare's raw 502.
-    try { clearTimeout(timeoutId); } catch (e) {}
-    console.error('chat:fetch-error', err && (err.name + ': ' + (err.message || '')));
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ reply: '', upstreamStatus: 0, error: err && err.name === 'AbortError' ? 'timeout' : 'network' })
-    };
   }
+  return json(last || { reply: '', upstreamStatus: 0, error: 'timeout' });
 };
