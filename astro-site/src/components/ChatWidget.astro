@@ -302,7 +302,9 @@
       div.innerHTML = text
         .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
         .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-        .replace(/\n/g,'<br>');
+        .replace(/\n/g,'<br>')
+        .replace(/(?:\+?1[\s.-]?)?\(?916\)?[\s.-]?399[\s.-]?3992/g, function(m){ return '<a href="tel:+19163993992">' + m + '</a>'; })
+        .replace(/info@imverica\.com/gi, function(m){ return '<a href="mailto:info@imverica.com">' + m + '</a>'; });
       body.appendChild(div);
       body.scrollTop = body.scrollHeight;
     }

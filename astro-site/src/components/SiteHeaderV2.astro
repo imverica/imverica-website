@@ -92,6 +92,9 @@ const L = (text: string) => megaLabel(text, lang);
         <button class="gn-icon gn-lang-btn" type="button" data-gn-menu="lang" aria-expanded="false" aria-controls="gn-panel-lang" aria-label={`Language: ${LANG_NAMES[lang]}`}>
           <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
         </button>
+        <a class="gn-icon gn-call" href="tel:+19163993992" aria-label={`${CALL[lang]} +1 (916) 399-3992`} data-gn-plain>
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" /></svg>
+        </a>
         <a class="gn-icon" href="/account.html" aria-label={t.portal} data-gn-plain>
           <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8.2" r="3.8" /><path d="M4.5 20.2c1.2-3.8 4.1-5.7 7.5-5.7s6.3 1.9 7.5 5.7" /></svg>
         </a>
@@ -626,8 +629,12 @@ const L = (text: string) => megaLabel(text, lang);
     .gn-link { padding: 0 2px; }
     .gn-tools a.gn-icon { display: none; }
   }
+  /* call button: phones and tablets only (bar mode keeps the CTA) */
+  .gn-tools a.gn-call { display: none; }
+  .gn.is-tight .gn-tools a.gn-call { display: inline-flex; }
   @media (max-width: 859px) {
     .gn-list, .gn-lang-btn, .gn-cta, .gn-flyout, .gn-scrim { display: none; }
+    .gn-tools a.gn-call { display: inline-flex; }
     .gn-inner { justify-content: space-between; }
     .gn-tools a.gn-icon { display: inline-flex; }
     .gn-burger { display: inline-block; }

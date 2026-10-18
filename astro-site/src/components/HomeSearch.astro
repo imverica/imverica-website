@@ -281,6 +281,12 @@ const t = STRINGS[lang] || STRINGS.en;
     result.classList.toggle('open', open);
   }
 
+  // Escaped text with the phone number and email as tel: / mailto: links.
+  function linkify(html: string) {
+    return html
+      .replace(/(?:\+?1[\s.-]?)?\(?916\)?[\s.-]?399[\s.-]?3992/g, (m) => `<a href="tel:+19163993992">${m}</a>`)
+      .replace(/info@imverica\.com/gi, (m) => `<a href="mailto:info@imverica.com">${m}</a>`);
+  }
   function escapeHtml(value: unknown) {
     return String(value ?? '').replace(/[&<>"']/g, (character) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -384,7 +390,7 @@ const t = STRINGS[lang] || STRINGS.en;
       const noteLang = lang !== 'en' ? lang : (['ru', 'uk', 'es'].includes(pageLang) ? pageLang : 'en');
       const note = routeData.messages?.[noteLang] || routeData.message || '';
       setResult(`
-        <p>${escapeHtml(note)}</p>
+        <p>${linkify(escapeHtml(note))}</p>
         <div class="ai-result-actions">
           <a href="https://t.me/imverica" target="_blank" rel="noopener">${t.telegram}</a>
           <a href="tel:+19163993992">${t.call}</a>
@@ -472,7 +478,7 @@ const t = STRINGS[lang] || STRINGS.en;
       const chatData = await chatPromise;
       const reply = String(chatData?.reply || '').trim();
       const extra = document.getElementById('aiExtra');
-      if (reply && extra) extra.innerHTML = escapeHtml(reply).replace(/\n/g, '<br>');
+      if (reply && extra) extra.innerHTML = linkify(escapeHtml(reply)).replace(/\n/g, '<br>');
       return;
     }
 
@@ -481,7 +487,7 @@ const t = STRINGS[lang] || STRINGS.en;
     const answer = String(chatData?.reply || chatData?.answer || '').trim();
     if (answer) {
       setResult(`
-        <p>${escapeHtml(answer).replace(/\n/g, '<br>')}</p>
+        <p>${linkify(escapeHtml(answer)).replace(/\n/g, '<br>')}</p>
         <div class="ai-result-actions">
           <button type="button" class="dark" data-ai-continue>${t.continue}</button>
           <a href="https://t.me/imverica" target="_blank" rel="noopener">${t.telegram}</a>
