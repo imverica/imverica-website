@@ -56,6 +56,7 @@ export function initHeroV2(): void {
   }
 
   // Statement: each word goes from dim to full white as it scrolls through.
+  // The dim state stays at 40% so even unlit words keep 3:1 (large text, AA).
   const reveal = document.querySelector<HTMLElement>('[data-hv2-reveal]');
   let words: HTMLElement[] = [];
   if (motion && reveal) {
@@ -75,7 +76,7 @@ export function initHeroV2(): void {
     const vh = window.innerHeight;
     const p = clamp((vh * 0.82 - r.top) / (r.height + vh * 0.25), 0, 1);
     const n = words.length;
-    words.forEach((w, i) => { w.style.opacity = (0.18 + 0.82 * clamp(p * (n + 2) - i, 0, 1)).toFixed(3); });
+    words.forEach((w, i) => { w.style.opacity = (0.4 + 0.6 * clamp(p * (n + 2) - i, 0, 1)).toFixed(3); });
   }
 
   let ticking = false;
