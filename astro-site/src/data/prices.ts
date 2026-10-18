@@ -53,7 +53,7 @@ export const PRICES: Record<string, PublishedPrice> = {
 };
 
 const TITLE_ALIASES: Record<string, string> = {
-  'FBN / DBA': 'FBN',
+  'FBN | DBA': 'FBN',
   'Demand Letter': 'DEMAND',
   'EOIR — Immigration Court': 'EOIR'
 };
