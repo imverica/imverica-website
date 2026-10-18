@@ -7,6 +7,8 @@
  * Rendered on every page but hidden unless <html class="v2"> (set from the
  * /preview flag), so the live site is untouched until cutover.
  */
+import fs from 'node:fs';
+import path from 'node:path';
 import { NAV, LOCALES, SUPPORTED_LOCALES, localizedPath, localizedPathSafe, type Locale } from '~/data/i18n';
 import { MEGA_NAV, megaLabel, type MegaKey, type MegaLink } from '~/data/megaNav';
 
@@ -42,8 +44,19 @@ function resolve(link: MegaLink) {
 }
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 
+// Language links only point at translations that were actually built:
+// /criminal and /california-name-change list RU / UA / MX in
+// availableLocales but have no such pages yet, so those go to the
+// language's homepage instead of a 404.
+const PAGES_DIR = path.join(process.cwd(), 'src/pages');
+function pageExists(href: string) {
+  if (!fs.existsSync(PAGES_DIR)) return true;
+  const p = href.replace(/\/$/, '') || '/index';
+  return fs.existsSync(path.join(PAGES_DIR, p + '.astro')) || fs.existsSync(path.join(PAGES_DIR, p, 'index.astro'));
+}
 function localeHref(locale: Locale) {
-  if (availableLocales.includes(locale)) return localizedPath(locale, currentSlug || '/');
+  const to = localizedPath(locale, currentSlug || '/');
+  if (availableLocales.includes(locale) && pageExists(to)) return to;
   return localizedPath(locale, '/');
 }
 const LANG_NAMES: Record<Locale, string> = { en: 'English', ru: 'Русский', uk: 'Українська', es: 'Español' };
