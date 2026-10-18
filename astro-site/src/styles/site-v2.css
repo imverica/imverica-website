@@ -535,3 +535,18 @@ html.v2 body .quick-facts { background: var(--tile) !important; border-top: 0 !i
 html.v2 body .why-section { background: #fff !important; }
 html.v2 body .discounts-strip { background: var(--tile) !important; border: 0 !important; border-radius: 30px !important; }
 html.v2 body .pricing-legal { background: var(--tile) !important; border: 0 !important; border-radius: 22px !important; }
+
+/* intake modal + chat widget */
+html.v2 body #quickIntakeModal { border-radius: 28px !important; padding: 32px 32px 26px !important; color: var(--ink) !important; }
+html.v2 body #quickIntakeModal #qiTitle { font-size: 28px !important; font-weight: 700 !important; letter-spacing: -0.025em !important; color: var(--ink) !important; }
+html.v2 body #quickIntakeModal :is(input, textarea, select) { border-color: var(--border) !important; border-radius: 12px !important; }
+html.v2 body #quickIntakeModal :is(input, textarea, select):focus { border-color: var(--navy) !important; box-shadow: 0 0 0 4px rgba(20, 50, 84, 0.12) !important; }
+html.v2 body #quickIntakeModal button[type="submit"] { background: var(--navy) !important; border-radius: 980px !important; }
+html.v2 body #iw-window { border-radius: 24px !important; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.28) !important; }
+html.v2 body .iw-header { background: #07111f !important; }
+html.v2 body .iw-header-title { font-weight: 600 !important; }
+html.v2 body .iw-lang { border-color: var(--border) !important; border-radius: 980px !important; }
+html.v2 body .iw-menu-btn { border-color: #e5e5ea !important; border-radius: 16px !important; }
+html.v2 body :is(.iw-input, .iw-form input, .iw-form textarea) { border-color: var(--border) !important; border-radius: 12px !important; }
+html.v2 body #iw-launcher { background: var(--navy) !important; }
+html.v2 body .iw-header-title span[aria-hidden="true"] { color: #9fb9de !important; }
