@@ -12,8 +12,12 @@
     var html = document.documentElement;
     if (!html.classList.contains('v2')) return;
     try {
+      // Motion runs for everyone (the owner wants it on every phone). With
+      // "reduce motion" only the pinned scroll-zoom of the desktop hero is
+      // left out (html.hv2-calm).
       var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!calm && 'IntersectionObserver' in window) html.classList.add('hv2-motion');
+      if ('IntersectionObserver' in window) html.classList.add('hv2-motion');
+      if (calm) html.classList.add('hv2-calm');
       document.querySelectorAll('template[data-v2-new]').forEach(function (tpl) {
         var old = document.querySelector('[data-v2-old="' + tpl.getAttribute('data-v2-new') + '"]');
         if (!old) return;

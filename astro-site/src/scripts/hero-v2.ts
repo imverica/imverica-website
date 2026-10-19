@@ -5,7 +5,9 @@
  * then the statement lights up word by word.
  *
  * Does nothing unless the v2 hero was swapped in (index.astro, html.v2), and
- * only animates with html.hv2-motion (no reduced motion).
+ * only animates with html.hv2-motion. The pinned scroll runs on screens
+ * from 734 px and not with "reduce motion" (html.hv2-calm); phones get a
+ * lighter version instead: the pages fan out as the stack scrolls up.
  */
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -14,6 +16,7 @@ export function initHeroV2(): void {
   const hero = document.querySelector<HTMLElement>('.hv2-hero');
   if (!hero) return;
   const motion = document.documentElement.classList.contains('hv2-motion');
+  const calm = document.documentElement.classList.contains('hv2-calm');
   const pin = hero.querySelector<HTMLElement>('.hv2-pin')!;
   const copy = hero.querySelector<HTMLElement>('.hv2-copy')!;
   const move = hero.querySelector<HTMLElement>('.hv2-stack-move')!;
@@ -38,7 +41,8 @@ export function initHeroV2(): void {
   function update() {
     ticking = false;
     updReveal();
-    if (!motion || !pinMQ.matches || hero!.classList.contains('is-static')) { reset(); return; }
+    if (motion && !pinMQ.matches) { fanPhone(); return; }
+    if (!motion || calm || !pinMQ.matches || hero!.classList.contains('is-static')) { reset(); return; }
     const total = hero!.offsetHeight - pin.offsetHeight;
     const top = bar ? bar.offsetHeight : 48;
     const p = total > 0 ? clamp((top - hero!.getBoundingClientRect().top) / total, 0, 1) : 0;
@@ -53,6 +57,18 @@ export function initHeroV2(): void {
     const c = clamp((p - 0.55) / 0.3, 0, 1);
     cap.style.opacity = c.toFixed(3);
     cap.style.transform = `translateY(${((1 - c) * 30).toFixed(1)}px)`;
+  }
+
+  // Phones: no pinning; the side pages spread and tilt as the stack moves
+  // from the bottom of the screen towards the top.
+  function fanPhone() {
+    const r = move.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const p = clamp((vh - r.top) / (vh * 0.85), 0, 1);
+    const e = ease(p);
+    stack.style.setProperty('--fan', (90 + e * 200).toFixed(1));
+    stack.style.setProperty('--rot', (1 + e * 9).toFixed(2));
+    move.style.transform = `scale(${(0.94 + e * 0.06).toFixed(4)})`;
   }
 
   // Statement: each word goes from dim to full white as it scrolls through.

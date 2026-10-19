@@ -90,8 +90,8 @@ const items = [
   // lands on its value), left to right, once the band is properly in view.
   // Without motion support the server-rendered numbers simply stay.
   function rollStats(nums: NodeListOf<HTMLElement>) {
-    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (calm || !('IntersectionObserver' in window)) return;
+    // Runs with "reduce motion" too: the owner wants the drums on every phone.
+    if (!('IntersectionObserver' in window)) return;
     nums.forEach((el, item) => {
       if (el.dataset.rolled) return;
       el.dataset.rolled = '1';

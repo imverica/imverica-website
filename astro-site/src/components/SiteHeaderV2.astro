@@ -334,9 +334,8 @@ const L = (text: string) => megaLabel(text, lang);
 
     // Inner pages: section headings below the fold rise in as they scroll
     // into view (the homepage hero runs its own motion).
-    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isV2 = document.documentElement.classList.contains('v2');
-    if (isV2 && !calm && 'IntersectionObserver' in window && !document.querySelector('.hv2-hero')) {
+    if (isV2 && 'IntersectionObserver' in window && !document.querySelector('.hv2-hero')) {
       const io = new IntersectionObserver((entries) => entries.forEach((entry) => {
         if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
       }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });

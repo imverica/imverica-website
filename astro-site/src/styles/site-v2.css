@@ -418,9 +418,6 @@ html.hv2-motion .hv2-rise { opacity: 0; transform: translateY(48px); transition:
 html.hv2-motion .hv2-rise.in { opacity: 1; transform: none; }
 html.v2.reveal-init .reveal { transform: translateY(48px); transition: opacity 0.9s ease, transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 html.v2.reveal-init .reveal.in { transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  html.hv2-motion .hv2-rise { opacity: 1; transform: none; transition: none; }
-}
 
 
 /* ==== Inner pages in the new design ======================================
@@ -514,7 +511,6 @@ html.v2 body .affordable-note { background: var(--tile) !important; border: 0 !i
 /* rise-in for section headings below the fold (added by SiteHeaderV2) */
 html.v2 .v2-rise { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 html.v2 .v2-rise.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { html.v2 .v2-rise { opacity: 1; transform: none; transition: none; } }
 html.v2 body .imm-cats-footnote { color: rgba(255, 255, 255, 0.6) !important; }
 html.v2 body .imm-cats-footnote a { color: #9fb9de !important; text-decoration-color: rgba(159, 185, 222, 0.4) !important; }
 

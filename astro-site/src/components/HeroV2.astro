@@ -259,20 +259,18 @@ const words = heading.split(/\s+/);
   html.hv2-motion .hv2-hero .hv2-finder { animation: hv2-fade-up 0.6s var(--hv2-ease) 0.28s both; }
   html.hv2-motion .hv2-hero .hv2-stack-in { animation: hv2-stack-in 0.85s var(--hv2-ease) 0.22s both; }
   @media (min-width: 734px) {
-    html.hv2-motion .hv2-hero:not(.is-static) { height: 225vh; }
-    html.hv2-motion .hv2-hero:not(.is-static) .hv2-hint { display: flex; }
-    html.hv2-motion .hv2-hero:not(.is-static) .hv2-pin {
+    html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) { height: 225vh; }
+    html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) .hv2-hint { display: flex; }
+    html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) .hv2-pin {
       position: sticky;
       top: var(--hv2-bar);
       height: calc(100vh - var(--hv2-bar));
       height: calc(100svh - var(--hv2-bar));
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .hv2-hero *, .hv2-hero *::before, .hv2-hero *::after { animation: none !important; transition: none !important; }
-  }
   /* The caption only exists inside the pinned scroll; without it, hide it. */
   html:not(.hv2-motion) .hv2-hero .hv2-cap,
+  html.hv2-calm .hv2-hero .hv2-cap,
   .hv2-hero.is-static .hv2-cap { display: none; }
 </style>
 

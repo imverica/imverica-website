@@ -1,9 +1,10 @@
 /**
- * Slider in components/HomeShowcaseV2.astro: wide slides that move right to
+ * Slider in components/HomeSliderV2.astro: wide slides that move right to
  * left every 5 s with the neighbours peeking in, in an endless loop (two
  * clones at each end). Dots, arrows, a pause button, swipe and arrow keys.
  * Autoplay stops while the slider has keyboard focus, is off screen or the
- * tab is hidden, and does not start at all with prefers-reduced-motion.
+ * tab is hidden. It runs with "reduce motion" too (the site owner wants it
+ * moving on every phone); the pause button stops it for anyone.
  * The pause button also stops the row of form cards underneath.
  */
 const INTERVAL = 5000;
@@ -34,10 +35,9 @@ function setup(root: HTMLElement): void {
   const all = Array.from(track.children) as HTMLElement[];
   const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-hs-dot]'));
   const play = root.querySelector<HTMLButtonElement>('[data-hs-play]');
-  const calm = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
   let pos = CLONES; // index in `all`
-  let userPaused = !!calm;
+  let userPaused = false;
   let hold = 0; // focus, drag, off screen, hidden tab
   let timer = 0;
   let drag: { x: number; y: number; dx: number; id: number; lock: '' | 'x' | 'y' } | null = null;
@@ -68,9 +68,9 @@ function setup(root: HTMLElement): void {
   }
   function go(to: number, animate = true) {
     pos = to;
-    paint(animate && !calm);
+    paint(animate);
     mark();
-    if (!animate || calm) settle();
+    if (!animate) settle();
   }
   // After sliding onto a clone, jump to the real slide without animation.
   function settle() {
