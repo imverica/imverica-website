@@ -6,11 +6,16 @@
  *
  * Does nothing unless the v2 hero was swapped in (index.astro, html.v2), and
  * only animates with html.hv2-motion. The pinned scroll runs on screens
- * from 734 px and not with "reduce motion" (html.hv2-calm); phones get a
- * lighter version instead: the pages fan out as the stack scrolls up.
+ * from 734 px and not with "reduce motion" (html.hv2-calm). Phones get
+ * their own opening instead: the three pages wait as one stack and open
+ * like a bouquet once a third of it is on screen (again each time it comes
+ * back into view), and the
+ * first screen is laid out so the finder sits in the middle of the screen
+ * with the phone number still above the fold.
  */
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeBack = (t: number) => 1 + 2.2 * Math.pow(t - 1, 3) + 1.2 * Math.pow(t - 1, 2);
 
 export function initHeroV2(): void {
   const hero = document.querySelector<HTMLElement>('.hv2-hero');
@@ -41,7 +46,7 @@ export function initHeroV2(): void {
   function update() {
     ticking = false;
     updReveal();
-    if (motion && !pinMQ.matches) { fanPhone(); return; }
+    if (!pinMQ.matches) return; // phones: bouquet() and placePhone()
     if (!motion || calm || !pinMQ.matches || hero!.classList.contains('is-static')) { reset(); return; }
     const total = hero!.offsetHeight - pin.offsetHeight;
     const top = bar ? bar.offsetHeight : 48;
@@ -59,16 +64,57 @@ export function initHeroV2(): void {
     cap.style.transform = `translateY(${((1 - c) * 30).toFixed(1)}px)`;
   }
 
-  // Phones: no pinning; the side pages spread and tilt as the stack moves
-  // from the bottom of the screen towards the top.
-  function fanPhone() {
-    const r = move.getBoundingClientRect();
+  // Phones: the pages arrive stacked, then the side pages swing out and
+  // tilt while the stack settles to full size.
+  let bouquetRun = 0;
+  function closed() {
+    stack.style.setProperty('--fan', '0');
+    stack.style.setProperty('--rot', '0');
+    move.style.transform = 'scale(0.9)';
+  }
+  function bouquet(delay: number) {
+    const run = ++bouquetRun;
+    closed();
+    window.setTimeout(() => {
+      const t0 = performance.now();
+      const frame = (now: number) => {
+        if (run !== bouquetRun || pinMQ.matches) return;
+        const t = clamp((now - t0) / 1500, 0, 1);
+        const e = easeBack(t);
+        stack.style.setProperty('--fan', (e * 250).toFixed(1));
+        stack.style.setProperty('--rot', (e * 11).toFixed(2));
+        move.style.transform = `scale(${(0.9 + 0.1 * ease(t)).toFixed(4)})`;
+        if (t < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    }, delay);
+  }
+
+  // Phones: top padding chosen so the finder's field is centred in the
+  // visible screen; moved up again if the phone number would fall below it.
+  const field = hero.querySelector<HTMLElement>('.ai-finder-form');
+  const contact = hero.querySelector<HTMLElement>('.ai-hero-contact');
+  const pageTop = (el: HTMLElement) => { let y = 0; for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) y += n.offsetTop; return y; };
+  let placedFor = 0;
+  function placePhone(force = false) {
+    if (pinMQ.matches) { hero!.style.removeProperty('--hv2-top'); placedFor = 0; return; }
+    if (!field || (!force && placedFor === window.innerWidth)) return;
+    placedFor = window.innerWidth;
+    const now = parseFloat(getComputedStyle(pin).paddingTop) || 0;
     const vh = window.innerHeight;
-    const p = clamp((vh - r.top) / (vh * 0.85), 0, 1);
-    const e = ease(p);
-    stack.style.setProperty('--fan', (90 + e * 200).toFixed(1));
-    stack.style.setProperty('--rot', (1 + e * 9).toFixed(2));
-    move.style.transform = `scale(${(0.94 + e * 0.06).toFixed(4)})`;
+    let shift = vh / 2 - (pageTop(field) + field.offsetHeight / 2);
+    if (contact) {
+      const over = pageTop(contact) + contact.offsetHeight + shift - (vh - 12);
+      if (over > 0) shift -= over;
+    }
+    // Long copy (UA, small phones): tighten the type once, then place again.
+    if (now + shift < 6 && !hero!.classList.contains('hv2-tight')) {
+      hero!.classList.add('hv2-tight');
+      placedFor = 0;
+      placePhone(true);
+      return;
+    }
+    hero!.style.setProperty('--hv2-top', `${clamp(now + shift, 6, 160).toFixed(0)}px`);
   }
 
   // Statement: each word goes from dim to full white as it scrolls through.
@@ -110,7 +156,20 @@ export function initHeroV2(): void {
   }
 
   update();
+  placePhone(true);
+  window.addEventListener('resize', () => placePhone());
   if (motion) revealSections();
+  if (motion && !pinMQ.matches) {
+    // Opens once a third of the stack is on screen, and again every time
+    // it comes back after leaving the screen.
+    closed();
+    let armed = true;
+    new IntersectionObserver(([entry]) => {
+      if (pinMQ.matches) return;
+      if (!entry.isIntersecting) { armed = true; bouquetRun++; closed(); return; }
+      if (armed && entry.intersectionRatio >= 0.33) { armed = false; bouquet(120); }
+    }, { threshold: [0, 0.33] }).observe(move);
+  }
 
   // Headline: the current homepage copy and the alternate line take turns.
   // Held still while someone types in the finder or reads its answer.

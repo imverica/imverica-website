@@ -5,7 +5,6 @@ import HomeSearch from '~/components/HomeSearch.astro';
 import StatsStrip from '~/components/StatsStrip.astro';
 import HeroV2 from '~/components/HeroV2.astro';
 import HomeFormsV2 from '~/components/HomeFormsV2.astro';
-import HomeSliderV2 from '~/components/HomeSliderV2.astro';
 import V2Swap from '~/components/V2Swap.astro';
 import { HERO } from '~/data/i18n';
 
@@ -74,8 +73,6 @@ const description =
   </section>
   </div>
   <template data-v2-new="services"><HomeFormsV2 lang={lang} /></template>
-  <div data-v2-old="slider"></div>
-  <template data-v2-new="slider"><HomeSliderV2 lang={lang} /></template>
   <V2Swap />
 
   <style>

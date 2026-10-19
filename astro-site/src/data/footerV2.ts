@@ -23,14 +23,12 @@ interface Column { title: string; links: Array<[slug: string, label: string]> }
 export interface FooterV2Copy {
   notes: Note[];
   columns: Column[];
-  reach: { lead: string; call: string; email: string; social: string };
+  reach: { lead: string; call: string; email: string };
   copyright: string;
   bottom: Array<[href: string, label: string]>;
   region: string;
   languages: string;
 }
-
-const TEL = '+1 (916) 399-3992';
 
 export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
   en: {
@@ -48,7 +46,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'Business', links: [['/business', 'All business filings'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Corporation | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement']] },
       { title: 'Imverica', links: [['/about', 'About Imverica'], ['/pricing', 'Pricing'], ['/for-attorneys', 'For Attorneys'], ['/lda', 'What Is an LDA'], ['/schedule', 'Schedule a Call'], ['/account.html', 'Client Portal']] }
     ],
-    reach: { lead: 'More ways to reach us:', call: `call ${TEL}`, email: 'email info@imverica.com', social: 'or message us on' },
+    reach: { lead: 'More ways to reach us', call: 'Call', email: 'Email' },
     copyright: 'Copyright © {year} Imverica LLC. All rights reserved.',
     bottom: [['/terms.html', 'Terms of Service'], ['/pricing', 'Pricing'], ['/lda', 'What Is an LDA'], ['/for-attorneys', 'For Attorneys']],
     region: 'California, USA',
@@ -69,7 +67,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'Бизнес', links: [['/business', 'Все документы для бизнеса'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Корпорация | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement (устав LLC)']] },
       { title: 'Imverica', links: [['/about', 'О компании'], ['/pricing', 'Цены'], ['/for-attorneys', 'Адвокатам'], ['/lda', 'Что такое LDA'], ['/schedule', 'Записаться на звонок'], ['/account.html', 'Кабинет клиента']] }
     ],
-    reach: { lead: 'Другие способы связаться:', call: `позвоните ${TEL}`, email: 'напишите на info@imverica.com', social: 'или в' },
+    reach: { lead: 'Другие способы связаться', call: 'Позвонить', email: 'Написать на почту' },
     copyright: 'Copyright © {year} Imverica LLC. Все права защищены.',
     bottom: [['/terms.html', 'Условия обслуживания'], ['/pricing', 'Цены'], ['/lda', 'Что такое LDA'], ['/for-attorneys', 'Адвокатам']],
     region: 'Калифорния, США',
@@ -90,7 +88,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'Бізнес', links: [['/business', 'Усі документи для бізнесу'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Корпорація | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement (статут LLC)']] },
       { title: 'Imverica', links: [['/about', 'Про компанію'], ['/pricing', 'Ціни'], ['/for-attorneys', 'Адвокатам'], ['/lda', 'Що таке LDA'], ['/schedule', 'Записатися на дзвінок'], ['/account.html', 'Кабінет клієнта']] }
     ],
-    reach: { lead: 'Інші способи зв’язатися:', call: `зателефонуйте ${TEL}`, email: 'напишіть на info@imverica.com', social: 'або в' },
+    reach: { lead: 'Інші способи зв’язатися', call: 'Зателефонувати', email: 'Написати на пошту' },
     copyright: 'Copyright © {year} Imverica LLC. Усі права захищено.',
     bottom: [['/terms.html', 'Умови обслуговування'], ['/pricing', 'Ціни'], ['/lda', 'Що таке LDA'], ['/for-attorneys', 'Адвокатам']],
     region: 'Каліфорнія, США',
@@ -111,7 +109,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'Negocios', links: [['/business', 'Todos los trámites de negocio'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Corporación | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement (acuerdo operativo)']] },
       { title: 'Imverica', links: [['/about', 'Sobre Imverica'], ['/pricing', 'Precios'], ['/for-attorneys', 'Para abogados'], ['/lda', 'Qué es un LDA'], ['/schedule', 'Agendar una llamada'], ['/account.html', 'Portal del cliente']] }
     ],
-    reach: { lead: 'Otras formas de contactarnos:', call: `llame al ${TEL}`, email: 'escriba a info@imverica.com', social: 'o envíenos un mensaje por' },
+    reach: { lead: 'Otras formas de contactarnos', call: 'Llamar', email: 'Escribir un correo' },
     copyright: 'Copyright © {year} Imverica LLC. Todos los derechos reservados.',
     bottom: [['/terms.html', 'Términos del servicio'], ['/pricing', 'Precios'], ['/lda', 'Qué es un LDA'], ['/for-attorneys', 'Para abogados']],
     region: 'California, EE. UU.',

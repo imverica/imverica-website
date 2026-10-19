@@ -118,16 +118,18 @@ const items = [
         el.append(col);
       });
     });
+    // Start once the band is half in view and its items have faded in
+    // (the rise-in takes ~0.9 s), so the whole spin is actually seen.
+    const band = nums[0].closest<HTMLElement>('.stats-strip') || nums[0];
+    const spin = () => nums.forEach((el) => el.querySelectorAll<HTMLElement>('.stat-odo-strip').forEach((strip) => {
+      strip.style.transform = `translateY(${-Number(strip.dataset.to)}em)`;
+    }));
     const io = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       io.unobserve(entry.target);
-      window.setTimeout(() => {
-        entry.target.querySelectorAll<HTMLElement>('.stat-odo-strip').forEach((strip) => {
-          strip.style.transform = `translateY(${-Number(strip.dataset.to)}em)`;
-        });
-      }, 300);
-    }), { threshold: 0.6 });
-    nums.forEach((el) => io.observe(el));
+      window.setTimeout(spin, 650);
+    }), { threshold: 0.5 });
+    io.observe(band);
 
     // Coming back with the Back button restores the page from bfcache with
     // the drums already stopped: spin them again from zero.
@@ -142,8 +144,8 @@ const items = [
           strip.style.transition = '';
           strip.style.transitionDelay = delay;
         });
-        io.observe(el);
       });
+      io.observe(band);
     });
   }
 
