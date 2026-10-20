@@ -10,4 +10,4 @@
  * (account.html, terms.html) carry a copy of this script: flip all three.
  */
 ---
-<script is:inline>var V2_DEFAULT=0;try{var c=document.documentElement.classList,m=location.search.match(/[?&]v2=([01])/);if(m){localStorage.setItem('imv-v2',m[1]);var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}var s=localStorage.getItem('imv-v2');if(s==='1'||(V2_DEFAULT&&s!=='0')){c.add('v2');if(!V2_DEFAULT)c.add('v2-pre')}}catch(e){if(V2_DEFAULT)document.documentElement.classList.add('v2')}</script>
+<script is:inline>var V2_DEFAULT=1;try{var c=document.documentElement.classList,m=location.search.match(/[?&]v2=([01])/);if(m){localStorage.setItem('imv-v2',m[1]);var u=new URL(location.href);u.searchParams.delete('v2');history.replaceState(null,'',u.pathname+u.search+u.hash)}var s=localStorage.getItem('imv-v2');if(s==='1'||(V2_DEFAULT&&s!=='0')){c.add('v2');if(!V2_DEFAULT)c.add('v2-pre')}}catch(e){if(V2_DEFAULT)document.documentElement.classList.add('v2')}</script>
