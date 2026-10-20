@@ -61,7 +61,7 @@ const sourceChecks = [
   ['astro-site/src/components/SiteHeader.astro', 'localizedPathSafe'],
   ['astro-site/src/components/SiteFooter.astro', 'localizedPathSafe'],
   ['astro-site/src/data/i18n.ts', 'translatedSlugs'],
-  ['astro-site/src/layouts/BaseLayout.astro', "ogImage = '/logo-nav.png'"]
+  ['astro-site/src/layouts/BaseLayout.astro', '/og/og-${lang}.jpg']
 ];
 for (const [file, marker] of sourceChecks) {
   assert(read(file).includes(marker), `${file} missing routing guardrail marker: ${marker}`);
@@ -74,9 +74,15 @@ for (const file of html) {
   const content = fs.readFileSync(file, 'utf8');
   const relative = path.relative(DIST, file);
 
+  // Search Console verification file and noindex pages (404, account,
+  // dashboard, previews) need no canonical; 404 pages are served for any
+  // missing path, so their own URL has no file.
+  const unindexed = /^google[0-9a-f]+\.html$/.test(relative) || /<meta name="robots" content="noindex/.test(content);
   const canonical = content.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
-  assert(canonical?.startsWith(SITE), `${relative} missing absolute canonical URL`);
-  assertUrlExists(canonical, `${relative} canonical`);
+  if (!unindexed) {
+    assert(canonical?.startsWith(SITE), `${relative} missing absolute canonical URL`);
+    assertUrlExists(canonical, `${relative} canonical`);
+  }
 
   for (const match of content.matchAll(/<link rel="alternate" hreflang="[^"]+" href="([^"]+)"/g)) {
     assertUrlExists(match[1], `${relative} hreflang`);

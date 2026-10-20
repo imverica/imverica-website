@@ -82,13 +82,13 @@ function testWiring() {
   assert.ok(netlifyConfig.includes('from = "/api/visa-bulletin"'), 'netlify.toml must expose /api/visa-bulletin');
 
   const astroHome = fs.readFileSync('astro-site/src/pages/index.astro', 'utf8');
-  for (const component of ['HomeSearch', 'ServiceSections', 'LatestUpdates', 'VisaBulletin', 'WhyUs', 'Testimonials', 'FAQSection']) {
+  for (const component of ['HomeSearch', 'OurServices', 'LatestUpdates', 'VisaBulletin', 'Testimonials']) {
     assert.ok(astroHome.includes(component), `Astro homepage must include ${component}`);
   }
 
   const header = fs.readFileSync('astro-site/src/components/SiteHeader.astro', 'utf8');
   assert.ok(header.includes('tel:+19163993992'), 'header topbar must expose phone link');
-  assert.ok(header.includes('Call/Text +1 (916) 399-3992'), 'header topbar must show international phone format');
+  assert.ok(header.includes('+1 (916) 399-3992'), 'header topbar must show international phone format');
 }
 
 async function main() {

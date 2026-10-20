@@ -117,6 +117,12 @@ async function main() {
   // with the preferred form in the generated county/type index.
   const reliefIndex = require('../assets/form-cache/ca-criminal-relief-index.json');
   async function assertExpectedReliefRoute(county, reliefType, result, label) {
+    // Resentencing (Prop 47 / 17(b) reduction) is relief we no longer
+    // prepare: the router answers attorney-only in every county.
+    if (reliefType === 'resentencing') {
+      assert(result.attorneyOnly === true && !(result.route || {}).formCode, `${label}: expected attorney-only answer, got ${(result.route || {}).formCode || 'none'}`);
+      return 'fallback';
+    }
     const matches = county.forms.filter((form) => form.reliefType === reliefType);
     const expected = matches.find((form) => form.role === 'prepare') || matches[0] || null;
     const actual = result.route || {};
@@ -127,10 +133,10 @@ async function main() {
       assert(actual.scope === 'local', `${label}: expected local scope`);
       return 'local';
     }
-    // Record-clearing services we offer (dismissal, early probation termination,
-    // resentencing) fall back to the statewide CR-180 intake so they never
+    // Record-clearing services we offer (dismissal, early probation
+    // termination) fall back to the statewide CR-180 intake so they never
     // dead-end; relief we don't prepare (warrant recall) stays no-local-form.
-    if (['record-cleanup', 'probation-motion', 'resentencing'].includes(reliefType)) {
+    if (['record-cleanup', 'probation-motion'].includes(reliefType)) {
       assert(actual.formCode === 'CR-180', `${label}: expected statewide CR-180 fallback, got ${actual.formCode || 'none'}`);
       assert(!actual.localFormId, `${label}: statewide fallback must not carry a localFormId`);
       return 'fallback';
