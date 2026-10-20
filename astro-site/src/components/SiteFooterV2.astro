@@ -215,6 +215,21 @@ const contacts = [
   }
   @media (min-width: 834px) {
     :global(html.v2-pre) .gf-inner { padding-bottom: 64px; }
+    /* contacts sit on the directory's four columns: phone, email, Telegram,
+       then Instagram and Facebook sharing the last one */
+    .gf-contacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px 24px; }
+    .gf-contacts li:nth-child(4) { grid-column: 4; grid-row: 1; justify-self: start; }
+    .gf-contacts li:nth-child(5) { grid-column: 4; grid-row: 1; justify-self: end; }
+    /* bar: copyright left and region | languages right on one line, legal links below */
+    .gf-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "copy locale" "legal legal";
+      gap: 8px 30px;
+    }
+    .gf-copy { grid-area: copy; }
+    .gf-legal { grid-area: legal; }
+    .gf-locale { grid-area: locale; margin-left: 0; justify-self: end; }
   }
   @media (prefers-reduced-motion: reduce) {
     .gf-col summary::after { transition: none; }
