@@ -9,7 +9,7 @@ import FounderBlock from '~/components/FounderBlock.astro';
 
 const lang = 'uk' as const;
 const title = 'Про компанію Imverica — California LDA та Immigration Consultant | Imverica Legal Solutions';
-const description = "Imverica Legal Solutions — мультимовний (англійська, російська, українська, іспанська) Legal Document Assistant та Immigration Consultant із Сакраменто. Готуємо документи USCIS, EOIR та судів Каліфорнії по всій території США та штату — за доступними, прозорими тарифами. Ми не юридична фірма й не надаємо юридичних консультацій.";
+const description = "Imverica Legal Solutions — мультимовний (англійська, російська, українська, іспанська) Legal Document Assistant та Immigration Consultant із Сакраменто. Готуємо документи USCIS та судів Каліфорнії по всій території США та штату — за доступними, прозорими тарифами. Ми не юридична фірма й не надаємо юридичних консультацій.";
 
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ua/about"
@@ -26,7 +26,7 @@ const description = "Imverica Legal Solutions — мультимовний (ан
   <LandingBody lang={lang} related={[
     { href: '/ua/lda', label: 'Хто такий California Legal Document Assistant?' },
     { href: '/ua/for-attorneys', label: 'Для адвокатів — paralegal-партнерство' },
-    { href: '/ua/immigration', label: 'USCIS та EOIR документи, які ми готуємо' },
+    { href: '/ua/immigration', label: 'Форми USCIS, які ми готуємо' },
     { href: '/ua/fl', label: 'Сімейне право Каліфорнії' },
     { href: '/ua/sacramento', label: 'Документи у Сакраменто — українською' }
   ]}>
@@ -74,7 +74,7 @@ const description = "Imverica Legal Solutions — мультимовний (ан
     <p><strong>Що ми готуємо:</strong></p>
     <ul>
       <li>Форми USCIS (I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864, відповіді на RFE, пакети доказів).</li>
-      <li>Документи для імміграційного суду EOIR (EOIR-29, 42A, 42B, клопотання, пакети про ситуацію в країні, декларації).</li>
+      <li><strong>Імміграційний суд (EOIR): лише для адвокатів.</strong> У справах EOIR ми працюємо лише як помічник юриста (paralegal) під керівництвом адвоката й не готуємо документи до імміграційного суду для приватних осіб (<a href="/ua/eoir-immigration-court">чому</a>).</li>
       <li>Сімейне право Каліфорнії (FL-100/110/120, FL-150/160, FL-300, опіка, аліменти, пакети судового рішення).</li>
       <li>Малі позови та цивільні справи в Каліфорнії (SC-100 — SC-140, досудові претензії, утримання із зарплати, abstract of judgment).</li>
       <li>Документи щодо виселення в Каліфорнії для орендодавців і орендарів (UD-100/105/110, триденні повідомлення, пакети default).</li>
@@ -106,10 +106,7 @@ const description = "Imverica Legal Solutions — мультимовний (ан
       і в кожному договорі.
     </p>
     <p>
-      З формами USCIS та EOIR ми працюємо лише як укладач документів за
-      вашим дорученням: ніколи не виступаємо вашим представником перед
-      USCIS чи EOIR і на кожному кроці повідомляємо, що ми не адвокати й не
-      акредитовані представники.
+      З формами USCIS ми працюємо лише як укладач документів за вашим дорученням: ніколи не виступаємо вашим представником перед USCIS і на кожному кроці повідомляємо, що ми не адвокати й не акредитовані представники. Справам в імміграційному суді (EOIR) потрібен ліцензований адвокат або акредитований представник (DOJ-accredited representative); у них ми працюємо лише як paralegal під керівництвом адвоката.
     </p>
 
     <h2 id="contact">Як з нами зв'язатися</h2>
@@ -123,7 +120,7 @@ const description = "Imverica Legal Solutions — мультимовний (ан
     </ul>
     <p>
       Офіс у Сакраменто, Каліфорнія. Справи в судах Каліфорнії — по всьому
-      штату; форми USCIS та EOIR — для клієнтів по всіх США.
+      штату; форми USCIS — для клієнтів по всіх США.
     </p>
 
     <cite>
@@ -144,7 +141,7 @@ const description = "Imverica Legal Solutions — мультимовний (ан
     heading="Оберіть напрямок"
     intro="Якщо вже знаєте, що вам потрібно — переходьте прямо туди:"
     tiles={[
-      { icon: '🛂', title: 'USCIS та EOIR',         desc: 'I-485, I-130, I-765, asylum, removal-defense — будь-який штат США.', href: '/ua/immigration', color: 'var(--navy)' },
+      { icon: '🛂', title: 'Форми USCIS', desc: 'I-485, I-130, I-765, N-400, I-589: будь-який штат США.', href: '/ua/immigration', color: 'var(--navy)' },
       { icon: '👨‍👩‍👧', title: 'Сімейне право CA',    desc: 'Розлучення, опіка, аліменти, post-judgment modifications.', href: '/ua/fl', color: 'var(--terracotta)' },
       { icon: '📃', title: 'Малі позови та civil',  desc: 'SC-100, demand letters, стягнення за рішенням.', href: '/ua/sc', color: 'var(--sage)' },
       { icon: '🏠', title: 'Виселення',             desc: 'UD-100, three-day notices, default-пакети.', href: '/ua/california-unlawful-detainer', color: 'var(--gold)' },

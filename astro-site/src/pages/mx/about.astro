@@ -9,7 +9,7 @@ import FounderBlock from '~/components/FounderBlock.astro';
 
 const lang = 'es' as const;
 const title = 'Sobre Imverica — California LDA y Consultor de Inmigración | Imverica Legal Solutions';
-const description = 'Imverica Legal Solutions es un Legal Document Assistant y Consultor de Inmigración multilingüe (inglés, ruso, ucraniano, español) con sede en Sacramento. Preparamos documentos de USCIS, EOIR y cortes del estado de California en todo el país y en todo el estado — a tarifas accesibles y transparentes. No somos un bufete de abogados y no damos asesoría legal.';
+const description = 'Imverica Legal Solutions es un Legal Document Assistant y Consultor de Inmigración multilingüe (inglés, ruso, ucraniano, español) con sede en Sacramento. Preparamos documentos de USCIS y de las cortes del estado de California en todo el país y en todo el estado — a tarifas accesibles y transparentes. No somos un bufete de abogados y no damos asesoría legal.';
 
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/about"
@@ -26,7 +26,7 @@ const description = 'Imverica Legal Solutions es un Legal Document Assistant y C
   <LandingBody lang={lang} related={[
     { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' },
     { href: '/mx/for-attorneys', label: 'Para abogados — colaboración paralegal' },
-    { href: '/mx/immigration', label: 'Documentos de USCIS y EOIR que preparamos' },
+    { href: '/mx/immigration', label: 'Formularios de USCIS que preparamos' },
     { href: '/mx/fl', label: 'Derecho familiar de California' }
   ]}>
     <p class="lead">
@@ -75,7 +75,7 @@ const description = 'Imverica Legal Solutions es un Legal Document Assistant y C
     <p><strong>Lo que preparamos:</strong></p>
     <ul>
       <li>Formularios de USCIS (I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864, respuestas a RFE, paquetes de pruebas).</li>
-      <li>Documentos para la corte de inmigración EOIR (EOIR-29, 42A, 42B, mociones, paquetes sobre condiciones del país, declaraciones).</li>
+      <li><strong>Corte de inmigración (EOIR): solo para abogados.</strong> En casos de EOIR trabajamos solo como asistente legal (paralegal) bajo la dirección de un abogado y no preparamos escritos para la corte de inmigración para particulares (<a href="/mx/eoir-immigration-court">por qué</a>).</li>
       <li>Derecho familiar de California (FL-100/110/120, FL-150/160, FL-300, custodia, manutención, paquetes de sentencia).</li>
       <li>Reclamos menores y asuntos civiles en California (SC-100 a SC-140, cartas de demanda, embargo de salario, abstract of judgment).</li>
       <li>Documentos de desalojo en California para propietarios e inquilinos (UD-100/105/110, avisos de tres días, paquetes de rebeldía).</li>
@@ -106,10 +106,7 @@ const description = 'Imverica Legal Solutions es un Legal Document Assistant y C
       datos también aparecen en cada contrato.
     </p>
     <p>
-      Con los formularios de USCIS y EOIR actuamos solo como preparadores de
-      documentos bajo su dirección: nunca lo representamos ante USCIS ni
-      EOIR y en cada paso le informamos que no somos abogados ni
-      representantes acreditados.
+      Con los formularios de USCIS actuamos solo como preparadores de documentos bajo su dirección: nunca lo representamos ante USCIS y en cada paso le informamos que no somos abogados ni representantes acreditados. Los asuntos de la corte de inmigración (EOIR) requieren un abogado con licencia o un representante acreditado por el DOJ; en ellos trabajamos solo como paralegal bajo la dirección de un abogado.
     </p>
 
     <h2 id="contact">Cómo contactarnos</h2>
@@ -123,8 +120,7 @@ const description = 'Imverica Legal Solutions es un Legal Document Assistant y C
     </ul>
     <p>
       Oficina en Sacramento, California. Asuntos en tribunales de California
-      en todo el estado; formularios de USCIS y EOIR para clientes en todo
-      Estados Unidos.
+      en todo el estado; formularios de USCIS para clientes en todo Estados Unidos.
     </p>
 
     <cite>
@@ -145,7 +141,7 @@ const description = 'Imverica Legal Solutions es un Legal Document Assistant y C
     heading="Elija un área de servicio"
     intro="Si ya sabe lo que necesita, vaya directo:"
     tiles={[
-      { icon: '🛂', title: 'USCIS y EOIR',           desc: 'I-485, I-130, I-765, asilo, defensa contra deportación — cualquier estado.', href: '/mx/immigration', color: 'var(--navy)' },
+      { icon: '🛂', title: 'Formularios de USCIS', desc: 'I-485, I-130, I-765, N-400, I-589: cualquier estado.', href: '/mx/immigration', color: 'var(--navy)' },
       { icon: '👨‍👩‍👧', title: 'Familia (CA)',         desc: 'Divorcio, custodia, manutención, modificaciones post-juicio.', href: '/mx/fl', color: 'var(--terracotta)' },
       { icon: '📃', title: 'Reclamos menores',       desc: 'SC-100, demand letters, cobro de juicio.', href: '/mx/sc', color: 'var(--sage)' },
       { icon: '🏠', title: 'Desalojo',               desc: 'UD-100, three-day notices, paquetes por incumplimiento.', href: '/mx/california-unlawful-detainer', color: 'var(--gold)' },

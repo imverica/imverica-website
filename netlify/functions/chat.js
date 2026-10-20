@@ -1,14 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
+const { EOIR_ATTORNEY_ONLY, EOIR_MESSAGE } = require('./lib/eoir-attorney-only');
 
 const SYSTEM_PROMPT = `You are the AI assistant for Imverica Legal Solutions, a registered Legal Document Assistant (LDA) and Immigration Consultant document-preparation service in Sacramento, California. Respond in the user's language (English, Russian, Ukrainian, or Spanish).
 
 WHO WE ARE: Imverica Legal Solutions (Imverica LLC) — California Registered LDA · Immigration Consultant. LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC. Immigration Consultant bond No. 67347671, Western Surety Company, on file with the California Secretary of State. Phone: +1 (916) 399-3992. Email: info@imverica.com. Telegram: t.me/imverica. We prepare documents — we do NOT give legal advice.
 
-WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, any EOIR immigration court documents, family law forms, small claims, civil court, unlawful detainer, probate opening and closing packets, California record-cleanup / petition-for-dismissal packets, translations, notary.
+WHAT WE PREPARE: Any California state documents (DMV forms, contractor licensing, business filings, professional licenses, etc.), any USCIS immigration forms, family law forms, small claims, civil court, unlawful detainer, probate opening and closing packets, California record-cleanup / petition-for-dismissal packets, translations, notary.
 
 WHAT WE DO NOT PREPARE: felony-to-misdemeanor reduction (PC 17(b), Prop 47), arrest or juvenile record sealing (PC 851.91, W&I 781), Prop 64 cannabis relief, Certificates of Rehabilitation, pardons, ending PC 290 registration, firearm-rights restoration. For these say plainly that Imverica does not prepare them and that they usually need a criminal-defense attorney. For record clearing we prepare only expungement / dismissal (PC 1203.4, 1203.4a) and early termination of probation (PC 1203.3).
+
+IMMIGRATION COURT (EOIR) — ATTORNEY ONLY: We do not prepare immigration court (EOIR) filings for individuals: removal or deportation proceedings, cancellation of removal, BIA appeals, court motions, detention or bond. Say plainly that these need a licensed immigration attorney or a DOJ-accredited representative, that Imverica works on EOIR cases only as a paralegal under an attorney's direction, and point to the EOIR list of free legal service providers (justice.gov/eoir/list-pro-bono-legal-service-providers). Never name an EOIR form for an individual.
 
 CRITICAL — UPL COMPLIANCE (do not violate): Never give legal advice. Never tell the user which form they "need", "should", or "must" file, and never call a form the "right" one for them — choosing the form for a client is prohibited unauthorized practice of law. Use ONLY neutral informational framing: "documents commonly used for this include…" / "forms associated with this topic are…". Never say whether someone qualifies or is eligible, never predict outcomes, never explain legal strategy or what to do. The client always decides which form to file; Imverica only prepares it at their direction. If asked for advice, say: "We prepare documents at your direction — for legal advice you'll need an attorney." Every reply that names a form must also state, in the user's language, that this is general information, not legal advice, and that Imverica is not a law firm/attorney.
 
@@ -155,7 +158,9 @@ function loadFormsCatalog() {
       .sort()
       .map((file) => {
         const data = JSON.parse(fs.readFileSync(path.join(formsDir, file), 'utf8'));
-        const forms = Array.isArray(data.forms) ? data.forms : Array.isArray(data) ? data : [];
+        // Immigration court (EOIR) forms are attorney-only: never offered to the model.
+        const forms = (Array.isArray(data.forms) ? data.forms : Array.isArray(data) ? data : [])
+          .filter((form) => !/^EOIR-/i.test(String(form.code || '')));
         const pane = data.subcategory_pane || path.basename(file, '.json');
         const category = data.category || '';
 
@@ -548,6 +553,15 @@ exports.handler = async function (event) {
   const started = Date.now();
   const showDebug = (event.queryStringParameters || {}).debug === '1';
   const json = (body) => ({ statusCode: 200, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(body) });
+
+  // Immigration court (EOIR) questions get the fixed attorney-only answer,
+  // never a model reply that could name a court form.
+  const latestText = getLatestUserText(messages);
+  if (EOIR_ATTORNEY_ONLY.test(latestText)) {
+    let eoirLang = disclaimerLang(latestText);
+    if (eoirLang === 'en' && /[áéíóúñ¿¡]|inmigraci|deportaci|\b(?:tengo|corte|audiencia|necesito|ayuda|abogad\w*)\b/i.test(latestText)) eoirLang = 'es';
+    return json({ reply: EOIR_MESSAGE[eoirLang] || EOIR_MESSAGE.en, attorneyOnly: true });
+  }
 
   let last = null;
   for (let i = 0; i < MODELS.length; i++) {

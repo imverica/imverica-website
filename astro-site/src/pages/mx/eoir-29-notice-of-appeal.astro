@@ -3,10 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'es' as const;
 const title = 'EOIR-29 — Notice of Appeal al Board of Immigration Appeals | Imverica';
-const description = 'California Registered LDA prepara la forma EOIR-29 para apelar ciertas decisiones de USCIS ante el Board of Immigration Appeals (BIA). Plazo de 30 días. Bajo dirección del cliente — la representación en corte requiere abogado.';
+const description = 'EOIR-29 — Notice of Appeal al BIA. Imverica trabaja en escritos de la corte de inmigración solo como paralegal bajo la dirección de un abogado; en un procedimiento de deportación se necesita un abogado con licencia o un representante acreditado por el DOJ.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-29-notice-of-appeal"
   slug="/eoir-29-notice-of-appeal" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
@@ -14,8 +15,9 @@ const description = 'California Registered LDA prepara la forma EOIR-29 para ape
     lang={lang}
     eyebrow="EOIR · BIA · 8 C.F.R. §1003.3"
     heading="EOIR-29 — Notice of Appeal al BIA"
-    sub="Forma para apelar ciertas decisiones de USCIS (p. ej. denegación de I-130, denegación de I-360) al Board of Immigration Appeals. Plazo estricto de 30 días. Preparamos la forma y el paquete bajo su dirección."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-29', text: 'Iniciar mi EOIR-29' }}
+    sub="Forma para apelar ciertas decisiones de USCIS (p. ej. denegación de I-130, denegación de I-360) al Board of Immigration Appeals. Plazo estricto de 30 días. Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle en la corte de inmigración. En este escrito trabajamos solo como paralegal bajo la dirección de un abogado."
+    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para abogados: apoyo paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Ayuda legal gratuita' }}
   />
 
   <LandingBody related={[
@@ -47,7 +49,8 @@ const description = 'California Registered LDA prepara la forma EOIR-29 para ape
       <li>Denegaciones de asilo referidas a corte — no hay apelación separada; el caso continúa en corte.</li>
     </ul>
 
-    <h2>Lo que preparamos</h2>
+    <h2>Para abogados: lo que preparamos bajo su dirección</h2>
+    <p>Solo bajo la dirección del abogado del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
     <div class="form-list">
       <strong>Paquete EOIR-29</strong>
       <ul>
@@ -59,23 +62,14 @@ const description = 'California Registered LDA prepara la forma EOIR-29 para ape
       </ul>
     </div>
 
-    <h2>Lo que no hacemos</h2>
-    <p>
-      <strong>Imverica no representa clientes en procedimientos de inmigración.</strong>
-      Las apelaciones al BIA implican argumento legal — eso es la práctica
-      del derecho y requiere un abogado con licencia o un BIA-accredited
-      representative. Como California Legal Document Assistant e
-      Immigration Consultant, preparamos la forma, organizamos exhibits y
-      cumplimos el plazo de 30 días bajo su dirección. El brief sustantivo
-      y argumento oral deben venir de su abogado.
-    </p>
+    <EoirNotice lang="es" />
 
     <cite>
       <strong>Fuente:</strong> 8 C.F.R. §§1003.3, 1003.38; EOIR Practice
       Manual; INA §242. La representación en corte requiere un abogado con
-      licencia o BIA-accredited representative.
+      licencia o DOJ-accredited representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="es" primaryHref="/#get-started?form=EOIR-29" primaryText="Iniciar mi entrevista EOIR-29" />
+  <CTAStrip lang="es" heading="¿Es abogado y lleva un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Para abogados: apoyo paralegal" />
 </BaseLayout>

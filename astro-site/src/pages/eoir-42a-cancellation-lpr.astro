@@ -3,16 +3,17 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const title = 'EOIR-42A — Cancellation of Removal for LPRs (Form 42A) | Imverica';
-const description = 'California Registered LDA prepares Form EOIR-42A — Application for Cancellation of Removal for Certain Permanent Residents under INA §240A(a). 7-year residence, 5-year LPR, no aggravated felony. Prepared at your direction — court representation requires an attorney.';
+const description = 'EOIR-42A — Cancellation of Removal for Permanent Residents. Imverica works on immigration court filings only as a paralegal under an attorney’s direction; people in removal proceedings need a licensed attorney or a DOJ-accredited representative.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'EOIR-42A Cancellation of Removal Document Preparation',
+  serviceType: 'EOIR-42A Cancellation of Removal — paralegal support for attorneys',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Document preparation for Form EOIR-42A — Cancellation of Removal for lawful permanent residents in immigration court proceedings. Court representation requires a licensed attorney.'
+  description: 'Paralegal support for attorneys on immigration court (EOIR) filings, at the attorney’s direction. Not legal advice or representation; Imverica does not prepare immigration court filings for individuals.'
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/eoir-42a-cancellation-lpr"
@@ -20,8 +21,9 @@ const schema = {
   <Hero
     eyebrow="EOIR · INA §240A(a) · Cancellation for LPRs"
     heading="EOIR-42A — Cancellation of Removal for Permanent Residents"
-    sub="For lawful permanent residents in removal proceedings who meet the §240A(a) requirements: at least 5 years as an LPR, 7 years of continuous US residence after lawful admission in any status, and no aggravated felony. We prepare the application and evidence packet at your direction."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-42A', text: 'Start my EOIR-42A packet' }}
+    sub="For lawful permanent residents in removal proceedings who meet the §240A(a) requirements: at least 5 years as an LPR, 7 years of continuous US residence after lawful admission in any status, and no aggravated felony. Only a licensed attorney or a DOJ-accredited representative can advise or represent you in immigration court. We work on this filing only as a paralegal under an attorney’s direction."
+    ctaPrimary={{ href: '/for-attorneys', text: 'Paralegal support for attorneys' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Find free legal help' }}
   />
 
   <LandingBody related={[
@@ -48,7 +50,8 @@ const schema = {
       <li>The immigration judge exercises favorable discretion considering family ties, hardship, equities, criminal history, and other §240(c)(4) factors.</li>
     </ul>
 
-    <h2>What we prepare</h2>
+    <h2>For attorneys: what we prepare at your direction</h2>
+    <p>Only at the direction of the attorney of record, for the attorney’s review, signature and filing. We do not prepare immigration court filings for individuals.</p>
     <div class="form-list">
       <strong>EOIR-42A package preparation</strong>
       <ul>
@@ -62,28 +65,16 @@ const schema = {
       </ul>
     </div>
 
-    <h2>What we do not do</h2>
-    <p>
-      <strong>Imverica does not represent clients in immigration court.</strong>
-      Cancellation of removal involves legal argument, cross-examination of
-      witnesses, and exercise of judicial discretion — that is the practice
-      of law and requires a licensed attorney or BIA-accredited
-      representative. As a California Legal Document Assistant and
-      Immigration Consultant, we accurately prepare the EOIR-42A and the
-      evidence packet under your attorney's direction, organize court-ready
-      indices and tabs per the EOIR Practice Manual, and translate foreign-
-      language documents to support the filing. We refer cases without
-      counsel to our network of California immigration attorneys.
-    </p>
+    <EoirNotice lang="en" />
 
     <cite>
       <strong>Statutory authority:</strong> INA §240A(a), 8 U.S.C. §1229b(a)
       (cancellation of removal for permanent residents); INA §101(a)(43)
       (aggravated-felony definition); INA §240A(d) (stop-time rule); EOIR
       Practice Manual (most recent edition). Court representation requires
-      a licensed attorney or BIA-accredited representative.
+      a licensed attorney or DOJ-accredited representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip primaryHref="/#get-started?form=EOIR-42A" primaryText="Begin my EOIR-42A intake" />
+  <CTAStrip heading="Working on an EOIR case as an attorney?" sub="We prepare drafts, exhibit indexes and certified translations at your direction, for your review and signature." primaryHref="/for-attorneys" primaryText="Paralegal support for attorneys" />
 </BaseLayout>

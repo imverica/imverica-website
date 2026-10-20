@@ -3,10 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'ru' as const;
-const title = 'EOIR-42B — Cancellation of Removal для non-LPR: подготовка формы | Imverica';
-const description = 'California Registered LDA готовит форму EOIR-42B — Application for Cancellation of Removal for Certain Nonpermanent Residents под INA §240A(b). 10 лет непрерывного присутствия, good moral character, exceptional and extremely unusual hardship. По поручению клиента — представительство требует адвоката.';
+const title = 'EOIR-42B — Cancellation of Removal для non-LPR | Imverica';
+const description = 'EOIR-42B — Cancellation of Removal для non-LPR. Imverica работает с документами иммиграционного суда только как paralegal под руководством адвоката; в removal proceedings нужен лицензированный адвокат или DOJ-accredited representative.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-42b-cancellation-non-lpr"
   slug="/eoir-42b-cancellation-non-lpr" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
@@ -14,8 +15,9 @@ const description = 'California Registered LDA готовит форму EOIR-42
     lang={lang}
     eyebrow="EOIR · INA §240A(b) · Non-LPR Cancellation"
     heading="EOIR-42B — Cancellation of Removal для non-LPR"
-    sub="Для noncitizen в removal proceedings, отвечающих требованиям §240A(b)(1): 10 лет непрерывного физического присутствия, good moral character, без disqualifying convictions, exceptional and extremely unusual hardship для квалифицирующего родственника US citizen/LPR. Готовим заявление и evidence packet по вашему поручению."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-42B', text: 'Начать пакет EOIR-42B' }}
+    sub="Для noncitizen в removal proceedings, отвечающих требованиям §240A(b)(1): 10 лет непрерывного физического присутствия, good moral character, без disqualifying convictions, exceptional and extremely unusual hardship для квалифицирующего родственника US citizen/LPR. Консультировать и представлять вас в иммиграционном суде может только лицензированный адвокат или DOJ-accredited representative. Над этой подачей мы работаем только как paralegal под руководством адвоката."
+    ctaPrimary={{ href: '/ru/for-attorneys', text: 'Для адвокатов: помощь paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Бесплатная юридическая помощь' }}
   />
 
   <LandingBody related={[
@@ -48,7 +50,8 @@ const description = 'California Registered LDA готовит форму EOIR-42
       и другими hardship стандартами.
     </p>
 
-    <h2>Что мы готовим</h2>
+    <h2>Для адвокатов: что мы готовим по вашему указанию</h2>
+    <p>Только по указанию адвоката по делу (attorney of record) — адвокат проверяет, подписывает и подаёт. Для частных лиц документы в иммиграционный суд мы не готовим.</p>
     <div class="form-list">
       <strong>Пакет EOIR-42B</strong>
       <ul>
@@ -63,28 +66,16 @@ const description = 'California Registered LDA готовит форму EOIR-42
       </ul>
     </div>
 
-    <h2>Чего мы не делаем</h2>
-    <p>
-      <strong>Imverica не представляет клиентов в иммиграционном суде.</strong>
-      Non-LPR cancellation включает юридические аргументы о §240A(b)
-      hardship стандарте, cross-examination свидетелей и judicial discretion —
-      это practice of law, требует лицензированного адвоката или
-      BIA-accredited representative. Как California Legal Document Assistant
-      и Immigration Consultant аккуратно готовим EOIR-42B и evidence packet
-      под руководством адвоката, организуем court-ready indices и tabs по
-      EOIR Practice Manual, переводим foreign-language документы. Дела без
-      counsel направляем в нашу сеть калифорнийских иммиграционных
-      адвокатов.
-    </p>
+    <EoirNotice lang="ru" />
 
     <cite>
       <strong>Источник:</strong> INA §240A(b)(1), 8 U.S.C. §1229b(b)(1)
       (cancellation для nonpermanent residents); INA §240A(b)(2) (VAWA
       cancellation); INA §240A(d) (stop-time rule); INA §240A(e) (годовой
       лимит 4 000 grants); EOIR Practice Manual. Представительство в суде
-      требует лицензированного адвоката или BIA-accredited representative.
+      требует лицензированного адвоката или DOJ-accredited representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="ru" primaryHref="/#get-started?form=EOIR-42B" primaryText="Начать анкету EOIR-42B" />
+  <CTAStrip lang="ru" heading="Вы адвокат и ведёте дело в EOIR?" sub="Готовим черновики, индексы приложений и заверенные переводы по вашему указанию — на вашу проверку и подпись." primaryHref="/ru/for-attorneys" primaryText="Для адвокатов: помощь paralegal" />
 </BaseLayout>

@@ -3,16 +3,17 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const title = 'EOIR-40 — Suspension of Deportation (Pre-IIRIRA / NACARA) | Imverica';
-const description = 'California Registered LDA prepares Form EOIR-40 — Application for Suspension of Deportation under the pre-IIRIRA framework and NACARA §203. Limited to certain Nicaraguan, Cuban, Salvadoran, Guatemalan, and former-Soviet-bloc applicants. Prepared at your direction.';
+const description = 'EOIR-40 — Application for Suspension of Deportation. Imverica works on immigration court filings only as a paralegal under an attorney’s direction; people in removal proceedings need a licensed attorney or a DOJ-accredited representative.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'EOIR-40 Suspension of Deportation Document Preparation',
+  serviceType: 'EOIR-40 Suspension of Deportation — paralegal support for attorneys',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Document preparation for Form EOIR-40 — Suspension of Deportation under the pre-IIRIRA framework, primarily used by NACARA §203 applicants.'
+  description: 'Paralegal support for attorneys on immigration court (EOIR) filings, at the attorney’s direction. Not legal advice or representation; Imverica does not prepare immigration court filings for individuals.'
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/eoir-40-suspension-of-deportation"
@@ -20,8 +21,9 @@ const schema = {
   <Hero
     eyebrow="EOIR · Pre-IIRIRA INA §244 · NACARA §203"
     heading="EOIR-40 — Application for Suspension of Deportation"
-    sub="Used by the narrow group of applicants still eligible under the pre-IIRIRA framework — primarily NACARA §203 Nicaraguan, Cuban, Salvadoran, Guatemalan, and former-Soviet-bloc nationals, and certain people in proceedings begun before April 1, 1997. We prepare the application accurately at your direction."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-40', text: 'Start my EOIR-40 packet' }}
+    sub="Used by the narrow group of applicants still eligible under the pre-IIRIRA framework — primarily NACARA §203 Nicaraguan, Cuban, Salvadoran, Guatemalan, and former-Soviet-bloc nationals, and certain people in proceedings begun before April 1, 1997. Only a licensed attorney or a DOJ-accredited representative can advise or represent you in immigration court. We work on this filing only as a paralegal under an attorney’s direction."
+    ctaPrimary={{ href: '/for-attorneys', text: 'Paralegal support for attorneys' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Find free legal help' }}
   />
 
   <LandingBody related={[
@@ -55,7 +57,8 @@ const schema = {
       case.
     </p>
 
-    <h2>What we prepare</h2>
+    <h2>For attorneys: what we prepare at your direction</h2>
+    <p>Only at the direction of the attorney of record, for the attorney’s review, signature and filing. We do not prepare immigration court filings for individuals.</p>
     <div class="form-list">
       <strong>EOIR-40 package preparation</strong>
       <ul>
@@ -70,27 +73,16 @@ const schema = {
       </ul>
     </div>
 
-    <h2>What we do not do</h2>
-    <p>
-      <strong>Imverica does not represent clients in immigration court.</strong>
-      Suspension of deportation involves legal argument about pre-IIRIRA
-      eligibility, NACARA class membership, and judicial discretion — that
-      is the practice of law and requires a licensed attorney or
-      BIA-accredited representative. As a California Legal Document
-      Assistant and Immigration Consultant, we accurately prepare EOIR-40
-      and the evidence packet under your attorney's direction. We refer
-      cases without counsel to our network of California immigration
-      attorneys experienced in NACARA and other pre-IIRIRA matters.
-    </p>
+    <EoirNotice lang="en" />
 
     <cite>
       <strong>Statutory authority:</strong> Pre-IIRIRA INA §244 (suspension
       of deportation, as preserved by IIRIRA §309(c) transition rules);
       NACARA §203, Pub. L. No. 105-100, §203 (1997); EOIR Practice Manual.
-      Court representation requires a licensed attorney or BIA-accredited
+      Court representation requires a licensed attorney or DOJ-accredited
       representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip primaryHref="/#get-started?form=EOIR-40" primaryText="Begin my EOIR-40 intake" />
+  <CTAStrip heading="Working on an EOIR case as an attorney?" sub="We prepare drafts, exhibit indexes and certified translations at your direction, for your review and signature." primaryHref="/for-attorneys" primaryText="Paralegal support for attorneys" />
 </BaseLayout>

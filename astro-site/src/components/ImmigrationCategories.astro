@@ -17,40 +17,40 @@ const lp = localePrefix[lang];
 const STRINGS = {
   en: {
     kicker: 'Pick a category to get started',
-    h2: 'USCIS & EOIR',
+    h2: 'USCIS immigration forms',
     intro: 'Most common immigration matters we handle. Tap any tile for the form-specific landing page with details, requirements, and a starter intake.',
     footPre: "Can't find your form? See the",
-    footLink: 'full list of USCIS & EOIR documents we prepare',
+    footLink: 'full list of USCIS documents we prepare',
     footMid: ', or',
     footTellLink: "tell us what you need",
     footPost: " and we'll point you to the matching forms (general information, not legal advice).",
   },
   ru: {
     kicker: 'Выберите категорию, чтобы начать',
-    h2: 'USCIS и EOIR',
+    h2: 'Иммиграционные формы USCIS',
     intro: 'Самые частые иммиграционные вопросы, с которыми мы работаем. Нажмите любую плитку, чтобы перейти на страницу с описанием формы, требованиями и началом анкеты.',
     footPre: 'Не нашли свою форму? Посмотрите',
-    footLink: 'полный список документов USCIS и EOIR, которые мы готовим',
+    footLink: 'полный список документов USCIS, которые мы готовим',
     footMid: ', или',
     footTellLink: 'опишите, что вам нужно',
     footPost: ' — мы покажем подходящие формы (общая информация, не юридическая консультация).',
   },
   uk: {
     kicker: 'Оберіть категорію, щоб почати',
-    h2: 'USCIS та EOIR',
+    h2: 'Імміграційні форми USCIS',
     intro: 'Найчастіші імміграційні справи, з якими ми працюємо. Натисніть будь-яку плитку, щоб перейти на сторінку форми з деталями, вимогами та анкетою.',
     footPre: 'Не знайшли свою форму? Перегляньте',
-    footLink: 'повний список документів USCIS та EOIR, які ми готуємо',
+    footLink: 'повний список документів USCIS, які ми готуємо',
     footMid: ', або',
     footTellLink: 'опишіть, що вам потрібно',
     footPost: ' — ми покажемо відповідні форми (загальна інформація, не юридична консультація).',
   },
   es: {
     kicker: 'Elija una categoría para comenzar',
-    h2: 'USCIS y EOIR',
+    h2: 'Formularios de inmigración USCIS',
     intro: 'Los asuntos de inmigración más comunes que manejamos. Toque cualquier tile para ver la página de la forma con detalles, requisitos y una entrevista inicial.',
     footPre: '¿No encuentra su formulario? Vea la',
-    footLink: 'lista completa de documentos USCIS y EOIR que preparamos',
+    footLink: 'lista completa de documentos USCIS que preparamos',
     footMid: ', o',
     footTellLink: 'cuéntenos lo que necesita',
     footPost: ' y le mostraremos los formularios relacionados (información general, no asesoría legal).',
@@ -67,7 +67,7 @@ const TITLES = {
     n400: { title: 'N-400 — Naturalization', desc: 'Citizenship application with civics + history support; multilingual intake.' },
     i130: { title: 'I-130 — Family Petition', desc: 'Spouse, parent, child, and sibling petitions (with I-130A for spouses).' },
     i765: { title: 'I-765 — Work Permit (EAD)', desc: 'All eligibility categories: (c)(8), (c)(9), TPS, DACA, parolee, and more.' },
-    eoir: { title: 'EOIR — Immigration Court', desc: 'EOIR-28 / 42A / 42B, motions, evidence packets, declarations, country conditions.' },
+    eoir: { title: 'EOIR — Immigration Court: attorneys only', desc: 'Only as a paralegal under an attorney’s direction. In court without a lawyer? Where to find free legal help.' },
     uvisa: { title: 'U visa — Crime victims', desc: 'I-918 + I-918A self-petition for survivors of qualifying crimes who help law enforcement.' },
     i539: { title: 'I-539 — Change | Extend Status', desc: 'Change to or extend a non-immigrant status (B, F, H4, L2, others) while in the US.' },
     i90: { title: 'I-90 — Green Card Renewal', desc: 'Renew, replace, or correct your Permanent Resident Card (10-year renewal, lost/stolen).' },
@@ -81,7 +81,7 @@ const TITLES = {
     n400: { title: 'N-400 — Натурализация', desc: 'Заявление на гражданство с поддержкой по civics и истории; многоязычная анкета.' },
     i130: { title: 'I-130 — Семейная петиция', desc: 'Петиции за супруга, родителя, ребёнка и брата/сестру (с I-130A для супругов).' },
     i765: { title: 'I-765 — Разрешение на работу (EAD)', desc: 'Все категории eligibility: (c)(8), (c)(9), TPS, DACA, parolee и др.' },
-    eoir: { title: 'EOIR — Иммиграционный суд', desc: 'EOIR-28 / 42A / 42B, ходатайства, evidence packets, декларации, country conditions.' },
+    eoir: { title: 'EOIR — Иммиграционный суд: только адвокатам', desc: 'Только как paralegal под руководством адвоката. В суде без адвоката? Где найти бесплатную юридическую помощь.' },
     uvisa: { title: 'U visa — жертвы преступлений', desc: 'I-918 + I-918A self-petition для пострадавших от квалифицирующих преступлений, помогающих правоохранителям.' },
     i539: { title: 'I-539 — смена | продление статуса', desc: 'Смена или продление неиммиграционного статуса (B, F, H4, L2 и др.) в США.' },
     i90: { title: 'I-90 — обновление green card', desc: 'Обновить, заменить или исправить вашу Permanent Resident Card (10-летнее обновление, утеря/кража).' },
@@ -95,7 +95,7 @@ const TITLES = {
     n400: { title: 'N-400 — Натуралізація', desc: 'Заява на громадянство з підтримкою з civics та історії; багатомовна анкета.' },
     i130: { title: 'I-130 — Сімейна петиція', desc: 'Петиції за дружину/чоловіка, батьків, дитину та брата/сестру (з I-130A для подружжя).' },
     i765: { title: 'I-765 — Дозвіл на роботу (EAD)', desc: 'Усі категорії eligibility: (c)(8), (c)(9), TPS, DACA, parolee та ін.' },
-    eoir: { title: 'EOIR — Імміграційний суд', desc: 'EOIR-28 / 42A / 42B, клопотання, evidence packets, декларації, country conditions.' },
+    eoir: { title: 'EOIR — Імміграційний суд: лише адвокатам', desc: 'Лише як paralegal під керівництвом адвоката. У суді без адвоката? Де знайти безкоштовну юридичну допомогу.' },
     uvisa: { title: 'U visa — Жертви злочинів', desc: 'I-918 + I-918A self-petition для постраждалих від кваліфікуючих злочинів, які допомагають правоохоронцям.' },
     i539: { title: 'I-539 — Зміна | продовження статусу', desc: 'Змінити або продовжити неімміграційний статус (B, F, H4, L2 та ін.) у США.' },
     i90: { title: 'I-90 — Поновлення green card', desc: 'Поновити, замінити або виправити вашу Permanent Resident Card (10-річне поновлення, втрата/крадіжка).' },
@@ -109,7 +109,7 @@ const TITLES = {
     n400: { title: 'N-400 — Naturalización', desc: 'Solicitud de ciudadanía con apoyo de civics e historia; entrevista multilingüe.' },
     i130: { title: 'I-130 — Petición Familiar', desc: 'Peticiones por cónyuge, padre, hijo y hermano (con I-130A para cónyuges).' },
     i765: { title: 'I-765 — Permiso de Trabajo (EAD)', desc: 'Todas las categorías de eligibility: (c)(8), (c)(9), TPS, DACA, parolee y más.' },
-    eoir: { title: 'EOIR — Corte de Inmigración', desc: 'EOIR-28 / 42A / 42B, mociones, evidence packets, declaraciones, country conditions.' },
+    eoir: { title: 'EOIR — Corte de Inmigración: solo abogados', desc: 'Solo como paralegal bajo la dirección de un abogado. ¿En la corte sin abogado? Dónde encontrar ayuda legal gratuita.' },
     uvisa: { title: 'U visa — Víctimas de delito', desc: 'I-918 + I-918A self-petition para sobrevivientes de delitos calificados que ayuden a las autoridades.' },
     i539: { title: 'I-539 — Cambio | Extensión de Estatus', desc: 'Cambiar o extender un estatus no-inmigrante (B, F, H4, L2, otros) en EE. UU.' },
     i90: { title: 'I-90 — Renovación de Green Card', desc: 'Renovar, reemplazar o corregir su Permanent Resident Card (renovación de 10 años, perdida/robada).' },
@@ -154,7 +154,7 @@ const cats = [
     <div class="imm-hero-grid">
       <div class="imm-hero-copy">
         <div class="imm-hero-eyebrow">{T.kicker}</div>
-        <h1 set:html={T.h2.replace('EOIR', '<em class="imm-hero-em">EOIR</em>')} />
+        <h1 set:html={T.h2.replace('USCIS', '<em class="imm-hero-em">USCIS</em>')} />
         <p>{T.intro}</p>
       </div>
     </div>

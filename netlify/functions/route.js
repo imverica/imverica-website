@@ -15,6 +15,7 @@ const catalogs = {
   appeals: require('./forms/appeals.json'),
   general: require('./forms/general.json')
 };
+const { EOIR_ATTORNEY_ONLY, EOIR_MESSAGE } = require('./lib/eoir-attorney-only');
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -135,44 +136,6 @@ const PACKAGE_RULES = [
     confidence: 0.92,
     patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|early\s+termination\s+of\s+probation|terminat\w*\s+(my\s+)?probation|end\s+(my\s+)?probation\s+early|1203\.[34]|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|досрочн\w*\s+(прекращ|окончан)|прекрат\w*\s+испытат|опечат\w*\s+арест|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes|terminaci[oó]n\s+anticipada|sellar\s+(mi\s+)?(arresto|registro))/i],
     reason: 'California record-clearing language (expungement/dismissal, early termination of probation) maps to the CR-180 record-cleanup intake.'
-  },
-
-  // ===== EOIR (immigration court) — most specific first =====
-  {
-    id: 'bia_appeal',
-    formCode: 'EOIR-29',
-    service: 'immigration',
-    packageForms: ['EOIR-29'],
-    confidence: 0.95,
-    patterns: [/eoir-?29|bia\s*appeal|board\s*of\s*immigration\s*appeals|notice\s*of\s*appeal|апелляц[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(в|до)\s+(bia|совет|раду)|апеляц[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+в\s+bia|apelaci[oó]n\s+bia/i],
-    reason: 'BIA appeal language maps to Form EOIR-29.'
-  },
-  {
-    id: 'cancellation_removal_lpr',
-    formCode: 'EOIR-42A',
-    service: 'immigration',
-    packageForms: ['EOIR-42A', 'EOIR-28'],
-    confidence: 0.92,
-    patterns: [/eoir-?42a|cancellation\s+of\s+removal\s+(for|of)\s+(lpr|permanent\s+resident)|отмена\s+removal\s+для\s+lpr|відмін[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+removal/i],
-    reason: 'LPR cancellation-of-removal language maps to EOIR-42A.'
-  },
-  {
-    id: 'cancellation_removal_non_lpr',
-    formCode: 'EOIR-42B',
-    service: 'immigration',
-    packageForms: ['EOIR-42B', 'EOIR-28'],
-    confidence: 0.92,
-    patterns: [/eoir-?42b|cancellation\s+of\s+removal|cancelaci[oó]n\s+de\s+(removal|deportaci[oó]n)|отмена\s+(депортац|removal)|відмін[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+депортац|10\s+years?\s+(physical\s+)?presence/i],
-    reason: 'Non-LPR cancellation-of-removal language maps to EOIR-42B.'
-  },
-  {
-    id: 'removal_proceedings',
-    formCode: 'EOIR-42B',
-    service: 'immigration',
-    packageForms: ['EOIR-42B', 'EOIR-28'],
-    confidence: 0.78,
-    patterns: [/removal\s+proceed|immigration\s+court|deportation\s+(hearing|case)|депортац[\wа-яёіїєґА-ЯЁІЇЄҐ]*|removal\s+depo|procedimiento\s+de\s+(removal|deportaci[oó]n)|\bnta\b|notice\s+to\s+appear|про\s+депорта|іммігр[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+суд/i],
-    reason: 'Generic removal/deportation language defaults to EOIR-42B prep.'
   },
 
   // ===== USCIS humanitarian (high specificity) =====
@@ -1106,18 +1069,23 @@ const ATTORNEY_ONLY_MESSAGE = {
   uk: 'Ми не готуємо документи для зниження фелонії до мисдиминору, засекречування записів про арешт або неповнолітніх і за Prop 64 — для цього зазвичай потрібен адвокат з кримінальних справ. За вашим дорученням ми можемо підготувати клопотання про зняття судимості (expungement) або про дострокове припинення probation. Загальна інформація, не юридична консультація.',
   es: 'No preparamos reducciones de delito grave a menor, sellado de antecedentes de arresto o juveniles, ni peticiones de la Prop 64: normalmente requieren un abogado penalista. Según sus instrucciones, podemos preparar una eliminación de antecedentes (expungement) o una terminación anticipada de la libertad condicional. Información general, no asesoría legal.'
 };
-function attorneyOnlyResult(originalQuery, lang) {
+// kind 'eoir': immigration court matters (lib/eoir-attorney-only.js).
+function attorneyOnlyResult(originalQuery, lang, kind = 'record') {
+  const messages = kind === 'eoir' ? EOIR_MESSAGE : ATTORNEY_ONLY_MESSAGE;
   return {
     ok: true,
     query: originalQuery,
     language: lang,
     attorneyOnly: true,
-    message: ATTORNEY_ONLY_MESSAGE[lang] || ATTORNEY_ONLY_MESSAGE.en,
-    messages: ATTORNEY_ONLY_MESSAGE,
+    message: messages[lang] || messages.en,
+    messages,
     route: {
       service: '', catalog: '', jurisdiction: '', formCode: '', formTitle: '',
       officialEndpoint: '', flowEndpoint: '', flowStatus: 'attorney-only',
-      packageForms: [], confidence: 0, reason: 'Record relief Imverica does not prepare (felony reduction, record sealing, Prop 64) — refer to a criminal-defense attorney.'
+      packageForms: [], confidence: 0,
+      reason: kind === 'eoir'
+        ? 'Immigration court (EOIR) matter: attorney or DOJ-accredited representative only; Imverica works on EOIR cases only as a paralegal under an attorney.'
+        : 'Record relief Imverica does not prepare (felony reduction, record sealing, Prop 64) — refer to a criminal-defense attorney.'
     }
   };
 }
@@ -1321,6 +1289,9 @@ function routeQuery(queryValue, options = {}) {
 
   if (options.intent === 'resentencing' || ATTORNEY_ONLY_RELIEF.test(originalQuery)) {
     return attorneyOnlyResult(originalQuery, lang);
+  }
+  if (EOIR_ATTORNEY_ONLY.test(originalQuery)) {
+    return attorneyOnlyResult(originalQuery, lang, 'eoir');
   }
 
   const codeMatch = originalQuery.match(/\b(?:AR|I|N|G|EOIR|FL|DV|CH|EA|GV|WV|SC|UD|FW|POS|CIV|CM|SUM|PLD|DE|GC|CR|NC|EJ|WG|JV|APP|MC|ADM|MIL)-[A-Z0-9]+(?:\s+Supplement(?:\s+[A-Z])?)?(?:\([A-Z0-9]+\))?\b/i);
@@ -1526,7 +1497,12 @@ async function handler(event) {
 
   if (!String(query || '').trim()) return json(400, { ok: false, error: 'Missing query' });
 
-  const result = routeQuery(query, { county, intent });
+  let result = routeQuery(query, { county, intent });
+  // Safety net: no answer may point to an immigration court (EOIR) form.
+  const routed = [result.route?.formCode, ...(result.route?.packageForms || [])];
+  if (routed.some((code) => /^EOIR-/i.test(String(code || '')))) {
+    result = attorneyOnlyResult(String(query).trim(), result.language || detectLanguage(String(query)), 'eoir');
+  }
   return json(result.ok ? 200 : 404, result, { 'Cache-Control': 'public, max-age=300' });
 }
 

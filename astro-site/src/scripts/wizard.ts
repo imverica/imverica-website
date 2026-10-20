@@ -380,6 +380,7 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Cached PDF fallback available',
       routing: 'Identifying the right document route...',
       routeError: 'We could not identify the exact route automatically. You can continue with the details you entered.',
+      eoirAttorneyOnly: 'Immigration court (EOIR) matters need a licensed immigration attorney or a DOJ-accredited representative. Imverica does not prepare immigration court filings for individuals: we work on EOIR cases only as a paralegal under an attorney\'s direction. Free or low-cost legal help: https://www.justice.gov/eoir/list-pro-bono-legal-service-providers. General information, not legal advice.',
       historyEntry: 'Entry',
       historyFrom: 'From',
       historyTo: 'To',
@@ -402,7 +403,7 @@ export function initIntakeWizard(): void {
       addressSuggestion: 'Use USPS/local suggested address',
       addressChecking: 'Checking address...',
       services: [
-        ['immigration', 'USCIS | EOIR immigration', 'Green card, work permit, citizenship, EOIR documents'],
+        ['immigration', 'USCIS immigration', 'Green card, work permit, citizenship'],
         ['family', 'California family law', 'Divorce, custody, support, FL-300 and related forms'],
         ['civil', 'Small claims & civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
         ['restraining', 'Restraining orders', 'CH, EA, GV, WV and related court forms'],
@@ -487,6 +488,7 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Локальная PDF-копия доступна',
       routing: 'Определяем правильный маршрут документов...',
       routeError: 'Не удалось автоматически определить точный маршрут. Можно продолжить с введенными деталями.',
+      eoirAttorneyOnly: 'Дела в иммиграционном суде (EOIR) требуют лицензированного иммиграционного адвоката или аккредитованного представителя (DOJ-accredited representative). Imverica не готовит документы в иммиграционный суд для частных лиц: по делам EOIR мы работаем только как помощник юриста (paralegal) под руководством адвоката. Бесплатная или недорогая юридическая помощь: https://www.justice.gov/eoir/list-pro-bono-legal-service-providers. Общая информация, не юридическая консультация.',
       historyEntry: 'Запись',
       historyFrom: 'С',
       historyTo: 'По',
@@ -509,7 +511,7 @@ export function initIntakeWizard(): void {
       addressSuggestion: 'Использовать предложенный адрес',
       addressChecking: 'Проверяем адрес...',
       services: [
-        ['immigration', 'USCIS | EOIR иммиграция', 'Green card, work permit, citizenship, EOIR документы'],
+        ['immigration', 'USCIS иммиграция', 'Green card, work permit, citizenship'],
         ['family', 'Семейное право California', 'Развод, custody, support, FL-300 и связанные формы'],
         ['civil', 'Small claims и civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
         ['restraining', 'Restraining orders', 'CH, EA, GV, WV и связанные формы'],
@@ -594,6 +596,7 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Локальна PDF-копія доступна',
       routing: 'Визначаємо правильний маршрут документів...',
       routeError: 'Не вдалося автоматично визначити точний маршрут. Можна продовжити з введеними деталями.',
+      eoirAttorneyOnly: 'Справи в імміграційному суді (EOIR) потребують ліцензованого імміграційного адвоката або акредитованого представника (DOJ-accredited representative). Imverica не готує документи до імміграційного суду для приватних осіб: у справах EOIR ми працюємо лише як помічник юриста (paralegal) під керівництвом адвоката. Безкоштовна або недорога юридична допомога: https://www.justice.gov/eoir/list-pro-bono-legal-service-providers. Загальна інформація, не юридична консультація.',
       historyEntry: 'Запис',
       historyFrom: 'З',
       historyTo: 'До',
@@ -616,7 +619,7 @@ export function initIntakeWizard(): void {
       addressSuggestion: 'Використати запропоновану адресу',
       addressChecking: 'Перевіряємо адресу...',
       services: [
-        ['immigration', 'USCIS | EOIR імміграція', 'Green card, work permit, citizenship, EOIR документи'],
+        ['immigration', 'USCIS імміграція', 'Green card, work permit, citizenship'],
         ['family', 'Сімейне право California', 'Розлучення, custody, support, FL-300 та пов’язані форми'],
         ['civil', 'Small claims і civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
         ['restraining', 'Restraining orders', 'CH, EA, GV, WV та пов’язані форми'],
@@ -701,6 +704,7 @@ export function initIntakeWizard(): void {
       cachedFallback: 'Copia PDF local disponible',
       routing: 'Identificando la ruta correcta de documentos...',
       routeError: 'No pudimos identificar la ruta exacta automáticamente. Puede continuar con los detalles ingresados.',
+      eoirAttorneyOnly: 'Los asuntos de la corte de inmigración (EOIR) requieren un abogado de inmigración con licencia o un representante acreditado por el DOJ. Imverica no prepara escritos para la corte de inmigración para particulares: en casos de EOIR trabajamos solo como asistente legal (paralegal) bajo la dirección de un abogado. Ayuda legal gratuita o de bajo costo: https://www.justice.gov/eoir/list-pro-bono-legal-service-providers. Información general, no asesoría legal.',
       historyEntry: 'Entrada',
       historyFrom: 'Desde',
       historyTo: 'Hasta',
@@ -723,7 +727,7 @@ export function initIntakeWizard(): void {
       addressSuggestion: 'Usar dirección sugerida',
       addressChecking: 'Verificando dirección...',
       services: [
-        ['immigration', 'USCIS | EOIR inmigración', 'Green card, work permit, citizenship, documentos EOIR'],
+        ['immigration', 'USCIS inmigración', 'Green card, work permit, citizenship'],
         ['family', 'Derecho familiar de California', 'Divorcio, custodia, manutención, FL-300 y relacionados'],
         ['civil', 'Small claims y civil court', 'SC-100, civil complaint, fee waiver, proof of service'],
         ['restraining', 'Restraining orders', 'CH, EA, GV, WV y formularios relacionados'],
@@ -2301,7 +2305,15 @@ export function initIntakeWizard(): void {
     if (!validateBaseStep()) return;
     if (!validateCurrentFlowStep()) return;
     if (state.step === 2) {
-      await loadRoute();
+      var routed = await loadRoute();
+      // Matters only an attorney can take (immigration court, record
+      // sealing…): say so on the Details step, no intake.
+      var attorneyOnly = routed && state.routeResult && state.routeResult.attorneyOnly ? state.routeResult : null;
+      if (attorneyOnly || /^EOIR-/.test(normalizeFormCode(state.formCode || ''))) {
+        state.routeError = (attorneyOnly && ((attorneyOnly.messages && attorneyOnly.messages[state.lang]) || attorneyOnly.message)) || t().eoirAttorneyOnly;
+        render();
+        return;
+      }
     }
     if (state.step === 2 && shouldUseImmigrationFlow()) {
       var loaded = await loadImmigrationFlow();

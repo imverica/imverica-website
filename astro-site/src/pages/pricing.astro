@@ -4,14 +4,14 @@ import Hero from '~/components/Hero.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'Pricing — Flat-Fee Document Preparation | Imverica Legal Solutions';
-const description = 'Transparent flat-fee pricing for USCIS, EOIR, California family law, small claims, probate, record cleanup, and business document preparation. Simple forms from $49. Probate from $249. Record clearing from $349. Complex cases by custom quote. Imverica is not a law firm.';
+const description = 'Transparent flat-fee pricing for USCIS, California family law, small claims, probate, record cleanup, and business document preparation. Simple forms from $49. Probate from $249. Record clearing from $349. Complex cases by custom quote. Imverica is not a law firm.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: 'Imverica Document Preparation Pricing',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', legalName: 'Imverica LLC', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Flat-fee document preparation for USCIS, EOIR, and California state-court forms. Imverica is a California-registered Legal Document Assistant and Immigration Consultant — not a law firm. Documents prepared at client direction. Government filing fees are separate.',
+  description: 'Flat-fee document preparation for USCIS and California state-court forms. Imverica is a California-registered Legal Document Assistant and Immigration Consultant — not a law firm. Documents prepared at client direction. Government filing fees are separate.',
   areaServed: [
     { '@type': 'Country', name: 'United States' },
     { '@type': 'State', name: 'California' }
@@ -122,7 +122,7 @@ const schema = {
           <div>
             <div class="price-card-kicker">Federal · custom quote after document review</div>
             <h2>Complex immigration document packages</h2>
-            <p class="price-card-sub">Asylum, RFE responses, country-conditions evidence, motions. We quote after reviewing your facts — these vary too much for fixed prices.</p>
+            <p class="price-card-sub">Asylum, RFE responses, country-conditions evidence. We quote after reviewing your facts — these vary too much for fixed prices.</p>
           </div>
         </div>
         <table class="price-table">
@@ -133,15 +133,12 @@ const schema = {
             <tr data-prefill="I need I-589 asylum document preparation" data-formcode="I-589"><td><strong>I-589</strong> Asylum document preparation</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$0</td></tr>
             <tr data-prefill="I received a USCIS Request for Evidence (RFE) and need a response prepared"><td><strong>RFE Response</strong> package</td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">$0</td></tr>
             <tr data-prefill="I need a country-conditions evidence packet"><td><strong>Country conditions</strong> evidence packet</td><td class="num"><span class="price">from $599</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need to file EOIR-29 Notice of Appeal to the BIA" data-formcode="EOIR-29"><td><strong>EOIR-29</strong> Notice of Appeal to BIA</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$110</td></tr>
-            <tr data-prefill="I need help with EOIR-42A or EOIR-42B Cancellation of Removal"><td><strong>EOIR-42A / 42B</strong> Cancellation of Removal</td><td class="num quote">custom quote</td><td class="num gov">$100</td></tr>
-            <tr data-prefill="I need help with EOIR-40 Suspension of Deportation" data-formcode="EOIR-40"><td><strong>EOIR-40</strong> Suspension of Deportation</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need to file a motion to reopen or reconsider in immigration court"><td><strong>Motion to Reopen / Reconsider</strong></td><td class="num"><span class="price">from $699</span></td><td class="num gov">$110</td></tr>
             <tr data-prefill="I need help with a humanitarian package (U-visa, T-visa, VAWA, or U4U)"><td><strong>U / T / VAWA / U4U</strong> humanitarian packages</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
           Document preparation only. We do not represent you before USCIS or EOIR. We do not give legal advice on whether you qualify, your defenses, or your strategy — for that you need an attorney. Imverica is not a law firm.
+          <strong>Immigration court (EOIR):</strong> we do not prepare court filings for individuals. We work on EOIR cases only as a paralegal under an attorney's direction (<a href="/for-attorneys">for attorneys</a>). If you are in removal proceedings, contact a licensed immigration attorney or a DOJ-accredited representative; free and low-cost providers are on the <a href="https://www.justice.gov/eoir/list-pro-bono-legal-service-providers" target="_blank" rel="noopener">EOIR list of pro bono legal service providers</a>.
         </p>
       </div>
 
@@ -711,6 +708,7 @@ const schema = {
       background: rgba(40,30,20,0.025);
       border-top: 1px solid rgba(40,30,20,0.06);
     }
+    .price-card-disclaimer a { text-decoration: underline; text-underline-offset: 2px; }
 
     /* ===== Mobile — collapse tables to vertical card rows ===== */
     @media (max-width: 640px) {

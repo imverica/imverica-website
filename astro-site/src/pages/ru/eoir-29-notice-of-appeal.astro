@@ -3,10 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'ru' as const;
 const title = 'EOIR-29 — Notice of Appeal в Board of Immigration Appeals | Imverica';
-const description = 'California Registered LDA готовит форму EOIR-29 для апелляции на отдельные решения USCIS в Board of Immigration Appeals (BIA). Срок 30 дней. По поручению клиента — представительство в суде требует адвоката.';
+const description = 'EOIR-29 — Notice of Appeal в BIA. Imverica работает с документами иммиграционного суда только как paralegal под руководством адвоката; в removal proceedings нужен лицензированный адвокат или DOJ-accredited representative.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-29-notice-of-appeal"
   slug="/eoir-29-notice-of-appeal" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
@@ -14,8 +15,9 @@ const description = 'California Registered LDA готовит форму EOIR-29
     lang={lang}
     eyebrow="EOIR · BIA · 8 C.F.R. §1003.3"
     heading="EOIR-29 — Notice of Appeal в BIA"
-    sub="Форма для апелляции на отдельные решения USCIS (например, отказ I-130, отказ I-360) в Board of Immigration Appeals. Жёсткий срок подачи 30 дней. Готовим форму и сопроводительный пакет по вашему поручению."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-29', text: 'Начать апелляцию EOIR-29' }}
+    sub="Форма для апелляции на отдельные решения USCIS (например, отказ I-130, отказ I-360) в Board of Immigration Appeals. Жёсткий срок подачи 30 дней. Консультировать и представлять вас в иммиграционном суде может только лицензированный адвокат или DOJ-accredited representative. Над этой подачей мы работаем только как paralegal под руководством адвоката."
+    ctaPrimary={{ href: '/ru/for-attorneys', text: 'Для адвокатов: помощь paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Бесплатная юридическая помощь' }}
   />
 
   <LandingBody related={[
@@ -48,7 +50,8 @@ const description = 'California Registered LDA готовит форму EOIR-29
       <li>Отказы asylum, направленные в иммиграционный суд — отдельной апелляции нет; дело продолжается в суде.</li>
     </ul>
 
-    <h2>Что мы готовим</h2>
+    <h2>Для адвокатов: что мы готовим по вашему указанию</h2>
+    <p>Только по указанию адвоката по делу (attorney of record) — адвокат проверяет, подписывает и подаёт. Для частных лиц документы в иммиграционный суд мы не готовим.</p>
     <div class="form-list">
       <strong>Пакет EOIR-29</strong>
       <ul>
@@ -60,27 +63,15 @@ const description = 'California Registered LDA готовит форму EOIR-29
       </ul>
     </div>
 
-    <h2>Чего мы не делаем</h2>
-    <p>
-      <strong>Imverica не представляет клиентов в иммиграционных делах.</strong>
-      Апелляции в BIA включают юридические аргументы об иммиграционном
-      праве, регулированиях и прецедентах — это practice of law, требует
-      лицензированного адвоката или BIA-accredited representative. Как
-      California Legal Document Assistant и Immigration Consultant мы
-      готовим форму, организуем supporting exhibits и соблюдаем жёсткий
-      30-дневный срок по вашему поручению. Существенный юридический brief
-      и устный аргумент должны прийти от вашего адвоката. Поддерживаем
-      referral list калифорнийских иммиграционных адвокатов, опытных в
-      BIA appeals.
-    </p>
+    <EoirNotice lang="ru" />
 
     <cite>
       <strong>Источник:</strong> 8 C.F.R. §§1003.3, 1003.38 (требования
       подачи апелляций в BIA); EOIR Practice Manual (последнее издание);
       INA §242 (judicial review). Представительство в суде требует
-      лицензированного адвоката или BIA-accredited representative.
+      лицензированного адвоката или DOJ-accredited representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="ru" primaryHref="/#get-started?form=EOIR-29" primaryText="Начать анкету EOIR-29" />
+  <CTAStrip lang="ru" heading="Вы адвокат и ведёте дело в EOIR?" sub="Готовим черновики, индексы приложений и заверенные переводы по вашему указанию — на вашу проверку и подпись." primaryHref="/ru/for-attorneys" primaryText="Для адвокатов: помощь paralegal" />
 </BaseLayout>

@@ -35,7 +35,7 @@ export const MEGA_NAV: MegaSection[] = [
           { label: 'Family Petition', slug: '/i-130-family-petition' },
           { label: 'Work Permit', slug: '/i-765-work-permit-help' },
           { label: 'Asylum', slug: '/i-589-asylum-help' },
-          { label: 'Immigration Court', slug: '/eoir-immigration-court' }
+          { label: 'Immigration Court · for attorneys', slug: '/eoir-immigration-court' }
         ]
       },
       {
@@ -62,7 +62,7 @@ export const MEGA_NAV: MegaSection[] = [
         ]
       },
       {
-        heading: 'Immigration Court',
+        heading: 'Immigration Court · for attorneys',
         links: [
           { label: 'Appeal to the BIA · EOIR-29', slug: '/eoir-29-notice-of-appeal' },
           { label: 'Cancellation (LPR) · EOIR-42A', slug: '/eoir-42a-cancellation-lpr' },
@@ -229,7 +229,7 @@ export const MEGA_NAV: MegaSection[] = [
       {
         heading: 'Practice Areas',
         links: [
-          { label: 'USCIS & EOIR', slug: '/immigration' },
+          { label: 'USCIS', slug: '/immigration' },
           { label: 'Family Law', slug: '/fl' },
           { label: 'Civil & Small Claims', slug: '/sc' },
           { label: 'Business Filings', slug: '/business' }
@@ -285,7 +285,7 @@ export const MEGA_I18N: Record<string, MegaTr> = {
   'Explore Immigration': x('Иммиграция', 'Імміграція', 'Inmigración'),
   'Humanitarian': x('Гуманитарные программы', 'Гуманітарні програми', 'Programas humanitarios'),
   'More USCIS Forms': x('Другие формы USCIS', 'Інші форми USCIS', 'Más formularios de USCIS'),
-  'Immigration Court': f('иммиграционный суд', 'імміграційний суд', 'tribunal de inmigración'),
+  'Immigration Court · for attorneys': f('иммиграционный суд, только для адвокатов', 'імміграційний суд, лише для адвокатів', 'corte de inmigración, solo para abogados'),
   'Explore Family Law': x('Семейное право', 'Сімейне право', 'Derecho familiar'),
   'Disclosures & Filings': x('Раскрытие сведений и подача', 'Розкриття відомостей і подання', 'Declaraciones y presentaciones'),
   'Good to Know': x('Полезно знать', 'Корисно знати', 'Información útil'),
@@ -304,7 +304,7 @@ export const MEGA_I18N: Record<string, MegaTr> = {
   'Company': x('Компания', 'Компанія', 'Empresa'),
   'Language': x('Язык', 'Мова', 'Idioma'),
 
-  // USCIS | EOIR
+  // USCIS
   'All Immigration Services': x('Все иммиграционные услуги', 'Усі імміграційні послуги', 'Todos los servicios de inmigración'),
   'Green Card': f('грин-карта', 'грін-карта', 'tarjeta de residencia'),
   'Citizenship': f('гражданство', 'громадянство', 'ciudadanía'),

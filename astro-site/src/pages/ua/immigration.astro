@@ -4,9 +4,9 @@ import ImmigrationCategories from '~/components/ImmigrationCategories.astro';
 import ServiceSections from '~/components/ServiceSections.astro';
 
 const lang = 'uk' as const;
-const title = 'Підготовка імміграційних документів USCIS та EOIR | Imverica Legal Solutions';
+const title = 'Підготовка імміграційних документів USCIS | Imverica Legal Solutions';
 const description =
-  'California Registered LDA та Immigration Consultant. Підготовка документів USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90) та для імміграційного суду EOIR — за дорученням клієнта.';
+  'California Registered LDA та Immigration Consultant. Підготовка документів USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90) — за дорученням клієнта. Імміграційний суд (EOIR) — лише допомога адвокатам як paralegal.';
 
 const servicesUK = [
   {
@@ -31,8 +31,8 @@ const servicesUK = [
   },
   {
     id: 'eoir-documents',
-    title: 'Документи для імміграційного суду EOIR',
-    text: 'Підготовка документів для процесів в Executive Office for Immigration Review (EOIR) — motions, evidence packets, indexes, declarations та заяви про relief.',
+    title: 'Імміграційний суд EOIR: лише для адвокатів',
+    text: 'У справах в імміграційному суді ми працюємо лише як помічник юриста (paralegal) під керівництвом адвоката: чернетки на перевірку адвокату, індекси додатків, переклади. Для приватних осіб документи до EOIR ми не готуємо: у removal proceedings потрібен ліцензований адвокат або DOJ-accredited representative.',
     items: [
       'EOIR-28 — Notice of Entry of Appearance',
       'EOIR-29 — Notice of Appeal (BIA)',
@@ -44,7 +44,7 @@ const servicesUK = [
       'Збірка country-conditions evidence',
       'Свідоцькі declarations та підготовка перекладів'
     ],
-    cite: 'Представництво в суді вимагає ліцензованого адвоката або accredited representative.'
+    cite: 'Консультувати й представляти в EOIR можуть лише адвокат або DOJ-accredited representative (8 C.F.R. § 1292.1).'
   },
   {
     id: 'document-translation-california',
@@ -73,8 +73,8 @@ const servicesUK = [
     lang={lang}
     include={['immigration-consultant-california', 'eoir-documents', 'document-translation-california']}
     servicesOverride={servicesUK}
-    kicker="USCIS · EOIR · Підготовка імміграційних документів"
-    heading="Петиції USCIS і документи для імміграційного суду EOIR"
-    intro="Imverica Legal Solutions — зареєстрований у Каліфорнії Immigration Consultant та Legal Document Assistant. Ми готуємо петиції USCIS та пакети документів для імміграційного суду (EOIR) за дорученням клієнта — акуратно, організовано та вчасно. Ми не є юридичною фірмою і не надаємо юридичних консультацій."
+    kicker="USCIS · Підготовка імміграційних документів"
+    heading="Петиції USCIS за вашим дорученням"
+    intro="Imverica Legal Solutions — зареєстрований у Каліфорнії Immigration Consultant та Legal Document Assistant. Ми готуємо петиції USCIS за дорученням клієнта — акуратно, організовано та вчасно. Справам в імміграційному суді (EOIR) потрібен ліцензований адвокат або DOJ-accredited representative; у них ми працюємо лише як paralegal під керівництвом адвоката. Ми не є юридичною фірмою і не надаємо юридичних консультацій."
   />
 </BaseLayout>

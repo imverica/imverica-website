@@ -3,10 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'ru' as const;
-const title = 'EOIR-42A — Cancellation of Removal для LPR: подготовка формы | Imverica';
-const description = 'California Registered LDA готовит форму EOIR-42A — Application for Cancellation of Removal для постоянных резидентов под INA §240A(a). 7 лет резидентуры, 5 лет LPR, нет aggravated felony. По поручению клиента — представительство требует адвоката.';
+const title = 'EOIR-42A — Cancellation of Removal для LPR | Imverica';
+const description = 'EOIR-42A — Cancellation of Removal для постоянных резидентов. Imverica работает с документами иммиграционного суда только как paralegal под руководством адвоката; в removal proceedings нужен лицензированный адвокат или DOJ-accredited representative.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-42a-cancellation-lpr"
   slug="/eoir-42a-cancellation-lpr" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
@@ -14,8 +15,9 @@ const description = 'California Registered LDA готовит форму EOIR-42
     lang={lang}
     eyebrow="EOIR · INA §240A(a) · Cancellation для LPR"
     heading="EOIR-42A — Cancellation of Removal для постоянных резидентов"
-    sub="Для LPR в removal proceedings, отвечающих требованиям §240A(a): не менее 5 лет как LPR, 7 лет непрерывной резидентуры в США после законного въезда в любом статусе, без aggravated felony. Готовим заявление и evidence packet по вашему поручению."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-42A', text: 'Начать пакет EOIR-42A' }}
+    sub="Для LPR в removal proceedings, отвечающих требованиям §240A(a): не менее 5 лет как LPR, 7 лет непрерывной резидентуры в США после законного въезда в любом статусе, без aggravated felony. Консультировать и представлять вас в иммиграционном суде может только лицензированный адвокат или DOJ-accredited representative. Над этой подачей мы работаем только как paralegal под руководством адвоката."
+    ctaPrimary={{ href: '/ru/for-attorneys', text: 'Для адвокатов: помощь paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Бесплатная юридическая помощь' }}
   />
 
   <LandingBody related={[
@@ -40,7 +42,8 @@ const description = 'California Registered LDA готовит форму EOIR-42
       <li>IJ применяет favorable discretion с учётом семейных связей, hardship, equities, criminal history и других факторов §240(c)(4).</li>
     </ul>
 
-    <h2>Что мы готовим</h2>
+    <h2>Для адвокатов: что мы готовим по вашему указанию</h2>
+    <p>Только по указанию адвоката по делу (attorney of record) — адвокат проверяет, подписывает и подаёт. Для частных лиц документы в иммиграционный суд мы не готовим.</p>
     <div class="form-list">
       <strong>Пакет EOIR-42A</strong>
       <ul>
@@ -54,28 +57,16 @@ const description = 'California Registered LDA готовит форму EOIR-42
       </ul>
     </div>
 
-    <h2>Чего мы не делаем</h2>
-    <p>
-      <strong>Imverica не представляет клиентов в иммиграционном суде.</strong>
-      Cancellation of removal включает юридические аргументы,
-      cross-examination свидетелей и применение judicial discretion — это
-      practice of law, требует лицензированного адвоката или
-      BIA-accredited representative. Как California Legal Document Assistant
-      и Immigration Consultant аккуратно готовим EOIR-42A и evidence packet
-      под руководством вашего адвоката, организуем court-ready indices и
-      tabs по EOIR Practice Manual, переводим foreign-language документы.
-      Дела без counsel направляем в нашу сеть калифорнийских иммиграционных
-      адвокатов.
-    </p>
+    <EoirNotice lang="ru" />
 
     <cite>
       <strong>Источник:</strong> INA §240A(a), 8 U.S.C. §1229b(a)
       (cancellation для постоянных резидентов); INA §101(a)(43)
       (определение aggravated felony); INA §240A(d) (stop-time rule); EOIR
       Practice Manual (последнее издание). Представительство в суде требует
-      лицензированного адвоката или BIA-accredited representative.
+      лицензированного адвоката или DOJ-accredited representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="ru" primaryHref="/#get-started?form=EOIR-42A" primaryText="Начать анкету EOIR-42A" />
+  <CTAStrip lang="ru" heading="Вы адвокат и ведёте дело в EOIR?" sub="Готовим черновики, индексы приложений и заверенные переводы по вашему указанию — на вашу проверку и подпись." primaryHref="/ru/for-attorneys" primaryText="Для адвокатов: помощь paralegal" />
 </BaseLayout>

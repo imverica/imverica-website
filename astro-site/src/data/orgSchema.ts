@@ -46,7 +46,7 @@ export const organizationSchema = {
     'https://t.me/imverica'
   ],
   description:
-    'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant based in Sacramento. Remote document preparation across all U.S. states in English, Russian, Ukrainian, and Spanish: USCIS immigration forms (U4U re-parole, TPS, work permits, green cards, family petitions, citizenship), EOIR filings, and California court documents (small claims, family law, eviction, probate, record cleanup).',
+    'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant based in Sacramento. Remote document preparation across all U.S. states in English, Russian, Ukrainian, and Spanish: USCIS immigration forms (U4U re-parole, TPS, work permits, green cards, family petitions, citizenship) and California court documents (small claims, family law, eviction, probate, record cleanup).',
   serviceType: [
     'USCIS immigration form preparation',
     'U4U Uniting for Ukraine re-parole document preparation',
@@ -55,7 +55,7 @@ export const organizationSchema = {
     'Green card and adjustment of status (I-485) document preparation',
     'Family-based petition (I-130) document preparation',
     'Citizenship (N-400) document preparation',
-    'EOIR document preparation',
+    'Paralegal support for attorneys in immigration court (EOIR) cases',
     'Certified document translation (Russian, Ukrainian, Spanish)',
     'California family law document preparation',
     'Small claims and civil court document preparation',

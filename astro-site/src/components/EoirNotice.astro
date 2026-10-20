@@ -1,0 +1,85 @@
+---
+/**
+ * The notice on every EOIR page (EN, RU, UA, ES): only an attorney or a
+ * DOJ-accredited representative may advise or represent someone in
+ * immigration court (8 C.F.R. § 1292.1), Imverica does not prepare court
+ * filings for individuals and works on EOIR cases only as a paralegal under
+ * an attorney's direction, and where to find free legal help.
+ */
+import type { Locale } from '~/data/i18n';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+const PRO_BONO = 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers';
+const FIND_REP = 'https://www.justice.gov/eoir/find-legal-representation';
+
+const COPY: Record<Locale, { title: string; who: string; how: string; help: string; proBono: string; findRep: string; call: string }> = {
+  en: {
+    title: 'In immigration court? You need an attorney',
+    who: 'Only a licensed attorney or a DOJ-accredited representative may advise or represent you before the immigration court or the Board of Immigration Appeals (8 C.F.R. § 1292.1). Imverica is a California Legal Document Assistant and Immigration Consultant, not a law firm: we do not prepare immigration court filings for individuals and do not tell anyone which relief to seek.',
+    how: 'We work on EOIR cases only as a paralegal under an attorney’s direction. The attorney reviews, signs and files every document and represents the client.',
+    help: 'Where to find help',
+    proBono: 'EOIR list of free (pro bono) legal service providers',
+    findRep: 'EOIR: Find Legal Representation',
+    call: 'Call us: on a free call we will point you to licensed immigration attorneys.'
+  },
+  ru: {
+    title: 'Вы в иммиграционном суде? Вам нужен адвокат',
+    who: 'Консультировать и представлять вас в иммиграционном суде и в Board of Immigration Appeals может только лицензированный адвокат или аккредитованный представитель (DOJ-accredited representative), 8 C.F.R. § 1292.1. Imverica — Legal Document Assistant и Immigration Consultant в Калифорнии, а не юридическая фирма: мы не готовим документы в иммиграционный суд для частных лиц и не говорим, какую защиту (relief) запрашивать.',
+    how: 'По делам EOIR мы работаем только как помощник юриста (paralegal) под руководством адвоката. Адвокат проверяет, подписывает и подаёт каждый документ и представляет клиента.',
+    help: 'Где найти помощь',
+    proBono: 'Список бесплатных юридических организаций EOIR (pro bono)',
+    findRep: 'EOIR: как найти представителя (Find Legal Representation)',
+    call: 'Позвоните нам: на бесплатном звонке подскажем, где найти лицензированного иммиграционного адвоката.'
+  },
+  uk: {
+    title: 'Ви в імміграційному суді? Вам потрібен адвокат',
+    who: 'Консультувати й представляти вас в імміграційному суді та в Board of Immigration Appeals може лише ліцензований адвокат або акредитований представник (DOJ-accredited representative), 8 C.F.R. § 1292.1. Imverica — Legal Document Assistant та Immigration Consultant у Каліфорнії, а не юридична фірма: ми не готуємо документи до імміграційного суду для приватних осіб і не кажемо, який захист (relief) просити.',
+    how: 'У справах EOIR ми працюємо лише як помічник юриста (paralegal) під керівництвом адвоката. Адвокат перевіряє, підписує й подає кожен документ і представляє клієнта.',
+    help: 'Де знайти допомогу',
+    proBono: 'Список безкоштовних юридичних організацій EOIR (pro bono)',
+    findRep: 'EOIR: як знайти представника (Find Legal Representation)',
+    call: 'Зателефонуйте нам: під час безкоштовного дзвінка підкажемо, де знайти ліцензованого імміграційного адвоката.'
+  },
+  es: {
+    title: '¿Está en la corte de inmigración? Necesita un abogado',
+    who: 'Solo un abogado con licencia o un representante acreditado por el DOJ (DOJ-accredited representative) puede asesorarle o representarle ante la corte de inmigración o la Junta de Apelaciones de Inmigración (BIA), 8 C.F.R. § 1292.1. Imverica es un Legal Document Assistant e Immigration Consultant de California, no un bufete: no preparamos escritos para la corte de inmigración para particulares ni decimos qué alivio (relief) solicitar.',
+    how: 'En casos de EOIR trabajamos solo como asistente legal (paralegal) bajo la dirección de un abogado. El abogado revisa, firma y presenta cada documento y representa al cliente.',
+    help: 'Dónde encontrar ayuda',
+    proBono: 'Lista de proveedores de servicios legales gratuitos de EOIR (pro bono)',
+    findRep: 'EOIR: cómo encontrar representación legal (Find Legal Representation)',
+    call: 'Llámenos: en una llamada gratuita le indicaremos dónde encontrar abogados de inmigración con licencia.'
+  }
+};
+const t = COPY[lang];
+---
+<section class="eoir-notice" aria-labelledby="eoir-notice">
+  <h2 id="eoir-notice">{t.title}</h2>
+  <p>{t.who}</p>
+  <p>{t.how}</p>
+  <p class="eoir-notice-help"><strong>{t.help}</strong></p>
+  <ul>
+    <li><a href={PRO_BONO} target="_blank" rel="noopener">{t.proBono}</a></li>
+    <li><a href={FIND_REP} target="_blank" rel="noopener">{t.findRep}</a></li>
+    <li>{t.call} <a href="tel:+19163993992">+1 (916) 399-3992</a></li>
+  </ul>
+</section>
+
+<style>
+  .eoir-notice {
+    margin: 28px 0;
+    padding: 20px 22px;
+    border-left: 4px solid var(--navy, #143254);
+    border-radius: 0 14px 14px 0;
+    background: rgba(20, 50, 84, 0.05);
+  }
+  .eoir-notice h2 { margin-top: 0; }
+  .eoir-notice p { margin: 0 0 10px; }
+  .eoir-notice-help { margin-top: 14px; }
+  .eoir-notice ul { margin: 0; padding-left: 1.2em; }
+  .eoir-notice li { margin: 4px 0; }
+  .eoir-notice a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+</style>

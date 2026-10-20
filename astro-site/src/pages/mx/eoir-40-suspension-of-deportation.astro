@@ -3,10 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'es' as const;
-const title = 'EOIR-40 — Suspension of Deportation (NACARA): preparación del formulario | Imverica';
-const description = 'California Registered LDA prepara la forma EOIR-40 — Application for Suspension of Deportation bajo pre-IIRIRA framework y NACARA §203. Bajo dirección del cliente.';
+const title = 'EOIR-40 — Suspension of Deportation (NACARA) | Imverica';
+const description = 'EOIR-40 — Application for Suspension of Deportation. Imverica trabaja en escritos de la corte de inmigración solo como paralegal bajo la dirección de un abogado; en un procedimiento de deportación se necesita un abogado con licencia o un representante acreditado por el DOJ.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-40-suspension-of-deportation"
   slug="/eoir-40-suspension-of-deportation" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
@@ -14,8 +15,9 @@ const description = 'California Registered LDA prepara la forma EOIR-40 — Appl
     lang={lang}
     eyebrow="EOIR · Pre-IIRIRA INA §244 · NACARA §203"
     heading="EOIR-40 — Application for Suspension of Deportation"
-    sub="Usada por el grupo estrecho de solicitantes elegibles bajo el marco pre-IIRIRA — principalmente NACARA §203 (nicaragüenses, cubanos, salvadoreños, guatemaltecos y nacionales del antiguo bloque soviético) y proceedings iniciados antes del 1 de abril de 1997. Preparamos bajo su dirección."
-    ctaPrimary={{ href: '/#get-started?form=EOIR-40', text: 'Iniciar mi EOIR-40' }}
+    sub="Usada por el grupo estrecho de solicitantes elegibles bajo el marco pre-IIRIRA — principalmente NACARA §203 (nicaragüenses, cubanos, salvadoreños, guatemaltecos y nacionales del antiguo bloque soviético) y proceedings iniciados antes del 1 de abril de 1997. Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle en la corte de inmigración. En este escrito trabajamos solo como paralegal bajo la dirección de un abogado."
+    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para abogados: apoyo paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Ayuda legal gratuita' }}
   />
 
   <LandingBody related={[
@@ -48,7 +50,8 @@ const description = 'California Registered LDA prepara la forma EOIR-40 — Appl
       abogado de inmigración con licencia.
     </p>
 
-    <h2>Lo que preparamos</h2>
+    <h2>Para abogados: lo que preparamos bajo su dirección</h2>
+    <p>Solo bajo la dirección del abogado del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
     <div class="form-list">
       <strong>Paquete EOIR-40</strong>
       <ul>
@@ -63,25 +66,16 @@ const description = 'California Registered LDA prepara la forma EOIR-40 — Appl
       </ul>
     </div>
 
-    <h2>Lo que no hacemos</h2>
-    <p>
-      <strong>Imverica no representa clientes en corte de inmigración.</strong>
-      El suspension of deportation requiere un abogado con licencia o
-      BIA-accredited representative. Como California Legal Document
-      Assistant e Immigration Consultant, preparamos EOIR-40 y el evidence
-      packet bajo la dirección de su abogado. Casos sin counsel los
-      referimos a nuestra red de abogados de inmigración con licencia en
-      California con experiencia en NACARA.
-    </p>
+    <EoirNotice lang="es" />
 
     <cite>
       <strong>Fuente:</strong> Pre-IIRIRA INA §244 (suspension of
       deportation, preservada por IIRIRA §309(c) transition rules); NACARA
       §203, Pub. L. No. 105-100, §203 (1997); EOIR Practice Manual. La
       representación en corte requiere abogado con licencia o
-      BIA-accredited representative.
+      DOJ-accredited representative.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="es" primaryHref="/#get-started?form=EOIR-40" primaryText="Iniciar mi entrevista EOIR-40" />
+  <CTAStrip lang="es" heading="¿Es abogado y lleva un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Para abogados: apoyo paralegal" />
 </BaseLayout>

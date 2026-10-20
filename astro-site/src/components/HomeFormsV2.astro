@@ -18,21 +18,21 @@ const p = PREFIX[lang];
 const COPY: Record<Props['lang'], { kicker: string; heading: string; lead: string; more: string }> = {
   ru: {
     kicker: 'Что мы делаем',
-    heading: 'USCIS, EOIR и калифорнийские формы — готовим под ключ',
+    heading: 'USCIS и калифорнийские формы — готовим под ключ',
     lead: 'Помощь с подготовкой документов на русском, английском, украинском и испанском. Не юридическая фирма, юридические консультации не даём — готовим формы аккуратно и по поручению клиента.',
-    more: 'Полный список USCIS, EOIR и калифорнийских форм — на странице'
+    more: 'Полный список форм USCIS и Калифорнии — на странице'
   },
   uk: {
     kicker: 'Що ми робимо',
-    heading: 'USCIS, EOIR і каліфорнійські форми — готуємо під ключ',
+    heading: 'USCIS і каліфорнійські форми — готуємо під ключ',
     lead: 'Допомога з підготовкою документів українською, російською, англійською та іспанською. Не юридична фірма, юридичних порад не надаємо — готуємо форми акуратно за дорученням клієнта.',
-    more: 'Повний перелік форм USCIS, EOIR і Каліфорнії — на сторінці'
+    more: 'Повний перелік форм USCIS і Каліфорнії — на сторінці'
   },
   es: {
     kicker: 'Lo que hacemos',
-    heading: 'USCIS, EOIR y formularios de California — preparados al detalle',
+    heading: 'USCIS y formularios de California — preparados al detalle',
     lead: 'Preparación de documentos en español, inglés, ruso y ucraniano. No somos un bufete de abogados ni brindamos asesoría legal — preparamos los formularios con precisión bajo la dirección del cliente.',
-    more: 'Lista completa de formularios USCIS, EOIR y California en la página'
+    more: 'Lista completa de formularios USCIS y California en la página'
   }
 };
 
@@ -44,7 +44,6 @@ const FORMS: Array<[string, string, Record<Props['lang'], string>, string]> = [
   ['I-130', 'Petition for Alien Relative', { ru: 'петиция для родственника-иностранца', uk: 'петиція для родича-іноземця', es: 'petición para familiar extranjero' }, '/immigration#immigration-consultant-california'],
   ['I-765', 'Application for Employment Authorization', { ru: 'заявление на разрешение на работу', uk: 'заява на дозвіл на роботу', es: 'solicitud de autorización de empleo' }, '/immigration#immigration-consultant-california'],
   ['I-131', 'Application for Travel Document', { ru: 'заявление на проездной документ', uk: 'заява на проїзний документ', es: 'solicitud de documento de viaje' }, '/immigration#immigration-consultant-california'],
-  ['EOIR-28 | 42A | 42B', 'Immigration Court', { ru: 'иммиграционный суд', uk: 'імміграційний суд', es: 'tribunal de inmigración' }, '/immigration#eoir-documents'],
   ['UD-100', 'Unlawful Detainer', { ru: 'выселение', uk: 'виселення', es: 'desalojo' }, `${p}/california-unlawful-detainer`],
   ['DE-295', 'Probate Closing', { ru: 'закрытие наследственного дела', uk: 'закриття спадкової справи', es: 'cierre de sucesión' }, `${p}/california-probate`],
   ['CR-180', 'Expungement', { ru: 'снятие судимости', uk: 'зняття судимості', es: 'eliminación de antecedentes penales' }, `${p}/california-expungement`]
@@ -65,7 +64,7 @@ const t = COPY[lang];
         </a>
       ))}
     </div>
-    <p class="hf2-more">{t.more} <a href="/immigration">USCIS | EOIR</a>.</p>
+    <p class="hf2-more">{t.more} <a href="/immigration">USCIS</a>.</p>
   </div>
 </section>
 

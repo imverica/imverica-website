@@ -27,9 +27,6 @@ export const PRICES: Record<string, PublishedPrice> = {
   'N-400': { amount: 599 },
   'I-824': { amount: 249 },
   'I-589': { amount: 1599, from: true },
-  // EOIR
-  'EOIR-29': { amount: 799, from: true },
-  'EOIR': { amount: 699, from: true }, // cheapest EOIR line: Motion to Reopen "from $699"
   // California courts
   'FL-100': { amount: 799, from: true },
   'FL-300': { amount: 349 },
@@ -54,8 +51,7 @@ export const PRICES: Record<string, PublishedPrice> = {
 
 const TITLE_ALIASES: Record<string, string> = {
   'FBN | DBA': 'FBN',
-  'Demand Letter': 'DEMAND',
-  'EOIR — Immigration Court': 'EOIR'
+  'Demand Letter': 'DEMAND'
 };
 
 /** Price label for a tile title like "I-485 — Adjustment of Status". */

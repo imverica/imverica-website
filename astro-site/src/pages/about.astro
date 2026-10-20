@@ -8,7 +8,7 @@ import QuickFacts from '~/components/QuickFacts.astro';
 import FounderBlock from '~/components/FounderBlock.astro';
 
 const title = 'About Imverica — California LDA & Immigration Consultant | Imverica Legal Solutions';
-const description = 'Imverica Legal Solutions is a Sacramento-based, multilingual (English, Russian, Ukrainian, Spanish) Legal Document Assistant and Immigration Consultant. We prepare USCIS, EOIR, and California state-court documents nationwide and statewide — at affordable, transparent rates. We are not a law firm and do not give legal advice.';
+const description = 'Imverica Legal Solutions is a Sacramento-based, multilingual (English, Russian, Ukrainian, Spanish) Legal Document Assistant and Immigration Consultant. We prepare USCIS and California state-court documents nationwide and statewide — at affordable, transparent rates. We are not a law firm and do not give legal advice.';
 
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/about"
@@ -25,7 +25,7 @@ const description = 'Imverica Legal Solutions is a Sacramento-based, multilingua
   <LandingBody related={[
     { href: '/lda', label: 'What is a California Legal Document Assistant?' },
     { href: '/for-attorneys', label: 'For attorneys — paralegal partnership' },
-    { href: '/immigration', label: 'USCIS & EOIR documents we prepare' },
+    { href: '/immigration', label: 'USCIS forms we prepare' },
     { href: '/fl', label: 'California family law forms' }
   ]}>
     <p class="lead">
@@ -72,7 +72,7 @@ const description = 'Imverica Legal Solutions is a Sacramento-based, multilingua
     <p><strong>What we prepare:</strong></p>
     <ul>
       <li>USCIS forms (I-485, I-130, I-765, I-589, N-400, I-90, I-131, I-864, RFE responses, evidence packets).</li>
-      <li>EOIR immigration court filings (EOIR-29, 42A, 42B, motions, country-conditions packets, declarations).</li>
+      <li><strong>Immigration court (EOIR): for attorneys only.</strong> We work on EOIR cases only as a paralegal under an attorney’s direction and do not prepare immigration court filings for individuals (<a href="/eoir-immigration-court">why</a>).</li>
       <li>California family law (FL-100/110/120, FL-150/160, FL-300, custody, support, judgment packages).</li>
       <li>California small claims and civil (SC-100 through SC-140, demand letters, wage garnishment, abstract of judgment).</li>
       <li>California unlawful detainer paperwork for landlords and tenants (UD-100/105/110, three-day notices, default packets).</li>
@@ -101,10 +101,7 @@ const description = 'Imverica Legal Solutions is a Sacramento-based, multilingua
       Secretary of State. Both also appear on every intake agreement.
     </p>
     <p>
-      For USCIS and EOIR forms we act only as a document preparer at your
-      direction: we never appear before USCIS or EOIR as your representative,
-      and we tell you at every step that we are not attorneys or accredited
-      representatives.
+      For USCIS forms we act only as a document preparer at your direction: we never appear before USCIS as your representative, and we tell you at every step that we are not attorneys or accredited representatives. Immigration court (EOIR) matters need a licensed attorney or a DOJ-accredited representative; we work on them only as a paralegal under an attorney’s direction.
     </p>
 
     <h2 id="contact">How to reach us</h2>
@@ -118,7 +115,7 @@ const description = 'Imverica Legal Solutions is a Sacramento-based, multilingua
     </ul>
     <p>
       Based in Sacramento, California. California state-court matters
-      statewide; USCIS and EOIR forms for clients across the United States.
+      statewide; USCIS forms for clients across the United States.
     </p>
 
     <cite>
@@ -138,7 +135,7 @@ const description = 'Imverica Legal Solutions is a Sacramento-based, multilingua
     heading="Pick a service area"
     intro="If you already know what you need, jump straight in:"
     tiles={[
-      { icon: '🛂', title: 'USCIS & EOIR',         desc: 'I-485, I-130, I-765, asylum, removal-defense — any US state.', href: '/immigration', color: 'var(--navy)' },
+      { icon: '🛂', title: 'USCIS forms', desc: 'I-485, I-130, I-765, N-400, I-589: any US state.', href: '/immigration', color: 'var(--navy)' },
       { icon: '👨‍👩‍👧', title: 'California family law', desc: 'Divorce, custody, support, post-judgment modifications.', href: '/fl', color: 'var(--terracotta)' },
       { icon: '📃', title: 'Small claims & civil', desc: 'SC-100, demand letters, judgment collection.', href: '/sc', color: 'var(--sage)' },
       { icon: '🏠', title: 'Unlawful detainer',    desc: 'UD-100, three-day notices, default packets.', href: '/california-unlawful-detainer', color: 'var(--gold)' },

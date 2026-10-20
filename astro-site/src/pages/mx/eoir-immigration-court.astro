@@ -4,17 +4,18 @@ import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'es' as const;
-const title = 'EOIR — preparación de documentos de corte de inmigración | Imverica';
-const description = 'California Registered LDA prepara documentos de corte de inmigración (EOIR) bajo su dirección — solicitudes de alivio (EOIR-42A/42B), asilo (I-589), mociones para reabrir/reconsiderar, paquetes de evidencia y apelaciones ante la BIA (EOIR-29). La representación en corte requiere un abogado con licencia o representante acreditado.';
+const title = 'EOIR — corte de inmigración: apoyo paralegal para abogados | Imverica';
+const description = 'Las cortes de inmigración y la Junta de Apelaciones de Inmigración (BIA) deciden los casos de deportación (removal). Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle allí. En casos de EOIR trabajamos solo como paralegal bajo la dirección de un abogado.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'EOIR Immigration Court Document Preparation',
+  serviceType: 'EOIR Immigration Court — paralegal support for attorneys',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Preparación de documentos para procedimientos ante el Executive Office for Immigration Review, bajo la dirección del cliente. No es representación legal.'
+  description: 'Paralegal support for attorneys on immigration court (EOIR) filings, at the attorney’s direction. Not legal advice or representation; Imverica does not prepare immigration court filings for individuals.'
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-immigration-court"
@@ -22,22 +23,23 @@ const schema = {
   <Hero
     lang={lang}
     eyebrow="EOIR · Corte de Inmigración · 8 C.F.R. §1003"
-    heading="EOIR — preparación de documentos de corte de inmigración"
-    sub="Preparación de documentos para procedimientos ante el Executive Office for Immigration Review — solicitudes de alivio, mociones, paquetes de evidencia y apelaciones — con precisión bajo su dirección. La representación en corte requiere un abogado con licencia o un representante acreditado por la BIA."
-    ctaPrimary={{ href: '/#get-started?topic=EOIR', text: 'Solicitar preparación de documentos EOIR' }}
+    heading="EOIR — corte de inmigración: apoyo paralegal para abogados"
+    sub="Las cortes de inmigración y la Junta de Apelaciones de Inmigración (BIA) deciden los casos de deportación (removal). Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle allí. En casos de EOIR trabajamos solo como paralegal bajo la dirección de un abogado."
+    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para abogados: apoyo paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Ayuda legal gratuita' }}
   />
 
   <CategoryTiles
-    kicker="Documentos que preparamos para la corte"
-    heading="Qué cubre la preparación de documentos EOIR"
-    intro="Preparamos y organizamos las presentaciones de la corte bajo su dirección. Toque un tile para iniciar su solicitud."
+    kicker="Para abogados"
+    heading="Dónde apoyamos a abogados en casos de EOIR"
+    intro="Solo bajo la dirección del abogado. Toque una tarjeta para leer sobre cada escrito."
     tiles={[
-      { icon: '⚖️', title: 'EOIR-42A — Cancelación (LPR)',     desc: 'Solicitud de cancelación de remoción para ciertos residentes permanentes.',          href: '/#get-started?topic=EOIR-42A', color: 'var(--terracotta-deep)' },
-      { icon: '⚖️', title: 'EOIR-42B — Cancelación (no-LPR)',  desc: 'Solicitud de cancelación de remoción y ajuste para ciertos no-residentes.',           href: '/#get-started?topic=EOIR-42B', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'EOIR-42A — Cancelación (LPR)',     desc: 'Solicitud de cancelación de remoción para ciertos residentes permanentes.',          href: '/mx/eoir-42a-cancellation-lpr', color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'EOIR-42B — Cancelación (no-LPR)',  desc: 'Solicitud de cancelación de remoción y ajuste para ciertos no-residentes.',           href: '/mx/eoir-42b-cancellation-non-lpr', color: 'var(--navy)' },
       { icon: '🏛️', title: 'I-589 — Asilo en corte',          desc: 'Solicitud defensiva de asilo y withholding presentada en el procedimiento.',          href: '/mx/i-589-asylum-help',         color: 'var(--sage)' },
-      { icon: '🔄', title: 'Mociones para reabrir | reconsiderar', desc: 'Paquetes de moción con evidencia de apoyo y un historial procesal claro.',         href: '/#get-started?topic=EOIR-motion', color: 'var(--gold)' },
-      { icon: '📑', title: 'Paquetes de evidencia e índices',  desc: 'Anexos organizados, pestañas, índices, declaraciones y evidencia de condiciones del país.', href: '/#get-started?topic=EOIR-evidence', color: 'var(--navy-light)' },
-      { icon: '📨', title: 'EOIR-29 — Apelación ante la BIA',  desc: 'Paquete de aviso de apelación ante la Junta de Apelaciones de Inmigración.',          href: '/#get-started?topic=EOIR-29',  color: 'var(--terracotta)' }
+      { icon: '🔄', title: 'Mociones para reabrir | reconsiderar', desc: 'Paquetes de moción con evidencia de apoyo y un historial procesal claro.',         href: '/mx/for-attorneys', color: 'var(--gold)' },
+      { icon: '📑', title: 'Paquetes de evidencia e índices',  desc: 'Anexos organizados, pestañas, índices, declaraciones y evidencia de condiciones del país.', href: '/mx/for-attorneys', color: 'var(--navy-light)' },
+      { icon: '📨', title: 'EOIR-29 — Apelación ante la BIA',  desc: 'Paquete de aviso de apelación ante la Junta de Apelaciones de Inmigración.',          href: '/mx/eoir-29-notice-of-appeal',  color: 'var(--terracotta)' }
     ]}
   />
 
@@ -54,7 +56,8 @@ const schema = {
       solicitudes de alivio, evidencia de apoyo y mociones — entregadas a la corte.
     </p>
 
-    <h2>Qué preparamos</h2>
+    <h2>Para abogados: lo que preparamos bajo su dirección</h2>
+    <p>Solo bajo la dirección del abogado del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
     <ul>
       <li><strong>Solicitudes de alivio</strong> como EOIR-42A y EOIR-42B (cancelación de remoción) y el Formulario I-589 (asilo/withholding), integradas con la evidencia de apoyo requerida.</li>
       <li><strong>Mociones</strong> para reabrir o reconsiderar ante el juez de inmigración o la BIA, con el historial procesal y los anexos organizados.</li>
@@ -63,28 +66,15 @@ const schema = {
       <li><strong>Traducciones certificadas</strong> de evidencia en idioma extranjero.</li>
     </ul>
 
-    <h2>Qué NO hacemos — esto es importante</h2>
-    <p>
-      Comparecer en la corte de inmigración, firmar un Notice of Entry of
-      Appearance (EOIR-28), aconsejarle qué alivio solicitar o argumentar su
-      caso son actos de representación legal. Un Legal Document Assistant
-      registrado <em>no puede</em> representarlo ante el EOIR — solo un abogado
-      con licencia o un representante acreditado por la BIA puede hacerlo.
-      Imverica prepara documentos bajo su dirección y no da asesoría legal, no
-      elige sus formularios ni su estrategia, ni garantiza ningún resultado.
-      Como los casos de remoción tienen consecuencias graves, recomendamos
-      enfáticamente contratar a un abogado de inmigración con licencia o a un
-      representante acreditado, y mantenemos referencias.
-    </p>
+    <EoirNotice lang="es" />
 
     <cite>
       <strong>Fuente:</strong> 8 C.F.R. Part 1003 (organización y procedimiento
       del EOIR); INA §240 (procedimientos de remoción); 8 C.F.R. §1003.23
       (mociones ante el juez de inmigración) y §1003.2 (mociones ante la BIA);
-      8 C.F.R. Part 1292 (representación y representantes acreditados). Solo
-      preparación de documentos — no asesoría legal ni representación.
+      8 C.F.R. Part 1292 (representación y representantes acreditados). Solo apoyo paralegal para abogados: no es asesoría legal ni representación.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="es" primaryHref="/#get-started?topic=EOIR" primaryText="Solicitar preparación de documentos EOIR" />
+  <CTAStrip lang="es" heading="¿Es abogado y lleva un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Para abogados: apoyo paralegal" />
 </BaseLayout>

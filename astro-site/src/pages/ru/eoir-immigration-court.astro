@@ -4,17 +4,18 @@ import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
+import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'ru' as const;
-const title = 'EOIR — подготовка документов иммиграционного суда | Imverica';
-const description = 'California Registered LDA готовит документы иммиграционного суда (EOIR) по вашему поручению — заявления на relief (EOIR-42A/42B), убежище (I-589), motions to reopen/reconsider, evidence packets, апелляции в BIA (EOIR-29). Представительство в суде требует лицензированного адвоката или accredited representative.';
+const title = 'EOIR — иммиграционный суд: помощь paralegal для адвокатов | Imverica';
+const description = 'Иммиграционные суды и Board of Immigration Appeals рассматривают дела о депортации (removal). Консультировать и представлять вас там может только лицензированный адвокат или DOJ-accredited representative. По делам EOIR мы работаем только как paralegal под руководством адвоката.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'EOIR Immigration Court Document Preparation',
+  serviceType: 'EOIR Immigration Court — paralegal support for attorneys',
   provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Подготовка документов для разбирательств в Executive Office for Immigration Review, по поручению клиента. Не юридическое представительство.'
+  description: 'Paralegal support for attorneys on immigration court (EOIR) filings, at the attorney’s direction. Not legal advice or representation; Imverica does not prepare immigration court filings for individuals.'
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/ru/eoir-immigration-court"
@@ -22,22 +23,23 @@ const schema = {
   <Hero
     lang={lang}
     eyebrow="EOIR · Immigration Court · 8 C.F.R. §1003"
-    heading="EOIR — подготовка документов иммиграционного суда"
-    sub="Подготовка документов для разбирательств в Executive Office for Immigration Review — заявления на relief, motions, evidence packets и апелляции — аккуратно по вашему поручению. Представительство в суде требует лицензированного адвоката или BIA-accredited representative."
-    ctaPrimary={{ href: '/#get-started?topic=EOIR', text: 'Запросить подготовку документов EOIR' }}
+    heading="EOIR — иммиграционный суд: помощь paralegal для адвокатов"
+    sub="Иммиграционные суды и Board of Immigration Appeals рассматривают дела о депортации (removal). Консультировать и представлять вас там может только лицензированный адвокат или DOJ-accredited representative. По делам EOIR мы работаем только как paralegal под руководством адвоката."
+    ctaPrimary={{ href: '/ru/for-attorneys', text: 'Для адвокатов: помощь paralegal' }}
+    ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Бесплатная юридическая помощь' }}
   />
 
   <CategoryTiles
-    kicker="Документы, которые мы готовим для суда"
-    heading="Что покрывает подготовка документов EOIR"
-    intro="Готовим и организуем судебные подачи по вашему поручению. Нажмите плитку, чтобы начать запрос."
+    kicker="Для адвокатов"
+    heading="Где мы помогаем адвокатам в делах EOIR"
+    intro="Только по указанию адвоката. Нажмите плитку, чтобы прочитать о каждой подаче."
     tiles={[
-      { icon: '⚖️', title: 'EOIR-42A — Cancellation (LPR)',     desc: 'Заявление на cancellation of removal для определённых постоянных резидентов.',       href: '/#get-started?topic=EOIR-42A', color: 'var(--terracotta-deep)' },
-      { icon: '⚖️', title: 'EOIR-42B — Cancellation (non-LPR)', desc: 'Заявление на cancellation of removal и adjustment для определённых не-резидентов.',   href: '/#get-started?topic=EOIR-42B', color: 'var(--navy)' },
+      { icon: '⚖️', title: 'EOIR-42A — Cancellation (LPR)',     desc: 'Заявление на cancellation of removal для определённых постоянных резидентов.',       href: '/ru/eoir-42a-cancellation-lpr', color: 'var(--terracotta-deep)' },
+      { icon: '⚖️', title: 'EOIR-42B — Cancellation (non-LPR)', desc: 'Заявление на cancellation of removal и adjustment для определённых не-резидентов.',   href: '/ru/eoir-42b-cancellation-non-lpr', color: 'var(--navy)' },
       { icon: '🏛️', title: 'I-589 — Убежище в суде',            desc: 'Defensive asylum и withholding, поданные в рамках разбирательства.',                 href: '/ru/i-589-asylum-help',         color: 'var(--sage)' },
-      { icon: '🔄', title: 'Motions to reopen | reconsider',     desc: 'Пакеты motion с подтверждающими доказательствами и ясной процедурной историей.',     href: '/#get-started?topic=EOIR-motion', color: 'var(--gold)' },
-      { icon: '📑', title: 'Evidence packets и indexes',         desc: 'Организованные exhibits, tabs, indexes, декларации и country-conditions evidence.',   href: '/#get-started?topic=EOIR-evidence', color: 'var(--navy-light)' },
-      { icon: '📨', title: 'EOIR-29 — Апелляция в BIA',          desc: 'Пакет notice of appeal в Board of Immigration Appeals.',                             href: '/#get-started?topic=EOIR-29',  color: 'var(--terracotta)' }
+      { icon: '🔄', title: 'Motions to reopen | reconsider',     desc: 'Пакеты motion с подтверждающими доказательствами и ясной процедурной историей.',     href: '/ru/for-attorneys', color: 'var(--gold)' },
+      { icon: '📑', title: 'Evidence packets и indexes',         desc: 'Организованные exhibits, tabs, indexes, декларации и country-conditions evidence.',   href: '/ru/for-attorneys', color: 'var(--navy-light)' },
+      { icon: '📨', title: 'EOIR-29 — Апелляция в BIA',          desc: 'Пакет notice of appeal в Board of Immigration Appeals.',                             href: '/ru/eoir-29-notice-of-appeal',  color: 'var(--terracotta)' }
     ]}
   />
 
@@ -54,7 +56,8 @@ const schema = {
       motions — подаваемых в суд.
     </p>
 
-    <h2>Что мы готовим</h2>
+    <h2>Для адвокатов: что мы готовим по вашему указанию</h2>
+    <p>Только по указанию адвоката по делу (attorney of record) — адвокат проверяет, подписывает и подаёт. Для частных лиц документы в иммиграционный суд мы не готовим.</p>
     <ul>
       <li><strong>Заявления на relief</strong> вроде EOIR-42A и EOIR-42B (cancellation of removal) и форму I-589 (asylum/withholding), собранные с необходимыми доказательствами.</li>
       <li><strong>Motions</strong> to reopen или reconsider перед immigration judge или BIA, с организованной процедурной историей и exhibits.</li>
@@ -63,29 +66,15 @@ const schema = {
       <li><strong>Заверенные переводы</strong> доказательств на иностранном языке.</li>
     </ul>
 
-    <h2>Чего мы НЕ делаем — это важно</h2>
-    <p>
-      Появление в иммиграционном суде, подписание Notice of Entry of Appearance
-      (EOIR-28), советы о том, какой relief запрашивать, или ведение вашего
-      дела — это акты юридического представительства. Зарегистрированный Legal
-      Document Assistant <em>не может</em> представлять вас перед EOIR — это
-      может делать только лицензированный адвокат или представитель,
-      аккредитованный BIA. Imverica готовит документы по вашему поручению и не
-      даёт юридических консультаций, не выбирает формы или стратегию и не
-      гарантирует результат. Поскольку дела о removal имеют серьёзные
-      последствия, мы настоятельно рекомендуем нанять лицензированного
-      иммиграционного адвоката или accredited representative, и у нас есть
-      referrals.
-    </p>
+    <EoirNotice lang="ru" />
 
     <cite>
       <strong>Источник:</strong> 8 C.F.R. Part 1003 (организация и процедура
       EOIR); INA §240 (removal proceedings); 8 C.F.R. §1003.23 (motions перед
       immigration judge) и §1003.2 (motions перед BIA); 8 C.F.R. Part 1292
-      (представительство и accredited representatives). Только подготовка
-      документов — не юридические консультации и не представительство.
+      (представительство и accredited representatives). Только помощь адвокатам как paralegal — не юридические консультации и не представительство.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="ru" primaryHref="/#get-started?topic=EOIR" primaryText="Запросить подготовку документов EOIR" />
+  <CTAStrip lang="ru" heading="Вы адвокат и ведёте дело в EOIR?" sub="Готовим черновики, индексы приложений и заверенные переводы по вашему указанию — на вашу проверку и подпись." primaryHref="/ru/for-attorneys" primaryText="Для адвокатов: помощь paralegal" />
 </BaseLayout>
