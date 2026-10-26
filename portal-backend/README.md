@@ -70,10 +70,10 @@ Example:
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/portal/intake/ \
-  -F first_name=Yana \
-  -F last_name=Hovdan \
+  -F first_name=Marta \
+  -F last_name=Demchenko \
   -F phone="+1 (916) 399-3992" \
-  -F email=yana@example.com \
+  -F email=marta@example.com \
   -F service=I-485 \
   -F description="Adjustment of status document preparation" \
   -F documents=@/path/to/passport.pdf

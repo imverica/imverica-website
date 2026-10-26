@@ -39,10 +39,10 @@ class PortalSmokeTests(TestCase):
         response = Client().post(
             "/api/portal/intake/",
             {
-                "first_name": "Yana",
-                "last_name": "Hovdan",
+                "first_name": "Marta",
+                "last_name": "Demchenko",
                 "phone": "+1 (916) 399-3992",
-                "email": "YANA@example.com",
+                "email": "MARTA@example.com",
                 "service": "I-485",
                 "description": "Adjustment of status document preparation.",
             },
@@ -55,10 +55,10 @@ class PortalSmokeTests(TestCase):
         self.assertEqual(body["documents_received"], 0)
 
         User = get_user_model()
-        user = User.objects.get(username="yana@example.com")
-        self.assertEqual(user.first_name, "Yana")
-        self.assertEqual(user.last_name, "Hovdan")
-        self.assertEqual(user.email, "yana@example.com")
+        user = User.objects.get(username="marta@example.com")
+        self.assertEqual(user.first_name, "Marta")
+        self.assertEqual(user.last_name, "Demchenko")
+        self.assertEqual(user.email, "marta@example.com")
         self.assertEqual(user.client_profile.phone, "9163993992")
 
         application = Application.objects.get(id=body["application_id"])

@@ -121,11 +121,11 @@ async function main() {
   const i485Overlays = i485TextOverlays(i485Payload);
   assert(Object.keys(i485Values).length >= 120, `I-485 endpoint payload should map at least 120 exact fields, got ${Object.keys(i485Values).length}`);
   assert(Array.isArray(i485Overlays), 'I-485 text overlays should be an array');
-  assert(i485Values['Pt1Line4_AlienNumber[0]'] === '208924970', 'I-485 should map applicant A-number');
-  assert(i485Values['Pt1Line1_FamilyName[0]'] === 'HOVDAN', 'I-485 should map applicant family name');
-  assert(i485Values['Pt1Line1_GivenName[0]'] === 'YANA', 'I-485 should map applicant given name');
-  assert(i485Values['Pt3Line3_DaytimePhoneNumber1[0]'] === '(253) 409-7210', 'I-485 daytime phone should be PDF-formatted');
-  assert(i485Values['Pt3Line4_MobileNumber1[0]'] === '(253) 409-7210', 'I-485 mobile phone should be PDF-formatted');
+  assert(i485Values['Pt1Line4_AlienNumber[0]'] === '123456789', 'I-485 should map applicant A-number');
+  assert(i485Values['Pt1Line1_FamilyName[0]'] === 'DEMCHENKO', 'I-485 should map applicant family name');
+  assert(i485Values['Pt1Line1_GivenName[0]'] === 'MARTA', 'I-485 should map applicant given name');
+  assert(i485Values['Pt3Line3_DaytimePhoneNumber1[0]'] === '(253) 555-0147', 'I-485 daytime phone should be PDF-formatted');
+  assert(i485Values['Pt3Line4_MobileNumber1[0]'] === '(253) 555-0147', 'I-485 mobile phone should be PDF-formatted');
 
   const i485Response = await callGeneratePdf(i485Payload);
   const i485Bytes = assertPdfResponse(i485Response, 'I-485', 'i-485.pdf');
@@ -153,30 +153,30 @@ async function main() {
       payload: {
         formCode: 'AR-11',
         formAnswers: {
-          applicant_given_name: 'Yana',
-          applicant_family_name: 'Hovdan',
-          date_of_birth: '1990-01-19',
-          alien_number: 'A208924970',
-          previous_address_line1: '14919 41st Ave',
+          applicant_given_name: 'Marta',
+          applicant_family_name: 'Demchenko',
+          date_of_birth: '1988-05-07',
+          alien_number: 'A123456789',
+          previous_address_line1: '480 Pine Ave',
           previous_unit_type: 'Apt',
           previous_address_unit: 'C3',
-          previous_city: 'Bothell',
+          previous_city: 'Tacoma',
           previous_state: 'WA',
-          previous_zip: '98012',
-          present_address_line1: '15 164 ST SW',
+          previous_zip: '98402',
+          present_address_line1: '2200 MAIN ST',
           present_unit_type: 'Apt',
           present_address_unit: 'B35',
-          present_city: 'Bothell',
+          present_city: 'Tacoma',
           present_state: 'WA',
-          present_zip: '98012',
-          mailing_address_line1: '15 164 ST SW',
+          present_zip: '98402',
+          mailing_address_line1: '2200 MAIN ST',
           mailing_unit_type: 'Apt',
           mailing_address_unit: 'B35',
-          mailing_city: 'Bothell',
+          mailing_city: 'Tacoma',
           mailing_state: 'WA',
-          mailing_zip: '98012'
+          mailing_zip: '98402'
         },
-        contact: { name: 'Yana Hovdan' }
+        contact: { name: 'Marta Demchenko' }
       }
     },
     {
@@ -186,12 +186,12 @@ async function main() {
       payload: {
         formCode: 'G-1145',
         formAnswers: {
-          daytime_phone: { countryCode: '+1', areaCode: '253', number: '4097210' },
-          email_address: 'yana@example.com'
+          daytime_phone: { countryCode: '+1', areaCode: '253', number: '5550147' },
+          email_address: 'marta@example.com'
         },
         contact: {
-          phone: '+1 253 409 7210',
-          email: 'yana@example.com'
+          phone: '+1 253 555 0147',
+          email: 'marta@example.com'
         }
       }
     },

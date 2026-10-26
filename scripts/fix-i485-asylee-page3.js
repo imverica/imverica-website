@@ -66,9 +66,9 @@ const q = readJson(questionnairePath);
 const answers = readJson(answersPath);
 
 // Page 3 I-94 section
-setIfExists(q, answers, 'P1Line12_FamilyName', 'HOVDAN');
-setIfExists(q, answers, 'P1Line13_GivenName', 'YANA');
-setIfExists(q, answers, 'P1Line12_I94', '77692068933');
+setIfExists(q, answers, 'P1Line12_FamilyName', 'DEMCHENKO');
+setIfExists(q, answers, 'P1Line13_GivenName', 'MARTA');
+setIfExists(q, answers, 'P1Line12_I94', '12345678901');
 setIfExists(q, answers, 'Pt1Line12_Date', 'D/S');
 setIfExists(q, answers, 'Pt1Line12_Status', 'ASYLEE');
 setIfExists(q, answers, 'Pt1Line14_Status', 'ASYLEE');
@@ -76,10 +76,10 @@ setIfExists(q, answers, 'Pt1Line15_Date', 'D/S');
 
 // Page 3 current physical address, exact keys from samples
 setIfExists(q, answers, 'Part1_Item18_InCareOfName', '');
-setIfExists(q, answers, 'Pt1Line18_StreetNumberName', '15 164 ST SW');
-setIfExists(q, answers, 'Pt1Line18_CityOrTown', 'BOTHELL');
+setIfExists(q, answers, 'Pt1Line18_StreetNumberName', '2200 MAIN ST');
+setIfExists(q, answers, 'Pt1Line18_CityOrTown', 'TACOMA');
 setIfExists(q, answers, 'Pt1Line18_State', 'WA');
-setIfExists(q, answers, 'Pt1Line18_ZipCode', '98012');
+setIfExists(q, answers, 'Pt1Line18_ZipCode', '98402');
 setIfExists(q, answers, 'Pt1Line18US_AptSteFlrNumber', 'B35');
 setIfExists(q, answers, 'Pt1Line18_Date', '02/15/2025');
 

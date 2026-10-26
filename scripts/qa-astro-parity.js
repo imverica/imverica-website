@@ -29,7 +29,7 @@ function assertIfExists(file, check) {
   if (exists(file)) check(file);
 }
 
-const noPublicPii = ['HOVDAN', 'YANA', 'OLEKSANDRIVNA', 'SERHIEIEVA'];
+const noPublicPii = ['DEMCHENKO', 'MARTA', 'OLEKSANDRIVNA', 'KUZMENKO'];
 const publicHtmlFiles = [
   'index.html',
   'portal.html',

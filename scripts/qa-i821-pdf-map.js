@@ -23,7 +23,7 @@ const { incrementalFillPdf } = require('../netlify/functions/lib/pdf-incremental
 const base = {
   initial_or_reregistration: 'Initial', tps_country: 'Ukraine',
   applicant_family_name: 'Kovalenko', applicant_given_name: 'Olena', date_of_birth: '1990-03-15',
-  country_of_birth: 'Ukraine', country_of_citizenship: 'Ukraine', alien_number: '208924970', ssn: '555001234', sex: 'Female',
+  country_of_birth: 'Ukraine', country_of_citizenship: 'Ukraine', alien_number: '123456789', ssn: '555001234', sex: 'Female',
   mailing_address: { line1: '100 Main St', line2: 'Apt 5', city: 'Sacramento', state: 'CA', zip: '95814', country: 'United States' },
   physical_same_as_mailing: 'Yes',
   daytime_phone: { countryCode: '+1', areaCode: '916', number: '5551234' }, email_address: 'olena@example.com'

@@ -16,54 +16,54 @@ function assertEqual(actual, expected, message) {
 }
 
 const formAnswers = {
-  applicant_given_name: 'Yana',
-  applicant_family_name: 'Hovdan',
-  date_of_birth: '1990-01-19',
-  city_of_birth: 'Mykolaiv',
+  applicant_given_name: 'Marta',
+  applicant_family_name: 'Demchenko',
+  date_of_birth: '1988-05-07',
+  city_of_birth: 'Vinnytsia',
   country_of_birth: 'Ukraine',
   country_of_citizenship: 'Ukraine',
   sex: 'Female',
   other_dob_used: 'No',
   marital_status: 'Divorced',
-  alien_number: 'A208924970',
+  alien_number: 'A123456789',
   has_prior_alien_number: 'No',
   uscis_online_account_number: '123456789012',
 
-  mailing_address_line1: '15 164 ST SW',
-  mailing_address_line2: 'Apt B35',
-  mailing_city: 'Bothell',
+  mailing_address_line1: '2200 MAIN ST',
+  mailing_address_line2: 'Apt 7',
+  mailing_city: 'Tacoma',
   mailing_state: 'WA - Washington',
-  mailing_zip: '98012',
+  mailing_zip: '98402',
   physical_same_as_mailing: 'Yes',
   date_moved_in: '2025-02-15',
-  daytime_phone: { countryCode: '+1', areaCode: '253', number: '4097210' },
-  email_address: 'yana@example.com',
+  daytime_phone: { countryCode: '+1', areaCode: '253', number: '5550147' },
+  email_address: 'marta@example.com',
 
   admission_basis: 'Paroled',
   paroled_as: 'PAROLED',
-  date_of_last_entry: '2016-02-29',
+  date_of_last_entry: '2016-03-14',
   manner_of_last_entry: 'ASYLEE',
   current_immigration_status: 'ASYLEE',
   authorized_stay_expires: 'D/S',
   status_expiration_date: 'D/S',
   visa_number: 'N/A',
-  last_arrival_date: '2016-02-29',
+  last_arrival_date: '2016-03-14',
   place_entry: 'San Ysidro, CA',
-  i94_number: '77692068933',
-  passport_number: 'FE079723',
+  i94_number: '12345678901',
+  passport_number: 'FX123456',
   passport_country_of_issuance: 'Ukraine',
-  passport_expiration: '2026-01-19',
+  passport_expiration: '2027-07-09',
 
   same_address_five_years: 'No',
   prior_us_addresses: [
     {
       from: '2021-01-01',
       to: '2025-02-14',
-      line1: '14919 41st Ave',
-      line2: 'Apt C3',
-      city: 'Bothell',
+      line1: '480 Pine Ave',
+      line2: 'Apt 12',
+      city: 'Tacoma',
       state: 'WA',
-      zip: '98012',
+      zip: '98402',
       country: 'United States'
     }
   ],
@@ -71,14 +71,14 @@ const formAnswers = {
     {
       from: '2010-02-05',
       to: '2016-02-21',
-      line1: 'Volodarskogo 80',
-      city: 'Mykolaiv',
-      state: 'Mykolaiv Oblast',
+      line1: 'Shevchenka 14',
+      city: 'Vinnytsia',
+      state: 'Vinnytsia Oblast',
       country: 'Ukraine'
     }
   ],
   has_ssn: 'Yes',
-  ssn: '671842359',
+  ssn: '987654320',
   ssn_ssa_consent: 'No',
 
   petition_previously_filed: 'No',
@@ -89,7 +89,7 @@ const formAnswers = {
   current_employment_history: [
     {
       from: '2024-10-01',
-      name: 'DELUX DELIVERY LLC',
+      name: 'NORTHWEST PARCEL LLC',
       occupation: 'SELF-EMPLOYED DRIVER'
     }
   ],
@@ -102,39 +102,39 @@ const formAnswers = {
     }
   ],
 
-  father_family_name: 'SERHIEIEV',
-  father_given_name: 'OLEKSY',
-  father_dob: '1965-11-27',
+  father_family_name: 'KUZMENKO',
+  father_given_name: 'TARAS',
+  father_dob: '1964-08-03',
   father_city_of_birth: 'Ukraine',
-  mother_family_name: 'SERHIEIEVA',
-  mother_given_name: 'IRYNA',
-  mother_birth_family_name: 'IVANTSOVA',
-  mother_birth_given_name: 'IRYNA',
-  mother_dob: '1970-06-04',
+  mother_family_name: 'KUZMENKO',
+  mother_given_name: 'HALYNA',
+  mother_birth_family_name: 'BOIKO',
+  mother_birth_given_name: 'HALYNA',
+  mother_dob: '1968-12-15',
   mother_city_of_birth: 'Ukraine',
 
   times_married: '1',
   spouse_family_name: 'NONE',
-  prior_spouse_family_name: 'HOVDAN',
-  prior_spouse_given_name: 'VOLODYMYR',
-  prior_spouse_dob: '1986-09-19',
+  prior_spouse_family_name: 'DEMCHENKO',
+  prior_spouse_given_name: 'STEPAN',
+  prior_spouse_dob: '1987-03-02',
   prior_spouse_country_of_birth: 'Ukraine',
   prior_spouse_country_of_citizenship: 'Ukraine',
-  prior_spouse_marriage_date: '2007-09-28',
-  prior_spouse_marriage_city: 'Malolepetykha Village',
-  prior_spouse_marriage_state: 'Velyka Lepetykha District Kherson Oblast',
+  prior_spouse_marriage_date: '2006-10-14',
+  prior_spouse_marriage_city: 'Hnivan',
+  prior_spouse_marriage_state: 'Tyvriv District Vinnytsia Oblast',
   prior_spouse_marriage_country: 'Ukraine',
-  prior_spouse_marriage_end_city: 'Velyka Lepetykha District',
-  prior_spouse_marriage_end_state: 'Kherson Oblast',
+  prior_spouse_marriage_end_city: 'Tyvriv District',
+  prior_spouse_marriage_end_state: 'Vinnytsia Oblast',
   prior_spouse_marriage_end_country: 'Ukraine',
-  prior_spouse_marriage_end_date: '2010-04-27',
+  prior_spouse_marriage_end_date: '2011-06-08',
   prior_spouse_marriage_end_type: 'Divorced',
 
   total_children: '1',
-  child1_family_name: 'HOVDAN',
-  child1_given_name: 'ANASTASIIA',
-  child1_alien_number: '208924971',
-  child1_dob: '2008-04-18',
+  child1_family_name: 'DEMCHENKO',
+  child1_given_name: 'SOFIIA',
+  child1_alien_number: '123456780',
+  child1_dob: '2010-02-11',
   child1_country_of_birth: 'Ukraine',
   child1_relationship: 'BIOLOGICAL CHILD',
   child1_applying_with_you: 'No',
@@ -158,9 +158,9 @@ const payload = {
   formCode: 'I-485',
   formAnswers,
   contact: {
-    name: 'Yana Hovdan',
-    phone: '+1 253 409 7210',
-    email: 'yana@example.com'
+    name: 'Marta Demchenko',
+    phone: '+1 253 555 0147',
+    email: 'marta@example.com'
   }
 };
 
@@ -170,7 +170,7 @@ const overlays = i485TextOverlays(payload);
 assert(Object.keys(values).length >= 175, `expected at least 175 fields from frontend I-485 intake, got ${Object.keys(values).length}`);
 assertEqual(overlays.length, 0, 'current frontend I-485 intake should not require synthetic overlays');
 
-assertEqual(values['Pt1Line1_FamilyName[0]'], 'Hovdan', 'applicant family name');
+assertEqual(values['Pt1Line1_FamilyName[0]'], 'Demchenko', 'applicant family name');
 assertEqual(values['Pt1Line3_YN[1]'], true, 'other date of birth no checkbox');
 assertEqual(values['Pt1Line4_YN[0]'], true, 'has A-number yes checkbox');
 assertEqual(values['Pt1Line4_YN[1]'], false, 'has A-number no checkbox');
@@ -180,13 +180,13 @@ assertEqual(values['Pt1Line10_NonImmDate[0]'], 'N/A', 'N/A visa issue date when 
 assertEqual(values['Pt2Line11_CB[1]'], true, 'paroled checkbox uses current PDF value 1');
 assertEqual(values['Pt2Line11_CB[2]'], false, 'without admission/parole checkbox should not be selected for parole');
 assertEqual(values['Pt6Line1_MaritalStatus[0]'], true, 'divorced checkbox uses PDF value 0');
-assertEqual(values['P1Line12_I94[0]'], '77692068933', 'I-94 number');
+assertEqual(values['P1Line12_I94[0]'], '12345678901', 'I-94 number');
 assertEqual(values['Pt1Line10_CityTown[0]'], 'San Ysidro', 'place entry city split');
 assertEqual(values['Pt1Line10_State[0]'], 'CA', 'place entry state split');
 assertEqual(values['Pt1Line18_YN[0]'], true, 'physical address same as mailing: yes');
 assertEqual(values['Pt1Line18_last5yrs_YN[1]'], true, 'same address five years: no');
 assertEqual(values['Pt1Line19_YN[1]'], true, 'has SSN checkbox uses PDF yes value');
-assertEqual(values['Pt1Line19_SSN[0]'], '671842359', 'SSN digits');
+assertEqual(values['Pt1Line19_SSN[0]'], '987654320', 'SSN digits');
 // Edition 09/18/26: Part 4 Items 5-6 ask about a prior adjustment application
 // and a rescinded green card, Part 1 Items 13/16/17 about first arrival and
 // crewman status; no wizard answer may land there.
