@@ -1,5 +1,20 @@
 const normalizedI485Map = require('../../../overlay-maps/normalized/i-485.json');
 const part9Logic = require('../../../form-logic/i-485.part9.json');
+const {
+  categoryByValue,
+  I864_INDEX,
+  I864_OPTIONS,
+  PUBLIC_CHARGE_OPTIONS,
+  PUBLIC_CHARGE_NOT_EXEMPT
+} = require('./i485-categories');
+const {
+  CATEGORY_KEY_BY_BASIS,
+  STATUS_EXPIRATION_KINDS,
+  INCOME_OPTIONS,
+  ASSET_OPTIONS,
+  LIABILITY_OPTIONS,
+  EDUCATION_OPTIONS
+} = require('./i485-review-steps');
 
 function clean(value, max = 300) {
   if (value && typeof value === 'object' && !Array.isArray(value)) {
@@ -214,57 +229,203 @@ function admissionBasisFields(value) {
   return {};
 }
 
-// Part 2, Item 3 – eligibility basis → checkbox
-// 3.a family-based IR/preference, 3.b employment-based, 3.c special immigrant,
-// 3.d asylee/refugee, 3.e DV, 3.f other (T/U/VAWA/Afghan-Iraqi/broadcaster/legalization/SAW)
-function eligibilityFields(basis) {
-  const b = clean(basis, 160).toLowerCase();
+// Part 2, Item 3 (edition 09/18/26). The category comes from the wizard's
+// per-basis select (see i485-categories.js); answers saved before it existed
+// carry free text in eligibility_basis, matched onto the same list here.
+const LEGACY_CATEGORY_PATTERNS = [
+  [/\bir.?1\b|\bcr.?1\b|spouse.*(usc|u\.?s\.? citizen)|(usc|u\.?s\.? citizen).*spouse/, 'Spouse of a U.S. citizen'],
+  [/\bir.?2\b|\bcr.?2\b|child.*(usc|u\.?s\.? citizen)/, 'Unmarried child under 21 of a U.S. citizen'],
+  [/\bir.?5\b|parent.*(usc|u\.?s\.? citizen)/, 'Parent of a U.S. citizen (citizen is 21 or older)'],
+  [/\bk.?[12]\b|fianc/, 'K-1 fiance(e) or K-2 child of a U.S. citizen'],
+  [/\biw\b|widow/, 'Widow or widower of a U.S. citizen'],
+  [/\bf1\b/, 'F1: Unmarried son or daughter (21+) of a U.S. citizen'],
+  [/\bf2a\b.*child|child.*\bf2a\b/, 'F2A: Unmarried child under 21 of a permanent resident'],
+  [/\bf2a\b|spouse.*(lpr|permanent resident)/, 'F2A: Spouse of a permanent resident'],
+  [/\bf2b\b/, 'F2B: Unmarried son or daughter (21+) of a permanent resident'],
+  [/\bf3\b/, 'F3: Married son or daughter of a U.S. citizen'],
+  [/\bf4\b|sibling|brother|sister/, 'F4: Brother or sister of a U.S. citizen (citizen is 21 or older)'],
+  [/vawa/, 'VAWA self-petitioning spouse'],
+  [/eb.?5|investor|i-?526/, 'Investor (Form I-526 or I-526E)'],
+  [/eb.?1a|extraordinary/, 'EB-1: Alien of extraordinary ability'],
+  [/eb.?1b|outstanding/, 'EB-1: Outstanding professor or researcher'],
+  [/eb.?1c|multinational/, 'EB-1: Multinational executive or manager'],
+  [/\bniw\b|national interest/, 'EB-2: National Interest Waiver'],
+  [/eb.?2/, 'EB-2: Advanced degree or exceptional ability (no NIW)'],
+  [/eb.?3w|unskilled|other worker/, 'EB-3: Other worker'],
+  [/eb.?3.*skilled|skilled worker/, 'EB-3: Skilled worker'],
+  [/eb.?3/, 'EB-3: Professional'],
+  [/\bsij\b|special.*juvenile/, 'Special Immigrant Juvenile'],
+  [/afghan|iraqi/, 'Certain Afghan or Iraqi national'],
+  [/broadcaster/, 'Certain international broadcaster'],
+  [/minister/, 'Religious worker: minister of religion'],
+  [/religious/, 'Religious worker: other religious worker'],
+  [/asylee|asylum/, 'Asylee (INA 208, Form I-589 or I-730)'],
+  [/refugee/, 'Refugee (INA 207, Form I-590 or I-730)'],
+  [/\bt.?(visa|nonimmigrant)|trafficking/, 'T nonimmigrant (human trafficking victim)'],
+  [/\bu.?(visa|nonimmigrant)|245.?m|crime.*victim/, 'U nonimmigrant (victim of qualifying criminal activity)'],
+  [/cuban/, 'Cuban Adjustment Act'],
+  [/hrifa|haitian/, 'HRIFA: dependent status'],
+  [/lautenberg/, 'Lautenberg parolee'],
+  [/diversity|\bdv\b|lottery/, 'Diversity Visa program'],
+  [/registry|1972/, 'Continuous residence since before January 1, 1972 (Registry)']
+];
 
-  // Immediate relatives (3.a)
-  if (/ir.?1|spouse.*usc|usc.*spouse/.test(b)) return { 'Pt2Line3a_CB[0]': true };
-  if (/ir.?2|child.*usc|usc.*child/.test(b)) return { 'Pt2Line3a_CB[1]': true };
-  if (/ir.?5|parent.*usc|usc.*parent/.test(b)) return { 'Pt2Line3a_CB[2]': true };
-  if (/ir.?4|orphan.*abroad/.test(b)) return { 'Pt2Line3a_CB[3]': true };
-  if (/ir.?3|orphan.*adopt/.test(b)) return { 'Pt2Line3a_CB[4]': true };
-  if (/iw\b|widow|widower/.test(b)) return { 'Pt2Line3a_CB[5]': true };
-  if (/\bf1\b/.test(b)) return { 'Pt2Line3a_CB[6]': true };
-  if (/\bf2a\b/.test(b)) return { 'Pt2Line3a_CB[7]': true };
-  if (/\bf2b\b/.test(b)) return { 'Pt2Line3a_CB[8]': true };
-  if (/\bf3\b/.test(b)) return { 'Pt2Line3a_CB[9]': true };
-  if (/\bf4\b/.test(b)) return { 'Pt2Line3a_CB[10]': true };
+function selectedCategory(answers) {
+  const basis = clean(answers.adjustment_basis, 80);
+  const key = CATEGORY_KEY_BY_BASIS[basis];
+  if (key && categoryByValue(answers[key])) return categoryByValue(answers[key]);
+  if (basis === 'Diversity visa') return categoryByValue('Diversity Visa program');
+  const text = clean(firstPresentValue(answers.eligibility_basis, answers.adjustment_basis), 160).toLowerCase();
+  const match = LEGACY_CATEGORY_PATTERNS.find(([pattern]) => pattern.test(text));
+  return match ? categoryByValue(match[1]) : null;
+}
 
-  // Employment-based (3.b)
-  if (/eb.?1a|extraordinary ability/.test(b)) return { 'Pt2Line3b_CB140[0]': true };
-  if (/eb.?1b|outstanding researcher/.test(b)) return { 'Pt2Line3b_CB140[1]': true };
-  if (/eb.?1c|multinational/.test(b)) return { 'Pt2Line3b_CB140[2]': true };
-  if (/eb.?2|national interest|niw/.test(b)) return { 'Pt2Line3b_CB140[3]': true };
-  if (/eb.?3w|unskilled/.test(b)) return { 'Pt2Line3b_CB140[5]': true };
-  if (/eb.?3/.test(b)) return { 'Pt2Line3b_CB140[4]': true };
-  if (/eb.?4/.test(b)) return { 'Pt2Line3b_CB140[6]': true };
-  if (/eb.?5|investor/.test(b)) return { 'Pt2Line3b_CB140[7]': true };
+function exclusiveGroup(prefix, count, selected) {
+  if (selected === null || selected === undefined || selected < 0) return {};
+  const result = {};
+  for (let i = 0; i < count; i += 1) result[`${prefix}[${i}]`] = i === selected;
+  return result;
+}
 
-  // Special immigrant (3.c)
-  if (/sij|special.*immigrant.*juvenile/.test(b)) return { 'Pt2Line3c_CB[0]': true };
+// Part 2, Item 3 checkbox and its follow-ups; Item 4 (INA 245(i)) only where
+// the form asks it: family, employment, special immigrant and DV categories.
+function categoryFields(answers, category) {
+  if (!category) return checkboxPair(yesNo(answers.ina_245i_adjustment), 'Pt2Line4_CB[1]', 'Pt2Line4_CB[0]');
+  const result = { [category.field]: true };
+  if (category.field === 'Pt2Line3d_AsyleeRefugeeCB[0]') result['Pt2Line3d_Asylum[0]'] = dateMdY(answers.asylum_grant_date);
+  if (category.field === 'Pt2Line3d_AsyleeRefugeeCB[1]') result['Pt2Line3d_Refugee[0]'] = dateMdY(answers.refugee_admission_date);
+  if (category.field === 'Pt2Line3g_CB[0]') result['Pt2Line1g_DV[0]'] = clean(answers.dv_rank_number, 30);
+  if (category.field === 'Pt2Line3g_CB[4]') result['Pt2Line1g_OtherEligibility[0]'] = clean(answers.other_eligibility_text, 120);
+  // Did a relative file the I-140? [0]=N/A (investor) [1]=No [2]=Yes
+  if (category.basis === 'Employment petition') {
+    const relative = yesNo(answers.eb_relative_petitioner);
+    const index = category.i864 === 'relative' ? (relative === true ? 2 : relative === false ? 1 : -1) : 0;
+    Object.assign(result, exclusiveGroup('Pt2Line3b_CB140Assoc', 3, index));
+  }
+  if (category.ina245i) Object.assign(result, checkboxPair(yesNo(answers.ina_245i_adjustment), 'Pt2Line4_CB[1]', 'Pt2Line4_CB[0]'));
+  return result;
+}
 
-  // Asylee / Refugee (3.d)
-  if (/asylee|asylum/.test(b)) return { 'Pt2Line3d_AsyleeRefugeeCB[0]': true };
-  if (/refugee/.test(b)) return { 'Pt2Line3d_AsyleeRefugeeCB[1]': true };
+// Part 3: [0]=1.a ... [4]=1.e (not required by statute), [5]=1.f (required).
+function affidavitSupportFields(answers, category) {
+  if (!category) return {};
+  let code = category.i864;
+  if (code === 'relative') {
+    const relative = yesNo(answers.eb_relative_petitioner);
+    code = relative === true ? '1.f' : relative === false ? '1.e' : '';
+  }
+  if (code === 'ask') {
+    const chosen = I864_OPTIONS.find(([, label]) => label === clean(answers.affidavit_support_exemption, 200));
+    code = chosen ? chosen[0] : '';
+  }
+  return code in I864_INDEX ? exclusiveGroup('Pt3Line1_CB', 6, I864_INDEX[code]) : {};
+}
 
-  // Diversity Visa (3.e)
-  if (/diversity|dv.?\d|lottery/.test(b)) return { 'Pt2Line3e_CB[0]': true };
+// Part 9, Item 56: the exempt category, or 23 "not exempt"; null if unknown.
+function publicChargeIndex(answers, category) {
+  if (category && Number.isInteger(category.publicCharge)) return category.publicCharge;
+  const chosen = PUBLIC_CHARGE_OPTIONS.find(([, label]) => label === clean(answers.public_charge_exemption, 200));
+  return chosen ? chosen[0] : null;
+}
 
-  // Other categories (3.f) — indices: [0]=T nonimmigrant, [1]=U nonimmigrant,
-  // [2]=VAWA, [3]=Afghan/Iraqi special immigrant, [4]=int'l broadcaster,
-  // [5]=legalization/245A, [6]=SAW, [7]=other
-  if (/t.nonimmigrant|t.?visa.*adjust|trafficking.*victim/.test(b)) return { 'Pt2Line3f_CB[0]': true };
-  if (/u.nonimmigrant|u.?visa.*adjust|245.?m|crime.*victim/.test(b)) return { 'Pt2Line3f_CB[1]': true };
-  if (/vawa|violence.*against.*women/.test(b)) return { 'Pt2Line3f_CB[2]': true };
-  if (/afghan|iraqi/.test(b)) return { 'Pt2Line3f_CB[3]': true };
-  if (/broadcaster/.test(b)) return { 'Pt2Line3f_CB[4]': true };
-  if (/legalization|irca|245.?a/.test(b)) return { 'Pt2Line3f_CB[5]': true };
-  if (/saw|special.*agricultural/.test(b)) return { 'Pt2Line3f_CB[6]': true };
+const EDUCATION_CHECKBOX = [0, 2, 1, 3, 7, 4, 5, 6];
+const PUBLIC_CHARGE_ANSWER_KEYS = /^(?:pc_|Pt9Line63_YesNo$)/;
 
-  return {};
+function lines(value) {
+  return String(value || '').split(/\r?\n|;/).map((line) => clean(line, 120)).filter(Boolean);
+}
+
+// Part 9, Items 56-64. Exempt applicants skip Items 57-64 (sanitizeI485Answers
+// drops their answers); the rest fill household, education, skills and the
+// Item 64 benefits table.
+function publicChargeFields(answers, index) {
+  if (index === null) return {};
+  const result = exclusiveGroup('Pt9Line56_CB', 25, index);
+  if (index !== PUBLIC_CHARGE_NOT_EXEMPT) return result;
+  const optionIndex = (options, value) => options.indexOf(clean(value, 120));
+  result['Pt9Line57_HouseholdSize[0]'] = clean(answers.pc_household, 120);
+  Object.assign(result, exclusiveGroup('Pt9Line53_CB', 5, optionIndex(INCOME_OPTIONS, answers.pc_income)));
+  Object.assign(result, exclusiveGroup('Pt9Line59_CB', 5, optionIndex(ASSET_OPTIONS, answers.pc_assets)));
+  Object.assign(result, exclusiveGroup('Pt9Line60_CB', 5, optionIndex(LIABILITY_OPTIONS, answers.pc_liabilities)));
+  const education = optionIndex(EDUCATION_OPTIONS, answers.pc_education);
+  if (education >= 0) {
+    Object.assign(result, exclusiveGroup('Pt9Line61_CB', 8, EDUCATION_CHECKBOX[education]));
+    if (education === 0) result['Pt9Line61_diploma[0]'] = clean(answers.pc_highest_grade, 60);
+  }
+  lines(answers.pc_skills).slice(0, 8).forEach((skill, row) => { result[`TextField${row + 1}[0]`] = skill; });
+  for (let row = 1; row <= 4; row += 1) {
+    if (!isPresentExactValue(answers[`pc_benefit${row}_name`])) continue;
+    result[`Pt8Line68c_Column1Row${row}[0]`] = clean(answers[`pc_benefit${row}_name`], 60);
+    result[`Pt8Line68c_Column2Row${row}[0]`] = dateMdY(answers[`pc_benefit${row}_start`]);
+    result[`Pt8Line68c_Column3Row${row}[0]`] = dateMdY(answers[`pc_benefit${row}_end`]);
+    result[`Pt8Line68c_Column4Row${row}[0]`] = clean(answers[`pc_benefit${row}_amount`], 20);
+    result[`Pt8Line68c_Column5Row${row}[0]`] = clean(answers[`pc_benefit${row}_reason`], 60);
+  }
+  return result;
+}
+
+// Part 1, Item 15. Asylee and refugee status has no expiration date: N/A.
+function currentStatusExpiration(answers, category) {
+  const kind = clean(answers.current_status_expiration_kind, 60);
+  if (kind === STATUS_EXPIRATION_KINDS[0]) return dateMdY(answers.current_status_expires_on);
+  if (kind === STATUS_EXPIRATION_KINDS[1]) return 'D/S';
+  if (kind === STATUS_EXPIRATION_KINDS[2]) return 'N/A';
+  if (isPresentExactValue(answers.status_expiration_date)) return dateMdY(answers.status_expiration_date);
+  return category && category.section === '3.d' ? 'N/A' : '';
+}
+
+// Part 2, Item 2: [0]=principal, [1]=derivative with the principal's details.
+function filingAsFields(answers) {
+  const as = clean(answers.filing_as, 40).toLowerCase();
+  if (as.startsWith('principal')) return { 'Pt2Line2_CB[0]': true, 'Pt2Line2_CB[1]': false };
+  if (!as.startsWith('derivative')) return {};
+  return {
+    'Pt2Line2_CB[0]': false,
+    'Pt2Line2_CB[1]': true,
+    'Pt2Line2_FamilyName[0]': clean(answers.principal_family_name, 60),
+    'Pt2Line2_GivenName[0]': clean(answers.principal_given_name, 60),
+    'Pt2Line2_MiddleName[0]': clean(answers.principal_middle_name, 60),
+    'Pt2Line2_AlienNumber[0]': digits(answers.principal_alien_number, 9),
+    'Pt1Line2_DOB[0]': dateMdY(answers.principal_dob)
+  };
+}
+
+function isMarried(answers) {
+  return /^married/.test(clean(answers.marital_status, 40).toLowerCase());
+}
+
+// Part 6, Items 2, 8 and 10. Item 2 is N/A unless married
+// (Pt5Line2_YNNA [0]=No [1]=Yes [2]=N/A); Item 8 copies the applicant's
+// physical address when the spouse lives there.
+function spouseFields(answers) {
+  if (!isPresentExactValue(answers.marital_status)) return {};
+  if (!isMarried(answers)) return exclusiveGroup('Pt5Line2_YNNA', 3, 2);
+  const armed = yesNo(answers.spouse_in_armed_forces);
+  const sameAddress = yesNo(answers.spouse_same_address);
+  const address = sameAddress === true
+    ? { ...physicalAddress(answers), country: 'United States' }
+    : sameAddress === false
+      ? {
+          line1: answers.spouse_physical_address_line1,
+          line2: answers.spouse_physical_address_line2,
+          city: answers.spouse_physical_city,
+          state: answers.spouse_physical_state,
+          zip: answers.spouse_physical_zip,
+          country: answers.spouse_physical_country
+        }
+      : null;
+  return {
+    ...exclusiveGroup('Pt5Line2_YNNA', 3, armed === true ? 1 : armed === false ? 0 : -1),
+    ...(address && (address.line1 || address.city) ? employerAddressFields(address, 'P6Line8', 'Part6Line8_StreetName[0]') : {}),
+    ...checkboxPair(yesNo(answers.spouse_applying_with_you), 'Pt6Line11_YN[1]', 'Pt6Line11_YN[0]')
+  };
+}
+
+// The applicant's own business is never printed as the interpreter's or
+// preparer's organization.
+function organizationName(value) {
+  const name = clean(value, 80);
+  return /imverica/i.test(name) ? '' : name;
 }
 
 // Part 1, Item 18: the first block is the current U.S. PHYSICAL address, the
@@ -273,9 +434,8 @@ function eligibilityFields(basis) {
 // the answer to "same address?" is No.
 // Unit boxes, by on-state: physical Pt1Line18US_Unit [2]=APT [0]=STE [1]=FLR;
 // mailing Pt1Line18_CurrentUnit [0]=APT [1]=STE [2]=FLR.
-function usAddress(answers) {
-  const separateMailing = yesNo(answers.physical_same_as_mailing) === false;
-  const physical = separateMailing
+function physicalAddress(answers) {
+  return yesNo(answers.physical_same_as_mailing) === false
     ? {
         line1: answers.physical_address_line1 || answers.current_address_line1,
         line2: answers.physical_address_line2 || answers.current_address_line2,
@@ -290,6 +450,11 @@ function usAddress(answers) {
         state: answers.mailing_state || answers.current_state,
         zip: answers.mailing_zip || answers.current_zip
       };
+}
+
+function usAddress(answers) {
+  const separateMailing = yesNo(answers.physical_same_as_mailing) === false;
+  const physical = physicalAddress(answers);
   const unit = clean(physical.line2);
   const result = {
     'Pt1Line18_StreetNumberName[0]': clean(physical.line1, 80),
@@ -390,17 +555,69 @@ function employmentFields(answers) {
   };
 }
 
-const PART14_SLOT_TEXT_FIELDS = [
-  'P14_Line2_AdditionalInfo[0]',
-  'P14_Line3_AdditionalInfo[0]',
-  'P14_Line4_AdditionalInfo[0]',
-  'P14_Line5_AdditionalInfo[0]'
-];
+// Part 14 (page 24): four slots, each Page/Part/Item plus a box ruled for 5
+// lines of about 88 characters. Entries that do not fit continue on copies of
+// page 24 appended to the PDF (pdf-incremental-fill.js draws them from the
+// `newPage` overlays built in i485TextOverlays).
+const PART14_SLOTS = [0, 1, 2, 3].map((slot) => ({
+  page: `Pt9Line3a_PageNumber[${slot}]`,
+  part: `Pt9Line3b_PartNumber[${slot}]`,
+  item: `Pt9Line3c_ItemNumber[${slot}]`,
+  text: `P14_Line${slot + 2}_AdditionalInfo[0]`
+}));
+const PART14_LINE_CHARS = 88;
+const PART14_SLOT_LINES = 5;
+const PART14_TEMPLATE_PAGE = 24;
 
 function explicitPart14SlotUsed(answers, slot) {
   if (slot === 0) return ['Pt9Line3a_PageNumber', 'Pt9Line3b_PartNumber', 'Pt9Line3c_ItemNumber', 'P14_Line2_Title', 'P14_Line2_Address'].some((key) => isPresentExactValue(answers[key]));
   if (slot === 1) return ['Pt9Line4a_PageNumber', 'Pt9Line4b_PartNumber', 'Pt9Line4c_ItemNumber', 'P14_Line3_Title', 'P14_Line3_Employment', 'P14_Line3_Dates', 'P14_Line3_Occupation'].some((key) => isPresentExactValue(answers[key]));
   return false;
+}
+
+function wrapPart14(text) {
+  const words = String(text || '').replace(/[^\x20-\x7e]/g, ' ').split(/\s+/).filter(Boolean);
+  const result = [];
+  let line = '';
+  for (const word of words) {
+    const candidate = line ? `${line} ${word}` : word;
+    if (candidate.length <= PART14_LINE_CHARS) {
+      line = candidate;
+      continue;
+    }
+    if (line) result.push(line);
+    let rest = word;
+    while (rest.length > PART14_LINE_CHARS) {
+      result.push(rest.slice(0, PART14_LINE_CHARS));
+      rest = rest.slice(PART14_LINE_CHARS);
+    }
+    line = rest;
+  }
+  if (line) result.push(line);
+  return result;
+}
+
+function historyRows(value) {
+  return Array.isArray(value)
+    ? value.filter((row) => row && typeof row === 'object' && Object.values(row).some((part) => clean(part)))
+    : [];
+}
+
+function placeText(row) {
+  return [row.line1, row.line2, row.city, stateCode(row.state), row.zip, row.country].map((part) => clean(part, 80)).filter(Boolean).join(', ');
+}
+
+function periodText(row) {
+  return `FROM ${dateMdY(row.from) || 'N/A'} TO ${row.to ? dateMdY(row.to) : 'PRESENT'}`;
+}
+
+function withinFiveYears(row) {
+  if (!row.to) return true;
+  const end = new Date(String(row.to));
+  if (Number.isNaN(end.getTime())) return true;
+  const cutoff = new Date();
+  cutoff.setFullYear(cutoff.getFullYear() - 5);
+  return end >= cutoff;
 }
 
 function childAdditionalInfo(n, answers) {
@@ -416,43 +633,123 @@ function childAdditionalInfo(n, answers) {
   return pieces.length ? `CHILD ${n}: ${pieces.join('; ')}` : '';
 }
 
-function additionalInfoFields(answers) {
+// Explanations the wizard collects for Yes answers in Part 9 (one per trigger
+// group), placed under the page and item numbers of the Yes answers.
+function part9ExplanationEntries(answers) {
   const entries = [];
+  for (const trigger of part9Logic.part14Triggers || []) {
+    const text = clean(answers[`part9_explanation_${trigger.id}`], 3000);
+    if (!text) continue;
+    const yesItems = trigger.items
+      .map((number) => PART9_ITEMS_BY_NUMBER.get(number))
+      .filter((item) => item && pdfYesNoEquals(answers, item, 'yes'));
+    if (!yesItems.length) continue;
+    const printed = yesItems.map((item) => item.printed || item.item);
+    const itemText = printed.length > 1 ? `${printed[0]}-${printed[printed.length - 1]}` : printed[0];
+    entries.push({ page: String(yesItems[0].page), part: '9', item: itemText, rows: [`ITEM${printed.length > 1 ? 'S' : ''} ${printed.join(', ')}: ${text}`] });
+  }
+  return entries;
+}
+
+function part14Entries(answers) {
+  const entries = [];
+  const add = (page, part, item, rows) => {
+    const list = rows.filter(Boolean);
+    if (list.length) entries.push({ page, part, item, rows: list });
+  };
+  const structuredOtherNames = [answers.other_name_family, answers.other_name_given].some(isPresentExactValue);
+  if (!structuredOtherNames && isPresentExactValue(answers.other_names_used)) {
+    add('1', '1', '2', [`OTHER NAMES USED: ${clean(answers.other_names_used, 900)}`]);
+  }
+  // Last 5 years: Part 1, Item 18 holds one prior address; the rest go here.
+  const addresses = historyRows(answers.prior_us_addresses || answers.addresses_last_five_years);
+  add('4', '1', '18', addresses.slice(1).map((row, index) => `PRIOR ADDRESS ${index + 2}: ${placeText(row)}; ${periodText(row)}`));
+  // Part 4, Item 7 holds one job or school; the rest of the last 5 years go here,
+  // including work abroad other than the employer shown in Item 8.
+  const jobs = [
+    ...historyRows(answers.current_employment_history || answers.employment_school_last_five_years).slice(1),
+    ...historyRows(answers.foreign_employment_history).slice(1).filter(withinFiveYears)
+  ];
+  add('8', '4', '7', jobs.map((row, index) => {
+    const what = [clean(row.name, 80), clean(row.occupation || row.activity, 60) && `OCCUPATION: ${clean(row.occupation || row.activity, 60)}`].filter(Boolean).join('; ');
+    const where = placeText(row);
+    return `EMPLOYMENT OR SCHOOL ${index + 2}: ${[what, where && `ADDRESS: ${where}`, periodText(row)].filter(Boolean).join('; ')}`;
+  }));
   if (isPresentExactValue(answers.additional_spouse_history)) {
-    entries.push({
-      page: '11',
-      part: '6',
-      item: '11',
-      text: `ADDITIONAL SPOUSE/MARRIAGE HISTORY: ${clean(answers.additional_spouse_history, 700)}`
-    });
+    add('11', '6', '11', [`ADDITIONAL SPOUSE/MARRIAGE HISTORY: ${clean(answers.additional_spouse_history, 1500)}`]);
   }
+  const children = [];
+  for (let n = 3; n <= 8; n += 1) children.push(childAdditionalInfo(n, answers));
+  add('12', '7', '3', children);
+  const extraSkills = lines(answers.pc_skills).slice(8);
+  if (extraSkills.length) add('19', '9', '62', [`SKILLS, LICENSES AND CERTIFICATES (CONTINUED): ${extraSkills.join('; ')}`]);
+  entries.push(...part9ExplanationEntries(answers));
+  return entries;
+}
 
-  const childEntries = [];
-  for (let n = 3; n <= 8; n += 1) {
-    const text = childAdditionalInfo(n, answers);
-    if (text) childEntries.push(text);
+// Slots in order; the ones that do not fit on page 24 continue on extra pages.
+// A row (one address, one job) stays in one slot unless it is longer than a slot.
+function part14Layout(answers) {
+  const slots = [];
+  for (const entry of part14Entries(answers)) {
+    let current = [];
+    const flush = () => {
+      if (current.length) slots.push({ page: entry.page, part: entry.part, item: entry.item, text: current.join('\n') });
+      current = [];
+    };
+    for (const row of entry.rows) {
+      const wrapped = wrapPart14(row);
+      if (current.length + wrapped.length > PART14_SLOT_LINES) flush();
+      for (const line of wrapped) {
+        if (current.length === PART14_SLOT_LINES) flush();
+        current.push(line);
+      }
+    }
+    flush();
   }
-  if (childEntries.length) {
-    entries.push({
-      page: '12',
-      part: '7',
-      item: '2',
-      text: `ADDITIONAL CHILDREN: ${childEntries.join(' | ')}`
-    });
-  }
+  const free = [0, 1, 2, 3].filter((slot) => !explicitPart14SlotUsed(answers, slot));
+  return {
+    onForm: slots.slice(0, free.length).map((slot, index) => ({ ...slot, position: free[index] })),
+    extra: slots.slice(free.length)
+  };
+}
 
-  const result = {};
-  let entryIndex = 0;
-  for (let slot = 0; slot < PART14_SLOT_TEXT_FIELDS.length && entryIndex < entries.length; slot += 1) {
-    if (explicitPart14SlotUsed(answers, slot)) continue;
-    const entry = entries[entryIndex];
-    result[`Pt9Line3a_PageNumber[${slot}]`] = entry.page;
-    result[`Pt9Line3b_PartNumber[${slot}]`] = entry.part;
-    result[`Pt9Line3c_ItemNumber[${slot}]`] = entry.item;
-    result[PART14_SLOT_TEXT_FIELDS[slot]] = clean(entry.text, 950);
-    entryIndex += 1;
+function part14FieldValues(answers, layout) {
+  const result = {
+    // Part 14, Item 1 repeats the applicant's name.
+    'Pt1Line1_FamilyName[1]': clean(answers.applicant_family_name, 60),
+    'Pt1Line1_GivenName[1]': clean(answers.applicant_given_name, 60),
+    'Pt1Line1_MiddleName[1]': clean(answers.applicant_middle_name, 60)
+  };
+  for (const slot of layout.onForm) {
+    const fields = PART14_SLOTS[slot.position];
+    result[fields.page] = slot.page;
+    result[fields.part] = slot.part;
+    result[fields.item] = slot.item;
+    result[fields.text] = slot.text;
   }
   return result;
+}
+
+function part14ContinuationOverlays(answers, layout) {
+  const overlays = [];
+  const aNumber = digits(firstPresentValue(answers.alien_number, answers.AlienNumber, answers.Pt1Line4_AlienNumber), 9);
+  layout.extra.forEach((slot, index) => {
+    const newPage = Math.floor(index / PART14_SLOTS.length) + 1;
+    const fields = PART14_SLOTS[index % PART14_SLOTS.length];
+    const put = (field, text) => { if (clean(text)) overlays.push({ newPage, templatePage: PART14_TEMPLATE_PAGE, field, text }); };
+    if (index % PART14_SLOTS.length === 0) {
+      put('Pt1Line4_AlienNumber[24]', aNumber);
+      put('Pt1Line1_FamilyName[1]', clean(answers.applicant_family_name, 60));
+      put('Pt1Line1_GivenName[1]', clean(answers.applicant_given_name, 60));
+      put('Pt1Line1_MiddleName[1]', clean(answers.applicant_middle_name, 60));
+    }
+    put(fields.page, slot.page);
+    put(fields.part, slot.part);
+    put(fields.item, slot.item);
+    put(fields.text, slot.text);
+  });
+  return overlays;
 }
 
 const NORMALIZED_FIELDS = Array.isArray(normalizedI485Map.fields) ? normalizedI485Map.fields : [];
@@ -615,6 +912,14 @@ function sanitizeI485Answers(rawAnswers = {}) {
   if (!shouldKeepPublicChargeQuestions(answers)) {
     for (const key of Object.keys(answers)) {
       if (PUBLIC_CHARGE_ITEM_KEYS.test(key)) delete answers[key];
+    }
+  }
+
+  // Applicants in an exempt category skip Part 9, Items 57-64 (Item 63 too).
+  const publicCharge = publicChargeIndex(answers, selectedCategory(answers));
+  if (publicCharge !== null && publicCharge !== PUBLIC_CHARGE_NOT_EXEMPT) {
+    for (const key of Object.keys(answers)) {
+      if (PUBLIC_CHARGE_ANSWER_KEYS.test(key)) delete answers[key];
     }
   }
 
@@ -818,6 +1123,7 @@ function i485TextOverlays(payload = {}) {
     }
   });
 
+  overlays.push(...part14ContinuationOverlays(answers, part14Layout(answers)));
   return overlays;
 }
 
@@ -853,9 +1159,10 @@ function i485FieldValues(payload = {}) {
   const priorANumber = yesNo(answers.has_prior_alien_number);
   const sameAddress5yrs = yesNo(answers.same_address_five_years);
   const ssaConsent = yesNo(answers.ssn_ssa_consent);
-  const ina245iAdjustment = yesNo(answers.ina_245i_adjustment);
   const cspaChildAdjustment = yesNo(answers.cspa_child_adjustment);
   const physicalSameAsMailing = yesNo(answers.physical_same_as_mailing);
+  const category = selectedCategory(answers);
+  const immigrantVisaAbroad = yesNo(answers.immigrant_visa_abroad);
   const placeEntry = splitCityState(answers.place_entry);
   const weight = weightParts(answers.weight_lbs || `${answers.weight_hundreds || ''}${answers.weight_tens || ''}${answers.weight_ones || ''}`);
 
@@ -865,26 +1172,24 @@ function i485FieldValues(payload = {}) {
     'Pt1Line1_GivenName[0]': clean(answers.applicant_given_name, 60),
     'Pt1Line1_MiddleName[0]': clean(answers.applicant_middle_name, 60),
 
-    // Safe/legal name (if different from current name)
-    'Pt1Line2_FamilyName[0]': clean(answers.safe_family_name, 60),
-    'Pt1Line2_GivenName[0]': clean(answers.safe_given_name, 60),
-    'Pt1Line2_MiddleName[0]': clean(answers.safe_middle_name, 60),
+    // Item 2: other names used, two rows (more go to Part 14)
+    'Pt1Line2_FamilyName[0]': clean(answers.other_name_family, 60),
+    'Pt1Line2_GivenName[0]': clean(answers.other_name_given, 60),
+    'Pt1Line2_MiddleName[0]': clean(answers.other_name_middle, 60),
+    'Pt1Line2a_FamilyName[0]': clean(answers.other_name2_family, 60),
+    'Pt1Line2a_GivenName[0]': clean(answers.other_name2_given, 60),
+    'Pt1Line2a_MiddleName[0]': clean(answers.other_name2_middle, 60),
 
-    // Other names used
-    'Pt1Line2a_FamilyName[0]': clean(answers.other_name_family, 60),
-    'Pt1Line2a_GivenName[0]': clean(answers.other_name_given, 60),
-    'Pt1Line2a_MiddleName[0]': clean(answers.other_name_middle, 60),
-
-    // DOB and prior DOB flag
+    // Item 3: date of birth and other dates of birth
     'Pt1Line3_DOB[0]': dateMdY(answers.date_of_birth),
     ...checkboxPair(otherDob, 'Pt1Line3_YN[0]', 'Pt1Line3_YN[1]'),
+    ...(otherDob ? { 'Pt1Line3A_OtherDOB[0]': dateMdY(answers.other_dob_1), 'Pt1Line3B_OtherDOB[0]': dateMdY(answers.other_dob_2) } : {}),
 
     // A-Number (every page header and Part 1, Item 4)
     ...alienNumberFields(alienNum),
     ...checkboxPair(alienNum ? true : false, 'Pt1Line4_YN[0]', 'Pt1Line4_YN[1]'),
     ...checkboxPair(priorANumber, 'Pt1Line5_YN[0]', 'Pt1Line5_YN[1]'),
-    'Pt1Line5A_ANumber[0]': digits(answers.prior_alien_number_1, 9),
-    'Pt1Line5B_ANumber[0]': digits(answers.prior_alien_number_2, 9),
+    ...(priorANumber ? { 'Pt1Line5A_ANumber[0]': digits(answers.prior_alien_number_1, 9), 'Pt1Line5B_ANumber[0]': digits(answers.prior_alien_number_2, 9) } : {}),
 
     // Birth / Citizenship
     'Pt1Line7_CityTownOfBirth[0]': clean(answers.city_of_birth, 60),
@@ -909,15 +1214,22 @@ function i485FieldValues(payload = {}) {
     'Pt1Line11_Admitted[0]': clean(answers.status_at_last_entry, 40),
     'Pt1Line11_Paroled[0]': clean(answers.paroled_as, 40),
 
-    // Part 1, Items 12-15 (edition 09/18/26): I-94 number, the authorized-stay
-    // expiration and status shown on the I-94, current status and its
-    // expiration. Items 13 (first time in the U.S.?), 16 and 17 (crewman) are
-    // not asked by the wizard and stay blank; removal history is Part 9.
+    // Part 1, Items 12-17 (edition 09/18/26). Item 12: name, number,
+    // authorized-stay expiration and status from the I-94 (the name defaults to
+    // the legal name); 13: first time in the U.S.; 14-15: current status and its
+    // expiration; 16-17: crewman. Removal history is asked in Part 9.
+    ...(isPresentExactValue(answers.i94_number) ? {
+      'P1Line12_FamilyName[0]': clean(answers.i94_family_name || answers.applicant_family_name, 60),
+      'P1Line13_GivenName[0]': clean(answers.i94_given_name || answers.applicant_given_name, 60)
+    } : {}),
     'P1Line12_I94[0]': clean(answers.i94_number, 20),
     'Pt1Line12_Date[0]': dateMdY(answers.authorized_stay_expires),
     'Pt1Line12_Status[0]': clean(answers.manner_of_last_entry, 60),
+    ...checkboxPair(yesNo(answers.first_time_in_us), 'Pt1Line13_YN[0]', 'Pt1Line13_YN[1]'),
     'Pt1Line14_Status[0]': clean(answers.current_immigration_status, 80),
-    'Pt1Line15_Date[0]': dateMdY(answers.status_expiration_date),
+    'Pt1Line15_Date[0]': currentStatusExpiration(answers, category),
+    ...checkboxPair(yesNo(answers.crewman_visa_issued), 'Pt1Line16_YN[0]', 'Pt1Line16_YN[1]'),
+    ...checkboxPair(yesNo(answers.arrived_as_crewman), 'Pt1Line17_YN[1]', 'Pt1Line17_YN[0]'),
 
     // SSN
     ...checkboxPair(hasSsn, 'Pt1Line19_YN[1]', 'Pt1Line19_YN[0]'),
@@ -929,15 +1241,25 @@ function i485FieldValues(payload = {}) {
     ...checkboxPair(eoirAdjustment, 'Pt2Line1_YN[0]', 'Pt2Line1_YN[1]'),
     'Pt2Line2_Receipt[0]': clean(firstPresentValue(answers.petition_receipt_number, answers.underlying_receipt_number), 20),
     'Pt2Line2_Date[0]': dateMdY(firstPresentValue(answers.priority_date, answers.petition_date)),
-    'Pt2Line2_FamilyName[0]': clean(answers.petitioner_family_name, 60),
-    'Pt2Line2_GivenName[0]': clean(answers.petitioner_given_name, 60),
-    'Pt2Line2_AlienNumber[0]': digits(answers.petitioner_alien_number, 9),
-    ...checkboxPair(ina245iAdjustment, 'Pt2Line4_CB[1]', 'Pt2Line4_CB[0]'),
+    // Item 2 names the principal applicant (derivatives only), not the petitioner.
+    ...filingAsFields(answers),
+    // Items 3-4: category, its follow-ups and INA 245(i) where it applies
+    ...categoryFields(answers, category),
     ...checkboxPair(cspaChildAdjustment, 'Pt2Line5_CB[1]', 'Pt2Line5_CB[0]'),
 
-    // Part 4 — employment (Items 7-8, employmentFields below). Items 5-6 ask
-    // about a prior adjustment application and a rescinded green card; the
-    // wizard's work questions do not answer them (unauthorized work is Part 9).
+    // Part 3 — Affidavit of Support exemption, by category
+    ...affidavitSupportFields(answers, category),
+
+    // Part 4 — Items 1-6 (Items 7-8 in employmentFields below)
+    ...checkboxPair(immigrantVisaAbroad, 'Pt4Line1_YN[1]', 'Pt4Line1_YN[0]'),
+    ...(immigrantVisaAbroad ? {
+      'Pt4Line2_CityTown[0]': clean(answers.consulate_city, 60),
+      'Pt4Line2_CityTownOfBirth[0]': clean(answers.consulate_country, 60),
+      'Pt4Line3_Decision[0]': clean(answers.consulate_decision, 60),
+      'Pt4Line4_Date[0]': dateMdY(answers.consulate_decision_date)
+    } : {}),
+    ...checkboxPair(yesNo(answers.prior_lpr_application_us), 'Pt4Line5_YN[1]', 'Pt4Line5_YN[0]'),
+    ...checkboxPair(yesNo(answers.lpr_rescinded), 'Pt4Line6_YN[1]', 'Pt4Line6_YN[0]'),
 
     // Part 5 — Parents
     'Pt5Line1_FamilyName[0]': clean(answers.father_family_name, 60),
@@ -1021,14 +1343,18 @@ function i485FieldValues(payload = {}) {
     // Interpreter (Part 11)
     'Pt11Line1a_FamilyName[0]': clean(answers.interpreter_family_name, 60),
     'Pt11Line1b_GivenName[0]': clean(answers.interpreter_given_name, 60),
-    'Pt11Line2_OrgName[0]': clean(answers.interpreter_org_name || answers.interpreter_business_name, 80),
+    'Pt11Line2_OrgName[0]': organizationName(answers.interpreter_org_name || answers.interpreter_business_name),
+    'P3_Line4_DaytimeTelePhoneNumber[0]': usPhonePdf(answers.interpreter_phone),
+    'P3_Line5_MobileTelePhoneNumber[0]': usPhonePdf(answers.interpreter_mobile),
+    'P3_Line6_Email[0]': clean(answers.interpreter_email, 180),
     'Part11_NameofLanguage[0]': clean(answers.interpreter_language, 40),
 
     // Preparer (Part 12)
     'Pt12Line1_PreparerFamilyName[0]': clean(answers.preparer_family_name, 60),
     'Pt12Line1a_PreparerGivenName[0]': clean(answers.preparer_given_name, 60),
-    'Pt12Line2_BusinessName[0]': clean(answers.preparer_business_name, 80),
+    'Pt12Line2_BusinessName[0]': organizationName(answers.preparer_business_name),
     'Pt12Line3_PreparerDaytimePhoneNumber1[0]': usPhonePdf(answers.preparer_phone),
+    'Pt12Line4_PreparerMobileNumber[0]': usPhonePdf(answers.preparer_mobile),
     'Pt12Line5_PreparerEmail[0]': clean(answers.preparer_email, 180),
 
     // Repeating A-number header on all pages
@@ -1042,14 +1368,15 @@ function i485FieldValues(payload = {}) {
     ...eyeColorFields(answers.eye_color),
     ...hairColorFields(answers.hair_color),
     ...admissionBasisFields(admissionBasis),
-    ...eligibilityFields(firstPresentValue(answers.eligibility_basis, answers.adjustment_basis)),
+    ...spouseFields(answers),
+    ...publicChargeFields(answers, publicChargeIndex(answers, category)),
     ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', priorMarriageEndTypeValue(answers.prior_spouse_marriage_end_type), 4),
     ...checkboxPair(sameAddress5yrs, 'Pt1Line18_last5yrs_YN[0]', 'Pt1Line18_last5yrs_YN[1]'),
     ...checkboxPair(physicalSameAsMailing, 'Pt1Line18_YN[0]', 'Pt1Line18_YN[1]'),
     ...priorUsAddressFields(answers),
     ...lastForeignAddressFields(answers),
     ...employmentFields(answers),
-    ...additionalInfoFields(answers),
+    ...part14FieldValues(answers, part14Layout(answers)),
     ...usAddress(answers)
   };
 

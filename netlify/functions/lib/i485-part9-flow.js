@@ -1,3 +1,4 @@
+const { i485PublicChargeSteps } = require('./i485-review-steps');
 const part9Logic = require('../../../form-logic/i-485.part9.json');
 
 // Keys are the item numbers in the PDF field names (edition 01/20/25 numbering);
@@ -151,7 +152,7 @@ function printedNumber(itemNumber, itemsByNumber) {
   return itemsByNumber.get(itemNumber)?.printed || itemNumber;
 }
 
-function yesNoField(field, item, itemsByNumber) {
+function yesNoField(field, item, itemsByNumber, showWhenAny) {
   const showWhen = dependencyShowWhen(item.item, itemsByNumber);
   return field(item.key, `${printedNumber(item.item, itemsByNumber)}. ${ITEM_LABELS[item.item] || item.topic || item.item}`, 'radio', {
     required: true,
@@ -159,7 +160,8 @@ function yesNoField(field, item, itemsByNumber) {
     part: 9,
     itemNumber: item.item,
     pdfKey: item.key,
-    ...(showWhen ? { showWhen } : {})
+    ...(showWhen ? { showWhen } : {}),
+    ...(showWhenAny ? { showWhenAny } : {})
   });
 }
 
@@ -220,6 +222,9 @@ function buildI485Part9Steps(field, step) {
   const itemsByNumber = itemMap();
   const chunkSize = 2;
   const steps = [];
+  // Items 56-64 (public charge): Item 63 is asked only when the category is
+  // not exempt; Items 56-62 come before it and the Item 64 table after it.
+  const publicCharge = i485PublicChargeSteps({ field, step });
 
   for (const group of PAGE_GROUPS) {
     for (let index = 0; index < group.items.length; index += chunkSize) {
@@ -228,13 +233,16 @@ function buildI485Part9Steps(field, step) {
       for (const itemNumber of items) {
         const item = itemsByNumber.get(itemNumber);
         if (!item) continue;
-        fields.push(item.type === 'yesNo' ? yesNoField(field, item, itemsByNumber) : item86Field(field, itemsByNumber));
+        const showWhenAny = itemNumber === '63' ? publicCharge.applies : null;
+        fields.push(item.type === 'yesNo' ? yesNoField(field, item, itemsByNumber, showWhenAny) : item86Field(field, itemsByNumber));
       }
       fields.push(...explanationFields(field, items, itemsByNumber));
 
       const first = printedNumber(items[0], itemsByNumber);
       const itemRange = items.length > 1 ? `${first}-${printedNumber(items[items.length - 1], itemsByNumber)}` : first;
+      if (items.includes('63')) steps.push(...publicCharge.before);
       steps.push(step(`${group.id}_${String((index / chunkSize) + 1).padStart(2, '0')}`, `${group.title}: ${itemRange}`, group.help, fields));
+      if (items.includes('63')) steps.push(...publicCharge.after);
       if (items.includes('1')) steps.push(...organizationDetailSteps(field, step, group, itemsByNumber));
     }
   }

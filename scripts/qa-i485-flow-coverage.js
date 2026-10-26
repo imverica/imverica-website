@@ -73,7 +73,27 @@ const before = (first, second) => {
   'documents_interpreter_choice',
   'documents_interpreter',
   'documents_preparer',
-  'documents_notes'
+  'documents_notes',
+  // Items added after the 09/18/26 test fill
+  'i485_other_dob',
+  'i485_other_names_detail',
+  'i485_prior_a_numbers',
+  'i485_i94_name',
+  'i485_first_arrival',
+  'i485_current_status_expiration',
+  'i485_crewman',
+  'i485_category',
+  'i485_category_details',
+  'i485_filing_as',
+  'i485_affidavit_support',
+  'i485_prior_applications',
+  'i485_prior_adjustment',
+  'i485_current_spouse_details',
+  'i485_current_spouse_address',
+  'i485_interpreter_contact',
+  'i485_preparer_contact',
+  'i485_part9_public_charge_56',
+  'i485_part9_public_charge_64'
 ].forEach((stepId) => assert(hasStepOrPrefix(stepId), `Missing I-485 flow step: ${stepId}`));
 
 [
@@ -117,7 +137,49 @@ const before = (first, second) => {
   'has_ssn',
   'ssn',
   'ssn_ssa_consent',
-  'eligibility_basis',
+  'i485_category_family',
+  'i485_category_employment',
+  'i485_category_special',
+  'i485_category_asylee',
+  'i485_category_other',
+  'asylum_grant_date',
+  'refugee_admission_date',
+  'dv_rank_number',
+  'other_eligibility_text',
+  'eb_relative_petitioner',
+  'ina_245i_adjustment',
+  'filing_as',
+  'affidavit_support_exemption',
+  'other_dob_used',
+  'other_name_family',
+  'has_prior_alien_number',
+  'i94_family_name',
+  'first_time_in_us',
+  'current_status_expiration_kind',
+  'current_status_expires_on',
+  'crewman_visa_issued',
+  'arrived_as_crewman',
+  'date_moved_in',
+  'nonimmigrant_visa_issue_date',
+  'immigrant_visa_abroad',
+  'prior_lpr_application_us',
+  'lpr_rescinded',
+  'spouse_dob',
+  'spouse_in_armed_forces',
+  'spouse_applying_with_you',
+  'spouse_same_address',
+  'spouse_address',
+  'interpreter_language',
+  'interpreter_phone',
+  'preparer_phone',
+  'public_charge_exemption',
+  'pc_household',
+  'pc_income',
+  'pc_assets',
+  'pc_liabilities',
+  'pc_education',
+  'pc_skills',
+  'pc_benefit1_name',
   'current_employment_history',
   'foreign_employment_history',
   'father_family_name',
@@ -144,7 +206,9 @@ for (const item of part9Logic.items || []) {
   'part9_explanation_security_42_45',
   'part9_explanation_family_member_security_46',
   'part9_explanation_security_47_55',
-  'part9_explanation_military_50_51'
+  'part9_explanation_military_50_51',
+  'part9_explanation_immigration_10_21',
+  'part9_explanation_admissibility_65_83'
 ].forEach((fieldId) => assert(fields.has(fieldId), `Missing Part 14 explanation frontend field: ${fieldId}`));
 
 before('applicant_name_parts', 'adjustment_basis');
@@ -159,6 +223,22 @@ before('adjustment_basis', 'i485_related_petition');
 before('i485_related_petition', 'i485_parent1_name');
 before('i485_parent1_name', 'i485_part9_entries_01');
 before('contact_info', 'documents_interpreter_choice');
+before('applicant_birth_date', 'i485_other_dob');
+before('i485_i94_status', 'i485_crewman');
+before('adjustment_basis', 'i485_category');
+before('i485_eligibility_basis', 'i485_affidavit_support');
+before('i485_affidavit_support', 'i485_work_status');
+before('i485_part9_public_charge_62', 'i485_part9_other_01');
+before('i485_part9_other_01', 'i485_part9_public_charge_64_1');
+before('documents_interpreter_business', 'i485_interpreter_contact');
+
+// Item 63 and Items 57-62 are asked only when the category is subject to public charge.
+const item63 = fields.get('Pt9Line63_YesNo');
+assert(Array.isArray(item63.showWhenAny) && item63.showWhenAny.length, 'Item 63 must depend on the filing category');
+assert(!item63.showWhenAny.some((condition) => condition.id === 'i485_category_asylee'), 'Item 63 must not be asked of asylees and refugees');
+// Item 4 (INA 245(i)) is not asked of asylees and refugees.
+const item4 = fields.get('ina_245i_adjustment');
+assert(!item4.showWhenAny.some((condition) => condition.id === 'i485_category_asylee'), 'INA 245(i) must not be asked of asylees and refugees');
 before('documents_notes', 'purpose');
 
 assert.strictEqual(orderedStepIds[0], 'applicant_name_parts', 'I-485 flow must start with Part 1 applicant fields');

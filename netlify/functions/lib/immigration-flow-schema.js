@@ -2,6 +2,7 @@ const SCHEMA_VERSION = 'immigration-flow-v1';
 const { stateSelectOptions } = require('./us-address');
 const { countrySelectOptions } = require('./country-options');
 const { buildI485Part9Steps } = require('./i485-part9-flow');
+const { i485ReviewSteps, whenCategory, I485_REVIEW_LOCALIZATION } = require('./i485-review-steps');
 
 const DISCLAIMER = 'Document preparation only. Possible forms may include official USCIS forms. Imverica is not a law firm or attorney and does not provide legal advice.';
 
@@ -999,7 +1000,7 @@ const I485_EXTRA_LOCALIZATION = {
   }
 };
 
-Object.entries(I485_EXTRA_LOCALIZATION).forEach(([lang, extra]) => {
+[I485_EXTRA_LOCALIZATION, I485_REVIEW_LOCALIZATION].forEach((source) => Object.entries(source).forEach(([lang, extra]) => {
   if (!LOCALIZATION[lang]) return;
   ['steps', 'stepHelp', 'fields', 'options', 'placeholders'].forEach((bucket) => {
     LOCALIZATION[lang][bucket] = {
@@ -1007,7 +1008,7 @@ Object.entries(I485_EXTRA_LOCALIZATION).forEach(([lang, extra]) => {
       ...(extra[bucket] || {})
     };
   });
-});
+}));
 
 const PURPOSE_SPLIT_LOCALIZATION = {
   ru: {
@@ -1532,11 +1533,11 @@ function i485CoreSteps() {
     step('i485_status_expiration', 'I-485 authorized stay', 'If the document shows D/S, enter D/S.', [
       field('authorized_stay_expires', 'Authorized stay expiration date or D/S', 'text', {
         placeholder: 'Example: D/S or 05/11/2026'
-      }),
-      field('status_expiration_date', 'Nonimmigrant status expiration date, if any', 'text')
+      })
     ]),
     step('i485_visa_number', 'I-485 visa number', 'Skipped automatically when the last entry was not as a nonimmigrant visa holder.', [
       field('visa_number', 'Nonimmigrant visa number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'admission_basis', equals: 'Nonimmigrant' }] }),
+      field('nonimmigrant_visa_issue_date', 'Date the nonimmigrant visa was issued', 'date', { showWhen: [{ id: 'admission_basis', equals: 'Nonimmigrant' }] })
     ]),
     step('i485_removal_history', 'I-485 removal history', 'These official questions must be answered carefully.', [
       field('eoir_adjustment_proceedings', 'Are you filing for adjustment of status with EOIR while in removal, exclusion, rescission, or deportation proceedings?', 'radio', {
@@ -1568,7 +1569,8 @@ function i485CoreSteps() {
       field('same_address_five_years', 'Have you lived at your current physical address for the required residence period?', 'radio', {
         required: true,
         options: ['Yes', 'No']
-      })
+      }),
+      field('date_moved_in', 'Date you first resided at your current physical address', 'date', { required: true })
     ]),
     step('i485_prior_us_address', 'I-485 prior U.S. addresses (last 5 years)', 'List every U.S. physical address from the last 5 years. Add as many entries as needed to cover the full 5-year period before today.', [
       addressHistoryField('prior_us_addresses', 'Prior U.S. addresses for the last 5 years', {
@@ -1625,14 +1627,13 @@ function i485CoreSteps() {
         showWhen: [{ id: 'petition_previously_filed', equals: 'Yes' }]
       })
     ]),
-    step('i485_eligibility_basis', 'I-485 exact eligibility basis', 'Use the exact category or basis that should appear in the filing.', [
-      field('eligibility_basis', 'Exact adjustment category or basis', 'text', {
+    // The exact category is chosen in i485_category; Part 2, Item 4 (INA
+    // 245(i)) applies only to family, employment, special immigrant and DV.
+    step('i485_eligibility_basis', 'I-485 INA 245(i) and CSPA', 'Part 2, Items 4-5.', [
+      field('ina_245i_adjustment', 'Are you applying for adjustment based on INA section 245(i)?', 'radio', {
         required: true,
-        placeholder: 'Example: asylee, refugee, IR-1 spouse of U.S. citizen, EB-3'
-      }),
-      field('ina_245i_adjustment', 'If your category is family-based, employment-based, special immigrant, or Diversity Visa, are you applying under INA section 245(i)?', 'radio', {
-        required: true,
-        options: ['Yes', 'No']
+        options: ['Yes', 'No'],
+        showWhenAny: whenCategory((category) => category.ina245i)
       }),
       field('cspa_child_adjustment', 'Are you 21 or older and applying as a child under the Child Status Protection Act (CSPA)?', 'radio', {
         required: true,
@@ -4584,6 +4585,24 @@ const I485_STEP_META = {
   address_contact: ['Part 1', 'Page 3'],
   physical_address_match: ['Part 1', 'Page 3'],
   i485_physical_address: ['Part 1', 'Page 3'],
+  i485_other_dob: ['Part 1', 'Page 1'],
+  i485_other_names_detail: ['Part 1', 'Page 1'],
+  i485_prior_a_numbers: ['Part 1', 'Page 2'],
+  i485_i94_name: ['Part 1', 'Page 3'],
+  i485_first_arrival: ['Part 1', 'Page 3'],
+  i485_current_status_expiration: ['Part 1', 'Page 3'],
+  i485_crewman: ['Part 1', 'Page 3'],
+  i485_category: ['Part 2', 'Pages 5-7'],
+  i485_category_details: ['Part 2', 'Pages 5-7'],
+  i485_filing_as: ['Part 2', 'Page 5'],
+  i485_affidavit_support: ['Part 3', 'Page 8'],
+  i485_prior_applications: ['Part 4', 'Page 8'],
+  i485_prior_adjustment: ['Part 4', 'Page 8'],
+  i485_current_spouse_details: ['Part 6', 'Pages 10-11'],
+  i485_current_spouse_address: ['Part 6', 'Page 10'],
+  i485_prior_spouse_middle: ['Part 6', 'Page 11'],
+  i485_interpreter_contact: ['Part 11', 'Page 22'],
+  i485_preparer_contact: ['Part 12', 'Page 23'],
   i485_residence_period: ['Part 1', 'Page 3'],
   i485_prior_us_address: ['Part 1', 'Page 4'],
   i485_foreign_address: ['Part 1', 'Page 4'],
@@ -4657,27 +4676,35 @@ function i485OrderedSteps() {
   const commonImmigration = immigrationHistorySteps();
   const commonEvidence = evidenceSteps();
   const i485Specific = FORM_OVERRIDES['I-485'] || [];
-  const map = stepsById(commonApplicant, commonAddress, commonImmigration, commonEvidence, i485Specific);
+  const reviewSteps = i485ReviewSteps({ field, step, addressBlockField, COUNTRY_OPTIONS });
+  const map = stepsById(commonApplicant, commonAddress, commonImmigration, commonEvidence, i485Specific, reviewSteps);
   const part9Steps = i485Specific.filter((item) => item?.id && /^i485_part9_/.test(item.id));
 
   const beforePart9 = orderedSteps(map, [
     // Form I-485 Part 1, pages 1-4: information about the applicant.
     'applicant_name_parts',
     'applicant_other_names',
+    'i485_other_names_detail',
     'applicant_birth_date',
+    'i485_other_dob',
     'applicant_birth_place',
     'applicant_birth_country',
     'applicant_citizenship',
     'applicant_sex_marital',
     'applicant_uscis_numbers',
+    'i485_prior_a_numbers',
     'immigration_passport',
     'immigration_passport_expiration',
     'immigration_entry_record',
     'i485_last_entry_type',
     'i485_parole_details',
+    'i485_visa_number',
+    'i485_i94_name',
     'i485_i94_status',
     'i485_status_expiration',
-    'i485_visa_number',
+    'i485_first_arrival',
+    'i485_current_status_expiration',
+    'i485_crewman',
     'address_contact',
     'physical_address_match',
     'i485_physical_address',
@@ -4689,14 +4716,20 @@ function i485OrderedSteps() {
 
     // Form I-485 Parts 2-4, pages 5-8: adjustment category and work/school facts.
     'adjustment_basis',
+    'i485_category',
+    'i485_category_details',
     'i485_location_status',
     'i485_medical_exam',
     'i485_petition_filing',
+    'i485_filing_as',
     'i485_related_petition',
     'i485_petition_person',
     'i485_petition_date',
     'i485_petition_category',
     'i485_eligibility_basis',
+    'i485_affidavit_support',
+    'i485_prior_applications',
+    'i485_prior_adjustment',
     'i485_work_status',
     'i485_current_work_history',
     'i485_foreign_work_history',
@@ -4714,9 +4747,12 @@ function i485OrderedSteps() {
     'i485_current_spouse_name',
     'i485_current_spouse_number',
     'i485_current_spouse_birth',
+    'i485_current_spouse_details',
+    'i485_current_spouse_address',
     'i485_current_marriage',
     'i485_current_marriage_place',
     'i485_prior_spouse_name',
+    'i485_prior_spouse_middle',
     'i485_prior_spouse_birth',
     'i485_prior_spouse_citizenship',
     'i485_prior_spouse_marriage',
@@ -4770,8 +4806,10 @@ function i485OrderedSteps() {
     'documents_interpreter_choice',
     'documents_interpreter',
     'documents_interpreter_business',
+    'i485_interpreter_contact',
     'documents_preparer',
     'documents_preparer_business',
+    'i485_preparer_contact',
 
     // Form I-485 supporting intake / review layer after the official-page sequence.
     'immigration_history',

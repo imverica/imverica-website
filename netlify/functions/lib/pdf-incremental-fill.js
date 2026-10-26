@@ -446,9 +446,16 @@ function wrapPdfContentLines(value, maxChars, maxLines) {
   return lines.slice(0, maxLines).map(pdfContentLine);
 }
 
-function multilineAppearanceContent(value, width, height, fontSize) {
-  const lineHeight = fontSize + 4;
-  const maxLines = Math.max(1, Math.floor((height - 6) / lineHeight));
+// I-485 Part 14 boxes are ruled every 18pt; text there sits on the rules.
+function ruledLinePitch(fieldName) {
+  return /^P14_Line[2-5]_AdditionalInfo\[0\]$/.test(String(fieldName || '')) ? 18 : 0;
+}
+
+function multilineAppearanceContent(value, width, height, fontSize, pitch = 0) {
+  const lineHeight = pitch || fontSize + 4;
+  const maxLines = pitch
+    ? Math.max(1, Math.floor((height - 18) / pitch) + 1)
+    : Math.max(1, Math.floor((height - 6) / lineHeight));
   const maxChars = Math.max(8, Math.floor((width - 4) / (fontSize * 0.58)));
   const lines = wrapPdfContentLines(value, maxChars, maxLines);
   const startY = Math.max(2, height - fontSize - 5);
@@ -495,11 +502,14 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption, f
   const text = pdfContentText(value);
   const isComb = Boolean((flags & 16777216) && maxLength > 1);
   const isTallTextField = height >= 36;
+  // Single-line text shrinks (down to 6pt) so long answers are not clipped.
+  const lineSize = Math.max(6, Math.min(fontSize, (width - 4) / Math.max(1, text.length * 0.52)));
+  const lineY = Math.max(2, (height - lineSize) / 2);
   const content = isComb
     ? combAppearanceContent(text, width, height, fontSize, y, maxLength)
     : isTallTextField
-      ? multilineAppearanceContent(value, width, height, fontSize)
-    : `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${fontSize.toFixed(2)} Tf\n0 g\n2 ${y.toFixed(2)} Td\n(${text}) Tj\nET\nQ\n`;
+      ? multilineAppearanceContent(value, width, height, fontSize, ruledLinePitch(object.pdfFieldName))
+    : `q\n0 0 ${width.toFixed(2)} ${height.toFixed(2)} re W n\nBT\n/F1 ${lineSize.toFixed(2)} Tf\n0 g\n2 ${lineY.toFixed(2)} Td\n(${text}) Tj\nET\nQ\n`;
   const encrypted = encryptObjectBytes(encryption, appearanceObjectNumber, 0, Buffer.from(content, 'latin1'), 'stream');
   return `<< /Type /XObject /Subtype /Form /FormType 1 /BBox [0 0 ${width.toFixed(2)} ${height.toFixed(2)}] /Resources << /Font << /F1 ${fontObjectNumber} 0 R >> >> /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
 }
@@ -867,6 +877,72 @@ function xrefStreamBody(entries, trailer, size, prev) {
   return `<< ${pieces.join(' ')} >>\nstream\n${stream.toString('latin1')}\nendstream`;
 }
 
+// Continuation sheets: an overlay with `newPage: n` and `templatePage: p` is
+// drawn on the n-th extra page appended after the last page. The extra page
+// shows page p's printed content (its content stream is shared, not copied)
+// without the form fields, and each overlay names the field of page p whose
+// box it fills (`field`), so text lands exactly where it would on page p.
+const CONTINUATION_FONT = 'IMVF';
+
+function widgetRect(object) {
+  const rect = firstPdfArray(object.body, 'Rect');
+  if (rect.length < 4) return null;
+  const x = Math.min(rect[0], rect[2]);
+  const y = Math.min(rect[1], rect[3]);
+  return { x, y, width: Math.abs(rect[2] - rect[0]), height: Math.abs(rect[3] - rect[1]) };
+}
+
+function continuationText(object, value) {
+  const rect = widgetRect(object);
+  if (!rect) return [];
+  const size = Math.max(7, Math.min(10, rect.height - 6));
+  const flags = firstPdfNumber(object.body, 'Ff') || 0;
+  const maxLength = firstPdfNumber(object.body, 'MaxLen') || 0;
+  const draw = (x, y, text) => `BT\n/${CONTINUATION_FONT} ${size.toFixed(2)} Tf\n1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm\n(${text}) Tj\nET`;
+
+  if ((flags & 16777216) && maxLength > 1) {
+    const cell = rect.width / maxLength;
+    const y = rect.y + (rect.height - size) / 2 + 1;
+    return pdfContentText(value).slice(0, maxLength).split('').map((char, index) =>
+      draw(rect.x + (cell * index) + ((cell - size * 0.56) / 2), y, char));
+  }
+  if (rect.height >= 36) {
+    const pitch = ruledLinePitch(object.pdfFieldName);
+    const lineHeight = pitch || size + 4;
+    const maxLines = pitch
+      ? Math.max(1, Math.floor((rect.height - 18) / pitch) + 1)
+      : Math.max(1, Math.floor((rect.height - 6) / lineHeight));
+    const maxChars = Math.max(8, Math.floor((rect.width - 4) / (size * 0.58)));
+    const top = rect.y + rect.height - size - 5;
+    return wrapPdfContentLines(value, maxChars, maxLines).map((line, index) => draw(rect.x + 2, top - (index * lineHeight), line));
+  }
+  return [draw(rect.x + 2, rect.y + (rect.height - size) / 2, pdfContentText(value))];
+}
+
+function continuationContentBody(objectNumber, items, fields, encryption) {
+  const parts = ['q', '0 g'];
+  for (const item of items) {
+    const object = fields.get(String(item.field || ''));
+    if (object) parts.push(...continuationText(object, item.text));
+  }
+  parts.push('Q', '');
+  const encrypted = encryptObjectBytes(encryption, objectNumber, 0, Buffer.from(parts.join('\n'), 'latin1'), 'stream');
+  return `<< /Length ${encrypted.length} >>\nstream\n${encrypted.toString('latin1')}\nendstream`;
+}
+
+function addFontToResources(body, fontObjectNumber) {
+  const entry = `/${CONTINUATION_FONT} ${fontObjectNumber} 0 R`;
+  if (/\/Font\s*<</.test(body)) return body.replace(/\/Font\s*<</, `/Font<<${entry} `);
+  return body.replace(/>>\s*$/, `/Font<<${entry}>> >>`);
+}
+
+function continuationPageBody(templateBody, contentObjectNumber) {
+  let body = removeDictionaryEntry(templateBody, 'Annots');
+  body = removeDictionaryEntry(body, 'StructParents');
+  body = removeDictionaryEntry(body, 'Tabs');
+  return appendPageContent(body, contentObjectNumber);
+}
+
 function incrementalFillPdf(input, fieldValues, textOverlays = []) {
   const original = Buffer.isBuffer(input) ? input : Buffer.from(input);
   const parsed = parsePdf(original);
@@ -943,6 +1019,74 @@ function incrementalFillPdf(input, fieldValues, textOverlays = []) {
     filledFields.push(fieldName);
   }
 
+
+  // Continuation sheets (see continuationContentBody above).
+  const continuation = new Map();
+  for (const overlay of Array.isArray(textOverlays) ? textOverlays : []) {
+    const newPage = Number(overlay?.newPage || 0);
+    const template = pages[Number(overlay?.templatePage || 0) - 1];
+    if (!newPage || !template || !overlay.field) continue;
+    const entry = continuation.get(newPage) || { template, items: [] };
+    entry.items.push({ field: overlay.field, text: String(overlay.text ?? '') });
+    continuation.set(newPage, entry);
+  }
+  const addedPagesByParent = new Map();
+  for (const [, entry] of [...continuation.entries()].sort((a, b) => a[0] - b[0])) {
+    const templateBody = entry.template.body;
+    const contentObjectNumber = nextObjectNumber;
+    const pageObjectNumber = nextObjectNumber + 1;
+    nextObjectNumber += 2;
+    updates.set(contentObjectNumber, {
+      generation: 0,
+      body: continuationContentBody(contentObjectNumber, entry.items, fields, parsed.encryption)
+    });
+
+    let pageBody = continuationPageBody(templateBody, contentObjectNumber);
+    const resourcesRef = firstPdfRef(templateBody, 'Resources');
+    if (resourcesRef) {
+      const resources = parsed.byObjectNumber.get(resourcesRef.objectNumber);
+      const resourcesObjectNumber = nextObjectNumber;
+      nextObjectNumber += 1;
+      updates.set(resourcesObjectNumber, { generation: 0, body: addFontToResources(resources?.body || '<< >>', fontObjectNumber) });
+      pageBody = pageBody.replace(/\/Resources\s+\d+\s+\d+\s+R/, `/Resources ${resourcesObjectNumber} 0 R`);
+    } else {
+      pageBody = pageBody.replace(/\/Resources\s*<<([\s\S]*?)\/Font\s*<</, (match) => match.replace(/\/Font\s*<<$/, `/Font<</${CONTINUATION_FONT} ${fontObjectNumber} 0 R `));
+      if (!pageBody.includes(`/${CONTINUATION_FONT} `)) {
+        pageBody = pageBody.replace(/\/Resources\s*<</, `/Resources<</Font<</${CONTINUATION_FONT} ${fontObjectNumber} 0 R>> `);
+      }
+    }
+    updates.set(pageObjectNumber, { generation: 0, body: pageBody });
+
+    const parentRef = firstPdfRef(templateBody, 'Parent');
+    if (parentRef) {
+      const added = addedPagesByParent.get(parentRef.objectNumber) || [];
+      added.push(pageObjectNumber);
+      addedPagesByParent.set(parentRef.objectNumber, added);
+    }
+  }
+  for (const [parentObjectNumber, added] of addedPagesByParent.entries()) {
+    const parent = parsed.byObjectNumber.get(parentObjectNumber);
+    if (!parent) continue;
+    const refs = added.map((objectNumber) => `${objectNumber} 0 R`).join(' ');
+    const parentBody = (updates.get(parentObjectNumber)?.body || parent.body)
+      .replace(/\/Kids\s*\[([\s\S]*?)\]/, (match, kids) => `/Kids[${kids.trim()} ${refs}]`);
+    updates.set(parentObjectNumber, { generation: parent.generation, body: parentBody });
+    // /Count on the parent and every ancestor grows by the pages added.
+    let node = parentObjectNumber;
+    const seen = new Set();
+    while (node && !seen.has(node)) {
+      seen.add(node);
+      const object = parsed.byObjectNumber.get(node);
+      if (!object) break;
+      const current = updates.get(node)?.body || object.body;
+      updates.set(node, {
+        generation: object.generation,
+        body: current.replace(/\/Count\s+(\d+)/, (match, count) => `/Count ${Number(count) + added.length}`)
+      });
+      node = firstPdfRef(object.body, 'Parent')?.objectNumber;
+    }
+  }
+
   const root = parsed.trailer.root ? parsed.byObjectNumber.get(parsed.trailer.root.objectNumber) : null;
   const acroRef = root ? firstPdfRef(root.body, 'AcroForm') : null;
   const acroForm = acroRef ? parsed.byObjectNumber.get(acroRef.objectNumber) : null;
@@ -1001,6 +1145,7 @@ function incrementalFillPdf(input, fieldValues, textOverlays = []) {
     filledFields,
     skippedFields,
     overlayFields: Array.isArray(textOverlays) ? textOverlays.length : 0,
+    addedPages: continuation.size,
     updateCount: updates.size
   };
 }

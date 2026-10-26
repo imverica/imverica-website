@@ -211,8 +211,15 @@ assertEqual(values['Pt7Line5_Eyecolor[2]'], true, 'brown eye color checkbox');
 assertEqual(values['Pt7Line6_Haircolor[3]'], true, 'brown hair color checkbox');
 assertEqual(values['Pt9Line10_YesNo[0]'], true, 'Part 9 No maps to PDF no option');
 assertEqual(values['Pt9Line10_YesNo[1]'], false, 'Part 9 No unsets yes option');
-assertEqual(values['Pt9Line63_YesNo[0]'], true, 'Part 9 Yes maps to PDF yes option');
-assertEqual(values['Pt9Line63_YesNo[1]'], false, 'Part 9 Yes unsets no option');
+// Asylees are exempt from public charge: Item 56 = Asylee, Items 57-64
+// (including the Item 63 answer) are dropped; Part 3 = 1.e; no INA 245(i).
+assertEqual(values['Pt9Line63_YesNo[0]'], undefined, 'Item 63 skipped for an exempt asylee');
+assertEqual(values['Pt9Line63_YesNo[1]'], undefined, 'Item 63 skipped for an exempt asylee');
+assertEqual(values['Pt9Line56_CB[3]'], true, 'Item 56: asylee exemption');
+assertEqual(values['Pt9Line56_CB[23]'], false, 'Item 56: not the not-exempt box');
+assertEqual(values['Pt3Line1_CB[4]'], true, 'Part 3: 1.e, Affidavit of Support not required');
+assertEqual(values['Pt2Line4_CB[0]'], undefined, 'INA 245(i) is not asked of asylees');
+assertEqual(values['Pt2Line4_CB[1]'], undefined, 'INA 245(i) is not asked of asylees');
 
 const inputPdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf'));
 const result = incrementalFillPdf(inputPdf, values, overlays);
