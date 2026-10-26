@@ -146,9 +146,15 @@ function maritalStatusFields(value) {
   return result;
 }
 
-// Pt7Line1_Ethnicity: [0]=Hispanic/Latino, [1]=Not Hispanic/Latino
+// Pt7Line1_Ethnicity: [0]=Hispanic/Latino, [1]=Not Hispanic/Latino.
+// The wizard option "Not Hispanic or Latino" also contains "Hispanic", so the
+// negative forms are checked first.
 function ethnicityFields(value) {
   const text = clean(value, 80).toLowerCase();
+  if (!text) return {};
+  if (/^(?:not|non|no|не|ні)[\s-]|not hispanic|non-?hispanic/.test(text)) {
+    return { 'Pt7Line1_Ethnicity[0]': false, 'Pt7Line1_Ethnicity[1]': true };
+  }
   if (/hispanic|latino|latina|іспан/.test(text)) {
     return { 'Pt7Line1_Ethnicity[0]': true, 'Pt7Line1_Ethnicity[1]': false };
   }
@@ -261,17 +267,53 @@ function eligibilityFields(basis) {
   return {};
 }
 
+// Part 1, Item 18: the first block is the current U.S. PHYSICAL address, the
+// second the mailing address, filled only when the two differ. The wizard asks
+// for the mailing address first and for the physical one (physical_*) only when
+// the answer to "same address?" is No.
+// Unit boxes, by on-state: physical Pt1Line18US_Unit [2]=APT [0]=STE [1]=FLR;
+// mailing Pt1Line18_CurrentUnit [0]=APT [1]=STE [2]=FLR.
 function usAddress(answers) {
-  const unit = clean(answers.mailing_address_line2 || answers.current_address_line2);
-  return {
-    'Pt1Line18_StreetNumberName[0]': clean(answers.mailing_address_line1 || answers.current_address_line1, 80),
+  const separateMailing = yesNo(answers.physical_same_as_mailing) === false;
+  const physical = separateMailing
+    ? {
+        line1: answers.physical_address_line1 || answers.current_address_line1,
+        line2: answers.physical_address_line2 || answers.current_address_line2,
+        city: answers.physical_city || answers.current_city,
+        state: answers.physical_state || answers.current_state,
+        zip: answers.physical_zip || answers.current_zip
+      }
+    : {
+        line1: answers.mailing_address_line1 || answers.current_address_line1,
+        line2: answers.mailing_address_line2 || answers.current_address_line2,
+        city: answers.mailing_city || answers.current_city,
+        state: answers.mailing_state || answers.current_state,
+        zip: answers.mailing_zip || answers.current_zip
+      };
+  const unit = clean(physical.line2);
+  const result = {
+    'Pt1Line18_StreetNumberName[0]': clean(physical.line1, 80),
     'Pt1Line18US_AptSteFlrNumber[0]': unitNumber(unit),
-    'Pt1Line18_CityOrTown[0]': clean(answers.mailing_city || answers.current_city, 60),
-    'Pt1Line18_State[0]': stateCode(answers.mailing_state || answers.current_state),
-    'Pt1Line18_ZipCode[0]': digits(answers.mailing_zip || answers.current_zip, 10),
-    ...(answers.in_care_of_name ? { 'Part1_Item18_InCareOfName[0]': clean(answers.in_care_of_name, 60) } : {}),
+    'Pt1Line18_CityOrTown[0]': clean(physical.city, 60),
+    'Pt1Line18_State[0]': stateCode(physical.state),
+    'Pt1Line18_ZipCode[0]': digits(physical.zip, 10),
     ...(answers.date_moved_in ? { 'Pt1Line18_Date[0]': dateMdY(answers.date_moved_in) } : {}),
-    ...(unit ? unitCheckbox(unit, 'Pt1Line18US_Unit[0]', 'Pt1Line18US_Unit[2]', 'Pt1Line18US_Unit[1]') : {})
+    ...(unit ? unitCheckbox(unit, 'Pt1Line18US_Unit[2]', 'Pt1Line18US_Unit[0]', 'Pt1Line18US_Unit[1]') : {})
+  };
+  if (!separateMailing) {
+    if (answers.in_care_of_name) result['Part1_Item18_InCareOfName[0]'] = clean(answers.in_care_of_name, 60);
+    return result;
+  }
+  const mailingUnit = clean(answers.mailing_address_line2);
+  return {
+    ...result,
+    ...(answers.in_care_of_name ? { 'Pt1Line18_CurrentInCareOfName[0]': clean(answers.in_care_of_name, 60) } : {}),
+    'Pt1Line18_CurrentStreetNumberName[0]': clean(answers.mailing_address_line1, 80),
+    'Pt1Line18_CurrentAptSteFlrNumber[0]': unitNumber(mailingUnit),
+    'Pt1Line18_CurrentCityOrTown[0]': clean(answers.mailing_city, 60),
+    'Pt1Line18_CurrentState[0]': stateCode(answers.mailing_state),
+    'Pt1Line18_CurrentZipCode[0]': digits(answers.mailing_zip, 10),
+    ...(mailingUnit ? unitCheckbox(mailingUnit, 'Pt1Line18_CurrentUnit[0]', 'Pt1Line18_CurrentUnit[1]', 'Pt1Line18_CurrentUnit[2]') : {})
   };
 }
 
@@ -309,15 +351,40 @@ function lastForeignAddressFields(answers) {
   };
 }
 
+// Part 4, Items 7-8 (edition 09/18/26). Item 7 has two name boxes,
+// "Employer or School (current or most recent)" [0] and "Name of Employer,
+// Company, or School" [2]; both get the name. [1] is the occupation.
+// Unit boxes: P4Line7_Unit / P4Line8_Unit [0]=APT [1]=STE [2]=FLR.
+function employerAddressFields(row, prefix, streetField) {
+  const unit = clean(row.line2);
+  const isUs = !row.country || /^(united states|usa|us)$/i.test(clean(row.country, 40));
+  return {
+    [streetField]: clean(row.line1, 80),
+    [`${prefix}_Number[0]`]: unitNumber(unit),
+    [`${prefix}_City[0]`]: clean(row.city, 60),
+    ...(isUs
+      ? { [`${prefix}_State[0]`]: stateCode(row.state), [`${prefix}_ZipCode[0]`]: digits(row.zip, 10) }
+      : { [`${prefix}_Province[0]`]: clean(row.state, 60), [`${prefix}_PostalCode[0]`]: clean(row.zip, 20) }),
+    [`${prefix}_Country[0]`]: clean(row.country || (row.line1 || row.city ? 'United States' : ''), 60),
+    ...(unit ? unitCheckbox(unit, `${prefix}_Unit[0]`, `${prefix}_Unit[1]`, `${prefix}_Unit[2]`) : {})
+  };
+}
+
 function employmentFields(answers) {
   const current = firstHistoryRow(answers.current_employment_history || answers.employment_school_last_five_years);
   const foreign = firstHistoryRow(answers.foreign_employment_history);
+  const currentName = clean(answers.employer_name || current.name, 80);
   return {
-    'Pt4Line7_EmployerName[0]': clean(answers.employer_name || current.name, 80),
+    'Pt4Line7_EmployerName[0]': currentName,
+    'Pt4Line7_EmployerName[2]': currentName,
+    'Pt4Line7_EmployerName[1]': clean(answers.current_occupation || current.occupation || current.activity, 60),
+    ...employerAddressFields(current, 'P4Line7', 'Part4Line7_StreetName[0]'),
     'Pt4Line7_DateFrom[0]': dateMdY(current.from),
-    'Pt4Line7_DateTo[0]': dateMdY(current.to),
+    // The first row is the current job; an open end date means it continues.
+    'Pt4Line7_DateTo[0]': current.to ? dateMdY(current.to) : (current.from ? 'PRESENT' : ''),
     'Pt4Line8_EmployerName[0]': clean(foreign.name, 80),
     'Pt4Line8_Occupation[0]': clean(foreign.occupation || foreign.activity, 60),
+    ...employerAddressFields(foreign, 'P4Line8', 'P4Line8_StreetName[0]'),
     'Pt4Line8_DateFrom[0]': dateMdY(foreign.from),
     'Pt4Line8_DateTo[0]': dateMdY(foreign.to)
   };
@@ -785,12 +852,7 @@ function i485FieldValues(payload = {}) {
   const otherDob = yesNo(answers.other_dob_used);
   const priorANumber = yesNo(answers.has_prior_alien_number);
   const sameAddress5yrs = yesNo(answers.same_address_five_years);
-  const inProceedings = yesNo(answers.in_removal_proceedings);
-  const priorOrder = yesNo(answers.prior_removal_order);
-  const everRemoved = yesNo(answers.ever_removed_excluded);
   const ssaConsent = yesNo(answers.ssn_ssa_consent);
-  const currentlyWorking = yesNo(answers.currently_working);
-  const unauthorizedWork = yesNo(answers.worked_without_authorization);
   const ina245iAdjustment = yesNo(answers.ina_245i_adjustment);
   const cspaChildAdjustment = yesNo(answers.cspa_child_adjustment);
   const physicalSameAsMailing = yesNo(answers.physical_same_as_mailing);
@@ -829,8 +891,8 @@ function i485FieldValues(payload = {}) {
     'Pt1Line7_CountryOfBirth[0]': clean(answers.country_of_birth, 60),
     'Pt1Line8_CountryofCitizenshipNationality[0]': clean(answers.country_of_citizenship, 60),
 
-    // USCIS account number
-    'USCISOnlineAcctNumber[0]': digits(answers.uscis_online_account_number, 12),
+    // USCIS account number (Part 1, Item 9 only: USCISOnlineAcctNumber[0] on
+    // page 1 is the attorney's account number)
     'Pt1Line9_USCISAccountNumber[0]': digits(answers.uscis_online_account_number, 12),
 
     // Passport / Entry
@@ -840,22 +902,22 @@ function i485FieldValues(payload = {}) {
     'Pt1Line10_VisaNum[0]': clean(visaNumber, 20),
     'Pt1Line10_CityTown[0]': clean(answers.port_of_entry_city || placeEntry.city, 60),
     'Pt1Line10_State[0]': stateCode(answers.port_of_entry_state || placeEntry.state),
-    'Pt1Line10_DateofArrival[0]': dateMdY(answers.date_of_arrival || answers.last_arrival_date),
+    'Pt1Line10_DateofArrival[0]': dateMdY(answers.date_of_arrival || answers.last_arrival_date || answers.date_of_last_entry),
     'Pt1Line10_NonImmDate[0]': visaIssueDateForPdf,
 
     // Admission basis and status at entry
     'Pt1Line11_Admitted[0]': clean(answers.status_at_last_entry, 40),
     'Pt1Line11_Paroled[0]': clean(answers.paroled_as, 40),
 
-    // Current immigration status (Part 1, lines 12–17)
+    // Part 1, Items 12-15 (edition 09/18/26): I-94 number, the authorized-stay
+    // expiration and status shown on the I-94, current status and its
+    // expiration. Items 13 (first time in the U.S.?), 16 and 17 (crewman) are
+    // not asked by the wizard and stay blank; removal history is Part 9.
     'P1Line12_I94[0]': clean(answers.i94_number, 20),
-    'Pt1Line12_Date[0]': dateMdY(answers.date_of_last_entry || answers.last_arrival_date),
+    'Pt1Line12_Date[0]': dateMdY(answers.authorized_stay_expires),
     'Pt1Line12_Status[0]': clean(answers.manner_of_last_entry, 60),
     'Pt1Line14_Status[0]': clean(answers.current_immigration_status, 80),
-    'Pt1Line15_Date[0]': clean(answers.authorized_stay_expires, 20),
-    ...checkboxPair(inProceedings, 'Pt1Line13_YN[0]', 'Pt1Line13_YN[1]'),
-    ...checkboxPair(priorOrder, 'Pt1Line16_YN[0]', 'Pt1Line16_YN[1]'),
-    ...checkboxPair(everRemoved, 'Pt1Line17_YN[0]', 'Pt1Line17_YN[1]'),
+    'Pt1Line15_Date[0]': dateMdY(answers.status_expiration_date),
 
     // SSN
     ...checkboxPair(hasSsn, 'Pt1Line19_YN[1]', 'Pt1Line19_YN[0]'),
@@ -873,17 +935,17 @@ function i485FieldValues(payload = {}) {
     ...checkboxPair(ina245iAdjustment, 'Pt2Line4_CB[1]', 'Pt2Line4_CB[0]'),
     ...checkboxPair(cspaChildAdjustment, 'Pt2Line5_CB[1]', 'Pt2Line5_CB[0]'),
 
-    // Part 4 — Processing / Employment
-    ...checkboxPair(currentlyWorking, 'Pt4Line5_YN[1]', 'Pt4Line5_YN[0]'),
-    ...checkboxPair(unauthorizedWork, 'Pt4Line6_YN[1]', 'Pt4Line6_YN[0]'),
-    'Pt4Line7_EmployerName[0]': clean(answers.employer_name, 80),
+    // Part 4 — employment (Items 7-8, employmentFields below). Items 5-6 ask
+    // about a prior adjustment application and a rescinded green card; the
+    // wizard's work questions do not answer them (unauthorized work is Part 9).
 
     // Part 5 — Parents
     'Pt5Line1_FamilyName[0]': clean(answers.father_family_name, 60),
     'Pt5Line1_GivenName[0]': clean(answers.father_given_name, 60),
     'Pt5Line1_MiddleName[0]': clean(answers.father_middle_name, 60),
     'Pt5Line3_DateofBirth[0]': dateMdY(answers.father_dob),
-    'Pt5Line5_CityTownOfBirth[0]': clean(answers.father_city_of_birth, 60),
+    // Pt5Line5 / Pt5Line10 are "Country of Birth" despite the field names.
+    'Pt5Line5_CityTownOfBirth[0]': clean(answers.father_country_of_birth || answers.father_city_of_birth, 60),
     'Pt5Line6_FamilyName[0]': clean(answers.mother_family_name, 60),
     'Pt5Line6_GivenName[0]': clean(answers.mother_given_name, 60),
     'Pt5Line6_MiddleName[0]': clean(answers.mother_middle_name, 60),
@@ -891,7 +953,7 @@ function i485FieldValues(payload = {}) {
     'Pt5Line7_GivenName[0]': clean(answers.mother_birth_given_name, 60),
     'Pt5Line7_MiddleName[0]': clean(answers.mother_birth_middle_name, 60),
     'Pt5Line8_DateofBirth[0]': dateMdY(answers.mother_dob),
-    'Pt5Line10_CityTownOfBirth[0]': clean(answers.mother_city_of_birth, 60),
+    'Pt5Line10_CityTownOfBirth[0]': clean(answers.mother_country_of_birth || answers.mother_city_of_birth, 60),
 
     // Part 6 — Marital history
     'Pt6Line3_TimesMarried[0]': clean(answers.times_married, 4),
@@ -899,19 +961,29 @@ function i485FieldValues(payload = {}) {
     'Pt6Line4_GivenName[0]': clean(answers.spouse_given_name, 60),
     'Pt6Line4_MiddleName[0]': clean(answers.spouse_middle_name, 60),
     'Pt6Line5_AlienNumber[0]': digits(answers.spouse_alien_number, 9),
+    // Pt5Line8_DateofBirth [1]-[3] are Part 6 dates: current spouse's birth,
+    // current marriage, prior spouse's birth.
+    'Pt5Line8_DateofBirth[1]': dateMdY(answers.spouse_dob),
     'Pt6Line7_Country[0]': clean(answers.spouse_country_of_birth, 60),
     'Pt6Line10_CityTownOfBirth[0]': clean(answers.current_marriage_city, 60),
     'Pt6Line10_State[0]': clean(answers.current_marriage_state, 60),
     'Pt6Line10_Country[0]': clean(answers.current_marriage_country, 60),
+    'Pt5Line8_DateofBirth[2]': dateMdY(answers.current_marriage_date),
     'Pt6Line12_FamilyName[0]': clean(answers.prior_spouse_family_name, 60),
     'Pt6Line12_GivenName[0]': clean(answers.prior_spouse_given_name, 60),
     'Pt6Line12_MiddleName[0]': clean(answers.prior_spouse_middle_name, 60),
+    'Pt5Line8_DateofBirth[3]': dateMdY(answers.prior_spouse_dob),
     'Pt6Line14_Country[0]': clean(answers.prior_spouse_country_of_birth, 60),
     'Pt6Line15_Country[0]': clean(answers.prior_spouse_country_of_citizenship, 60),
     'Pt6Line16_DateofBirth[0]': dateMdY(answers.prior_spouse_marriage_date),
+    // Item 16, place of the prior marriage, reuses Pt6Line10_*[1].
+    'Pt6Line10_CityTownOfBirth[1]': clean(answers.prior_spouse_marriage_city, 60),
+    'Pt6Line10_State[1]': clean(answers.prior_spouse_marriage_state, 60),
+    'Pt6Line10_Country[1]': clean(answers.prior_spouse_marriage_country, 60),
     'Pt6Line18_CityTownOfBirth[0]': clean(answers.prior_spouse_marriage_end_city, 60),
     'Pt6Line18_State[0]': clean(answers.prior_spouse_marriage_end_state, 60),
     'Pt6Line18_Country[0]': clean(answers.prior_spouse_marriage_end_country, 60),
+    'Pt6Line16_DateofBirth[1]': dateMdY(answers.prior_spouse_marriage_end_date),
     'Pt6Line19_HowMarriageEndedOther[0]': clean(answers.prior_spouse_marriage_end_other, 60),
 
     // Part 6 / 7 — Children
@@ -949,7 +1021,7 @@ function i485FieldValues(payload = {}) {
     // Interpreter (Part 11)
     'Pt11Line1a_FamilyName[0]': clean(answers.interpreter_family_name, 60),
     'Pt11Line1b_GivenName[0]': clean(answers.interpreter_given_name, 60),
-    'Pt11Line2_OrgName[0]': clean(answers.interpreter_org_name, 80),
+    'Pt11Line2_OrgName[0]': clean(answers.interpreter_org_name || answers.interpreter_business_name, 80),
     'Part11_NameofLanguage[0]': clean(answers.interpreter_language, 40),
 
     // Preparer (Part 12)

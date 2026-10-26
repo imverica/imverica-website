@@ -1131,8 +1131,8 @@ export function initIntakeWizard(): void {
         var suggestId = historySuggestionId(field.id, index);
         return '<div class="intake-history-entry" data-history-index="' + index + '">' +
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
-          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.from || '') + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyAddress1) + '</label><div class="intake-address-wrap"><input type="text" data-history-part="line1" data-address-autocomplete="' + esc(suggestId) + '" data-street-line autocomplete="address-line1" maxlength="48" value="' + esc(row.line1 || '') + '"><div class="intake-address-suggestions" data-address-suggestions="' + esc(suggestId) + '"></div></div><div class="intake-address-note" data-address-note="' + esc(suggestId) + '"></div></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyAddress2) + '</label><input type="text" data-history-part="line2" autocomplete="address-line2" value="' + esc(row.line2 || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCity) + '</label><input type="text" data-history-part="city" autocomplete="address-level2" value="' + esc(row.city || '') + '"></div>' +
@@ -1159,8 +1159,8 @@ export function initIntakeWizard(): void {
         var suggestId = historySuggestionId(field.id, index);
         return '<div class="intake-history-entry" data-history-index="' + index + '">' +
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-history-row="' + esc(field.id) + '" data-remove-history-index="' + index + '">' + esc(copy.historyRemoveEntry || copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
-          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.from || '') + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31" data-history-part="from" value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31" data-history-part="to" value="' + esc(row.to || '') + '" placeholder="' + esc(copy.historyPresent) + '"></div>' +
           '<div class="intake-field intake-field-full"><label>' + esc(copy.historyEmployerSchool) + '</label><input type="text" data-history-part="name" autocomplete="organization" value="' + esc(row.name || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyActivity) + '</label><input type="text" data-history-part="activity" value="' + esc(row.activity || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyOccupation) + '</label><input type="text" data-history-part="occupation" value="' + esc(row.occupation || '') + '"></div>' +
@@ -1186,8 +1186,8 @@ export function initIntakeWizard(): void {
       rows.map(function (row, index) {
         return '<div class="intake-history-entry" data-travel-index="' + index + '">' +
           '<h4><span>' + esc(copy.historyEntry) + ' ' + (index + 1) + '</span>' + (rows.length > 1 ? '<button type="button" class="intake-history-remove" data-remove-travel-row="' + esc(field.id) + '" data-remove-travel-index="' + index + '">' + esc(copy.historyRemoveEntry || copy.historyRemoveAddress) + '</button>' : '') + '</h4>' +
-          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.from || '') + '"></div>' +
-          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31"  value="' + esc(row.to || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyFrom) + '</label><input type="date" min="1900-01-01" max="2049-12-31" data-travel-part="from" value="' + esc(row.from || '') + '"></div>' +
+          '<div class="intake-field"><label>' + esc(copy.historyTo) + '</label><input type="date" min="1900-01-01" max="2049-12-31" data-travel-part="to" value="' + esc(row.to || '') + '"></div>' +
           '<div class="intake-field"><label>' + esc(copy.historyCountry) + '</label><select data-travel-part="country"><option value=""></option>' + renderSelectOptions(countryOptions, row.country || '') + '</select></div>' +
           '<div class="intake-field"><label>' + esc(copy.travelDays || 'Total days') + '</label><input type="number" min="0" inputmode="numeric" data-travel-part="days" value="' + esc(row.days || '') + '"></div>' +
         '</div>';

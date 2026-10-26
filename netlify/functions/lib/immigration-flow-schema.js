@@ -51,6 +51,7 @@ const LOCALIZATION = {
       i485_status_expiration: 'I-485: срок разрешенного пребывания',
       i485_visa_number: 'I-485: номер визы',
       i485_removal_history: 'I-485: removal / deportation',
+      i485_physical_address: 'I-485: физический адрес',
       i485_residence_period: 'I-485: проживание по текущему адресу',
       i485_prior_us_address: 'I-485: предыдущий адрес в США',
       i485_foreign_address: 'I-485: последний адрес за пределами США',
@@ -715,7 +716,7 @@ const I485_EXTRA_LOCALIZATION = {
       father_given_name: 'Родитель 1: имя',
       father_middle_name: 'Родитель 1: middle name',
       father_dob: 'Родитель 1: дата рождения',
-      father_city_of_birth: 'Родитель 1: страна/место рождения',
+      father_city_of_birth: 'Родитель 1: страна рождения',
       mother_family_name: 'Родитель 2: текущая фамилия',
       mother_given_name: 'Родитель 2: текущее имя',
       mother_middle_name: 'Родитель 2: middle name',
@@ -723,7 +724,8 @@ const I485_EXTRA_LOCALIZATION = {
       mother_birth_given_name: 'Родитель 2: имя при рождении',
       mother_birth_middle_name: 'Родитель 2: middle name при рождении',
       mother_dob: 'Родитель 2: дата рождения',
-      mother_city_of_birth: 'Родитель 2: страна/место рождения',
+      mother_city_of_birth: 'Родитель 2: страна рождения',
+      physical_address: 'Текущий физический адрес в США',
       times_married: 'Сколько раз вы были в браке?',
       spouse_family_name: 'Текущий супруг: фамилия, если есть',
       spouse_given_name: 'Текущий супруг: имя, если есть',
@@ -812,6 +814,7 @@ const I485_EXTRA_LOCALIZATION = {
       i485_status_expiration: 'I-485: строк дозволеного перебування',
       i485_visa_number: 'I-485: номер візи',
       i485_removal_history: 'I-485: removal / deportation',
+      i485_physical_address: 'I-485: фізична адреса',
       i485_residence_period: 'I-485: проживання за поточною адресою',
       i485_prior_us_address: 'I-485: попередня адреса у США',
       i485_foreign_address: 'I-485: остання адреса за межами США',
@@ -852,6 +855,9 @@ const I485_EXTRA_LOCALIZATION = {
       date_of_last_entry: 'Дата останнього в’їзду за I-94',
       manner_of_last_entry: 'Статус на I-94 або entry document',
       authorized_stay_expires: 'Дата закінчення дозволеного перебування або D/S',
+      physical_address: 'Поточна фізична адреса у США',
+      father_city_of_birth: 'Батько або мати 1: країна народження',
+      mother_city_of_birth: 'Батько або мати 2: країна народження',
       visa_number: 'Номер неімміграційної візи, якщо є',
       same_address_five_years: 'Ви жили за поточною фізичною адресою весь потрібний період?',
       prior_us_addresses: 'Попередня фізична адреса у США',
@@ -906,6 +912,7 @@ const I485_EXTRA_LOCALIZATION = {
       i485_status_expiration: 'I-485: vencimiento de estadía autorizada',
       i485_visa_number: 'I-485: número de visa',
       i485_removal_history: 'I-485: removal / deportation',
+      i485_physical_address: 'I-485: dirección física',
       i485_residence_period: 'I-485: residencia en dirección actual',
       i485_prior_us_address: 'I-485: dirección anterior en EE.UU.',
       i485_foreign_address: 'I-485: última dirección fuera de EE.UU.',
@@ -946,6 +953,9 @@ const I485_EXTRA_LOCALIZATION = {
       date_of_last_entry: 'Fecha de última entrada según I-94',
       manner_of_last_entry: 'Estado en I-94 o documento de entrada',
       authorized_stay_expires: 'Fecha de vencimiento de estadía autorizada o D/S',
+      physical_address: 'Dirección física actual en EE. UU.',
+      father_city_of_birth: 'Padre o madre 1: país de nacimiento',
+      mother_city_of_birth: 'Padre o madre 2: país de nacimiento',
       visa_number: 'Número de visa no inmigrante, si tiene',
       same_address_five_years: '¿Ha vivido en la dirección física actual durante el período requerido?',
       prior_us_addresses: 'Dirección física anterior en Estados Unidos',
@@ -1545,6 +1555,15 @@ function i485CoreSteps() {
         options: ['Yes', 'No', 'Not sure']
       })
     ]),
+    // Part 1, Item 18 wants the physical address first; the mailing address
+    // asked earlier goes in the second block when the two differ.
+    step('i485_physical_address', 'I-485 current physical address', 'Skipped automatically when the physical address is the same as the mailing address.', [
+      addressBlockField('physical_address', 'Current U.S. physical address', 'physical', {
+        required: true,
+        requiredParts: ['line1', 'city', 'state', 'zip'],
+        showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
     step('i485_residence_period', 'I-485 current residence period', 'Confirm whether the current physical address covers the required period.', [
       field('same_address_five_years', 'Have you lived at your current physical address for the required residence period?', 'radio', {
         required: true,
@@ -1643,9 +1662,11 @@ function i485CoreSteps() {
     step('i485_parent1_middle_name', 'I-485 parent 1 middle name', 'Enter only if there is a middle name.', [
       field('father_middle_name', 'Parent 1 middle name', 'text'),
     ]),
-    step('i485_parent1_birth', 'I-485 parent 1 birth', 'Enter parent 1 birth date and place.', [
+    // Form I-485 Part 5 asks only the parent's COUNTRY of birth; the key keeps
+    // its old name so saved drafts still load.
+    step('i485_parent1_birth', 'I-485 parent 1 birth', 'Enter parent 1 birth date and country of birth.', [
       field('father_dob', 'Parent 1 date of birth', 'date'),
-      field('father_city_of_birth', 'Parent 1 country/place of birth', 'text'),
+      field('father_city_of_birth', 'Parent 1 country of birth', 'select', { options: COUNTRY_OPTIONS }),
     ]),
     step('i485_parent2_current_name', 'I-485 parent 2 current name', 'Enter parent 2 current legal name.', [
       field('mother_family_name', 'Parent 2 current family name', 'text', { autocomplete: 'family-name' }),
@@ -1661,9 +1682,9 @@ function i485CoreSteps() {
     step('i485_parent2_birth_middle_name', 'I-485 parent 2 birth middle name', 'Enter only if the birth middle name is known.', [
       field('mother_birth_middle_name', 'Parent 2 middle name at birth', 'text'),
     ]),
-    step('i485_parent2_birth', 'I-485 parent 2 birth', 'Enter parent 2 birth date and place.', [
+    step('i485_parent2_birth', 'I-485 parent 2 birth', 'Enter parent 2 birth date and country of birth.', [
       field('mother_dob', 'Parent 2 date of birth', 'date'),
-      field('mother_city_of_birth', 'Parent 2 country/place of birth', 'text'),
+      field('mother_city_of_birth', 'Parent 2 country of birth', 'select', { options: COUNTRY_OPTIONS }),
     ]),
     step('i485_marriage_count', 'I-485 marriage count', 'This controls current-spouse and prior-spouse sections.', [
       field('times_married', 'How many times have you been married?', 'number', { inputmode: 'numeric' }),
@@ -4562,6 +4583,7 @@ const I485_STEP_META = {
   i485_visa_number: ['Part 1', 'Page 3'],
   address_contact: ['Part 1', 'Page 3'],
   physical_address_match: ['Part 1', 'Page 3'],
+  i485_physical_address: ['Part 1', 'Page 3'],
   i485_residence_period: ['Part 1', 'Page 3'],
   i485_prior_us_address: ['Part 1', 'Page 4'],
   i485_foreign_address: ['Part 1', 'Page 4'],
@@ -4658,6 +4680,7 @@ function i485OrderedSteps() {
     'i485_visa_number',
     'address_contact',
     'physical_address_match',
+    'i485_physical_address',
     'i485_residence_period',
     'i485_prior_us_address',
     'i485_foreign_address',

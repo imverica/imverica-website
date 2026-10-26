@@ -187,8 +187,25 @@ assertEqual(values['Pt1Line18_YN[0]'], true, 'physical address same as mailing: 
 assertEqual(values['Pt1Line18_last5yrs_YN[1]'], true, 'same address five years: no');
 assertEqual(values['Pt1Line19_YN[1]'], true, 'has SSN checkbox uses PDF yes value');
 assertEqual(values['Pt1Line19_SSN[0]'], '671842359', 'SSN digits');
-assertEqual(values['Pt4Line5_YN[1]'], true, 'currently working yes');
-assertEqual(values['Pt4Line6_YN[0]'], true, 'unauthorized work no');
+// Edition 09/18/26: Part 4 Items 5-6 ask about a prior adjustment application
+// and a rescinded green card, Part 1 Items 13/16/17 about first arrival and
+// crewman status; no wizard answer may land there.
+for (const name of ['Pt4Line5_YN[0]', 'Pt4Line5_YN[1]', 'Pt4Line6_YN[0]', 'Pt4Line6_YN[1]',
+  'Pt1Line13_YN[0]', 'Pt1Line13_YN[1]', 'Pt1Line16_YN[0]', 'Pt1Line16_YN[1]', 'Pt1Line17_YN[0]', 'Pt1Line17_YN[1]',
+  'USCISOnlineAcctNumber[0]']) {
+  assertEqual(values[name], undefined, `${name} stays blank`);
+}
+const mdY = (iso) => iso.replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$2/$3/$1');
+assertEqual(values['Pt1Line9_USCISAccountNumber[0]'], formAnswers.uscis_online_account_number, 'USCIS online account number in Part 1, Item 9');
+assertEqual(values['Pt1Line12_Date[0]'], formAnswers.authorized_stay_expires, 'I-94 authorized stay expiration');
+assertEqual(values['Pt1Line15_Date[0]'], formAnswers.status_expiration_date, 'current status expiration');
+assertEqual(values['Pt7Line1_Ethnicity[1]'], true, 'Not Hispanic or Latino checkbox');
+assertEqual(values['Pt7Line1_Ethnicity[0]'], false, 'Hispanic or Latino unchecked');
+assertEqual(values['Pt5Line5_CityTownOfBirth[0]'], formAnswers.father_city_of_birth, 'parent 1 country of birth');
+assertEqual(values['Pt5Line8_DateofBirth[3]'], mdY(formAnswers.prior_spouse_dob), 'prior spouse date of birth');
+assertEqual(values['Pt6Line10_CityTownOfBirth[1]'], formAnswers.prior_spouse_marriage_city, 'prior marriage city');
+assertEqual(values['Pt6Line10_Country[1]'], formAnswers.prior_spouse_marriage_country, 'prior marriage country');
+assertEqual(values['Pt6Line16_DateofBirth[1]'], mdY(formAnswers.prior_spouse_marriage_end_date), 'prior marriage end date');
 assertEqual(values['Pt7Line2_Race[1]'], true, 'race white checkbox');
 assertEqual(values['Pt7Line5_Eyecolor[2]'], true, 'brown eye color checkbox');
 assertEqual(values['Pt7Line6_Haircolor[3]'], true, 'brown hair color checkbox');
