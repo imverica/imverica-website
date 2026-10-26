@@ -32,7 +32,7 @@ const ZOOM = { url: 'https://us05web.zoom.us/j/7315124254?pwd=abc.1', id: '731 5
 // --- video appointment ---
 const videoRec = {
   id: 'IMVERICA-20260721-25',
-  contact: { name: 'Farruh Test', email: 'fko@example.com', phone: '9165988219' },
+  contact: { name: 'Test Client', email: 'client@example.com', phone: '9165550100' },
   situation: 'APPOINTMENT REQUEST\nMeeting: Video meeting · 30 minutes',
   appointment: { type: 'video', typeLabel: 'Video meeting · 30 minutes', date: '2026-07-21', time: '2:00 PM', durationMin: 30 }
 };

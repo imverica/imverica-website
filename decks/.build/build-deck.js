@@ -638,16 +638,16 @@ async function build() {
     // Founder card (left, large)
     s.addShape('rect', { x: 0.6, y: 2.3, w: 6.0, h: 4.6, fill: { color: C.white }, line: { color: C.line, width: 1 } });
     s.addShape('ellipse', { x: 0.95, y: 2.6, w: 1.4, h: 1.4, fill: { color: C.navy }, line: { type: 'none' } });
-    s.addText('FK', {
+    s.addText('IM', {
       x: 0.95, y: 2.6, w: 1.4, h: 1.4,
       fontSize: 36, bold: true, color: C.gold, fontFace: FONT_DISPLAY,
       align: 'center', valign: 'middle', margin: 0
     });
-    s.addText('Farruh Kochkarov', {
+    s.addText('Founder', {
       x: 2.55, y: 2.65, w: 4.0, h: 0.55,
       fontSize: 22, bold: true, color: C.ink, fontFace: FONT_DISPLAY, margin: 0
     });
-    s.addText('Founder · LDA · Immigration Consultant', {
+    s.addText('LDA · Immigration Consultant', {
       x: 2.55, y: 3.2, w: 4.0, h: 0.35,
       fontSize: 11, color: C.terracotta, fontFace: FONT_BODY, italic: true, charSpacing: 2, margin: 0
     });

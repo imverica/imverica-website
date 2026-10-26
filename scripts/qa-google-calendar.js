@@ -29,7 +29,7 @@ function check(label, cond, extra) {
 
   const record = {
     id: 'IMVERICA-20260717-25',
-    contact: { name: 'Farruh K', email: 'client@example.com', phone: '+1 916 555 0000' },
+    contact: { name: 'Test Client', email: 'client@example.com', phone: '+1 916 555 0000' },
     situation: 'APPOINTMENT REQUEST\nMeeting: Video meeting · 30 minutes',
     appointment: { type: 'video', typeLabel: 'Video meeting · 30 minutes', date: '2026-07-21', time: '2:00 PM', durationMin: 30 }
   };
@@ -82,7 +82,7 @@ function check(label, cond, extra) {
   check('two reminders: 1 day + 1 hour popups', !eventBody.reminders.useDefault
     && eventBody.reminders.overrides.some((o) => o.method === 'popup' && o.minutes === 1440)
     && eventBody.reminders.overrides.some((o) => o.method === 'popup' && o.minutes === 60));
-  check('summary has client + order', eventBody.summary.includes('Farruh K') && eventBody.summary.includes('IMVERICA-20260717-25'));
+  check('summary has client + order', eventBody.summary.includes('Test Client') && eventBody.summary.includes('IMVERICA-20260717-25'));
   check('zoom in location', eventBody.location === zoom.url);
   check('zoom + contacts in description', eventBody.description.includes(zoom.url) && eventBody.description.includes('client@example.com'));
 
