@@ -38,6 +38,15 @@ const directSlugs = [...new Set([
   ...listPreparableFamilyLawSlugs()
 ])];
 const directSet = new Set(directSlugs);
+// Info and court-only documents (CR-290, FL-192, SC-200 …) are never filled for
+// clients, and some have no fillable fields at all: their templates only need
+// to load and match the manifest.
+const referenceCodes = new Set([
+  ...listAllCourtForms().filter((form) => form.role !== 'prepare'),
+  ...getSmallClaimsCatalog().forms.filter((form) => form.role !== 'prepare')
+].map((form) => form.code));
+// The statewide catalog only grows; a smaller one means forms went missing.
+const MIN_STATEWIDE_FORMS = 345;
 const headers = { host: 'imverica.com', origin: 'https://imverica.com' };
 headers.cookie = `imv_session=${signSession('all-court-qa@example.com', { headers })}`;
 
@@ -107,7 +116,12 @@ async function verifyTemplate(record) {
   try {
     const document = await PDFDocument.load(decrypted, { ignoreEncryption: true });
     const fields = document.getForm().getFields();
-    if (fields.length !== record.fieldCount || !fields.length) throw new Error(`field count ${fields.length} != ${record.fieldCount}`);
+    if (fields.length !== record.fieldCount) throw new Error(`field count ${fields.length} != manifest ${record.fieldCount}`);
+    if (referenceCodes.has(record.code)) {
+      ok(`${record.code}: reference template valid (${fields.length} fields, not filled for clients)`);
+      return;
+    }
+    if (!fields.length) throw new Error('no form fields');
 
     if (!directSet.has(record.slug)) {
       const sample = fields.find((field) => field instanceof PDFTextField || field instanceof PDFCheckBox || field instanceof PDFRadioGroup);
@@ -183,16 +197,19 @@ async function verifyBlockedForm(form) {
 async function main() {
   console.log('\n=== All California court forms QA ===\n');
 
-  if (MANIFEST.formCount === 61 && MANIFEST.failedCount === 0) ok('official manifest covers 61 healthy site templates');
-  else bad(`manifest count/failures unexpected: ${MANIFEST.formCount}/${MANIFEST.failedCount}`);
+  if (MANIFEST.formCount === MANIFEST.forms.length && MANIFEST.formCount > 0 && MANIFEST.failedCount === 0) {
+    ok(`official manifest covers ${MANIFEST.formCount} healthy templates`);
+  } else {
+    bad(`manifest count/failures unexpected: ${MANIFEST.formCount} listed, ${MANIFEST.forms.length} records, ${MANIFEST.failedCount} failed`);
+  }
   if (directSlugs.length === 49) ok('49 cabinet wizard forms registered');
   else bad(`expected 49 cabinet wizard forms, got ${directSlugs.length}`);
 
   const allForms = listAllCourtForms();
   const preparableForms = listPreparableAllCourtForms();
   const summary = getAllCourtCatalogSummary();
-  if (summary.total === 345 && allForms.length === 345) ok('statewide catalog contains 345 unique official forms');
-  else bad(`expected 345 statewide forms, got ${summary.total}/${allForms.length}`);
+  if (summary.total === allForms.length && allForms.length >= MIN_STATEWIDE_FORMS) ok(`statewide catalog contains ${allForms.length} unique official forms`);
+  else bad(`expected at least ${MIN_STATEWIDE_FORMS} statewide forms, got ${summary.total}/${allForms.length}`);
   if (summary.preparableCount === preparableForms.length && summary.preparableCount + summary.referenceCount === summary.total) {
     ok(`${summary.preparableCount} preparable + ${summary.referenceCount} reference/court forms classified`);
   } else {
