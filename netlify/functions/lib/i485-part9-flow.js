@@ -1,5 +1,7 @@
 const part9Logic = require('../../../form-logic/i-485.part9.json');
 
+// Keys are the item numbers in the PDF field names (edition 01/20/25 numbering);
+// labels follow the wording of edition 09/18/26.
 const ITEM_LABELS = {
   '1': 'Have you EVER been a member of, involved in, or associated with any organization, association, fund, foundation, party, club, society, or similar group?',
   '10': 'Have you EVER been denied admission to the United States?',
@@ -63,31 +65,30 @@ const ITEM_LABELS = {
   '53.d': 'Have you EVER intentionally and severely injured or tried to injure any person?',
   '54': 'Have you EVER recruited, enlisted, conscripted, or used a person under 15 years old to participate in hostilities or serve in an armed force or group?',
   '55': 'Have you EVER used a person under 15 years old to take part in hostilities or support combat?',
-  '63': 'Can you read and understand English?',
-  '64': 'Is a credit report available if needed for this application?',
-  '67': 'Have you EVER been deported from the United States based on public charge grounds?',
-  '68': 'Have you EVER committed fraud or misrepresented a material fact to obtain an immigration benefit?',
-  '69': 'Have you EVER falsely claimed to be a U.S. citizen?',
-  '70': 'Have you EVER voted in violation of law?',
-  '71': 'Have you EVER applied for or received a waiver of inadmissibility?',
-  '72': 'Have you EVER been excluded, deported, or removed after April 1, 1997?',
-  '73': 'Have you EVER been unlawfully present in the United States for more than 180 days and then departed?',
-  '74': 'Have you EVER been unlawfully present after a prior immigration violation?',
-  '75': 'Have you EVER triggered any other unlawful presence or reentry ground?',
-  '76': 'Are you a foreign medical graduate seeking adjustment without required medical licensing or service?',
-  '77': 'Have you EVER left or remained outside the United States to avoid military service?',
-  '78.a': 'Have you EVER left the United States to avoid being drafted into the U.S. Armed Forces?',
-  '78.b': 'Have you EVER applied for exemption from U.S. military service as a nonresident alien?',
-  '79': 'Have you EVER received relief under INA section 245A?',
-  '80': 'Have you EVER been a lawful permanent resident before?',
-  '81': 'Have you EVER renounced U.S. citizenship to avoid taxation?',
-  '82': 'Have you EVER been a J exchange visitor subject to a foreign residence requirement?',
-  '83': 'Are you now in A, E, G, or similar diplomatic or treaty status?',
-  '84.a': 'If in A status, do you claim diplomatic rights, privileges, exemptions, or immunities?',
-  '84.b': 'If in E status, do you claim treaty rights, privileges, exemptions, or immunities?',
-  '84.c': 'If in G status, do you claim diplomatic or organization rights, privileges, exemptions, or immunities?',
-  '85': 'Have you submitted a waiver of rights, privileges, exemptions, and immunities?',
-  '86': 'If yes to Item 85, provide your nationality, occupational status, and position title.'
+  '63': 'Have you EVER received any means-tested public benefit? Answer Yes only if you have received means-tested public benefits, in the past or now.',
+  '67': 'Have you EVER failed or refused to attend or to remain in attendance at any removal proceeding filed against you on or after April 1, 1997?',
+  '68': 'Have you EVER submitted altered, fraudulent, or counterfeit documentation to any U.S. Government official to obtain or attempt to obtain any immigration benefit, including a visa or entry into the United States?',
+  '69': 'Have you EVER lied about, concealed, or misrepresented any information on an application or petition to obtain a visa, other documentation required for entry into the United States, admission to the United States, or any other kind of immigration benefit?',
+  '70': 'Have you EVER falsely claimed to be a U.S. citizen (in writing or any other way)?',
+  '71': 'Have you EVER been a stowaway on a vessel or aircraft arriving in the United States?',
+  '72': 'Have you EVER knowingly encouraged, induced, assisted, abetted, or aided any alien to enter or to try to enter the United States illegally (alien smuggling)?',
+  '73': 'Are you under a final order of civil penalty for violating INA section 274C for use of fraudulent documents?',
+  '74': 'Have you EVER been excluded, deported, or removed from the United States, or have you ever departed the United States on your own after having been ordered excluded, deported, or removed?',
+  '75': 'Have you EVER entered the United States without being inspected and admitted or paroled?',
+  '76': 'Since April 1, 1997, have you been unlawfully present in the United States?',
+  '77': 'If you answered Yes to Item 74, was a severe form of trafficking in persons at least one central reason for your unlawful presence in the United States?',
+  '78.a': 'Since April 1, 1997, have you EVER reentered or attempted to reenter the United States without being inspected and admitted or paroled after having been unlawfully present in the United States for more than one year in the aggregate on or after April 1, 1997?',
+  '78.b': 'Since April 1, 1997, have you EVER reentered or attempted to reenter the United States without being inspected and admitted or paroled after having been deported, excluded, or removed from the United States?',
+  '79': 'Do you plan to practice polygamy in the United States?',
+  '80': 'Are you accompanying an alien who is inadmissible and who has been certified by a medical officer as helpless from sickness, mental or physical disability, or infancy, and who requires your protection or guardianship (INA section 232(c))?',
+  '81': 'Have you EVER assisted in detaining, retaining, or withholding custody of a U.S. citizen child outside the United States from a person who has been granted custody of the child?',
+  '82': 'Have you EVER voted in violation of any Federal, state, or local constitutional provision, statute, ordinance, or regulation in the United States?',
+  '83': 'Have you EVER renounced U.S. citizenship to avoid being taxed by the United States?',
+  '84.a': 'Have you EVER applied for exemption or discharge from training or service in the U.S. armed forces or in the U.S. National Security Training Corps on the ground that you are an alien?',
+  '84.b': 'Have you EVER been relieved or discharged from such training or service on the ground that you are an alien?',
+  '84.c': 'Have you EVER been convicted of desertion from the U.S. armed forces?',
+  '85': 'Have you EVER left or remained outside the United States to avoid or evade training or service in the U.S. armed forces in time of war or a period declared by the President to be a national emergency?',
+  '86': 'If you answered Yes to Item 83, what was your nationality or immigration status immediately before you left (for example, U.S. citizen or national, lawful permanent resident, nonimmigrant, parolee, present without admission or parole, or any other status)?'
 };
 
 const PAGE_GROUPS = [
@@ -113,7 +114,7 @@ const PAGE_GROUPS = [
     id: 'i485_part9_other',
     title: 'Part 9 eligibility: public charge and other admissibility questions',
     help: 'These remaining Part 9 questions help identify additional explanations or documents.',
-    items: ['63', '64', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78.a', '78.b', '79', '80', '81', '82', '83', '84.a', '84.b', '84.c', '85', '86']
+    items: ['63', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78.a', '78.b', '79', '80', '81', '82', '83', '84.a', '84.b', '84.c', '85', '86']
   }
 ];
 
@@ -145,9 +146,14 @@ function part14ShowWhenAny(trigger, itemsByNumber) {
     .filter(Boolean);
 }
 
+// The number printed on the current form (Part 9 was renumbered from Item 64 on).
+function printedNumber(itemNumber, itemsByNumber) {
+  return itemsByNumber.get(itemNumber)?.printed || itemNumber;
+}
+
 function yesNoField(field, item, itemsByNumber) {
   const showWhen = dependencyShowWhen(item.item, itemsByNumber);
-  return field(item.key, `${item.item}. ${ITEM_LABELS[item.item] || item.topic || item.item}`, 'radio', {
+  return field(item.key, `${printedNumber(item.item, itemsByNumber)}. ${ITEM_LABELS[item.item] || item.topic || item.item}`, 'radio', {
     required: true,
     options: ['Yes', 'No'],
     part: 9,
@@ -158,7 +164,7 @@ function yesNoField(field, item, itemsByNumber) {
 }
 
 function item86Field(field, itemsByNumber) {
-  return field('Pt9Line86_Nationality', `86. ${ITEM_LABELS['86']}`, 'textarea', {
+  return field('Pt9Line86_Nationality', `${printedNumber('86', itemsByNumber)}. ${ITEM_LABELS['86']}`, 'textarea', {
     required: true,
     part: 9,
     itemNumber: '86',
@@ -226,7 +232,8 @@ function buildI485Part9Steps(field, step) {
       }
       fields.push(...explanationFields(field, items, itemsByNumber));
 
-      const itemRange = items.length > 1 ? `${items[0]}-${items[items.length - 1]}` : items[0];
+      const first = printedNumber(items[0], itemsByNumber);
+      const itemRange = items.length > 1 ? `${first}-${printedNumber(items[items.length - 1], itemsByNumber)}` : first;
       steps.push(step(`${group.id}_${String((index / chunkSize) + 1).padStart(2, '0')}`, `${group.title}: ${itemRange}`, group.help, fields));
       if (items.includes('1')) steps.push(...organizationDetailSteps(field, step, group, itemsByNumber));
     }

@@ -22,8 +22,10 @@ const textOverlays = i485TextOverlays({ formAnswers: scenario.fields, contact: {
 assert(Object.keys(values).length >= 415, `Expected exact I-485 map to produce at least 415 real fields, got ${Object.keys(values).length}`);
 assertEqual(textOverlays.length, 0, 'No synthetic overlays are expected for the current I-485 map');
 
-assertEqual(values['AlienNumber[0]'], '208924970', 'A-number page 1');
-assertEqual(values['AlienNumber[23]'], '208924970', 'A-number page 24');
+// Edition 09/18/26: page headers and Part 1, Item 4 are all Pt1Line4_AlienNumber[0..24].
+assertEqual(values['Pt1Line4_AlienNumber[0]'], '208924970', 'A-number page 1');
+assertEqual(values['Pt1Line4_AlienNumber[2]'], '208924970', 'A-number Part 1, Item 4');
+assertEqual(values['Pt1Line4_AlienNumber[24]'], '208924970', 'A-number page 24');
 assertEqual(values['Pt1Line1_FamilyName[0]'], 'HOVDAN', 'Current family name page 1');
 assertEqual(values['Pt1Line1_FamilyName[1]'], 'HOVDAN', 'Current family name page 24');
 assertEqual(values['Pt1Line3_YN[0]'], false, 'Other date of birth Yes should be unselected');

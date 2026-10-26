@@ -107,9 +107,49 @@ for (const expected of [
   '1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21',
   '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35.a', '35.b', '36', '37', '38', '39', '40', '41',
   '42.a', '42.b', '42.c', '42.d', '43.a', '43.b', '43.c', '43.d', '43.e', '43.f', '43.g', '43.h', '43.i', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53.a', '53.b', '53.c', '53.d', '54', '55',
-  '63', '64', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78.a', '78.b', '79', '80', '81', '82', '83', '84.a', '84.b', '84.c', '85', '86'
+  '63', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78.a', '78.b', '79', '80', '81', '82', '83', '84.a', '84.b', '84.c', '85', '86'
 ]) {
   assert(part9ItemNumbers.has(expected), `Missing I-485 Part 9 frontend field for official item ${expected}`);
+}
+// Edition 09/18/26 removed old Item 64 (long-term institutionalization): no field, no question.
+assert(!part9ItemNumbers.has('64'), 'Item 64 (institutionalization) was removed in edition 09/18/26');
+
+// Each label must ask the question whose PDF field receives the answer, under
+// the number printed on edition 09/18/26 (Part 9 was renumbered from Item 64 on).
+const part9Fields = new Map();
+for (const step of [...entries, ...criminal, ...security, ...other]) {
+  for (const field of step.fields || []) if (field.part === 9 && field.pdfKey) part9Fields.set(field.pdfKey, field);
+}
+for (const [pdfKey, printed, words] of [
+  ['Pt9Line63_YesNo', '63', /means-tested public benefit/i],
+  ['Pt9Line67_YesNo', '65', /removal proceeding/i],
+  ['Pt9Line68_YesNo', '66', /fraudulent, or counterfeit documentation/i],
+  ['Pt9Line69_YesNo', '67', /lied about, concealed, or misrepresented/i],
+  ['Pt9Line70_YesNo', '68', /falsely claimed to be a U\.S\. citizen/i],
+  ['Pt9Line71_YesNo', '69', /stowaway/i],
+  ['Pt9Line72_YesNo', '70', /alien smuggling/i],
+  ['Pt9Line73_YesNo', '71', /274C/],
+  ['Pt9Line74_YesNo', '72', /excluded, deported, or removed/i],
+  ['Pt9Line75_YesNo', '73', /without being inspected and admitted or paroled\?$/i],
+  ['Pt9Line76_YesNo', '74', /unlawfully present/i],
+  ['Pt9Line77_YesNo', '75', /trafficking in persons/i],
+  ['Pt9Line78a_YesNo', '76.a', /more than one year/i],
+  ['Pt9Line78b_YesNo', '76.b', /after having been deported/i],
+  ['Pt9Line79_YesNo', '77', /polygamy/i],
+  ['Pt9Line80_YesNo', '78', /helpless/i],
+  ['Pt9Line81_YesNo', '79', /custody of a U\.S\. citizen child/i],
+  ['Pt9Line82_YesNo', '80', /voted/i],
+  ['Pt9Line83_YesNo', '81', /renounced U\.S\. citizenship/i],
+  ['Pt9Line84a_YesNo', '82.a', /exemption or discharge/i],
+  ['Pt9Line84b_YesNo', '82.b', /relieved or discharged/i],
+  ['Pt9Line84c_YesNo', '82.c', /desertion/i],
+  ['Pt9Line85_YesNo', '83', /avoid or evade training or service/i],
+  ['Pt9Line86_Nationality', '84', /nationality or immigration status/i]
+]) {
+  const field = part9Fields.get(pdfKey);
+  assert(field, `Missing Part 9 field ${pdfKey}`);
+  assert(field.label.startsWith(`${printed}. `), `${pdfKey} must show printed number ${printed}, got "${field.label.slice(0, 12)}"`);
+  assert(words.test(field.label), `${pdfKey} label does not ask its own question: "${field.label.slice(0, 80)}"`);
 }
 
 console.log('I-485 Part 9 flow QA passed');

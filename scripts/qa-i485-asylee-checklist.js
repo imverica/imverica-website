@@ -5,6 +5,8 @@ const CHECKLIST_PATH = 'form-scenarios/i-485-asylee.checklist.json';
 const OVERLAY_PATH = 'overlay-maps/normalized/i-485.json';
 
 const CHECKLIST_FIELD_ALIASES = {
+  // Edition 09/18/26 renamed the page-header A-Number (AlienNumber[k]) to Pt1Line4_AlienNumber[k].
+  AlienNumber: ['Pt1Line4_AlienNumber'],
   Pt4Line7_NameOfEmployer: ['Pt4Line7_EmployerName[2]'],
   Pt4Line7_Occupation: ['Pt4Line7_EmployerName[1]'],
   Pt6Line13_DateofBirth: ['Pt5Line8_DateofBirth[3]'],

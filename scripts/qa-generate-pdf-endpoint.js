@@ -121,7 +121,7 @@ async function main() {
   const i485Overlays = i485TextOverlays(i485Payload);
   assert(Object.keys(i485Values).length >= 120, `I-485 endpoint payload should map at least 120 exact fields, got ${Object.keys(i485Values).length}`);
   assert(Array.isArray(i485Overlays), 'I-485 text overlays should be an array');
-  assert(i485Values['AlienNumber[0]'] === '208924970', 'I-485 should map applicant A-number');
+  assert(i485Values['Pt1Line4_AlienNumber[0]'] === '208924970', 'I-485 should map applicant A-number');
   assert(i485Values['Pt1Line1_FamilyName[0]'] === 'HOVDAN', 'I-485 should map applicant family name');
   assert(i485Values['Pt1Line1_GivenName[0]'] === 'YANA', 'I-485 should map applicant given name');
   assert(i485Values['Pt3Line3_DaytimePhoneNumber1[0]'] === '(253) 409-7210', 'I-485 daytime phone should be PDF-formatted');

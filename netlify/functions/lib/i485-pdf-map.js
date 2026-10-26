@@ -106,12 +106,14 @@ function priorMarriageEndTypeValue(value) {
   return '';
 }
 
-// AlienNumber[0..23] repeats as a running header on every page
+// Edition 09/18/26: the A-Number is one field name, Pt1Line4_AlienNumber[0..24]:
+// the running header on every page plus Part 1, Item 4 ([2], page 2).
+// (Edition 01/20/25 used AlienNumber[0..23] for the headers.)
 function alienNumberFields(value) {
   const a = digits(value, 9);
   if (!a) return {};
   const result = {};
-  for (let i = 0; i <= 23; i++) result[`AlienNumber[${i}]`] = a;
+  for (let i = 0; i <= 24; i++) result[`Pt1Line4_AlienNumber[${i}]`] = a;
   return result;
 }
 
@@ -582,7 +584,7 @@ function legacyExactI485Values(answers = {}) {
   };
 
   if (aDigits) {
-    result['Pt1Line4_AlienNumber[0]'] = aDigits;
+    Object.assign(result, alienNumberFields(aDigits));
     Object.assign(result, checkboxGroupFromPdfBase(0, 'Pt1Line4_YN', 2));
   }
 
@@ -815,8 +817,8 @@ function i485FieldValues(payload = {}) {
     'Pt1Line3_DOB[0]': dateMdY(answers.date_of_birth),
     ...checkboxPair(otherDob, 'Pt1Line3_YN[0]', 'Pt1Line3_YN[1]'),
 
-    // A-Number
-    'Pt1Line4_AlienNumber[0]': alienNum,
+    // A-Number (every page header and Part 1, Item 4)
+    ...alienNumberFields(alienNum),
     ...checkboxPair(alienNum ? true : false, 'Pt1Line4_YN[0]', 'Pt1Line4_YN[1]'),
     ...checkboxPair(priorANumber, 'Pt1Line5_YN[0]', 'Pt1Line5_YN[1]'),
     'Pt1Line5A_ANumber[0]': digits(answers.prior_alien_number_1, 9),
