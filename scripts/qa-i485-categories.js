@@ -72,6 +72,22 @@ check(part1['Pt1Line15_Date[0]'] === 'N/A', 'Item 15: asylee status does not exp
 const ds = i485FieldValues({ formAnswers: { current_status_expiration_kind: 'D/S (duration of status)' } });
 check(ds['Pt1Line15_Date[0]'] === 'D/S', 'Item 15: D/S');
 
+// Item 3.b relative question: investors blank, self-petition N/A, relative details.
+const investor = i485FieldValues({ formAnswers: categoryAnswers(CATEGORIES.find((c) => c.field === 'Pt2Line3b_CB526[0]')) });
+check(selected(investor, 'Pt2Line3b_CB140Assoc').length === 0, 'investor: I-140 relative question blank');
+const niw = CATEGORIES.find((c) => c.field === 'Pt2Line3b_CB140[7]');
+const selfPetition = i485FieldValues({ formAnswers: categoryAnswers(niw, { eb_relative_petitioner: 'I filed my own I-140 (self-petition)' }) });
+check(selfPetition['Pt2Line3b_CB140Assoc[0]'] === true && selfPetition['Pt3Line1_CB[4]'] === true, 'NIW self-petition: N/A and Part 3 1.e');
+const byRelative = i485FieldValues({ formAnswers: categoryAnswers(niw, { eb_relative_petitioner: 'Yes', eb_relative_relationship: 'Brother', eb_relative_status: 'U.S. citizen' }) });
+check(byRelative['Pt2Line3b_CB140Assoc[2]'] === true && byRelative['Pt2Relative_CB[5]'] === true && byRelative['Pt2RelativeType_CB[0]'] === true && byRelative['Pt3Line1_CB[5]'] === true, 'I-140 by a relative: brother, U.S. citizen, Part 3 1.f');
+
+// Part 1, Item 11: the text sits next to the ticked box; refugees are admitted as refugees.
+const refugee = CATEGORIES.find((category) => category.field === 'Pt2Line3d_AsyleeRefugeeCB[1]');
+const refugeeEntry = i485FieldValues({ formAnswers: categoryAnswers(refugee, { admission_basis: 'Other' }) });
+check(refugeeEntry['Pt2Line11_CB[0]'] === true && refugeeEntry['Pt1Line11_Admitted[0]'] === 'REFUGEE', 'Item 11: refugee admitted as REFUGEE');
+const otherEntry = i485FieldValues({ formAnswers: { admission_basis: 'Other', status_at_last_entry: 'TPS' } });
+check(otherEntry['Pt2Line11_CB[3]'] === true && otherEntry['Pt1Line11_Other[0]'] === 'TPS' && !otherEntry['Pt1Line11_Admitted[0]'], 'Item 11: Other text in the Other box');
+
 // Exempt categories skip Item 63 and Items 57-64.
 const exempt = i485FieldValues({ formAnswers: categoryAnswers(asylee, { Pt9Line63_YesNo: 'Yes', pc_household: '2', pc_benefit1_name: 'X' }) });
 check(exempt['Pt9Line63_YesNo[0]'] === undefined && exempt['Pt9Line57_HouseholdSize[0]'] === undefined && exempt['Pt8Line68c_Column1Row1[0]'] === undefined, 'asylee: Items 57-64 skipped');

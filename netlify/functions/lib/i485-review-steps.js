@@ -22,6 +22,11 @@ const CATEGORY_KEY_BY_BASIS = {
 
 const STATUS_EXPIRATION_KINDS = ['A date', 'D/S (duration of status)', 'My status does not expire'];
 
+// Part 2, Item 3.b: who filed the I-140 and, if a relative, who they are.
+const EB_RELATIVE_OPTIONS = ['Yes', 'No', 'I filed my own I-140 (self-petition)'];
+const RELATIVE_OPTIONS = ['Father', 'Mother', 'Child', 'Adult son', 'Adult daughter', 'Brother', 'Sister', 'None of these'];
+const RELATIVE_STATUS_OPTIONS = ['U.S. citizen', 'U.S. national', 'Lawful permanent resident', 'None of these'];
+
 const INCOME_OPTIONS = ['$0-27,000', '$27,001-52,000', '$52,001-85,000', '$85,001-141,000', 'Over $141,000'];
 const ASSET_OPTIONS = ['$0-18,400', '$18,401-136,000', '$136,001-321,400', '$321,401-707,100', 'Over $707,100'];
 const LIABILITY_OPTIONS = ['$0', '$1-10,100', '$10,101-57,700', '$57,701-186,800', 'Over $186,800'];
@@ -117,8 +122,20 @@ function i485ReviewSteps({ field, step, addressBlockField, COUNTRY_OPTIONS }) {
       }),
       field('dv_rank_number', 'Diversity Visa rank number', 'text', { required: true, showWhen: [{ id: 'adjustment_basis', equals: 'Diversity visa' }] }),
       field('other_eligibility_text', 'Describe your other eligibility', 'text', { required: true, showWhen: [{ id: 'i485_category_other', equals: 'Other eligibility' }] }),
-      yesNo('eb_relative_petitioner', 'Did a relative file the Form I-140 for you, or does a relative own 5% or more of the business that filed it?', {
+      field('eb_relative_petitioner', 'Did a relative file the Form I-140 for you, or does a relative own 5% or more of the business that filed it?', 'radio', {
+        required: true,
+        options: EB_RELATIVE_OPTIONS,
         showWhenAny: whenCategory((category) => category.i864 === 'relative')
+      }),
+      field('eb_relative_relationship', 'That relative is your', 'select', {
+        required: true,
+        options: RELATIVE_OPTIONS,
+        showWhen: [{ id: 'eb_relative_petitioner', equals: 'Yes' }]
+      }),
+      field('eb_relative_status', 'The relative is a', 'select', {
+        required: true,
+        options: RELATIVE_STATUS_OPTIONS,
+        showWhen: [{ id: 'eb_relative_petitioner', equals: 'Yes' }]
       })
     ]),
     step('i485_filing_as', 'I-485 principal or derivative applicant', 'Part 2, Item 2.', [
@@ -270,6 +287,8 @@ const I485_REVIEW_LOCALIZATION = {
       dv_rank_number: 'Номер Diversity Visa (rank number)',
       other_eligibility_text: 'Опишите другое основание',
       eb_relative_petitioner: 'Подал ли I-140 ваш родственник, или владеет ли родственник 5% или более компании-петиционера?',
+      eb_relative_relationship: 'Этот родственник вам',
+      eb_relative_status: 'Статус родственника',
       filing_as: 'Я подаю эту I-485 как',
       principal_family_name: 'Основной заявитель: фамилия',
       principal_given_name: 'Основной заявитель: имя',
@@ -384,6 +403,8 @@ const I485_REVIEW_LOCALIZATION = {
       dv_rank_number: 'Номер Diversity Visa (rank number)',
       other_eligibility_text: 'Опишіть іншу підставу',
       eb_relative_petitioner: 'Чи подав I-140 ваш родич, або чи володіє родич 5% або більше компанії-петиціонера?',
+      eb_relative_relationship: 'Цей родич вам',
+      eb_relative_status: 'Статус родича',
       filing_as: 'Я подаю цю I-485 як',
       principal_family_name: 'Основний заявник: прізвище',
       principal_given_name: "Основний заявник: ім'я",
@@ -498,6 +519,8 @@ const I485_REVIEW_LOCALIZATION = {
       dv_rank_number: 'Número de rango de la Diversity Visa',
       other_eligibility_text: 'Describa su otra elegibilidad',
       eb_relative_petitioner: '¿Un familiar presentó el I-140 por usted, o un familiar es dueño del 5% o más de la empresa peticionaria?',
+      eb_relative_relationship: 'Ese familiar es su',
+      eb_relative_status: 'El familiar es',
       filing_as: 'Presento este I-485 como',
       principal_family_name: 'Solicitante principal: apellido',
       principal_given_name: 'Solicitante principal: nombre',
@@ -636,6 +659,20 @@ const OPTION_TRANSLATIONS = {
   'Syrian national under Public Law 106-378': ['Гражданин Сирии (Public Law 106-378)', 'Громадянин Сирії (Public Law 106-378)', 'Nacional sirio (Ley Pública 106-378)'],
   'Spouse, child or parent of a U.S. active-duty service member (NDAA)': ['Супруг, ребёнок или родитель военнослужащего США (NDAA)', 'Чоловік/дружина, дитина або батьки військовослужбовця США (NDAA)', 'Cónyuge, hijo o padre de militar activo de EE. UU. (NDAA)']
 };
+Object.assign(OPTION_TRANSLATIONS, {
+  'I filed my own I-140 (self-petition)': ['Я сам(а) подал(а) I-140 (self-petition)', 'Я сам(а) подав(ла) I-140 (self-petition)', 'Presenté mi propio I-140 (autopetición)'],
+  Father: ['Отец', 'Батько', 'Padre'],
+  Mother: ['Мать', 'Мати', 'Madre'],
+  Child: ['Ребёнок', 'Дитина', 'Hijo(a)'],
+  'Adult son': ['Взрослый сын', 'Дорослий син', 'Hijo adulto'],
+  'Adult daughter': ['Взрослая дочь', 'Доросла донька', 'Hija adulta'],
+  Brother: ['Брат', 'Брат', 'Hermano'],
+  Sister: ['Сестра', 'Сестра', 'Hermana'],
+  'None of these': ['Никто из перечисленных', 'Ніхто з перелічених', 'Ninguno de estos'],
+  'U.S. citizen': ['Гражданин США', 'Громадянин США', 'Ciudadano de EE. UU.'],
+  'U.S. national': ['Национал США (U.S. national)', 'Націонал США (U.S. national)', 'Nacional de EE. UU.'],
+  'Lawful permanent resident': ['Постоянный житель (green card)', 'Постійний житель (green card)', 'Residente permanente']
+});
 const BENEFIT_FIELD_LABELS = {
   start: ['Дата начала', 'Дата початку', 'Fecha de inicio'],
   end: ['Дата окончания', 'Дата закінчення', 'Fecha de fin'],
@@ -684,6 +721,9 @@ const STEP_HELP = {
 
 module.exports = {
   CATEGORY_KEY_BY_BASIS,
+  EB_RELATIVE_OPTIONS,
+  RELATIVE_OPTIONS,
+  RELATIVE_STATUS_OPTIONS,
   whenCategory,
   STATUS_EXPIRATION_KINDS,
   INCOME_OPTIONS,

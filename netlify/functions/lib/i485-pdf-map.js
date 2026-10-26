@@ -9,6 +9,9 @@ const {
 } = require('./i485-categories');
 const {
   CATEGORY_KEY_BY_BASIS,
+  EB_RELATIVE_OPTIONS,
+  RELATIVE_OPTIONS,
+  RELATIVE_STATUS_OPTIONS,
   STATUS_EXPIRATION_KINDS,
   INCOME_OPTIONS,
   ASSET_OPTIONS,
@@ -229,6 +232,28 @@ function admissionBasisFields(value) {
   return {};
 }
 
+// Part 1, Item 11. A refugee was inspected and admitted as a refugee, whatever
+// the wizard's entry-type answer (there is no "refugee" option there).
+function isRefugee(category) {
+  return Boolean(category && category.field === 'Pt2Line3d_AsyleeRefugeeCB[1]');
+}
+
+function refugeeAdmission(admissionBasis, category) {
+  if (!isRefugee(category) || /parol|without|ewi/i.test(clean(admissionBasis, 80))) return admissionBasis;
+  return 'admitted';
+}
+
+// The text goes next to the box that is ticked: [0] admitted as, [1] paroled
+// as, [3] other.
+function admissionTextFields(answers, admissionBasis, category) {
+  const ticked = admissionBasisFields(refugeeAdmission(admissionBasis, category));
+  const status = clean(answers.status_at_last_entry, 40);
+  if (ticked['Pt2Line11_CB[1]']) return { 'Pt1Line11_Paroled[0]': clean(answers.paroled_as || status, 40) };
+  if (ticked['Pt2Line11_CB[3]']) return { 'Pt1Line11_Other[0]': clean(status || answers.manner_of_last_entry, 60) };
+  if (ticked['Pt2Line11_CB[0]']) return { 'Pt1Line11_Admitted[0]': status || (isRefugee(category) ? 'REFUGEE' : '') };
+  return {};
+}
+
 // Part 2, Item 3 (edition 09/18/26). The category comes from the wizard's
 // per-basis select (see i485-categories.js); answers saved before it existed
 // carry free text in eligibility_basis, matched onto the same list here.
@@ -296,11 +321,16 @@ function categoryFields(answers, category) {
   if (category.field === 'Pt2Line3d_AsyleeRefugeeCB[1]') result['Pt2Line3d_Refugee[0]'] = dateMdY(answers.refugee_admission_date);
   if (category.field === 'Pt2Line3g_CB[0]') result['Pt2Line1g_DV[0]'] = clean(answers.dv_rank_number, 30);
   if (category.field === 'Pt2Line3g_CB[4]') result['Pt2Line1g_OtherEligibility[0]'] = clean(answers.other_eligibility_text, 120);
-  // Did a relative file the I-140? [0]=N/A (investor) [1]=No [2]=Yes
-  if (category.basis === 'Employment petition') {
-    const relative = yesNo(answers.eb_relative_petitioner);
-    const index = category.i864 === 'relative' ? (relative === true ? 2 : relative === false ? 1 : -1) : 0;
-    Object.assign(result, exclusiveGroup('Pt2Line3b_CB140Assoc', 3, index));
+  // Did a relative file the I-140? [0]=N/A (I-140 self-petition) [1]=No
+  // [2]=Yes, then who (Pt2Relative_CB) and their status (Pt2RelativeType_CB).
+  // Investors (I-526) leave it blank.
+  if (category.i864 === 'relative') {
+    const answer = EB_RELATIVE_OPTIONS.indexOf(clean(answers.eb_relative_petitioner, 80));
+    Object.assign(result, exclusiveGroup('Pt2Line3b_CB140Assoc', 3, [2, 1, 0][answer] ?? -1));
+    if (answer === 0) {
+      Object.assign(result, exclusiveGroup('Pt2Relative_CB', 8, RELATIVE_OPTIONS.indexOf(clean(answers.eb_relative_relationship, 40))));
+      Object.assign(result, exclusiveGroup('Pt2RelativeType_CB', 4, RELATIVE_STATUS_OPTIONS.indexOf(clean(answers.eb_relative_status, 40))));
+    }
   }
   if (category.ina245i) Object.assign(result, checkboxPair(yesNo(answers.ina_245i_adjustment), 'Pt2Line4_CB[1]', 'Pt2Line4_CB[0]'));
   return result;
@@ -311,8 +341,8 @@ function affidavitSupportFields(answers, category) {
   if (!category) return {};
   let code = category.i864;
   if (code === 'relative') {
-    const relative = yesNo(answers.eb_relative_petitioner);
-    code = relative === true ? '1.f' : relative === false ? '1.e' : '';
+    const answer = EB_RELATIVE_OPTIONS.indexOf(clean(answers.eb_relative_petitioner, 80));
+    code = answer === 0 ? '1.f' : answer > 0 ? '1.e' : '';
   }
   if (code === 'ask') {
     const chosen = I864_OPTIONS.find(([, label]) => label === clean(answers.affidavit_support_exemption, 200));
@@ -1211,8 +1241,7 @@ function i485FieldValues(payload = {}) {
     'Pt1Line10_NonImmDate[0]': visaIssueDateForPdf,
 
     // Admission basis and status at entry
-    'Pt1Line11_Admitted[0]': clean(answers.status_at_last_entry, 40),
-    'Pt1Line11_Paroled[0]': clean(answers.paroled_as, 40),
+    ...admissionTextFields(answers, admissionBasis, category),
 
     // Part 1, Items 12-17 (edition 09/18/26). Item 12: name, number,
     // authorized-stay expiration and status from the I-94 (the name defaults to
@@ -1367,7 +1396,7 @@ function i485FieldValues(payload = {}) {
     ...raceFields(answers.race),
     ...eyeColorFields(answers.eye_color),
     ...hairColorFields(answers.hair_color),
-    ...admissionBasisFields(admissionBasis),
+    ...admissionBasisFields(refugeeAdmission(admissionBasis, category)),
     ...spouseFields(answers),
     ...publicChargeFields(answers, publicChargeIndex(answers, category)),
     ...checkboxGroupValue(answers.prior_spouse_marriage_end_type, 'Pt6Line19_MaritalStatus', priorMarriageEndTypeValue(answers.prior_spouse_marriage_end_type), 4),
