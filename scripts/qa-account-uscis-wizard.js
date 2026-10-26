@@ -34,7 +34,7 @@ function signedHeaders() {
     host: 'localhost:8888',
     origin: 'http://localhost:8888'
   };
-  headers.cookie = `imv_session=${signSession('uscis-wizard-qa@example.com', { headers })}`;
+  headers.cookie = `imv_session=${signSession('applicant@example.com', { headers })}`;
   return headers;
 }
 
@@ -65,8 +65,8 @@ function i765Payload() {
     formCode: 'I-765',
     formAnswers: {
       i765_application_reason: 'Initial permission to accept employment',
-      applicant_given_name: 'Ivan',
-      applicant_family_name: 'Petrov',
+      applicant_given_name: 'Alex',
+      applicant_family_name: 'Example',
       date_of_birth: '1990-04-12',
       city_of_birth: 'Kyiv',
       country_of_birth: 'Ukraine',
@@ -76,18 +76,18 @@ function i765Payload() {
       alien_number: 'A123456789',
       uscis_online_account_number: '123456789012',
       ssn: '123-45-6789',
-      mailing_address_line1: '8305 Deer Spring Circle',
-      mailing_address_line2: 'Apt 2',
-      mailing_city: 'Antelope',
-      mailing_state: 'CA - California',
-      mailing_zip: '95843',
+      mailing_address_line1: '100 Example Street',
+      mailing_address_line2: '',
+      mailing_city: 'Example City',
+      mailing_state: 'CA',
+      mailing_zip: '00000',
       physical_same_as_mailing: 'Yes',
       daytime_phone: {
         countryCode: '+1',
-        areaCode: '916',
-        number: '5551212'
+        areaCode: '555',
+        number: '0100200'
       },
-      email_address: 'ivan@example.com',
+      email_address: 'applicant@example.com',
       current_immigration_status: 'Pending asylum',
       status_at_last_entry: 'Parolee',
       last_arrival_date: '2023-01-15',
@@ -104,9 +104,9 @@ function i765Payload() {
       has_preparer: 'No'
     },
     contact: {
-      name: 'Ivan Petrov',
-      phone: '+1 916 555 1212',
-      email: 'ivan@example.com'
+      name: 'Alex Example',
+      phone: '(555) 010-0200',
+      email: 'applicant@example.com'
     }
   };
 }

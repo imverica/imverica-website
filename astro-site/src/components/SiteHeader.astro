@@ -57,8 +57,8 @@ function localeHref(locale: Locale) {
             <a
               href={localeHref(locale)}
               class={`site-utility-lang lang-${locale}${lang === locale ? ' is-active' : ''}`}
-              aria-label={`${LOCALES[locale].label} language`}
-            >{LOCALES[locale].label}</a>
+              aria-label={LOCALES[locale].label}
+            ><span class="site-utility-lang-name">{LOCALES[locale].label}</span><span class="site-utility-lang-flag" aria-hidden="true">{LOCALES[locale].flag}</span></a>
           ))}
         </div>
         <a class="site-utility-portal" href="/account.html" aria-label={t.portal}>
@@ -172,6 +172,7 @@ function localeHref(locale: Locale) {
     text-decoration: none;
   }
   .site-utility-lang:hover { color: #EBE2CE; }
+  .site-utility-lang-flag { display: none; }
   /* The ACTIVE language pill shows its flag as the background (owner ask
      2026-07-16); inactive pills keep the plain dark bar. White label with a
      dark outline stays readable on any band of any flag. */
@@ -202,6 +203,10 @@ function localeHref(locale: Locale) {
     .site-utility-inner { padding: 7px 0.85rem; gap: 10px; }
     .site-utility-sec, .site-utility-pipe { display: none; }
     .site-utility-portal-label { display: none; }
+    .site-utility-langs { gap: 1px; }
+    .site-utility-lang { padding: 4px 6px; }
+    .site-utility-lang-name { display: none; }
+    .site-utility-lang-flag { display: inline; font-size: 15px; }
   }
   @media (max-width: 430px) {
     .site-utility-call-prefix { display: none; }

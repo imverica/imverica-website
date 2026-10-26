@@ -8,12 +8,12 @@
  * organization schema (they'd drift). Page-specific Service / FAQPage
  * schemas still go through the BaseLayout `jsonLd` prop.
  *
- * Type stays `LegalService` (established on the site since launch) with an
- * explicit not-a-law-firm disambiguation — never use `Attorney`.
+ * `Organization` keeps the entity unambiguous without implying that Imverica
+ * is a law firm or publishing a physical address. Never use `Attorney`.
  */
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Organization',
   '@id': 'https://imverica.com/#organization',
   name: 'Imverica Legal Solutions',
   legalName: 'Imverica LLC',
@@ -22,15 +22,8 @@ export const organizationSchema = {
   logo: 'https://imverica.com/logo-nav.png',
   telephone: '+1-916-399-3992',
   email: 'info@imverica.com',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Sacramento',
-    addressRegion: 'CA',
-    addressCountry: 'US'
-  },
   areaServed: [
-    { '@type': 'State', name: 'California' },
-    { '@type': 'Country', name: 'United States' }
+    { '@type': 'State', name: 'California' }
   ],
   knowsLanguage: ['en', 'ru', 'uk', 'es'],
   // LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC
@@ -46,8 +39,8 @@ export const organizationSchema = {
     'https://t.me/imverica'
   ],
   description:
-    'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant based in Sacramento. Remote document preparation across all U.S. states in English, Russian, Ukrainian, and Spanish: USCIS immigration forms (U4U re-parole, TPS, work permits, green cards, family petitions, citizenship) and California court documents (small claims, family law, eviction, probate, record cleanup).',
-  serviceType: [
+    'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant based in Sacramento. Imverica provides remote document preparation throughout California in English, Russian, Ukrainian, and Spanish. Imverica has more than 10 years of immigration-document preparation experience, including prior paralegal work under the direction of California-licensed attorneys. Documents are prepared only at the client\'s specific direction; Imverica does not provide legal advice.',
+  knowsAbout: [
     'USCIS immigration form preparation',
     'U4U Uniting for Ukraine re-parole document preparation',
     'TPS document preparation',
@@ -65,6 +58,17 @@ export const organizationSchema = {
   ],
   disambiguatingDescription:
     "Imverica Legal Solutions is not a law firm and does not provide legal advice or court representation. Documents are prepared at the client's direction."
+};
+
+/** Stable site-name entity linked to the canonical organization. */
+export const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': 'https://imverica.com/#website',
+  url: 'https://imverica.com/',
+  name: 'Imverica Legal Solutions',
+  alternateName: 'Imverica',
+  publisher: { '@id': 'https://imverica.com/#organization' }
 };
 
 export interface FaqItem {

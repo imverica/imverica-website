@@ -4,11 +4,10 @@ import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
-import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'es' as const;
-const title = 'EOIR — corte de inmigración: apoyo paralegal para abogados | Imverica';
-const description = 'Las cortes de inmigración y la Junta de Apelaciones de Inmigración (BIA) deciden los casos de deportación (removal). Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle allí. En casos de EOIR trabajamos solo como paralegal bajo la dirección de un abogado.';
+const title = 'EOIR — corte de inmigración: apoyo paralegal para profesionales jurídicos | Imverica';
+const description = 'Las cortes de inmigración y la Junta de Apelaciones de Inmigración (BIA) deciden los casos de deportación (removal). En asuntos EOIR, Imverica brinda apoyo paralegal únicamente bajo la dirección de un profesional con licencia para ejercer el derecho en California. No ofrece asesoría legal ni representación.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -23,16 +22,16 @@ const schema = {
   <Hero
     lang={lang}
     eyebrow="EOIR · Corte de Inmigración · 8 C.F.R. §1003"
-    heading="EOIR — corte de inmigración: apoyo paralegal para abogados"
-    sub="Las cortes de inmigración y la Junta de Apelaciones de Inmigración (BIA) deciden los casos de deportación (removal). Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle allí. En casos de EOIR trabajamos solo como paralegal bajo la dirección de un abogado."
-    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para abogados: apoyo paralegal' }}
+    heading="EOIR — corte de inmigración: apoyo paralegal para profesionales jurídicos"
+    sub="Las cortes de inmigración y la Junta de Apelaciones de Inmigración (BIA) deciden los casos de deportación (removal). Solo una persona autorizada conforme a 8 C.F.R. Part 1292 puede asesorar o representar ante EOIR. Trabajamos únicamente como apoyo paralegal bajo la dirección de un profesional con licencia para ejercer el derecho en California."
+    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para profesionales jurídicos: apoyo paralegal' }}
     ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Ayuda legal gratuita' }}
   />
 
   <CategoryTiles
-    kicker="Para abogados"
-    heading="Dónde apoyamos a abogados en casos de EOIR"
-    intro="Solo bajo la dirección del abogado. Toque una tarjeta para leer sobre cada escrito."
+    kicker="Para profesionales jurídicos"
+    heading="Dónde apoyamos a profesionales con licencia en casos de EOIR"
+    intro="Solo bajo la dirección del profesional responsable del caso. Toque una tarjeta para leer sobre cada escrito."
     tiles={[
       { icon: '⚖️', title: 'EOIR-42A — Cancelación (LPR)',     desc: 'Solicitud de cancelación de remoción para ciertos residentes permanentes.',          href: '/mx/eoir-42a-cancellation-lpr', color: 'var(--terracotta-deep)' },
       { icon: '⚖️', title: 'EOIR-42B — Cancelación (no-LPR)',  desc: 'Solicitud de cancelación de remoción y ajuste para ciertos no-residentes.',           href: '/mx/eoir-42b-cancellation-non-lpr', color: 'var(--navy)' },
@@ -56,8 +55,8 @@ const schema = {
       solicitudes de alivio, evidencia de apoyo y mociones — entregadas a la corte.
     </p>
 
-    <h2>Para abogados: lo que preparamos bajo su dirección</h2>
-    <p>Solo bajo la dirección del abogado del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
+    <h2>Para profesionales jurídicos: lo que preparamos bajo su dirección</h2>
+    <p>Solo bajo la dirección del profesional con licencia responsable del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
     <ul>
       <li><strong>Solicitudes de alivio</strong> como EOIR-42A y EOIR-42B (cancelación de remoción) y el Formulario I-589 (asilo/withholding), integradas con la evidencia de apoyo requerida.</li>
       <li><strong>Mociones</strong> para reabrir o reconsiderar ante el juez de inmigración o la BIA, con el historial procesal y los anexos organizados.</li>
@@ -66,15 +65,27 @@ const schema = {
       <li><strong>Traducciones certificadas</strong> de evidencia en idioma extranjero.</li>
     </ul>
 
-    <EoirNotice lang="es" />
+    <h2>Alcance limitado del servicio</h2>
+    <p>
+      Comparecer ante la corte de inmigración, presentar el aviso de
+      comparecencia EOIR-28, recomendar qué forma de alivio solicitar o
+      argumentar el caso son tareas de representación legal. Un Legal Document
+      Assistant registrado <em>no puede</em> representar a un cliente ante
+      EOIR. Para asuntos EOIR, Imverica trabaja únicamente como apoyo paralegal
+      bajo las instrucciones específicas de un profesional con licencia para
+      ejercer el derecho en California. Esa persona elige la estrategia,
+      revisa, firma y presenta cada documento. Imverica no brinda asesoría
+      legal, no representa a particulares y no garantiza resultados. La
+      representación debe cumplir 8 C.F.R. Part 1292.
+    </p>
 
     <cite>
       <strong>Fuente:</strong> 8 C.F.R. Part 1003 (organización y procedimiento
       del EOIR); INA §240 (procedimientos de remoción); 8 C.F.R. §1003.23
       (mociones ante el juez de inmigración) y §1003.2 (mociones ante la BIA);
-      8 C.F.R. Part 1292 (representación y representantes acreditados). Solo apoyo paralegal para abogados: no es asesoría legal ni representación.
+      8 C.F.R. Part 1292 (representación y representantes acreditados). Solo apoyo paralegal bajo la dirección de profesionales con licencia: no es asesoría legal ni representación.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="es" heading="¿Es abogado y lleva un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Para abogados: apoyo paralegal" />
+  <CTAStrip lang="es" heading="¿Representa un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Apoyo paralegal para profesionales jurídicos" />
 </BaseLayout>

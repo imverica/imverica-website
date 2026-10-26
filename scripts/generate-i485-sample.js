@@ -12,14 +12,14 @@ const SOURCE_PDF = path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf');
 const OUTPUT_DIR = path.join(ROOT, 'generated-samples');
 const OUTPUT_PDF = path.join(OUTPUT_DIR, 'sample-i-485-test.pdf');
 
-// Maria Kovalchuk — U-1 nonimmigrant adjusting status under INA 245(m)
+// Alex Example — U-1 nonimmigrant adjusting status under INA 245(m)
 function samplePayload() {
   return {
     formAnswers: {
       // Part 1 — Identity
-      applicant_family_name: 'Kovalchuk',
-      applicant_given_name: 'Maria',
-      applicant_middle_name: 'Oleksandrivna',
+      applicant_family_name: 'Example',
+      applicant_given_name: 'Alex',
+      applicant_middle_name: '',
       date_of_birth: '1985-03-15',
       other_dob_used: 'No',
       sex: 'Female',
@@ -63,18 +63,18 @@ function samplePayload() {
       ssn_ssa_consent: 'Yes',
 
       // Part 1 — Current address (same for 5+ years)
-      mailing_address_line1: '8305 Deer Spring Circle',
-      mailing_address_line2: 'Apt 14',
-      mailing_city: 'Sacramento',
+      mailing_address_line1: '100 Example Street',
+      mailing_address_line2: '',
+      mailing_city: 'Example City',
       mailing_state: 'CA',
-      mailing_zip: '95843',
+      mailing_zip: '00000',
       same_address_five_years: 'No',
 
       // Part 1 — Prior address (before current address)
-      prior_address_line1: '412 Oak Street',
-      prior_city: 'New York',
-      prior_state: 'NY',
-      prior_zip: '10001',
+      prior_address_line1: '100 Example Street',
+      prior_city: 'Example City',
+      prior_state: 'CA',
+      prior_zip: '00000',
       prior_country: 'United States',
       prior_date_from: '2021-05-01',
       prior_date_to: '2022-08-01',
@@ -84,8 +84,8 @@ function samplePayload() {
       petition_previously_filed: 'Yes',
       petition_receipt_number: 'IOE2100123456',
       petition_date: '2021-01-15',
-      petitioner_family_name: 'Kovalchuk',
-      petitioner_given_name: 'Maria',
+      petitioner_family_name: 'Example',
+      petitioner_given_name: 'Alex',
       concurrent_filing: 'No',
 
       // Part 4 — Employment
@@ -94,14 +94,14 @@ function samplePayload() {
       employer_name: 'Sacramento Community Services Inc.',
 
       // Part 5 — Parents
-      father_family_name: 'Kovalchuk',
-      father_given_name: 'Mykola',
-      father_middle_name: 'Ivanovych',
+      father_family_name: 'Example',
+      father_given_name: 'Alex',
+      father_middle_name: '',
       father_dob: '1958-07-22',
       father_city_of_birth: 'Lviv',
-      mother_family_name: 'Kovalchuk',
-      mother_given_name: 'Oksana',
-      mother_middle_name: 'Mykhailivna',
+      mother_family_name: 'Example',
+      mother_given_name: 'Alex',
+      mother_middle_name: '',
       mother_dob: '1961-11-04',
       mother_city_of_birth: 'Lviv',
 
@@ -121,14 +121,14 @@ function samplePayload() {
       hair_color: 'Brown',
 
       // Contact
-      daytime_phone: { areaCode: '916', number: '5551234' },
-      mobile_phone: { areaCode: '916', number: '5551234' },
-      email_address: 'maria.kovalchuk@example.com'
+      daytime_phone: { areaCode: '555', number: '0100200' },
+      mobile_phone: { areaCode: '555', number: '0100200' },
+      email_address: 'applicant@example.com'
     },
     contact: {
-      name: 'Maria Kovalchuk',
-      phone: '9165551234',
-      email: 'maria.kovalchuk@example.com'
+      name: 'Alex Example',
+      phone: '(555) 010-0200',
+      email: 'applicant@example.com'
     }
   };
 }

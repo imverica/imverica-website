@@ -9,14 +9,15 @@ import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
 const title = '¿Qué es un California Legal Document Assistant (LDA)? | Imverica';
-const description = 'Un LDA es un profesional registrado y afianzado de California, no abogado, autorizado para preparar documentos legales bajo la dirección del cliente. Más económico que un abogado. Cal. Bus. & Prof. Code §§6400-6415.';
+const description = 'Un LDA es una persona registrada y afianzada en California que puede preparar documentos bajo la dirección específica de un cliente autorrepresentado. No brinda asesoría legal ni representación. Cal. Bus. & Prof. Code §§6400-6415.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California Legal Document Assistant Services',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
-  description: 'Servicios de California Legal Document Assistant — preparación de documentos sin abogados bajo Cal. Bus. & Prof. Code §§6400-6415.'
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
+  description: 'Servicios de California Legal Document Assistant — preparación de documentos bajo la dirección específica del cliente conforme al Cal. Bus. & Prof. Code §§6400-6415; sin asesoría legal ni representación.'
 };
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/lda"
@@ -25,7 +26,7 @@ const schema = {
     lang={lang}
     eyebrow="California Bus. & Prof. Code §§6400-6415"
     heading="¿Qué es un California Legal Document Assistant (LDA)?"
-    sub="En lenguaje sencillo: cuándo conviene un LDA, cuándo necesita un abogado, cuánto cuesta y qué protecciones al consumidor diseñó California en torno al registro de LDA."
+    sub="En lenguaje sencillo: qué puede hacer un LDA, cuándo buscar asesoría legal y qué protecciones al consumidor acompañan el registro de LDA en California."
     ctaPrimary={{ href: '/#get-started', text: 'Empezar con Imverica' }}
   />
 
@@ -51,13 +52,11 @@ const schema = {
     { href: '/mx/california-unlawful-detainer', label: 'California unlawful detainer (desalojo)' }
   ]}>
     <p class="lead">
-      Un California Legal Document Assistant — o LDA — es un profesional
-      registrado, afianzado (con fianza de $25,000), no abogado,
-      autorizado para preparar documentos legales bajo la dirección de
-      una parte que se representa a sí misma. El esquema LDA fue creado
-      por la legislatura de California en 1998 para dar al público acceso
-      a preparación de documentos de calidad a un precio razonable, sin
-      cruzar la línea de la práctica no autorizada del derecho.
+      Un California Legal Document Assistant — o LDA — es una persona
+      registrada y afianzada que puede preparar documentos bajo la dirección
+      específica de una parte que se representa a sí misma. Un LDA no está
+      autorizado para ejercer el derecho y no puede brindar asesoría legal ni
+      representación.
     </p>
 
     <h2>Lo que un LDA puede hacer</h2>
@@ -67,7 +66,7 @@ const schema = {
     </p>
     <ul>
       <li>Mecanografiar o ensamblar documentos legales que el cliente ya decidió presentar</li>
-      <li>Proveer formularios legales pre-impresos preparados por abogados</li>
+      <li>Proveer formularios legales preimpresos preparados por personas autorizadas para ejercer el derecho</li>
       <li>Proveer publicaciones de información legal de fuentes estatales</li>
       <li>Presentar documentos en el tribunal por el cliente</li>
       <li>Traducir documentos (con certification de traductor bajo 8 C.F.R. §103.2(b)(3) para presentaciones ante USCIS)</li>
@@ -84,7 +83,7 @@ const schema = {
       <li>Seleccionar formularios por el cliente (el cliente debe decidir qué presentar)</li>
       <li>Elegir un curso de acción o estrategia legal</li>
       <li>Representar al cliente en tribunal o ante cualquier agencia</li>
-      <li>Hacerse pasar por abogado</li>
+      <li>Presentarse como una persona autorizada para ejercer el derecho</li>
     </ul>
     <p>
       Cruzar la línea del §6411 se trata como práctica no autorizada del
@@ -98,8 +97,8 @@ const schema = {
       <li><strong>Registrarse en el county clerk.</strong> En cada condado donde el LDA opera. Registro público consultable por cualquiera.</li>
       <li><strong>Constituir fianza de $25,000.</strong> Según §6405. Protege a los clientes en caso de mala conducta del LDA.</li>
       <li><strong>Cumplir requisitos de educación o experiencia.</strong> Según §6402.1. Dos años de experiencia legal, certificado de paralegal, J.D. u otras vías calificadas.</li>
-      <li><strong>Proveer contrato escrito.</strong> Según §6410. Indica servicios, precio fijo, número de registro del LDA, y la nota §6411 de que el LDA no es abogado.</li>
-      <li><strong>Mostrar avisos obligatorios.</strong> Según §6408. Letrero en oficina: «I am NOT an attorney».</li>
+      <li><strong>Proveer contrato escrito.</strong> Según §6410. Indica los servicios, el precio y las divulgaciones requeridas.</li>
+      <li><strong>Mostrar avisos obligatorios.</strong> Según §§6408 y 6408.5, deben aparecer los datos de registro y el aviso exigido sobre los límites del servicio.</li>
       <li><strong>Renovar el registro cada dos años.</strong></li>
     </ul>
 
@@ -113,9 +112,12 @@ const schema = {
       documentos de respaldo y traducir presentaciones — pero, como un
       LDA, no puede dar asesoría legal, seleccionar formularios por el
       cliente, ni representar al cliente ante USCIS o la corte de
-      inmigración. Para representar a un cliente ante USCIS hay que
-      ser abogado licenciado en cualquier estado de EE. UU. o
-      representative acreditado por el DOJ (8 C.F.R. §1292.1). Los asuntos de la corte de inmigración (EOIR) requieren un abogado o un representante acreditado por el DOJ; en ellos trabajamos solo como paralegal bajo la dirección de un abogado.
+      inmigración. La representación ante USCIS requiere una persona autorizada
+      por la normativa federal o un representante acreditado por el DOJ
+      (8 C.F.R. §§1.2, 292.1). Los asuntos de la corte de inmigración
+      (EOIR) requieren una persona autorizada por la normativa federal o un
+      representante acreditado por el DOJ; Imverica presta apoyo paralegal
+      en esos asuntos únicamente bajo la dirección de una firma jurídica.
     </p>
     <p>
       Imverica Legal Solutions está registrada como California Legal
@@ -127,17 +129,17 @@ const schema = {
           Nuestro registro: LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC; fianza de consultor de inmigración n.º 67347671 (Western Surety Company).
     </p>
 
-    <h2>LDA o abogado — ¿cuál necesita?</h2>
+    <h2>Cuándo conviene un LDA y cuándo buscar asesoría legal</h2>
     <p>
       <strong>Use un LDA</strong> cuando sabe qué quiere presentar y
       necesita alguien que prepare los documentos con precisión —
       divorcio no contencioso, reclamos menores, formularios USCIS con
       ruta clara, sucesiones, órdenes de restricción, registros
-      empresariales, desalojos. Precio fijo, generalmente 60–90% más
-      económico que un abogado para el mismo trabajo de documentos.
+      empresariales o desalojos. El precio de la preparación se informa antes
+      de comenzar el trabajo.
     </p>
     <p>
-      <strong>Contrate un abogado</strong> cuando el caso es contencioso
+      <strong>Busque asesoría legal</strong> cuando el caso es contencioso
       o requiere estrategia — disputas de custodia con alto conflicto,
       caracterización compleja de bienes comunes, exposición penal
       vinculada a la presentación migratoria, removal proceedings,
@@ -149,14 +151,13 @@ const schema = {
     <h2>Cómo encaja Imverica</h2>
     <p>
       Imverica Legal Solutions es un California LDA registrado e
-      Immigration Consultant. Atendemos clientes en toda California y de
-      forma remota en todo el mundo (para piezas de USCIS / federales).
+      Immigration Consultant. Atendemos clientes de forma remota en todo
+      California.
       Entrevista en cuatro idiomas (inglés, ruso, ucraniano, español),
       contrato escrito §6410 antes de iniciar, precio fijo informado por
-      adelantado, y la nota estándar §6411 de que no somos un bufete y
-      no brindamos asesoría legal. Mantenemos relaciones de referido
-      con abogados con licencia en California para asuntos que requieran
-      asesoría legal.
+      adelantado, y el aviso exigido por §6408.5 sobre los límites del servicio.
+      No brindamos asesoría legal ni representación; para esas necesidades,
+      consulte a una persona debidamente autorizada.
     </p>
 
     <cite>

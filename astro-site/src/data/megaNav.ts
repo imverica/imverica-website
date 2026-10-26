@@ -285,7 +285,7 @@ export const MEGA_I18N: Record<string, MegaTr> = {
   'Explore Immigration': x('Иммиграция', 'Імміграція', 'Inmigración'),
   'Humanitarian': x('Гуманитарные программы', 'Гуманітарні програми', 'Programas humanitarios'),
   'More USCIS Forms': x('Другие формы USCIS', 'Інші форми USCIS', 'Más formularios de USCIS'),
-  'Immigration Court · for attorneys': f('иммиграционный суд, только для адвокатов', 'імміграційний суд, лише для адвокатів', 'corte de inmigración, solo para abogados'),
+  'Immigration Court · for attorneys': f('иммиграционный суд, только для адвокатов', 'імміграційний суд, лише для адвокатів', 'corte de inmigración, solo para firmas jurídicas'),
   'Explore Family Law': x('Семейное право', 'Сімейне право', 'Derecho familiar'),
   'Disclosures & Filings': x('Раскрытие сведений и подача', 'Розкриття відомостей і подання', 'Declaraciones y presentaciones'),
   'Good to Know': x('Полезно знать', 'Корисно знати', 'Información útil'),
@@ -297,7 +297,7 @@ export const MEGA_I18N: Record<string, MegaTr> = {
   'Explore Business': x('Бизнес', 'Бізнес', 'Negocios'),
   'Stay Compliant': x('Отчётность и соответствие', 'Звітність і відповідність', 'Cumplimiento'),
   'Pricing': x('Цены', 'Ціни', 'Precios'),
-  'For Attorneys': x('Для адвокатов', 'Для адвокатів', 'Para abogados'),
+  'For Attorneys': x('Для адвокатов', 'Для адвокатів', 'Para profesionales jurídicos'),
   'Practice Areas': x('Направления', 'Напрями', 'Áreas de práctica'),
   'About Imverica': x('Об Imverica', 'Про Imverica', 'Sobre Imverica'),
   'Contact': x('Контакты', 'Контакти', 'Contacto'),
@@ -404,7 +404,8 @@ export const MEGA_I18N: Record<string, MegaTr> = {
  * unknown labels pass through.
  */
 export function megaLabel(label: string, lang: Locale): { main: string; note: string } {
-  const tr = lang === 'en' ? undefined : MEGA_I18N[label];
+  if (lang === 'en') return { main: label, note: '' };
+  const tr = MEGA_I18N[label];
   if (!tr) return { main: label, note: '' };
   if (tr.kind === 'form') return { main: label, note: `(${tr[lang]})` };
   // "TPS (временный защищённый статус)": an English program name with its

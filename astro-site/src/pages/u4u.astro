@@ -8,14 +8,14 @@ import CTAStrip from '~/components/CTAStrip.astro';
 import { faqSchema, type FaqItem } from '~/data/orgSchema';
 
 const title = 'U4U re-parole & Uniting for Ukraine document preparation | Imverica Legal Solutions';
-const description = 'Ukrainian-speaking help with U4U re-parole applications and the full Uniting for Ukraine package — I-765 (c)(11) work permit, I-131 advance parole, TPS re-registration, I-485 when eligible. Remote across all U.S. states. California Registered LDA — not a law firm.';
+const description = 'Ukrainian-speaking document preparation for U4U re-parole and related forms at the client\'s direction. Remote throughout California. California Registered LDA — not a law firm; no legal advice.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'U4U Uniting for Ukraine re-parole document preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
   availableLanguage: ['en', 'ru', 'uk'],
   description: 'Document preparation for Ukrainian humanitarian parolees under the Uniting for Ukraine program — re-parole requests, work permits, travel documents — at the client direction.'
 };
@@ -23,19 +23,19 @@ const schema = {
 const faq: FaqItem[] = [
   {
     q: 'Can Imverica prepare my U4U re-parole application?',
-    a: 'Yes. We prepare complete U4U re-parole request packages — the application, current parole and identity documents, and supporting evidence — at your direction, and review everything before you file. Intake works in Ukrainian, Russian, and English, fully remote in any U.S. state.'
+    a: 'Yes. We prepare U4U re-parole request packages at your specific direction for California clients. Intake is available in Ukrainian, Russian, and English and works remotely throughout California.'
   },
   {
-    q: 'Is the work permit free for U4U parolees?',
-    a: 'USCIS currently waives the I-765 filing fee for U4U parolees applying under the (c)(11) category, so the work-permit application itself costs nothing in government fees. Our flat preparation fee is listed at imverica.com/pricing.'
+    q: 'What government fee applies to a U4U work-permit filing?',
+    a: 'USCIS fees depend on whether the filing is initial or a renewal and can change. Check the current Form G-1055 fee schedule and the current I-765 instructions immediately before filing; Imverica does not quote a fixed government fee on this page.'
   },
   {
-    q: 'Do you work with Ukrainians outside California?',
-    a: 'Yes. USCIS forms are federal, so we serve U4U parolees remotely in every U.S. state — intake, document upload, review, and delivery all happen online, in Ukrainian, Russian, or English.'
+    q: 'Where is the service available?',
+    a: 'Imverica serves U4U clients remotely throughout California. Intake, document upload, review, and delivery are available online in Ukrainian, Russian, or English.'
   },
   {
     q: 'Are you attorneys?',
-    a: 'No. Imverica Legal Solutions is a California-registered and bonded Legal Document Assistant and Immigration Consultant — not a law firm. We prepare documents at your direction and do not give legal advice. If your case needs legal strategy (prior denials, removal proceedings, criminal history), we refer you to a licensed immigration attorney.'
+    a: 'No. Imverica Legal Solutions is a California-registered and bonded Legal Document Assistant and Immigration Consultant — not a law firm. We prepare documents at your specific direction and do not give legal advice. Consult a licensed attorney if you need legal strategy or representation.'
   },
   {
     q: 'What if I already filled out the forms myself?',
@@ -48,7 +48,7 @@ const faq: FaqItem[] = [
   <Hero
     eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
     heading="U4U re-parole & Uniting for Ukraine documents"
-    sub="If you arrived under Uniting for Ukraine, we prepare your re-parole application, work permit, travel documents, and TPS re-registration — accurately, at your direction. Fixed fee, remote in all U.S. states, Ukrainian-, Russian- and English-speaking intake."
+    sub="We prepare U4U re-parole and related documents at your specific direction. Fixed fee, remote throughout California, with Ukrainian-, Russian-, and English-speaking intake. No legal advice."
     ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Start my U4U package' }}
   />
 
@@ -57,7 +57,7 @@ const faq: FaqItem[] = [
     heading="What U4U involves"
     intro="The U4U package usually combines several USCIS filings. Tap any tile to see details."
     tiles={[
-      { icon: '💼', title: 'I-765 (c)(11) — Work permit', desc: 'Employment Authorization Document under the parolee category. Free for U4U parolees.',  href: '/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '💼', title: 'I-765 (c)(11) — Work permit', desc: 'Employment Authorization Document under the parolee category. Current USCIS fees apply.',  href: '/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
       { icon: '🛡️', title: 'TPS — Temporary Protected Status', desc: 'Ukraine TPS re-registration; secondary protection on top of parole.',                   href: '/tps',                    color: 'var(--navy)' },
       { icon: '🛂', title: 'I-131 — Advance parole',       desc: 'Travel document so you can re-enter the U.S. after international travel.',                     href: '/#get-started?form=I-131', color: 'var(--sage)' },
       { icon: '🟢', title: 'I-485 — Adjustment of Status',  desc: 'If you become eligible (asylum approved, marriage to USC, etc.) — green-card package.',         href: '/i-485-help',              color: 'var(--gold)' },
@@ -91,7 +91,7 @@ const faq: FaqItem[] = [
 
     <h2>What we prepare for U4U parolees</h2>
     <ul>
-      <li><strong>I-765 with (c)(11) category</strong> — work permit (EAD). For U4U parolees, USCIS waives the filing fee and the biometrics fee.</li>
+      <li><strong>I-765 with (c)(11) category</strong> — work permit (EAD), when the client directs this filing. Check the current <a href="https://www.uscis.gov/g-1055" target="_blank" rel="noopener noreferrer">USCIS Form G-1055 fee schedule</a> and I-765 instructions immediately before filing.</li>
       <li><strong>Re-registration for Ukraine TPS</strong> — when DHS extends the Ukraine designation, we prepare the I-821 + I-765 re-registration packet.</li>
       <li><strong>I-131 advance parole</strong> — travel document so you can leave the U.S. and return without losing your parole status.</li>
       <li><strong>Re-parole requests</strong> — when the initial 2-year parole nears expiration, we prepare the supporting documentation for re-parole consideration.</li>
@@ -106,8 +106,8 @@ const faq: FaqItem[] = [
       parole, applying for TPS, applying for asylum, and adjusting status
       are <em>separate decisions</em> with their own forms and deadlines. We
       can prepare the documents for whichever path you decide to file. We do
-      not give legal advice on which strategy is best — for that we maintain
-      referrals to licensed California immigration attorneys.
+      not give legal advice on which strategy is best. Consult a licensed
+      immigration attorney if you need legal advice or representation.
     </p>
 
     <cite>

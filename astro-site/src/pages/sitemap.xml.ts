@@ -14,6 +14,8 @@ interface SitemapEntry {
   slug: string;
   priority: number;
   changefreq: string;
+  /** Last substantial content change. Omit when the date is unknown. */
+  lastmod?: string;
   /** Kept for reference only: the languages listed in the sitemap are the
    *  ones whose page file actually exists (see pageExists below), so this
    *  list can no longer drift from the site. */
@@ -29,18 +31,18 @@ const URLS: SitemapEntry[] = [
   // pages RU/UA leads land on, and they were invisible to crawlers).
   { slug: '/u4u', priority: 0.95, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/tps', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/about-imverica-legal-solutions', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/about-imverica-legal-solutions', priority: 0.9, changefreq: 'monthly', lastmod: '2026-10-18', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/uscis-document-review', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/immigration', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/pricing', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },
-  { slug: '/about', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/about', priority: 0.7, changefreq: 'monthly', lastmod: '2026-10-18', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/testimonials', priority: 0.7, changefreq: 'weekly', translatedLocales: [] },
   { slug: '/business', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/criminal', priority: 0.75, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/california-name-change', priority: 0.7, changefreq: 'monthly', translatedLocales: [] },
   { slug: '/for-attorneys', priority: 0.6, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/schedule', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/i-485-help', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/i-485-help', priority: 0.9, changefreq: 'monthly', lastmod: '2026-10-18', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/i-589-asylum-help', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/n-400-citizenship-help', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/california-unlawful-detainer', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
@@ -112,17 +114,22 @@ function localesFor(entry: SitemapEntry): Loc[] {
   return all.filter((l) => pageExists(localizedPath(l, entry.slug)));
 }
 
-function urlBlock(entry: SitemapEntry, lastmod: string, locale: Loc, locales: Loc[]): string {
-  const loc = SITE + localizedPath(locale, entry.slug);
+function absoluteUrl(href: string): string {
+  if (href === '/') return SITE + '/';
+  if (/\.[a-z0-9]+$/i.test(href)) return SITE + href;
+  return SITE + (href.endsWith('/') ? href : href + '/');
+}
+
+function urlBlock(entry: SitemapEntry, locale: Loc, locales: Loc[]): string {
+  const loc = absoluteUrl(localizedPath(locale, entry.slug));
   // hreflang alternates: every language this page really exists in
   const alternates = locales
-    .map((alt) => `    <xhtml:link rel="alternate" hreflang="${LOCALES[alt].htmlLang}" href="${SITE + localizedPath(alt, entry.slug)}"/>`)
+    .map((alt) => `    <xhtml:link rel="alternate" hreflang="${LOCALES[alt].htmlLang}" href="${absoluteUrl(localizedPath(alt, entry.slug))}"/>`)
     .join('\n');
-  const xDefault = SITE + localizedPath(locales.includes('en') ? 'en' : locales[0], entry.slug);
+  const xDefault = absoluteUrl(localizedPath(locales.includes('en') ? 'en' : locales[0], entry.slug));
   return `  <url>
     <loc>${loc}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>${entry.changefreq}</changefreq>
+${entry.lastmod ? `    <lastmod>${entry.lastmod}</lastmod>\n` : ''}    <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority.toFixed(1)}</priority>
 ${alternates}
     <xhtml:link rel="alternate" hreflang="x-default" href="${xDefault}"/>
@@ -130,12 +137,11 @@ ${alternates}
 }
 
 export const GET: APIRoute = () => {
-  const lastmod = new Date().toISOString().slice(0, 10);
   const blocks: string[] = [];
   for (const entry of URLS) {
     // One <url> per language the page exists in, each listing the others
     const locales = localesFor(entry);
-    for (const locale of locales) blocks.push(urlBlock(entry, lastmod, locale, locales));
+    for (const locale of locales) blocks.push(urlBlock(entry, locale, locales));
   }
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

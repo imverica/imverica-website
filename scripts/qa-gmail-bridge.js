@@ -23,7 +23,7 @@ delete process.env.RESEND_API_KEY;        // skip outbound owner email
 delete process.env.RESEND_WEBHOOK_SECRET;  // use shared-secret inbound auth
 
 const HOST = 'imverica.com'; // non-localhost → real key paths, not dev fallback
-const EMAIL = 'client@example.com';
+const EMAIL = 'applicant@example.com';
 const CLIENT_MSG = 'Hello, I have a question about my I-130.';
 const OWNER_REPLY = 'Hi! Yes, we received it — sending the next steps now.';
 
@@ -69,7 +69,7 @@ async function run() {
       to: [`reply+${tok}@estutkal.resend.app`],
       from: 'imverica@gmail.com',
       subject: 'Re: New portal message',
-      text: OWNER_REPLY + '\n\nOn Mon, Jun 2, 2026 at 9:00 AM Imverica <messages@imverica.com> wrote:\n> ' + CLIENT_MSG
+      text: OWNER_REPLY + '\n\nOn Mon, Jun 2, 2026 at 9:00 AM Imverica <applicant@example.com> wrote:\n> ' + CLIENT_MSG
     }
   };
   const inb = await inbound.handler({

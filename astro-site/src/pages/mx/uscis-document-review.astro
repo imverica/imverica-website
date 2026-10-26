@@ -9,7 +9,7 @@ import { faqSchema, type FaqItem } from '~/data/orgSchema';
 const lang = 'es' as const;
 const title = 'Revisión de documentos USCIS antes de presentar | Imverica';
 const description =
-  '¿Preparó sus formularios de USCIS por su cuenta? Revisamos el paquete antes de presentarlo: respuestas completas, consistencia entre formularios, ediciones vigentes, firmas y lista de evidencias. Remoto en todo EE. UU., en español.';
+  '¿Preparó sus formularios de USCIS por su cuenta? Revisamos el paquete antes de presentarlo: respuestas completas, consistencia entre formularios, ediciones vigentes, firmas y lista de evidencias. Servicio remoto en todo California, en español.';
 
 const faqs: FaqItem[] = [
   {
@@ -18,7 +18,7 @@ const faqs: FaqItem[] = [
   },
   {
     q: '¿Es lo mismo que asesoría legal?',
-    a: 'No. La revisión es técnica, no legal: integridad, consistencia y formato según los requisitos de USCIS. No evaluamos su elegibilidad, no predecimos resultados ni elegimos estrategia — para eso referimos a abogados de inmigración con licencia.'
+    a: 'No. La revisión es técnica, no legal: integridad, consistencia y formato según los requisitos de USCIS. No evaluamos su elegibilidad, no predecimos resultados ni elegimos estrategia — para eso referimos a profesionales jurídicos de inmigración con licencia.'
   },
   {
     q: '¿Qué solicitudes revisan?',
@@ -43,7 +43,7 @@ const serviceSchema = {
   '@type': 'Service',
   serviceType: 'USCIS Document Review (Spanish-speaking)',
   provider: { '@id': 'https://imverica.com/#organization' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  areaServed: { '@type': 'State', name: 'California' },
   availableLanguage: ['es', 'en', 'ru', 'uk'],
   description: 'Revisión de paquetes USCIS preparados por el propio solicitante antes de presentarlos: integridad, consistencia, ediciones vigentes, firmas y lista de evidencias. Solo revisión de documentos — no asesoría legal.'
 };
@@ -111,10 +111,10 @@ const serviceSchema = {
 
     <cite>
       Imverica Legal Solutions es un Legal Document Assistant e Immigration
-      Consultant registrado en California; no es un bufete de abogados. La
+      Consultant registrado en California; no es una firma jurídica. La
       revisión de documentos verifica integridad y consistencia; no es
       asesoría legal, evaluación de elegibilidad ni predicción del resultado.
-      Si su caso necesita estrategia legal, consulte a un abogado de
+      Si su caso necesita estrategia legal, consulte a un profesional jurídico de
       inmigración con licencia.
     </cite>
   </LandingBody>

@@ -7,13 +7,14 @@ import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
 const title = 'U4U — preparación de documentos Uniting for Ukraine | Imverica';
-const description = 'California Registered LDA prepara paquetes Uniting for Ukraine (U4U) — parole humanitario, I-765 (c)(11) permiso de trabajo, I-131 advance parole, re-registro de TPS, I-485 cuando aplica.';
+const description = 'Un LDA registrado de California prepara documentos U4U y formularios relacionados bajo la dirección específica del cliente. Servicio remoto en todo California; sin asesoría legal.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'U4U Uniting for Ukraine Document Preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
   description: 'Preparación de documentos para parolees ucranianos bajo el programa Uniting for Ukraine bajo la dirección del cliente.'
 };
 ---
@@ -23,7 +24,7 @@ const schema = {
     lang={lang}
     eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
     heading="U4U — preparación de documentos Uniting for Ukraine"
-    sub="Si llegó bajo Uniting for Ukraine, tiene derecho a permiso de trabajo, documentos de viaje y re-registro de TPS. Preparamos cada presentación bajo su dirección — precio fijo, entrevista multilingüe (ucraniano, ruso, inglés)."
+    sub="Preparamos documentos U4U y formularios relacionados bajo su dirección específica para clientes de California. Precio fijo, entrevista en ucraniano, ruso, inglés o español; sin asesoría legal."
     ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Comenzar paquete U4U' }}
   />
 
@@ -32,7 +33,7 @@ const schema = {
     heading="Qué incluye U4U"
     intro="El paquete U4U usualmente combina varias presentaciones USCIS. Toque un tile para ver detalles."
     tiles={[
-      { icon: '💼', title: 'I-765 (c)(11) — Permiso de trabajo', desc: 'EAD bajo categoría parolee. Gratis para parolees U4U.',                            href: '/mx/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '💼', title: 'I-765 (c)(11) — Permiso de trabajo', desc: 'EAD bajo categoría parolee. Se aplican las tarifas vigentes de USCIS.',                            href: '/mx/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
       { icon: '🛡️', title: 'TPS — Estatus de Protección Temporal', desc: 'Re-registro de TPS Ucrania, protección adicional sobre el parole.',                href: '/mx/tps',                    color: 'var(--navy)' },
       { icon: '🛂', title: 'I-131 — Advance parole',              desc: 'Documento de viaje para salir y volver a EE. UU. sin perder su parole.',           href: '/#get-started?form=I-131',   color: 'var(--sage)' },
       { icon: '🟢', title: 'I-485 — Ajuste de estatus',           desc: 'Cuando califica (asilo, matrimonio con ciudadano, etc.) — paquete de green card.', href: '/mx/i-485-help',             color: 'var(--gold)' },
@@ -66,7 +67,7 @@ const schema = {
 
     <h2>Lo que preparamos para parolees U4U</h2>
     <ul>
-      <li><strong>I-765 categoría (c)(11)</strong> — permiso de trabajo (EAD). Para U4U, USCIS exime el costo de presentación y biometría.</li>
+      <li><strong>I-765 categoría (c)(11)</strong> — permiso de trabajo (EAD), cuando el cliente indica que se incluya. Revise el <a href="https://www.uscis.gov/g-1055" target="_blank" rel="noopener noreferrer">tarifario vigente USCIS Form G-1055</a> y las instrucciones del I-765 inmediatamente antes de presentar.</li>
       <li><strong>Re-registro Ucrania TPS</strong> — cuando DHS extiende la designation, preparamos el paquete I-821 + I-765 de re-registro.</li>
       <li><strong>I-131 advance parole</strong> — documento de viaje para salir y volver sin perder parole.</li>
       <li><strong>Solicitudes de re-parole</strong> — cuando el parole inicial de 2 años se acerca a expiración, preparamos la documentación de respaldo.</li>
@@ -81,8 +82,8 @@ const schema = {
       solo. Renovar el parole, solicitar TPS, solicitar asilo y ajustar
       estatus son <em>decisiones separadas</em> con sus propios formularios
       y plazos. Podemos preparar los documentos para la vía que decida. No
-      damos asesoría legal sobre la estrategia — para eso mantenemos
-      referrals con abogados de inmigración licenciados en California.
+      damos asesoría legal sobre la estrategia. Si necesita asesoría o
+      representación, consulte a una persona debidamente autorizada.
     </p>
 
     <cite>

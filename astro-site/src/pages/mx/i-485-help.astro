@@ -6,21 +6,15 @@ import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
 const title = 'I-485 Preparación de Documentos — Ajuste de Estatus | Imverica';
-const description = 'LDA registrado de California prepara el paquete I-485 — ajuste de estatus a residente permanente (green card). Información biográfica, historial de domicilios y empleo, evidencia, examen médico I-693, permiso de trabajo I-765, advance parole I-131. Precio fijo.';
+const description = 'Un LDA registrado de California prepara documentos del Formulario I-485 bajo la dirección del cliente. El cliente indica la base que ha decidido usar y proporciona las respuestas; Imverica no determina elegibilidad ni brinda asesoría legal.';
 
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'I-485 Adjustment of Status Document Preparation',
-  provider: {
-    '@type': 'LegalService',
-    name: 'Imverica Legal Solutions',
-    url: 'https://imverica.com',
-    telephone: '+1-916-399-3992',
-    areaServed: { '@type': 'Country', name: 'United States' },
-    disambiguatingDescription: 'Imverica no es un bufete de abogados. Solo preparación de documentos bajo la dirección del cliente.'
-  },
-  description: 'El Formulario I-485 es la solicitud para ajustar el estatus a residente permanente. Imverica prepara el paquete completo bajo la dirección del cliente.'
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
+  description: 'Imverica prepara el Formulario I-485 y organiza los materiales proporcionados por el cliente bajo su dirección. Los formularios relacionados se incluyen solo por indicación específica y cuando las instrucciones actuales de USCIS lo permiten.'
 };
 ---
 <BaseLayout
@@ -36,95 +30,109 @@ const serviceSchema = {
     lang={lang}
     eyebrow="USCIS · Ajuste de Estatus · INA §245(a)"
     heading="I-485 — Solicitud para Registrar Residencia Permanente o Ajuste de Estatus"
-    sub="Preparamos el paquete completo I-485 bajo su dirección — información biográfica, historial de domicilios y empleo de 5 años, evidencia, examen médico I-693, permiso de trabajo I-765, advance parole I-131. Precio fijo. Español, inglés, ruso, ucraniano."
+    sub="Preparamos el Formulario I-485 y organizamos los materiales que usted proporciona bajo su dirección. Según las instrucciones actuales de USCIS y sus indicaciones específicas, el paquete también puede incluir un Formulario I-693 sellado por un médico civil autorizado por USCIS y los Formularios I-765 o I-131. Precio fijo. Español, inglés, ruso, ucraniano."
     ctaPrimary={{ href: '/#get-started?form=I-485', text: 'Iniciar mi paquete I-485' }}
   />
 
   <LandingBody related={[
-    { href: '/i-765-work-permit-help', label: 'I-765 — permiso de trabajo' },
+    { href: '/mx/i-765-work-permit-help', label: 'I-765 — permiso de trabajo' },
     { href: '/mx/i-589-asylum-help', label: 'I-589 — asilo' },
     { href: '/mx/n-400-citizenship-help', label: 'N-400 — naturalización' }
   ]}>
     <p class="lead">
       El Formulario I-485 es la solicitud que presenta un extranjero que se
       encuentra físicamente en los Estados Unidos ante USCIS para ajustar su
-      estatus a residente permanente legal (green card). Imverica prepara el
-      paquete completo de I-485 bajo su dirección — datos biográficos, historial
-      de residencia y empleo, evidencia de respaldo, y los formularios
-      complementarios que la mayoría de los solicitantes de ajuste presentan
-      junto con la I-485.
+      estatus a residente permanente legal (green card). Imverica prepara
+      el Formulario I-485 y organiza los materiales de respaldo que usted
+      proporciona bajo su dirección. Los formularios complementarios se incluyen
+      únicamente cuando usted o una persona con licencia para ejercer el derecho indica
+      específicamente que se incluyan y las instrucciones actuales de USCIS
+      permiten presentarlos.
     </p>
 
-    <h2>Quién puede presentar la I-485</h2>
+    <h2>Información general sobre quién puede presentar la I-485</h2>
     <p>
-      El ajuste de estatus conforme a INA §245(a) está disponible para una
-      persona físicamente presente en los EE. UU., que fue inspeccionada y
-      admitida o paroled (o califica conforme a las rutas más estrechas de
-      §245(i) / §245(k) / asilado / refugiado / inmigrante especial), que es
-      beneficiaria de una petición de inmigrante aprobada o presentada
-      concurrentemente, que tiene una visa de inmigrante inmediatamente
-      disponible según el Visa Bulletin actual, y que es admisible a los
-      Estados Unidos o elegible para una exención de cualquier motivo de
-      inadmisibilidad.
+      Algunas personas físicamente presentes en Estados Unidos usan el
+      Formulario I-485 para solicitar la residencia permanente legal. La
+      posibilidad de presentarlo depende de las circunstancias del caso: la
+      base de presentación, la forma de entrada, la disponibilidad de una visa,
+      la admisibilidad, las prohibiciones y excepciones legales, y las leyes e
+      instrucciones actuales de USCIS.
     </p>
     <p>
-      Rutas comunes de ajuste que vemos: cónyuge, padre o hijo de ciudadano
-      estadounidense (basado en familia); basado en empleo EB-1 a EB-5;
-      asilado un año después de la concesión del asilo; refugiado un año
-      después de la admisión; auto-peticionario VAWA; ajuste por visa T o U;
-      seleccionado de visa de diversidad; y varias categorías humanitarias.
+      USCIS enumera bases posibles, incluidas categorías familiares, laborales,
+      de inmigrante especial, asilado o refugiado y otras categorías
+      humanitarias. Imverica no determina si usted puede presentar la solicitud,
+      no elige la base y no recomienda una estrategia jurídica. Revise la
+      página y las instrucciones actuales del Formulario I-485 de USCIS antes
+      de presentar. Si no sabe si puede presentar el formulario, consulte a
+      una persona con licencia para ejercer el derecho.
     </p>
 
-    <h2>Qué incluye normalmente el paquete I-485</h2>
+    <h2>Documentos que pueden incluirse en un paquete I-485</h2>
     <div class="form-list">
-      <strong>Formularios que preparamos para el paquete</strong>
+      <strong>Elementos que organizamos o preparamos bajo su dirección</strong>
       <ul>
         <li><strong>I-485</strong> — Application to Register Permanent Residence or Adjust Status (formulario principal)</li>
-        <li><strong>I-693</strong> — Reporte de Examen Médico (completado por un médico civil designado por USCIS; lo organizamos y enviamos con el paquete)</li>
-        <li><strong>I-765</strong> — Application for Employment Authorization, se presenta concurrentemente para obtener permiso de trabajo mientras la I-485 está pendiente</li>
-        <li><strong>I-131</strong> — Application for Travel Document, se presenta concurrentemente para obtener advance parole para viajar mientras la I-485 está pendiente</li>
-        <li><strong>I-864</strong> / <strong>I-864A</strong> / <strong>I-864EZ</strong> — Affidavit of Support, requerido para ajustes basados en familia y algunos basados en empleo</li>
-        <li><strong>I-944</strong> — Declaration of Self-Sufficiency, cuando la regla actual lo requiere</li>
-        <li><strong>I-912</strong> — Request for Fee Waiver, cuando el solicitante cumple con los criterios de ingresos familiares o de beneficios sujetos a verificación de recursos</li>
+        <li><strong>I-693</strong> — Report of Immigration Medical Examination and Vaccination Record, cuando se requiere. Un médico civil autorizado por USCIS completa y sella este formulario. El cliente entrega el formulario sellado; Imverica únicamente lo organiza con los materiales proporcionados por el cliente, bajo sus instrucciones específicas, y no abre, modifica ni completa el I-693.</li>
+        <li><strong>I-765</strong> — Application for Employment Authorization, cuando el cliente indica que se incluya y las reglas actuales de USCIS permiten presentarlo</li>
+        <li><strong>I-131</strong> — Application for Travel Documents, Parole Documents, and Arrival/Departure Records, cuando el cliente indica que se incluya y las reglas actuales de USCIS permiten presentarlo</li>
+        <li><strong>I-864</strong> / <strong>I-864A</strong> / <strong>I-864EZ</strong> — Affidavit of Support, cuando se requiere para la base de presentación indicada por el cliente</li>
+        <li><strong>I-912</strong> — Request for Fee Waiver, solo si el beneficio y la categoría admiten I-912 conforme a las instrucciones actuales de USCIS y el cliente indica que se incluya</li>
         <li><strong>Evidencia de respaldo</strong> — acta de nacimiento, acta de matrimonio, página biográfica del pasaporte, estampados de visas anteriores, I-94, I-797 receipt y approval notices, documentos de inmigración anteriores, fotografías, y traducciones certificadas de cualquier documento en idioma extranjero conforme a 8 CFR §103.2(b)(3)</li>
       </ul>
     </div>
 
     <h2>Cómo funciona nuestro intake de I-485</h2>
     <p>
-      Usted responde un asistente guiado a su propio ritmo. El asistente
-      refleja la I-485 oficial parte por parte — Parte 1 información del
-      solicitante, Parte 2 tipo de solicitud y categoría de presentación,
-      Parte 3 información adicional, Parte 4 historial de domicilios de los
-      últimos 5 años, Parte 5 historial de empleo de los últimos 5 años,
-      Parte 6 información matrimonial y familiar incluyendo todos sus hijos,
-      Parte 7 información biográfica (origen étnico, raza, estatura, peso,
-      color de ojos y cabello), Parte 8 elegibilidad general, y Parte 9
-      preguntas específicas de elegibilidad / inadmisibilidad.
+      Usted responde un cuestionario guiado a su propio ritmo. El cuestionario
+      recopila la información solicitada por la edición actual del Formulario
+      I-485: datos biográficos e historiales de domicilio, empleo, familia e
+      inmigración, además de respuestas a preguntas de elegibilidad. El cliente
+      indica la base de presentación y responde las preguntas jurídicas o de
+      elegibilidad; Imverica transcribe la información proporcionada y no toma
+      esas decisiones.
     </p>
     <p>
       Todos sus datos se guardan a medida que avanza. Puede pausar, cambiar
       de idioma, o volver más tarde. Cuando termine, ensamblamos el paquete,
       generamos los PDF listos para presentar, y le indicamos qué reunir
       (tarifa de USCIS o exención de tarifas, fotografías a color según la
-      especificación actual, documentos civiles y traducciones, y el examen
-      médico) antes de que firme y envíe al lockbox correspondiente de
-      USCIS.
+      especificación actual, documentos civiles y traducciones y, cuando se
+      requiera, el I-693 sellado proporcionado por un médico civil autorizado
+      por USCIS) antes de que firme y envíe el paquete conforme a las
+      instrucciones actuales de USCIS para la base que usted indicó.
     </p>
 
     <h2>Lo que NO hacemos</h2>
     <p>
-      Como Asistente de Documentos Legales con licencia de California y
+      Como Asistente de Documentos Legales registrado en California y
       Consultor de Inmigración, no podemos brindar asesoría legal, recomendar
       una estrategia particular de presentación, ni representarlo ante USCIS o
-      en un tribunal de inmigración. Si durante el intake su situación parece
-      requerir un abogado con licencia — por ejemplo procedimientos de
-      removal, un historial complejo de deportación, un historial criminal con
-      implicaciones de admisibilidad, o decisiones estratégicas sobre §245(i)
-      vs. procesamiento consular — se lo diremos de inmediato y lo
-      referiremos a un abogado de inmigración con licencia de California de
-      nuestra red.
+      en un tribunal de inmigración. Si elegir la base, la categoría, una
+      respuesta o un formulario requiere análisis jurídico, pausamos la
+      preparación hasta recibir sus instrucciones específicas o las de una
+      persona con licencia para ejercer el derecho. No preparamos documentos que no
+      podamos preparar legalmente conforme al California Business &amp;
+      Professions Code §6411.
     </p>
+
+    <p>
+      La posibilidad de usar el Formulario I-912 depende del beneficio, la
+      categoría de presentación y las instrucciones actuales de USCIS. I-912 no
+      sirve para todos los formularios o categorías. Imverica incluye I-912
+      únicamente bajo la dirección específica del cliente y no promete que
+      USCIS lo apruebe.
+    </p>
+
+    <p><strong>Última revisión:</strong> 18 de octubre de 2026.</p>
+
+    <h2>Recursos oficiales de USCIS</h2>
+    <ul>
+      <li><a href="https://www.uscis.gov/i-485" target="_blank" rel="noopener noreferrer">Página del Formulario I-485 e instrucciones actuales</a></li>
+      <li><a href="https://www.uscis.gov/i-765" target="_blank" rel="noopener noreferrer">Página del Formulario I-765 e instrucciones actuales</a></li>
+      <li><a href="https://www.uscis.gov/i-912" target="_blank" rel="noopener noreferrer">Página del Formulario I-912 sobre exenciones e instrucciones actuales</a></li>
+    </ul>
 
     <cite>
       <strong>Base estatutaria:</strong> Immigration and Nationality Act

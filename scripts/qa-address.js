@@ -22,7 +22,7 @@ async function main() {
   assert(stateSelectOptions().includes('CA - California'), 'state dropdown is missing California');
   assert(stateSelectOptions().includes('PR - Puerto Rico'), 'state dropdown is missing Puerto Rico');
 
-  const query = '8305 Deer Spring Circle, Antelope, CA 95843';
+  const query = '100 Example Street, Example City, CA 00000';
   const suggested = await call(suggest, {
     httpMethod: 'GET',
     queryStringParameters: { q: query },
@@ -31,19 +31,19 @@ async function main() {
   assert(suggested.response.statusCode === 200, `address suggest expected 200, got ${suggested.response.statusCode}`);
   assert(suggested.body.ok === true, 'address suggest expected ok true');
   assert(Array.isArray(suggested.body.suggestions), 'address suggest should return suggestions array');
-  assert(suggested.body.suggestions[0]?.city === 'Antelope', 'address suggest should parse city');
+  assert(suggested.body.suggestions[0]?.city === 'Example City', 'address suggest should parse city');
   assert(suggested.body.suggestions[0]?.state === 'CA', 'address suggest should parse state');
-  assert(suggested.body.suggestions[0]?.zip === '95843', 'address suggest should parse zip');
+  assert(suggested.body.suggestions[0]?.zip === '00000', 'address suggest should parse zip');
 
   const verified = await call(verify, {
     httpMethod: 'POST',
     queryStringParameters: {},
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
-      line1: '8305 Deer Spring Circle',
-      city: 'Antelope',
+      line1: '100 Example Street',
+      city: 'Example City',
       state: 'CA',
-      zip: '95843'
+      zip: '00000'
     })
   });
   assert(verified.response.statusCode === 200, `address verify expected 200, got ${verified.response.statusCode}`);

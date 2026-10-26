@@ -39,7 +39,7 @@ function renderQuickLookSmoke(pdfPath) {
 async function callDraft(payload) {
   return await draft.handler({
     httpMethod: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', origin: 'http://localhost:8888' },
     body: JSON.stringify(payload)
   });
 }
@@ -49,8 +49,8 @@ function sampleI765Payload() {
     formCode: 'I-765',
     formAnswers: {
       i765_application_reason: 'Initial permission to accept employment',
-      applicant_given_name: 'Ivan',
-      applicant_family_name: 'Petrov',
+      applicant_given_name: 'Alex',
+      applicant_family_name: 'Example',
       other_names_used: 'No',
       date_of_birth: '1990-04-12',
       city_of_birth: 'Kyiv',
@@ -62,18 +62,18 @@ function sampleI765Payload() {
       alien_number: 'A123456789',
       uscis_online_account_number: '123456789012',
       ssn: '123-45-6789',
-      mailing_address_line1: '8305 Deer Spring Circle',
-      mailing_address_line2: 'Apt 2',
-      mailing_city: 'Antelope',
-      mailing_state: 'CA - California',
-      mailing_zip: '95843',
+      mailing_address_line1: '100 Example Street',
+      mailing_address_line2: 'Apt 1',
+      mailing_city: 'Example City',
+      mailing_state: 'CA',
+      mailing_zip: '00000',
       physical_same_as_mailing: 'Yes',
       daytime_phone: {
         countryCode: '+1',
-        areaCode: '916',
-        number: '5551212'
+        areaCode: '555',
+        number: '0100200'
       },
-      email_address: 'ivan@example.com',
+      email_address: 'applicant@example.com',
       current_immigration_status: 'Pending asylum',
       status_at_last_entry: 'Parolee',
       last_arrival_date: '2023-01-15',
@@ -92,9 +92,9 @@ function sampleI765Payload() {
       has_preparer: 'No'
     },
     contact: {
-      name: 'Ivan Petrov',
-      phone: '+1 916 555 1212',
-      email: 'ivan@example.com'
+      name: 'Alex Example',
+      phone: '(555) 010-0200',
+      email: 'applicant@example.com'
     }
   };
 }
@@ -104,7 +104,7 @@ async function main() {
   const fieldValues = i765FieldValues(payload);
   assert(!('Line1c_MiddleName[0]' in fieldValues), 'blank middle name should not be written');
   assert(fieldValues['Line2a_FamilyName[0]'] === 'N/A', 'no other names should write N/A');
-  assert(fieldValues['Pt2Line5_AptSteFlrNumber[0]'] === '2', 'unit field should contain only the apartment number');
+  assert(fieldValues['Pt2Line5_AptSteFlrNumber[0]'] === '1', 'unit field should contain only the apartment number');
   assert(fieldValues['Line7_AlienNumber[0]'] === '123456789', 'A-number should keep all 9 digits after removing the A prefix');
   assert(fieldValues['Line12b_SSN[0]'] === '123456789', 'SSN should keep all 9 digits after removing hyphens');
   assert(fieldValues['Line8_ElisAccountNumber[0]'] === '123456789012', 'USCIS online account number should be digits only');

@@ -34,7 +34,7 @@ const ZOOM_MEETING = {
 // Personal signature (owner request 2026-07-14): the ack reads like a reply
 // from a real person, not a robot. Title deliberately UPL-safe — never
 // "attorney"/"lawyer"/"legal advisor"; Imverica is a registered LDA.
-const SIGN_NAME = 'Fa Koch';
+const SIGN_NAME = 'Imverica team';
 const SIGN_TITLE = 'Client Care · Imverica Legal Solutions';
 const SIGN_EMAIL = 'info@imverica.com';
 

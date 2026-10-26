@@ -3,11 +3,10 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
-import EoirNotice from '~/components/EoirNotice.astro';
 
 const lang = 'es' as const;
 const title = 'EOIR-40 — Suspension of Deportation (NACARA) | Imverica';
-const description = 'EOIR-40 — Application for Suspension of Deportation. Imverica trabaja en escritos de la corte de inmigración solo como paralegal bajo la dirección de un abogado; en un procedimiento de deportación se necesita un abogado con licencia o un representante acreditado por el DOJ.';
+const description = 'EOIR-40 — Application for Suspension of Deportation. Imverica brinda apoyo paralegal únicamente bajo la dirección de un profesional con licencia para ejercer el derecho en California. No ofrece asesoría legal ni representación.';
 ---
 <BaseLayout title={title} description={description} canonical="https://imverica.com/mx/eoir-40-suspension-of-deportation"
   slug="/eoir-40-suspension-of-deportation" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
@@ -15,8 +14,8 @@ const description = 'EOIR-40 — Application for Suspension of Deportation. Imve
     lang={lang}
     eyebrow="EOIR · Pre-IIRIRA INA §244 · NACARA §203"
     heading="EOIR-40 — Application for Suspension of Deportation"
-    sub="Usada por el grupo estrecho de solicitantes elegibles bajo el marco pre-IIRIRA — principalmente NACARA §203 (nicaragüenses, cubanos, salvadoreños, guatemaltecos y nacionales del antiguo bloque soviético) y proceedings iniciados antes del 1 de abril de 1997. Solo un abogado con licencia o un representante acreditado por el DOJ puede asesorarle o representarle en la corte de inmigración. En este escrito trabajamos solo como paralegal bajo la dirección de un abogado."
-    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para abogados: apoyo paralegal' }}
+    sub="Usada por el grupo estrecho de solicitantes elegibles bajo el marco pre-IIRIRA — principalmente NACARA §203 (nicaragüenses, cubanos, salvadoreños, guatemaltecos y nacionales del antiguo bloque soviético) y proceedings iniciados antes del 1 de abril de 1997. Solo una persona autorizada conforme a 8 C.F.R. Part 1292 puede asesorar o representar ante EOIR. Trabajamos únicamente como apoyo paralegal bajo la dirección de un profesional con licencia para ejercer el derecho en California."
+    ctaPrimary={{ href: '/mx/for-attorneys', text: 'Para profesionales jurídicos: apoyo paralegal' }}
     ctaSecondary={{ href: 'https://www.justice.gov/eoir/list-pro-bono-legal-service-providers', text: 'Ayuda legal gratuita' }}
   />
 
@@ -46,17 +45,18 @@ const description = 'EOIR-40 — Application for Suspension of Deportation. Imve
     </ul>
     <p>
       La mayoría de los casos modernos presentan EOIR-42A (LPR) o EOIR-42B
-      (non-LPR). Si no está seguro de cuál forma aplica, pregunte a un
-      abogado de inmigración con licencia.
+      (non-LPR). Si necesita ayuda para determinar qué formulario corresponde,
+      consulte a una persona con licencia para ejercer el derecho o a un
+      representante acreditado por el DOJ.
     </p>
 
-    <h2>Para abogados: lo que preparamos bajo su dirección</h2>
-    <p>Solo bajo la dirección del abogado del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
+    <h2>Para profesionales jurídicos: lo que preparamos bajo su dirección</h2>
+    <p>Solo bajo la dirección del profesional con licencia responsable del caso (attorney of record), que revisa, firma y presenta. No preparamos escritos para la corte de inmigración para particulares.</p>
     <div class="form-list">
       <strong>Paquete EOIR-40</strong>
       <ul>
         <li><strong>Forma EOIR-40</strong> con datos biográficos, familiares, presence y good moral character.</li>
-        <li><strong>Forma EOIR-28</strong> notice of representation si comparece un abogado con licencia.</li>
+        <li><strong>Forma EOIR-28</strong> — aviso de comparecencia, cuando interviene una persona autorizada conforme a 8 C.F.R. Part 1292.</li>
         <li><strong>Filing fee o fee waiver</strong> (Form EOIR-26A).</li>
         <li><strong>Evidencia de elegibilidad NACARA §203</strong> (donde aplique) — país y fechas de entrada, prior registration.</li>
         <li><strong>Evidencia de continuous physical presence</strong> (7 años bajo el estándar antiguo) — impuestos, lease, utility, school, medical y employment records.</li>
@@ -66,16 +66,25 @@ const description = 'EOIR-40 — Application for Suspension of Deportation. Imve
       </ul>
     </div>
 
-    <EoirNotice lang="es" />
+    <h2>Alcance limitado del servicio</h2>
+    <p>
+      <strong>Imverica no representa clientes en corte de inmigración.</strong>
+      La representación ante EOIR requiere una persona autorizada conforme a
+      8 C.F.R. Part 1292. Para asuntos EOIR, preparamos EOIR-40 y organizamos
+      el expediente de pruebas únicamente como apoyo paralegal bajo las
+      instrucciones específicas de un profesional con licencia para ejercer el
+      derecho en California. Esa persona revisa, firma y presenta cada documento.
+      No brindamos asesoría legal ni preparamos escritos de corte para particulares.
+    </p>
 
     <cite>
       <strong>Fuente:</strong> Pre-IIRIRA INA §244 (suspension of
       deportation, preservada por IIRIRA §309(c) transition rules); NACARA
       §203, Pub. L. No. 105-100, §203 (1997); EOIR Practice Manual. La
-      representación en corte requiere abogado con licencia o
-      DOJ-accredited representative.
+      representación ante EOIR requiere una persona autorizada conforme a
+      8 C.F.R. Part 1292.
     </cite>
   </LandingBody>
 
-  <CTAStrip lang="es" heading="¿Es abogado y lleva un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Para abogados: apoyo paralegal" />
+  <CTAStrip lang="es" heading="¿Representa un caso ante EOIR?" sub="Preparamos borradores, índices de anexos y traducciones certificadas bajo su dirección, para su revisión y firma." primaryHref="/mx/for-attorneys" primaryText="Apoyo paralegal para profesionales jurídicos" />
 </BaseLayout>

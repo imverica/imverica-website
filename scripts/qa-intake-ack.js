@@ -25,7 +25,7 @@ function assert(label, cond) {
 
 // --- 1. Language detection -------------------------------------------------
 
-// Plain English (the real Anastasiia lead — UI en, wrote en).
+// Plain English (the real Sample lead — UI en, wrote en).
 check('en plain', detectAckLanguage(
   'I am a Ukrainian who came to the U.S. through Uniting for Ukraine (U4U). My humanitarian parole expires in February 2027, and I would like someone to prepare and file my re-parole application for me.',
   'en'
@@ -80,20 +80,20 @@ check('missing UI tag → en', detectAckLanguage('ok', undefined), 'en');
 
 const ORDER = 'IMVERICA-20260714-25';
 const MUST_CONTAIN = {
-  en: ['Hello Anastasiia,', 'not a law firm', 'within one business day'],
-  ru: ['Здравствуйте, Anastasiia!', 'не является юридической фирмой', 'рабочего дня'],
-  uk: ['Вітаємо, Anastasiia!', 'не є юридичною фірмою', 'робочого дня'],
-  es: ['Hola, Anastasiia:', 'no es un bufete', 'un día hábil']
+  en: ['Hello Sample,', 'not a law firm', 'within one business day'],
+  ru: ['Здравствуйте, Sample!', 'не является юридической фирмой', 'рабочего дня'],
+  uk: ['Вітаємо, Sample!', 'не є юридичною фірмою', 'робочого дня'],
+  es: ['Hola, Sample:', 'no es un bufete', 'un día hábil']
 };
 
 for (const lang of ['en', 'ru', 'uk', 'es']) {
-  const { subject, text, html } = ackCopy(lang, { name: 'Anastasiia Bila', orderId: ORDER });
+  const { subject, text, html } = ackCopy(lang, { name: 'Sample Client', orderId: ORDER });
   assert(`${lang} subject has order id`, subject.includes(ORDER));
   assert(`${lang} text has order id`, text.includes(ORDER));
   assert(`${lang} html has order id`, html.includes(ORDER));
   assert(`${lang} text has phone`, text.includes('+1 (916) 399-3992'));
-  assert(`${lang} signed by Fa Koch`, text.includes('Fa Koch') && html.includes('Fa Koch'));
-  assert(`${lang} sig title UPL-safe`, text.includes('Client Care · Imverica Legal Solutions') && !/attorney|lawyer/i.test('Fa Koch Client Care'));
+  assert(`${lang} signed by Imverica team`, text.includes('Imverica team') && html.includes('Imverica team'));
+  assert(`${lang} sig title UPL-safe`, text.includes('Client Care · Imverica Legal Solutions') && !/attorney|lawyer/i.test('Imverica team Client Care'));
   for (const needle of MUST_CONTAIN[lang]) {
     assert(`${lang} contains ${JSON.stringify(needle)}`, text.includes(needle) || html.includes(needle));
   }
@@ -113,7 +113,7 @@ assert('html escapes name', !evil.includes('<img') && evil.includes('&lt;img'));
 
 const SITUATION = 'I need help with my re-parole application.\nMy parole expires in February 2027.';
 const reply = ackCopy('en', {
-  name: 'Anastasiia Bila',
+  name: 'Sample Client',
   orderId: ORDER,
   situation: SITUATION,
   createdAt: '2026-07-14T18:40:00.000Z' // 11:40 AM PT
@@ -123,7 +123,7 @@ assert('subject has short order id', reply.subject.includes(ORDER));
 assert('text quotes each line with >', reply.text.includes('> I need help with my re-parole application.')
   && reply.text.includes('> My parole expires in February 2027.'));
 assert('text has "you wrote" + PT date', reply.text.includes('On July 14, 2026, you wrote:'));
-assert('signoff before signature', reply.text.indexOf('Best regards,') < reply.text.indexOf('Fa Koch'));
+assert('signoff before signature', reply.text.indexOf('Best regards,') < reply.text.indexOf('Imverica team'));
 assert('html has blockquote with request', reply.html.includes('<blockquote') && reply.html.includes('re-parole application.'));
 
 // Bad/missing date → label without date; no quote block when situation empty.

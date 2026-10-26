@@ -9,14 +9,14 @@ import { faqSchema, type FaqItem } from '~/data/orgSchema';
 
 const lang = 'ru' as const;
 const title = 'U4U re-parole — русскоязычная подготовка документов Uniting for Ukraine | Imverica Legal Solutions';
-const description = 'Русскоязычная помощь с re-parole по программе U4U и полным пакетом Uniting for Ukraine — I-765 (c)(11) разрешение на работу, I-131 advance parole, перерегистрация TPS, I-485 при наличии оснований. Дистанционно по всем штатам США. California Registered LDA — не адвокатская фирма.';
+const description = 'Русскоязычная подготовка документов U4U re-parole и связанных форм по указанию клиента. Дистанционно по всей Калифорнии. California Registered LDA — не адвокатская фирма; без юридических консультаций.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'U4U Uniting for Ukraine re-parole document preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
   availableLanguage: ['ru', 'uk', 'en'],
   description: 'Подготовка документов для украинских гуманитарных parolees по программе Uniting for Ukraine — re-parole, разрешения на работу, проездные документы — по поручению клиента.'
 };
@@ -24,15 +24,15 @@ const schema = {
 const faq: FaqItem[] = [
   {
     q: 'Помогаете ли вы с re-parole по программе U4U?',
-    a: 'Да. Мы готовим полный пакет для запроса re-parole — заявление, текущие документы пароля, подтверждающие материалы — по вашему поручению и проверяем всё перед подачей. Приём на русском, украинском и английском, полностью дистанционно в любом штате США.'
+    a: 'Да. Мы готовим пакет для запроса re-parole по вашему конкретному указанию для клиентов из Калифорнии. Приём на русском, украинском и английском, полностью дистанционно по всей Калифорнии.'
   },
   {
-    q: 'Разрешение на работу для U4U — бесплатное?',
-    a: 'USCIS сейчас не берёт пошлину за I-765 для U4U parolees по категории (c)(11) — государственная подача разрешения на работу бесплатна. Наш фиксированный тариф за подготовку указан на imverica.com/pricing.'
+    q: 'Какая государственная пошлина применяется к разрешению на работу U4U?',
+    a: 'Пошлины USCIS зависят от того, первичная это подача или продление, и могут меняться. Непосредственно перед подачей проверьте актуальный тариф Form G-1055 и инструкции I-765; Imverica не указывает фиксированную государственную пошлину на этой странице.'
   },
   {
-    q: 'Вы работаете с украинцами не из Калифорнии?',
-    a: 'Да. Формы USCIS — федеральные, поэтому мы работаем дистанционно во всех штатах: анкета, загрузка документов, проверка и выдача — всё онлайн, на русском, украинском или английском.'
+    q: 'Где доступна услуга?',
+    a: 'Imverica работает с клиентами U4U дистанционно по всей Калифорнии. Анкета, загрузка документов, проверка и выдача доступны онлайн на русском, украинском или английском.'
   },
   {
     q: 'Вы адвокаты?',
@@ -50,7 +50,7 @@ const faq: FaqItem[] = [
     lang={lang}
     eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
     heading="U4U re-parole и документы Uniting for Ukraine"
-    sub="Если вы приехали по программе Uniting for Ukraine, мы подготовим ваш запрос re-parole, разрешение на работу, travel-документы и перерегистрацию TPS — аккуратно, по вашему поручению. Фиксированная цена, дистанционно по всем штатам США, анкета на русском, украинском и английском."
+    sub="Мы готовим документы U4U re-parole и связанные формы по вашему конкретному указанию. Фиксированная цена, дистанционно по всей Калифорнии, анкета на русском, украинском и английском. Без юридических консультаций."
     ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Начать пакет U4U' }}
   />
 
@@ -59,7 +59,7 @@ const faq: FaqItem[] = [
     heading="Что включает U4U"
     intro="Пакет U4U обычно объединяет несколько подач USCIS. Нажмите плитку для деталей."
     tiles={[
-      { icon: '💼', title: 'I-765 (c)(11) — Разрешение на работу', desc: 'EAD по категории parolee. Бесплатно для U4U-parolees.',                       href: '/ru/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '💼', title: 'I-765 (c)(11) — Разрешение на работу', desc: 'EAD по категории parolee. Действуют актуальные пошлины USCIS.',                       href: '/ru/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
       { icon: '🛡️', title: 'TPS — Временная защита',               desc: 'Повторная регистрация TPS для Украины поверх parole.',                         href: '/ru/tps',                    color: 'var(--navy)' },
       { icon: '🛂', title: 'I-131 — Advance parole',                desc: 'Travel-документ для выезда и въезда обратно без потери parole.',               href: '/#get-started?form=I-131',   color: 'var(--sage)' },
       { icon: '🟢', title: 'I-485 — Изменение статуса',             desc: 'Когда возникает основание (asylum, брак с USC и т. д.) — пакет на green card.', href: '/ru/i-485-help',             color: 'var(--gold)' },
@@ -92,7 +92,7 @@ const faq: FaqItem[] = [
 
     <h2>Что мы готовим для U4U-parolees</h2>
     <ul>
-      <li><strong>I-765 категория (c)(11)</strong> — разрешение на работу (EAD). Для U4U USCIS отменяет filing fee и biometrics fee.</li>
+      <li><strong>I-765 категория (c)(11)</strong> — разрешение на работу (EAD), когда клиент указывает включить эту форму. Перед подачей проверьте актуальный <a href="https://www.uscis.gov/g-1055" target="_blank" rel="noopener noreferrer">тариф USCIS Form G-1055</a> и инструкции I-765.</li>
       <li><strong>Повторная регистрация Украина TPS</strong> — когда DHS продлевает Украине designation, готовим пакет I-821 + I-765 на повторную регистрацию.</li>
       <li><strong>I-131 advance parole</strong> — travel-документ для выезда и возврата в США без потери parole.</li>
       <li><strong>Re-parole requests</strong> — когда начальный 2-летний parole близится к окончанию, готовим документы для рассмотрения re-parole.</li>

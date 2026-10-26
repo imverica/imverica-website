@@ -9,14 +9,14 @@ import { faqSchema, type FaqItem } from '~/data/orgSchema';
 
 const lang = 'uk' as const;
 const title = 'U4U re-parole — україномовна підготовка документів Uniting for Ukraine | Imverica Legal Solutions';
-const description = 'Україномовна допомога з re-parole за програмою U4U та повним пакетом Uniting for Ukraine — I-765 (c)(11) дозвіл на роботу, I-131 advance parole, перереєстрація TPS, I-485 за наявності підстав. Дистанційно по всіх штатах США. California Registered LDA — не адвокатська фірма.';
+const description = 'Україномовна підготовка документів U4U re-parole і пов’язаних форм за вказівкою клієнта. Дистанційно по всій Каліфорнії. California Registered LDA — не адвокатська фірма; без юридичних консультацій.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'U4U Uniting for Ukraine re-parole document preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
   availableLanguage: ['uk', 'ru', 'en'],
   description: 'Підготовка документів для українських гуманітарних parolees за програмою Uniting for Ukraine — re-parole, дозволи на роботу, проїзні документи — за дорученням клієнта.'
 };
@@ -24,15 +24,15 @@ const schema = {
 const faq: FaqItem[] = [
   {
     q: 'Чи допомагаєте ви з re-parole за програмою U4U?',
-    a: 'Так. Ми готуємо повний пакет для запиту re-parole — заяву, чинні документи пароля, підтверджувальні матеріали — за вашим дорученням і перевіряємо все перед подачею. Приймання українською, російською та англійською, повністю дистанційно в будь-якому штаті США.'
+    a: 'Так. Ми готуємо пакет для запиту re-parole за вашою конкретною вказівкою для клієнтів із Каліфорнії. Приймання українською, російською та англійською, повністю дистанційно по всій Каліфорнії.'
   },
   {
-    q: 'Дозвіл на роботу для U4U — безкоштовний?',
-    a: 'USCIS наразі не бере збір за I-765 для U4U parolees за категорією (c)(11) — державна подача дозволу на роботу безкоштовна. Наш фіксований тариф за підготовку вказано на imverica.com/pricing.'
+    q: 'Який державний збір застосовується до дозволу на роботу U4U?',
+    a: 'Збори USCIS залежать від того, первинне це подання чи продовження, і можуть змінюватися. Безпосередньо перед поданням перевірте актуальний тариф Form G-1055 та інструкції I-765; Imverica не вказує фіксований державний збір на цій сторінці.'
   },
   {
-    q: 'Ви працюєте з українцями не з Каліфорнії?',
-    a: 'Так. Форми USCIS — федеральні, тому ми працюємо дистанційно в усіх штатах: анкета, завантаження документів, перевірка та видача — все онлайн, українською, російською чи англійською.'
+    q: 'Де доступна послуга?',
+    a: 'Imverica працює з клієнтами U4U дистанційно по всій Каліфорнії. Анкета, завантаження документів, перевірка та видача доступні онлайн українською, російською чи англійською.'
   },
   {
     q: 'Ви адвокати?',
@@ -50,7 +50,7 @@ const faq: FaqItem[] = [
     lang={lang}
     eyebrow="USCIS · Humanitarian Parole · INA §212(d)(5)"
     heading="U4U re-parole та документи Uniting for Ukraine"
-    sub="Якщо ви приїхали за програмою Uniting for Ukraine, ми підготуємо ваш запит re-parole, дозвіл на роботу, travel-документи та перереєстрацію TPS — акуратно, за вашим дорученням. Фіксована ціна, дистанційно по всіх штатах США, анкета українською, російською та англійською."
+    sub="Ми готуємо документи U4U re-parole і пов’язані форми за вашою конкретною вказівкою. Фіксована ціна, дистанційно по всій Каліфорнії, анкета українською, російською та англійською. Без юридичних консультацій."
     ctaPrimary={{ href: '/#get-started?topic=U4U', text: 'Почати пакет U4U' }}
   />
 
@@ -59,7 +59,7 @@ const faq: FaqItem[] = [
     heading="Що включає U4U"
     intro="Пакет U4U зазвичай поєднує кілька подань USCIS. Натисніть плитку для деталей."
     tiles={[
-      { icon: '💼', title: 'I-765 (c)(11) — Дозвіл на роботу', desc: 'EAD за категорією parolee. Безкоштовно для U4U-parolees.',                     href: '/ua/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
+      { icon: '💼', title: 'I-765 (c)(11) — Дозвіл на роботу', desc: 'EAD за категорією parolee. Діють актуальні збори USCIS.',                     href: '/ua/i-765-work-permit-help', color: 'var(--terracotta-deep)' },
       { icon: '🛡️', title: 'TPS — Тимчасовий захист',          desc: 'Повторна реєстрація TPS для України поверх parole.',                            href: '/ua/tps',                    color: 'var(--navy)' },
       { icon: '🛂', title: 'I-131 — Advance parole',           desc: 'Travel-документ для виїзду і повернення без втрати parole.',                    href: '/#get-started?form=I-131',   color: 'var(--sage)' },
       { icon: '🟢', title: 'I-485 — Зміна статусу',            desc: 'Коли виникає підстава (asylum, шлюб з USC тощо) — пакет на green card.',         href: '/ua/i-485-help',             color: 'var(--gold)' },
@@ -92,7 +92,7 @@ const faq: FaqItem[] = [
 
     <h2>Що ми готуємо для U4U-parolees</h2>
     <ul>
-      <li><strong>I-765 категорія (c)(11)</strong> — дозвіл на роботу (EAD). Для U4U USCIS скасовує filing fee та biometrics fee.</li>
+      <li><strong>I-765 категорія (c)(11)</strong> — дозвіл на роботу (EAD), коли клієнт указує включити цю форму. Перед поданням перевірте актуальний <a href="https://www.uscis.gov/g-1055" target="_blank" rel="noopener noreferrer">тариф USCIS Form G-1055</a> та інструкції I-765.</li>
       <li><strong>Повторна реєстрація Україна TPS</strong> — коли DHS продовжує Україні designation, готуємо пакет I-821 + I-765 на повторну реєстрацію.</li>
       <li><strong>I-131 advance parole</strong> — travel-документ для виїзду і повернення до США без втрати parole.</li>
       <li><strong>Re-parole requests</strong> — коли початковий 2-річний parole добігає кінця, готуємо документи для розгляду re-parole.</li>

@@ -22,10 +22,10 @@ export interface LocaleMeta {
 }
 
 export const LOCALES: Record<Locale, LocaleMeta> = {
-  en: { code: 'en', htmlLang: 'en-US', ogLocale: 'en_US', flag: '🇺🇸', label: 'EN', prefix: '' },
-  ru: { code: 'ru', htmlLang: 'ru-RU', ogLocale: 'ru_RU', flag: '🇷🇺', label: 'RU', prefix: '/ru' },
-  uk: { code: 'uk', htmlLang: 'uk-UA', ogLocale: 'uk_UA', flag: '🇺🇦', label: 'UA', prefix: '/ua' },
-  es: { code: 'es', htmlLang: 'es-MX', ogLocale: 'es_MX', flag: '🇲🇽', label: 'MX', prefix: '/mx' }
+  en: { code: 'en', htmlLang: 'en-US', ogLocale: 'en_US', flag: '🇺🇸', label: 'English', prefix: '' },
+  ru: { code: 'ru', htmlLang: 'ru-RU', ogLocale: 'ru_RU', flag: '🇷🇺', label: 'Русский', prefix: '/ru' },
+  uk: { code: 'uk', htmlLang: 'uk-UA', ogLocale: 'uk_UA', flag: '🇺🇦', label: 'Українська', prefix: '/ua' },
+  es: { code: 'es', htmlLang: 'es-MX', ogLocale: 'es_MX', flag: '🇲🇽', label: 'Español', prefix: '/mx' }
 };
 
 export const SUPPORTED_LOCALES: Locale[] = ['en', 'ru', 'uk', 'es'];
@@ -196,7 +196,7 @@ export const NAV: Record<Locale, {
     criminal: 'Limpieza de antecedentes',
     business: 'Negocios',
     pricing: 'Precios',
-    forAttorneys: 'Para Abogados',
+    forAttorneys: 'Para Firmas Jurídicas',
     about: 'Acerca',
     portal: 'Mi portal',
     quote: 'Iniciar su caso',
@@ -243,7 +243,7 @@ export const FOOTER: Record<Locale, {
     servicesCivil: 'Corte de California',
     about: 'Sobre nosotros',
     brandLine: 'Asistente de Documentos Legales · Consultor de Inmigración · California',
-    disclaimer: '© {year} Imverica LLC, que opera como Imverica Legal Solutions, sociedad de responsabilidad limitada de California; Asistente de Documentos Legales (Legal Document Assistant) y Consultor de Inmigración registrado y con fianza (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC. Fianza de consultor de inmigración n.º 67347671 (Western Surety Company), registrada ante la Secretaría de Estado de California.||Imverica no es un bufete de abogados ni sustituye a un abogado. No brindamos asesoría legal y el uso de este sitio no crea una relación abogado-cliente. Los documentos se preparan únicamente según las instrucciones del cliente. Si necesita asesoría legal, consulte a un abogado con licencia.'
+    disclaimer: '© {year} Imverica LLC, que opera como Imverica Legal Solutions, sociedad de responsabilidad limitada de California; Asistente de Documentos Legales (Legal Document Assistant) y Consultor de Inmigración registrado y con fianza (Cal. Bus. & Prof. Code §§6400-6415 y §§22440-22448).||LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC. Fianza de consultor de inmigración n.º 67347671 (Western Surety Company), registrada ante la Secretaría de Estado de California.||Imverica no está autorizada para ejercer el derecho y no brinda asesoría legal ni representación. El uso de este sitio no crea una relación de representación jurídica. Los documentos se preparan únicamente bajo la dirección específica del cliente. Si necesita asesoría legal, consulte a una persona con licencia para ejercer el derecho.'
   }
 };
 
@@ -259,53 +259,53 @@ export const HERO: Record<Locale, {
     eyebrow: 'California · Registered LDA · Immigration Consultant',
     heading: 'What document do you need prepared?',
     headingHtml: 'What document do you need <em class="hero-em">prepared?</em>',
-    sub: 'Describe your situation or enter a form number. We prepare USCIS petitions (I-485, I-130, I-765, I-589, N-400, I-131, I-90), California family law forms (FL-100, FL-300), small claims (SC-100), unlawful detainer, restraining orders, probate, and fee waivers — for clients across California and worldwide.'
+    sub: 'Describe the document you want prepared or enter a form number. We prepare USCIS and California court documents at the client’s specific direction throughout California. EOIR support is for attorneys only. No legal advice.'
   },
   ru: {
     eyebrow: 'Калифорния · Зарегистрированный LDA · Иммиграционный консультант',
     heading: 'Какой документ нужно подготовить?',
     headingHtml: 'Какой документ нужно <em class="hero-em">подготовить?</em>',
-    sub: 'Опишите свою ситуацию или введите номер формы. Мы готовим петиции USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90), калифорнийские формы семейного права (FL-100, FL-300), малые иски (SC-100), unlawful detainer (выселение), защитные ордера, наследственные дела и заявления об освобождении от пошлины — для клиентов по всей Калифорнии и по всему миру.'
+    sub: 'Опишите документ, который вы хотите подготовить, или введите номер формы. Мы готовим документы USCIS и судов Калифорнии по конкретному указанию клиента по всей Калифорнии. Поддержка EOIR — только для адвокатов. Без юридических консультаций.'
   },
   uk: {
     eyebrow: 'Каліфорнія · Зареєстрований LDA · Імміграційний консультант',
     heading: 'Який документ потрібно підготувати?',
     headingHtml: 'Який документ потрібно <em class="hero-em">підготувати?</em>',
-    sub: 'Опишіть свою ситуацію або введіть номер форми. Ми готуємо петиції USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90), каліфорнійські форми сімейного права (FL-100, FL-300), малі позови (SC-100), unlawful detainer (виселення), захисні ордери, спадкові справи та заяви про звільнення від мита — для клієнтів по всій Каліфорнії та по всьому світу.'
+    sub: 'Опишіть документ, який ви хочете підготувати, або введіть номер форми. Ми готуємо документи USCIS та судів Каліфорнії за конкретною вказівкою клієнта по всій Каліфорнії. Підтримка EOIR — лише для адвокатів. Без юридичних консультацій.'
   },
   es: {
     eyebrow: 'California · LDA registrado · Consultor de inmigración',
     heading: '¿Qué documento necesita preparar?',
     headingHtml: '¿Qué documento necesita <em class="hero-em">preparar?</em>',
-    sub: 'Describa su situación o ingrese un número de formulario. Preparamos peticiones de USCIS (I-485, I-130, I-765, I-589, N-400, I-131, I-90), formularios de derecho familiar de California (FL-100, FL-300), reclamos menores (SC-100), unlawful detainer (desalojo), órdenes de restricción, sucesiones y exenciones de tasas — para clientes en todo California y en todo el mundo.'
+    sub: 'Describa el documento que desea preparar o ingrese un número de formulario. Preparamos documentos de USCIS y de las cortes de California bajo la dirección específica del cliente en todo California. El apoyo de EOIR es solo para firmas jurídicas. Sin asesoría legal.'
   }
 };
 
-/** Stats strip labels per locale. Numbers stay numeric. */
+/** Verified facts in the stats strip. Numbers stay numeric. */
 export const STATS: Record<Locale, string[]> = {
   en: [
-    'USCIS & California forms supported',
-    'Priority forms with curated flows',
     'Languages — EN · RU · UA · ES',
-    'Years preparing California & USCIS forms'
+    'Years preparing immigration documents',
+    'Registered roles — LDA & Immigration Consultant',
+    'LDA registration current through Sep. 27'
   ],
   ru: [
-    'Форм USCIS и Калифорнии в работе',
-    'Приоритетных форм с готовой анкетой',
     'Языка — EN · RU · UA · ES',
-    'Лет подготовки документов USCIS и Калифорнии'
+    'Лет подготовки иммиграционных документов',
+    'Регистрации — LDA и Immigration Consultant',
+    'Регистрация LDA действует до 27 сентября'
   ],
   uk: [
-    'Форм USCIS і Каліфорнії в роботі',
-    'Пріоритетних форм з готовою анкетою',
     'Мови — EN · RU · UA · ES',
-    'Років підготовки документів USCIS і Каліфорнії'
+    'Років підготовки імміграційних документів',
+    'Реєстрації — LDA та Immigration Consultant',
+    'Реєстрація LDA чинна до 27 вересня'
   ],
   es: [
-    'Formularios USCIS y California compatibles',
-    'Formularios prioritarios con flujos guiados',
     'Idiomas — EN · RU · UA · ES',
-    'Años preparando formularios de California y USCIS'
+    'Años preparando documentos de inmigración',
+    'Registros — LDA y Consultor de Inmigración',
+    'Registro LDA vigente hasta el 27 de septiembre'
   ]
 };
 

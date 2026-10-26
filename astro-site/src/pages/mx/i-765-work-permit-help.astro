@@ -6,13 +6,14 @@ import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
 const title = 'Preparación de documentos I-765 — permiso de trabajo (EAD) | Imverica';
-const description = 'California Registered LDA prepara Form I-765 — Application for Employment Authorization. Pending asylum (c)(8), adjustment (c)(9), TPS (c)(19/a)(12), DACA (c)(33) y otras categorías. Entrevista multilingüe a precio fijo.';
+const description = 'Un LDA registrado de California prepara el Formulario I-765 bajo la dirección del cliente. El cliente indica la categoría que ha decidido usar; Imverica no determina elegibilidad ni brinda asesoría legal.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'I-765 Employment Authorization Document Preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
   description: 'Preparación de documentos para Form I-765 (Application for Employment Authorization) bajo la dirección del solicitante.'
 };
 ---
@@ -22,35 +23,42 @@ const schema = {
     lang={lang}
     eyebrow="USCIS · Employment Authorization · 8 CFR §274a.12"
     heading="I-765 — Application for Employment Authorization"
-    sub="Preparamos el paquete I-765 para cualquier categoría de eligibility — pending asylum (c)(8), adjustment of status (c)(9), TPS (a)(12)/(c)(19), DACA (c)(33), parolee (c)(11), cónyuge de L-1/E (a)(18), y más. Precio fijo."
+    sub="Preparamos el Formulario I-765 con la categoría y los datos que usted proporcione. Usted indica la categoría que ha decidido usar; Imverica no determina elegibilidad. Preparación bajo su dirección — sin asesoría legal."
     ctaPrimary={{ href: '/#get-started?form=I-765', text: 'Comenzar paquete I-765' }}
   />
 
   <LandingBody related={[
     { href: '/mx/i-485-help', label: 'I-485 — Ajuste de Estatus (concurrent I-765 c)(9))' },
-    { href: '/mx/i-589-asylum-help', label: 'I-589 — Pending asylum ((c)(8) EAD tras 150 días)' },
+    { href: '/mx/i-589-asylum-help', label: 'I-589 — asilo pendiente y plazos de I-765 bajo (c)(8)' },
     { href: '/mx/lda', label: '¿Qué es un California Legal Document Assistant?' }
   ]}>
     <p class="lead">
       El Formulario I-765 es la solicitud de Employment Authorization
       Document (EAD), la tarjeta física que un no-ciudadano necesita
-      para acreditar que puede trabajar legalmente en EE. UU. Preparamos
-      el I-765 bajo la dirección del solicitante, eligiendo la categoría
-      de eligibility correcta según su estatus y reuniendo la evidencia
-      de respaldo.
+      para acreditar su autorización de empleo en EE. UU. Preparamos el
+      I-765 bajo la dirección del solicitante y usamos la categoría que este
+      indique. Imverica no determina qué categoría corresponde ni brinda
+      asesoría legal.
     </p>
 
-    <h2>Categorías de eligibility comunes que preparamos</h2>
+    <h2>Ejemplos de códigos de categoría de elegibilidad</h2>
+    <p>
+      USCIS usa códigos de categoría como los siguientes. Esta es información
+      general, no una determinación de elegibilidad. Las categorías, pruebas,
+      tarifas y reglas de presentación pueden cambiar. Antes de presentar,
+      consulte la página y las instrucciones actuales del Formulario I-765 de
+      USCIS. Si necesita ayuda para elegir una categoría, consulte a una
+      persona con licencia para ejercer el derecho.
+    </p>
     <ul>
-      <li><strong>(c)(8)</strong> — Solicitante con asilo pendiente. Elegible 150 días después de presentar I-589, más el clock de 30 días, sin negación de I-589.</li>
-      <li><strong>(c)(9)</strong> — Solicitante con I-485 (ajuste de estatus) pendiente. Concurrent filing común con AOS familiar o por asilo.</li>
-      <li><strong>(a)(12)</strong> / <strong>(c)(19)</strong> — Temporary Protected Status (TPS), inicial / renewal. Las designations varían por país y fecha de re-designation.</li>
-      <li><strong>(c)(33)</strong> — DACA (Deferred Action for Childhood Arrivals), inicial / renewal.</li>
-      <li><strong>(c)(11)</strong> — Parolee (humanitarian parole, U4U, parolees CHNV).</li>
-      <li><strong>(a)(18)</strong> — Cónyuge de L-1 intracompany transferee.</li>
-      <li><strong>(c)(26)</strong> — Cónyuge de H-1B con I-140 aprobado.</li>
-      <li><strong>(c)(14)</strong> — Receptor de deferred action.</li>
-      <li><strong>(c)(16)</strong> — Self-petitioning religious worker, Special Immigrant Juvenile, etc.</li>
+      <li><strong>(c)(8)</strong> — Ciertos solicitantes con una solicitud de asilo pendiente.</li>
+      <li><strong>(c)(9)</strong> — Ciertos solicitantes con un Formulario I-485 pendiente.</li>
+      <li><strong>(a)(12)</strong> / <strong>(c)(19)</strong> — Ciertos solicitantes o beneficiarios de Temporary Protected Status.</li>
+      <li><strong>(c)(33)</strong> — Ciertos solicitantes de DACA.</li>
+      <li><strong>(c)(11)</strong> — Ciertas personas con parole.</li>
+      <li><strong>(a)(18)</strong> — Ciertos cónyuges de personas con estatus L-1.</li>
+      <li><strong>(c)(26)</strong> — Ciertos cónyuges con estatus H-4.</li>
+      <li><strong>(c)(14)</strong> — Ciertas personas con deferred action.</li>
     </ul>
 
     <h2>Lo que necesitamos de usted para I-765</h2>
@@ -65,13 +73,24 @@ const schema = {
 
     <h2>Filing fee y fee waiver</h2>
     <p>
-      El costo de presentación del I-765 depende de la categoría y de si
-      se presenta con I-485 concurrente — algunas categorías no pagan
-      tarifa separada si se presentan con el formulario subyacente. El
-      Formulario I-912 fee waiver está disponible para solicitantes
-      bajo el umbral de ingresos o que reciben ciertos beneficios
-      means-tested. Preparamos el I-912 cuando aplica.
+      La tarifa del I-765 y la posibilidad de solicitar una exención dependen
+      de la categoría de presentación, la solicitud de beneficio subyacente y
+      las reglas actuales de USCIS. El Formulario I-912 no puede usarse con
+      todos los formularios o categorías. Antes de presentar, consulte las
+      páginas e instrucciones actuales de USCIS para I-765 e I-912. Imverica
+      prepara I-912 solo bajo la dirección del cliente o conforme a instrucciones
+      proporcionadas por una persona con licencia para ejercer el derecho; no
+      determina la elegibilidad para una exención ni promete que
+      USCIS la aprobará.
     </p>
+
+    <p><strong>Última revisión:</strong> 18 de octubre de 2026.</p>
+
+    <h2>Recursos oficiales de USCIS</h2>
+    <ul>
+      <li><a href="https://www.uscis.gov/i-765" target="_blank" rel="noopener noreferrer">Página del Formulario I-765 e instrucciones actuales</a></li>
+      <li><a href="https://www.uscis.gov/i-912" target="_blank" rel="noopener noreferrer">Página del Formulario I-912 sobre exenciones e instrucciones actuales</a></li>
+    </ul>
 
     <cite>
       <strong>Fuente:</strong> Immigration and Nationality Act §274A

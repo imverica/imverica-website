@@ -9,7 +9,7 @@ import { faqSchema, type FaqItem } from '~/data/orgSchema';
 const lang = 'ru' as const;
 const title = 'Проверка документов USCIS перед подачей | Imverica';
 const description =
-  'Заполнили формы USCIS самостоятельно? Проверим пакет перед подачей: полнота ответов, согласованность форм, актуальные редакции, подписи, чек-лист приложений. Дистанционно по всей территории США, по-русски.';
+  'Заполнили формы USCIS самостоятельно? Проверим пакет перед подачей: полнота ответов, согласованность форм, актуальные редакции, подписи, чек-лист приложений. Дистанционно по всей Калифорнии, по-русски.';
 
 const faqs: FaqItem[] = [
   {
@@ -43,7 +43,7 @@ const serviceSchema = {
   '@type': 'Service',
   serviceType: 'USCIS Document Review (Russian-speaking)',
   provider: { '@id': 'https://imverica.com/#organization' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  areaServed: { '@type': 'State', name: 'California' },
   availableLanguage: ['ru', 'uk', 'en', 'es'],
   description: 'Проверка самостоятельно подготовленных пакетов USCIS перед подачей: полнота, согласованность, актуальные редакции форм, подписи, чек-лист приложений. Только проверка документов — не юридическая консультация.'
 };

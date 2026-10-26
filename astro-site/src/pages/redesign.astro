@@ -28,14 +28,14 @@ const languages = [
 const quickChips = ['Family petition', 'Response to divorce', 'Small claims', 'Expungement'];
 
 const stats = [
-  { target: 746, suffix: '+', label: 'USCIS & California forms supported' },
-  { target: 18, suffix: '+', label: 'Priority forms with curated flows' },
   { target: 4, suffix: '', label: 'Languages — EN · RU · UA · ES' },
-  { target: 10, suffix: '+', label: 'Years preparing California & USCIS forms' }
+  { target: 10, suffix: '+', label: 'Years preparing immigration documents' },
+  { target: 2, suffix: '', label: 'Registered roles — LDA & Immigration Consultant' },
+  { target: 2028, suffix: '', label: 'LDA registration current through Sep. 27' }
 ];
 
 const services = [
-  { num: '01', kicker: 'USCIS', title: 'Immigration Forms & Petitions', desc: 'Adjustment of status, work permits, green card, asylum, TPS, U visa, naturalization, travel documents, and removal-defense document preparation.', scope: 'Remote · worldwide', ca: false },
+  { num: '01', kicker: 'USCIS', title: 'Immigration Forms & Petitions', desc: 'Client-directed preparation of adjustment-of-status, work-permit, family-petition, naturalization, travel-document, and other USCIS forms. EOIR support is available only to licensed attorneys.', scope: 'Remote · California', ca: false },
   { num: '02', kicker: 'Family Law', title: 'Divorce & Family Forms', desc: 'Dissolution of marriage, summary dissolution, legal separation, child custody, and child support forms. Per Cal. Family Code §2320 et seq.', scope: 'California residents only', ca: true },
   { num: '03', kicker: 'Small Claims', title: 'California Court Forms', desc: 'Small claims document preparation (current CA limit: $12,500 for individuals per CCP §116.221) and Superior Court civil forms.', scope: 'California residents only', ca: true },
   { num: '04', kicker: 'Unlawful Detainer', title: 'Landlord & Tenant Documents', desc: 'Eviction document preparation for landlords and tenants — complaints, responses, and related California court forms. Per CCP §1161 et seq.', scope: 'California residents only', ca: true },
@@ -66,7 +66,7 @@ const reviews = [
 
 const abouts = [
   { icon: '§', title: 'California Registered LDA', desc: 'Registered and bonded Legal Document Assistant under Cal. Bus. & Prof. Code §§6400-6415 — authorized to prepare court and agency documents at your direction.' },
-  { icon: '✦', title: 'Immigration Consultant', desc: 'Registered Immigration Consultant for USCIS document preparation under Cal. Bus. & Prof. Code §§22440-22448. Remote service worldwide.' },
+  { icon: '✦', title: 'Immigration Consultant', desc: 'Registered Immigration Consultant for USCIS document preparation under Cal. Bus. & Prof. Code §§22440-22448. Remote service throughout California.' },
   { icon: '✓', title: 'Flat fee, no surprises', desc: "A written §6410 contract and a flat fee disclosed before we start. We are not a law firm and do not give legal advice — we prepare the documents you decide to file." }
 ];
 
@@ -127,7 +127,7 @@ const footerConnect = ['Instagram', 'Facebook', 'Telegram', 'Client Portal'];
     <div class="rd-hero-inner">
       <div class="rd-hero-pill"><span class="rd-dot-gold">★</span> California · Registered LDA · Immigration Consultant</div>
       <h1 class="rd-hero-h1">What document do you need <span class="rd-italic-gold">prepared?</span></h1>
-      <p class="rd-hero-sub">Describe your situation or enter a form number. We prepare USCIS and California court documents at your direction — for clients across California and worldwide.</p>
+      <p class="rd-hero-sub">Describe the document you want prepared or enter a form number. We prepare USCIS and California court documents at your specific direction for clients throughout California. EOIR support is for attorneys only. No legal advice.</p>
 
       <form class="rd-search" id="rdSearch">
         <span class="rd-search-icon" aria-hidden="true">⌕</span>
@@ -296,7 +296,7 @@ const footerConnect = ['Instagram', 'Facebook', 'Telegram', 'Client Portal'];
             <div class="rd-footer-mark">I</div>
             <div class="rd-footer-brandname">Imverica Legal Solutions</div>
           </div>
-          <p class="rd-footer-tag">Legal Document Assistant · Immigration Consultant · California. Remote service worldwide.</p>
+          <p class="rd-footer-tag">Legal Document Assistant · Immigration Consultant · Remote service throughout California.</p>
           <div class="rd-footer-contact">+1 (916) 399-3992<br />info@imverica.com<br />imverica.com</div>
         </div>
         <div>

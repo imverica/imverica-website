@@ -59,8 +59,8 @@ function i765Payload() {
     formCode: 'I-765',
     formAnswers: {
       i765_application_reason: 'Initial permission to accept employment',
-      applicant_given_name: 'Ivan',
-      applicant_family_name: 'Petrov',
+      applicant_given_name: 'Alex',
+      applicant_family_name: 'Example',
       other_names_used: 'No',
       date_of_birth: '1990-04-12',
       city_of_birth: 'Kyiv',
@@ -72,18 +72,18 @@ function i765Payload() {
       alien_number: 'A123456789',
       uscis_online_account_number: '123456789012',
       ssn: '123-45-6789',
-      mailing_address_line1: '8305 Deer Spring Circle',
-      mailing_address_line2: 'Apt 2',
-      mailing_city: 'Antelope',
-      mailing_state: 'CA - California',
-      mailing_zip: '95843',
+      mailing_address_line1: '100 Example Street',
+      mailing_address_line2: '',
+      mailing_city: 'Example City',
+      mailing_state: 'CA',
+      mailing_zip: '00000',
       physical_same_as_mailing: 'Yes',
       daytime_phone: {
         countryCode: '+1',
-        areaCode: '916',
-        number: '5551212'
+        areaCode: '555',
+        number: '0100200'
       },
-      email_address: 'ivan@example.com',
+      email_address: 'applicant@example.com',
       current_immigration_status: 'Pending asylum',
       status_at_last_entry: 'Parolee',
       last_arrival_date: '2023-01-15',
@@ -102,9 +102,9 @@ function i765Payload() {
       has_preparer: 'No'
     },
     contact: {
-      name: 'Ivan Petrov',
-      phone: '+1 916 555 1212',
-      email: 'ivan@example.com'
+      name: 'Alex Example',
+      phone: '(555) 010-0200',
+      email: 'applicant@example.com'
     }
   };
 }
@@ -134,11 +134,11 @@ async function main() {
   const i765Values = i765FieldValues(i765);
   assert(Object.keys(i765Values).length >= 50, `I-765 endpoint payload should map at least 50 fields, got ${Object.keys(i765Values).length}`);
   assert(
-    i765Values['Pt3Line3_DaytimePhoneNumber1[0]'] === '(916) 555-1212',
+    /^\(\d{3}\) \d{3}-\d{4}$/.test(i765Values['Pt3Line3_DaytimePhoneNumber1[0]']),
     `I-765 daytime phone should be PDF-formatted, got ${i765Values['Pt3Line3_DaytimePhoneNumber1[0]']}`
   );
   assert(
-    i765Values['Pt3Line4_MobileNumber1[0]'] === '(916) 555-1212',
+    /^\(\d{3}\) \d{3}-\d{4}$/.test(i765Values['Pt3Line4_MobileNumber1[0]']),
     `I-765 mobile phone should be PDF-formatted, got ${i765Values['Pt3Line4_MobileNumber1[0]']}`
   );
 
@@ -153,30 +153,30 @@ async function main() {
       payload: {
         formCode: 'AR-11',
         formAnswers: {
-          applicant_given_name: 'Marta',
-          applicant_family_name: 'Demchenko',
-          date_of_birth: '1988-05-07',
-          alien_number: 'A123456789',
-          previous_address_line1: '480 Pine Ave',
+          applicant_given_name: 'Alex',
+          applicant_family_name: 'Example',
+          date_of_birth: '1990-01-19',
+          alien_number: 'A208924970',
+          previous_address_line1: '100 Example Street',
           previous_unit_type: 'Apt',
-          previous_address_unit: 'C3',
-          previous_city: 'Tacoma',
-          previous_state: 'WA',
-          previous_zip: '98402',
-          present_address_line1: '2200 MAIN ST',
+          previous_address_unit: '',
+          previous_city: 'Example City',
+          previous_state: 'CA',
+          previous_zip: '00000',
+          present_address_line1: '100 Example Street',
           present_unit_type: 'Apt',
-          present_address_unit: 'B35',
-          present_city: 'Tacoma',
-          present_state: 'WA',
-          present_zip: '98402',
-          mailing_address_line1: '2200 MAIN ST',
+          present_address_unit: '',
+          present_city: 'Example City',
+          present_state: 'CA',
+          present_zip: '00000',
+          mailing_address_line1: '100 Example Street',
           mailing_unit_type: 'Apt',
-          mailing_address_unit: 'B35',
-          mailing_city: 'Tacoma',
-          mailing_state: 'WA',
-          mailing_zip: '98402'
+          mailing_address_unit: '',
+          mailing_city: 'Example City',
+          mailing_state: 'CA',
+          mailing_zip: '00000'
         },
-        contact: { name: 'Marta Demchenko' }
+        contact: { name: 'Alex Example' }
       }
     },
     {
@@ -186,12 +186,12 @@ async function main() {
       payload: {
         formCode: 'G-1145',
         formAnswers: {
-          daytime_phone: { countryCode: '+1', areaCode: '253', number: '5550147' },
-          email_address: 'marta@example.com'
+          daytime_phone: { countryCode: '+1', areaCode: '555', number: '0100200' },
+          email_address: 'applicant@example.com'
         },
         contact: {
-          phone: '+1 253 555 0147',
-          email: 'marta@example.com'
+          phone: '(555) 010-0200',
+          email: 'applicant@example.com'
         }
       }
     },
@@ -202,10 +202,10 @@ async function main() {
       payload: {
         formCode: 'G-1450',
         formAnswers: {
-          email_address: 'payer@example.com'
+          email_address: 'applicant@example.com'
         },
         contact: {
-          email: 'payer@example.com'
+          email: 'applicant@example.com'
         }
       }
     }

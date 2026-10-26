@@ -8,7 +8,7 @@ import { faqSchema, type FaqItem } from '~/data/orgSchema';
 
 const title = 'USCIS Document Review — check your application before filing | Imverica';
 const description =
-  'Prepared your USCIS forms yourself? We review the completed package before you file — completeness, consistency, current form editions, signatures, and supporting-document checklist. Remote across the U.S., in English, Russian, Ukrainian, and Spanish.';
+  'Prepared your USCIS forms yourself? We review the completed package before you file — completeness, consistency, current form editions, signatures, and supporting-document checklist. Remote throughout California, in English, Russian, Ukrainian, and Spanish.';
 
 const faqs: FaqItem[] = [
   {
@@ -42,7 +42,7 @@ const serviceSchema = {
   '@type': 'Service',
   serviceType: 'USCIS Document Review',
   provider: { '@id': 'https://imverica.com/#organization' },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  areaServed: { '@type': 'State', name: 'California' },
   availableLanguage: ['en', 'ru', 'uk', 'es'],
   description: 'Pre-filing review of self-prepared USCIS application packages: completeness, consistency, current form editions, signatures, and supporting-document checklist. Document review only — not legal advice.'
 };
