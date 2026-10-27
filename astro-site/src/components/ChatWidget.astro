@@ -10,7 +10,7 @@
 .iw-header-sub{font-size:11px;opacity:.65;margin-top:2px;}
 .iw-close{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;padding:0;}
 .iw-langs{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid #eee;background:#f8f8f6;}
-.iw-lang{flex:1;padding:6px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:12px;color:#444;font-family:inherit;}
+.iw-lang{flex:1;min-width:0;padding:6px 4px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:11px;color:#444;font-family:inherit;white-space:nowrap;}
 .iw-lang.active{background:#1a2e4a;color:#fff;border-color:#1a2e4a;}
 .iw-menu{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto;}
 .iw-menu-btn{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;font-size:14px;color:#333;text-decoration:none;font-family:inherit;text-align:left;transition:background 0.15s;}
@@ -46,6 +46,10 @@
   #iw-launcher{bottom:18px;right:16px;width:54px;height:54px;font-size:25px;}
   #iw-window{bottom:84px;right:16px;}
 }
+@media (max-width: 390px){
+  .iw-langs{gap:3px;padding-inline:8px;}
+  .iw-lang{padding-inline:2px;font-size:10px;}
+}
 </style>
 
 <button id="iw-launcher" aria-label="Open chat">💬</button>
@@ -59,10 +63,10 @@
     <button class="iw-close" id="iw-close">×</button>
   </div>
   <div class="iw-langs">
-    <button class="iw-lang active" data-lang="en">EN</button>
-    <button class="iw-lang" data-lang="ru">RU</button>
-    <button class="iw-lang" data-lang="uk">UA</button>
-    <button class="iw-lang" data-lang="es">ES</button>
+    <button class="iw-lang active" type="button" data-lang="en">English</button>
+    <button class="iw-lang" type="button" data-lang="ru">Русский</button>
+    <button class="iw-lang" type="button" data-lang="uk">Українська</button>
+    <button class="iw-lang" type="button" data-lang="es">Español</button>
   </div>
   <div id="iw-content"></div>
 </div>

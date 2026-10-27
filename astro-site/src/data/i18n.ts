@@ -284,25 +284,25 @@ export const HERO: Record<Locale, {
 /** Verified facts in the stats strip. Numbers stay numeric. */
 export const STATS: Record<Locale, string[]> = {
   en: [
-    'Languages — EN · RU · UA · ES',
+    'Languages — English · Russian · Ukrainian · Spanish',
     'Years preparing immigration documents',
     'Registered roles — LDA & Immigration Consultant',
     'LDA registration current through Sep. 27'
   ],
   ru: [
-    'Языка — EN · RU · UA · ES',
+    'Языки — английский · русский · украинский · испанский',
     'Лет подготовки иммиграционных документов',
     'Регистрации — LDA и Immigration Consultant',
     'Регистрация LDA действует до 27 сентября'
   ],
   uk: [
-    'Мови — EN · RU · UA · ES',
+    'Мови — англійська · російська · українська · іспанська',
     'Років підготовки імміграційних документів',
     'Реєстрації — LDA та Immigration Consultant',
     'Реєстрація LDA чинна до 27 вересня'
   ],
   es: [
-    'Idiomas — EN · RU · UA · ES',
+    'Idiomas — inglés · ruso · ucraniano · español',
     'Años preparando documentos de inmigración',
     'Registros — LDA y Consultor de Inmigración',
     'Registro LDA vigente hasta el 27 de septiembre'
