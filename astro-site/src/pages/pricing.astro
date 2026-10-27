@@ -130,8 +130,8 @@ const schema = {
           </thead>
           <tbody>
             <tr data-prefill="I need I-589 asylum document preparation" data-formcode="I-589"><td><strong>I-589</strong> Asylum document preparation</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I received a USCIS Request for Evidence (RFE) and need a response prepared"><td><strong>RFE Response</strong> package</td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need a country-conditions evidence packet"><td><strong>Country conditions</strong> evidence packet</td><td class="num"><span class="price">from $599</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I received a USCIS Request for Evidence (RFE) and need a response prepared"><td><strong>RFE evidence</strong> package<br><small>the documents USCIS asked for, organized and indexed at your direction; legal arguments come from you or your attorney</small></td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I need a country-conditions evidence packet"><td><strong>Country conditions</strong> evidence packet<br><small>published reports you or your attorney select, indexed and translated</small></td><td class="num"><span class="price">from $599</span></td><td class="num gov">$0</td></tr>
             <tr data-prefill="I need help with a humanitarian package (U-visa, T-visa, VAWA, or U4U)"><td><strong>U / T / VAWA / U4U</strong> humanitarian packages</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
           </tbody>
         </table>
@@ -594,6 +594,7 @@ const schema = {
       vertical-align: middle;
     }
     .price-table tbody tr:last-child td { border-bottom: 0; }
+    .price-table td small { display: inline-block; margin-top: 3px; font-size: 12.5px; line-height: 1.4; color: var(--muted, #6e6e73); font-weight: 400; }
     .price-table .num { text-align: right; white-space: nowrap; }
 
     /* Clickable rows — added by JS at runtime when data-prefill is set.

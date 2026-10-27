@@ -527,9 +527,13 @@ exports.handler = async function (event) {
     if (messages.length > 40) messages = messages.slice(-40);
   } catch { return { statusCode: 400, body: JSON.stringify({ error: 'Bad request' }) }; }
 
-  // Model: Claude Opus 5.5, with Claude Opus 4.7 (the previous model) as an
-  // automatic fallback so the chat widget and the homepage finder keep
-  // answering if 5.5 errors out, refuses, or returns no text.
+  // Model: Claude Opus 5.5. A safety-classifier refusal is re-run on another
+  // model by the API itself (server-side `fallbacks: "default"`, beta
+  // server-side-fallback-2026-07-01; Anthropic picks the substitute by refusal
+  // category), so it costs no extra round trip. If 5.5 errors out, times out
+  // or returns no text, the request is retried once on Claude Sonnet 5.5, so
+  // the chat widget and the homepage finder keep answering. If the API ever
+  // rejects the beta field, the same model is retried without it.
   //
   // Opus 5.5 migration checklist applied (from Opus 4.7):
   //   - No `temperature`/`top_p`/`top_k`, no `budget_tokens`, no prefills,
@@ -546,8 +550,8 @@ exports.handler = async function (event) {
   // left (and at least 2.5s of it), so the function still answers inside
   // Netlify's 10s limit.
   const MODELS = [
-    { id: 'claude-opus-5-5', maxTokens: 2048, extra: { output_config: { effort: 'low' } } },
-    { id: 'claude-opus-4-7', maxTokens: 1024, extra: {} }
+    { id: 'claude-opus-5-5', maxTokens: 2048, extra: { output_config: { effort: 'low' }, fallbacks: 'default' }, beta: 'server-side-fallback-2026-07-01' },
+    { id: 'claude-sonnet-5-5', maxTokens: 2048, extra: { output_config: { effort: 'low' } } }
   ];
   const BUDGET_MS = 9000;
   const started = Date.now();
@@ -573,7 +577,12 @@ exports.handler = async function (event) {
     try {
       const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+          ...(model.beta ? { 'anthropic-beta': model.beta } : {})
+        },
         signal: ac.signal,
         body: JSON.stringify({
           model: model.id,
@@ -595,6 +604,11 @@ exports.handler = async function (event) {
         // callers (homepage / chat widget) still see the safe empty-reply
         // shape with just a numeric status code.
         last = { reply: '', upstreamStatus: apiRes.status, ...(showDebug ? { upstreamBody: t.slice(0, 500), model: model.id } : {}) };
+        if (apiRes.status === 400 && model.beta && /fallback/i.test(t)) {
+          // Beta not accepted: same model again, without server-side fallback.
+          const { fallbacks, ...extra } = model.extra;
+          MODELS.splice(i + 1, 0, { ...model, extra, beta: '' });
+        }
         continue;
       }
       const data = await apiRes.json();
