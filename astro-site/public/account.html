@@ -2824,7 +2824,7 @@ function smallClaimsNext(){
 
 // Forms whose answers are checked before the draft (arithmetic, items that
 // should agree, blanks and attachments the form asks for). See /api/form-review.
-const REVIEWED_COURT_FORMS = ['FL-150'];
+const REVIEWED_COURT_FORMS = ['FL-150', 'FW-001', 'FL-142', 'FL-160'];
 
 // Shared by the court and USCIS wizards: ask /api/form-review and render the
 // list grouped by kind. A failed request returns null and never blocks a draft.
@@ -3775,8 +3775,9 @@ function uscisNext(){
   }
 }
 
-// Forms whose address, job and trip dates are checked before the draft.
-const REVIEWED_USCIS_FORMS = ['I-485', 'N-400'];
+// Forms checked before the draft: address, job and trip dates (I-485,
+// N-400); household size, income and asset totals (I-864).
+const REVIEWED_USCIS_FORMS = ['I-485', 'N-400', 'I-864'];
 
 async function reviewUscisForm(){
   const next = document.getElementById('uscis-next');
@@ -3785,7 +3786,7 @@ async function reviewUscisForm(){
   next.disabled = false;
   if (!issues || !issues.length) {
     await generateUscisPdf();
-    if (issues) setUscisStatus('ok', T.uscisReadyPdf + ' ' + T.frCleanDates);
+    if (issues) setUscisStatus('ok', T.uscisReadyPdf + ' ' + (uscisWizardState.form.code === 'I-864' ? T.frClean : T.frCleanDates));
     return;
   }
   uscisWizardState.stage = 'review';

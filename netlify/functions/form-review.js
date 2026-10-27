@@ -14,6 +14,7 @@
 
 const { reviewFl150 } = require('./lib/fl150-review');
 const { reviewHistory, HISTORY_FORMS } = require('./lib/history-review');
+const { reviewTotals, TOTALS_COURT_FORMS, TOTALS_ANSWER_FORMS } = require('./lib/totals-review');
 const { sessionFromEvent } = require('./lib/session-auth');
 const { originGuard, throttleOrReject, ensureBlobs } = require('./lib/abuse-guard');
 
@@ -44,5 +45,7 @@ exports.handler = async function (event) {
   const lang = ['en', 'ru', 'uk', 'es'].includes(body.lang) ? body.lang : 'en';
   if (formCode === 'FL-150') return json(200, { ok: true, formCode, issues: reviewFl150(plainObject(body.directFields), lang) });
   if (HISTORY_FORMS.includes(formCode)) return json(200, { ok: true, formCode, issues: reviewHistory(formCode, plainObject(body.formAnswers), lang) });
+  if (TOTALS_COURT_FORMS.includes(formCode)) return json(200, { ok: true, formCode, issues: reviewTotals(formCode, plainObject(body.directFields), lang) });
+  if (TOTALS_ANSWER_FORMS.includes(formCode)) return json(200, { ok: true, formCode, issues: reviewTotals(formCode, plainObject(body.formAnswers), lang) });
   return json(200, { ok: true, formCode, issues: [] });
 };

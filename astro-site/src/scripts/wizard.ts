@@ -1463,14 +1463,21 @@ export function initIntakeWizard(): void {
     loadReviewChecks();
   }
 
-  // Address, job and trip dates are checked before the intake is sent
-  // (/api/form-review). The list is a reminder only; it never blocks sending.
-  var REVIEW_CHECK_FORMS = ['I-485', 'N-400'];
+  // Address, job and trip dates (I-485, N-400) and I-864 household and
+  // income totals are checked before the intake is sent (/api/form-review).
+  // The list is a reminder only; it never blocks sending.
+  var REVIEW_CHECK_FORMS = ['I-485', 'N-400', 'I-864'];
   var REVIEW_CHECK_TITLE = {
     en: 'Before you send: dates to double-check',
     ru: 'Перед отправкой: проверьте даты',
     uk: 'Перед надсиланням: перевірте дати',
     es: 'Antes de enviar: fechas para revisar'
+  };
+  var REVIEW_NUMBERS_TITLE = {
+    en: 'Before you send: numbers to double-check',
+    ru: 'Перед отправкой: проверьте цифры',
+    uk: 'Перед надсиланням: перевірте цифри',
+    es: 'Antes de enviar: cifras para revisar'
   };
   function loadReviewChecks() {
     var code = String(state.formCode || (state.flowSchema && state.flowSchema.code) || '').toUpperCase();
@@ -1485,7 +1492,8 @@ export function initIntakeWizard(): void {
       .then(function (data) {
         var issues = data && data.ok && Array.isArray(data.issues) ? data.issues : [];
         if (!issues.length || !box.isConnected) return;
-        box.innerHTML = '<strong>' + esc(REVIEW_CHECK_TITLE[state.lang] || REVIEW_CHECK_TITLE.en) + '</strong><ul>' +
+        var titles = code === 'I-864' ? REVIEW_NUMBERS_TITLE : REVIEW_CHECK_TITLE;
+        box.innerHTML = '<strong>' + esc(titles[state.lang] || titles.en) + '</strong><ul>' +
           issues.map(function (issue) { return '<li>' + esc(issue.text) + '</li>'; }).join('') + '</ul>';
         box.hidden = false;
       })
