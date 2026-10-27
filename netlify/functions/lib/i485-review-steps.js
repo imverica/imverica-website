@@ -43,6 +43,11 @@ const EDUCATION_OPTIONS = [
 
 const PUBLIC_CHARGE_NOT_EXEMPT_LABEL = PUBLIC_CHARGE_OPTIONS.find(([index]) => index === PUBLIC_CHARGE_NOT_EXEMPT)[1];
 
+// Item 56 also exempts any category when the applicant is in valid U status
+// ([4]) or has a pending prima facie or approved T application ([12]).
+const UT_STATUS_OPTIONS = ['No', 'Yes: I am in valid U nonimmigrant status', 'Yes: I have a pending prima facie or approved T application'];
+const NOT_UT_EXEMPT = [{ id: 'pc_ut_status', in: ['', UT_STATUS_OPTIONS[0]] }];
+
 // showWhenAny conditions matching the categories for which `predicate` holds.
 function whenCategory(predicate) {
   const conditions = [];
@@ -85,6 +90,9 @@ function i485ReviewSteps({ field, step, addressBlockField, COUNTRY_OPTIONS }) {
       yesNo('has_prior_alien_number', 'Have you ever used, or been assigned, any other A-Number?'),
       field('prior_alien_number_1', 'Other A-Number', 'text', { required: true, autocomplete: 'off', showWhen: [{ id: 'has_prior_alien_number', equals: 'Yes' }] }),
       field('prior_alien_number_2', 'Another A-Number, if any', 'text', { autocomplete: 'off', showWhen: [{ id: 'has_prior_alien_number', equals: 'Yes' }] })
+    ]),
+    step('i485_in_care_of', 'I-485 In Care Of name', 'Part 1, Item 18. Fill only if your mail goes to another person or organization.', [
+      field('in_care_of_name', 'In Care Of name (if any)', 'text')
     ]),
     step('i485_i94_name', 'I-485 name on the I-94', 'Part 1, Item 12. Exactly as printed on your most recent I-94. Leave blank if it matches your legal name.', [
       field('i94_family_name', 'Family name as shown on the I-94', 'text'),
@@ -182,6 +190,10 @@ function i485ReviewSteps({ field, step, addressBlockField, COUNTRY_OPTIONS }) {
         showWhenAny: [{ id: 'marital_status', in: ['Divorced', 'Widowed', 'Separated', 'Annulled'] }, { id: 'times_married', gte: 2 }]
       })
     ]),
+    step('i485_mobile_phone', 'I-485 mobile phone', 'Part 10, Item 2.', [
+      yesNo('daytime_is_mobile', 'Is your daytime phone a mobile phone?'),
+      field('mobile_phone', 'Mobile phone, if any', 'phone', { showWhen: [{ id: 'daytime_is_mobile', equals: 'No' }] })
+    ]),
     step('i485_interpreter_contact', 'I-485 interpreter contact', 'Part 11.', [
       field('interpreter_language', 'Language the interpreter used with the applicant', 'text', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
       field('interpreter_phone', "Interpreter's daytime phone", 'phone', { required: true, showWhen: [{ id: 'has_interpreter', equals: 'Yes' }] }),
@@ -205,20 +217,25 @@ function i485PublicChargeSteps({ field, step }) {
         required: true,
         options: PUBLIC_CHARGE_OPTIONS.map(([, label]) => label),
         showWhenAny: whenCategory((category) => category.publicCharge === null)
+      }),
+      field('pc_ut_status', 'Are you in valid U nonimmigrant status, or do you have a pending prima facie or approved T nonimmigrant application?', 'radio', {
+        required: true,
+        options: UT_STATUS_OPTIONS,
+        showWhenAny: whenCategory((category) => category.publicCharge === PUBLIC_CHARGE_NOT_EXEMPT)
       })
     ]),
     step('i485_part9_public_charge_57', 'Part 9 public charge: household', 'Part 9, Items 57-59. Only for categories subject to public charge.', [
-      field('pc_household', 'Describe your family status (for example, your household size)', 'text', { required: true, showWhenAny: applies }),
-      field('pc_income', 'Annual household income', 'select', { required: true, options: INCOME_OPTIONS, showWhenAny: applies }),
-      field('pc_assets', 'Total value of household assets', 'select', { required: true, options: ASSET_OPTIONS, showWhenAny: applies })
+      field('pc_household', 'Describe your family status (for example, your household size)', 'text', { required: true, showWhenAny: applies, showWhen: NOT_UT_EXEMPT }),
+      field('pc_income', 'Annual household income', 'select', { required: true, options: INCOME_OPTIONS, showWhenAny: applies, showWhen: NOT_UT_EXEMPT }),
+      field('pc_assets', 'Total value of household assets', 'select', { required: true, options: ASSET_OPTIONS, showWhenAny: applies, showWhen: NOT_UT_EXEMPT })
     ]),
     step('i485_part9_public_charge_60', 'Part 9 public charge: liabilities and education', 'Part 9, Items 60-61.', [
-      field('pc_liabilities', 'Total value of household liabilities', 'select', { required: true, options: LIABILITY_OPTIONS, showWhenAny: applies }),
-      field('pc_education', 'Highest degree or level of school completed', 'select', { required: true, options: EDUCATION_OPTIONS, showWhenAny: applies }),
+      field('pc_liabilities', 'Total value of household liabilities', 'select', { required: true, options: LIABILITY_OPTIONS, showWhenAny: applies, showWhen: NOT_UT_EXEMPT }),
+      field('pc_education', 'Highest degree or level of school completed', 'select', { required: true, options: EDUCATION_OPTIONS, showWhenAny: applies, showWhen: NOT_UT_EXEMPT }),
       field('pc_highest_grade', 'Highest grade of school completed', 'text', { required: true, showWhen: [{ id: 'pc_education', equals: EDUCATION_OPTIONS[0] }] })
     ]),
     step('i485_part9_public_charge_62', 'Part 9 public charge: skills', 'Part 9, Item 62. One per line: certifications, licenses, work skills, languages.', [
-      field('pc_skills', 'Your skills, licenses and certificates (one per line)', 'textarea', { required: true, showWhenAny: applies })
+      field('pc_skills', 'Your skills, licenses and certificates (one per line)', 'textarea', { required: true, showWhenAny: applies, showWhen: NOT_UT_EXEMPT })
     ])
   ];
   const after = [1, 2, 3, 4].map((row) => {
@@ -231,7 +248,7 @@ function i485PublicChargeSteps({ field, step }) {
       field(`pc_benefit${row}_reason`, 'Reason you received the benefit', 'text', { showWhen })
     ]);
   });
-  return { before, after, applies };
+  return { before, after, applies, notUtExempt: NOT_UT_EXEMPT };
 }
 
 const I485_REVIEW_LOCALIZATION = {
@@ -719,8 +736,132 @@ const STEP_HELP = {
   for (const [id, texts] of Object.entries(STEP_HELP)) copy.stepHelp[id] = texts[index];
 });
 
+// Added with the In Care Of, mobile phone, organization 2 and U/T questions.
+const MORE_LOCALIZATION = {
+  "ru": {
+    "steps": {
+      "i485_in_care_of": "I-485: In Care Of",
+      "i485_mobile_phone": "I-485: мобильный телефон"
+    },
+    "stepHelp": {
+      "i485_in_care_of": "Часть 1, пункт 18. Только если почту получает другой человек или организация.",
+      "i485_mobile_phone": "Часть 10, пункт 2."
+    },
+    "fields": {
+      "in_care_of_name": "In Care Of (на чьё имя приходит почта), если есть",
+      "daytime_is_mobile": "Ваш дневной телефон — мобильный?",
+      "mobile_phone": "Мобильный телефон, если есть",
+      "pc_ut_status": "У вас действующий статус U или поданное (prima facie) либо одобренное заявление на статус T?",
+      "Pt9Line2_Organization1": "Организация 1: название",
+      "Pt9Line3_CityTownOfBirth": "Организация 1: город",
+      "Pt9Line3_State": "Организация 1: штат или область",
+      "Pt9Line3_Country": "Организация 1: страна",
+      "Pt9Line4_FamilyName": "Организация 1: чем занимается, её цели",
+      "Pt9Line4_Involvement": "Организация 1: ваше участие, роль или должности",
+      "Pt9Line5_DateFrom": "Организация 1: с какой даты",
+      "Pt9Line5_DateTo": "Организация 1: по какую дату",
+      "pt9_second_org": "Состояли ли вы в другой организации или участвовали в её работе?",
+      "Pt9Line6_Organization2": "Организация 2: название",
+      "Pt9Line7_CityTownOfBirth": "Организация 2: город",
+      "Pt9Line7_State": "Организация 2: штат или область",
+      "Pt9Line7_Country": "Организация 2: страна",
+      "Pt9Line8_FamilyName": "Организация 2: чем занимается, её цели",
+      "Pt9Line8_Involvement": "Организация 2: ваше участие, роль или должности",
+      "Pt9Line9_DateFrom": "Организация 2: с какой даты",
+      "Pt9Line9_DateTo": "Организация 2: по какую дату",
+      "pt9_more_organizations": "Другие организации: название, город и страна, чем занимается, ваша роль и даты (по одной в строке)"
+    },
+    "options": {
+      "Yes: I am in valid U nonimmigrant status": "Да: у меня действующий статус U",
+      "Yes: I have a pending prima facie or approved T application": "Да: у меня поданное (prima facie) или одобренное заявление на T"
+    }
+  },
+  "uk": {
+    "steps": {
+      "i485_in_care_of": "I-485: In Care Of",
+      "i485_mobile_phone": "I-485: мобільний телефон"
+    },
+    "stepHelp": {
+      "i485_in_care_of": "Частина 1, пункт 18. Лише якщо пошту отримує інша особа чи організація.",
+      "i485_mobile_phone": "Частина 10, пункт 2."
+    },
+    "fields": {
+      "in_care_of_name": "In Care Of (на чиє ім'я приходить пошта), якщо є",
+      "daytime_is_mobile": "Ваш денний телефон — мобільний?",
+      "mobile_phone": "Мобільний телефон, якщо є",
+      "pc_ut_status": "Чи маєте ви чинний статус U або подану (prima facie) чи схвалену заяву на статус T?",
+      "Pt9Line2_Organization1": "Організація 1: назва",
+      "Pt9Line3_CityTownOfBirth": "Організація 1: місто",
+      "Pt9Line3_State": "Організація 1: штат або область",
+      "Pt9Line3_Country": "Організація 1: країна",
+      "Pt9Line4_FamilyName": "Організація 1: чим займається, її цілі",
+      "Pt9Line4_Involvement": "Організація 1: ваша участь, роль або посади",
+      "Pt9Line5_DateFrom": "Організація 1: з якої дати",
+      "Pt9Line5_DateTo": "Організація 1: по яку дату",
+      "pt9_second_org": "Чи були ви членом іншої організації або брали участь у її роботі?",
+      "Pt9Line6_Organization2": "Організація 2: назва",
+      "Pt9Line7_CityTownOfBirth": "Організація 2: місто",
+      "Pt9Line7_State": "Організація 2: штат або область",
+      "Pt9Line7_Country": "Організація 2: країна",
+      "Pt9Line8_FamilyName": "Організація 2: чим займається, її цілі",
+      "Pt9Line8_Involvement": "Організація 2: ваша участь, роль або посади",
+      "Pt9Line9_DateFrom": "Організація 2: з якої дати",
+      "Pt9Line9_DateTo": "Організація 2: по яку дату",
+      "pt9_more_organizations": "Інші організації: назва, місто й країна, чим займається, ваша роль і дати (по одній у рядку)"
+    },
+    "options": {
+      "Yes: I am in valid U nonimmigrant status": "Так: у мене чинний статус U",
+      "Yes: I have a pending prima facie or approved T application": "Так: у мене подана (prima facie) або схвалена заява на T"
+    }
+  },
+  "es": {
+    "steps": {
+      "i485_in_care_of": "I-485: In Care Of",
+      "i485_mobile_phone": "I-485: teléfono móvil"
+    },
+    "stepHelp": {
+      "i485_in_care_of": "Parte 1, punto 18. Solo si su correo llega a otra persona u organización.",
+      "i485_mobile_phone": "Parte 10, punto 2."
+    },
+    "fields": {
+      "in_care_of_name": "In Care Of (a nombre de quién llega el correo), si aplica",
+      "daytime_is_mobile": "¿Su teléfono diurno es un móvil?",
+      "mobile_phone": "Teléfono móvil, si tiene",
+      "pc_ut_status": "¿Tiene estatus U vigente, o una solicitud de estatus T pendiente (prima facie) o aprobada?",
+      "Pt9Line2_Organization1": "Organización 1: nombre",
+      "Pt9Line3_CityTownOfBirth": "Organización 1: ciudad",
+      "Pt9Line3_State": "Organización 1: estado o provincia",
+      "Pt9Line3_Country": "Organización 1: país",
+      "Pt9Line4_FamilyName": "Organización 1: naturaleza y actividades",
+      "Pt9Line4_Involvement": "Organización 1: su participación, función o cargos",
+      "Pt9Line5_DateFrom": "Organización 1: desde",
+      "Pt9Line5_DateTo": "Organización 1: hasta",
+      "pt9_second_org": "¿Fue miembro de otra organización o participó en ella?",
+      "Pt9Line6_Organization2": "Organización 2: nombre",
+      "Pt9Line7_CityTownOfBirth": "Organización 2: ciudad",
+      "Pt9Line7_State": "Organización 2: estado o provincia",
+      "Pt9Line7_Country": "Organización 2: país",
+      "Pt9Line8_FamilyName": "Organización 2: naturaleza y actividades",
+      "Pt9Line8_Involvement": "Organización 2: su participación, función o cargos",
+      "Pt9Line9_DateFrom": "Organización 2: desde",
+      "Pt9Line9_DateTo": "Organización 2: hasta",
+      "pt9_more_organizations": "Otras organizaciones: nombre, ciudad y país, naturaleza, su función y fechas (una por línea)"
+    },
+    "options": {
+      "Yes: I am in valid U nonimmigrant status": "Sí: tengo estatus U vigente",
+      "Yes: I have a pending prima facie or approved T application": "Sí: tengo una solicitud T pendiente (prima facie) o aprobada"
+    }
+  }
+};
+for (const [lang, buckets] of Object.entries(MORE_LOCALIZATION)) {
+  for (const [bucket, entries] of Object.entries(buckets)) {
+    I485_REVIEW_LOCALIZATION[lang][bucket] = { ...(I485_REVIEW_LOCALIZATION[lang][bucket] || {}), ...entries };
+  }
+}
+
 module.exports = {
   CATEGORY_KEY_BY_BASIS,
+  UT_STATUS_OPTIONS,
   EB_RELATIVE_OPTIONS,
   RELATIVE_OPTIONS,
   RELATIVE_STATUS_OPTIONS,

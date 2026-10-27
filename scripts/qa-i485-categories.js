@@ -8,7 +8,7 @@ const path = require('path');
 const { i485FieldValues, i485TextOverlays } = require('../netlify/functions/lib/i485-pdf-map');
 const { incrementalFillPdf, parsePdf, extractFieldObjects } = require('../netlify/functions/lib/pdf-incremental-fill');
 const { CATEGORIES, I864_INDEX, I864_OPTIONS, PUBLIC_CHARGE_NOT_EXEMPT } = require('../netlify/functions/lib/i485-categories');
-const { CATEGORY_KEY_BY_BASIS } = require('../netlify/functions/lib/i485-review-steps');
+const { CATEGORY_KEY_BY_BASIS, UT_STATUS_OPTIONS } = require('../netlify/functions/lib/i485-review-steps');
 
 const pdf = fs.readFileSync(path.join(__dirname, '..', 'assets/form-cache/pdfs/i-485.pdf'));
 const pdfFields = extractFieldObjects(parsePdf(pdf));
@@ -100,6 +100,39 @@ check(spouse['Pt5Line2_YNNA[1]'] === true && spouse['Part6Line8_StreetName[0]'] 
 // The applicant's business is never printed as an organization name.
 const orgs = i485FieldValues({ formAnswers: { interpreter_business_name: 'Imverica', preparer_business_name: 'IMVERICA LLC' } });
 check(!orgs['Pt11Line2_OrgName[0]'] && !orgs['Pt12Line2_BusinessName[0]'], 'organization names never print Imverica');
+
+// Item 56 for a category that is not exempt: valid U status [4], pending or approved T [12].
+const f1 = CATEGORIES.find((category) => category.publicCharge === PUBLIC_CHARGE_NOT_EXEMPT);
+const withUt = (status) => i485FieldValues({ formAnswers: categoryAnswers(f1, { pc_ut_status: status, pc_household: '3', Pt9Line63_YesNo: 'No' }) });
+const uStatus = withUt(UT_STATUS_OPTIONS[1]);
+check(JSON.stringify(selected(uStatus, 'Pt9Line56_CB')) === '[4]' && uStatus['Pt9Line57_HouseholdSize[0]'] === undefined && uStatus['Pt9Line63_YesNo[0]'] === undefined, 'U status: Item 56 [4], Items 57-64 skipped');
+check(JSON.stringify(selected(withUt(UT_STATUS_OPTIONS[2]), 'Pt9Line56_CB')) === '[12]', 'T application: Item 56 [12]');
+const noUt = withUt(UT_STATUS_OPTIONS[0]);
+check(JSON.stringify(selected(noUt, 'Pt9Line56_CB')) === '[23]' && noUt['Pt9Line57_HouseholdSize[0]'] === '3', 'no U/T: not exempt, Items 57-64 kept');
+
+// Part 9, Items 1-9: two organizations, dates as mm/dd/yyyy, the rest in Part 14.
+const organizations = {
+  Pt8Line1_YesNo: 'Yes', Pt9Line2_Organization1: 'FIRST TEST CLUB', Pt9Line5_DateFrom: '2012-03-01', Pt9Line5_DateTo: '2014-06-30',
+  pt9_second_org: 'Yes', Pt9Line6_Organization2: 'SECOND TEST UNION', Pt9Line7_Country: 'Testland', Pt9Line9_DateFrom: '2015-09-01', Pt9Line9_DateTo: '2016-01-31',
+  pt9_more_organizations: 'THIRD TEST SOCIETY, Testville, Testland; sports club; member; 2017-2018\nFOURTH TEST GROUP, Testville, Testland; charity; volunteer; 2019'
+};
+const orgValues = i485FieldValues({ formAnswers: organizations });
+check(orgValues['Pt9Line2_Organization1[0]'] === 'FIRST TEST CLUB' && orgValues['Pt9Line5_DateFrom[0]'] === '03/01/2012', 'organization 1 with mm/dd/yyyy dates');
+check(orgValues['Pt9Line6_Organization2[0]'] === 'SECOND TEST UNION' && orgValues['Pt9Line7_Country[0]'] === 'Testland' && orgValues['Pt9Line9_DateTo[0]'] === '01/31/2016', 'organization 2 in Items 6-9');
+const orgSlot = [1, 2, 3, 4].find((n) => /ORGANIZATION 3: THIRD TEST SOCIETY/.test(orgValues[`P14_Line${n + 1}_AdditionalInfo[0]`] || ''));
+check(orgSlot && /ORGANIZATION 4/.test(orgValues[`P14_Line${orgSlot + 1}_AdditionalInfo[0]`]), 'organizations 3+ in Part 14');
+const noSecond = i485FieldValues({ formAnswers: { ...organizations, pt9_second_org: 'No' } });
+check(noSecond['Pt9Line6_Organization2[0]'] === undefined && noSecond['Pt9Line2_Organization1[0]'] === 'FIRST TEST CLUB', 'no second organization: Items 6-9 blank');
+const noOrg = i485FieldValues({ formAnswers: { ...organizations, Pt8Line1_YesNo: 'No' } });
+check(noOrg['Pt9Line2_Organization1[0]'] === undefined && noOrg['Pt9Line6_Organization2[0]'] === undefined, 'Item 1 No: Items 2-9 blank');
+
+// Part 10, Item 2 and Part 1, Item 18 In Care Of.
+const daytime = { countryCode: '+1', areaCode: '916', number: '5550100' };
+const mobileFor = (extra) => i485FieldValues({ formAnswers: { daytime_phone: daytime, ...extra } })['Pt3Line4_MobileNumber1[0]'] || '';
+check(mobileFor({}) === '(916) 555-0100', 'mobile defaults to the daytime number');
+check(mobileFor({ daytime_is_mobile: 'No', mobile_phone: { countryCode: '+1', areaCode: '916', number: '5550111' } }) === '(916) 555-0111', 'separate mobile number');
+check(mobileFor({ daytime_is_mobile: 'No' }) === '', 'no mobile: blank');
+check(i485FieldValues({ formAnswers: { in_care_of_name: 'TEST FRIEND', mailing_address_line1: '1 Test Way', physical_same_as_mailing: 'Yes' } })['Part1_Item18_InCareOfName[0]'] === 'TEST FRIEND', 'In Care Of name');
 
 // Part 14: five-year addresses beyond the form continue on extra sheets.
 const addresses = Array.from({ length: 12 }, (_, index) => ({

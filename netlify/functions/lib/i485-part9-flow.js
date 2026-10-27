@@ -152,8 +152,9 @@ function printedNumber(itemNumber, itemsByNumber) {
   return itemsByNumber.get(itemNumber)?.printed || itemNumber;
 }
 
-function yesNoField(field, item, itemsByNumber, showWhenAny) {
-  const showWhen = dependencyShowWhen(item.item, itemsByNumber);
+function yesNoField(field, item, itemsByNumber, showWhenAny, extraShowWhen = []) {
+  const dependency = dependencyShowWhen(item.item, itemsByNumber);
+  const showWhen = dependency || extraShowWhen.length ? [...(dependency || []), ...extraShowWhen] : null;
   return field(item.key, `${printedNumber(item.item, itemsByNumber)}. ${ITEM_LABELS[item.item] || item.topic || item.item}`, 'radio', {
     required: true,
     options: ['Yes', 'No'],
@@ -177,6 +178,7 @@ function item86Field(field, itemsByNumber) {
 
 function organizationDetailFields(field, itemsByNumber) {
   const showWhen = [conditionToField({ item: '1', equals: 'yes' }, itemsByNumber)];
+  const second = [...showWhen, { id: 'pt9_second_org', equals: 'Yes' }];
   return [
     field('Pt9Line2_Organization1', 'Organization name', 'text', { required: true, showWhen }),
     field('Pt9Line3_CityTownOfBirth', 'Organization city or town', 'text', { showWhen }),
@@ -185,7 +187,18 @@ function organizationDetailFields(field, itemsByNumber) {
     field('Pt9Line4_FamilyName', 'Nature of organization and its purpose or activities', 'textarea', { required: true, showWhen }),
     field('Pt9Line4_Involvement', 'Nature of your involvement and role or positions held', 'textarea', { required: true, showWhen }),
     field('Pt9Line5_DateFrom', 'Dates of membership or involvement: from', 'date', { showWhen }),
-    field('Pt9Line5_DateTo', 'Dates of membership or involvement: to', 'date', { showWhen })
+    field('Pt9Line5_DateTo', 'Dates of membership or involvement: to', 'date', { showWhen }),
+    // Items 6-9: a second organization; any more go to Part 14.
+    field('pt9_second_org', 'Were you a member of, or involved with, another organization?', 'radio', { required: true, options: ['Yes', 'No'], showWhen }),
+    field('Pt9Line6_Organization2', 'Organization 2 name', 'text', { required: true, showWhen: second }),
+    field('Pt9Line7_CityTownOfBirth', 'Organization 2 city or town', 'text', { showWhen: second }),
+    field('Pt9Line7_State', 'Organization 2 state or province', 'text', { showWhen: second }),
+    field('Pt9Line7_Country', 'Organization 2 country', 'text', { showWhen: second }),
+    field('Pt9Line8_FamilyName', 'Organization 2: nature of the organization and its purpose or activities', 'textarea', { required: true, showWhen: second }),
+    field('Pt9Line8_Involvement', 'Organization 2: nature of your involvement and role or positions held', 'textarea', { required: true, showWhen: second }),
+    field('Pt9Line9_DateFrom', 'Organization 2 dates: from', 'date', { showWhen: second }),
+    field('Pt9Line9_DateTo', 'Organization 2 dates: to', 'date', { showWhen: second }),
+    field('pt9_more_organizations', 'Any other organizations: name, city and country, nature, your role and dates (one per line)', 'textarea', { showWhen: second })
   ];
 }
 
@@ -195,7 +208,10 @@ function organizationDetailSteps(field, step, group, itemsByNumber) {
     ['Pt9Line2_Organization1'],
     ['Pt9Line3_CityTownOfBirth', 'Pt9Line3_State', 'Pt9Line3_Country'],
     ['Pt9Line4_FamilyName', 'Pt9Line4_Involvement'],
-    ['Pt9Line5_DateFrom', 'Pt9Line5_DateTo']
+    ['Pt9Line5_DateFrom', 'Pt9Line5_DateTo', 'pt9_second_org'],
+    ['Pt9Line6_Organization2', 'Pt9Line7_CityTownOfBirth', 'Pt9Line7_State', 'Pt9Line7_Country'],
+    ['Pt9Line8_FamilyName', 'Pt9Line8_Involvement'],
+    ['Pt9Line9_DateFrom', 'Pt9Line9_DateTo', 'pt9_more_organizations']
   ];
 
   return chunks.map((ids, index) => step(
@@ -234,7 +250,8 @@ function buildI485Part9Steps(field, step) {
         const item = itemsByNumber.get(itemNumber);
         if (!item) continue;
         const showWhenAny = itemNumber === '63' ? publicCharge.applies : null;
-        fields.push(item.type === 'yesNo' ? yesNoField(field, item, itemsByNumber, showWhenAny) : item86Field(field, itemsByNumber));
+        const extraShowWhen = itemNumber === '63' ? publicCharge.notUtExempt : [];
+        fields.push(item.type === 'yesNo' ? yesNoField(field, item, itemsByNumber, showWhenAny, extraShowWhen) : item86Field(field, itemsByNumber));
       }
       fields.push(...explanationFields(field, items, itemsByNumber));
 

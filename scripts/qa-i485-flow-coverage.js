@@ -93,7 +93,9 @@ const before = (first, second) => {
   'i485_interpreter_contact',
   'i485_preparer_contact',
   'i485_part9_public_charge_56',
-  'i485_part9_public_charge_64'
+  'i485_part9_public_charge_64',
+  'i485_in_care_of',
+  'i485_mobile_phone'
 ].forEach((stepId) => assert(hasStepOrPrefix(stepId), `Missing I-485 flow step: ${stepId}`));
 
 [
@@ -194,7 +196,15 @@ const before = (first, second) => {
   'race',
   'weight_lbs',
   'has_interpreter',
-  'has_preparer'
+  'has_preparer',
+  'in_care_of_name',
+  'daytime_is_mobile',
+  'mobile_phone',
+  'pc_ut_status',
+  'pt9_second_org',
+  'Pt9Line6_Organization2',
+  'Pt9Line9_DateTo',
+  'pt9_more_organizations'
 ].forEach((fieldId) => assert(fields.has(fieldId), `Missing I-485 core frontend field: ${fieldId}`));
 
 for (const item of part9Logic.items || []) {
@@ -236,6 +246,10 @@ before('documents_interpreter_business', 'i485_interpreter_contact');
 const item63 = fields.get('Pt9Line63_YesNo');
 assert(Array.isArray(item63.showWhenAny) && item63.showWhenAny.length, 'Item 63 must depend on the filing category');
 assert(!item63.showWhenAny.some((condition) => condition.id === 'i485_category_asylee'), 'Item 63 must not be asked of asylees and refugees');
+// A valid U status or a T application exempts the applicant: Item 63 is not asked.
+assert((item63.showWhen || []).some((condition) => condition.id === 'pc_ut_status'), 'Item 63 must be skipped for a U/T exemption');
+before('address_contact', 'i485_in_care_of');
+before('contact_info', 'i485_mobile_phone');
 // Item 4 (INA 245(i)) is not asked of asylees and refugees.
 const item4 = fields.get('ina_245i_adjustment');
 assert(!item4.showWhenAny.some((condition) => condition.id === 'i485_category_asylee'), 'INA 245(i) must not be asked of asylees and refugees');

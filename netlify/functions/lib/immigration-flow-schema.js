@@ -4601,6 +4601,8 @@ const I485_STEP_META = {
   i485_current_spouse_details: ['Part 6', 'Pages 10-11'],
   i485_current_spouse_address: ['Part 6', 'Page 10'],
   i485_prior_spouse_middle: ['Part 6', 'Page 11'],
+  i485_in_care_of: ['Part 1', 'Page 3'],
+  i485_mobile_phone: ['Part 10', 'Page 22'],
   i485_interpreter_contact: ['Part 11', 'Page 22'],
   i485_preparer_contact: ['Part 12', 'Page 23'],
   i485_residence_period: ['Part 1', 'Page 3'],
@@ -4706,6 +4708,7 @@ function i485OrderedSteps() {
     'i485_current_status_expiration',
     'i485_crewman',
     'address_contact',
+    'i485_in_care_of',
     'physical_address_match',
     'i485_physical_address',
     'i485_residence_period',
@@ -4803,6 +4806,7 @@ function i485OrderedSteps() {
   const afterPart9 = orderedSteps(map, [
     // Form I-485 Parts 10-13, pages 22-23: contact, interpreter, preparer.
     'contact_info',
+    'i485_mobile_phone',
     'documents_interpreter_choice',
     'documents_interpreter',
     'documents_interpreter_business',

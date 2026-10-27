@@ -16,7 +16,8 @@ const {
   INCOME_OPTIONS,
   ASSET_OPTIONS,
   LIABILITY_OPTIONS,
-  EDUCATION_OPTIONS
+  EDUCATION_OPTIONS,
+  UT_STATUS_OPTIONS
 } = require('./i485-review-steps');
 
 function clean(value, max = 300) {
@@ -352,14 +353,21 @@ function affidavitSupportFields(answers, category) {
 }
 
 // Part 9, Item 56: the exempt category, or 23 "not exempt"; null if unknown.
+// A category that is not exempt still is when the applicant is in valid U
+// status ([4]) or has a pending prima facie or approved T application ([12]).
+const UT_EXEMPTION_INDEX = [null, 4, 12];
 function publicChargeIndex(answers, category) {
+  if (category && category.publicCharge === PUBLIC_CHARGE_NOT_EXEMPT) {
+    return UT_EXEMPTION_INDEX[UT_STATUS_OPTIONS.indexOf(clean(answers.pc_ut_status, 120))] ?? PUBLIC_CHARGE_NOT_EXEMPT;
+  }
   if (category && Number.isInteger(category.publicCharge)) return category.publicCharge;
   const chosen = PUBLIC_CHARGE_OPTIONS.find(([, label]) => label === clean(answers.public_charge_exemption, 200));
   return chosen ? chosen[0] : null;
 }
 
 const EDUCATION_CHECKBOX = [0, 2, 1, 3, 7, 4, 5, 6];
-const PUBLIC_CHARGE_ANSWER_KEYS = /^(?:pc_|Pt9Line63_YesNo$)/;
+// pc_ut_status stays: it is what makes the applicant exempt.
+const PUBLIC_CHARGE_ANSWER_KEYS = /^(?:pc_(?!ut_status$)|Pt9Line63_YesNo$)/;
 
 function lines(value) {
   return String(value || '').split(/\r?\n|;/).map((line) => clean(line, 120)).filter(Boolean);
@@ -711,6 +719,9 @@ function part14Entries(answers) {
   const children = [];
   for (let n = 3; n <= 8; n += 1) children.push(childAdditionalInfo(n, answers));
   add('12', '7', '3', children);
+  // Part 9, Items 1-9 hold two organizations; any more go here.
+  const moreOrganizations = String(answers.pt9_more_organizations || '').split(/\r?\n/).map((line) => clean(line, 600)).filter(Boolean);
+  add('13', '9', '1', moreOrganizations.map((line, index) => `ORGANIZATION ${index + 3}: ${line}`));
   const extraSkills = lines(answers.pc_skills).slice(8);
   if (extraSkills.length) add('19', '9', '62', [`SKILLS, LICENSES AND CERTIFICATES (CONTINUED): ${extraSkills.join('; ')}`]);
   entries.push(...part9ExplanationEntries(answers));
@@ -929,6 +940,9 @@ function shouldKeepPublicChargeQuestions(answers) {
   return checkboxSelectedIndexFromPdfBase(answers.Pt9Line56_CB, 'Pt9Line56_CB') === PUBLIC_CHARGE_NOT_EXEMPT_INDEX;
 }
 
+const ORGANIZATION_1_KEYS = /^(?:Pt9Line[2-5]_|pt9_second_org$)/;
+const ORGANIZATION_2_KEYS = /^(?:Pt9Line[6-9]_|pt9_more_organizations$)/;
+
 function sanitizeI485Answers(rawAnswers = {}) {
   const answers = { ...rawAnswers };
 
@@ -943,6 +957,15 @@ function sanitizeI485Answers(rawAnswers = {}) {
     for (const key of Object.keys(answers)) {
       if (PUBLIC_CHARGE_ITEM_KEYS.test(key)) delete answers[key];
     }
+  }
+
+  // Part 9, Items 2-9 only follow a Yes to Item 1; Items 6-9 (and any more
+  // organizations) only when the wizard says there was a second one.
+  const memberOfOrganization = pdfYesNoEquals(answers, PART9_ITEMS_BY_NUMBER.get('1'), 'yes');
+  const secondOrganization = memberOfOrganization && clean(answers.pt9_second_org, 10) === 'Yes';
+  for (const key of Object.keys(answers)) {
+    if (!memberOfOrganization && ORGANIZATION_1_KEYS.test(key)) delete answers[key];
+    if (!secondOrganization && ORGANIZATION_2_KEYS.test(key)) delete answers[key];
   }
 
   // Applicants in an exempt category skip Part 9, Items 57-64 (Item 63 too).
@@ -1097,8 +1120,12 @@ function exactScenarioFieldValues(answers = {}) {
         continue;
       }
 
+      // The wizard's date inputs store YYYY-MM-DD; the form wants mm/dd/yyyy.
+      const value = EXACT_PHONE_KEYS.has(key)
+        ? usPhonePdf(rawValue)
+        : (/^\d{4}-\d{2}-\d{2}$/.test(String(rawValue).trim()) ? dateMdY(rawValue) : rawValue);
       names.forEach((name) => {
-        result[name] = EXACT_PHONE_KEYS.has(key) ? usPhonePdf(rawValue) : rawValue;
+        result[name] = value;
       });
     }
   }
@@ -1163,7 +1190,10 @@ function i485FieldValues(payload = {}) {
   const legacyValues = legacyExactI485Values(answers);
   const contact = payload.contact || {};
   const phone = usPhonePdf(answers.daytime_phone || contact.phone);
-  const mobile = usPhonePdf(answers.mobile_phone || answers.daytime_phone || contact.phone);
+  // Part 10, Item 2: the daytime number unless the applicant said it is not a mobile.
+  const mobile = clean(answers.daytime_is_mobile, 10) === 'No'
+    ? usPhonePdf(answers.mobile_phone)
+    : usPhonePdf(answers.mobile_phone || answers.daytime_phone || contact.phone);
   const email = clean(answers.email_address || contact.email, 180);
   const alienNum = digits(firstPresentValue(answers.alien_number, answers.AlienNumber, answers.Pt1Line4_AlienNumber), 9);
   const visaNumber = firstPresentValue(answers.visa_number, answers.Pt1Line10_VisaNum);
