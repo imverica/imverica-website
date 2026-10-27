@@ -26,12 +26,12 @@ export const organizationSchema = {
     { '@type': 'State', name: 'California' }
   ],
   knowsLanguage: ['en', 'ru', 'uk', 'es'],
-  // LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028, Imverica LLC
-  // (Cal. Bus. & Prof. Code §6400 et seq.); immigration consultant bond on
-  // file with the California Secretary of State.
+  // The founder's LDA Reg. No. 2026-010, Sacramento County, expires
+  // 09/27/2028 (Cal. Bus. & Prof. Code §6400 et seq.), and the founder's
+  // immigration consultant bond on file with the California Secretary of State.
   identifier: [
-    { '@type': 'PropertyValue', propertyID: 'California Legal Document Assistant registration (Sacramento County, expires 2028-09-27)', value: '2026-010' },
-    { '@type': 'PropertyValue', propertyID: 'California Immigration Consultant bond (Western Surety Company)', value: '67347671' }
+    { '@type': 'PropertyValue', propertyID: 'California Legal Document Assistant registration of the founder (Sacramento County, expires 2028-09-27)', value: '2026-010' },
+    { '@type': 'PropertyValue', propertyID: 'California Immigration Consultant bond of the founder (Western Surety Company)', value: '67347671' }
   ],
   sameAs: [
     'https://www.instagram.com/imverica',
@@ -39,7 +39,7 @@ export const organizationSchema = {
     'https://t.me/imverica'
   ],
   description:
-    'Imverica Legal Solutions, the trade name of Imverica LLC, is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant based in Sacramento. Imverica provides remote document preparation throughout California in English, Russian, Ukrainian, and Spanish. Imverica has more than 10 years of immigration-document preparation experience, including prior paralegal work under the direction of California-licensed attorneys. Documents are prepared only at the client\'s specific direction; Imverica does not provide legal advice.',
+    'Imverica Legal Solutions, the trade name of Imverica LLC, is a document-preparation company based in Sacramento. Its founder is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant. Imverica provides remote document preparation throughout California in English, Russian, Ukrainian, and Spanish. Imverica has more than 10 years of immigration-document preparation experience, including prior paralegal work under the direction of California-licensed attorneys. Documents are prepared only at the client\'s specific direction; Imverica does not provide legal advice.',
   knowsAbout: [
     'USCIS immigration form preparation',
     'U4U Uniting for Ukraine re-parole document preparation',

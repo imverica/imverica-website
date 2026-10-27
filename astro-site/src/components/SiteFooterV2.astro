@@ -39,7 +39,17 @@ const contacts = [
 <footer class="gf" lang={LOCALES[lang].htmlLang}>
   <div class="gf-inner">
     <ol class="gf-notes">
-      {f.notes.map((n) => <li><strong>{n.lead}</strong> {n.text}</li>)}
+      {f.notes.map((n) => (
+        <li>
+          <strong>{n.lead}</strong> {n.text}
+          {n.registrant && (
+            <span class="gf-registrant">
+              {n.registrant.label}
+              <img src="/img/legal/registrant.png" alt={n.registrant.alt} width="254" height="32" loading="lazy" decoding="async" />
+            </span>
+          )}
+        </li>
+      ))}
     </ol>
 
     <nav class="gf-dir" aria-label="Imverica">
@@ -131,6 +141,8 @@ const contacts = [
     overflow-wrap: break-word;
   }
   .gf-notes strong { color: #1d1d1f; font-weight: 600; }
+  .gf-registrant { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 6px; text-align: left; }
+  .gf-registrant img { display: block; width: 254px; max-width: 100%; height: auto; }
 
   .gf-dir {
     display: grid;

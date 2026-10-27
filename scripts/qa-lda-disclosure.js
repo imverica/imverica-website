@@ -21,13 +21,13 @@ function check(ok, label) {
     const pdf = fs.readFileSync(path.join(__dirname, '..', 'assets/form-cache/ca-court', `${slug}.pdf`));
     const names = new Set((await PDFDocument.load(pdf, { ignoreEncryption: true })).getForm().getFields().map((field) => field.getName()));
     for (const [key, name] of Object.entries(BLOCKS[slug])) check(names.has(name), `${slug}: ${key} field exists`);
-    const withAddress = applyLdaDisclosure(slug, {}, { LDA_ADDRESS: '100 Test Plaza, Sacramento, CA 95814' });
+    const withAddress = applyLdaDisclosure(slug, {}, { LDA_ASSISTANT_NAME: 'SAMPLE ASSISTANT', LDA_ADDRESS: '100 Test Plaza, Sacramento, CA 95814' });
     check(withAddress.values[BLOCKS[slug].did] === true && withAddress.values[BLOCKS[slug].didNot] === false, `${slug}: "did" ticked`);
-    check(withAddress.values[BLOCKS[slug].regNo] === '2026-010' && withAddress.missing.length === 0, `${slug}: registration filled`);
+    check(withAddress.values[BLOCKS[slug].regNo] === '2026-010' && withAddress.values[BLOCKS[slug].name] === 'SAMPLE ASSISTANT' && withAddress.missing.length === 0, `${slug}: registration filled`);
     const filled = await fillCourtForm(pdf, withAddress.values);
     check(filled.skipped.length === 0, `${slug}: fills without skipped fields`);
     const noAddress = applyLdaDisclosure(slug, {}, {});
-    check(JSON.stringify(noAddress.missing) === '["address"]' && !(BLOCKS[slug].address in noAddress.values), `${slug}: no address without LDA_ADDRESS`);
+    check(JSON.stringify(noAddress.missing) === '["name","address"]' && !(BLOCKS[slug].address in noAddress.values) && !(BLOCKS[slug].name in noAddress.values), `${slug}: no name or address without their variables`);
   }
   check(applyLdaDisclosure('ud-100', { a: 1 }, { LDA_DISCLOSURE: 'off' }).values.a === 1 && Object.keys(applyLdaDisclosure('ud-100', {}, { LDA_DISCLOSURE: 'off' }).values).length === 0, 'LDA_DISCLOSURE=off');
   check(Object.keys(applyLdaDisclosure('fl-100', {}, {}).values).length === 0, 'forms without the block are untouched');

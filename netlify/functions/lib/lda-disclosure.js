@@ -3,10 +3,10 @@
 // California forms that ask whether a legal document assistant or unlawful
 // detainer assistant helped for pay (Bus. & Prof. Code §§ 6400-6415). When
 // Imverica prepares one of them, the answer is "did" and the block lists the
-// registration. Registration facts default to what the site footer states;
-// the business address is never stored in the code: it comes only from the
-// LDA_ADDRESS environment variable (Netlify settings). LDA_DISCLOSURE=off
-// turns the whole thing off.
+// registration. The registrant's name and business address are never stored
+// in the code: they come only from the LDA_ASSISTANT_NAME and LDA_ADDRESS
+// environment variables (Netlify settings). The other registration facts
+// default to what the site states. LDA_DISCLOSURE=off turns it all off.
 
 const BLOCKS = {
   'ud-100': {
@@ -73,7 +73,7 @@ const BLOCKS = {
 
 function ldaDetails(env = process.env) {
   return {
-    name: env.LDA_ASSISTANT_NAME || 'Imverica LLC',
+    name: env.LDA_ASSISTANT_NAME || '',
     address: env.LDA_ADDRESS || '',
     phone: env.LDA_PHONE || '(916) 399-3992',
     county: env.LDA_COUNTY || 'Sacramento',
@@ -83,7 +83,7 @@ function ldaDetails(env = process.env) {
 }
 
 // Returns the field values with the assistant block filled, plus the list of
-// details still missing (only the address can be, when LDA_ADDRESS is unset).
+// details still missing (the name and the address, when their variables are unset).
 function applyLdaDisclosure(slug, fieldValues = {}, env = process.env) {
   const block = BLOCKS[String(slug || '').toLowerCase()];
   if (!block || String(env.LDA_DISCLOSURE || '').toLowerCase() === 'off') return { values: fieldValues, missing: [] };
