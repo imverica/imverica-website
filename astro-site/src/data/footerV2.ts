@@ -48,7 +48,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
     ],
     reach: { lead: 'More ways to reach us', call: 'Call', email: 'Email' },
     copyright: 'Copyright © {year} Imverica LLC. All rights reserved.',
-    bottom: [['/terms.html', 'Terms of Service'], ['/pricing', 'Pricing'], ['/lda', 'What Is an LDA'], ['/for-attorneys', 'For Attorneys']],
+    bottom: [['/terms.html', 'Terms of Service'], ['/document-security', 'How we protect documents'], ['/pricing', 'Pricing'], ['/lda', 'What Is an LDA'], ['/for-attorneys', 'For Attorneys']],
     region: 'California, USA',
     languages: 'Language'
   },
@@ -69,7 +69,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
     ],
     reach: { lead: 'Другие способы связаться', call: 'Позвонить', email: 'Написать на почту' },
     copyright: 'Copyright © {year} Imverica LLC. Все права защищены.',
-    bottom: [['/terms.html', 'Условия обслуживания'], ['/pricing', 'Цены'], ['/lda', 'Что такое LDA'], ['/for-attorneys', 'Адвокатам']],
+    bottom: [['/terms.html', 'Условия обслуживания'], ['/ru/document-security', 'Защита документов'], ['/pricing', 'Цены'], ['/lda', 'Что такое LDA'], ['/for-attorneys', 'Адвокатам']],
     region: 'Калифорния, США',
     languages: 'Язык'
   },
@@ -90,7 +90,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
     ],
     reach: { lead: 'Інші способи зв’язатися', call: 'Зателефонувати', email: 'Написати на пошту' },
     copyright: 'Copyright © {year} Imverica LLC. Усі права захищено.',
-    bottom: [['/terms.html', 'Умови обслуговування'], ['/pricing', 'Ціни'], ['/lda', 'Що таке LDA'], ['/for-attorneys', 'Адвокатам']],
+    bottom: [['/terms.html', 'Умови обслуговування'], ['/ua/document-security', 'Захист документів'], ['/pricing', 'Ціни'], ['/lda', 'Що таке LDA'], ['/for-attorneys', 'Адвокатам']],
     region: 'Каліфорнія, США',
     languages: 'Мова'
   },
@@ -111,7 +111,7 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
     ],
     reach: { lead: 'Otras formas de contactarnos', call: 'Llamar', email: 'Escribir un correo' },
     copyright: 'Copyright © {year} Imverica LLC. Todos los derechos reservados.',
-    bottom: [['/terms.html', 'Términos del servicio'], ['/pricing', 'Precios'], ['/lda', 'Qué es un LDA'], ['/for-attorneys', 'Para firmas jurídicas']],
+    bottom: [['/terms.html', 'Términos del servicio'], ['/mx/document-security', 'Protección de documentos'], ['/pricing', 'Precios'], ['/lda', 'Qué es un LDA'], ['/for-attorneys', 'Para firmas jurídicas']],
     region: 'California, EE. UU.',
     languages: 'Idioma'
   }

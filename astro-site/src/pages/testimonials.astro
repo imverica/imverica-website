@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { REVIEWS, GOOGLE_REVIEWS_URL } from '~/data/reviews';
+import { REVIEWS, GOOGLE_REVIEWS_URL, GOOGLE_RATING } from '~/data/reviews';
 
 const title = 'Client reviews — Imverica Legal Solutions';
 const description =
@@ -20,7 +20,7 @@ const schema = {
       <div class="reviews-head">
         <div class="reviews-kicker">Client reviews</div>
         <h1>What our clients say</h1>
-        <p>Real feedback from clients across immigration and California court document preparation — in the language they speak. These reviews are published on our Google Business Profile.</p>
+        <p>Real feedback from clients across immigration and California court document preparation — in the language they speak. These reviews are published on our Google Business Profile, rated {GOOGLE_RATING.average} out of 5 from {GOOGLE_RATING.count} reviews.</p>
         <a class="reviews-google-cta" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
           <span class="reviews-google-stars" aria-hidden="true">★★★★★</span> Read &amp; leave a review on Google <span aria-hidden="true">→</span>
         </a>
@@ -43,7 +43,7 @@ const schema = {
 
       <div class="reviews-foot">
         <a class="reviews-google-cta" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
-          <span class="reviews-google-stars" aria-hidden="true">★★★★★</span> See all reviews on Google <span aria-hidden="true">→</span>
+          <span class="reviews-google-stars" aria-hidden="true">★★★★★</span> {GOOGLE_RATING.average} · See all {GOOGLE_RATING.count} reviews on Google <span aria-hidden="true">→</span>
         </a>
         <a class="reviews-back" href="/">← Back to home</a>
         <p class="reviews-disclaimer">Document preparation only · No legal advice · We are not a law firm.</p>

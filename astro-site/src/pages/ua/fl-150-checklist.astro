@@ -1,0 +1,9 @@
+---
+import InfoPageView from '~/components/InfoPageView.astro';
+import SampleForm from '~/components/SampleForm.astro';
+import { FL150_CHECKLIST } from '~/data/trustPages';
+---
+<InfoPageView page={FL150_CHECKLIST.uk} lang="uk" slug="/fl-150-checklist" ctaHref="/#get-started?form=FL-150"
+  related={[{ href: '/ua/fl-150-income-expense-declaration', label: 'FL-150 — Income and Expense Declaration (декларація про доходи та витрати)' }, { href: '/ua/fl-300-request-for-order', label: 'FL-300 — Request for Order (клопотання про наказ)' }, { href: '/ua/document-security', label: 'Як ми захищаємо документи' }]}>
+  <SampleForm form="fl-150" lang="uk" />
+</InfoPageView>

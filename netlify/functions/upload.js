@@ -347,7 +347,7 @@ exports.handler = async function (event) {
   // Take a COMPLETE file buffer (single-shot or reassembled from chunks) and run
   // it through the full security pipeline: magic-byte validation → VirusTotal
   // hash scan → encrypt-at-rest → store + metadata → best-effort Drive mirror.
-  async function finalizeUpload(buf, name, type) {
+  async function finalizeUpload(buf, name, type, authorized) {
     if (!buf.length) return json(400, { ok: false, error: 'Empty file' });
     if (buf.length > MAX_TOTAL_BYTES) return json(413, { ok: false, error: 'File too large (max 25 MB).' });
 
@@ -380,6 +380,8 @@ exports.handler = async function (event) {
       size: buf.length,
       uploadedAt: new Date().toISOString(),
       source: 'client',
+      // The client confirmed they may share this document (portal checkbox).
+      ...(authorized ? { authorizedAt: new Date().toISOString() } : {}),
       enc: true
     });
     await writeJson(filesStore, metaKey, meta, FILES_DIR);
@@ -440,11 +442,11 @@ exports.handler = async function (event) {
       }
       for (let i = 0; i < totalChunks; i++) await deleteBlob(filesStore, `chunks/${orderId}/${uploadId}/${i}`, FILES_DIR);
       if (total > MAX_TOTAL_BYTES) return json(413, { ok: false, error: 'File too large (max 25 MB).' });
-      return await finalizeUpload(Buffer.concat(parts), name, type);
+      return await finalizeUpload(Buffer.concat(parts), name, type, body.authorized === true);
     }
 
     // ---- Single-shot (files that fit in one request body) ----
-    return await finalizeUpload(part, name, type);
+    return await finalizeUpload(part, name, type, body.authorized === true);
   }
 
   return json(405, { ok: false, error: 'Method not allowed' });

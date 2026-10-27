@@ -1,0 +1,9 @@
+---
+import InfoPageView from '~/components/InfoPageView.astro';
+import SampleForm from '~/components/SampleForm.astro';
+import { FL150_CHECKLIST } from '~/data/trustPages';
+---
+<InfoPageView page={FL150_CHECKLIST.en} lang="en" slug="/fl-150-checklist" ctaHref="/#get-started?form=FL-150"
+  related={[{ href: '/fl-150-income-expense-declaration', label: 'FL-150 — Income and Expense Declaration' }, { href: '/fl-300-request-for-order', label: 'FL-300 — Request for Order' }, { href: '/document-security', label: 'How we protect your documents' }]}>
+  <SampleForm form="fl-150" lang="en" />
+</InfoPageView>

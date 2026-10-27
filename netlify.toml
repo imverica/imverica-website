@@ -245,6 +245,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/form-review"
+  to = "/.netlify/functions/form-review"
+  status = 200
+
+[[redirects]]
   from = "/api/generate-court-pdf"
   to = "/.netlify/functions/generate-court-pdf"
   status = 200

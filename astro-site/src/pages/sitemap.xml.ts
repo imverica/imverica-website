@@ -62,6 +62,8 @@ const URLS: SitemapEntry[] = [
   { slug: '/fl-100-divorce', priority: 0.85, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/fl-120-divorce-response', priority: 0.75, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/fl-150-income-expense-declaration', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/fl-150-checklist', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/document-security', priority: 0.5, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/fl-160-property-declaration', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/fl-300-request-for-order', priority: 0.8, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/fl-105-uccjea', priority: 0.7, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },

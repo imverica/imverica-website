@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import SampleForm from '~/components/SampleForm.astro';
+import WhyNotChatGPT from '~/components/WhyNotChatGPT.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
@@ -65,6 +67,7 @@ const schema = {
       <li><strong>FL-150</strong> completada con las cifras de ingresos, deducciones y gastos que usted proporciona.</li>
       <li>Organización de los anexos de <strong>talones de pago y declaraciones de impuestos</strong> que exige el formulario.</li>
       <li>Las <strong>FL-160 / FL-142</strong> complementarias cuando se necesiten.</li>
+      <li>Una <strong>revisión de cifras antes del borrador</strong>: totales, promedios, puntos que deben coincidir y los anexos que pide el formulario (<a href="/mx/fl-150-checklist">lista de revisión del FL-150</a>).</li>
     </ul>
 
     <h2>Qué NO hacemos</h2>
@@ -83,6 +86,9 @@ const schema = {
       legal.
     </cite>
   </LandingBody>
+
+  <SampleForm form="fl-150" lang="es" />
+  <WhyNotChatGPT lang="es" />
 
   <CTAStrip lang="es" primaryHref="/#get-started?form=FL-150" primaryText="Comenzar mi entrevista FL-150" />
 </BaseLayout>

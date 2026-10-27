@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import SampleForm from '~/components/SampleForm.astro';
+import WhyNotChatGPT from '~/components/WhyNotChatGPT.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
@@ -63,6 +65,7 @@ const schema = {
       <li><strong>FL-150</strong> completed from the income, deduction, and expense figures you provide.</li>
       <li>Organization of <strong>pay stubs and tax-return attachments</strong> the form requires.</li>
       <li>The companion <strong>FL-160 / FL-142</strong> property disclosures where needed.</li>
+      <li>A <strong>numbers check before your draft</strong>: totals, averages, items that should agree, and the attachments the form asks for (<a href="/fl-150-checklist">see the FL-150 checklist</a>).</li>
     </ul>
 
     <h2>What we do NOT do</h2>
@@ -80,6 +83,9 @@ const schema = {
       only — not legal advice.
     </cite>
   </LandingBody>
+
+  <SampleForm form="fl-150" />
+  <WhyNotChatGPT />
 
   <CTAStrip primaryHref="/#get-started?form=FL-150" primaryText="Begin my FL-150 intake" />
 </BaseLayout>

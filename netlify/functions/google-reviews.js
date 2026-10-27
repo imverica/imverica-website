@@ -63,6 +63,30 @@ function cleanText(s) {
   return String(s || '').replace(/[\x00-\x1f\x7f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 600);
 }
 
+// The founder's name appears on the site only as the image in the About
+// founder block, so review text never prints it. The name is kept here as
+// SHA-256 hashes of its spellings (lower case), not as text.
+const REDACTED_NAME_HASHES = new Set([
+  'db27d4aceaf3b714a5948d6fb95b349da535e62285674b4a98c7791c185efcae',
+  '962e95a952551897a9d755e25e033cfb117b35ab72a6a7d9fa034f693d9d1ca1',
+  '3e6b7feece1ab4b6aee726a542e994a9412705e1ea68d34394c626871ba45ed4',
+  '3550e0d6ed0e70e0248e2ce8492c06c16da58bfe5ad7e2ef784e304439c182f3',
+  'b4edb4afa11f350a7a3f55a65f6f3c22546f209f2c147de79012fcd509599b2e',
+  '39be144b6d68e24ce3bcbf4282ee3ec12bf815ea4ac3ac6078ec719b2703c7b0',
+  '4face15cc85dd1f5e65a6ce2cabdbc85ae7c0ab6a285d9fb2ec7a4f067bcdf1b',
+  'e1c42a6d6d883f9f807ebb3f70f98726b23e322ee47af40940f1e903b5520b9d',
+  'c3a6ca66cd7a25fe97c55bcc51f61aae151a57e84cd6f6f748ac2e30167f9fa8',
+  '8b393ffb07aa5d294d3e121679e0d64c6af85f8b299a2c3acb8f82d8dc2d943f',
+  '6d9187c8376142e98e788c2f177aecb57b11e7c40cb8c774b46e12ea3dc54dd3'
+]);
+
+function redactNames(text) {
+  const crypto = require('crypto');
+  return String(text || '').replace(/\p{L}+/gu, (word) => (
+    REDACTED_NAME_HASHES.has(crypto.createHash('sha256').update(word.toLowerCase()).digest('hex')) ? '[our preparer]' : word
+  ));
+}
+
 // ---- Blobs cache (best-effort) ----
 async function getStore() {
   try { return require('@netlify/blobs').getStore(CACHE_STORE); } catch { return null; }
@@ -134,7 +158,7 @@ function mapBusinessProfile(data) {
   const reviews = list
     .map((r) => {
       const stars = STAR_WORDS[String(r.starRating || '').toUpperCase()] || 0;
-      const body = cleanText(r.comment);
+      const body = redactNames(cleanText(r.comment));
       const name = cleanText(r.reviewer && r.reviewer.displayName) || 'Google user';
       const time = r.updateTime || r.createTime || '';
       return body && stars
@@ -196,7 +220,7 @@ function mapPlaces(result) {
   const reviews = list
     .map((r) => {
       const stars = Math.round(Number(r.rating) || 0);
-      const body = cleanText(r.text);
+      const body = redactNames(cleanText(r.text));
       const name = cleanText(r.author_name) || 'Google user';
       return body && stars
         ? { stars, name, body, meta: (cleanText(r.relative_time_description) ? cleanText(r.relative_time_description) + ' · ' : '') + 'Google review', time: r.time ? new Date(r.time * 1000).toISOString() : '', source: 'google' }

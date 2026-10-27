@@ -20,8 +20,22 @@ export interface Review {
 // kept in sync with admin-order.js's review-request email fallback.
 export const GOOGLE_REVIEWS_URL = 'https://maps.app.goo.gl/gEGYUtF817aDtW6U7';
 
+// Google Business Profile rating as last checked; update with new reviews.
+export const GOOGLE_RATING = { average: '5.0', count: 21 };
+
 // Newest first — the homepage shows the leading 6, the rest live on /testimonials.
+// Square brackets mark the one edit made to a quote: the founder's name is
+// replaced, since it only appears on the site as the founder image.
 export const REVIEWS: Review[] = [
+  { stars: 5, name: 'J. M.',
+    meta: 'USCIS · Immigration case',
+    body: 'We came to this company on a strong recommendation, and their team handled our case with absolute perfection from start to finish. Even though the USCIS process itself threw a few bumps our way, their expertise got us across the finish line, and we couldn’t be happier with the results!' },
+  { stars: 5, name: 'Anastasiia',
+    meta: 'Demand letter · Small Claims',
+    body: 'We are very grateful to [our preparer]. He was professional, prompt, and guided us through the entire process. He helped us draft a demand letter and complete the necessary Small Claims Court documents. As a result, the defendant agreed to return our deposit before the case went any further.' },
+  { stars: 5, name: 'Ale',
+    meta: 'Document preparation',
+    body: 'It’s a real pleasure working with these guys. They genuinely care about you.' },
   { stars: 5, name: 'Serdar',
     meta: 'USCIS I-765 · I-589 · Family',
     body: 'Thank you so much for helping our entire family! We contacted Imverica to prepare immigration forms — including I-765 and I-589 — for me, my wife, and our children. They were incredibly professional and punctual, and every document was prepared carefully.' },

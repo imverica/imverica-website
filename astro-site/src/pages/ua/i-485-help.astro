@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import SampleForm from '~/components/SampleForm.astro';
+import WhyNotChatGPT from '~/components/WhyNotChatGPT.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
@@ -137,6 +139,9 @@ const serviceSchema = {
       (Immigration Consultant Act).
     </cite>
   </LandingBody>
+
+  <SampleForm form="i-485" lang="uk" />
+  <WhyNotChatGPT lang="uk" />
 
   <CTAStrip
     lang={lang}

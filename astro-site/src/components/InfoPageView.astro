@@ -1,0 +1,45 @@
+---
+// Shared layout for the informational pages in ~/data/trustPages.ts.
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import type { InfoPage, Lang } from '~/data/trustPages';
+
+interface Props {
+  page: InfoPage;
+  lang: Lang;
+  slug: string;
+  ctaHref: string;
+  related?: { href: string; label: string }[];
+}
+const { page, lang, slug, ctaHref, related = [] } = Astro.props;
+const prefix = { en: '', ru: '/ru', uk: '/ua', es: '/mx' }[lang];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: page.heading,
+  url: `https://imverica.com${prefix}${slug}`,
+  inLanguage: lang,
+  publisher: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com' }
+};
+---
+<BaseLayout title={page.title} description={page.description} canonical={`https://imverica.com${prefix}${slug}`}
+  slug={slug} lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[schema]}>
+  <Hero lang={lang} eyebrow={page.eyebrow} heading={page.heading} sub={page.sub} ctaPrimary={{ href: ctaHref, text: page.cta }} />
+
+  <LandingBody lang={lang} related={related}>
+    {page.sections.map((section) => (
+      <>
+        <h2>{section.heading}</h2>
+        {section.text && <p>{section.text}</p>}
+        {section.items && <ul>{section.items.map((item) => <li>{item}</li>)}</ul>}
+      </>
+    ))}
+    <cite>{page.foot}</cite>
+  </LandingBody>
+
+  <slot />
+
+  <CTAStrip lang={lang} primaryHref={ctaHref} primaryText={page.cta} />
+</BaseLayout>

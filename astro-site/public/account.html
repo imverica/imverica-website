@@ -175,6 +175,21 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .sc-status.info{display:block;background:#eef2f7;color:#33506e;}
 .sc-status.error{display:block;background:#fdeeee;color:#9a2f24;}
 .sc-status.ok{display:block;background:#eef7f0;color:#1a5a3a;}
+.fr-title{font-size:17px;margin:0 0 12px;color:var(--navy);}
+.ua-overlay{position:fixed;inset:0;z-index:1400;background:rgba(15,22,35,.55);display:flex;align-items:center;justify-content:center;padding:16px;}
+.ua-modal{background:#fff;border-radius:14px;max-width:440px;width:100%;padding:22px 22px 18px;box-shadow:0 30px 80px rgba(15,22,35,.4);display:flex;flex-direction:column;gap:12px;}
+.ua-modal h3{margin:0;font-size:17px;color:var(--navy);}
+.ua-check{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:#24364b;cursor:pointer;}
+.ua-check input{margin-top:3px;width:18px;height:18px;flex:0 0 auto;}
+.ua-modal a{font-size:13px;color:var(--navy);}
+.ua-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:4px;}
+.ua-actions button{border:1px solid var(--border);background:#fff;border-radius:8px;padding:9px 16px;font-weight:600;cursor:pointer;}
+.ua-actions button.primary{background:var(--navy);border-color:var(--navy);color:#fff;}
+.ua-actions button:disabled{opacity:.45;cursor:not-allowed;}
+.fr-group{margin:0 0 16px;}
+.fr-group-title{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#586779;margin-bottom:8px;}
+.fr-group ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.fr-group li{font-size:13.5px;line-height:1.55;color:#24364b;background:#fbfaf7;border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
 .sc-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 24px;border-top:1px solid var(--border);background:#fafaf8;}
 .sc-footer button{font:600 13px var(--font-system);padding:10px 16px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--navy);}
 /* ===== USCIS wizard — split-screen, one question per screen ===== */
@@ -1135,6 +1150,8 @@ const STRINGS = {
     scLoadFail: 'Could not load the Small Claims. Please try again.',
     scNoFields: 'This form has no client-fillable fields.', scFields: 'fillable fields',
     scDisclaimer: 'Imverica prepares documents at your direction and does not provide legal advice. Leave court, clerk, and judge sections blank. Review every field before filing.',
+    uaTitle: 'Before you upload', uaText: 'I confirm I may share these documents: they are mine, or I have permission from the person they belong to.', uaLink: '/document-security', uaLinkText: 'How we store and protect documents', uaCancel: 'Cancel', uaOk: 'Continue',
+    frTitle: 'Before your draft: items to double-check', frIntro: 'We checked the numbers you entered: totals, items that should agree with each other, blanks the form asks you to fill, and the attachments it asks for. This is not legal advice — you decide what to report. Fix anything that needs it, or generate the draft as is.', frMath: 'Arithmetic', frCheck: 'Check these answers', frAttach: 'Attach to the form', frFix: 'Back to the form', frAnyway: 'Generate the draft anyway', frClean: 'Numbers check: totals add up and related items agree.',
     notifTitle: 'Notifications', notifMarkAll: 'Mark all read',
     notifEmpty: 'No notifications yet.', notifEmptyLong: 'No notifications yet. Replies from Imverica and status updates will show here.',
     notifImvericaReplied: 'Imverica replied', notifStatus: 'Status:',
@@ -1271,6 +1288,8 @@ const STRINGS = {
     scLoadFail: 'Не удалось загрузить мастер Small Claims. Попробуйте ещё раз.',
     scNoFields: 'В этой форме нет полей для заполнения клиентом.', scFields: 'полей для заполнения',
     scDisclaimer: 'Imverica готовит документы по вашим указаниям и не даёт юридических консультаций. Оставляйте разделы суда, клерка и судьи пустыми. Проверьте каждое поле перед подачей.',
+    uaTitle: 'Перед загрузкой', uaText: 'Подтверждаю, что вправе передать эти документы: они мои или у меня есть разрешение человека, которому они принадлежат.', uaLink: '/ru/document-security', uaLinkText: 'Как мы храним и защищаем документы', uaCancel: 'Отмена', uaOk: 'Продолжить',
+    frTitle: 'Перед черновиком: что перепроверить', frIntro: 'Мы проверили введённые цифры: итоги, пункты, которые должны совпадать, пустые места, которые форма просит заполнить, и приложения, которые она требует. Это не юридическая консультация — что указывать, решаете вы. Исправьте нужное или создайте черновик как есть.', frMath: 'Арифметика', frCheck: 'Проверьте ответы', frAttach: 'Приложить к форме', frFix: 'Вернуться к форме', frAnyway: 'Всё равно создать черновик', frClean: 'Проверка цифр: итоги сходятся, связанные пункты совпадают.',
     notifTitle: 'Уведомления', notifMarkAll: 'Отметить всё прочитанным',
     notifEmpty: 'Уведомлений пока нет.', notifEmptyLong: 'Уведомлений пока нет. Здесь появятся ответы от Imverica и обновления статусов.',
     notifImvericaReplied: 'Imverica ответили', notifStatus: 'Статус:',
@@ -1407,6 +1426,8 @@ const STRINGS = {
     scLoadFail: 'Не вдалося завантажити майстер Small Claims. Спробуйте ще раз.',
     scNoFields: 'У цій формі немає полів для заповнення клієнтом.', scFields: 'полів для заповнення',
     scDisclaimer: 'Imverica готує документи за вашими вказівками й не надає юридичних консультацій. Залишайте розділи суду, клерка та судді порожніми. Перевірте кожне поле перед поданням.',
+    uaTitle: 'Перед завантаженням', uaText: 'Підтверджую, що маю право передати ці документи: вони мої або я маю дозвіл особи, якій вони належать.', uaLink: '/ua/document-security', uaLinkText: 'Як ми зберігаємо та захищаємо документи', uaCancel: 'Скасувати', uaOk: 'Продовжити',
+    frTitle: 'Перед чернеткою: що перевірити', frIntro: 'Ми перевірили введені цифри: підсумки, пункти, які мають збігатися, порожні місця, які форма просить заповнити, і додатки, яких вона вимагає. Це не юридична консультація — що вказувати, вирішуєте ви. Виправте потрібне або створіть чернетку як є.', frMath: 'Арифметика', frCheck: 'Перевірте відповіді', frAttach: 'Додати до форми', frFix: 'Повернутися до форми', frAnyway: 'Все одно створити чернетку', frClean: 'Перевірка цифр: підсумки сходяться, пов’язані пункти збігаються.',
     notifTitle: 'Сповіщення', notifMarkAll: 'Позначити все прочитаним',
     notifEmpty: 'Сповіщень поки немає.', notifEmptyLong: 'Сповіщень поки немає. Тут з\'являться відповіді від Imverica та оновлення статусів.',
     notifImvericaReplied: 'Imverica відповіли', notifStatus: 'Статус:',
@@ -1543,6 +1564,8 @@ const STRINGS = {
     scLoadFail: 'No se pudo cargar el asistente Small Claims. Inténtelo de nuevo.',
     scNoFields: 'Este formulario no tiene campos para completar por el cliente.', scFields: 'campos editables',
     scDisclaimer: 'Imverica prepara documentos según sus instrucciones y no brinda asesoría legal. Deje en blanco las secciones del tribunal, secretario y juez. Revise cada campo antes de presentar.',
+    uaTitle: 'Antes de subir', uaText: 'Confirmo que puedo compartir estos documentos: son míos o tengo permiso de la persona a quien pertenecen.', uaLink: '/mx/document-security', uaLinkText: 'Cómo guardamos y protegemos los documentos', uaCancel: 'Cancelar', uaOk: 'Continuar',
+    frTitle: 'Antes del borrador: puntos para revisar', frIntro: 'Revisamos las cifras que ingresó: totales, puntos que deben coincidir, espacios en blanco que el formulario pide llenar y los anexos que exige. Esto no es asesoría legal: usted decide qué declarar. Corrija lo necesario o genere el borrador tal como está.', frMath: 'Cálculos', frCheck: 'Revise estas respuestas', frAttach: 'Adjuntar al formulario', frFix: 'Volver al formulario', frAnyway: 'Generar el borrador de todos modos', frClean: 'Revisión de cifras: los totales cuadran y los puntos relacionados coinciden.',
     notifTitle: 'Notificaciones', notifMarkAll: 'Marcar todo leído',
     notifEmpty: 'No hay notificaciones aún.', notifEmptyLong: 'No hay notificaciones aún. Aquí aparecerán respuestas de Imverica y actualizaciones de estado.',
     notifImvericaReplied: 'Imverica respondió', notifStatus: 'Estado:',
@@ -1886,7 +1909,44 @@ function readBlobAsBase64(blob){
     r.readAsDataURL(blob);
   });
 }
+// Before the first upload the client confirms they may share the documents
+// (their own, or with permission of the person they belong to). Remembered
+// in this browser; every upload records the confirmation server-side.
+let uploadAuthorized = false;
+try { uploadAuthorized = localStorage.getItem('imv-upload-authorized') === '1'; } catch(e) {}
+function confirmUploadAuthorization(){
+  if (uploadAuthorized) return Promise.resolve(true);
+  return new Promise(function(resolve){
+    const overlay = document.createElement('div');
+    overlay.className = 'ua-overlay';
+    overlay.innerHTML =
+      '<div class="ua-modal" role="dialog" aria-modal="true" aria-labelledby="ua-title">' +
+        '<h3 id="ua-title">' + escText(T.uaTitle) + '</h3>' +
+        '<label class="ua-check"><input type="checkbox" id="ua-box"> <span>' + escText(T.uaText) + '</span></label>' +
+        '<a href="' + escText(T.uaLink) + '" target="_blank" rel="noopener">' + escText(T.uaLinkText) + '</a>' +
+        '<div class="ua-actions"><button type="button" id="ua-cancel">' + escText(T.uaCancel) + '</button>' +
+        '<button type="button" class="primary" id="ua-ok" disabled>' + escText(T.uaOk) + '</button></div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    const box = overlay.querySelector('#ua-box');
+    const ok = overlay.querySelector('#ua-ok');
+    box.addEventListener('change', function(){ ok.disabled = !box.checked; });
+    function done(result){
+      overlay.remove();
+      if (result) {
+        uploadAuthorized = true;
+        try { localStorage.setItem('imv-upload-authorized', '1'); } catch(e) {}
+      }
+      resolve(result);
+    }
+    ok.addEventListener('click', function(){ done(true); });
+    overlay.querySelector('#ua-cancel').addEventListener('click', function(){ done(false); });
+    box.focus();
+  });
+}
+
 async function uploadFile(orderId, file, msgEl){
+  if (!(await confirmUploadAuthorization())) return;
   msgEl.className='doc-msg';
   if(file.size > UPLOAD_MAX_BYTES){ msgEl.className='doc-msg err'; msgEl.textContent= T.errFileBig; return; }
   msgEl.textContent= T.msgUploading + ' ' + file.name + '…';
@@ -1895,7 +1955,7 @@ async function uploadFile(orderId, file, msgEl){
       // Small file → one request (the original path).
       const dataBase64 = await readBlobAsBase64(file);
       const r = await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64})});
+        body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64, authorized:true})});
       const d = await r.json();
       if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error || T.errUploadFail; return; }
     } else {
@@ -1908,7 +1968,7 @@ async function uploadFile(orderId, file, msgEl){
         const dataBase64 = await readBlobAsBase64(slice);
         msgEl.textContent = T.msgUploading + ' ' + file.name + ' (' + (i+1) + '/' + totalChunks + ')…';
         const r = await fetch('/api/upload',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64, uploadId, chunkIndex:i, totalChunks})});
+          body:JSON.stringify({orderId, name:file.name, type:file.type, dataBase64, uploadId, chunkIndex:i, totalChunks, authorized:true})});
         const d = await r.json();
         if(!d.ok){ msgEl.className='doc-msg err'; msgEl.textContent=d.error || T.errUploadFail; return; }
       }
@@ -2018,8 +2078,10 @@ function pickAttachment(kind){
   const id = kind==='camera' ? 'chat-file-camera' : (kind==='photo' ? 'chat-file-photo' : 'chat-file-doc');
   const el=$(id); if(el){ el.value=''; el.click(); }
 }
-function onChatFiles(input){
+async function onChatFiles(input){
   const files = Array.from(input.files||[]);
+  input.value='';
+  if (files.length && !(await confirmUploadAuthorization())) return;
   for(const f of files){
     if(chatPending.length>=CHAT_MAX_FILES){ chatErr(T.attTooMany||'Up to 3 files per message.'); break; }
     if(f.size>CHAT_MAX_BYTES){ chatErr('File too large (max 4 MB).'); continue; }
@@ -2027,7 +2089,6 @@ function onChatFiles(input){
     reader.onload=()=>{ chatPending.push({name:f.name, type:f.type, size:f.size, dataBase64:String(reader.result)}); renderChatPending(); };
     reader.readAsDataURL(f);
   }
-  input.value='';
 }
 function removeChatPending(i){ chatPending.splice(i,1); renderChatPending(); }
 function renderChatPending(){
@@ -2431,6 +2492,7 @@ function setSmallClaimsFooter(backVisible, nextVisible, nextLabel){
   const back = document.getElementById('sc-back');
   const next = document.getElementById('sc-next');
   back.classList.toggle('hidden', !backVisible);
+  back.textContent = T.scBack;
   next.classList.toggle('hidden', !nextVisible);
   next.disabled = false;
   next.textContent = nextLabel || T.scNext;
@@ -2716,6 +2778,11 @@ async function fetchAllForms(q, rerender){
 }
 
 function smallClaimsBack(){
+  if (smallClaimsState.stage === 'review') {
+    smallClaimsState.stage = 'fields';
+    renderSmallClaimsFields();
+    return;
+  }
   if (smallClaimsState.stage === 'fields') {
     collectSmallClaimsPage();
     if (smallClaimsState.pageIndex > 0) {
@@ -2739,14 +2806,64 @@ function smallClaimsBack(){
 }
 
 function smallClaimsNext(){
+  if (smallClaimsState.stage === 'review') {
+    generateSmallClaimsPdf();
+    return;
+  }
   if (smallClaimsState.stage !== 'fields') return;
   collectSmallClaimsPage();
   if (smallClaimsState.pageIndex < smallClaimsState.schema.steps.length - 1) {
     smallClaimsState.pageIndex += 1;
     renderSmallClaimsFields();
+  } else if (REVIEWED_COURT_FORMS.indexOf(smallClaimsState.form.code) !== -1) {
+    reviewCourtForm();
   } else {
     generateSmallClaimsPdf();
   }
+}
+
+// Forms whose answers are checked before the draft (arithmetic, items that
+// should agree, blanks and attachments the form asks for). See /api/form-review.
+const REVIEWED_COURT_FORMS = ['FL-150'];
+
+async function reviewCourtForm(){
+  const next = document.getElementById('sc-next');
+  next.disabled = true;
+  let issues = null;
+  try {
+    const response = await fetch('/api/form-review', {
+      method:'POST',
+      credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ formCode:smallClaimsState.form.code, directFields:smallClaimsState.values, lang:CURRENT_LANG })
+    });
+    const data = await response.json().catch(function(){ return {}; });
+    if (response.ok && data.ok && Array.isArray(data.issues)) issues = data.issues;
+  } catch(e) { /* the review is a convenience; never block the draft */ }
+  next.disabled = false;
+  if (!issues || !issues.length) {
+    await generateSmallClaimsPdf();
+    if (issues) setSmallClaimsStatus('ok', T.scReady + ' ' + T.frClean);
+    return;
+  }
+  smallClaimsState.stage = 'review';
+  const groups = [['math', T.frMath], ['check', T.frCheck], ['attach', T.frAttach]];
+  document.getElementById('sc-body').innerHTML =
+    '<div class="fr-review">' +
+      '<h3 class="fr-title">' + escText(T.frTitle) + '</h3>' +
+      '<div class="sc-intro">' + escText(T.frIntro) + '</div>' +
+      groups.map(function(group){
+        const items = issues.filter(function(issue){ return issue.kind === group[0]; });
+        if (!items.length) return '';
+        return '<div class="fr-group"><div class="fr-group-title">' + escText(group[1]) + ' · ' + items.length + '</div><ul>' +
+          items.map(function(issue){
+            return '<li>' + escText(issue.text) + '</li>';
+          }).join('') + '</ul></div>';
+      }).join('') +
+      '<div class="sc-status" id="sc-status"></div>' +
+    '</div>';
+  setSmallClaimsFooter(true, true, T.frAnyway);
+  document.getElementById('sc-back').textContent = T.frFix;
 }
 
 function blobToDataUrl(blob){

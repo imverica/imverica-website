@@ -8,23 +8,38 @@
 // 60 seconds. The first batch is server-rendered so search engines see content.
 // When /api/google-reviews is configured it overrides this pool automatically.
 
-import { REVIEWS, GOOGLE_REVIEWS_URL, type Review } from '~/data/reviews';
+import { REVIEWS, GOOGLE_REVIEWS_URL, GOOGLE_RATING, type Review } from '~/data/reviews';
+
+interface Props { lang?: 'en' | 'ru' | 'uk' | 'es' }
+const { lang = 'en' } = Astro.props;
+// Section copy per language; the reviews stay in the language they were written in.
+const slavic = (n: number, one: string, few: string, many: string) => {
+  const d = n % 10, h = n % 100;
+  return d === 1 && h !== 11 ? one : d >= 2 && d <= 4 && (h < 12 || h > 14) ? few : many;
+};
+const n = GOOGLE_RATING.count;
+const COPY = {
+  en: { kicker: 'Client reviews', heading: 'What clients say', sub: 'Recent feedback from clients across immigration and California court document preparation — in the language they speak.', more: 'Read more reviews', google: `${GOOGLE_RATING.average} · See all ${n} reviews on Google`, outOf: 'out of 5' },
+  ru: { kicker: 'Отзывы клиентов', heading: 'Что говорят клиенты', sub: 'Свежие отзывы клиентов о подготовке документов USCIS и калифорнийских судов. Отзывы приведены на языке оригинала.', more: 'Все отзывы', google: `${GOOGLE_RATING.average} · ${n} ${slavic(n, 'отзыв', 'отзыва', 'отзывов')} в Google`, outOf: 'из 5' },
+  uk: { kicker: 'Відгуки клієнтів', heading: 'Що кажуть клієнти', sub: 'Свіжі відгуки клієнтів про підготовку документів USCIS і каліфорнійських судів. Відгуки наведено мовою оригіналу.', more: 'Усі відгуки', google: `${GOOGLE_RATING.average} · ${n} ${slavic(n, 'відгук', 'відгуки', 'відгуків')} у Google`, outOf: 'з 5' },
+  es: { kicker: 'Reseñas de clientes', heading: 'Lo que dicen nuestros clientes', sub: 'Opiniones recientes de clientes sobre la preparación de documentos de USCIS y de tribunales de California, en su idioma original.', more: 'Ver más reseñas', google: `${GOOGLE_RATING.average} · ${n} reseñas en Google`, outOf: 'de 5' }
+}[lang];
 
 const ALL: Review[] = REVIEWS;
 // Server-render the first 6 so search engines (and no-JS visitors) see content.
 const initial: Review[] = ALL.slice(0, 6);
 ---
-<section class="testimonials-section" id="testimonials">
+<section class="testimonials-section" id="testimonials" data-out-of={COPY.outOf}>
   <div class="testimonials-inner">
     <div class="testimonials-heading">
-      <div class="testimonials-kicker">Client reviews</div>
-      <h2>What clients say</h2>
-      <p>Recent feedback from clients across immigration and California court document preparation — in the language they speak.</p>
+      <div class="testimonials-kicker">{COPY.kicker}</div>
+      <h2>{COPY.heading}</h2>
+      <p>{COPY.sub}</p>
     </div>
     <div class="testimonials-grid" id="testimonialsGrid">
       {initial.map((item) => (
         <article class="testimonial-card">
-          <div class="testimonial-stars" aria-label={`${item.stars} out of 5`}>
+          <div class="testimonial-stars" aria-label={`${item.stars} ${COPY.outOf}`}>
             {'★'.repeat(item.stars)}<span class="testimonial-stars-dim">{'★'.repeat(5 - item.stars)}</span>
           </div>
           <p>{item.body}</p>
@@ -37,9 +52,9 @@ const initial: Review[] = ALL.slice(0, 6);
     </div>
 
     <div class="testimonials-actions">
-      <a class="testimonials-more" href="/testimonials">Read more reviews <span aria-hidden="true">→</span></a>
+      <a class="testimonials-more" href="/testimonials">{COPY.more} <span aria-hidden="true">→</span></a>
       <a class="testimonials-google" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer">
-        <span class="testimonials-google-stars" aria-hidden="true">★★★★★</span> See all reviews on Google
+        <span class="testimonials-google-stars" aria-hidden="true">★★★★★</span> {COPY.google}
       </a>
     </div>
   </div>
@@ -54,6 +69,7 @@ const initial: Review[] = ALL.slice(0, 6);
       var data = document.getElementById('testimonialsData');
       if (!grid || !data) return;
       var gridEl = grid;
+      var outOf = (gridEl.closest('[data-out-of]') as HTMLElement | null)?.dataset.outOf || 'out of 5';
       var dataEl = data;
       type Review = { stars: number; body: string; name: string; meta: string };
 
@@ -73,7 +89,7 @@ const initial: Review[] = ALL.slice(0, 6);
           var filled = '★'.repeat(s);
           var empty = '★'.repeat(5 - s);
           return '<article class="testimonial-card">' +
-            '<div class="testimonial-stars" aria-label="' + s + ' out of 5">' +
+            '<div class="testimonial-stars" aria-label="' + s + ' ' + esc(outOf) + '">' +
               esc(filled) + '<span class="testimonial-stars-dim">' + esc(empty) + '</span>' +
             '</div>' +
             '<p>' + esc(r.body) + '</p>' +

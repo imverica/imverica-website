@@ -1,0 +1,6 @@
+---
+import InfoPageView from '~/components/InfoPageView.astro';
+import { DOCUMENT_SECURITY } from '~/data/trustPages';
+---
+<InfoPageView page={DOCUMENT_SECURITY.es} lang="es" slug="/document-security" ctaHref="/#get-started"
+  related={[{ href: '/terms.html', label: 'Terms of Service (términos del servicio)' }, { href: '/mx/about', label: 'Sobre Imverica' }, { href: '/mx/lda', label: '¿Qué es un Legal Document Assistant?' }]} />

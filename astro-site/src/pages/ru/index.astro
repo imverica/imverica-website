@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import WhyNotChatGPT from '~/components/WhyNotChatGPT.astro';
 import Hero from '~/components/Hero.astro';
 import HomeSearch from '~/components/HomeSearch.astro';
 import StatsStrip from '~/components/StatsStrip.astro';
+import Testimonials from '~/components/Testimonials.astro';
 import HeroV2 from '~/components/HeroV2.astro';
 import HomeFormsV2 from '~/components/HomeFormsV2.astro';
 import V2Swap from '~/components/V2Swap.astro';
@@ -73,6 +75,10 @@ const description =
   </div>
   <template data-v2-new="services"><HomeFormsV2 lang={lang} /></template>
   <V2Swap />
+
+  <WhyNotChatGPT lang={lang} />
+
+  <Testimonials lang={lang} />
 
   <style>
     .ru-form-grid {

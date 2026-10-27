@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import SampleForm from '~/components/SampleForm.astro';
+import WhyNotChatGPT from '~/components/WhyNotChatGPT.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
@@ -65,6 +67,7 @@ const schema = {
       <li><strong>FL-150</strong>, заповнену за наданими вами цифрами доходів, відрахувань і витрат.</li>
       <li>Організацію додатків — <strong>pay stubs і податкових декларацій</strong>, які вимагає форма.</li>
       <li>Супутні <strong>FL-160 / FL-142</strong> за потреби.</li>
+      <li><strong>Перевірку цифр до чернетки</strong>: підсумки, середні, пункти, що мають збігатися, і додатки, яких вимагає форма (<a href="/ua/fl-150-checklist">чекліст FL-150</a>).</li>
     </ul>
 
     <h2>Чого ми НЕ робимо</h2>
@@ -83,6 +86,9 @@ const schema = {
       не юридичні консультації.
     </cite>
   </LandingBody>
+
+  <SampleForm form="fl-150" lang="uk" />
+  <WhyNotChatGPT lang="uk" />
 
   <CTAStrip lang="uk" primaryHref="/#get-started?form=FL-150" primaryText="Почати анкету FL-150" />
 </BaseLayout>
