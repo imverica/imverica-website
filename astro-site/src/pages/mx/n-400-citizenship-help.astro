@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import SampleForm from '~/components/SampleForm.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
@@ -126,6 +127,8 @@ const serviceSchema = {
       &amp; Prof. Code §§22440-22448 (Immigration Consultant Act).
     </cite>
   </LandingBody>
+
+  <SampleForm form="n-400" lang="es" />
 
   <CTAStrip
     lang={lang}

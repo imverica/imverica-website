@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import SampleForm from '~/components/SampleForm.astro';
 import CategoryTiles from '~/components/CategoryTiles.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
@@ -82,6 +83,8 @@ const schema = {
       слушании). Только подготовка документов — не юридические консультации.
     </cite>
   </LandingBody>
+
+  <SampleForm form="sc-100" lang="ru" />
 
   <CTAStrip lang="ru" primaryHref="/#get-started?form=SC-100" primaryText="Начать анкету SC-100" />
 </BaseLayout>

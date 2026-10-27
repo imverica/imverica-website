@@ -491,6 +491,26 @@ function detectBodyFontObjectNumber(parsed) {
   return 195;
 }
 
+// Helvetica advance widths (1/1000 em) for ASCII 32-126, from the standard
+// AFM, so long single-line answers shrink enough to stay inside the box.
+const HELVETICA_WIDTHS = [
+  278, 278, 355, 556, 556, 889, 667, 222, 333, 333, 389, 584, 278, 333, 278, 278,
+  556, 556, 556, 556, 556, 556, 556, 556, 556, 556, 278, 278, 584, 584, 584, 556,
+  1015, 667, 667, 722, 722, 667, 611, 778, 722, 278, 500, 667, 556, 833, 722, 778,
+  667, 778, 722, 667, 611, 722, 667, 944, 667, 667, 611, 278, 278, 278, 469, 556,
+  222, 556, 556, 500, 556, 556, 278, 556, 556, 222, 222, 500, 222, 833, 556, 556,
+  556, 556, 333, 500, 278, 556, 500, 722, 500, 500, 500, 334, 260, 334, 584
+];
+
+function helveticaWidthEm(value) {
+  let total = 0;
+  for (const char of String(value)) {
+    const code = char.charCodeAt(0);
+    total += code >= 32 && code <= 126 ? HELVETICA_WIDTHS[code - 32] : 600;
+  }
+  return total / 1000;
+}
+
 function textAppearanceBody(object, value, appearanceObjectNumber, encryption, fontObjectNumber) {
   const rect = firstPdfArray(object.body, 'Rect');
   const width = Math.max(1, Math.abs((rect[2] || 200) - (rect[0] || 0)));
@@ -503,7 +523,7 @@ function textAppearanceBody(object, value, appearanceObjectNumber, encryption, f
   const isComb = Boolean((flags & 16777216) && maxLength > 1);
   const isTallTextField = height >= 36;
   // Single-line text shrinks (down to 6pt) so long answers are not clipped.
-  const lineSize = Math.max(6, Math.min(fontSize, (width - 4) / Math.max(1, text.length * 0.52)));
+  const lineSize = Math.max(6, Math.min(fontSize, (width - 6) / Math.max(0.5, helveticaWidthEm(value) * 1.04)));
   const lineY = Math.max(2, (height - lineSize) / 2);
   const content = isComb
     ? combAppearanceContent(text, width, height, fontSize, y, maxLength)

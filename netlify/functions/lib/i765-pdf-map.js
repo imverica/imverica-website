@@ -115,12 +115,13 @@ function i765ApplicationReasonFields(reasonValue, priorEadValue) {
   };
 }
 
-function applicantStatementFields(statementValue) {
+function applicantStatementFields(statementValue, language) {
   const statement = clean(statementValue, 160).toLowerCase();
   if (/interpreter|translator|перевод|переклад|intérprete|interprete/.test(statement)) {
     return {
       'Pt3Line1Checkbox[0]': true,
-      'Pt3Line1Checkbox[1]': false
+      'Pt3Line1Checkbox[1]': false,
+      'Pt3Line1b_Language[0]': clean(language, 60)
     };
   }
   if (/english|англ|англі|ingl[eé]s/.test(statement)) {
@@ -204,6 +205,7 @@ function noInterpreterPreparerFields(answers) {
     values['Pt4Line1a_InterpreterFamilyName[0]'] = answers.interpreter_family_name;
     values['Pt4Line1b_InterpreterGivenName[0]'] = answers.interpreter_given_name;
     values['Pt4Line2_InterpreterBusinessorOrg[0]'] = answers.interpreter_business_name;
+    values['Part4_NameofLanguage[0]'] = clean(answers.interpreter_language, 60);
   } else if (combined === false || hasInterpreter === false) {
     values['Pt4Line1a_InterpreterFamilyName[0]'] = 'N/A';
     values['Pt4Line1b_InterpreterGivenName[0]'] = 'N/A';
@@ -242,10 +244,13 @@ function physicalAddress(answers) {
   const same = yesNo(answers.physical_same_as_mailing);
   const base = checkboxPair(same, 'Part2Line5_Checkbox[1]', 'Part2Line5_Checkbox[0]');
   if (same !== false) return base;
+  const unit = clean(answers.physical_address_line1 ? answers.physical_address_line2 : answers.mailing_address_line2);
 
   return {
     ...base,
     'Pt2Line7_StreetNumberName[0]': answers.physical_address_line1 || answers.mailing_address_line1,
+    'Pt2Line7_AptSteFlrNumber[0]': unitNumber(unit),
+    ...unitRadio('Pt2Line7_Unit', unit),
     'Pt2Line7_CityOrTown[0]': answers.physical_city || answers.mailing_city,
     'Pt2Line7_State[0]': stateCode(answers.physical_state || answers.mailing_state),
     'Pt2Line7_ZipCode[0]': digits(answers.physical_zip || answers.mailing_zip, 10)
@@ -280,7 +285,11 @@ function i765FieldValues(payload = {}) {
     'Line23_StatusLastEntry[0]': answers.status_at_last_entry,
     'Line24_CurrentStatus[0]': answers.current_immigration_status,
     'place_entry[0]': answers.place_entry,
-    'Line28_ReceiptNumber[0]': answers.pending_application_receipt,
+    // The form asks for a receipt number only for (c)(26) (item 29: the
+    // H-1B spouse's I-797) and (c)(35)/(c)(36) (item 31.a: the I-140 I-797).
+    // For (c)(8), (c)(9) and others the receipt is evidence, not an answer.
+    'Line28_ReceiptNumber[0]': category[0] === 'c' && category[1] === '26' ? answers.pending_application_receipt : '',
+    'Line30a_ReceiptNumber[0]': category[0] === 'c' && ['35', '36'].includes(category[1]) ? answers.pending_application_receipt : '',
     'Pt3Line3_DaytimePhoneNumber1[0]': phone,
     'Pt3Line4_MobileNumber1[0]': phone,
     'Pt3Line5_Email[0]': email,
@@ -293,7 +302,7 @@ function i765FieldValues(payload = {}) {
     ...otherNameFields(answers.other_names_used),
     ...citizenshipFields(answers.country_of_citizenship),
     ...i765ApplicationReasonFields(answers.i765_application_reason, answers.prior_ead),
-    ...applicantStatementFields(answers.applicant_statement),
+    ...applicantStatementFields(answers.applicant_statement, answers.interpreter_language),
     ...sexFields(answers.sex),
     ...maritalStatusFields(answers.marital_status),
     ...c8CrimeHistoryFields(category, answers.c8_arrested_or_convicted),

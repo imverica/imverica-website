@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import SampleForm from '~/components/SampleForm.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'es' as const;
@@ -100,6 +101,8 @@ const schema = {
       Authorization).
     </cite>
   </LandingBody>
+
+  <SampleForm form="i-765" lang="es" />
 
   <CTAStrip lang="es"
     heading="Inicie su solicitud de permiso de trabajo I-765"

@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import SampleForm from '~/components/SampleForm.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'I-765 Work Permit (EAD) Document Preparation | Imverica';
@@ -11,7 +12,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'I-765 Employment Authorization Document Preparation',
-  provider: { '@id': 'https://imverica.com/#organization' },
+  provider: { '@type': 'LegalService', '@id': 'https://imverica.com/#organization', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
   areaServed: { '@type': 'State', name: 'California' },
   description: 'Document preparation for Form I-765 Application for Employment Authorization at the applicant direction.'
 };
@@ -94,6 +95,8 @@ const schema = {
       USCIS Policy Manual Volume 10 (Employment Authorization).
     </cite>
   </LandingBody>
+
+  <SampleForm form="i-765" />
 
   <CTAStrip
     heading="Start your I-765 work permit application"

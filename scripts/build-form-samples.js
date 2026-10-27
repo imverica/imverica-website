@@ -4,14 +4,14 @@
 // Every name, number and address in the samples is fictional.
 //
 // Needs pdftoppm (poppler) and sharp (installed with astro-site).
-// Run: node scripts/build-form-samples.js
+// Run: node scripts/build-form-samples.js [slug ...]
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { PDFDocument, PDFName, rgb } = require('pdf-lib');
+const { PDFDocument, PDFName, PDFButton, rgb } = require('pdf-lib');
 const sharp = require('../astro-site/node_modules/sharp');
-const { i485FieldValues, i485TextOverlays } = require('../netlify/functions/lib/i485-pdf-map');
+const { validateImmigrationAnswers } = require('../netlify/functions/lib/immigration-answer-validation');
 const { incrementalFillPdf } = require('../netlify/functions/lib/pdf-incremental-fill');
 const { fillCourtForm } = require('../netlify/functions/lib/ca-court-fill');
 
@@ -19,34 +19,62 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'astro-site/public/samples');
 const DPI = 100;
 
+function readSample(slug) {
+  return JSON.parse(fs.readFileSync(path.join(ROOT, `form-samples/${slug}.sample.json`), 'utf8'));
+}
+
+// USCIS forms go through the same map the account wizard uses.
+function uscisSample(slug, code, previews) {
+  return {
+    slug,
+    previews,
+    async fill() {
+      const formAnswers = readSample(slug);
+      const payload = { formCode: code, formAnswers, contact: { phone: formAnswers.daytime_phone, email: formAnswers.email_address } };
+      const errors = validateImmigrationAnswers(code, payload);
+      if (errors.length) throw new Error(`${code} sample answers do not validate: ${JSON.stringify(errors)}`);
+      const map = require(`../netlify/functions/lib/${slug.replace(/-/g, '')}-pdf-map`);
+      const fieldValues = Object.values(map).find((fn) => typeof fn === 'function' && /fieldvalues/i.test(fn.name));
+      const textOverlays = Object.values(map).find((fn) => typeof fn === 'function' && /textoverlays/i.test(fn.name)) || (() => []);
+      const pdf = fs.readFileSync(path.join(ROOT, `assets/form-cache/pdfs/${slug}.pdf`));
+      const result = incrementalFillPdf(pdf, fieldValues(payload), textOverlays(payload));
+      if (result.skippedFields.length) throw new Error(`${code} sample skipped fields: ${result.skippedFields.join(', ')}`);
+      return result.buffer;
+    }
+  };
+}
+
+// Court forms: field values keyed by PDF field name, as the portal sends them.
+function courtSample(slug, previews) {
+  return {
+    slug,
+    previews,
+    async fill() {
+      const pdf = fs.readFileSync(path.join(ROOT, `assets/form-cache/ca-court/${slug}.pdf`));
+      return drawCheckMarks((await fillCourtForm(pdf, readSample(slug))).buffer);
+    }
+  };
+}
+
 const SAMPLES = [
-  {
-    slug: 'i-485',
-    previews: [1, 3, 5],
-    async fill() {
-      const formAnswers = JSON.parse(fs.readFileSync(path.join(ROOT, 'form-samples/i-485.sample.json'), 'utf8'));
-      const payload = { formCode: 'I-485', formAnswers, contact: { phone: formAnswers.daytime_phone, email: formAnswers.email_address } };
-      const pdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/pdfs/i-485.pdf'));
-      return incrementalFillPdf(pdf, i485FieldValues(payload), i485TextOverlays(payload)).buffer;
-    }
-  },
-  {
-    slug: 'fl-150',
-    previews: [1, 2, 3, 4],
-    async fill() {
-      const fields = JSON.parse(fs.readFileSync(path.join(ROOT, 'form-samples/fl-150.sample.json'), 'utf8'));
-      const pdf = fs.readFileSync(path.join(ROOT, 'assets/form-cache/ca-court/fl-150.pdf'));
-      return drawCheckMarks((await fillCourtForm(pdf, fields)).buffer);
-    }
-  }
+  uscisSample('i-485', 'I-485', [1, 3, 5]),
+  courtSample('fl-150', [1, 2, 3, 4]),
+  uscisSample('i-765', 'I-765', [1, 2, 3]),
+  uscisSample('n-400', 'N-400', [1, 3, 5]),
+  courtSample('sc-100', [2, 3, 4]),
+  courtSample('fl-100', [1, 2, 3])
 ];
+const ONLY = process.argv.slice(2);
 
 // Court-form check boxes draw their mark with the ZapfDingbats font, which
 // poppler may not have; draw the X as lines so the rendered sample shows it.
+// The forms' own Print / Save / Clear buttons are dropped from the picture.
 async function drawCheckMarks(buffer) {
   const doc = await PDFDocument.load(buffer);
   const pages = doc.getPages();
-  for (const field of doc.getForm().getFields()) {
+  const form = doc.getForm();
+  for (const button of form.getFields().filter((field) => field instanceof PDFButton)) form.removeField(button);
+  for (const field of form.getFields()) {
     if (!field.isChecked || !field.isChecked()) continue;
     for (const widget of field.acroField.getWidgets()) {
       const page = pages.find((candidate) => candidate.ref === widget.dict.get(PDFName.of('P')));
@@ -99,5 +127,5 @@ async function build(sample) {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  for (const sample of SAMPLES) await build(sample);
+  for (const sample of SAMPLES) if (!ONLY.length || ONLY.includes(sample.slug)) await build(sample);
 })();

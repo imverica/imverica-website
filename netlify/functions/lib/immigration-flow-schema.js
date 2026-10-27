@@ -4437,7 +4437,8 @@ const FORM_OVERRIDES = {
       field('applicant_statement', 'Applicant statement', 'radio', {
         required: true,
         options: ['I can read and understand English', 'Interpreter read the application to me']
-      })
+      }),
+      field('interpreter_language', 'Language interpreted', 'text', { required: true, showWhen: [{ id: 'applicant_statement', equals: 'Interpreter read the application to me' }] })
     ])
   ],
   'I-821': i821SpecificSteps(),

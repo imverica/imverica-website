@@ -3,12 +3,17 @@
 // (built by scripts/build-form-samples.js into /samples), with page previews
 // and the full watermarked PDF.
 type Lang = 'en' | 'ru' | 'uk' | 'es';
-interface Props { form: 'i-485' | 'fl-150'; lang?: Lang }
+type Form = 'i-485' | 'fl-150' | 'i-765' | 'n-400' | 'sc-100' | 'fl-100';
+interface Props { form: Form; lang?: Lang }
 const { form, lang = 'en' } = Astro.props;
 
 const SAMPLES = {
   'i-485': { code: 'I-485', pages: 24, previews: [1, 3, 5] },
-  'fl-150': { code: 'FL-150', pages: 4, previews: [1, 2, 3, 4] }
+  'fl-150': { code: 'FL-150', pages: 4, previews: [1, 2, 3, 4] },
+  'i-765': { code: 'I-765', pages: 7, previews: [1, 2, 3] },
+  'n-400': { code: 'N-400', pages: 14, previews: [1, 3, 5] },
+  'sc-100': { code: 'SC-100', pages: 6, previews: [2, 3, 4] },
+  'fl-100': { code: 'FL-100', pages: 3, previews: [1, 2, 3] }
 };
 const sample = SAMPLES[form];
 
@@ -18,6 +23,10 @@ const COPY = {
     heading: `A sample ${sample.code}, filled the way we prepare it`,
     'i-485': 'Every name, number and address in this sample is invented. It shows what you get: the current USCIS edition, every answer in its own box, dates as mm/dd/yyyy, and extra pages when the form runs out of space.',
     'fl-150': 'Every name and number in this sample is invented. It shows what you get: the current Judicial Council revision, totals that add up, and the attachments the form asks for listed for you.',
+    'i-765': 'Every name and number in this sample is invented. It shows a first work permit request while a green card case is pending: the eligibility category in its boxes, the interpreter and preparer sections, and dates as mm/dd/yyyy.',
+    'n-400': 'Every name, number and address in this sample is invented. It shows what you get: five years of addresses, jobs and trips with no gaps, every Part 9 question answered, and dates as mm/dd/yyyy.',
+    'sc-100': 'Every name, number and address in this sample is invented. It shows a security deposit claim: both parties, the amount and how it was figured, and the reason for the courthouse checked.',
+    'fl-100': 'Every name and date in this sample is invented. It shows a divorce petition with one child: residence, the dates of marriage and separation, and the custody and property items checked.',
     open: `Open the full sample (PDF, ${sample.pages} pages)`,
     page: 'page',
     note: 'A sample only: not legal advice, and not a form for anyone’s real case.'
@@ -27,6 +36,10 @@ const COPY = {
     heading: `Образец ${sample.code} — так мы его заполняем`,
     'i-485': 'Все имена, номера и адреса в образце вымышленные. Видно, что вы получите: актуальную редакцию USCIS, каждый ответ в своём поле, даты в формате mm/dd/yyyy и дополнительные страницы, если в форме не хватает места.',
     'fl-150': 'Все имена и цифры в образце вымышленные. Видно, что вы получите: актуальную редакцию Judicial Council, сходящиеся итоги и список приложений, которые требует форма.',
+    'i-765': 'Все имена и номера в образце вымышленные. Это первое разрешение на работу, пока рассматривается дело на грин-карту: категория в своих клетках, разделы переводчика и составителя, даты в формате mm/dd/yyyy.',
+    'n-400': 'Все имена, номера и адреса в образце вымышленные. Видно, что вы получите: адреса, работу и поездки за 5 лет без пробелов, ответы на все вопросы Part 9 и даты в формате mm/dd/yyyy.',
+    'sc-100': 'Все имена, номера и адреса в образце вымышленные. Это иск о возврате депозита: обе стороны, сумма и как она посчитана, отмеченная причина выбора суда.',
+    'fl-100': 'Все имена и даты в образце вымышленные. Это заявление о разводе с одним ребёнком: проживание, даты брака и раздельного проживания, отмеченные пункты об опеке и имуществе.',
     open: `Открыть весь образец (PDF, ${sample.pages} стр.)`,
     page: 'стр.',
     note: 'Только образец: не юридическая консультация и не форма по чьему-то реальному делу.'
@@ -36,6 +49,10 @@ const COPY = {
     heading: `Зразок ${sample.code} — так ми його заповнюємо`,
     'i-485': 'Усі імена, номери й адреси у зразку вигадані. Видно, що ви отримаєте: актуальну редакцію USCIS, кожну відповідь у своєму полі, дати у форматі mm/dd/yyyy і додаткові сторінки, якщо у формі бракує місця.',
     'fl-150': 'Усі імена й цифри у зразку вигадані. Видно, що ви отримаєте: актуальну редакцію Judicial Council, підсумки, що сходяться, і перелік додатків, яких вимагає форма.',
+    'i-765': 'Усі імена й номери у зразку вигадані. Це перший дозвіл на роботу, поки розглядається справа на грін-карту: категорія у своїх клітинках, розділи перекладача й укладача, дати у форматі mm/dd/yyyy.',
+    'n-400': 'Усі імена, номери й адреси у зразку вигадані. Видно, що ви отримаєте: адреси, роботу й поїздки за 5 років без прогалин, відповіді на всі питання Part 9 і дати у форматі mm/dd/yyyy.',
+    'sc-100': 'Усі імена, номери й адреси у зразку вигадані. Це позов про повернення депозиту: обидві сторони, сума і як її пораховано, позначена причина вибору суду.',
+    'fl-100': 'Усі імена й дати у зразку вигадані. Це заява про розлучення з однією дитиною: проживання, дати шлюбу й окремого проживання, позначені пункти про опіку й майно.',
     open: `Відкрити весь зразок (PDF, ${sample.pages} стор.)`,
     page: 'стор.',
     note: 'Лише зразок: не юридична консультація і не форма у чиїйсь реальній справі.'
@@ -45,6 +62,10 @@ const COPY = {
     heading: `Un ejemplo de ${sample.code}, llenado como lo preparamos`,
     'i-485': 'Todos los nombres, números y direcciones del ejemplo son inventados. Muestra lo que recibe: la edición vigente de USCIS, cada respuesta en su casilla, fechas en formato mm/dd/aaaa y páginas adicionales cuando falta espacio.',
     'fl-150': 'Todos los nombres y cifras del ejemplo son inventados. Muestra lo que recibe: la revisión vigente del Judicial Council, totales que cuadran y la lista de anexos que pide el formulario.',
+    'i-765': 'Todos los nombres y números del ejemplo son inventados. Es un primer permiso de trabajo mientras está pendiente un caso de green card: la categoría en sus casillas, las secciones del intérprete y del preparador, y fechas en formato mm/dd/aaaa.',
+    'n-400': 'Todos los nombres, números y direcciones del ejemplo son inventados. Muestra lo que recibe: cinco años de domicilios, empleos y viajes sin huecos, todas las preguntas de la Parte 9 contestadas y fechas en formato mm/dd/aaaa.',
+    'sc-100': 'Todos los nombres, números y direcciones del ejemplo son inventados. Es un reclamo por un depósito de garantía: ambas partes, el monto y cómo se calculó, y el motivo del tribunal marcado.',
+    'fl-100': 'Todos los nombres y fechas del ejemplo son inventados. Es una petición de divorcio con un hijo: residencia, fechas de matrimonio y separación, y los puntos de custodia y bienes marcados.',
     open: `Abrir el ejemplo completo (PDF, ${sample.pages} páginas)`,
     page: 'pág.',
     note: 'Solo un ejemplo: no es asesoría legal ni un formulario de un caso real.'

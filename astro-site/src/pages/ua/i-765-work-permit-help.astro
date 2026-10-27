@@ -2,6 +2,7 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import LandingBody from '~/components/LandingBody.astro';
+import SampleForm from '~/components/SampleForm.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const lang = 'uk' as const;
@@ -97,6 +98,8 @@ const schema = {
       USCIS Policy Manual Volume 10 (Employment Authorization).
     </cite>
   </LandingBody>
+
+  <SampleForm form="i-765" lang="uk" />
 
   <CTAStrip lang="uk"
     heading="Розпочніть заявку I-765 на дозвіл на роботу"
