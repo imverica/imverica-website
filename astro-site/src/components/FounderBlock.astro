@@ -17,7 +17,8 @@ interface Props {
   lang: Locale;
 }
 const { lang } = Astro.props;
-const REG = 'LDA Reg. No. 2026-010 · Sacramento County · expires 09/27/2028';
+// The registration and the bond belong to Imverica LLC, as everywhere else on the site.
+const REG = 'Imverica LLC · LDA Reg. No. 2026-010 · Sacramento County · expires 09/27/2028';
 
 interface Copy {
   head: string;
@@ -36,7 +37,7 @@ const COPY: Record<Locale, Copy> = {
     head: 'Meet the founder',
     photoAlt: 'Portrait of the founder of Imverica',
     quote: 'One wrong box can cost months of waiting. My job is to make sure every box is right.',
-    role: 'Founder · California Legal Document Assistant and Immigration Consultant',
+    role: 'Founder · Imverica LLC, a California Legal Document Assistant and Immigration Consultant',
     bond: 'Immigration Consultant bond No. 67347671 · Western Surety Company',
     story: [
       'I have always liked helping people with the things that worry them most, and for many families that is paperwork. When I was forced to leave my home country, I settled in California and started where most immigrants start: low-paid jobs, long shifts and forms in a language that was not my first.',
@@ -48,7 +49,7 @@ const COPY: Record<Locale, Copy> = {
       ['The standard attorneys expect.', 'Complete, consistent documents with exhibits in order, the way I learned to prepare them for California attorneys.'],
       ['Someone who has been there.', 'Patient explanations in your language, no judgment and no rush. I know what a form in a foreign language feels like after a long shift.'],
       ['No surprises.', 'The price before the work, your status in the client portal, and answers the same business day.'],
-      ['Registered and bonded, twice.', 'California knows who prepares your documents: I am registered as a Legal Document Assistant with Sacramento County and bonded as an Immigration Consultant, with the bond on file with the California Secretary of State.']
+      ['Registered and bonded, twice.', 'California knows who prepares your documents: Imverica LLC is registered as a Legal Document Assistant with Sacramento County and bonded as an Immigration Consultant, with the bond on file with the California Secretary of State.']
     ],
     closing: 'I am not an attorney. I can only provide self help services at your specific direction. If your matter needs a lawyer, I will tell you on the first call and point you to licensed attorneys. The first call is free.'
   },
@@ -56,7 +57,7 @@ const COPY: Record<Locale, Copy> = {
     head: 'Знакомьтесь: основатель',
     photoAlt: 'Портрет основателя Imverica',
     quote: 'Одна неверная графа может стоить месяцев ожидания. Моя работа — чтобы каждая графа была верной.',
-    role: 'Основатель · Legal Document Assistant и Immigration Consultant в Калифорнии',
+    role: 'Основатель · Imverica LLC — Legal Document Assistant и Immigration Consultant в Калифорнии',
     bond: 'Залог иммиграционного консультанта № 67347671 · Western Surety Company',
     story: [
       'Мне всегда нравилось помогать людям с тем, что тревожит их больше всего, а для многих семей это бумаги. Когда мне пришлось покинуть родину, я обосновался в Калифорнии и начинал, как большинство иммигрантов: низкооплачиваемая работа, длинные смены и документы на неродном языке.',
@@ -68,7 +69,7 @@ const COPY: Record<Locale, Copy> = {
       ['Стандарт, которого ждут адвокаты.', 'Полные, согласованные документы с приложениями по порядку — так, как я учился готовить их для калифорнийских адвокатов.'],
       ['Человек, который сам через это прошёл.', 'Терпеливые объяснения на вашем языке, без осуждения и спешки. Я знаю, каково заполнять форму на чужом языке после длинной смены.'],
       ['Без сюрпризов.', 'Цена до начала работы, статус дела в личном кабинете и ответ в тот же рабочий день.'],
-      ['Двойная регистрация и залог.', 'Калифорния знает, кто готовит ваши документы: я зарегистрирован как Legal Document Assistant в округе Сакраменто и внёс гарантийный залог (bond) как иммиграционный консультант — он хранится у Государственного секретаря Калифорнии.']
+      ['Двойная регистрация и залог.', 'Калифорния знает, кто готовит ваши документы: Imverica LLC зарегистрирована как Legal Document Assistant в округе Сакраменто и внесла гарантийный залог (bond) как иммиграционный консультант — он хранится у Государственного секретаря Калифорнии.']
     ],
     closing: 'Я не являюсь адвокатом (attorney). Я могу оказывать услуги самопомощи только по вашему конкретному указанию. Если вашему делу нужен адвокат, я скажу об этом при первом же звонке и подскажу, где найти лицензированного адвоката. Первый звонок бесплатный.'
   },
@@ -76,7 +77,7 @@ const COPY: Record<Locale, Copy> = {
     head: 'Знайомтеся: засновник',
     photoAlt: 'Портрет засновника Imverica',
     quote: 'Одна неправильна графа може коштувати місяців очікування. Моя робота — щоб кожна графа була правильною.',
-    role: 'Засновник · Legal Document Assistant та Immigration Consultant у Каліфорнії',
+    role: 'Засновник · Imverica LLC — Legal Document Assistant та Immigration Consultant у Каліфорнії',
     bond: 'Застава імміграційного консультанта № 67347671 · Western Surety Company',
     story: [
       'Мені завжди подобалося допомагати людям з тим, що турбує їх найбільше, а для багатьох родин це папери. Коли мені довелося залишити батьківщину, я оселився в Каліфорнії й починав, як більшість іммігрантів: низькооплачувана робота, довгі зміни та документи нерідною мовою.',
@@ -88,7 +89,7 @@ const COPY: Record<Locale, Copy> = {
       ['Стандарт, якого очікують адвокати.', 'Повні, узгоджені документи з додатками по порядку — так, як я навчився готувати їх для каліфорнійських адвокатів.'],
       ['Людина, яка сама через це пройшла.', 'Терплячі пояснення вашою мовою, без осуду й поспіху. Я знаю, як це — заповнювати форму чужою мовою після довгої зміни.'],
       ['Без сюрпризів.', 'Ціна до початку роботи, статус справи в особистому кабінеті й відповідь того ж робочого дня.'],
-      ['Подвійна реєстрація та застава.', 'Каліфорнія знає, хто готує ваші документи: я зареєстрований як Legal Document Assistant в окрузі Сакраменто й вніс гарантійну заставу (bond) як імміграційний консультант — вона зберігається в Державного секретаря Каліфорнії.']
+      ['Подвійна реєстрація та застава.', 'Каліфорнія знає, хто готує ваші документи: Imverica LLC зареєстрована як Legal Document Assistant в окрузі Сакраменто й внесла гарантійну заставу (bond) як імміграційний консультант — вона зберігається в Державного секретаря Каліфорнії.']
     ],
     closing: 'Я не є адвокатом (attorney). Я можу надавати послуги самодопомоги лише за вашою конкретною вказівкою. Якщо вашій справі потрібен адвокат, я скажу про це під час першого ж дзвінка й підкажу, де знайти ліцензованого адвоката. Перший дзвінок безкоштовний.'
   },
@@ -96,7 +97,7 @@ const COPY: Record<Locale, Copy> = {
     head: 'Conozca al fundador',
     photoAlt: 'Retrato del fundador de Imverica',
     quote: 'Una casilla equivocada puede costar meses de espera. Mi trabajo es que cada casilla esté bien.',
-    role: 'Fundador · Asistente de Documentos Legales y Consultor de Inmigración en California',
+    role: 'Fundador · Imverica LLC, Asistente de Documentos Legales y Consultor de Inmigración en California',
     bond: 'Fianza de Consultor de Inmigración n.º 67347671 · Western Surety Company',
     story: [
       'Siempre me ha gustado ayudar a las personas con lo que más les preocupa, y para muchas familias eso es el papeleo. Cuando tuve que dejar mi país, me establecí en California y empecé como la mayoría de los inmigrantes: trabajos mal pagados, turnos largos y formularios en un idioma que no era el mío.',
@@ -108,7 +109,7 @@ const COPY: Record<Locale, Copy> = {
       ['El estándar que esperan los abogados.', 'Documentos completos y coherentes, con anexos en orden, como aprendí a prepararlos para abogados de California.'],
       ['Alguien que ya pasó por esto.', 'Explicaciones con paciencia en su idioma, sin juicios ni prisas. Sé lo que es llenar un formulario en otro idioma después de un turno largo.'],
       ['Sin sorpresas.', 'El precio antes del trabajo, el estado de su asunto en el portal del cliente y respuestas el mismo día hábil.'],
-      ['Registrado y con fianza, dos veces.', 'California sabe quién prepara sus documentos: estoy registrado como Asistente de Documentos Legales en el condado de Sacramento y tengo fianza como Consultor de Inmigración, registrada ante la Secretaría de Estado de California.']
+      ['Registrada y con fianza, dos veces.', 'California sabe quién prepara sus documentos: Imverica LLC está registrada como Asistente de Documentos Legales en el condado de Sacramento y tiene fianza como Consultor de Inmigración, registrada ante la Secretaría de Estado de California.']
     ],
     closing: 'No soy abogado (attorney). Solo puedo prestar servicios de autoayuda según sus instrucciones específicas. Si su asunto necesita un abogado, se lo diré en la primera llamada y le indicaré dónde encontrar abogados con licencia. La primera llamada es gratuita.'
   }
