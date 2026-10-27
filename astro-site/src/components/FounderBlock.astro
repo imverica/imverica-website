@@ -1,0 +1,189 @@
+---
+/**
+ * "Meet the founder" on the About pages (EN, RU, UA, ES): a one-line hook,
+ * photo, name, role, the LDA registration and the Immigration Consultant
+ * bond, a short first-person story, then what that background means for the
+ * client, and the statement of Cal. Bus. & Prof. Code § 6408.5 in the page
+ * language. The story leaves out when and how the founder came to the
+ * United States.
+ *
+ * At the owner's request the name is only an image (public/img/about/
+ * founder-name.png), never text: not in the markup, alt text, schema or file
+ * names, so the page is not found by a search for the name.
+ */
+import type { Locale } from '~/data/i18n';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const REG = 'LDA Reg. No. 2026-010 · Sacramento County · expires 09/27/2028';
+
+interface Copy {
+  head: string;
+  photoAlt: string;
+  quote: string;
+  role: string;
+  bond: string;
+  story: string[];
+  pointsHead: string;
+  points: Array<[title: string, text: string]>;
+  closing: string;
+}
+
+const COPY: Record<Locale, Copy> = {
+  en: {
+    head: 'Meet the founder',
+    photoAlt: 'Portrait of the founder of Imverica',
+    quote: 'One wrong box can cost months of waiting. My job is to make sure every box is right.',
+    role: 'Founder · California Legal Document Assistant and Immigration Consultant',
+    bond: 'Immigration Consultant bond No. 67347671 · Western Surety Company',
+    story: [
+      'I have always liked helping people with the things that worry them most, and for many families that is paperwork. When I was forced to leave my home country, I settled in California and started where most immigrants start: low-paid jobs, long shifts and forms in a language that was not my first.',
+      'Then came about six years in IT, and work as a paralegal for attorneys licensed by the State Bar of California. Imverica is where the two meet: an engineer’s precision and the standards I learned next to attorneys, for people who deserve both.'
+    ],
+    pointsHead: 'What that means for you',
+    points: [
+      ['Precision, engineer-style.', 'Every packet is checked against the current form edition and a written checklist (each field, signature, fee, translation and copy) before you sign.'],
+      ['The standard attorneys expect.', 'Complete, consistent documents with exhibits in order, the way I learned to prepare them for California attorneys.'],
+      ['Someone who has been there.', 'Patient explanations in your language, no judgment and no rush. I know what a form in a foreign language feels like after a long shift.'],
+      ['No surprises.', 'The price before the work, your status in the client portal, and answers the same business day.'],
+      ['Registered and bonded, twice.', 'California knows who prepares your documents: I am registered as a Legal Document Assistant with Sacramento County and bonded as an Immigration Consultant, with the bond on file with the California Secretary of State.']
+    ],
+    closing: 'I am not an attorney. I can only provide self help services at your specific direction. If your matter needs a lawyer, I will tell you on the first call and point you to licensed attorneys. The first call is free.'
+  },
+  ru: {
+    head: 'Знакомьтесь: основатель',
+    photoAlt: 'Портрет основателя Imverica',
+    quote: 'Одна неверная графа может стоить месяцев ожидания. Моя работа — чтобы каждая графа была верной.',
+    role: 'Основатель · Legal Document Assistant и Immigration Consultant в Калифорнии',
+    bond: 'Залог иммиграционного консультанта № 67347671 · Western Surety Company',
+    story: [
+      'Мне всегда нравилось помогать людям с тем, что тревожит их больше всего, а для многих семей это бумаги. Когда мне пришлось покинуть родину, я обосновался в Калифорнии и начинал, как большинство иммигрантов: низкооплачиваемая работа, длинные смены и документы на неродном языке.',
+      'Потом были около шести лет в IT и работа помощником юриста (paralegal) у адвокатов с лицензией State Bar of California. Imverica — это место, где сошлось одно и другое: инженерная точность и стандарты, которым я учился рядом с адвокатами, — для людей, которые заслуживают и того и другого.'
+    ],
+    pointsHead: 'Что это значит для вас',
+    points: [
+      ['Инженерная точность.', 'Каждый пакет проверяется по актуальной редакции формы и по письменному чек-листу (каждое поле, подпись, пошлина, перевод и копия) до того, как вы подпишете.'],
+      ['Стандарт, которого ждут адвокаты.', 'Полные, согласованные документы с приложениями по порядку — так, как я учился готовить их для калифорнийских адвокатов.'],
+      ['Человек, который сам через это прошёл.', 'Терпеливые объяснения на вашем языке, без осуждения и спешки. Я знаю, каково заполнять форму на чужом языке после длинной смены.'],
+      ['Без сюрпризов.', 'Цена до начала работы, статус дела в личном кабинете и ответ в тот же рабочий день.'],
+      ['Двойная регистрация и залог.', 'Калифорния знает, кто готовит ваши документы: я зарегистрирован как Legal Document Assistant в округе Сакраменто и внёс гарантийный залог (bond) как иммиграционный консультант — он хранится у Государственного секретаря Калифорнии.']
+    ],
+    closing: 'Я не являюсь адвокатом (attorney). Я могу оказывать услуги самопомощи только по вашему конкретному указанию. Если вашему делу нужен адвокат, я скажу об этом при первом же звонке и подскажу, где найти лицензированного адвоката. Первый звонок бесплатный.'
+  },
+  uk: {
+    head: 'Знайомтеся: засновник',
+    photoAlt: 'Портрет засновника Imverica',
+    quote: 'Одна неправильна графа може коштувати місяців очікування. Моя робота — щоб кожна графа була правильною.',
+    role: 'Засновник · Legal Document Assistant та Immigration Consultant у Каліфорнії',
+    bond: 'Застава імміграційного консультанта № 67347671 · Western Surety Company',
+    story: [
+      'Мені завжди подобалося допомагати людям з тим, що турбує їх найбільше, а для багатьох родин це папери. Коли мені довелося залишити батьківщину, я оселився в Каліфорнії й починав, як більшість іммігрантів: низькооплачувана робота, довгі зміни та документи нерідною мовою.',
+      'Потім були близько шести років в IT і робота помічником юриста (paralegal) в адвокатів із ліцензією State Bar of California. Imverica — це місце, де зійшлося одне й друге: інженерна точність і стандарти, яких я навчився поруч з адвокатами, — для людей, які заслуговують і на те, і на інше.'
+    ],
+    pointsHead: 'Що це означає для вас',
+    points: [
+      ['Інженерна точність.', 'Кожен пакет перевіряється за чинною редакцією форми та за письмовим чек-листом (кожне поле, підпис, збір, переклад і копія) до того, як ви підпишете.'],
+      ['Стандарт, якого очікують адвокати.', 'Повні, узгоджені документи з додатками по порядку — так, як я навчився готувати їх для каліфорнійських адвокатів.'],
+      ['Людина, яка сама через це пройшла.', 'Терплячі пояснення вашою мовою, без осуду й поспіху. Я знаю, як це — заповнювати форму чужою мовою після довгої зміни.'],
+      ['Без сюрпризів.', 'Ціна до початку роботи, статус справи в особистому кабінеті й відповідь того ж робочого дня.'],
+      ['Подвійна реєстрація та застава.', 'Каліфорнія знає, хто готує ваші документи: я зареєстрований як Legal Document Assistant в окрузі Сакраменто й вніс гарантійну заставу (bond) як імміграційний консультант — вона зберігається в Державного секретаря Каліфорнії.']
+    ],
+    closing: 'Я не є адвокатом (attorney). Я можу надавати послуги самодопомоги лише за вашою конкретною вказівкою. Якщо вашій справі потрібен адвокат, я скажу про це під час першого ж дзвінка й підкажу, де знайти ліцензованого адвоката. Перший дзвінок безкоштовний.'
+  },
+  es: {
+    head: 'Conozca al fundador',
+    photoAlt: 'Retrato del fundador de Imverica',
+    quote: 'Una casilla equivocada puede costar meses de espera. Mi trabajo es que cada casilla esté bien.',
+    role: 'Fundador · Asistente de Documentos Legales y Consultor de Inmigración en California',
+    bond: 'Fianza de Consultor de Inmigración n.º 67347671 · Western Surety Company',
+    story: [
+      'Siempre me ha gustado ayudar a las personas con lo que más les preocupa, y para muchas familias eso es el papeleo. Cuando tuve que dejar mi país, me establecí en California y empecé como la mayoría de los inmigrantes: trabajos mal pagados, turnos largos y formularios en un idioma que no era el mío.',
+      'Después vinieron unos seis años en tecnología (IT) y el trabajo como asistente legal (paralegal) para abogados con licencia del State Bar of California. Imverica es donde se unen las dos cosas: la precisión de un ingeniero y los estándares que aprendí junto a abogados, para personas que merecen ambas.'
+    ],
+    pointsHead: 'Qué significa para usted',
+    points: [
+      ['Precisión de ingeniero.', 'Cada paquete se revisa contra la edición vigente del formulario y una lista de control escrita (cada campo, firma, cuota, traducción y copia) antes de que usted firme.'],
+      ['El estándar que esperan los abogados.', 'Documentos completos y coherentes, con anexos en orden, como aprendí a prepararlos para abogados de California.'],
+      ['Alguien que ya pasó por esto.', 'Explicaciones con paciencia en su idioma, sin juicios ni prisas. Sé lo que es llenar un formulario en otro idioma después de un turno largo.'],
+      ['Sin sorpresas.', 'El precio antes del trabajo, el estado de su asunto en el portal del cliente y respuestas el mismo día hábil.'],
+      ['Registrado y con fianza, dos veces.', 'California sabe quién prepara sus documentos: estoy registrado como Asistente de Documentos Legales en el condado de Sacramento y tengo fianza como Consultor de Inmigración, registrada ante la Secretaría de Estado de California.']
+    ],
+    closing: 'No soy abogado (attorney). Solo puedo prestar servicios de autoayuda según sus instrucciones específicas. Si su asunto necesita un abogado, se lo diré en la primera llamada y le indicaré dónde encontrar abogados con licencia. La primera llamada es gratuita.'
+  }
+};
+const t = COPY[lang];
+---
+<h2 id="founder">{t.head}</h2>
+<section class="founder" aria-labelledby="founder">
+  <blockquote class="founder-quote"><p>{t.quote}</p></blockquote>
+
+  <div class="founder-card">
+    <img class="founder-photo" src="/img/about/founder.webp" alt={t.photoAlt} width="480" height="480" loading="lazy" decoding="async" />
+    <div class="founder-who">
+      <img class="founder-name" src="/img/about/founder-name.png" alt="" width="192" height="32" decoding="async" />
+      <span class="founder-role">{t.role}</span>
+      <span class="founder-reg">{REG}</span>
+      <span class="founder-reg">{t.bond}</span>
+    </div>
+  </div>
+
+  <div class="founder-story">
+    {t.story.map((p) => <p>{p}</p>)}
+  </div>
+
+  <h3 class="founder-points-head">{t.pointsHead}</h3>
+  <ul class="founder-points">
+    {t.points.map(([title, text]) => <li><strong>{title}</strong> {text}</li>)}
+  </ul>
+
+  <p class="founder-closing">{t.closing}</p>
+</section>
+
+<style>
+  .founder { margin: 14px 0 8px; display: grid; gap: 18px; }
+  .founder-quote {
+    margin: 0;
+    padding: 4px 0 4px 18px;
+    border-left: 4px solid var(--navy, #143254);
+  }
+  .founder-quote p {
+    margin: 0;
+    font-size: clamp(21px, 2.4vw, 28px);
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--navy, #143254);
+    text-wrap: balance;
+  }
+  .founder-card { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 22px; align-items: center; }
+  .founder-photo { display: block; width: 148px; height: 148px; border-radius: 50%; object-fit: cover; background: #e8e8ed; }
+  .founder-who { display: grid; gap: 4px; min-width: 0; }
+  .founder-name { display: block; width: auto; height: 32px; max-width: 100%; margin-bottom: 2px; }
+  .founder-role { font-size: 14px; line-height: 1.4; color: var(--muted, #6e6e73); }
+  .founder-reg { font-size: 13px; line-height: 1.4; color: var(--navy, #143254); font-weight: 600; }
+  .founder-story p { margin: 0 0 12px; }
+  .founder-story p:last-child { margin-bottom: 0; }
+  .founder-points-head { margin: 6px 0 0; font-size: 19px; }
+  .founder-points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .founder-points li {
+    margin: 0;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: rgba(20, 50, 84, 0.05);
+    line-height: 1.5;
+  }
+  .founder-points li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .founder-points strong { display: block; margin-bottom: 4px; color: var(--navy, #143254); }
+  .founder-closing { margin: 0; font-size: 15px; line-height: 1.55; color: var(--muted, #6e6e73); }
+  @media (max-width: 640px) {
+    .founder-points { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .founder-card { grid-template-columns: 100px minmax(0, 1fr); gap: 16px; align-items: start; }
+    .founder-photo { width: 100px; height: 100px; }
+    .founder-name { height: 27px; }
+    .founder-quote { padding-left: 14px; }
+  }
+</style>

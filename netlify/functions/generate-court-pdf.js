@@ -24,6 +24,7 @@
 const fs = require('fs');
 
 const { fillCourtForm, fillAndFlattenCourtForm } = require('./lib/ca-court-fill');
+const { applyLdaDisclosure } = require('./lib/lda-disclosure');
 const { getBuilder, listForms } = require('./lib/ca-court-registry');
 const { loadCourtTemplate } = require('./lib/ca-court-template');
 const { sanitizeDirectFields } = require('./lib/ca-court-direct-schema');
@@ -132,6 +133,15 @@ exports.handler = async function (event) {
       return json(422, { error: 'No fields could be filled from the provided answers', formCode: slug });
     }
 
+    // Forms with a legal document / unlawful detainer assistant block get
+    // Imverica's registration (Bus. & Prof. Code §§ 6400-6415).
+    let ldaMissing = [];
+    if (!localForm) {
+      const disclosure = applyLdaDisclosure(slug, fieldValues);
+      fieldValues = disclosure.values;
+      ldaMissing = disclosure.missing;
+    }
+
     const flatten = payload.flatten === true;
     const result = flatten
       ? await fillAndFlattenCourtForm(inputPdf, fieldValues)
@@ -155,7 +165,8 @@ exports.handler = async function (event) {
         mapped: Object.keys(fieldValues).length,
         filled: result.filled.length,
         skipped: result.skipped.length,
-        flattened: Boolean(result.flattened)
+        flattened: Boolean(result.flattened),
+        ...(ldaMissing.length ? { ldaMissing } : {})
       });
     }
 
@@ -164,7 +175,8 @@ exports.handler = async function (event) {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename=${localForm ? `${localForm.countySlug}-` : ''}${slug}-filled.pdf`,
-        'Cache-Control': 'no-store'
+        'Cache-Control': 'no-store',
+        ...(ldaMissing.length ? { 'X-LDA-Missing': ldaMissing.join(',') } : {})
       },
       body: result.buffer.toString('base64'),
       isBase64Encoded: true
