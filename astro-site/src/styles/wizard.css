@@ -47,6 +47,10 @@
 .intake-field input,.intake-field textarea,.intake-field select{width:100%;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:var(--font-system);font-size:15px;line-height:1.45;color:var(--navy-dark);background:#fff;outline:none;}
 .intake-field input.intake-invalid,.intake-field textarea.intake-invalid,.intake-field select.intake-invalid,.intake-field.intake-invalid,.intake-field[data-flow-radio-group].intake-invalid,.intake-field[data-flow-checkbox-group].intake-invalid,.intake-phone-grid.intake-invalid,.intake-history.intake-invalid,.intake-address-block.intake-invalid{border-color:#b94c3f;background:#fff8f6;box-shadow:0 0 0 3px rgba(185,76,63,0.1);}
 .intake-error{display:none;margin-top:16px;color:#9c3329;background:#fff8f6;border-left:3px solid #b94c3f;padding:12px 14px;font-size:13px;line-height:1.5;}
+.intake-review-checks{margin-top:16px;background:#f8f6ef;border-left:3px solid #b8860b;padding:12px 14px;font-size:13px;line-height:1.55;color:#33404f;}
+.intake-review-checks[hidden]{display:none;}
+.intake-review-checks ul{margin:8px 0 0;padding-left:18px;}
+.intake-review-checks li{margin:4px 0;}
 .intake-field textarea{min-height:150px;resize:vertical;}
 .intake-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:760px;}
 .intake-grid-single{max-width:680px;}

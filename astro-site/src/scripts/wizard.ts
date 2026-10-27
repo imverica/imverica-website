@@ -1459,7 +1459,37 @@ export function initIntakeWizard(): void {
         '<div class="intake-field"><label>' + esc(copy.reviewPackage) + '</label><input readonly value="' + esc(packageForms.join(', ') || '-') + '"></div>' +
         '<div class="intake-field"><label>' + esc(copy.reviewAnswers) + '</label><input readonly value="' + esc(String(filledAnswerCount())) + '"></div>' +
         '<div class="intake-field"><label>' + esc(finalReviewLabel) + '</label><input readonly value="' + esc(finalReviewValue) + '"></div>' +
-      '</div><div id="intakeFlowError" class="intake-error"></div>';
+      '</div><div id="intakeReviewChecks" class="intake-review-checks" hidden></div><div id="intakeFlowError" class="intake-error"></div>';
+    loadReviewChecks();
+  }
+
+  // Address, job and trip dates are checked before the intake is sent
+  // (/api/form-review). The list is a reminder only; it never blocks sending.
+  var REVIEW_CHECK_FORMS = ['I-485', 'N-400'];
+  var REVIEW_CHECK_TITLE = {
+    en: 'Before you send: dates to double-check',
+    ru: 'Перед отправкой: проверьте даты',
+    uk: 'Перед надсиланням: перевірте дати',
+    es: 'Antes de enviar: fechas para revisar'
+  };
+  function loadReviewChecks() {
+    var code = String(state.formCode || (state.flowSchema && state.flowSchema.code) || '').toUpperCase();
+    var box = document.getElementById('intakeReviewChecks');
+    if (!box || REVIEW_CHECK_FORMS.indexOf(code) === -1) return;
+    fetch('/api/form-review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ formCode: code, formAnswers: state.formAnswers, lang: state.lang })
+    })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (data) {
+        var issues = data && data.ok && Array.isArray(data.issues) ? data.issues : [];
+        if (!issues.length || !box.isConnected) return;
+        box.innerHTML = '<strong>' + esc(REVIEW_CHECK_TITLE[state.lang] || REVIEW_CHECK_TITLE.en) + '</strong><ul>' +
+          issues.map(function (issue) { return '<li>' + esc(issue.text) + '</li>'; }).join('') + '</ul>';
+        box.hidden = false;
+      })
+      .catch(function () {});
   }
 
   function render() {

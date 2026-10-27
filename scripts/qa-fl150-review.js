@@ -75,8 +75,8 @@ check(reviewFl150(broken, 'xx')[0].text === brokenIssues[0].text, 'unknown langu
 
 // The endpoint needs a session and returns nothing for forms without a review.
 (async () => {
-  const unauth = await formReview.handler({ httpMethod: 'POST', headers: {}, body: '{}' });
-  check(unauth.statusCode === 401, 'review endpoint requires a session');
+  const unauth = await formReview.handler({ httpMethod: 'POST', headers: { origin: 'https://example.org' }, body: '{}' });
+  check(unauth.statusCode === 403, 'review endpoint refuses anonymous requests from other sites');
 
   const schema = await getDirectCourtSchema('fl-150', 'FL-150');
   const labels = schema.steps.flatMap((step) => step.fields.map((field) => field.label));

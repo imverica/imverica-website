@@ -118,6 +118,35 @@ function buildLabels() {
     [`${P4}List19[0].L3[0].List[0].L1[0].TextField26[0]`]: '19c(1). For how many months?',
     [`${P4}List19[0].L3[0].List[0].L3[0].FillText1[0]`]: '19c(3). Child support I receive for those children ($ per month)'
   });
+  Object.assign(labels, {
+    [`${P1}List2[0].Li2[0].HSchl_cb[0]`]: '2b. I have completed high school or the equivalent: Yes',
+    [`${P1}List2[0].Li2[0].HSchl_cb[1]`]: '2b. I have completed high school or the equivalent: No',
+    [`${P1}List2[0].Li3[0].FillText109[0]`]: '2c. College degree(s) obtained (specify)',
+    [`${P1}List2[0].Li4[0].FillText109[0]`]: '2d. Graduate degree(s) obtained (specify)',
+    [`${P1}List2[0].Li5[0].FillText10[0]`]: '2e. Professional/occupational license(s) (specify)',
+    [`${P1}List2[0].Li5[0].FillText109[0]`]: '2e. Vocational training (specify)',
+    [`${P1}List3[0].Li3[0].TaxSt_CB[0]`]: '3c. I file state tax returns in another state',
+    [`${P2}List7[0].L1[0].RB2Choices[0]`]: '7. I am the: other (business role)',
+    [`${P2}List7[0].L1[0].FillText109[0]`]: '7. My business role: other (specify)'
+  });
+  // Item 12 rows: the name, age, relationship and income fields have
+  // different names on each row.
+  const household = [
+    ['a', 'L1', 'TextField1', 'TextField2', 'TextField3', 'item12a_cb'],
+    ['b', 'L2', 'TextField', 'TextField1', 'TextField2', 'People2_cb'],
+    ['c', 'L3', 'TextField', 'TextField1', 'TextField6', 'People3_cb'],
+    ['d', 'L4', 'TextField', 'TextField1', 'TextField6', 'People4_cb'],
+    ['e', 'L5', 'TextField', 'TextField1', 'TextField6', 'People5_cb']
+  ];
+  for (const [row, line, age, relation, income, box] of household) {
+    const base = `${P3}List12[0].${line}[0].`;
+    labels[`${base}FillText1[0]`] = `12${row}. Person who lives with me: name`;
+    labels[`${base}${age}[0]`] = `12${row}. Age`;
+    labels[`${base}${relation}[0]`] = `12${row}. How the person is related to me (for example: son)`;
+    labels[`${base}${income}[0]`] = `12${row}. That person's gross monthly income ($)`;
+    labels[`${base}${box}[0]`] = `12${row}. Pays some of the household expenses: Yes`;
+    labels[`${base}${box}[1]`] = `12${row}. Pays some of the household expenses: No`;
+  }
   return labels;
 }
 

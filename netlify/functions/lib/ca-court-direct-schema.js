@@ -13,17 +13,7 @@ const {
   PDFTextField
 } = require('pdf-lib');
 const { loadCourtTemplate } = require('./ca-court-template');
-const { FL150_LABELS } = require('./fl150-review');
-
-// Plain labels for forms whose PDF tooltips only say "$" or "Last month";
-// keyed by the field name from "PageN[0]." on.
-const LABEL_OVERRIDES = { 'fl-150': FL150_LABELS };
-
-function overrideLabel(slug, name) {
-  const labels = LABEL_OVERRIDES[slug];
-  if (!labels) return '';
-  return labels[String(name).replace(/^.*?(Page\d\[0\]\.)/, '$1')] || '';
-}
+const { courtFieldLabel } = require('./court-field-labels');
 
 const CACHE = new Map();
 
@@ -73,7 +63,7 @@ function isCourtOnlyField(name, label, slug) {
 function directField(field, slug) {
   const name = field.getName();
   const leaf = name.split('.').pop();
-  const label = overrideLabel(slug, name) || cleanLabel(tooltipOf(field), leaf);
+  const label = courtFieldLabel(slug, name) || cleanLabel(tooltipOf(field), leaf);
   if (isCourtOnlyField(name, label, slug)) return null;
 
   // Netlify's esbuild bundle renames pdf-lib constructors (for example,
