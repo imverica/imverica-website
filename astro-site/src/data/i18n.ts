@@ -282,32 +282,31 @@ export const HERO: Record<Locale, {
   }
 };
 
-/** Labels in the stats strip, in order: forms we prepare (counted at build
- *  time), languages, years, and the LDA registration. */
+/** Stats strip labels per locale. Numbers stay numeric. */
 export const STATS: Record<Locale, string[]> = {
   en: [
-    'USCIS and California court forms we prepare',
-    'Languages — English · Russian · Ukrainian · Spanish',
-    'Years preparing immigration documents',
-    'Registered in Sacramento County · No. 2026-010 · current through 09/27/2028'
+    'USCIS & California forms supported',
+    'Priority forms with curated flows',
+    'Languages — EN · RU · UA · ES',
+    'Years preparing California & USCIS forms'
   ],
   ru: [
-    'Форм USCIS и судов Калифорнии, которые мы готовим',
-    'Языки — английский · русский · украинский · испанский',
-    'Лет подготовки иммиграционных документов',
-    'Регистрация в округе Сакраменто · № 2026-010 · действует до 27.09.2028'
+    'Форм USCIS и Калифорнии в работе',
+    'Приоритетных форм с готовой анкетой',
+    'Языка — EN · RU · UA · ES',
+    'Лет подготовки документов USCIS и Калифорнии'
   ],
   uk: [
-    'Форм USCIS і судів Каліфорнії, які ми готуємо',
-    'Мови — англійська · російська · українська · іспанська',
-    'Років підготовки імміграційних документів',
-    'Реєстрація в окрузі Сакраменто · № 2026-010 · чинна до 27.09.2028'
+    'Форм USCIS і Каліфорнії в роботі',
+    'Пріоритетних форм з готовою анкетою',
+    'Мови — EN · RU · UA · ES',
+    'Років підготовки документів USCIS і Каліфорнії'
   ],
   es: [
-    'Formularios de USCIS y de las cortes de California que preparamos',
-    'Idiomas — inglés · ruso · ucraniano · español',
-    'Años preparando documentos de inmigración',
-    'Registro en el condado de Sacramento · n.º 2026-010 · vigente hasta el 27/09/2028'
+    'Formularios USCIS y California compatibles',
+    'Formularios prioritarios con flujos guiados',
+    'Idiomas — EN · RU · UA · ES',
+    'Años preparando formularios de California y USCIS'
   ]
 };
 
