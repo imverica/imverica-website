@@ -282,31 +282,32 @@ export const HERO: Record<Locale, {
   }
 };
 
-/** Verified facts in the stats strip. Numbers stay numeric. */
+/** Labels in the stats strip, in order: forms we prepare (counted at build
+ *  time), languages, years, and the LDA registration. */
 export const STATS: Record<Locale, string[]> = {
   en: [
+    'USCIS and California court forms we prepare',
     'Languages — English · Russian · Ukrainian · Spanish',
     'Years preparing immigration documents',
-    'Registered roles — LDA & Immigration Consultant',
-    'LDA registration current through Sep. 27'
+    'Registered in Sacramento County · No. 2026-010 · current through 09/27/2028'
   ],
   ru: [
+    'Форм USCIS и судов Калифорнии, которые мы готовим',
     'Языки — английский · русский · украинский · испанский',
     'Лет подготовки иммиграционных документов',
-    'Регистрации — LDA и Immigration Consultant',
-    'Регистрация LDA действует до 27 сентября'
+    'Регистрация в округе Сакраменто · № 2026-010 · действует до 27.09.2028'
   ],
   uk: [
+    'Форм USCIS і судів Каліфорнії, які ми готуємо',
     'Мови — англійська · російська · українська · іспанська',
     'Років підготовки імміграційних документів',
-    'Реєстрації — LDA та Immigration Consultant',
-    'Реєстрація LDA чинна до 27 вересня'
+    'Реєстрація в окрузі Сакраменто · № 2026-010 · чинна до 27.09.2028'
   ],
   es: [
+    'Formularios de USCIS y de las cortes de California que preparamos',
     'Idiomas — inglés · ruso · ucraniano · español',
     'Años preparando documentos de inmigración',
-    'Registros — LDA y Consultor de Inmigración',
-    'Registro LDA vigente hasta el 27 de septiembre'
+    'Registro en el condado de Sacramento · n.º 2026-010 · vigente hasta el 27/09/2028'
   ]
 };
 

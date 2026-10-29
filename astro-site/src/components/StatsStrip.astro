@@ -1,4 +1,7 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
+import { createRequire } from 'node:module';
 import { STATS, type Locale } from '~/data/i18n';
 
 interface Props {
@@ -7,11 +10,28 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const labels = STATS[lang];
 
-const items = [
-  { target: 4, suffix: '', label: labels[0] },
-  { target: 10, suffix: '+', label: labels[1] },
-  { target: 2, suffix: '', label: labels[2] },
-  { target: 2028, suffix: '', label: labels[3] }
+// Forms we can actually prepare, counted at build time: California court
+// forms the portal fills plus USCIS forms with a fill map. Rounded down to
+// ten, so the figure only grows when forms are really added.
+function preparableForms(): number {
+  try {
+    const root = [process.cwd(), path.resolve(process.cwd(), '..')]
+      .find((dir) => fs.existsSync(path.join(dir, 'netlify/functions/lib/ca-all-court-catalog.js')));
+    if (!root) return 400;
+    const lib = path.join(root, 'netlify/functions/lib');
+    const court = createRequire(path.join(root, 'package.json'))('./netlify/functions/lib/ca-all-court-catalog.js').listPreparableAllCourtForms().length;
+    const uscis = fs.readdirSync(lib).filter((file) => file.endsWith('-pdf-map.js')).length;
+    return Math.floor((court + uscis) / 10) * 10;
+  } catch {
+    return 400;
+  }
+}
+
+const items: Array<{ target?: number; text?: string; suffix: string; label: string }> = [
+  { target: preparableForms(), suffix: '+', label: labels[0] },
+  { target: 4, suffix: '', label: labels[1] },
+  { target: 10, suffix: '+', label: labels[2] },
+  { text: 'LDA', suffix: '', label: labels[3] }
 ];
 ---
 <section class="stats-strip">
@@ -19,7 +39,7 @@ const items = [
     {items.map((s) => (
       <div class="stat-item">
         <div class="stat-number">
-          <span data-stat-target={s.target}>{s.target}</span>
+          {s.text ? <span>{s.text}</span> : <span data-stat-target={s.target}>{s.target}</span>}
           {s.suffix && <span style="font-size:0.62em;color:var(--gold-light);">{s.suffix}</span>}
         </div>
         <div class="stat-label">{s.label}</div>
