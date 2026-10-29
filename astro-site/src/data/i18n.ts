@@ -94,6 +94,7 @@ const translatedSlugs = new Set<string>([
   // so RU/UA/MX nav clicks fall back to /pricing (EN) instead of 404.
   // Localised versions are queued as a follow-up.
   '/about',
+  '/about-imverica-legal-solutions',
   '/for-attorneys',
   '/schedule'
 ]);

@@ -25,13 +25,13 @@ interface SitemapEntry {
 }
 
 const URLS: SitemapEntry[] = [
-  { slug: '/', priority: 1.0, changefreq: 'weekly', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/', priority: 1.0, changefreq: 'weekly', lastmod: '2026-10-29', translatedLocales: ['ru', 'uk', 'es'] },
   // High-intent pages that were MISSING from the sitemap entirely (found
   // 2026-07-14 during the AI-search audit — /u4u and /tps are the exact
   // pages RU/UA leads land on, and they were invisible to crawlers).
   { slug: '/u4u', priority: 0.95, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/tps', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
-  { slug: '/about-imverica-legal-solutions', priority: 0.9, changefreq: 'monthly', lastmod: '2026-10-18', translatedLocales: ['ru', 'uk', 'es'] },
+  { slug: '/about-imverica-legal-solutions', priority: 0.9, changefreq: 'monthly', lastmod: '2026-10-29', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/uscis-document-review', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/immigration', priority: 0.9, changefreq: 'monthly', translatedLocales: ['ru', 'uk', 'es'] },
   { slug: '/pricing', priority: 0.85, changefreq: 'monthly', translatedLocales: [] },

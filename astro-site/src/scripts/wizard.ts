@@ -836,7 +836,7 @@ export function initIntakeWizard(): void {
 
   function renderLangButtons() {
     var FLAGS = { en: '🇺🇸', ru: '🇷🇺', uk: '🇺🇦', es: '🇲🇽' };
-    var LABELS = { en: 'EN', ru: 'RU', uk: 'UA', es: 'ES' };
+    var LABELS = { en: 'English', ru: 'Русский', uk: 'Українська', es: 'Español' };
     langEl.innerHTML = ['en','ru','uk','es'].map(function (lang) {
       return '<button type="button" class="' + (state.lang === lang ? 'active' : '') + '" data-intake-lang="' + lang + '"><span class="flag">' + FLAGS[lang] + '</span> ' + LABELS[lang] + '</button>';
     }).join('');
