@@ -35,6 +35,16 @@ explicitly asks for that exact change in the current task. "Accuracy",
   environment variables `LDA_ASSISTANT_NAME` and `LDA_ADDRESS`. Do not add
   defaults for them in code.
 
+## Intake wizard and PDF generation
+
+- Do not remove or reroute the question-by-question wizards and PDF
+  generation: `astro-site/src/scripts/wizard.ts`, `IntakeWizard.astro`,
+  the USCIS and court wizards in `astro-site/public/account.html`, and the
+  `generate-*-pdf` functions.
+- "Continue" in the finder and "Start my ..." buttons send forms the
+  portal can prepare straight to their wizard
+  (`astro-site/src/scripts/portal-wizard.ts`, `/portal-forms.json`). Keep it.
+
 ## Deploys
 
 - `.github/workflows/deploy.yml` runs only by hand (`workflow_dispatch`).
