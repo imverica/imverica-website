@@ -2704,16 +2704,25 @@ async function openCabinetForms(term){
   }, 80);
 }
 
-function maybeOpenRequestedCourtForm(){
+async function maybeOpenRequestedCourtForm(){
   if (smallClaimsState.category !== 'all' || smallClaimsState.requestedRouteOpened) return;
   const route = smallClaimsState.pendingRoute;
   if (!route) return;
-  const forms = smallClaimsState.catalog && smallClaimsState.catalog.forms || [];
-  const form = forms.find(function(item){
-    if (route.localFormId && item.id === route.localFormId) return true;
-    return !route.localFormId && route.formCode && item.code === route.formCode;
-  });
-  if (!form) return;
+  const findForm = function(){
+    const forms = smallClaimsState.catalog && smallClaimsState.catalog.forms || [];
+    return forms.find(function(item){
+      if (route.localFormId && item.id === route.localFormId) return true;
+      return !route.localFormId && route.formCode && item.code === route.formCode;
+    });
+  };
+  let form = findForm();
+  // The library's first page holds 100 forms: search for the requested one.
+  if (!form && route.formCode && !smallClaimsState.requestedRouteSearched) {
+    smallClaimsState.requestedRouteSearched = true;
+    await fetchAllForms(route.formCode, true);
+    form = findForm();
+  }
+  if (!form || smallClaimsState.requestedRouteOpened) return;
   smallClaimsState.requestedRouteOpened = true;
   smallClaimsState.pendingRoute = null;
   try { localStorage.removeItem('imverica_court_route'); } catch(e) {}

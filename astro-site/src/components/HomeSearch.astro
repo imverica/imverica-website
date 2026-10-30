@@ -105,6 +105,7 @@ const t = STRINGS[lang] || STRINGS.en;
 </div>
 
 <script>
+  import { portalWizardUrl, courtRouteUrl } from '~/scripts/portal-wizard';
   const form = document.getElementById('aiFinderForm') as HTMLFormElement | null;
   const input = document.getElementById('aiFinderInput') as HTMLTextAreaElement | null;
   const result = document.getElementById('aiFinderResult') as HTMLElement | null;
@@ -351,8 +352,15 @@ const t = STRINGS[lang] || STRINGS.en;
     } catch { /* analytics must never break search */ }
   }
 
-  function continueToWizard(query: string, formCode = '') {
-    logSearchEvent('start', query, '', 0);
+  // A form the client portal can prepare goes straight to its wizard
+  // (questions, then the PDF draft); anything else opens the short request.
+  async function continueToWizard(query: string, formCode = '', localFormId = '') {
+    logSearchEvent('start', query, formCode, 0);
+    const wizardUrl = localFormId ? courtRouteUrl() : await portalWizardUrl(formCode);
+    if (wizardUrl) {
+      window.location.href = wizardUrl;
+      return;
+    }
     const opener = (window as Window & { openIntakeModal?: (prefill?: string, options?: { formCode?: string }) => void }).openIntakeModal;
     if (typeof opener === 'function') {
       opener(query, formCode ? { formCode } : undefined);
@@ -470,7 +478,8 @@ const t = STRINGS[lang] || STRINGS.en;
           <a href="tel:+19163993992">${t.call}</a>
         </div>
       `);
-      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery, formCode));
+      const localFormId = String(routeData?.route?.localFormId || '');
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery, formCode, localFormId));
 
       const chatData = await chatPromise;
       const reply = String(chatData?.reply || '').trim();
