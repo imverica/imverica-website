@@ -7,15 +7,11 @@
  *   href="/#get-started?service=business"  (a service category)
  * This module intercepts those clicks site-wide, prevents the navigation,
  * and calls window.openIntakeModal(prefill, mode) installed by wizard.ts.
- * A form the client portal can prepare goes straight to its wizard instead
- * (portal-wizard.ts): sign-in, the form's questions, then the PDF draft.
  *
  * Also handles the case where a user lands directly on a URL containing
  * #get-started (e.g. they bookmarked the CTA) — in that case we trigger
  * the modal after the wizard has finished initializing.
  */
-
-import { portalWizardUrl } from './portal-wizard';
 
 function getParam(href: string, key: string): string {
   // Reads a query param from the hash portion: /#get-started?form=I-485
@@ -37,18 +33,6 @@ function resolveCta(href: string): { prefill: string; mode: CtaMode } {
   const topic = getParam(href, 'topic');
   if (topic) return { prefill: topic, mode: 'topic' };
   return { prefill: '', mode: '' };
-}
-
-// Form CTAs: the portal wizard when it has the form, else the request form.
-function openCta(prefill: string, mode: CtaMode): void {
-  if (mode !== 'form') {
-    tryOpenWithRetry(prefill, mode);
-    return;
-  }
-  portalWizardUrl(prefill).then((url) => {
-    if (url) window.location.href = url;
-    else tryOpenWithRetry(prefill, mode);
-  });
 }
 
 function tryOpenWithRetry(prefill: string, mode: CtaMode = '', attempts = 8): void {
@@ -84,14 +68,14 @@ export function installCtaBridge(): void {
 
     event.preventDefault();
     const { prefill, mode } = resolveCta(anchor.getAttribute('href') || '');
-    openCta(prefill, mode);
+    tryOpenWithRetry(prefill, mode);
   });
 
   // If the page loaded with #get-started already in the URL, open the
   // modal once the wizard is ready.
   if (window.location.hash.startsWith('#get-started')) {
     const { prefill, mode } = resolveCta(window.location.hash);
-    openCta(prefill, mode);
+    tryOpenWithRetry(prefill, mode);
   }
 
   // Cabinet "Continue intake" CTA passes the order id via ?continue=…

@@ -150,12 +150,10 @@ const BRAND_FONTS = 'https://fonts.googleapis.com/css2?family=Newsreader:ital,op
   {/* v2: apple.com-style footer; inert template, swapped in before paint */}
   <template data-v2-new="footer"><SiteFooterV2 lang={lang} slug={slug} availableLocales={availableLocales} /></template>
   <V2Swap />
-  <!-- IntakeWizard runs first and registers window.openIntakeModal for
-       the long Q&A. QuickIntakeModal loads AFTER it and re-assigns the
-       same global to the new one-screen form — this wins for every
-       homepage / landing-page CTA. The long wizard is still reachable
-       from the cabinet via window.openIntakeWizard (or a direct call to
-       the legacy modal when the user is mid-flow on an existing order). -->
+  <!-- IntakeWizard registers window.openIntakeModal: the question-by-question
+       wizard that every CTA and the homepage finder open. QuickIntakeModal is
+       the short request form behind the wizard's "Have us call you" button
+       (window.openQuickIntake). -->
   <IntakeWizard />
   <QuickIntakeModal />
   <ChatWidget />

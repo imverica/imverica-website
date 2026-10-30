@@ -138,12 +138,7 @@ import '~/styles/wizard.css';
     if (callbackBtn) {
       callbackBtn.addEventListener('click', function () {
         if (typeof window.closeIntakeModal === 'function') window.closeIntakeModal();
-        if (typeof window.openIntakeModal === 'function') {
-          // openIntakeModal is the QuickIntakeModal opener — the long
-          // wizard exposes its own internal opener too, but at this
-          // point in the page lifecycle QuickIntake has overridden it.
-          window.openIntakeModal();
-        }
+        if (typeof window.openQuickIntake === 'function') window.openQuickIntake();
       });
     }
   })();

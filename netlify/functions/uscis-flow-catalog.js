@@ -68,7 +68,13 @@ function hasPdfMap(code) {
   return file.startsWith(MAP_DIR) && fs.existsSync(file);
 }
 
-function listUscisForms() {
+exports.handler = async function (event) {
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
+  if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
+
+  const session = sessionFromEvent(event);
+  if (!session) return json(401, { ok: false, error: 'Not signed in' });
+
   const catalogIndex = catalogByCode();
   const forms = manifestForms()
     .filter((form) => form.agency === 'uscis')
@@ -97,23 +103,7 @@ function listUscisForms() {
       if (a.preparable !== b.preparable) return a.preparable ? -1 : 1;
       return a.code.localeCompare(b.code);
     });
-  return forms;
-}
 
-// Codes the cabinet wizard can prepare; the public site links straight to
-// them (astro-site/src/pages/portal-forms.json.ts).
-exports.preparableCodes = function () {
-  return listUscisForms().filter((form) => form.preparable).map((form) => form.code);
-};
-
-exports.handler = async function (event) {
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS_HEADERS };
-  if (event.httpMethod !== 'GET') return json(405, { ok: false, error: 'Method not allowed' });
-
-  const session = sessionFromEvent(event);
-  if (!session) return json(401, { ok: false, error: 'Not signed in' });
-
-  const forms = listUscisForms();
   const counts = {
     total: forms.length,
     preparable: forms.filter((form) => form.preparable).length,

@@ -105,7 +105,6 @@ const t = STRINGS[lang] || STRINGS.en;
 </div>
 
 <script>
-  import { portalWizardUrl, courtRouteUrl } from '~/scripts/portal-wizard';
   const form = document.getElementById('aiFinderForm') as HTMLFormElement | null;
   const input = document.getElementById('aiFinderInput') as HTMLTextAreaElement | null;
   const result = document.getElementById('aiFinderResult') as HTMLElement | null;
@@ -352,18 +351,16 @@ const t = STRINGS[lang] || STRINGS.en;
     } catch { /* analytics must never break search */ }
   }
 
-  // A form the client portal can prepare goes straight to its wizard
-  // (questions, then the PDF draft); anything else opens the short request.
-  async function continueToWizard(query: string, formCode = '', localFormId = '') {
+  // "Continue" opens the question-by-question wizard (wizard.ts) with what
+  // the visitor typed; it finds a form number in the text itself. A form the
+  // router recognized from words alone ("divorce" -> FL-100) is passed as
+  // the form.
+  function continueToWizard(query: string, formCode = '') {
     logSearchEvent('start', query, formCode, 0);
-    const wizardUrl = localFormId ? courtRouteUrl() : await portalWizardUrl(formCode);
-    if (wizardUrl) {
-      window.location.href = wizardUrl;
-      return;
-    }
-    const opener = (window as Window & { openIntakeModal?: (prefill?: string, options?: { formCode?: string }) => void }).openIntakeModal;
+    const opener = (window as Window & { openIntakeModal?: (prefill?: string, mode?: string) => void }).openIntakeModal;
     if (typeof opener === 'function') {
-      opener(query, formCode ? { formCode } : undefined);
+      if (formCode && !query.toUpperCase().includes(formCode)) opener(formCode, 'form');
+      else opener(query);
       return;
     }
     window.location.hash = 'get-started';
@@ -478,8 +475,7 @@ const t = STRINGS[lang] || STRINGS.en;
           <a href="tel:+19163993992">${t.call}</a>
         </div>
       `);
-      const localFormId = String(routeData?.route?.localFormId || '');
-      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery, formCode, localFormId));
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery, formCode));
 
       const chatData = await chatPromise;
       const reply = String(chatData?.reply || '').trim();

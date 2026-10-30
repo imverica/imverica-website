@@ -41,9 +41,11 @@ explicitly asks for that exact change in the current task. "Accuracy",
   generation: `astro-site/src/scripts/wizard.ts`, `IntakeWizard.astro`,
   the USCIS and court wizards in `astro-site/public/account.html`, and the
   `generate-*-pdf` functions.
-- "Continue" in the finder and "Start my ..." buttons send forms the
-  portal can prepare straight to their wizard
-  (`astro-site/src/scripts/portal-wizard.ts`, `/portal-forms.json`). Keep it.
+- "Continue" in the homepage finder and every "Start my ..." / "Start
+  your case" button open this question-by-question wizard on the site
+  (`window.openIntakeModal` from `wizard.ts`). Do not point them at the
+  short request form (`QuickIntakeModal`, reached only from the wizard's
+  "Have us call you" button) or at the client portal.
 
 ## Deploys
 

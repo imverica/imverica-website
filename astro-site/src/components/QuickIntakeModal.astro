@@ -623,10 +623,13 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     setTimeout(() => { bd.hidden = true; md.hidden = true; }, 200);
   }
 
-  // Expose globally so other components (HomeSearch, ServiceSections,
-  // landing-page CTAs) can call window.openIntakeModal(query) without
-  // having to import this script.
-  (window as Window & { openIntakeModal?: (q?: string, hints?: { formCode?: string }) => void }).openIntakeModal = openModal;
+  // The question-by-question wizard (wizard.ts) owns window.openIntakeModal:
+  // every CTA and the homepage finder open it. The short form is reached
+  // from the wizard's "Have us call you" button via window.openQuickIntake
+  // (and stands in only if the wizard script did not load).
+  const w = window as Window & { openQuickIntake?: typeof openModal; openIntakeModal?: (q?: string, hints?: unknown) => void };
+  w.openQuickIntake = openModal;
+  if (typeof w.openIntakeModal !== 'function') w.openIntakeModal = openModal;
 
   // Cloudflare Turnstile callback — when the widget verifies the user it
   // calls this global hook with the token. We stash it in the hidden
