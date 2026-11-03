@@ -29,8 +29,9 @@ explicitly asks for that exact change in the current task. "Accuracy",
   is registered" or "Imverica LLC is bonded".
 - Keep the registrant picture in the footer's LDA note
   (`public/img/legal/registrant.png`, the `registrant` field in
-  `astro-site/src/data/footerV2.ts`). The registrant's name and business
-  address must never appear as text in the code or on the site.
+  `astro-site/src/data/footerV2.ts`): the name and "Sacramento County,
+  California". The name must never appear as text in the code or on the
+  site, and the business address must not appear on the site at all.
 - The name and address used on court forms come only from the Netlify
   environment variables `LDA_ASSISTANT_NAME` and `LDA_ADDRESS`. Do not add
   defaults for them in code.
