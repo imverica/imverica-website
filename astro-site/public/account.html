@@ -122,6 +122,17 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:0 2.5rem;displ
 .md-file-generated .md-file-tag{background:#fff3e0;color:#8a5a00;}
 .md-file-dl{flex:0 0 auto;color:var(--navy);text-decoration:none;font-weight:600;font-size:12.5px;padding:6px 12px;border:1px solid var(--border);border-radius:6px;}
 .md-file-dl:hover{background:#f0f4f8;}
+.md-file-haspf{flex-wrap:wrap;}
+.md-file-pf{flex:1 1 100%;padding-left:44px;color:var(--navy);font-weight:600;font-size:12.5px;text-underline-offset:3px;}
+/* Phones: the name gets its own line so nothing is pushed out of the row. */
+@media (max-width:560px){
+  .md-file{flex-wrap:wrap;}
+  .md-file-name{flex:1 1 calc(100% - 44px);white-space:normal;overflow-wrap:anywhere;}
+  .md-file-meta{margin-left:44px;}
+  .md-file-dl{margin-left:auto;}
+}
+.pf-link{display:block;margin-top:10px;padding:12px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--navy);font-weight:600;font-size:13px;line-height:1.45;text-decoration:none;}
+.pf-link:hover{background:#f0f4f8;}
 
 /* ===== Small Claims cabinet wizard ===== */
 .sc-overlay{position:fixed;inset:0;background:rgba(15,22,35,0.62);backdrop-filter:blur(3px);z-index:1002;display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -1152,6 +1163,7 @@ const STRINGS = {
     scDisclaimer: 'Imverica prepares documents at your direction and does not provide legal advice. Leave court, clerk, and judge sections blank. Review every field before filing.',
     uaTitle: 'Before you upload', uaText: 'I confirm I may share these documents: they are mine, or I have permission from the person they belong to.', uaLink: '/document-security', uaLinkText: 'How we store and protect documents', uaCancel: 'Cancel', uaOk: 'Continue',
     frInfo: 'For your information', frCleanDates: 'Date check: no gaps or overlaps found.', frTitle: 'Before your draft: items to double-check', frIntro: 'We checked what you entered: totals and dates, items that should agree with each other, blanks the form asks you to fill, and the attachments it asks for. This is not legal advice — you decide what to report. Fix anything that needs it, or generate the draft as is.', frMath: 'Arithmetic', frCheck: 'Check these answers', frAttach: 'Attach to the form', frFix: 'Back to the form', frAnyway: 'Generate the draft anyway', frClean: 'Numbers check: totals add up and related items agree.',
+    pfLink: 'Before you mail it to USCIS: signatures, payment and what goes in the envelope', pfDoc: 'Before you mail it: the list for this form',
     notifTitle: 'Notifications', notifMarkAll: 'Mark all read',
     notifEmpty: 'No notifications yet.', notifEmptyLong: 'No notifications yet. Replies from Imverica and status updates will show here.',
     notifImvericaReplied: 'Imverica replied', notifStatus: 'Status:',
@@ -1290,6 +1302,7 @@ const STRINGS = {
     scDisclaimer: 'Imverica готовит документы по вашим указаниям и не даёт юридических консультаций. Оставляйте разделы суда, клерка и судьи пустыми. Проверьте каждое поле перед подачей.',
     uaTitle: 'Перед загрузкой', uaText: 'Подтверждаю, что вправе передать эти документы: они мои или у меня есть разрешение человека, которому они принадлежат.', uaLink: '/ru/document-security', uaLinkText: 'Как мы храним и защищаем документы', uaCancel: 'Отмена', uaOk: 'Продолжить',
     frInfo: 'Для сведения', frCleanDates: 'Проверка дат: пробелов и пересечений нет.', frTitle: 'Перед черновиком: что перепроверить', frIntro: 'Мы проверили введённое: итоги и даты, пункты, которые должны совпадать, пустые места, которые форма просит заполнить, и приложения, которые она требует. Это не юридическая консультация — что указывать, решаете вы. Исправьте нужное или создайте черновик как есть.', frMath: 'Арифметика', frCheck: 'Проверьте ответы', frAttach: 'Приложить к форме', frFix: 'Вернуться к форме', frAnyway: 'Всё равно создать черновик', frClean: 'Проверка цифр: итоги сходятся, связанные пункты совпадают.',
+    pfLink: 'Перед отправкой в USCIS: подписи, оплата и что положить в конверт', pfDoc: 'Перед отправкой: список для этой формы',
     notifTitle: 'Уведомления', notifMarkAll: 'Отметить всё прочитанным',
     notifEmpty: 'Уведомлений пока нет.', notifEmptyLong: 'Уведомлений пока нет. Здесь появятся ответы от Imverica и обновления статусов.',
     notifImvericaReplied: 'Imverica ответили', notifStatus: 'Статус:',
@@ -1428,6 +1441,7 @@ const STRINGS = {
     scDisclaimer: 'Imverica готує документи за вашими вказівками й не надає юридичних консультацій. Залишайте розділи суду, клерка та судді порожніми. Перевірте кожне поле перед поданням.',
     uaTitle: 'Перед завантаженням', uaText: 'Підтверджую, що маю право передати ці документи: вони мої або я маю дозвіл особи, якій вони належать.', uaLink: '/ua/document-security', uaLinkText: 'Як ми зберігаємо та захищаємо документи', uaCancel: 'Скасувати', uaOk: 'Продовжити',
     frInfo: 'До відома', frCleanDates: 'Перевірка дат: прогалин і перетинів немає.', frTitle: 'Перед чернеткою: що перевірити', frIntro: 'Ми перевірили введене: підсумки й дати, пункти, які мають збігатися, порожні місця, які форма просить заповнити, і додатки, яких вона вимагає. Це не юридична консультація — що вказувати, вирішуєте ви. Виправте потрібне або створіть чернетку як є.', frMath: 'Арифметика', frCheck: 'Перевірте відповіді', frAttach: 'Додати до форми', frFix: 'Повернутися до форми', frAnyway: 'Все одно створити чернетку', frClean: 'Перевірка цифр: підсумки сходяться, пов’язані пункти збігаються.',
+    pfLink: 'Перед відправленням до USCIS: підписи, оплата і що покласти в конверт', pfDoc: 'Перед відправленням: список для цієї форми',
     notifTitle: 'Сповіщення', notifMarkAll: 'Позначити все прочитаним',
     notifEmpty: 'Сповіщень поки немає.', notifEmptyLong: 'Сповіщень поки немає. Тут з\'являться відповіді від Imverica та оновлення статусів.',
     notifImvericaReplied: 'Imverica відповіли', notifStatus: 'Статус:',
@@ -1566,6 +1580,7 @@ const STRINGS = {
     scDisclaimer: 'Imverica prepara documentos según sus instrucciones y no brinda asesoría legal. Deje en blanco las secciones del tribunal, secretario y juez. Revise cada campo antes de presentar.',
     uaTitle: 'Antes de subir', uaText: 'Confirmo que puedo compartir estos documentos: son míos o tengo permiso de la persona a quien pertenecen.', uaLink: '/mx/document-security', uaLinkText: 'Cómo guardamos y protegemos los documentos', uaCancel: 'Cancelar', uaOk: 'Continuar',
     frInfo: 'Para su información', frCleanDates: 'Revisión de fechas: no hay huecos ni superposiciones.', frTitle: 'Antes del borrador: puntos para revisar', frIntro: 'Revisamos lo que ingresó: totales y fechas, puntos que deben coincidir, espacios en blanco que el formulario pide llenar y los anexos que exige. Esto no es asesoría legal: usted decide qué declarar. Corrija lo necesario o genere el borrador tal como está.', frMath: 'Cálculos', frCheck: 'Revise estas respuestas', frAttach: 'Adjuntar al formulario', frFix: 'Volver al formulario', frAnyway: 'Generar el borrador de todos modos', frClean: 'Revisión de cifras: los totales cuadran y los puntos relacionados coinciden.',
+    pfLink: 'Antes de enviarlo a USCIS: firmas, pago y qué va en el sobre', pfDoc: 'Antes de enviar: la lista para este formulario',
     notifTitle: 'Notificaciones', notifMarkAll: 'Marcar todo leído',
     notifEmpty: 'No hay notificaciones aún.', notifEmptyLong: 'No hay notificaciones aún. Aquí aparecerán respuestas de Imverica y actualizaciones de estado.',
     notifImvericaReplied: 'Imverica respondió', notifStatus: 'Estado:',
@@ -2435,7 +2450,8 @@ function renderMyDocuments(){
       const isPrep = f.source === 'prepared';
       const isGenerated = f.source === 'generated';
       const ext = (f.name.split('.').pop() || '?').toUpperCase().slice(0,4);
-      html += '<div class="md-file' + (isPrep ? ' md-file-prepared' : '') + (isGenerated ? ' md-file-generated' : '') + '">';
+      const pfUrl = isGenerated ? preflightUrl(f.formCode) : '';
+      html += '<div class="md-file' + (isPrep ? ' md-file-prepared' : '') + (isGenerated ? ' md-file-generated' : '') + (pfUrl ? ' md-file-haspf' : '') + '">';
       html += '<span class="md-file-icon">' + escText(ext) + '</span>';
       html += '<span class="md-file-name">' + escText(f.name) + '</span>';
       html += '<span class="md-file-meta">' + fmtSize(f.size) + '</span>';
@@ -2444,6 +2460,7 @@ function renderMyDocuments(){
         ? '/api/generated-documents?fileId=' + encodeURIComponent(f.fileId)
         : '/api/upload?orderId=' + encodeURIComponent(orderId) + '&fileId=' + encodeURIComponent(f.fileId);
       html += '<a class="md-file-dl" href="' + href + '">' + T.mdDownload + '</a>';
+      if (pfUrl) html += '<a class="md-file-pf" target="_blank" rel="noopener" href="' + pfUrl + '">' + escText(T.pfDoc) + '\u00a0→</a>';
       html += '</div>';
     });
     html += '</div>';
@@ -3784,6 +3801,40 @@ function uscisNext(){
   }
 }
 
+// Forms with a "before you mail to USCIS" sheet (/before-you-mail.html):
+// signatures, payment, what goes in the envelope. See /api/form-preflight.
+const PREFLIGHT_FORMS = ['I-485', 'I-765', 'N-400'];
+
+// Sheet address for a form, or '' when the form has none. `answers` (the
+// wizard's values) narrows the interpreter and preparer lines when known.
+function preflightUrl(formCode, answers){
+  const code = String(formCode || '').toUpperCase();
+  if (PREFLIGHT_FORMS.indexOf(code) === -1) return '';
+  const query = new URLSearchParams({ form:code, lang:CURRENT_LANG });
+  ['interpreter', 'preparer'].forEach(function(key){
+    const value = String((answers && answers['has_' + key]) || '').toLowerCase();
+    if (value === 'yes' || value === 'no') query.set(key, value);
+  });
+  return '/before-you-mail.html?' + query.toString();
+}
+
+// Under the "draft is ready" status: the link to the sheet for this form.
+function showUscisPreflightLink(){
+  const old = document.getElementById('uscis-preflight');
+  if (old) old.remove();
+  const status = document.getElementById('uscis-status');
+  const url = preflightUrl(uscisWizardState.form.code, uscisWizardState.values);
+  if (!status || !url) return;
+  const link = document.createElement('a');
+  link.id = 'uscis-preflight';
+  link.className = 'pf-link';
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.textContent = T.pfLink + '\u00a0→';
+  status.insertAdjacentElement('afterend', link);
+}
+
 // Forms checked before the draft: address, job and trip dates (I-485,
 // N-400); household size, income and asset totals (I-864).
 const REVIEWED_USCIS_FORMS = ['I-485', 'N-400', 'I-864'];
@@ -3854,6 +3905,7 @@ async function generateUscisPdf(){
       category: 'uscis'
     });
     setUscisStatus('ok', T.uscisReadyPdf);
+    showUscisPreflightLink();
   } catch(e) {
     setUscisStatus('error', e.message || T.uscisLoadFail);
   } finally {

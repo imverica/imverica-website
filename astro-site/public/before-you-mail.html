@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Before you mail to USCIS | Imverica</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<style>
+:root{
+  --navy:#1a2e4a;--navy-dark:#111e30;--gold:#c9a96e;--bg:#f4f3f0;--border:#dddad4;--muted:#5d6672;--ink:#1c232d;--ok:#1a5a3a;
+  --font-system:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:var(--font-system);background:var(--bg);color:var(--ink);line-height:1.5;}
+.bar{background:#fff;border-bottom:1px solid var(--border);}
+.bar-in{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.logo img{display:block;width:124px;height:auto;}
+.langs{display:flex;gap:2px;}
+.langs a{font-size:12px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-decoration:none;padding:8px 9px;border-radius:6px;}
+.langs a[aria-current="true"]{color:var(--navy);background:#eef2f7;}
+main{max-width:760px;margin:0 auto;padding:20px 16px 48px;}
+.sheet{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px 22px 24px;}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted);}
+h1{font-size:26px;line-height:1.2;font-weight:700;color:var(--navy-dark);margin-top:8px;text-wrap:balance;}
+.rule{width:56px;height:3px;background:var(--gold);border-radius:2px;margin:14px 0 14px;}
+.intro{font-size:15px;color:#3a4350;}
+.tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+.count{flex:0 0 auto;font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.count.done{color:var(--ok);}
+.print{font:600 14px/1.3 var(--font-system);color:#fff;background:var(--navy);border:0;border-radius:999px;padding:11px 18px;cursor:pointer;}
+.print:hover{background:#243d60;}
+h2{font-size:13px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--navy);margin:26px 0 6px;}
+.items{list-style:none;}
+.items li{border-top:1px solid #eeece7;padding:12px 0;}
+.items li:first-child{border-top:0;}
+.item{display:flex;gap:12px;align-items:flex-start;cursor:pointer;}
+.item input{flex:0 0 auto;width:22px;height:22px;margin-top:1px;accent-color:var(--navy);cursor:pointer;}
+.item span{font-size:15.5px;}
+.item input:checked + span{color:var(--muted);}
+.more{display:inline-block;margin:6px 0 0 34px;font-size:13.5px;font-weight:600;color:var(--navy);text-underline-offset:3px;}
+.sources{list-style:none;}
+.sources li{padding:7px 0;font-size:14px;}
+.sources a{color:var(--navy);font-weight:600;text-underline-offset:3px;}
+.sources .url{display:none;}
+.foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted);}
+.state{font-size:15px;color:#3a4350;}
+.state a{color:var(--navy);font-weight:600;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--navy);outline-offset:3px;}
+@media (min-width:640px){
+  main{padding-top:32px;}
+  .sheet{padding:40px 44px 34px;}
+  h1{font-size:31px;}
+}
+@media print{
+  @page{margin:14mm 15mm;}
+  body{background:#fff;color:#000;}
+  .bar,.tools{display:none;}
+  main{max-width:none;padding:0;}
+  .sheet{border:0;border-radius:0;padding:0;}
+  h1{font-size:20pt;color:#000;}
+  .intro{font-size:10.5pt;color:#000;}
+  h2{font-size:9.5pt;color:#000;margin:14pt 0 2pt;break-after:avoid;}
+  .items li{padding:5pt 0;break-inside:avoid;border-color:#ccc;}
+  .item span{font-size:10.5pt;}
+  .item input{width:12pt;height:12pt;}
+  .item input:checked + span{color:#000;}
+  .more{display:none;}
+  .sources li{padding:2pt 0;font-size:9pt;break-inside:avoid;}
+  .sources a{color:#000;text-decoration:none;}
+  .sources .url{display:block;font-size:8pt;color:#333;word-break:break-all;}
+  .foot{font-size:8.5pt;color:#333;margin-top:10pt;padding-top:8pt;}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="bar-in">
+    <a class="logo" href="/" aria-label="Imverica Legal Solutions"><img src="/logo-nav.webp" alt="Imverica Legal Solutions" width="279" height="92"></a>
+    <nav class="langs" id="langs" aria-label="Language"></nav>
+  </div>
+</div>
+<main>
+  <article class="sheet" id="sheet" aria-live="polite">
+    <p class="state" id="state">Loading…</p>
+  </article>
+</main>
+<script>
+(function(){
+  'use strict';
+  var FALLBACK = {
+    en: { loading: 'Loading…', error: 'Could not load the list. Check your connection and try again.', none: 'There is no list for this form yet. Official forms and instructions:', eyebrow: 'Imverica Legal Solutions · Document preparation' },
+    ru: { loading: 'Загрузка…', error: 'Не удалось загрузить список. Проверьте соединение и попробуйте ещё раз.', none: 'Для этой формы списка пока нет. Официальные формы и инструкции:', eyebrow: 'Imverica Legal Solutions · Подготовка документов' },
+    uk: { loading: 'Завантаження…', error: 'Не вдалося завантажити список. Перевірте з’єднання і спробуйте ще раз.', none: 'Для цієї форми списку поки немає. Офіційні форми та інструкції:', eyebrow: 'Imverica Legal Solutions · Підготовка документів' },
+    es: { loading: 'Cargando…', error: 'No se pudo cargar la lista. Revise su conexión e intente de nuevo.', none: 'Todavía no hay una lista para este formulario. Formularios e instrucciones oficiales:', eyebrow: 'Imverica Legal Solutions · Preparación de documentos' }
+  };
+  var LANGS = [['en', 'EN'], ['ru', 'RU'], ['uk', 'UA'], ['es', 'ES']];
+  var params = new URLSearchParams(window.location.search);
+
+  function detectLang(){
+    var q = params.get('lang');
+    if (q && FALLBACK[q]) return q;
+    try {
+      var path = new URL(document.referrer).pathname;
+      if (path === '/ru' || path.indexOf('/ru/') === 0) return 'ru';
+      if (path === '/ua' || path.indexOf('/ua/') === 0) return 'uk';
+      if (path === '/mx' || path.indexOf('/mx/') === 0) return 'es';
+    } catch (e) {}
+    return 'en';
+  }
+
+  var lang = detectLang();
+  var words = FALLBACK[lang];
+  var form = String(params.get('form') || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+  var sheetEl = document.getElementById('sheet');
+  document.documentElement.lang = lang;
+
+  function el(tag, className, text){
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function link(className, label, url){
+    var a = el('a', className, label);
+    // Only official https pages are linked.
+    if (/^https:\/\//.test(url)) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+    return a;
+  }
+
+  function renderLangs(){
+    var nav = document.getElementById('langs');
+    LANGS.forEach(function(pair){
+      var next = new URLSearchParams(window.location.search);
+      next.set('lang', pair[0]);
+      var a = el('a', '', pair[1]);
+      a.href = window.location.pathname + '?' + next.toString();
+      a.lang = pair[0];
+      if (pair[0] === lang) a.setAttribute('aria-current', 'true');
+      nav.appendChild(a);
+    });
+  }
+
+  function showState(text, withLink){
+    sheetEl.textContent = '';
+    var p = el('p', 'state', text + (withLink ? ' ' : ''));
+    if (withLink) p.appendChild(link('', 'uscis.gov/forms', 'https://www.uscis.gov/forms/all-forms'));
+    sheetEl.appendChild(p);
+  }
+
+  // Ticks stay on this device only, so the list can be finished later.
+  var storeKey = 'imv-preflight-' + form;
+  function readTicks(){
+    try { var saved = JSON.parse(localStorage.getItem(storeKey) || '[]'); return Array.isArray(saved) ? saved : []; } catch (e) { return []; }
+  }
+  function writeTicks(ids){
+    try { localStorage.setItem(storeKey, JSON.stringify(ids)); } catch (e) {}
+  }
+
+  function render(sheet){
+    document.title = sheet.title + ' | Imverica';
+    sheetEl.textContent = '';
+    sheetEl.appendChild(el('p', 'eyebrow', words.eyebrow));
+    sheetEl.appendChild(el('h1', '', sheet.title));
+    sheetEl.appendChild(el('div', 'rule'));
+    sheetEl.appendChild(el('p', 'intro', sheet.intro));
+
+    var tools = el('div', 'tools');
+    var count = el('span', 'count');
+    var print = el('button', 'print', sheet.printLabel);
+    print.type = 'button';
+    print.addEventListener('click', function(){ window.print(); });
+    tools.appendChild(count);
+    tools.appendChild(print);
+    sheetEl.appendChild(tools);
+
+    var ticks = readTicks();
+    var boxes = [];
+    function refresh(){
+      var done = boxes.filter(function(box){ return box.checked; }).length;
+      count.textContent = done + ' / ' + boxes.length;
+      count.className = 'count' + (done === boxes.length ? ' done' : '');
+    }
+
+    sheet.sections.forEach(function(section){
+      sheetEl.appendChild(el('h2', '', section.title));
+      var list = el('ul', 'items');
+      section.items.forEach(function(item){
+        var id = section.id + '.' + item.id;
+        var li = el('li');
+        var label = el('label', 'item');
+        var box = el('input');
+        box.type = 'checkbox';
+        box.checked = ticks.indexOf(id) !== -1;
+        box.addEventListener('change', function(){
+          var now = readTicks().filter(function(saved){ return saved !== id; });
+          if (box.checked) now.push(id);
+          writeTicks(now);
+          refresh();
+        });
+        boxes.push(box);
+        label.appendChild(box);
+        label.appendChild(el('span', '', item.text));
+        li.appendChild(label);
+        if (item.link) li.appendChild(link('more', item.link.label + ' ↗', item.link.url));
+        list.appendChild(li);
+      });
+      sheetEl.appendChild(list);
+    });
+    refresh();
+
+    sheetEl.appendChild(el('h2', '', sheet.sourcesTitle));
+    var sources = el('ul', 'sources');
+    sheet.sources.forEach(function(source){
+      var li = el('li');
+      li.appendChild(link('', source.label, source.url));
+      li.appendChild(el('span', 'url', source.url));
+      sources.appendChild(li);
+    });
+    sheetEl.appendChild(sources);
+    sheetEl.appendChild(el('p', 'foot', sheet.footer));
+  }
+
+  renderLangs();
+  showState(words.loading);
+  if (!form) { showState(words.none, true); return; }
+
+  var query = new URLSearchParams({ form: form, lang: lang });
+  ['interpreter', 'preparer'].forEach(function(key){
+    var value = String(params.get(key) || '').toLowerCase();
+    if (value === 'yes' || value === 'no') query.set(key, value);
+  });
+  fetch('/api/form-preflight?' + query.toString(), { headers: { Accept: 'application/json' } })
+    .then(function(response){
+      if (response.status === 404) { showState(words.none, true); return null; }
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(function(data){
+      if (!data) return;
+      if (!data.ok || !data.sheet) throw new Error('Bad response');
+      render(data.sheet);
+    })
+    .catch(function(){ showState(words.error); });
+})();
+</script>
+</body>
+</html>

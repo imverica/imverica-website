@@ -250,6 +250,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/form-preflight"
+  to = "/.netlify/functions/form-preflight"
+  status = 200
+
+[[redirects]]
   from = "/api/generate-court-pdf"
   to = "/.netlify/functions/generate-court-pdf"
   status = 200
