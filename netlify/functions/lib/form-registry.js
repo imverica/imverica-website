@@ -72,7 +72,7 @@ const PACKET_CHECKLISTS = {
     'Applicant’s written declaration describing the claim',
     'Available supporting evidence (identity, country conditions, corroboration)',
     'One additional copy of the complete packet for the record (per instructions)',
-    'No filing fee for Form I-589'
+    'Filing fee or fee exemption evidence per the current USCIS fee schedule'
   ]
 };
 

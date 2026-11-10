@@ -276,7 +276,7 @@ async function buildUscisPacket(formCode, payload) {
   c.bullets([
     `Official form page: ${profile.officialPageUrl || 'uscis.gov'}`,
     `Current fees: ${profile.filingFeeUrl || 'https://www.uscis.gov/g-1055'} (USCIS fee schedule)`,
-    code === 'I-589' ? 'Form I-589 has no filing fee.' : 'Verify the current filing fee or fee-exemption evidence before mailing.',
+    'Verify the current filing fee or fee-exemption evidence before mailing.',
     'Use the filing address listed on the official form page for your category.',
     'Keep a complete copy of everything you mail.',
     'Send by a trackable mail service and keep the receipt.'

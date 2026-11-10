@@ -40,7 +40,7 @@ const i765 = getFormProfile('I-765');
 ok(Array.isArray(i765.packetChecklist) && i765.packetChecklist.length >= 5, 'I-765 packet checklist present');
 ok(Array.isArray(i765.qcChecklist) && i765.qcChecklist.length >= 5, 'I-765 QC checklist present');
 const i589 = getFormProfile('I-589');
-ok(Array.isArray(i589.packetChecklist) && i589.packetChecklist.some((x) => /no filing fee/i.test(x)), 'I-589 checklist notes no filing fee');
+ok(Array.isArray(i589.packetChecklist) && i589.packetChecklist.some((x) => /fee schedule/i.test(x)) && !i589.packetChecklist.some((x) => /no filing fee/i.test(x)), 'I-589 checklist points to the fee schedule (the form has a fee since July 2025)');
 
 // Never invent: unknown forms are null, never fabricated.
 ok(getFormProfile('XX-999') === null, 'unknown form returns null (never fabricated)');

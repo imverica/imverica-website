@@ -49,7 +49,8 @@ function textOf(pdfPath, from, to) {
       ok(text.includes('not a law firm') || text.includes('not legal advice'), 'UPL-safe wording present');
       ok(text.includes('Kovalenko'), 'client name appears in packet');
       ok(text.includes(fx.formCode), 'official hyphenated form number appears');
-      if (fx.formCode === 'I-589') ok(/no filing fee/i.test(text), 'I-589 no-fee note present');
+      // Form I-589 has carried a filing fee since July 2025.
+      if (fx.formCode === 'I-589') ok(!/no filing fee/i.test(text) && /current filing fee/i.test(text), 'I-589: fee line points to the current fee, no "no fee" claim');
       // Advisory-wording scan covers OUR pages only (cover + accessory tail) —
       // the official government form's own printed text legitimately says
       // "you must file" and is not Imverica wording.
