@@ -4,9 +4,7 @@
 //
 // How: build full fictional answers from the wizard schema, change one answer
 // at a time, see which PDF fields change, and read those fields' tooltips.
-// Covers the auto-generated maps and the maps listed in ALSO_CHECK. Large
-// hand-built maps (I-485, N-400, ...) have their own QA and internal field
-// names the tooltips do not describe, so they are not judged here.
+// Covers every map except the large hand-built ones listed in OWN_QA.
 // Run: node scripts/qa-uscis-answer-routing.js   (add --report for coverage)
 const fs = require('fs');
 const path = require('path');
@@ -19,7 +17,9 @@ const { parsePdf, extractFieldObjects } = require(path.join(LIB, 'pdf-incrementa
 const manifest = require(path.join(ROOT, 'netlify/functions/form-cache-manifest.json'));
 const catalog = require(path.join(ROOT, 'netlify/functions/forms/immigration.json'));
 
-const ALSO_CHECK = ['i90-pdf-map.js', 'ar11-pdf-map.js'];
+// Large hand-built maps with their own QA; their internal field names are not
+// described by tooltips, so the tooltip rules below would misjudge them.
+const OWN_QA = ['i485-pdf-map.js', 'n400-pdf-map.js', 'i765-pdf-map.js', 'i589-pdf-map.js', 'i864-pdf-map.js', 'i751-pdf-map.js', 'i131-pdf-map.js', 'i140-pdf-map.js', 'i9-pdf-map.js', 'g1650-pdf-map.js'];
 const ALIASES = { g845supplement: 'g845s-pdf-map.js', i485supplementa: 'i485a-pdf-map.js', i485supplementj: 'i485j-pdf-map.js' };
 const compact = (code) => String(code).toLowerCase().replace(/[^a-z0-9]/g, '');
 const mapFile = (code) => ALIASES[compact(code)] || `${compact(code)}-pdf-map.js`;
@@ -131,6 +131,12 @@ function judge(key, field, tip) {
   return problems;
 }
 
+// A fill-in for the interpreter or the preparer must never fall back to the
+// applicant's own phone, e-mail, name or address (the language of the
+// applicant's statement is the interpreter's language, so that one is fine).
+// Many fields have no tooltip, so this is read from the map's source.
+const HELPER_FALLBACK = /a\.(interpreter|preparer)_\w+\s*\|\|\s*(?:a\.(?:interpreter|preparer)_\w+\s*\|\|\s*)*(?:a\.(?:mobile|daytime|phone|email|applicant_(?!statement)|mailing|physical|given|family|address|city|state|zip)\w*|c\.\w+)/;
+
 const REPORT = process.argv.includes('--report');
 const failures = [];
 const rows = [];
@@ -140,7 +146,11 @@ for (const form of (manifest.forms || []).filter((f) => f.agency === 'uscis' && 
   const file = mapFile(code);
   const mapPath = path.join(LIB, file);
   if (!fs.existsSync(mapPath) || !pdfPath(code)) continue;
-  const generated = /incrementalFillPdf: _unused/.test(fs.readFileSync(mapPath, 'utf8'));
+  const source = fs.readFileSync(mapPath, 'utf8');
+  const generated = /incrementalFillPdf: _unused/.test(source);
+  source.split('\n').forEach((line, index) => {
+    if (HELPER_FALLBACK.test(line)) failures.push(`${code}: ${file}:${index + 1} gives the interpreter or preparer the applicant's own data`);
+  });
   const mod = require(mapPath);
   const build = Object.values(mod).find((v) => typeof v === 'function' && /fieldvalues/i.test(v.name)) || Object.values(mod).find((v) => typeof v === 'function');
   const entry = (catalog.forms || []).find((f) => String(f.code).toUpperCase() === code) || {};
@@ -153,12 +163,12 @@ for (const form of (manifest.forms || []).filter((f) => f.agency === 'uscis' && 
     const next = build(payload({ ...answers, [key]: changed(fields[key], answers[key]) })) || {};
     const touched = [...new Set([...Object.keys(base), ...Object.keys(next)])].filter((f) => JSON.stringify(base[f]) !== JSON.stringify(next[f]));
     if (touched.length) used += 1;
-    if (!generated && !ALSO_CHECK.includes(file)) continue;
+    if (OWN_QA.includes(file)) continue;
     for (const field of touched) {
       for (const problem of judge(key, field, tips[field] || '')) failures.push(`${code}: ${key} -> ${field}: ${problem}`);
     }
   }
-  if (generated || ALSO_CHECK.includes(file)) checked += 1;
+  if (!OWN_QA.includes(file)) checked += 1;
   rows.push({ code, asked: Object.keys(answers).length, used, fields: Object.keys(base).length, kind: generated ? 'auto' : 'hand' });
 }
 

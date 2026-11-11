@@ -387,6 +387,45 @@ function extractFieldObjects(parsed) {
   return fields;
 }
 
+// USCIS forms reuse a short field name for different boxes (Form I-821 calls
+// both the date of birth and the date of marriage "Part2_Item10_DateOfBirth[0]"),
+// and extractFieldObjects keeps only the first. Here every field is listed
+// under its full name, parent names included, which is unique:
+// "form1[0].#subform[1].Part2_Item10_DateOfBirth[0]". A map uses the full
+// name to reach a box that a same-named earlier one hides.
+function extractQualifiedFieldObjects(parsed) {
+  const fields = new Map();
+  const partialName = (object) => {
+    const match = String(object.body || '').match(/\/T\s*(\((?:\\.|[^\\)])*\)|<[^>]*>)/);
+    return match ? decodePdfString(match[1], object.decryptString) : '';
+  };
+  for (const object of parsed.objects) {
+    const body = object.body || '';
+    if (!isFieldObject(body)) continue;
+    const name = partialName(object);
+    if (!name) continue;
+    const parts = [name];
+    let current = object;
+    for (let depth = 0; depth < 12; depth += 1) {
+      const parentRef = firstPdfRef(current.body || '', 'Parent');
+      const parent = parentRef ? parsed.byObjectNumber.get(parentRef.objectNumber) : null;
+      if (!parent) break;
+      const parentName = partialName(parent);
+      if (parentName) parts.unshift(parentName);
+      current = parent;
+    }
+    const fullName = parts.join('.');
+    if (fields.has(fullName)) continue;
+    fields.set(fullName, {
+      ...object,
+      pdfFieldName: name,
+      pdfFieldType: firstPdfName(body, 'FT'),
+      appearanceStates: parseAppearanceStates(body)
+    });
+  }
+  return fields;
+}
+
 function encryptedStringToken(encryption, objectNumber, generation, value) {
   const bytes = bytesForPdfString(value);
   const encrypted = encryptObjectBytes(encryption, objectNumber, generation, bytes, 'string');
@@ -996,8 +1035,15 @@ function incrementalFillPdf(input, fieldValues, textOverlays = []) {
     pageOverlays.set(page.objectNumber, overlays);
   }
 
+  let qualifiedFields = null;
   for (const [fieldName, rawValue] of Object.entries(fieldValues || {})) {
-    const object = fields.get(fieldName);
+    let object = fields.get(fieldName);
+    // A name with a parent path ("form1[0].#subform[1].Field[0]") addresses a
+    // box whose short name another box also carries.
+    if (!object && fieldName.includes('.')) {
+      qualifiedFields = qualifiedFields || extractQualifiedFieldObjects(parsed);
+      object = qualifiedFields.get(fieldName);
+    }
     if (!object) {
       skippedFields.push(fieldName);
       continue;
@@ -1173,5 +1219,6 @@ function incrementalFillPdf(input, fieldValues, textOverlays = []) {
 module.exports = {
   incrementalFillPdf,
   parsePdf,
-  extractFieldObjects
+  extractFieldObjects,
+  extractQualifiedFieldObjects
 };

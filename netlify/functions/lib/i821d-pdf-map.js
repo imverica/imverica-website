@@ -35,7 +35,15 @@ function i_821dFieldValues(payload={}) {
   const c = payload.contact || {};
   const residence = firstItem(a.residence_history);
   const v = {};
-  v["P1_Line2_Date[0]"] = dateMdY(a.prior_daca_dates);
+  // Part 1, items 1 and 2: initial request or renewal. Item 2 takes the one
+  // date the current DACA expires on; free text is left for review.
+  const requestType = clean(a.daca_request_type, 40).toLowerCase();
+  if (requestType === 'initial') v["P1_Line1_Checkbox[0]"] = true;
+  if (requestType === 'renewal') {
+    v["P1_Line2_Checkbox[0]"] = true;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(clean(a.prior_daca_dates, 40))) v["P1_Line2_Date[0]"] = dateMdY(a.prior_daca_dates);
+  }
+  Object.assign(v, sexFields(a.sex));
   v["P1_Line3a_Name[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["P1_Line3b_Name[0]"] = clean(a.applicant_given_name || a.given_name || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
   v["P1_Line3c_Name[0]"] = clean(a.applicant_middle_name || a.middle_name, 60);
@@ -51,7 +59,7 @@ function i_821dFieldValues(payload={}) {
   v["P1_Line8_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
   v["P1_Line11a_CityBirth[0]"] = clean(a.city_of_birth || a.place_of_birth_city, 60);
   v["P1_Line11b_CountryBirth[0]"]  = clean(a.country_of_birth, 60);
-  v["P1_Line12_CountryRes[0]"] = clean(a.country_of_residence || a.country_of_citizenship, 60);
+  v["P1_Line12_CountryRes[0]"] = clean(a.country_of_residence, 60);
   v["P1_Line13_CountryCitz[0]"] = clean(a.country_of_citizenship, 60);
   v["P2_Line9b_Passport[0]"] = clean(a.passport_number, 20);
   v["P2_Line9a_Country[0]"] = clean(a.passport_country_of_issuance, 60);
@@ -65,12 +73,16 @@ function i_821dFieldValues(payload={}) {
   v["P2_Line2f_ZipCode[0]"] = digits(residence.zip || a.physical_zip, 10);
   v["P3_Line2_Date[0]"] = dateMdY(a.date_last_entered_us || a.last_arrival_date);
   v["P3_Line3_Place[0]"] = clean(a.place_entry, 80);
-  v["P3_Line4_ImmStatus[0]"] = clean(a.current_immigration_status, 80);
-  v["P3_Line5a_I94[0]"]     = clean(a.i94_number, 20);
+  const status = clean(a.current_immigration_status, 80);
+  if (/^(no lawful status|status expired|parole expired)$/i.test(status)) v["P3_Line4_ImmStatus[0]"] = status;
+  // Part 3, item 1: arrived and established residence before age 16.
+  if (/^yes$/i.test(clean(a.arrival_before_age_16, 10))) v["P3_Line1_checkbox[0]"] = true;
+  if (/^no$/i.test(clean(a.arrival_before_age_16, 10))) v["P3_Line1_checkbox[1]"] = true;
+  if (clean(a.i94_number, 20)) v["P3_Line5a_I94[0]"] = true;
   v["P3_Line5b_I94Number[0]"] = clean(a.i94_number, 20);
   v["P3_Line5c_I94Date[0]"] = dateMdY(a.authorized_stay_expires || a.status_expiration);
   v["P5_Line3_DayPhone[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["P5_Line4_MobilePhone[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
+  v["P5_Line4_MobilePhone[0]"] = usPhone(a.mobile_phone);
   v["P5_Line5_Email[0]"] = clean(a.email_address || a.email || c.email, 120);
   v["P5_Line2b_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P6_Line1a_Name[0]"] = clean(a.interpreter_family_name, 60);
@@ -100,7 +112,6 @@ function i_821dFieldValues(payload={}) {
   v["P7_Line3e_ZipCode[0]"] = digits(a.preparer_zip, 10);
   v["P7_Line3h_Country[0]"] = clean(a.preparer_country, 60);
   v["P7_Line4_DayPhone[0]"] = usPhone(a.preparer_phone);
-  v["P7_Line5_MobilePhone[0]"] = usPhone(a.preparer_mobile_phone || a.mobile_phone);
   v["P7_Line6_Email[0]"]  = clean(a.preparer_email, 120);
   v["P7_Line7b_Date[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));

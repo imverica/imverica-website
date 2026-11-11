@@ -48,18 +48,41 @@ function i_912FieldValues(payload={}) {
   v["Part3_Line1_FormsFiled1[0]"] = firstListValue(a.fee_waiver_forms) || clean(a.form_code_confirmed, 20);
   v["Part3_Line1_Name1[0]"] = clean(`${a.applicant_given_name || ''} ${a.applicant_family_name || ''}`.trim() || c.name, 80);
   v["Part3_Line1_DateofBirth1[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["Part4_Line1_FullName1[0]"] = clean(`${a.applicant_given_name || ''} ${a.applicant_family_name || ''}`.trim() || c.name, 80);
+  // Part 1. Basis for the request (one box per basis the client chose).
+  const basis = (Array.isArray(a.fee_waiver_basis) ? a.fee_waiver_basis : [a.fee_waiver_basis]).map((x) => clean(x, 80).toLowerCase());
+  const meansTested = basis.some((x) => /means-tested/.test(x));
+  if (meansTested) v["P1_Line1_Checkbox[0]"] = true;
+  if (basis.some((x) => /household income/.test(x))) v["P1_Line2_Checkbox[0]"] = true;
+  if (basis.some((x) => /hardship/.test(x))) v["P1_Line3_Checkbox[0]"] = true;
+  // Part 4 lists who receives a means-tested benefit: the requestor's own
+  // name only when that is the basis chosen.
+  if (meansTested) v["Part4_Line1_FullName1[0]"] = clean(`${a.applicant_given_name || ''} ${a.applicant_family_name || ''}`.trim() || c.name, 80);
   v["Part4_Line2a_RelationshipToYou1[0]"] = 'Self';
   v["Part5_Line3_TotalHouseSize[0]"] = digits(a.household_size_fee_waiver || a.household_size, 2);
-  v["Part5_Line4_TotalHousehold[0]"] = digits(a.household_size_fee_waiver || a.household_size, 2);
-  v["Part5_Line5_NameHousehold[0]"] = clean(`${a.applicant_given_name || ''} ${a.applicant_family_name || ''}`.trim() || c.name, 80);
-  v["MonthlyIncome[0]"] = clean(a.household_income || a.current_annual_income, 40);
-  v["AvgHousehold[0]"] = clean(a.i912_monthly_expenses_total || a.household_income, 40);
-  v["Part5_Line9_Explanation[0]"] = clean(a.hardship_explanation || a.i912_additional_hardship_notes, 900);
-  v["P7_L1B_Name[0]"] = clean(a.applicant_given_name || a.given_name, 60);
-  v["P7_L2_Name[0]"] = clean(a.applicant_family_name || a.family_name, 60);
+  // Part 5, items 6 to 8 ask for annual adjusted gross income: the
+  // requestor's own, the family's, and the total. The wizard takes one
+  // "monthly or annual" household figure, which fits none of the three
+  // lines, so they are left for review. (Fields: MonthlyIncome, AvgHousehold,
+  // Total.)
+  // Part 6. Financial hardship: the situation, total assets, total expenses.
+  v["Part6_Line1_Situation[0]"] = clean(a.hardship_explanation || a.i912_additional_hardship_notes, 900);
+  v["TotalAssets[0]"] = clean(a.i912_assets_total, 20);
+  v["Part6_Line3_Total[0]"] = clean(a.i912_monthly_expenses_total, 20);
+  // Part 7. Requestor's statement: 1.a reads English, 1.b an interpreter
+  // read it in a language, 2 names the preparer.
+  const statement = clean(a.applicant_statement, 80).toLowerCase();
+  if (/read and understand english/.test(statement)) v["P7_L1_chbx[0]"] = true;
+  if (/interpreter/.test(statement)) {
+    v["P7_L1_chbx[1]"] = true;
+    v["P7_L1B_Name[0]"] = clean(a.applicant_statement_language, 40);
+  }
+  const preparerName = [clean(a.preparer_given_name, 60), clean(a.preparer_family_name, 60)].filter(Boolean).join(' ');
+  if (/^yes$/i.test(clean(a.has_preparer, 10)) && preparerName) {
+    v["P7_L2_chbx[0]"] = true;
+    v["P7_L2_Name[0]"] = preparerName;
+  }
   v["P7_L3_DaytimeTelePhoneNumber1[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["P7_L4_MobileTelePhoneNumber1[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
+  v["P7_L4_MobileTelePhoneNumber1[0]"] = usPhone(a.mobile_phone);
   v["P7_L5_EmailAddress[0]"] = clean(a.email_address || a.email || c.email, 120);
   v["P7_L6_Date[0]"] = dateMdY(a.applicant_signature_date);
   v["P9_L1A_FamilyName[0]"] = clean(a.interpreter_family_name, 60);
