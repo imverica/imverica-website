@@ -16,7 +16,6 @@ function i_907FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["P5_Line4_DaytimeTelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P5_Line6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P5_Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);

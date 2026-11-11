@@ -27,8 +27,6 @@ function i_601aFieldValues(payload={}) {
   v["Pt1Line3_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["Pt1Line13_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Pt1Line14_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
-  v["Pt8Line5_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt8Line6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt8Line8b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Pt7Line1a_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);

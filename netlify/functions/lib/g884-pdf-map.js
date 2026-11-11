@@ -22,7 +22,6 @@ function g_884FieldValues(payload={}) {
   v["Pt1Line2_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["P1_Line7_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["P1_Line4b_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
-  v["Part6_Line4_InterpretersMobileTelephoneNumber3[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["Part5_Line5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Part6_Line1a_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Part6_Line1b_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);

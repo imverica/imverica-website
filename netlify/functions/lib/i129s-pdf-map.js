@@ -13,22 +13,13 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"Pt2Line10_Gender[1]":true,"Pt2Line10_Gender[0]":false};
-  if(/^f|female/.test(s))return{"Pt2Line10_Gender[1]":false,"Pt2Line10_Gender[0]":true};
   return {};}
 
 function i_129sFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["Pt2Line9_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["Pt3Line1_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["Pt2Line3_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["Pt2Line2_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["Pt2Line13_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
-  v["Pt9Line3_PreparerDaytimePhoneNumber1[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt8Line4_InterpreterMobileTelephone[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt8Line5_InterpreterEmail[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt9Line6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Pt8Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);

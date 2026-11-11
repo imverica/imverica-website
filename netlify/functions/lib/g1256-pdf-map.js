@@ -17,7 +17,6 @@ function g_1256FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["Pt1Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["IntervieweeAlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

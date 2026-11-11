@@ -29,7 +29,6 @@ function i_942FieldValues(payload={}) {
   const v = {};
   v["P2_5_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1Line8_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["P9_L5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   Object.assign(v, maritalFields(a.marital_status || ''));
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

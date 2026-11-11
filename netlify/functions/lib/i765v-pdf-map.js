@@ -31,16 +31,9 @@ function i_765vFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["Part1_Item17_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["Part2_Item5_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["Part1_Item4_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["USCISOnlineAccountNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["Part1_Item21_CityTownOfBirth[0]"] = clean(a.city_of_birth || a.place_of_birth_city, 60);
-  v["Part2_Item3_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
-  v["Part2_Item7_Passport[0]"] = clean(a.passport_number, 20);
   v["Part1_Item19_I94[0]"]     = clean(a.i94_number, 20);
-  v["Part6_Item4_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Line4_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Part6_Item8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));

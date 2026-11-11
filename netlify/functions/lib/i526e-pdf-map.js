@@ -40,7 +40,6 @@ function i_526eFieldValues(payload={}) {
   v["P1_Line24_CountryofBirth[0]"]  = clean(a.country_of_citizenship || a.country_of_birth, 60); // 12 Citizenship/Nationality
   v["Line29_Passport[0]"] = clean(a.passport_number, 20);
   v["P9_Line4_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["P9_Line6_EmailAddress[2]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P12_Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["P9_Line1a_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);

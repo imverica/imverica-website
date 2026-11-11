@@ -14,8 +14,6 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"Pt4Line3_Sex[0]":true,"Pt4Line3_Sex[1]":false};
-  if(/^f|female/.test(s))return{"Pt4Line3_Sex[0]":false,"Pt4Line3_Sex[1]":true};
   return {};}
 
 function maritalFields(v){const s=clean(v,80).toLowerCase();
@@ -40,7 +38,6 @@ function i_360FieldValues(payload={}) {
   v["Pt1Line4_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);       // 4 A-Number
   v["Pt1Line3_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);          // 3 SSN
   v["Pt1Line2_OnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);// 2 USCIS account
-  v["Pt10Line3_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Pt3Line10_Passport[0]"] = clean(a.passport_number, 20);
   v["Pt3Line9_I94[0]"]     = clean(a.i94_number, 20);
   // Part 1, Item 6 — Mailing Address (the visible boxes are Pt1Line6_*, not Line7).
@@ -51,9 +48,6 @@ function i_360FieldValues(payload={}) {
   v["Pt1Line6_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt1Line6_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
   v["Pt1Line6_Country[0]"]   = clean(a.mailing_country || 'United States', 40);
-  v["Pt13Line4_DaytimePhoneNumber1[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt12Line5_InterpreterMobileTelephone[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt13Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt13Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));

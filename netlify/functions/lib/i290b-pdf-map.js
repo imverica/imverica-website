@@ -19,7 +19,6 @@ function i_290bFieldValues(payload={}) {
   const v = {};
   v["P1_Line2_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1_Line6_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["Pt1Line6_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
   v["Pt1Line6_AptSteFlrNumber[0]"] = unitNumber(a.mailing_address_line2 || a.address_unit);
   Object.assign(v, unitRadio("Pt1Line6_Unit", a.mailing_address_line2 || a.address_unit)); // Apt/Ste/Flr selector

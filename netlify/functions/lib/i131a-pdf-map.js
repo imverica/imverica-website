@@ -23,7 +23,6 @@ function i_131aFieldValues(payload={}) {
   v["Pt1_Line11_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Pt1_Line12_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["P4_Line4_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["P5_Line5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P5_Line6b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P5_Line1a_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P5_Line1b_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);

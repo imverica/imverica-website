@@ -23,6 +23,12 @@ const aliases = {
 
 const payload = {
   formAnswers: {
+    // The I-134 wizard asks about the supporter and the beneficiary, not a
+    // generic applicant.
+    sponsor_family_name: "Smith",
+    sponsor_given_name: "John",
+    principal_immigrant_family_name: "Demchenko",
+    principal_immigrant_given_name: "Marta",
     applicant_family_name: "Smith",
     applicant_given_name: "John",
     applicant_middle_name: "Michael",

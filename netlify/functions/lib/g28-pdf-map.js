@@ -17,7 +17,6 @@ function g_28FieldValues(payload={}) {
   const c = payload.contact || {};
   const v = {};
   v["Pt3Line8_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["Line10_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
   v["Pt5Line2b_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

@@ -13,8 +13,6 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"P2_Line4_Gender[0]":true,"P2_Line4_Gender[1]":false};
-  if(/^f|female/.test(s))return{"P2_Line4_Gender[0]":false,"P2_Line4_Gender[1]":true};
   return {};}
 
 function maritalFields(v){const s=clean(v,80).toLowerCase();
@@ -32,19 +30,11 @@ function i_134aFieldValues(payload={}) {
   const c = payload.contact || {};
   const v = {};
   v["P2_Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
-  v["P2_Line1_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
-  v["P2_Line1_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
-  v["P2_Line3_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["P2_Line5_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["P_Line12_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["P2_Line8_PassportNumber[0]"] = clean(a.passport_number, 20);
   v["P3_Line14_I94[0]"]     = clean(a.i94_number, 20);
-  v["P2_Line14_MobilePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["P7_Line3_MobileTelephoneNum[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["P2_Line15_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P5_Line6_DateOfSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
-  Object.assign(v, maritalFields(a.marital_status || ''));
   v["P6_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P6_Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["P7_Line1_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);
@@ -54,23 +44,12 @@ function i_134aFieldValues(payload={}) {
   // ----- Beneficiary: place of birth, citizenship, passport, address, phone -----
   // (Part 2 of I-134A. Field LINE numbers differ from the printed item numbers;
   //  mapped by the /TU tooltip semantics, verified against the real PDF.)
-  v["P2_Line6_CityOrTown[0]"]       = clean(a.city_of_birth || a.place_of_birth_city, 60);
   v["P2_Line6_StateOrProvince[0]"]  = clean(a.state_of_birth || a.place_of_birth_state, 60);
-  v["P2_Line6_Country[0]"]          = clean(a.country_of_birth || a.place_of_birth_country, 60);
-  v["P2_Line7_CountryOfCitizen[0]"] = clean(a.country_of_citizenship || a.country_of_birth, 60);
-  v["P2_Line8_CountryPassportIssue[0]"] = clean(a.passport_country_of_issuance || a.country_of_citizenship || a.country_of_birth, 60);
-  v["P2_Line8_ExpirationDate[0]"]   = dateMdY(a.passport_expiration || '');
-  v["P2_Line13_DaytimePhoneNumber[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
 
   // Beneficiary's mailing address (Part 2, internal Line10).
   const _mStreet = clean(a.mailing_address_line1 || a.address_line1, 80);
-  v["P2_Line10_StreetName[0]"] = _mStreet;
-  v["P2_Line10_City[0]"]       = clean(a.mailing_city || a.city, 60);
-  v["P2_Line10_State[0]"]      = stateCode(a.mailing_state || a.state || '');
-  v["P2_Line10_ZipCode[0]"]    = digits(a.mailing_zip || a.zip_code, 10);
   const _mUnitRaw = clean(a.mailing_address_line2 || a.address_unit || '', 16);
   if (_mUnitRaw) {
-    v["P2_Line10_Number[0]"] = _mUnitRaw.replace(/^(?:apt|ste|fl(?:oor)?|unit|#)\.?\s*/i,'').trim().slice(0,10);
     if (/\bste/i.test(_mUnitRaw)) v["P2_Line10_Unit[1]"] = true;        // STE
     else if (/\bfl/i.test(_mUnitRaw)) v["P2_Line10_Unit[2]"] = true;    // FLR
     else v["P2_Line10_Unit[0]"] = true;                                 // APT (default)

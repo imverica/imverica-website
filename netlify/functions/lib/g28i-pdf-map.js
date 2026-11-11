@@ -17,10 +17,15 @@ function g_28iFieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["Pt1Line1_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["Pt1Line4_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt1Line5_MobileTelephoneNum[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt1Line6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
+  // Part 3. Information About Client and Client's Contact Information
+  v["Pt3Line6a_FamilyName[0]"] = clean(a.applicant_family_name, 60);
+  v["Pt3Line6b_GivenName[0]"] = clean(a.applicant_given_name, 60);
+  v["Pt3Line6c_MiddleName[0]"] = clean(a.applicant_middle_name, 60);
+  v["Pt3Line8_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
+  v["Pt3Line9_ANumber[0]"] = digits(a.alien_number || a.a_number, 9);
+  v["Pt3Line10_DaytimePhoneNumber[0]"] = usPhone(a.daytime_phone || a.phone || c.phone);
+  v["Pt3Line11_MobilePhoneNumber[0]"] = usPhone(a.mobile_phone);
+  v["Pt3Line12_EMail[0]"] = clean(a.email_address || a.email || c.email, 120);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

@@ -34,7 +34,6 @@ function n_600FieldValues(payload={}) {
   v["Pt1Line1_FamilyName[1]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
   v["Pt1Line1_GivenName[1]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
   v["Pt1Line1_MiddleName[1]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
-  v["P5_Line9B_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Line1_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   { const an = digits(a.alien_number || a.a_number, 9); if(an) {
     v["Line1_AlienNumber[15]"] = an;
@@ -61,8 +60,6 @@ function n_600FieldValues(payload={}) {
   v["Pt2Line14B_PassportNumber[0]"] = clean(a.passport_number, 20);
   v["Pt2Line10_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt2Line10_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
-  v["P10_Line4_Telephone[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["P10_Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P13_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));

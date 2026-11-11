@@ -22,15 +22,10 @@ function i_881FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["P1_Line5_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["P7_Line14_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["P1_Line12_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["P1_Line7_CityTownOfBirth[0]"] = clean(a.city_of_birth || a.place_of_birth_city, 60);
   v["P1_Line8_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Part11_Line1_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Part13_Line4_PreparersMobileTelephoneNumber3[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Part13_Line5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Part12_Line1a_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Part12_Line1b_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);

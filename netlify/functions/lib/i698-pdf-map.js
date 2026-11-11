@@ -42,7 +42,6 @@ function i_698FieldValues(payload={}) {
   v["Pt1Line5_CityOrTown[0]"] = clean(a.mailing_city || a.city, 60);
   v["Pt1Line5_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt1Line5_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
-  v["P4_L5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
 

@@ -31,12 +31,8 @@ function i_212FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["p5Line3DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["p1Line1AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["p1Line11SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["p5Line5CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
-  v["p5Line7CountryCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["p7Line5Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["p9Line8bDateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));

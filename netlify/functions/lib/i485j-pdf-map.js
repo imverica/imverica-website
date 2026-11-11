@@ -16,7 +16,6 @@ function i_485_supplement_jFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["Part6_Line14_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Part2_Line3_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["Part6_Line15_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
   v["Part2_Line4_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);

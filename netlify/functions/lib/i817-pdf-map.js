@@ -22,14 +22,10 @@ function i_817FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["Part4_Line4_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["Part5_Line10d_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["Part4_Line7_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["AttorneyAccreditRepresentativeUSCISAcctNum[0]"] = digits(a.uscis_online_account_number, 12);
   v["Part1_Line9_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Part1_Line10_CountryofCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["Part5_Line3d_Passport[0]"] = clean(a.passport_number, 20);
-  v["Part7_Line6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Part7_Line1a_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Part7_Line1b_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);

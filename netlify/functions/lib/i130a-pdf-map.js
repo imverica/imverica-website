@@ -30,7 +30,6 @@ function i_130aFieldValues(payload={}) {
   v["Pt1Line3b_GivenName[0]"] = clean(a.spouse_given_name || a.applicant_given_name || a.given_name, 60);
   v["Pt1Line3c_MiddleName[0]"] = clean(a.spouse_middle_name || a.applicant_middle_name || a.middle_name, 60);
   v["Pt1Line12CityTownOfBirth[0]"] = clean(a.spouse_city_of_birth || a.city_of_birth || a.place_of_birth_city, 60);
-  v["Pt1Line14_CountryofBirth[0]"]  = clean(a.spouse_country_of_birth || a.country_of_birth, 60);
   v["Pt1Line15_CountryofResidence[0]"] = clean(a.spouse_country_of_residence, 60);
   Object.assign(v, sexFields(a.spouse_sex || a.sex || a.gender, "Pt1Line12_Male[0]", "Pt1Line12_Female[0]"));
 

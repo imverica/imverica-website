@@ -22,7 +22,6 @@ function i_694FieldValues(payload={}) {
     v["AlienNumber[1]"] = an;
     v["AlienNumber[0]"] = an;
   }}
-  v["P5_L6_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

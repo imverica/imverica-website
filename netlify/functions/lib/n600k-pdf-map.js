@@ -13,8 +13,6 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"Part3_Item8_Sex[0]":true,"Part3_Item8_Sex[1]":false};
-  if(/^f|female/.test(s))return{"Part3_Item8_Sex[0]":false,"Part3_Item8_Sex[1]":true};
   return {};}
 
 function maritalFields(v){const s=clean(v,80).toLowerCase();
@@ -37,13 +35,9 @@ function n_600kFieldValues(payload={}) {
     v["Line1_AlienNumber[1]"] = an;
     v["Line1_AlienNumber[0]"] = an;
   }}
-  v["Part3_Item4_USCISOnlinAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["Part7_Item3_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Part5_Item9_LostCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
-  v["Part12_Item5_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Part12_Item6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
-  Object.assign(v, maritalFields(a.marital_status || ''));
   v["Part11_Item1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Part11_Item_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
 

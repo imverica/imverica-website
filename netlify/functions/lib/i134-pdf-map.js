@@ -26,18 +26,21 @@ function i_134FieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["Pt1Line1_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
-  v["Pt1Line1_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
-  v["Pt1Line1_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
-  v["P2_Line8_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["Pt3Line5_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["Pt2Line10_State[0]"] = stateCode(a.mailing_state || a.state || '');
-  v["Pt2Line10_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
-  v["P3_Line4_DaytimeTelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt7Line3_MobileTelephoneNum[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt7Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
-  v["Pt7Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
-  Object.assign(v, maritalFields(a.marital_status || ''));
+  // The I-134 wizard asks about the supporter (sponsor_*) and the beneficiary
+  // (principal_immigrant_*). Field meanings were read from the form's tooltips.
+  // Part 2. The individual agreeing to financially support the beneficiary
+  v["Pt1Line1_FamilyName[0]"] = clean(a.sponsor_family_name, 60);
+  v["Pt1Line1_GivenName[0]"] = clean(a.sponsor_given_name, 60);
+  v["Pt1Line1_MiddleName[0]"] = clean(a.sponsor_middle_name, 60);
+  v["Pt1Line5_AlienNumber[0]"] = digits(a.sponsor_alien_number, 9);
+  v["Pt1Line10_OnlineAccountNumber[0]"] = digits(a.sponsor_uscis_online_account_number, 12);
+  // Part 3. The beneficiary
+  v["Pt3Line1_FamilyName[0]"] = clean(a.principal_immigrant_family_name, 60);
+  v["Pt3Line1_GivenName[0]"] = clean(a.principal_immigrant_given_name, 60);
+  v["Pt3Line1_MiddleName[0]"] = clean(a.principal_immigrant_middle_name, 60);
+  v["P2_Line8_DateOfBirth[0]"] = dateMdY(a.principal_immigrant_date_of_birth);
+  v["Pt3Line5_AlienNumber[0]"] = digits(a.principal_immigrant_alien_number, 9);
+  v["P2_Line8_Country[0]"] = clean(a.principal_immigrant_country_of_citizenship, 60);
   v["P4_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P4_Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);
 

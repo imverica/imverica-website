@@ -23,7 +23,6 @@ function i_600aFieldValues(payload={}) {
   v["Pt1Line1_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
   v["DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1Line23_SpouseAlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Pt1Line26_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
   v["Pt1Line26_AptSteFlrNumber[0]"] = unitNumber(a.mailing_address_line2 || a.address_unit);
@@ -31,8 +30,6 @@ function i_600aFieldValues(payload={}) {
   v["Pt1Line26_CityOrTown[0]"] = clean(a.mailing_city || a.city, 60);
   v["Pt1Line26_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt1Line26_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
-  v["P7_Line4_ReviewerApproverDaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["P7_Line6_ReviewerApproverEmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt2Line5B_PreparersGivenName[1]"]  = clean(a.preparer_given_name, 60);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

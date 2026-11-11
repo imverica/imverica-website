@@ -25,11 +25,7 @@ function g_325aFieldValues(payload={}) {
   v["P1_Line9_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["P4_Line2_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
   v["P2_Line6_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["P1_Line23_CityCountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P1_Line5_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
-  v["Pt12Line5_InterpreterMobileTelephone[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt12Line5_InterpreterMobileTelephone[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt12Line5_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt12Line6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Pt13Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);

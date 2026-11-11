@@ -28,8 +28,6 @@ function n_648FieldValues(payload={}) {
   v["Pt2Line2_CityOrTown[0]"] = clean(a.mailing_city || a.city, 60);
   v["Pt2Line2_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt2Line2_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
-  v["Pt4Line4_InterpreterDaytimeTelephone[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt4Line6_Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt4Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

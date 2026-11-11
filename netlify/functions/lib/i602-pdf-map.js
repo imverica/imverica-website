@@ -23,7 +23,6 @@ function i_602FieldValues(payload={}) {
   v["Pt3Line3_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["Pt1Line6_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["Pt1Line2_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["Pt3Line4_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Pt1Line5_StreetNumberName[0]"] = clean(a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
   v["Pt1Line5_AptSteFlrNumber[0]"] = unitNumber(a.mailing_address_line2 || a.address_unit);
   Object.assign(v, unitRadio("Pt1Line5_Unit", a.mailing_address_line2 || a.address_unit)); // Apt/Ste/Flr selector
@@ -31,8 +30,6 @@ function i_602FieldValues(payload={}) {
   v["Pt1Line5_State[0]"] = stateCode(a.mailing_state || a.state || '');
   v["Pt1Line5_ZipCode[0]"]   = digits(a.mailing_zip || a.zip_code, 10);
   v["Pt5Line1_DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Pt7Line4_PreparersMobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt7Line5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Pt6Line6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["Pt6Line1_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["Pt6Line1_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);

@@ -16,7 +16,6 @@ function i_956gFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["P7_Line4_DaytimeTelePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["A1_Line28B_InvstAdviserEmail[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P7_Line8_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P7_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);

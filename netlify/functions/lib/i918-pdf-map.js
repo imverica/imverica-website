@@ -48,7 +48,6 @@ function i_918FieldValues(payload={}) {
   v["P1_Line4d_CityTown[0]"]         = clean(a.mailing_city || a.city, 60);
   v["P1_Line4e_State[0]"]            = stateCode(a.mailing_state || a.state || '');
   v["P1_Line4f_ZipCode[0]"]          = digits(a.mailing_zip || a.zip_code, 10);
-  v["P6_Line5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P6_Line1a_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P6_Line1b_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);
   v["P7_Line1a_PreparersFamilyName[0]"] = clean(a.preparer_family_name, 60);

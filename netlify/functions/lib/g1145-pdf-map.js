@@ -17,7 +17,6 @@ function g_1145FieldValues(payload={}) {
   const c = payload.contact || {};
   const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["MobilePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   v["Email[0]"]  = clean(a.email_address || a.email || c.email, 120);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));

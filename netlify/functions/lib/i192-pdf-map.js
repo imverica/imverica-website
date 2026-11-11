@@ -37,10 +37,7 @@ function i_192FieldValues(payload={}) {
   v["P2_Line16_DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["P2_Line15_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["P2_Line4_USCISOnlineAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);
-  v["P2_Line42_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P2_Line7_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
-  v["P4_Line4_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["P4_Line5_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P4_Line6_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));

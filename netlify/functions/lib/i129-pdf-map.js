@@ -29,11 +29,8 @@ function i_129FieldValues(payload={}) {
     v["Line1_AlienNumber[2]"] = an;
   }}
   v["Line25_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["Part3Line4_CountryOfBirth[0]"]  = clean(a.country_of_birth, 60);
   v["Part3Line4_CountryOfCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["Line14b_Passport[0]"] = clean(a.passport_number, 20);
-  v["Preparer_DaytimePhoneNumber1[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
-  v["Part14_EmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["Part14_DateofSignature[1]"] = dateMdY(a.applicant_signature_date);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   v["Line_PreparerFamilyName[1]"] = clean(a.preparer_family_name, 60);

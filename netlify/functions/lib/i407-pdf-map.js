@@ -21,7 +21,6 @@ function i_407FieldValues(payload={}) {
   v["P1_Line2_USCISOnlineAccountNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["P1_Line6_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["P1_Line7_CountryofCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
-  v["P2_Line5_InterEmailAddress[0]"]  = clean(a.email_address || a.email || c.email, 120);
   v["P4_Line4_DateofSignature[0]"] = dateMdY(a.applicant_signature_date);
   v["P2_Line1_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
   v["P2_Line1_InterpreterGivenName[0]"]  = clean(a.interpreter_given_name, 60);

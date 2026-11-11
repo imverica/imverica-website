@@ -33,11 +33,9 @@ function i_687FieldValues(payload={}) {
   const today = new Date().toISOString().slice(0,10);
   const v = {};
   v["DateofBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
-  v["USCISAccountNumber[0]"] = digits(a.uscis_online_account_number, 12);
   v["CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["CountryofCitizenship[0]"]  = clean(a.country_of_citizenship, 60);
   v["PassportNumber[0]"] = clean(a.passport_number, 20);
-  v["DaytimePhoneNumber[0]"]  = usPhone(a.daytime_phone || a.phone || c.phone);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
   Object.assign(v, maritalFields(a.marital_status || ''));
   v["PrintPreparersFamilyName[0]"] = clean(a.preparer_family_name, 60);

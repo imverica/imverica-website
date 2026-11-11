@@ -13,8 +13,6 @@ function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','т�
 function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
 
 function sexFields(v){const s=clean(v,40).toLowerCase();
-  if(/^m/.test(s))return{"Part3_Sex[0]":true,"Part3_Sex[1]":false};
-  if(/^f|female/.test(s))return{"Part3_Sex[0]":false,"Part3_Sex[1]":true};
   return {};}
 
 function maritalFields(v){const s=clean(v,80).toLowerCase();
@@ -36,7 +34,6 @@ function i_929FieldValues(payload={}) {
   v["CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
   v["CountryofCitizenshipNationality[0]"]  = clean(a.country_of_citizenship, 60);
   Object.assign(v, sexFields(a.sex || a.gender || ''));
-  Object.assign(v, maritalFields(a.marital_status || ''));
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }
