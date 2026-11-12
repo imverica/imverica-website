@@ -343,9 +343,13 @@ const t = STRINGS[lang] || STRINGS.en;
   }
 
   // Fire-and-forget analytics beacon — never blocks or breaks the UX.
+  // What the visitor typed is never sent: only the language, the page and a
+  // recognised form number (the server drops anything else too).
+  const FORM_CODE_RE = /^[A-Z]{1,5}-\d{1,4}[A-Z]{0,4}$/;
   function logSearchEvent(type: 'search' | 'start', query: string, formCode: string, confidence: number) {
     try {
-      const payload = JSON.stringify({ type, query: query.slice(0, 200), lang: detectLang(query), formCode, confidence });
+      const code = String(formCode || '').trim().toUpperCase();
+      const payload = JSON.stringify({ type, lang: detectLang(query), page: location.pathname, formCode: FORM_CODE_RE.test(code) ? code : '', confidence });
       if (navigator.sendBeacon) navigator.sendBeacon('/api/analytics', new Blob([payload], { type: 'application/json' }));
       else fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(() => {});
     } catch { /* analytics must never break search */ }

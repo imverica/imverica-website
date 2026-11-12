@@ -42,6 +42,19 @@ async function getStore() {
 
 function clean(v, max) { return String(v || '').replace(/\s+/g, ' ').trim().slice(0, max); }
 
+// Analytics never keeps what a visitor typed. Only a recognised form number
+// (I-485, N-400, FL-100, DV-100, EOIR-42B, AR-11 ...) or a fixed marker set
+// by the site's own code is stored; anything else is dropped.
+const FORM_CODE = /^[A-Z]{1,5}-\d{1,4}[A-Z]{0,4}$/;
+const MARKERS = ['APPOINTMENT'];
+function safeFormCode(v) {
+  const code = clean(v, 24).toUpperCase();
+  return FORM_CODE.test(code) || MARKERS.includes(code) ? code : '';
+}
+function safeQuery(v) { return clean(v, 20) === 'wizard' ? 'wizard' : ''; }
+function safeLang(v) { const l = clean(v, 8); return /^[a-z]{2}(-[A-Z]{2})?$/.test(l) ? l : ''; }
+function safePage(v) { return clean(v, 200).split(/[?#]/)[0].replace(/[^A-Za-z0-9/_.-]/g, ''); }
+
 exports.handler = async function (event) {
   ensureBlobs(event);
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS };
@@ -60,16 +73,13 @@ exports.handler = async function (event) {
     const entry = {
       ts: new Date().toISOString(),
       type,
-      query: clean(body.query, 200),
-      lang: clean(body.lang, 8),
-      formCode: clean(body.formCode, 24).toUpperCase(),
-      confidence: Number(body.confidence) || null,
-      page: clean(body.page, 200)
+      query: safeQuery(body.query),
+      lang: safeLang(body.lang),
+      formCode: safeFormCode(body.formCode),
+      confidence: Number.isFinite(Number(body.confidence)) && body.confidence !== null && body.confidence !== '' ? Math.max(0, Math.min(1, Number(body.confidence))) || null : null,
+      page: safePage(body.page)
     };
-    // Search events are meaningless without a query/form; conversion
-    // events (lead/call/email) are meaningful with just the page.
-    const isConversion = type === 'lead' || type === 'call' || type === 'email';
-    if (!isConversion && !entry.query && !entry.formCode) return json(400, { ok: false });
+    // A search with no recognised form is still counted, without its text.
 
     const store = await getStore();
     if (store) {
