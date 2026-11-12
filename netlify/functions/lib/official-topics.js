@@ -143,7 +143,10 @@ function navigationFor(text, lang = 'en') {
   return {
     topics,
     directories,
-    freeHelp: FREE_HELP.map((h) => ({ id: h.id, url: h.url, label: h.label[l] }))
+    // The EOIR list is immigration help: not shown under court-only topics.
+    freeHelp: FREE_HELP
+      .filter((h) => h.id !== 'eoir-free' || !agencies.size || agencies.has('uscis'))
+      .map((h) => ({ id: h.id, url: h.url, label: h.label[l] }))
   };
 }
 
