@@ -21,7 +21,6 @@ function g_325aFieldValues(payload={}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
   const v = {};
-  v["P1_Line14_DateOfBirth[0]"] = dateMdY(a.date_of_birth || a.dob || '');
   v["P1_Line9_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
   v["P4_Line2_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
   v["P2_Line6_USCISELISAcctNumber[0]"] = digits(a.uscis_online_account_number, 12);

@@ -23,15 +23,35 @@ function i_130aFieldValues(payload={}) {
   const priorEmployment = firstItem(a.spouse_employment_history);
   const lastForeignEmployment = firstItem(a.spouse_last_foreign_employment);
   const v = {};
-  v["Pt1Line11_DateofBirth[0]"] = dateMdY(a.spouse_date_of_birth || a.date_of_birth || a.dob || '');
   v["Pt1Line1_AlienNumber[0]"] = digits(a.spouse_alien_number || a.alien_number || a.a_number, 9);
-  v["USCISOnlineAcctNumber[0]"] = digits(a.spouse_uscis_online_account_number || a.uscis_online_account_number, 12);
+  // Item 2. ("USCISOnlineAcctNumber[0]" is the attorney's box at the top.)
+  v["Pt2Line3_USCISELISActNumber[0]"] = digits(a.spouse_uscis_online_account_number || a.uscis_online_account_number, 12);
   v["Pt1Line3a_FamilyName[0]"] = clean(a.spouse_family_name || a.applicant_family_name || a.family_name, 60);
   v["Pt1Line3b_GivenName[0]"] = clean(a.spouse_given_name || a.applicant_given_name || a.given_name, 60);
   v["Pt1Line3c_MiddleName[0]"] = clean(a.spouse_middle_name || a.applicant_middle_name || a.middle_name, 60);
-  v["Pt1Line12CityTownOfBirth[0]"] = clean(a.spouse_city_of_birth || a.city_of_birth || a.place_of_birth_city, 60);
-  v["Pt1Line15_CountryofResidence[0]"] = clean(a.spouse_country_of_residence, 60);
-  Object.assign(v, sexFields(a.spouse_sex || a.sex || a.gender, "Pt1Line12_Male[0]", "Pt1Line12_Female[0]"));
+  // Items 10 to 23 describe the spouse beneficiary's parents. The form has
+  // no date of birth, sex or birthplace of the spouse beneficiary (those are
+  // on Form I-130), so those answers are not written here. A parent's full
+  // name is split as "Family, Given Middle" or "Given Middle Family".
+  const parentName = (full) => {
+    const text = clean(full, 120);
+    if (!text) return {};
+    if (text.includes(',')) {
+      const [family, rest] = text.split(',').map((part) => part.trim());
+      const [given, ...middle] = rest.split(' ');
+      return { family, given, middle: middle.join(' ') };
+    }
+    const words = text.split(' ');
+    return words.length === 1 ? { family: words[0] } : { given: words[0], middle: words.slice(1, -1).join(' '), family: words[words.length - 1] };
+  };
+  const parent1 = parentName(a.spouse_parent1_full_name);
+  v["Pt1Line10_FamilyName[0]"] = parent1.family;
+  v["Pt1Line10_GivenName[0]"] = parent1.given;
+  v["Pt1Line10_MiddleName[0]"] = parent1.middle;
+  const parent2 = parentName(a.spouse_parent2_full_name);
+  v["Pt1Line16_FamilyName[0]"] = parent2.family;
+  v["Pt1Line16_GivenName[0]"] = parent2.given;
+  v["Pt1Line16_MiddleName[0]"] = parent2.middle;
 
   v["Pt1Line4a_StreetNumberName[0]"] = clean(a.spouse_current_address_line1 || a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
   v["Pt1Line4b_AptSteFlrNumber[0]"] = addressLine2(a.spouse_current_address_line2 || a.mailing_address_line2 || a.address_unit);
@@ -39,7 +59,7 @@ function i_130aFieldValues(payload={}) {
   v["Pt1Line4c_CityOrTown[0]"] = clean(a.spouse_current_city || a.mailing_city || a.city, 60);
   v["Pt1Line4d_State[0]"] = stateCode(a.spouse_current_state || a.mailing_state || a.state || '');
   v["Pt1Line4e_ZipCode[0]"] = digits(a.spouse_current_zip || a.mailing_zip || a.zip_code, 10);
-  v["Pt1Line4h_Country[0]"] = clean(a.spouse_current_country || a.mailing_country || 'United States', 60);
+  v["Pt1Line4h_Country[0]"] = clean(a.spouse_current_country || a.mailing_country, 60);
   v["Pt1Line5a_DateFrom[0]"] = dateMdY(a.spouse_current_address_from);
 
   v["Pt2Line1_EmployerOrCompName[0]"] = clean(currentEmployment.name || currentEmployment.company, 80);
@@ -53,13 +73,14 @@ function i_130aFieldValues(payload={}) {
   v["Pt2Line4b_DateTo[0]"] = dateMdY(currentEmployment.to);
 
   v["Pt2Line5_EmployerOrCompName[0]"] = clean(priorEmployment.name || priorEmployment.company, 80);
-  v["Pt2Line6_StreetNumberName[0]"] = clean(priorEmployment.line1 || a.spouse_last_foreign_address_line1 || a.mailing_address_line1 || a.current_address_line1 || a.address_line1, 80);
-  v["Pt2Line6_AptSteFlrNumber[0]"] = addressLine2(priorEmployment.line2 || a.spouse_last_foreign_address_line2 || a.mailing_address_line2 || a.address_unit);
-  Object.assign(v, unitRadio("Pt2Line6_Unit", priorEmployment.line2 || a.spouse_last_foreign_address_line2 || a.mailing_address_line2 || a.address_unit));
-  v["Pt2Line6_CityOrTown[0]"] = clean(priorEmployment.city || a.spouse_last_foreign_city || a.mailing_city || a.city, 60);
-  v["Pt2Line6_State[0]"] = stateCode(priorEmployment.state || a.mailing_state || a.state || '');
-  v["Pt2Line6_ZipCode[0]"] = digits(priorEmployment.zip || a.mailing_zip || a.zip_code, 10);
-  v["Pt2Line6_Country[0]"] = clean(priorEmployment.country || a.spouse_last_foreign_country || a.mailing_country, 60);
+  // The earlier employer's address comes from that job only, never from a home address.
+  v["Pt2Line6_StreetNumberName[0]"] = clean(priorEmployment.line1, 80);
+  v["Pt2Line6_AptSteFlrNumber[0]"] = addressLine2(priorEmployment.line2);
+  Object.assign(v, unitRadio("Pt2Line6_Unit", priorEmployment.line2));
+  v["Pt2Line6_CityOrTown[0]"] = clean(priorEmployment.city, 60);
+  v["Pt2Line6_State[0]"] = stateCode(priorEmployment.state || '');
+  v["Pt2Line6_ZipCode[0]"] = digits(priorEmployment.zip, 10);
+  v["Pt2Line6_Country[0]"] = clean(priorEmployment.country, 60);
   v["Pt2Line7_Occupation[0]"] = clean(priorEmployment.occupation || priorEmployment.activity, 60);
   v["Pt2Line8a_DateFrom[0]"] = dateMdY(priorEmployment.from);
   v["Pt2Line8b_DateTo[0]"] = dateMdY(priorEmployment.to);
@@ -75,7 +96,7 @@ function i_130aFieldValues(payload={}) {
   v["Pt3Line4b_DateTo[0]"] = dateMdY(lastForeignEmployment.to);
 
   v["Pt4Line3_DaytimePhoneNumber1[0]"] = usPhone(a.spouse_daytime_phone || a.daytime_phone || a.phone || c.phone);
-  v["Pt4Line4_MobileNumber1[0]"] = usPhone(a.spouse_mobile_phone || a.mobile_phone || a.daytime_phone || c.phone);
+  v["Pt4Line4_MobileNumber1[0]"] = usPhone(a.spouse_mobile_phone || a.mobile_phone);
   v["Pt4Line5_Email[0]"] = clean(a.spouse_email_address || a.email_address || a.email || c.email, 120);
   // Preparer fields use ONLY the preparer's own data — never the beneficiary's
   // phone/email (those belong in Part 4).
@@ -89,6 +110,47 @@ function i_130aFieldValues(payload={}) {
   v["Pt6Line1a_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);
   v["Pt6Line1b_PreparerGivenName[0]"]  = clean(a.preparer_given_name, 60);
   v["Pt6Line2_BusinessName[0]"] = clean(a.preparer_business_name, 80);
+
+  // ---- Answers the wizard collects that had no place in this map. Field
+  // meanings were read from the form's tooltips.
+  // Address History, Physical Address 2: the address before the current one.
+  const previous = (Array.isArray(a.spouse_residence_history) ? a.spouse_residence_history : [])[0] || {};
+  if (clean(previous.line1)) {
+    const abroad = clean(previous.country, 60) && !/^(united states|usa|us)$/i.test(clean(previous.country, 60));
+    v["Pt1Line6a_StreetNumberName[0]"] = clean(previous.line1, 34);
+    v["Pt1Line6b_AptSteFlrNumber[0]"] = clean(previous.line2, 40).replace(/^(?:apt|apartment|ste|suite|flr|fl|floor|unit|#)\s*\.?\s*#?\s*/i, '').slice(0, 6);
+    v["Pt1Line6c_CityOrTown[0]"] = clean(previous.city, 20);
+    if (abroad) {
+      v["Pt1Line6f_Province[0]"] = clean(previous.state, 20);
+      v["Pt1Line6g_PostalCode[0]"] = clean(previous.zip, 9);
+    } else {
+      v["Pt1Line6d_State[0]"] = stateCode(previous.state || '');
+      v["Pt1Line6e_ZipCode[0]"] = digits(previous.zip, 5);
+    }
+    v["Pt1Line6h_Country[0]"] = clean(previous.country, 60);
+    v["Pt1Line7a_DateFrom[0]"] = dateMdY(previous.from);
+    v["Pt1Line7b_DateTo[0]"] = dateMdY(previous.to);
+  }
+  // Last physical address outside the United States (item 8).
+  v["Pt1Line8a_StreetNumberName[0]"] = clean(a.spouse_last_foreign_address_line1, 34);
+  v["Pt1Line8b_AptSteFlrNumber[0]"] = clean(a.spouse_last_foreign_address_line2, 40).replace(/^(?:apt|apartment|ste|suite|flr|fl|floor|unit|#)\s*\.?\s*#?\s*/i, '').slice(0, 6);
+  v["Pt1Line8c_CityOrTown[0]"] = clean(a.spouse_last_foreign_city, 20);
+  v["Pt1Line8d_Province[0]"] = clean(a.spouse_last_foreign_state, 20);
+  v["Pt1Line8e_PostalCode[0]"] = clean(a.spouse_last_foreign_zip, 9);
+  v["Pt1Line8f_Country[0]"] = clean(a.spouse_last_foreign_country, 60);
+  // Part 4. Spouse beneficiary's statement
+  const statement = clean(a.spouse_statement, 80).toLowerCase();
+  if (/read and understand english/.test(statement)) v["Pt4Line1Checkbox[1]"] = true;
+  if (/interpreter/.test(statement)) {
+    v["Pt4Line1Checkbox[0]"] = true;
+    v["Pt4Line1b_Language[0]"] = clean(a.spouse_statement_language, 40);
+  }
+  const preparerName = [clean(a.preparer_given_name, 60), clean(a.preparer_family_name, 60)].filter(Boolean).join(' ');
+  if (/^yes$/i.test(clean(a.has_preparer, 10)) && preparerName) {
+    v["Pt4_Checkbox[0]"] = true;
+    v["Pt4Line2_RepresentativeName[0]"] = preparerName;
+  }
+  if (clean(a.interpreter_family_name)) v["Pt5_NameofLanguage[0]"] = clean(a.interpreter_language || a.spouse_statement_language, 40);
 
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
 }

@@ -1,38 +1,76 @@
 'use strict';
-const { incrementalFillPdf: _unused } = require('./pdf-incremental-fill'); // keep dep for later
+// Form I-864A, Contract Between Sponsor and Household Member. The person
+// answering the wizard is the household member (Part 1). Field meanings come
+// from the form's tooltips.
+//
+// Not filled: Part 2 item 1 to 3 status boxes and Parts 3 to 5 about the
+// sponsor (the wizard does not ask for them).
 
-function clean(v, max = 300) {
-  if (v && typeof v === 'object' && !Array.isArray(v)) return Object.values(v).filter(Boolean).join(' ').replace(/\s+/g,' ').trim().slice(0,max);
-  return String(v||'').replace(/\s+/g,' ').trim().slice(0,max);
-}
-function digits(v,max=30){return clean(v,Math.max(80,max*4)).replace(/\D/g,'').slice(0,max);}
-function dateMdY(v){const t=clean(v,40);const m=t.match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?`${m[2]}/${m[3]}/${m[1]}`:t;}
-function stateCode(v){const t=clean(v,80);const m=t.match(/^([A-Z]{2})\b/);return m?m[1]:t;}
-function usPhone(v){if(v&&typeof v==='object'&&!Array.isArray(v)){return digits(`${v.areaCode||''}${v.number||''}`,10);}const r=digits(v,20);if(r.length===11&&r.startsWith('1'))return r.slice(1);return r.length>10?r.slice(-10):r;}
-function yesNo(v){const t=clean(v,40).toLowerCase();if(['yes','true','да','так'].includes(t))return true;if(['no','false','нет','ні'].includes(t))return false;return null;}
-function cb(v,y,n){if(v===true)return{[y]:true,[n]:false};if(v===false)return{[y]:false,[n]:true};return {};}
+const {
+  clean, digits, dateMdY, usPhone, lower, isYes, isNo,
+  addressFields, addressAnswers, choice, helperFields, compact
+} = require('./uscis-map-kit');
 
-function i_864aFieldValues(payload={}) {
+function i_864aFieldValues(payload = {}) {
   const a = payload.formAnswers || payload.answers || {};
   const c = payload.contact || {};
-  const today = new Date().toISOString().slice(0,10);
   const v = {};
-  v["Pt1Line1a_FamilyName[0]"] = clean(a.applicant_family_name || a.family_name || (c.name ? c.name.split(' ').pop() : ''), 60);
-  v["Pt1Line1b_GivenName[0]"]  = clean(a.applicant_given_name  || a.given_name  || (c.name ? c.name.split(' ').slice(0,-1).join(' ') : ''), 60);
-  v["Pt1Line1c_MiddleName[0]"] = clean(a.applicant_middle_name || a.middle_name || '', 60);
-  v["P1_Line8_AlienNumber[0]"] = digits(a.alien_number || a.a_number, 9);
-  v["P2_Line5_SSN[0]"] = digits(a.ssn || a.social_security_number, 9);
-  v["P1_Line6_CountryofBirth[0]"]  = clean(a.country_of_birth, 60);
-  v["P7Line6_MobileTelephoneNumber[0]"] = usPhone(a.mobile_phone || a.daytime_phone || c.phone);
-  v["Pt2Line6_DateofSignature[1]"] = dateMdY(today);
-  v["P8Line1a_InterpretersFamilyName[0]"] = clean(a.interpreter_family_name, 60);
-  v["P8Line1b_InterpretersGivenName[0]"]  = clean(a.interpreter_given_name, 60);
-  v["P8Line2_InterpretersBusinessName[0]"]    = clean(a.interpreter_org_name || a.interpreter_business_name, 80);
-  v["P9Line1a_PreparersFamilyName[0]"] = clean(a.preparer_family_name, 60);
-  v["P9Line1b_PreparersGivenName[0]"]  = clean(a.preparer_given_name, 60);
-  v["P9Line2_PreparersBusinessName[0]"]    = clean(a.preparer_business_name, 80);
 
-  return Object.fromEntries(Object.entries(v).filter(([,val])=>val!==undefined&&val!==null&&val!==''));
+  // Part 1. Information about you (the household member)
+  v['P1_Line1a_FamilyName[0]'] = clean(a.applicant_family_name, 60);
+  v['P1_Line1b_GivenName[0]'] = clean(a.applicant_given_name, 60);
+  v['P1_Line1c_MiddleName[0]'] = clean(a.applicant_middle_name, 60);
+  Object.assign(v, addressFields(addressAnswers(a, 'mailing'), {
+    street: 'P1_Line2_StreetNumberName[0]', city: 'P1_Line2_CityOrTown[0]', state: 'P1_Line2_State[0]', zip: 'P1_Line2_ZipCode[0]',
+    province: 'P1_Line2_Province[0]', postal: 'P1_Line2_PostalCode[0]', country: 'P1_Line2_Country[0]',
+    unit: { number: 'P1_Line2_AptSteFlrNumber[0]' }, max: { city: 20 }
+  }));
+  if (isYes(a.physical_same_as_mailing)) v['P1_Line3_CB[1]'] = true;
+  if (isNo(a.physical_same_as_mailing)) {
+    v['P1_Line3_CB[0]'] = true;
+    Object.assign(v, addressFields(addressAnswers(a, 'physical'), {
+      street: 'P1_Line4_StreetNumberName[0]', city: 'P1_Line4_CityOrTown[0]', state: 'P1_Line4_State[0]', zip: 'P1_Line4_ZipCode[0]',
+      province: 'P1_Line4_Province[0]', postal: 'P1_Line4_PostalCode[0]', country: 'P1_Line4_Country[0]',
+      unit: { number: 'P1_Line4_AptSteFlrNumber[0]' }, max: { city: 20 }
+    }));
+  }
+  v['P1_Line5_DateOfBirth[0]'] = dateMdY(a.date_of_birth || a.dob || '');
+  v['P1_Line6_CountryofBirth[0]'] = clean(a.country_of_birth, 60);
+  v['P1_Line7_SSN[0]'] = digits(a.ssn || a.social_security_number, 9);
+  v['P1_Line8_AlienNumber[0]'] = digits(a.alien_number || a.a_number, 9);
+  v['P1_Line9_USCISOnlineAcctNumber[0]'] = digits(a.uscis_online_account_number, 12);
+
+  // Part 2, item 3: relationship to the sponsor, when the answer names one
+  // of the form's four kinds. Anything else is left for review.
+  Object.assign(v, choice(a.relationship_to_sponsor, {
+    're:^(spouse|wife|husband)$': 'P2_Line3_A_Relationship[0]',
+    're:^(son|daughter|adult son|adult daughter|child)$': 'P2_Line3_A_Relationship[1]',
+    're:^(parent|mother|father)$': 'P2_Line3_A_Relationship[2]',
+    're:^(brother|sister|sibling)$': 'P2_Line3_A_Relationship[3]'
+  }));
+  // Part 3, item 7: current individual annual income.
+  v['P3_Line2_CurrentIncome[0]'] = clean(a.household_member_income, 20);
+
+  // Part 5, the promise: "I, THE HOUSEHOLD MEMBER (print name)". The field is
+  // named "Part9_Iamfluent[0]".
+  v['Part9_Iamfluent[0]'] = [clean(a.applicant_given_name, 60), clean(a.applicant_middle_name, 60), clean(a.applicant_family_name, 60)].filter(Boolean).join(' ');
+
+  // Part 6. Statement and contact information
+  const statement = lower(a.applicant_statement);
+  if (/interpreter/.test(statement)) v['P6Line1b_language[0]'] = clean(a.applicant_statement_language, 40);
+  const preparerName = [clean(a.preparer_given_name, 60), clean(a.preparer_family_name, 60)].filter(Boolean).join(' ');
+  if (isYes(a.has_preparer) && preparerName) v['P6Line2_Attorney[0]'] = preparerName;
+  v['P7Line5_DaytimeTelephoneNumber[0]'] = usPhone(a.daytime_phone || a.phone || c.phone);
+  v['P7Line6_MobileTelephoneNumber[0]'] = usPhone(a.mobile_phone);
+  v['P7Line7_EmailAddress[0]'] = clean(a.email_address || a.email || c.email, 38);
+
+  // Part 8 (interpreter) and Part 9 (preparer)
+  Object.assign(v, helperFields(a, {
+    interpreter: { family: 'P8Line1a_InterpretersFamilyName[0]', given: 'P8Line1b_InterpretersGivenName[0]', business: 'P8Line2_InterpretersBusinessName[0]' },
+    preparer: { family: 'P9Line1a_PreparersFamilyName[0]', given: 'P9Line1b_PreparersGivenName[0]', business: 'P9Line2_PreparersBusinessName[0]' }
+  }));
+
+  return compact(v);
 }
 
 module.exports = { i_864aFieldValues };

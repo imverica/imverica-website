@@ -55,6 +55,8 @@ function sample(field) {
   if (type === 'phone' || /phone|telephone|mobile/i.test(id)) return '9165550142';
   if (type === 'number') return '2';
   if (/alien|a_number/i.test(id)) return '123456789';
+  if (/account/i.test(id)) return '987654321012';
+  if (/i94/i.test(id)) return '12345678901';
   if (/ssn|social_security/i.test(id)) return '555112222';
   if (/zip|postal/i.test(id)) return '95814';
   return `Q${id.replace(/[^a-z0-9]/gi, '').slice(0, 14)}`.toUpperCase();
@@ -94,7 +96,7 @@ function collect(flow) {
 
 const OTHER_PERSON_KEY = /spouse|child|parent|mother|father|petitioner|beneficiary|immigrant|sponsor|employer|interpreter|preparer|prior|former|joint|household|relative|member|attorney|representative|sibling|fiance|derivative|dependent|contact_/i;
 const OTHER_PERSON_TIP = /\b(Spouse|Child(ren)?|Parent|Mother|Father|Beneficiary|Employer|Marriage Broker|Sponsor|Household Member|Relative|Derivative|Attorney|Representative|Sibling|Fianc)/i;
-const OWN_SECTION_TIP = /About You\b|Your Full|Your (Mailing|Physical)|Applicant's|Petitioner's Contact|Client|pre-?populate/i;
+const OWN_SECTION_TIP = /About You\b|Your Full|Your (Mailing|Physical)|Your \(the |Applicant's|Petitioner's Contact|Client|pre-?populate/i;
 const ITEM_RULES = [
   [/(^|_)date_of_birth$|(^|_)dob$/, /Date of Birth/i, /DateOfBirth|DOB/i],
   [/country_of_birth$/, /Country of (Your )?Birth/i, /CountryOfBirth/i],
@@ -106,9 +108,24 @@ const ITEM_RULES = [
   [/passport_number$/, /Passport|Travel Document/i, /Passport/i]
 ];
 
+// A field the form sets aside for one kind of person takes only answers about
+// that kind of person, whoever the form's main person is.
+const ROLE_RULES = [
+  ['an attorney or representative', /Attorney or Accredited Representative|Attorney State Bar/i, /attorney|representative|g28/i],
+  ['a parent', /Information About (Your )?(Parent|Father|Mother)|Parent [12]\b|Father's|Mother's|Parent's/i, /parent|mother|father/i],
+  ['a child', /Child [1-9]\b|Information About Your Child|Children of/i, /child|son|daughter/i],
+  ['an employer', /Employer|Employment History/i, /employ|company|job|occupation|work|business|school/i]
+];
+
 function judge(key, field, tip) {
   if (/^(has_|applicant_statement)/.test(key)) return [];
   const problems = [];
+  // "Applicant's, Parent's, or Legal Guardian's" names whoever signs the form,
+  // not a parent's own section.
+  const signerSection = /Legal Guardian/i.test(tip);
+  for (const [who, tipRe, keyRe] of ROLE_RULES) {
+    if (tipRe.test(tip) && !keyRe.test(key) && !(signerSection && who === 'a parent')) problems.push(`lands in a field about ${who}`);
+  }
   const interpreter = /interpret/i.test(tip) || /Interpret/i.test(field);
   const preparer = /prepar/i.test(tip) || /Prepar/i.test(field);
   const statementField = /NameofRepresentative|RepresentativeName/i.test(field);

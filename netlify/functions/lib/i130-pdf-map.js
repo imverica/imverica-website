@@ -194,6 +194,61 @@ function i_130FieldValues(payload={}) {
   v["Pt4Line24_CountryOfIssuance[0]"]  = clean(a.beneficiary_passport_country, 60);
   v["Pt4Line21d_DateExpired[0]"]       = dateMdY(a.beneficiary_passport_expiration);
 
+  // ---- Answers the wizard collects that had no place in this map. Field
+  // meanings were read from the form's tooltips.
+  const low = (x) => clean(x, 80).toLowerCase();
+  const yes = (x) => low(x) === 'yes';
+  const no = (x) => low(x) === 'no';
+  // Part 2. Petitioner: in care of, same address, height, eye and hair color
+  v["Pt2Line10_InCareofName[0]"] = clean(a.petitioner_in_care_of_name, 34);
+  if (yes(a.petitioner_physical_same_as_mailing)) v["Pt2Line11_Yes[0]"] = true;
+  if (no(a.petitioner_physical_same_as_mailing)) v["Pt2Line11_No[0]"] = true;
+  v["Pt3Line3_HeightFeet[0]"] = digits(a.petitioner_height_feet, 1);
+  v["Pt3Line3_HeightInches[0]"] = digits(a.petitioner_height_inches, 2);
+  const eye = { blue: 0, brown: 1, hazel: 2, pink: 3, maroon: 4, green: 5, gray: 6, black: 7, unknown: 8 }[low(a.petitioner_eye_color)];
+  if (eye !== undefined) v[`Pt3Line5_EyeColor[${eye}]`] = true;
+  const hair = { bald: 0, black: 1, blond: 2, brown: 3, gray: 4, red: 5, sandy: 6, white: 7, unknown: 8 }[low(a.petitioner_hair_color)];
+  if (hair !== undefined) v[`Pt3Line6_HairColor[${hair}]`] = true;
+  // Part 4. Beneficiary: current marriage, I-94, earlier petitions and proceedings
+  v["Pt4Line19_DateOfMarriage[0]"] = dateMdY(a.beneficiary_current_marriage_date);
+  v["Pt4Line20a_CityTown[0]"] = clean(a.beneficiary_current_marriage_place, 20);
+  v["Pt4Line21b_ArrivalDeparture[0]"] = clean(a.beneficiary_i94_number, 11);
+  // Item 10 asks the wizard's question word for word.
+  if (yes(a.prior_petition_filed_for_beneficiary)) v["Pt4Line10_Yes[0]"] = true;
+  if (no(a.prior_petition_filed_for_beneficiary)) v["Pt4Line10_No[0]"] = true;
+  // Items 45 and 53 ask "EVER". Being in the United States now, or in
+  // proceedings now, answers "Yes"; a "No" about today does not answer "ever".
+  if (yes(a.beneficiary_in_us_now)) v["Pt4Line20_Yes[0]"] = true;
+  if (yes(a.beneficiary_in_removal_proceedings)) v["Pt4Line28_Yes[0]"] = true;
+  // Part 5, item 1: ever filed for this beneficiary or any other alien.
+  if (yes(a.filed_for_same_beneficiary_before) || yes(a.filed_for_other_relatives_before)) v["Part4Line1_Yes[0]"] = true;
+  else if (no(a.filed_for_same_beneficiary_before) && no(a.filed_for_other_relatives_before)) v["Part4Line1_No[0]"] = true;
+  // Part 6. Petitioner's statement and contact information
+  const statement = low(a.petitioner_statement);
+  if (/read and understand english/.test(statement)) v["Pt6Line1Checkbox[0]"] = true;
+  if (/interpreter/.test(statement)) {
+    v["Pt6Line1Checkbox[1]"] = true;
+    v["Pt6Line1b_Language[0]"] = clean(a.petitioner_statement_language, 40);
+  }
+  const preparerName = [clean(a.preparer_given_name, 60), clean(a.preparer_family_name, 60)].filter(Boolean).join(' ');
+  if (yes(a.has_preparer) && preparerName) {
+    v["Pt6Line2_Checkbox[0]"] = true;
+    v["Pt6Line2_RepresentativeName[0]"] = preparerName;
+  }
+  v["Pt6Line4_MobileNumber[0]"] = usPhone(a.petitioner_mobile_phone);
+  // Part 7 (interpreter) and Part 8 (preparer)
+  if (!no(a.has_interpreter)) {
+    v["Pt7Line1a_InterpreterFamilyName[0]"] = clean(a.interpreter_family_name, 60);
+    v["Pt7Line1b_InterpreterGivenName[0]"] = clean(a.interpreter_given_name, 60);
+    v["Pt7Line2_InterpreterBusinessorOrg[0]"] = clean(a.interpreter_business_name, 38);
+    if (clean(a.interpreter_family_name)) v["Pt7_NameofLanguage[0]"] = clean(a.interpreter_language || a.petitioner_statement_language, 40);
+  }
+  if (!no(a.has_preparer)) {
+    v["Pt8Line1a_PreparerFamilyName[0]"] = clean(a.preparer_family_name, 60);
+    v["Pt8Line1b_PreparerGivenName[0]"] = clean(a.preparer_given_name, 60);
+    v["Pt8Line2_BusinessName[0]"] = clean(a.preparer_business_name, 34);
+  }
+
   return Object.fromEntries(Object.entries(v).filter(([,val])=>val===true||(val!==undefined&&val!==null&&val!=='')));
 }
 
