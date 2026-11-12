@@ -13,7 +13,7 @@ const ROOT = path.resolve(__dirname, '..');
 const LIB = path.join(ROOT, 'netlify/functions/lib');
 const PDF_DIR = path.join(ROOT, 'assets/form-cache/pdfs');
 const { buildImmigrationFlow } = require(path.join(LIB, 'immigration-flow-schema'));
-const { parsePdf, extractFieldObjects } = require(path.join(LIB, 'pdf-incremental-fill'));
+const { parsePdf, extractFieldObjects, extractQualifiedFieldObjects } = require(path.join(LIB, 'pdf-incremental-fill'));
 const manifest = require(path.join(ROOT, 'netlify/functions/form-cache-manifest.json'));
 const catalog = require(path.join(ROOT, 'netlify/functions/forms/immigration.json'));
 
@@ -29,9 +29,13 @@ function pdfPath(code) {
   return file ? path.join(PDF_DIR, file) : null;
 }
 
+// Tooltips by short name and by full name: maps address a field by its full
+// name when the form gives several fields the same short one.
 function tooltips(code) {
   const out = {};
-  for (const [name, obj] of extractFieldObjects(parsePdf(fs.readFileSync(pdfPath(code))))) {
+  const parsed = parsePdf(fs.readFileSync(pdfPath(code)));
+  for (const [name, obj] of [...extractFieldObjects(parsed), ...extractQualifiedFieldObjects(parsed)]) {
+    if (out[name] !== undefined) continue;
     const match = String(obj.body || '').match(/\/TU\s*\(((?:\\.|[^\\)])*)\)/);
     let text = match ? match[1].replace(/\\([()\\])/g, '$1').replace(/\\[rn]/g, ' ') : '';
     if (/^(þÿ|þÿ)/.test(text)) text = text.replace(/^(þÿ|þÿ)/, '').split('').filter((_, i) => i % 2 === 1).join('');
@@ -96,10 +100,13 @@ function collect(flow) {
 
 const OTHER_PERSON_KEY = /spouse|child|parent|mother|father|petitioner|beneficiary|immigrant|sponsor|employer|interpreter|preparer|prior|former|joint|household|relative|member|attorney|representative|sibling|fiance|derivative|dependent|contact_/i;
 const OTHER_PERSON_TIP = /\b(Spouse|Child(ren)?|Parent|Mother|Father|Beneficiary|Employer|Marriage Broker|Sponsor|Household Member|Relative|Derivative|Attorney|Representative|Sibling|Fianc)/i;
-const OWN_SECTION_TIP = /About You\b|Your Full|Your (Mailing|Physical)|Your \(the |Applicant's|Petitioner's Contact|Client|pre-?populate/i;
+// On Forms I-134 and I-134A the person answering is the supporter, whose
+// sections are titled "the Individual Agreeing to Financially Support the
+// Beneficiary".
+const OWN_SECTION_TIP = /About You\b|Your Full|Your (Mailing|Physical)|Your \(the |Applicant's|Petitioner's Contact|Client|pre-?populate|Individual Agreeing to (Financially )?Support/i;
 const ITEM_RULES = [
   [/(^|_)date_of_birth$|(^|_)dob$/, /Date of Birth/i, /DateOfBirth|DOB/i],
-  [/country_of_birth$/, /Country of (Your )?Birth/i, /CountryOfBirth/i],
+  [/country_of_birth$/, /Country of (Your )?Birth|Place of Birth\. (Enter )?Country/i, /CountryOfBirth/i],
   [/(^|_)ssn$|social_security/, /Social Security/i, /SSN|SocialSecurity/i],
   [/alien_number$|(^|_)a_number$/, /Alien|A\.? ?-? ?Number/i, /Alien|ANumber/i],
   [/email(_address)?$/, /E-?mail/i, /Email/i],
@@ -118,7 +125,9 @@ const ROLE_RULES = [
 ];
 
 function judge(key, field, tip) {
-  if (/^(has_|applicant_statement)/.test(key)) return [];
+  // Answers that pick which parts of the form apply (who files for whom)
+  // switch whole sections on and off.
+  if (/^(has_|applicant_statement|i134_filing_for$|i134a_filing_under$)/.test(key)) return [];
   const problems = [];
   // "Applicant's, Parent's, or Legal Guardian's" names whoever signs the form,
   // not a parent's own section.
@@ -126,7 +135,10 @@ function judge(key, field, tip) {
   for (const [who, tipRe, keyRe] of ROLE_RULES) {
     if (tipRe.test(tip) && !keyRe.test(key) && !(signerSection && who === 'a parent')) problems.push(`lands in a field about ${who}`);
   }
-  const interpreter = /interpret/i.test(tip) || /Interpret/i.test(field);
+  // I-134 names the preparer's name fields "P4_Line1_Interpreter..." and gives
+  // them no tooltip; on the page they sit under Part 7, the preparer's part.
+  const misnamedPreparer = /^P4_Line1_Interpreter(Family|Given)Name\[0\]$/.test(field) && !tip && /preparer/i.test(key);
+  const interpreter = !misnamedPreparer && (/interpret/i.test(tip) || /Interpret/i.test(field));
   const preparer = /prepar/i.test(tip) || /Prepar/i.test(field);
   const statementField = /NameofRepresentative|RepresentativeName/i.test(field);
   if (/Signature/i.test(field) && !/Date/i.test(field) && !/Date of Signature/i.test(tip)) problems.push('types into a signature field');
@@ -187,6 +199,18 @@ for (const form of (manifest.forms || []).filter((f) => f.agency === 'uscis' && 
   }
   if (!OWN_QA.includes(file)) checked += 1;
   rows.push({ code, asked: Object.keys(answers).length, used, fields: Object.keys(base).length, kind: generated ? 'auto' : 'hand' });
+}
+
+// Forms repaired after clients' answers were found missing from the PDF:
+// with the sample answers each must keep filling at least this many fields.
+const FIELD_FLOOR = {
+  'I-90': 50, 'AR-11': 19, 'I-130': 110, 'I-130A': 63, 'I-821D': 33, 'I-821': 30, 'I-912': 27, 'I-539': 28,
+  'N-600': 40, 'I-864A': 23, 'I-134': 75, 'I-134A': 100, 'N-565': 23, 'I-129F': 24
+};
+for (const [code, floor] of Object.entries(FIELD_FLOOR)) {
+  const row = rows.find((r) => r.code === code);
+  if (!row) failures.push(`${code}: map or PDF missing`);
+  else if (row.fields < floor) failures.push(`${code}: only ${row.fields} PDF fields filled from the wizard's answers (at least ${floor} expected)`);
 }
 
 if (REPORT) {

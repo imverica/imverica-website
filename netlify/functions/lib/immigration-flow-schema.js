@@ -2,6 +2,7 @@ const SCHEMA_VERSION = 'immigration-flow-v1';
 const { stateSelectOptions } = require('./us-address');
 const { countrySelectOptions } = require('./country-options');
 const { buildI485Part9Steps } = require('./i485-part9-flow');
+const { GAP_LOCALIZATION } = require('./immigration-flow-gap-localization');
 const { i485ReviewSteps, whenCategory, I485_REVIEW_LOCALIZATION } = require('./i485-review-steps');
 
 const DISCLAIMER = 'Document preparation only. Possible forms may include official USCIS forms. Imverica is not a law firm or attorney and does not provide legal advice.';
@@ -1012,6 +1013,18 @@ const I485_EXTRA_LOCALIZATION = {
     };
   });
 }));
+
+// Labels for the questions added to I-134, I-134A, AR-11 and I-90. An
+// existing translation of the same id keeps priority.
+Object.entries(GAP_LOCALIZATION).forEach(([lang, extra]) => {
+  if (!LOCALIZATION[lang]) return;
+  ['steps', 'stepHelp', 'fields', 'options', 'placeholders'].forEach((bucket) => {
+    LOCALIZATION[lang][bucket] = {
+      ...(extra[bucket] || {}),
+      ...(LOCALIZATION[lang][bucket] || {})
+    };
+  });
+});
 
 const PURPOSE_SPLIT_LOCALIZATION = {
   ru: {
@@ -3108,6 +3121,208 @@ function i589SpecificSteps() {
   ];
 }
 
+// Forms I-134 and I-134A: a person agreeing to support a beneficiary (the
+// supporter) and the beneficiary. The questions follow the printed items of
+// each form. Answers reuse the I-864 ids where the meaning is the same
+// (sponsor_* = supporter, principal_immigrant_* = beneficiary), so the
+// interpreter, preparer and contact steps are shared with Form I-864.
+const I134_FOR_OTHER = 'Another individual who is the beneficiary';
+const I134_FOR_SELF = 'Myself as the beneficiary';
+const I134_ASSET_TYPES = [
+  'Checking - Bank Account', 'Savings - Bank Account', 'Annuities', 'Stocks, Bonds, Certificates of Deposit',
+  'Retirement or Educational Account', 'Real Estate Holdings', 'Personal Property (net value)'
+];
+const I134_STATUS = [
+  'U.S. citizen', 'U.S. national', 'Lawful permanent resident', 'Nonimmigrant', 'Asylee', 'Refugee', 'Parolee',
+  'TPS holder', 'Deferred action (including DACA) or Deferred Enforced Departure', 'Other'
+];
+const I134A_STATUS = ['U.S. citizen', 'U.S. national', 'Lawful permanent resident', 'Nonimmigrant', 'Other'];
+const I134_EMPLOYMENT = ['Employed', 'Self-employed', 'Unemployed or not employed', 'Retired', 'Other'];
+const I134_MARITAL = ['Single, never married', 'Married', 'Divorced', 'Widowed', 'Legally separated', 'Marriage annulled', 'Other'];
+
+function i134SpecificSteps(code) {
+  const online = code === 'I-134A';
+  const forOther = [{ id: 'i134_filing_for', equals: I134_FOR_OTHER }];
+  // On I-134 the beneficiary part is skipped when the filer supports
+  // themselves; on I-134A Part 2 (the beneficiary) is always completed.
+  const beneficiaryShow = online ? {} : { showWhen: forOther };
+  const benef = (id, label, type = 'text', options = {}) => field(id, label, type, { ...beneficiaryShow, ...options });
+  const assetRow = (n) => [
+    field(`i134_asset${n}_type`, `Asset ${n}: type`, 'select', { options: I134_ASSET_TYPES }),
+    field(`i134_asset${n}_amount`, `Asset ${n}: cash value in U.S. dollars`, 'text', { inputmode: 'decimal' })
+  ];
+  const sponsorShow = online ? { showWhen: forOther } : {};
+  const iCheck = (id, label, type, options = {}) => field(id, label, type, { ...sponsorShow, ...options });
+
+  const basis = [
+    field('i134_filing_for', 'I am filing this form on behalf of', 'radio', { required: true, options: [I134_FOR_OTHER, I134_FOR_SELF] })
+  ];
+  if (online) {
+    basis.push(
+      field('i134a_filing_under', 'I am filing under', 'select', { options: ['Parole Process', 'Family Reunification Parole Process'] }),
+      field('i134a_parole_country', 'Parole process for the following country', 'select', {
+        options: ['Cuba', 'Haiti', 'Nicaragua', 'Ukraine', 'Venezuela'],
+        showWhen: [{ id: 'i134a_filing_under', equals: 'Parole Process' }]
+      }),
+      field('i134a_frp_nationality', 'Family reunification: the relative is a national of', 'select', {
+        options: ['Colombia', 'Cuba', 'El Salvador', 'Guatemala', 'Haiti', 'Honduras'],
+        showWhen: [{ id: 'i134a_filing_under', equals: 'Family Reunification Parole Process' }]
+      }),
+      field('i134a_invitation_number', 'Invitation number', 'text', { showWhen: [{ id: 'i134a_filing_under', equals: 'Family Reunification Parole Process' }] }),
+      field('i134a_family_members_total', 'Total family members who share the same invitation number', 'number', { inputmode: 'numeric', showWhen: [{ id: 'i134a_filing_under', equals: 'Family Reunification Parole Process' }] })
+    );
+  }
+
+  const beneficiary = [
+    step('i134_beneficiary_name', 'Beneficiary', 'The person who will be supported. Enter the legal name without nicknames.', [
+      benef('principal_immigrant_family_name', 'Beneficiary family name', 'text', { required: true }),
+      benef('principal_immigrant_given_name', 'Beneficiary given name', 'text', { required: true }),
+      benef('principal_immigrant_middle_name', 'Beneficiary middle name, if any'),
+      benef('principal_immigrant_other_names', 'Other names the beneficiary has used, if any', 'text')
+    ]),
+    step('i134_beneficiary_birth', 'Beneficiary birth and citizenship', 'Date and place of birth, sex and citizenship.', [
+      benef('principal_immigrant_date_of_birth', 'Beneficiary date of birth', 'date', { required: true }),
+      benef('principal_immigrant_sex', 'Beneficiary sex', 'radio', { options: online ? ['Male', 'Female', 'X'] : ['Male', 'Female'] }),
+      benef('principal_immigrant_city_of_birth', 'Beneficiary city or town of birth'),
+      benef('principal_immigrant_state_of_birth', 'Beneficiary state or province of birth, if any'),
+      benef('principal_immigrant_country_of_birth', 'Beneficiary country of birth', 'select', { options: COUNTRY_OPTIONS }),
+      benef('principal_immigrant_country_of_citizenship', 'Beneficiary country of citizenship or nationality', 'select', { required: true, options: COUNTRY_OPTIONS }),
+      benef('principal_immigrant_alien_number', 'Beneficiary A-number, if any', 'text', { autocomplete: 'off' })
+    ]),
+    ...(online ? [step('i134a_beneficiary_passport', 'Beneficiary passport', "The beneficiary's most recently issued passport.", [
+      field('principal_immigrant_passport_number', 'Passport number'),
+      field('principal_immigrant_passport_country', 'Country that issued the passport', 'select', { options: COUNTRY_OPTIONS }),
+      field('principal_immigrant_passport_expiration', 'Passport expiration date', 'date')
+    ])] : []),
+    step('i134_beneficiary_marital', 'Beneficiary marital status', '', [
+      benef('principal_immigrant_marital_status', 'Beneficiary marital status', 'select', { options: I134_MARITAL }),
+      benef('principal_immigrant_marital_status_other', 'If other, explain', 'text', { showWhen: [...(beneficiaryShow.showWhen || []), { id: 'principal_immigrant_marital_status', equals: 'Other' }] })
+    ]),
+    step('i134_beneficiary_address', 'Beneficiary mailing address', '', [
+      addressBlockField('principal_immigrant_mailing_address', 'Beneficiary mailing address', 'principal_immigrant_mailing', { required: true, ...beneficiaryShow }),
+      benef('principal_immigrant_physical_same_as_mailing', "Are the beneficiary's mailing and physical addresses the same?", 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i134_beneficiary_physical_address', 'Beneficiary physical address', '', [
+      addressBlockField('principal_immigrant_physical_address', 'Beneficiary physical address', 'principal_immigrant_physical', {
+        required: true,
+        showWhen: [...(beneficiaryShow.showWhen || []), { id: 'principal_immigrant_physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    ...(online ? [step('i134a_beneficiary_contact', 'Beneficiary contact information', '', [
+      field('principal_immigrant_daytime_phone', 'Beneficiary daytime telephone number', 'phone'),
+      field('principal_immigrant_mobile_phone', 'Beneficiary mobile telephone number, if any', 'phone'),
+      field('principal_immigrant_email', 'Beneficiary email address, if any', 'email')
+    ])] : []),
+    step('i134_beneficiary_stay', 'Anticipated period of stay', 'How long the beneficiary expects to stay in the United States.', [
+      benef('beneficiary_stay_from', 'Anticipated stay from', 'date'),
+      benef('beneficiary_stay_end', 'Anticipated end of stay', 'radio', { options: ['End date', 'No end date'] }),
+      benef('beneficiary_stay_to', 'Anticipated stay to', 'date', { showWhen: [...(beneficiaryShow.showWhen || []), { id: 'beneficiary_stay_end', equals: 'End date' }] })
+    ]),
+    ...(online ? [step('beneficiary_parole_reason', 'Reasons for parole', 'Part 2, Item 4 asks why parole should be granted for this person. Write the facts in your own words.', [
+      field('beneficiary_parole_reason', 'Why a favorable exercise of discretion is merited for the beneficiary', 'textarea', { rows: 5 })
+    ])] : [])
+  ];
+
+  const supporter = [
+    step('i134_supporter_name', online ? 'Supporter' : 'You (the supporter)', 'The person agreeing to financially support the beneficiary.', [
+      iCheck('sponsor_family_name', 'Supporter family name', 'text', { required: true, autocomplete: 'family-name' }),
+      iCheck('sponsor_given_name', 'Supporter given name', 'text', { required: true, autocomplete: 'given-name' }),
+      iCheck('sponsor_middle_name', 'Supporter middle name, if any', 'text', { autocomplete: 'additional-name' }),
+      iCheck('sponsor_other_names', 'Other names the supporter has used, if any', 'text'),
+      ...(online ? [
+        field('i134a_co_supporter', 'Organization, group or other individuals supporting the beneficiary with you, if any', 'text', { showWhen: forOther })
+      ] : [])
+    ]),
+    step('i134_supporter_mailing', 'Supporter mailing address', '', [
+      addressBlockField('sponsor_mailing_address', 'Supporter mailing address', 'sponsor_mailing', { required: true, ...sponsorShow }),
+      iCheck('sponsor_physical_same_as_mailing', 'Is the supporter mailing address the same as the physical address?', 'radio', { required: true, options: ['Yes', 'No'] })
+    ]),
+    step('i134_supporter_physical', 'Supporter physical address', '', [
+      addressBlockField('sponsor_physical_address', 'Supporter physical address', 'sponsor_physical', {
+        required: true,
+        showWhen: [...(sponsorShow.showWhen || []), { id: 'sponsor_physical_same_as_mailing', equals: 'No' }]
+      })
+    ]),
+    step('i134_supporter_birth', 'Supporter birth', '', [
+      iCheck('sponsor_date_of_birth', 'Supporter date of birth', 'date', { required: true }),
+      ...(online ? [field('sponsor_sex', 'Supporter sex', 'radio', { options: ['Male', 'Female', 'X'], showWhen: forOther })] : []),
+      iCheck('sponsor_city_of_birth', 'Supporter city or town of birth', 'text'),
+      iCheck('sponsor_state_of_birth', 'Supporter state or province of birth, if any', 'text'),
+      iCheck('sponsor_country_of_birth', 'Supporter country of birth', 'select', { options: COUNTRY_OPTIONS })
+    ]),
+    step('i134_supporter_status', 'Supporter immigration status', 'Choose the status you can document.', [
+      iCheck('sponsor_status', 'Supporter current immigration status', 'select', { required: true, options: online ? I134A_STATUS : I134_STATUS }),
+      iCheck('sponsor_status_other', 'If other, explain', 'text', { showWhen: [...(sponsorShow.showWhen || []), { id: 'sponsor_status', equals: 'Other' }] }),
+      ...(online ? [field('sponsor_i94_number', 'If nonimmigrant, Form I-94 number', 'text', { showWhen: [...forOther, { id: 'sponsor_status', equals: 'Nonimmigrant' }] })] : []),
+      iCheck('sponsor_alien_number', 'Supporter A-number, if any', 'text', { autocomplete: 'off' }),
+      iCheck('sponsor_uscis_online_account_number', 'Supporter USCIS online account number, if any', 'text', { autocomplete: 'off' }),
+      ...(online ? [field('sponsor_ssn', 'Supporter Social Security number, if any', 'text', { inputmode: 'numeric', autocomplete: 'off', showWhen: forOther })] : []),
+      iCheck('sponsor_relationship_to_beneficiary', 'Relationship to the beneficiary', 'text', online ? {} : { showWhen: forOther })
+    ]),
+    step('i134_supporter_employment', 'Supporter employment', '', [
+      iCheck('i134_employment_status', 'Employment status', 'radio', { required: true, options: I134_EMPLOYMENT }),
+      iCheck('sponsor_occupation', 'Employed as (occupation)', 'text', { showWhen: [...(sponsorShow.showWhen || []), { id: 'i134_employment_status', equals: 'Employed' }] }),
+      iCheck('sponsor_employer_name', 'Name of employer', 'text', { showWhen: [...(sponsorShow.showWhen || []), { id: 'i134_employment_status', equals: 'Employed' }] }),
+      iCheck('sponsor_self_employed_as', 'Self-employed as', 'text', { showWhen: [...(sponsorShow.showWhen || []), { id: 'i134_employment_status', equals: 'Self-employed' }] }),
+      iCheck('i134_employment_other', 'If other, explain', 'text', { showWhen: [...(sponsorShow.showWhen || []), { id: 'i134_employment_status', equals: 'Other' }] }),
+      ...(online ? [addressBlockField('sponsor_employer_address', "Current employer's address", 'sponsor_employer', { showWhen: [...forOther, { id: 'i134_employment_status', equals: 'Employed' }] })] : [])
+    ]),
+    step('i134_supporter_finances', 'Supporter income and dependents', online ? 'Part 3, Items 19 to 23.' : 'Part 2, Items 13 to 16.', online ? [
+      field('current_annual_income', 'Your annual income in U.S. dollars', 'text', { inputmode: 'decimal', showWhen: forOther }),
+      field('i134_dependents', 'Dependents and others you support: full name, date of birth, relationship, annual income contribution (one per line)', 'textarea', { rows: 4, showWhen: forOther }),
+      field('i134_dependents_count', 'Total number of dependents', 'number', { inputmode: 'numeric', showWhen: forOther }),
+      field('i134_income_illegal', 'Does any of this income come from an illegal activity or source?', 'radio', { options: ['Yes', 'No'], showWhen: forOther }),
+      field('i134_income_means_tested', 'Does any of this income come from means-tested public benefits?', 'radio', { options: ['Yes', 'No'], showWhen: forOther }),
+      field('i134_income_means_tested_amount', 'Amount from means-tested public benefits', 'text', { inputmode: 'decimal', showWhen: [...forOther, { id: 'i134_income_means_tested', equals: 'Yes' }] })
+    ] : [
+      field('i134_other_obligations_count', 'How many other Forms I-134, I-134A, I-864, I-864EZ or I-864A have you submitted whose support obligation has not ended?', 'number', { inputmode: 'numeric' }),
+      field('i134_dependents_count', 'How many other dependents do you support, including yourself?', 'number', { inputmode: 'numeric' }),
+      field('i134_dependents', 'Dependents and others you support: full name, date of birth, relationship, A-number, receipt number (one per line)', 'textarea', { rows: 4 }),
+      field('current_annual_income', 'Your current annual income in U.S. dollars', 'text', { inputmode: 'decimal' })
+    ]),
+    step('i134_supporter_assets', 'Supporter assets', 'Cash and assets available to you. Do not include the beneficiary\'s assets.', [
+      ...[1, 2, 3].flatMap(assetRow).map((item) => (online ? { ...item, showWhen: [...forOther, ...(item.showWhen || [])] } : item))
+    ]),
+    step('i134_contributions', 'Support you intend to provide', online
+      ? 'Part 3, Items 28 to 30: money, housing and help with services.'
+      : 'Part 2, Items 18 and 19. If you will furnish room and board, include the address where the beneficiary will live.', online ? [
+      field('i134a_previous_i134a', 'Have you previously submitted Form I-134A for someone other than this beneficiary?', 'radio', { options: ['Yes', 'No'], showWhen: forOther }),
+      field('i134a_support_financial', 'Resources you will use to support the beneficiary', 'textarea', { rows: 4, showWhen: forOther }),
+      field('i134a_support_housing', "How the beneficiary's housing needs will be met", 'textarea', { rows: 4, showWhen: forOther }),
+      field('i134a_support_services', 'How you will help the beneficiary access services and benefits', 'textarea', { rows: 4, showWhen: forOther })
+    ] : [
+      field('i134_specific_contributions', 'Do you intend to make specific contributions to cover the beneficiary\'s basic living needs?', 'radio', { options: ['Yes', 'No'], showWhen: forOther }),
+      field('i134_contributions_description', 'Describe the specific contributions', 'textarea', { rows: 4, showWhen: [...forOther, { id: 'i134_specific_contributions', equals: 'Yes' }] })
+    ])
+  ];
+
+  const shared = i864SpecificSteps();
+  const pick = (id) => shared.find((item) => item.id === id);
+  return [
+    step('i134_basis', 'Basis for filing', 'Part 1 of the form.', basis),
+    ...(online ? [...beneficiary, ...supporter] : [...supporter, ...beneficiary]),
+    step('i134_statement', 'Statement and contact information', 'For the person who signs: the supporter, or the beneficiary filing for themselves.', [
+      field('i864_sponsor_statement', 'Statement', 'radio', {
+        required: true,
+        options: ['I can read and understand English, and I have read and understand every question and instruction', 'An interpreter read every question and instruction to me']
+      }),
+      field('i864_sponsor_statement_language', 'Language used by interpreter', 'text', {
+        required: true,
+        showWhen: [{ id: 'i864_sponsor_statement', equals: 'An interpreter read every question and instruction to me' }]
+      }),
+      field('daytime_phone', 'Daytime phone', 'phone', { required: true, autocomplete: 'tel' }),
+      field('mobile_phone', 'Mobile phone, if any', 'phone', { autocomplete: 'tel' }),
+      field('email_address', 'Email address, if any', 'email', { autocomplete: 'email' })
+    ]),
+    pick('i864_interpreter_preparer_choice'),
+    pick('i864_interpreter_details'),
+    pick('i864_preparer_details'),
+    step('i134_additional_information', 'Additional information', 'Part 8: anything that did not fit in the items above.', [
+      field('i864_additional_information', 'Additional information', 'textarea', { rows: 6 })
+    ])
+  ];
+}
+
 function i864SpecificSteps() {
   const sponsorBasisOptions = [
     '1.a. I am the petitioner. I filed or am filing for the immigration of my relative.',
@@ -3886,6 +4101,33 @@ function i821dSpecificSteps() {
   ];
 }
 
+// Form AR-11, Alien's Change of Address Card: name, date of birth, A-number,
+// the previous and the present physical address, and a mailing address only
+// when it differs from the present one.
+function ar11SpecificSteps() {
+  return [
+    step('ar11_name', 'Your name', 'Part 1. Enter your current legal name.', [
+      field('applicant_family_name', 'Family name / last name', 'text', { required: true, autocomplete: 'family-name' }),
+      field('applicant_given_name', 'Given name / first name', 'text', { required: true, autocomplete: 'given-name' }),
+      field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('ar11_identity', 'Date of birth and A-number', 'Part 1.', [
+      field('date_of_birth', 'Date of birth', 'date', { required: true, autocomplete: 'bday' }),
+      field('alien_number', 'A-number, if any', 'text', { autocomplete: 'off', placeholder: '9 digits' })
+    ]),
+    step('ar11_previous_address', 'Previous physical address', 'Part 2. The U.S. address where you lived before you moved.', [
+      addressBlockField('previous_address', 'Previous physical address', 'previous', { required: true })
+    ]),
+    step('ar11_present_address', 'Present physical address', 'Part 2. The U.S. address where you live now.', [
+      addressBlockField('present_address', 'Present physical address', 'present', { required: true })
+    ]),
+    step('ar11_mailing_match', 'Mailing address', 'Part 2. Give a mailing address only if mail should go somewhere else.', [
+      field('physical_same_as_mailing', 'Is your mailing address the same as your present physical address?', 'radio', { required: true, options: ['Yes', 'No'] }),
+      addressBlockField('mailing_address', 'Mailing address', 'mailing', { required: true, showWhen: [{ id: 'physical_same_as_mailing', equals: 'No' }] })
+    ])
+  ];
+}
+
 function i90SpecificSteps() {
   return [
     // I-90 Part 1, page 1: applicant numbers and name.
@@ -3899,6 +4141,14 @@ function i90SpecificSteps() {
     ]),
     step('i90_middle_name', 'Middle name', 'If there is no middle name, leave this blank.', [
       field('applicant_middle_name', 'Middle name', 'text', { autocomplete: 'additional-name' })
+    ]),
+    step('i90_name_change', 'Name on your current card', 'Part 1, Items 4 and 5. Your new card is issued in the name you entered above.', [
+      field('i90_name_changed', 'Has your name legally changed since your current Permanent Resident Card was issued?', 'radio', {
+        options: ['Yes', 'No', 'N/A - I never received my previous card']
+      }),
+      field('i90_card_family_name', 'Family name exactly as printed on your current card', 'text', { required: true, showWhen: [{ id: 'i90_name_changed', equals: 'Yes' }] }),
+      field('i90_card_given_name', 'Given name exactly as printed on your current card', 'text', { required: true, showWhen: [{ id: 'i90_name_changed', equals: 'Yes' }] }),
+      field('i90_card_middle_name', 'Middle name exactly as printed on your current card, if any', 'text', { showWhen: [{ id: 'i90_name_changed', equals: 'Yes' }] })
     ]),
     step('i90_other_names', 'Other names used', 'Prior legal names, maiden names, aliases, or nicknames.', [
       field('other_names_used', 'Other names used', 'textarea')
@@ -3997,7 +4247,8 @@ function i90SpecificSteps() {
     ]),
     step('i90_biographic_body', 'Height and weight', 'Use feet, inches, and pounds.', [
       field('height_feet', 'Height feet', 'select', { options: ['3', '4', '5', '6', '7', '8'] }),
-      field('height_inches', 'Height inches', 'select', { options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] })
+      field('height_inches', 'Height inches', 'select', { options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'] }),
+      field('weight_pounds', 'Weight in pounds', 'number', { inputmode: 'numeric' })
     ]),
     step('i90_biographic_colors', 'Eye color and hair color', 'Select the closest USCIS option.', [
       field('eye_color', 'Eye color', 'select', { options: ['Black', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel', 'Maroon', 'Pink', 'Unknown'] }),
@@ -4946,6 +5197,12 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
               ...i131SpecificSteps(),
               ...evidenceSteps()
             ]
+            : code === 'AR-11'
+              ? [
+                ...purposeSteps(code, title),
+                ...ar11SpecificSteps(),
+                ...evidenceSteps()
+              ]
             : code === 'I-90'
               ? [
                 ...purposeSteps(code, title),
@@ -4964,6 +5221,12 @@ function buildImmigrationFlow(codeValue, entry = {}, official = {}) {
                     ...i864SpecificSteps(),
                     ...evidenceSteps()
                   ]
+                  : code === 'I-134' || code === 'I-134A'
+                    ? [
+                      ...purposeSteps(code, title),
+                      ...i134SpecificSteps(code),
+                      ...evidenceSteps()
+                    ]
                   : code === 'I-912'
                     ? [
                       ...purposeSteps(code, title),

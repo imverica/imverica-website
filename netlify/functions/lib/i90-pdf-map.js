@@ -81,6 +81,17 @@ function i_90FieldValues(payload = {}) {
   v['P1_Line3a_FamilyName[0]'] = family;
   v['P1_Line3b_GivenName[0]'] = given;
   v['P1_Line3c_MiddleName[0]'] = middle;
+  // Items 4 and 5: name change since the current card was issued, and the
+  // name exactly as printed on that card.
+  const nameChanged = clean(a.i90_name_changed, 60).toLowerCase();
+  if (nameChanged === 'yes') {
+    v['P1_checkbox4[0]'] = true;
+    v['P1_Line5a_FamilyName[0]'] = clean(a.i90_card_family_name, 60);
+    v['P1_Line5b_GivenName[0]'] = clean(a.i90_card_given_name, 60);
+    v['P1_Line5c_MiddleName[0]'] = clean(a.i90_card_middle_name, 60);
+  }
+  if (nameChanged === 'no') v['P1_checkbox4[1]'] = true;
+  if (nameChanged.startsWith('n/a')) v['P1_checkbox4[2]'] = true;
   // The Part 8 page repeats the name and A-Number from page 1.
   v['P1_Line1_AlienNumber[1]'] = aNumber;
   v['P1_Line3a_FamilyName[1]'] = family;

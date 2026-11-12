@@ -24,17 +24,17 @@ function ar_11FieldValues(payload={}) {
   v["AlienNumber[0]"]    = digits(a.alien_number || a.a_number || '', 9);
 
   v["S2A_StreetNumberName[0]"] = clean(a.previous_address_line1 || '', 80);
-  v["S2A_AptSteFlrNumber[0]"]  = clean(a.previous_address_unit || '', 6);
+  v["S2A_AptSteFlrNumber[0]"]  = unitNumber(a.previous_address_line2 || a.previous_address_unit);
   v["S2A_CityOrTown[0]"]       = clean(a.previous_city || '', 60);
   v["S2A_State[0]"]            = stateCode(a.previous_state || '');
   v["S2A_ZipCode[0]"]          = digits(a.previous_zip || '', 10);
-  Object.assign(v, unitRadio('S2A_Unit', a.previous_address_unit || a.previous_unit_type));
+  Object.assign(v, unitRadio('S2A_Unit', a.previous_address_line2 || a.previous_address_unit || a.previous_unit_type));
 
   // Present physical address: the wizard's physical address, or its mailing
   // address when the client said the two are the same.
   const separateMailing = /^no$/i.test(clean(a.physical_same_as_mailing, 10));
   const present = a.present_address_line1
-    ? { line1: a.present_address_line1, unit: a.present_address_unit, city: a.present_city, state: a.present_state, zip: a.present_zip }
+    ? { line1: a.present_address_line1, unit: a.present_address_line2 || a.present_address_unit, city: a.present_city, state: a.present_state, zip: a.present_zip }
     : (separateMailing
       ? { line1: a.physical_address_line1, unit: a.physical_address_line2, city: a.physical_city, state: a.physical_state, zip: a.physical_zip }
       : { line1: a.mailing_address_line1, unit: a.mailing_address_line2 || a.mailing_address_unit, city: a.mailing_city, state: a.mailing_state, zip: a.mailing_zip });
@@ -46,7 +46,7 @@ function ar_11FieldValues(payload={}) {
   Object.assign(v, unitRadio('S2B__Unit', present.unit || a.present_unit_type));
 
   // Mailing address (optional on the form): only when it differs.
-  if (separateMailing || a.present_address_line1) {
+  if (separateMailing) {
     const mailingUnit = a.mailing_address_line2 || a.mailing_address_unit;
     v["S2C_StreetNumberName[0]"] = clean(a.mailing_address_line1 || '', 25);
     v["S2C_AptSteFlrNumber[0]"]  = unitNumber(mailingUnit);
