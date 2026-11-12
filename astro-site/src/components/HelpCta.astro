@@ -10,26 +10,26 @@ const { lang = 'en', heading, text } = Astro.props;
 
 const STR: Record<Locale, { h: string; p: string; start: string; call: string }> = {
   en: {
-    h: 'Not sure which form you need?',
-    p: "Tell us your situation and any deadline or USCIS / court notice — we'll point you to the matching forms. General information, not legal advice.",
+    h: 'Looking for your form?',
+    p: 'Search by topic or form number: we link you to the official USCIS and California court form lists, you choose the form, and we prepare it at your direction. General information, not legal advice.',
     start: 'Start your case →',
     call: 'Call +1 (916) 399-3992'
   },
   ru: {
-    h: 'Не уверены, какая форма вам нужна?',
-    p: 'Опишите ситуацию и любые сроки или уведомление USCIS / суда — мы подскажем подходящие формы. Общая информация, не юридическая консультация.',
+    h: 'Ищете свою форму?',
+    p: 'Поиск по теме или номеру формы: мы дадим ссылки на официальные списки форм USCIS и судов Калифорнии, вы выбираете форму, а мы готовим её по вашему указанию. Общая информация, не юридическая консультация.',
     start: 'Начать кейс →',
     call: 'Звонок +1 (916) 399-3992'
   },
   uk: {
-    h: 'Не впевнені, яка форма вам потрібна?',
-    p: 'Опишіть ситуацію та будь-які терміни чи повідомлення USCIS / суду — ми підкажемо відповідні форми. Загальна інформація, не юридична консультація.',
+    h: 'Шукаєте свою форму?',
+    p: 'Пошук за темою або номером форми: ми дамо посилання на офіційні списки форм USCIS і судів Каліфорнії, ви обираєте форму, а ми готуємо її за вашою вказівкою. Загальна інформація, не юридична консультація.',
     start: 'Почати кейс →',
     call: 'Дзвінок +1 (916) 399-3992'
   },
   es: {
-    h: '¿No está seguro de qué formulario necesita?',
-    p: 'Cuéntenos su situación y cualquier fecha límite o aviso de USCIS / corte — le indicaremos los formularios correspondientes. Información general, no asesoría legal.',
+    h: '¿Busca su formulario?',
+    p: 'Busque por tema o número de formulario: le damos los enlaces a las listas oficiales de formularios de USCIS y de las cortes de California, usted elige el formulario y nosotros lo preparamos bajo su dirección. Información general, no asesoría legal.',
     start: 'Iniciar su caso →',
     call: 'Llamar +1 (916) 399-3992'
   }
