@@ -52,3 +52,9 @@ explicitly asks for that exact change in the current task. "Accuracy",
 
 - `.github/workflows/deploy.yml` runs only by hand (`workflow_dispatch`).
   Do not add push or schedule triggers: every deploy costs money.
+
+## Paused work
+
+- USCIS forms that still ask only the generic questions are paused by the
+  owner. When the owner asks where the work stopped, show
+  `docs/agents/uscis-forms-backlog.md`. Do not start them until asked.
