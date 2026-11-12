@@ -17,7 +17,10 @@ const STRINGS = {
     metaB: 'No legal advice',
     metaC: 'English · Russian · Ukrainian · Spanish',
     callAria: 'Call Imverica +1 (916) 399-3992',
-    seeServices: 'See services'
+    seeServices: 'See services',
+    officialLead: 'Official form lists:',
+    officialUscis: 'USCIS forms',
+    officialCourts: 'California court forms'
   },
   ru: {
     placeholder: 'Ask Imverica: «грин-карта»…',
@@ -29,7 +32,10 @@ const STRINGS = {
     metaB: 'Юридических консультаций не даём',
     metaC: 'English · Русский · Українська · Español',
     callAria: 'Позвонить в Imverica +1 (916) 399-3992',
-    seeServices: 'Услуги'
+    seeServices: 'Услуги',
+    officialLead: 'Официальные списки форм:',
+    officialUscis: 'Формы USCIS',
+    officialCourts: 'Формы судов Калифорнии'
   },
   uk: {
     placeholder: 'Ask Imverica: «грін-карта»…',
@@ -41,7 +47,10 @@ const STRINGS = {
     metaB: 'Юридичних порад не надаємо',
     metaC: 'English · Русский · Українська · Español',
     callAria: 'Зателефонувати до Imverica +1 (916) 399-3992',
-    seeServices: 'Послуги'
+    seeServices: 'Послуги',
+    officialLead: 'Офіційні списки форм:',
+    officialUscis: 'Форми USCIS',
+    officialCourts: 'Форми судів Каліфорнії'
   },
   es: {
     placeholder: 'Ask Imverica: “green card”…',
@@ -53,7 +62,10 @@ const STRINGS = {
     metaB: 'No brindamos asesoría legal',
     metaC: 'English · Русский · Українська · Español',
     callAria: 'Llamar a Imverica +1 (916) 399-3992',
-    seeServices: 'Servicios'
+    seeServices: 'Servicios',
+    officialLead: 'Listas oficiales de formularios:',
+    officialUscis: 'Formularios de USCIS',
+    officialCourts: 'Formularios de las cortes de California'
   }
 } as const;
 
@@ -75,6 +87,15 @@ const t = STRINGS[lang] || STRINGS.en;
   </form>
   <div class="ai-result" id="aiFinderResult" aria-live="polite"></div>
 </div>
+
+{/* Always under the search box: the official form lists. The visitor picks
+    the form there and comes back with its number. */}
+<p class="ai-official-links">
+  {t.officialLead}{' '}
+  <a href="https://www.uscis.gov/forms/all-forms" target="_blank" rel="noopener noreferrer">{t.officialUscis}&nbsp;↗</a>
+  <span aria-hidden="true"> · </span>
+  <a href="https://selfhelp.courts.ca.gov/find-forms/all-by-category" target="_blank" rel="noopener noreferrer">{t.officialCourts}&nbsp;↗</a>
+</p>
 
 <div class="ai-examples" aria-label={t.examplesLabel}>
   {t.examples.map((example) => (
