@@ -629,7 +629,9 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
   // (and stands in only if the wizard script did not load).
   const w = window as Window & { openQuickIntake?: typeof openModal; openIntakeModal?: (q?: string, hints?: unknown) => void };
   w.openQuickIntake = openModal;
-  if (typeof w.openIntakeModal !== 'function') w.openIntakeModal = openModal;
+  // Type-only cast: the fallback takes (prefill, { formCode }) while the
+  // wizard's global type says (prefill, mode); both read the first argument.
+  if (typeof w.openIntakeModal !== 'function') w.openIntakeModal = openModal as unknown as NonNullable<typeof w.openIntakeModal>;
 
   // Cloudflare Turnstile callback — when the widget verifies the user it
   // calls this global hook with the token. We stash it in the hidden

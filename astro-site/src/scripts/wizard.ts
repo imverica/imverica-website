@@ -2390,7 +2390,10 @@ export function initIntakeWizard(): void {
 
   window.openIntakeModal = function (prefill, mode) {
     if (typeof window.imvTrack === 'function') {
-      window.imvTrack('start', { query: ('wizard ' + (typeof prefill === 'string' ? prefill : '')).trim().slice(0, 150) });
+      // Only a form number, never the visitor's own words: the finder text
+      // can hold personal details.
+      var startCode = typeof prefill === 'string' && /^[A-Z]{1,4}-?\d{1,4}[A-Z]{0,2}$/i.test(prefill.trim()) ? prefill.trim().toUpperCase() : '';
+      window.imvTrack('start', { query: 'wizard', formCode: startCode });
     }
     // The visitor already picked a language on the site (header switcher).
     // Inherit it so we never re-ask "Choose your preferred language".
