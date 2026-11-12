@@ -1595,7 +1595,7 @@ export function initIntakeWizard(): void {
 
     if (state.step === 2) {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
-        '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
+        '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="G-1145, FL-115, SC-104..."></div>' +
         '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>' +
         '<div id="intakeStepError" class="intake-error" style="' + (state.flowError || state.routeError ? 'display:block;' : '') + '">' + esc(state.flowError || state.routeError) + '</div>' +
         renderOfficialNavigation();

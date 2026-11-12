@@ -297,9 +297,9 @@ const t = STRINGS[lang] || STRINGS.en;
       topics: 'Official information on this topic',
       directories: 'Official form lists',
       numberLabel: 'Form number you chose',
-      numberPlaceholder: 'e.g. I-765 or FL-100',
+      numberPlaceholder: 'number format, e.g. {ex}',
       start: 'Start preparing',
-      badNumber: 'Please enter a form number, for example I-765 or FL-100.',
+      badNumber: 'Please enter a form number, for example {ex}.',
       callback: 'Prefer to talk? Leave your phone number',
       freeHelp: 'Free help choosing',
       note: 'General information, not legal advice. Imverica prepares the form you choose and is not a law firm.',
@@ -313,9 +313,9 @@ const t = STRINGS[lang] || STRINGS.en;
       topics: 'Официальная информация по теме',
       directories: 'Официальные списки форм',
       numberLabel: 'Номер выбранной формы',
-      numberPlaceholder: 'например, I-765 или FL-100',
+      numberPlaceholder: 'формат номера, например {ex}',
       start: 'Начать подготовку',
-      badNumber: 'Введите номер формы, например I-765 или FL-100.',
+      badNumber: 'Введите номер формы, например {ex}.',
       callback: 'Удобнее поговорить? Оставьте телефон',
       freeHelp: 'Бесплатная помощь с выбором',
       note: 'Общая информация, не юридическая консультация. Imverica готовит выбранную вами форму и не является юридической фирмой.',
@@ -329,9 +329,9 @@ const t = STRINGS[lang] || STRINGS.en;
       topics: 'Офіційна інформація за темою',
       directories: 'Офіційні списки форм',
       numberLabel: 'Номер обраної форми',
-      numberPlaceholder: 'наприклад, I-765 або FL-100',
+      numberPlaceholder: 'формат номера, наприклад {ex}',
       start: 'Почати підготовку',
-      badNumber: 'Введіть номер форми, наприклад I-765 або FL-100.',
+      badNumber: 'Введіть номер форми, наприклад {ex}.',
       callback: 'Зручніше поговорити? Залиште телефон',
       freeHelp: 'Безкоштовна допомога з вибором',
       note: 'Загальна інформація, не юридична консультація. Imverica готує обрану вами форму і не є юридичною фірмою.',
@@ -345,9 +345,9 @@ const t = STRINGS[lang] || STRINGS.en;
       topics: 'Información oficial sobre este tema',
       directories: 'Listas oficiales de formularios',
       numberLabel: 'Número del formulario que eligió',
-      numberPlaceholder: 'p. ej. I-765 o FL-100',
+      numberPlaceholder: 'formato del número, p. ej. {ex}',
       start: 'Empezar la preparación',
-      badNumber: 'Escriba un número de formulario, por ejemplo I-765 o FL-100.',
+      badNumber: 'Escriba un número de formulario, por ejemplo {ex}.',
       callback: '¿Prefiere hablar? Deje su teléfono',
       freeHelp: 'Ayuda gratuita para elegir',
       note: 'Información general, no asesoría legal. Imverica prepara el formulario que usted elige y no es un bufete de abogados.',
@@ -368,16 +368,17 @@ const t = STRINGS[lang] || STRINGS.en;
     const topics: NavLink[] = Array.isArray(nav.topics) ? nav.topics : [];
     const dirs: NavLink[] = Array.isArray(nav.directories) ? nav.directories : [];
     const help: NavLink[] = Array.isArray(nav.freeHelp) ? nav.freeHelp : [];
+    const example = String(nav.example || 'G-1145 | POS-010').replace(' | ', lang === 'en' ? ' or ' : lang === 'es' ? ' o ' : lang === 'uk' ? ' або ' : ' или ');
     setResult(`
       <ul class="ai-nav-list ai-nav-first">${navLinks([...topics, ...dirs])}</ul>
       <p class="ai-nav-lead">${escapeHtml(n.lead)}</p>
       <form class="ai-nav-form" data-ai-nav-form>
         <label>${escapeHtml(n.numberLabel)}
-          <input type="text" name="code" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(n.numberPlaceholder)}" />
+          <input type="text" name="code" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(n.numberPlaceholder.replace('{ex}', example))}" />
         </label>
         <button type="submit" class="dark">${escapeHtml(n.start)}</button>
       </form>
-      <p class="ai-nav-error" data-ai-nav-error hidden>${escapeHtml(n.badNumber)}</p>
+      <p class="ai-nav-error" data-ai-nav-error hidden>${escapeHtml(n.badNumber.replace('{ex}', example))}</p>
       <div class="ai-result-actions">
         <button type="button" data-ai-callback>${escapeHtml(n.callback)}</button>
         <a href="tel:+19163993992">${(labels as any)[lang]?.call || labels.en.call}</a>

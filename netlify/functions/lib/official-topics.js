@@ -69,34 +69,39 @@ const TOPICS = [
     match: /uscis[^.]{0,30}(fee\s+waiver|освобожд|звільн)|(fee\s+waiver|освобожд\w+\s+от\s+пошлин)[^.]{0,30}uscis/i,
     label: L('USCIS fee waiver', 'Освобождение от пошлины USCIS', 'Звільнення від мита USCIS', 'Exención de tarifas de USCIS') },
   // California courts
-  { id: 'divorce', agency: 'courts', url: 'https://selfhelp.courts.ca.gov/divorce-forms',
+  { id: 'divorce', agency: 'courts', example: 'FL-115', url: 'https://selfhelp.courts.ca.gov/divorce-forms',
     match: /divorce|dissolution|развод|розлуч|divorcio/i,
     label: L('Divorce (California courts)', 'Развод (суды Калифорнии)', 'Розлучення (суди Каліфорнії)', 'Divorcio (cortes de California)') },
-  { id: 'court-fee-waiver', agency: 'courts', url: 'https://selfhelp.courts.ca.gov/fee-waiver',
+  { id: 'court-fee-waiver', agency: 'courts', example: 'MC-025', url: 'https://selfhelp.courts.ca.gov/fee-waiver',
     match: /court\s+fee|fee\s+waiver|освобожд\w+\s+от\s+(судебн|сбор|пошлин)|звільн\w+\s+від\s+(судов|збор)|exenci[oó]n\s+de\s+cuotas/i,
     label: L('Court fee waiver', 'Освобождение от судебных сборов', 'Звільнення від судових зборів', 'Exención de cuotas de la corte') },
-  { id: 'family-court', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'family-court', agency: 'courts', example: 'FL-335', url: COURTS_ALL_FORMS,
     match: /custody|child\s+support|visitation|alimony|spousal\s+support|опек|алимент|аліме|опік|custodia|manutenci[oó]n|pensi[oó]n\s+alimenticia/i,
     label: L('Custody and support (California courts forms by category)', 'Опека и алименты (формы судов Калифорнии по категориям)', 'Опіка та аліменти (форми судів Каліфорнії за категоріями)', 'Custodia y manutención (formularios de las cortes por categoría)') },
-  { id: 'restraining-order', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'restraining-order', agency: 'courts', example: 'DV-200', url: COURTS_ALL_FORMS,
     match: /restraining\s+order|protective\s+order|domestic\s+violence\s+order|запретительн|защитн\w+\s+ордер|заборонн|захисн\w+\s+ордер|orden\s+de\s+restricci[oó]n|orden\s+de\s+protecci[oó]n/i,
     label: L('Restraining orders (California courts forms by category)', 'Запретительные приказы (формы судов Калифорнии по категориям)', 'Заборонні накази (форми судів Каліфорнії за категоріями)', 'Órdenes de restricción (formularios de las cortes por categoría)') },
-  { id: 'eviction', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'eviction', agency: 'courts', example: 'POS-010', url: COURTS_ALL_FORMS,
     match: /eviction|unlawful\s+detainer|выселен|виселен|desalojo/i,
     label: L('Eviction (California courts forms by category)', 'Выселение (формы судов Калифорнии по категориям)', 'Виселення (форми судів Каліфорнії за категоріями)', 'Desalojo (formularios de las cortes por categoría)') },
-  { id: 'small-claims', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'small-claims', agency: 'courts', example: 'SC-104', url: COURTS_ALL_FORMS,
     match: /small\s+claims?|смол+\s*кле[ий]м|мал\w+\s+иск|мал\w+\s+позов|reclamos\s+menores|demandas\s+peque/i,
     label: L('Small claims (California courts forms by category)', 'Малые иски (формы судов Калифорнии по категориям)', 'Малі позови (форми судів Каліфорнії за категоріями)', 'Reclamos menores (formularios de las cortes por categoría)') },
-  { id: 'name-change', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'name-change', agency: 'courts', example: 'MC-025', url: COURTS_ALL_FORMS,
     match: /name\s+change|change\s+(my\s+)?name|смен\w+\s+(имени|фамил)|змін\w+\s+(імені|прізвищ)|cambio\s+de\s+nombre/i,
     label: L('Name change (California courts forms by category)', 'Смена имени (формы судов Калифорнии по категориям)', 'Зміна імені (форми судів Каліфорнії за категоріями)', 'Cambio de nombre (formularios de las cortes por categoría)') },
-  { id: 'guardianship-probate', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'guardianship-probate', agency: 'courts', example: 'DE-120', url: COURTS_ALL_FORMS,
     match: /guardianship|probate|conservatorship|опекунств|наследств|спадщин|опікунств|tutela|sucesi[oó]n|herencia/i,
     label: L('Guardianship and probate (California courts forms by category)', 'Опекунство и наследство (формы судов Калифорнии по категориям)', 'Опікунство та спадщина (форми судів Каліфорнії за категоріями)', 'Tutela y sucesiones (formularios de las cortes por categoría)') },
-  { id: 'record-clearing', agency: 'courts', url: COURTS_ALL_FORMS,
+  { id: 'record-clearing', agency: 'courts', example: 'MC-025', url: COURTS_ALL_FORMS,
     match: /expunge|clean\s+(my\s+)?record|record\s+clear|1203\.4|снят\w+\s+судимост|зняття\s+судимост|limpiar\s+(mi\s+)?(record|historial|antecedentes)/i,
     label: L('Clearing a criminal record (California courts forms by category)', 'Снятие судимости (формы судов Калифорнии по категориям)', 'Зняття судимості (форми судів Каліфорнії за категоріями)', 'Limpiar antecedentes (formularios de las cortes por categoría)') }
 ];
+
+// Example form number shown in the number field: a procedural form from the
+// same series (proof of service, notice, attachment, e-notification). It
+// shows the number format and is never a suggestion of what to file.
+const DEFAULT_EXAMPLE = { uscis: 'G-1145', courts: 'POS-010' };
 
 const DIRECTORIES = [
   { id: 'uscis-all', agency: 'uscis', url: USCIS_ALL_FORMS, label: L('All USCIS forms', 'Все формы USCIS', 'Усі форми USCIS', 'Todos los formularios de USCIS') },
@@ -140,9 +145,13 @@ function navigationFor(text, lang = 'en') {
   const directories = DIRECTORIES
     .filter((d) => !agencies.size || agencies.has(d.agency))
     .map((d) => ({ id: d.id, url: d.url, label: d.label[l] }));
+  const first = topics[0];
+  const firstTopic = first ? TOPICS.find((t) => t.id === first.id) : null;
+  const example = (firstTopic && firstTopic.example) || (first ? DEFAULT_EXAMPLE[first.agency] : `${DEFAULT_EXAMPLE.uscis} | ${DEFAULT_EXAMPLE.courts}`);
   return {
     topics,
     directories,
+    example,
     // The EOIR list is immigration help: not shown under court-only topics.
     freeHelp: FREE_HELP
       .filter((h) => h.id !== 'eoir-free' || !agencies.size || agencies.has('uscis'))
