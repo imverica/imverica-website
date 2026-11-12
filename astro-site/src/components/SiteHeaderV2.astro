@@ -95,6 +95,9 @@ const L = (text: string) => megaLabel(text, lang);
         <a class="gn-icon gn-call" href="tel:+19163993992" aria-label={`${CALL[lang]} +1 (916) 399-3992`} data-gn-plain>
           <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" /></svg>
         </a>
+        <a class="gn-icon gn-schedule" href={localizedPath(lang, '/schedule')} aria-label={t.schedule} title={t.schedule} data-gn-plain>
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" /><path d="M3.5 10h17M8 3v4M16 3v4" /></svg>
+        </a>
         <a class="gn-icon" href="/account.html" aria-label={t.portal} data-gn-plain>
           <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="8.2" r="3.8" /><path d="M4.5 20.2c1.2-3.8 4.1-5.7 7.5-5.7s6.3 1.9 7.5 5.7" /></svg>
         </a>

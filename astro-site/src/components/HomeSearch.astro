@@ -1,5 +1,5 @@
 ---
-import type { Locale } from '~/data/i18n';
+import { LOCALES, type Locale } from '~/data/i18n';
 
 interface Props {
   lang?: Locale;
@@ -17,7 +17,8 @@ const STRINGS = {
     metaB: 'No legal advice',
     metaC: 'English · Russian · Ukrainian · Spanish',
     callAria: 'Call Imverica +1 (916) 399-3992',
-    seeServices: 'See services'
+    seeServices: 'See services',
+    schedule: 'Schedule an appointment'
   },
   ru: {
     placeholder: 'Ask Imverica: «грин-карта»…',
@@ -29,7 +30,8 @@ const STRINGS = {
     metaB: 'Юридических консультаций не даём',
     metaC: 'English · Русский · Українська · Español',
     callAria: 'Позвонить в Imverica +1 (916) 399-3992',
-    seeServices: 'Услуги'
+    seeServices: 'Услуги',
+    schedule: 'Записаться на встречу'
   },
   uk: {
     placeholder: 'Ask Imverica: «грін-карта»…',
@@ -41,7 +43,8 @@ const STRINGS = {
     metaB: 'Юридичних порад не надаємо',
     metaC: 'English · Русский · Українська · Español',
     callAria: 'Зателефонувати до Imverica +1 (916) 399-3992',
-    seeServices: 'Послуги'
+    seeServices: 'Послуги',
+    schedule: 'Записатися на зустріч'
   },
   es: {
     placeholder: 'Ask Imverica: “green card”…',
@@ -53,7 +56,8 @@ const STRINGS = {
     metaB: 'No brindamos asesoría legal',
     metaC: 'English · Русский · Українська · Español',
     callAria: 'Llamar a Imverica +1 (916) 399-3992',
-    seeServices: 'Servicios'
+    seeServices: 'Servicios',
+    schedule: 'Agendar una cita'
   }
 } as const;
 
@@ -101,6 +105,7 @@ const t = STRINGS[lang] || STRINGS.en;
   {/* All services overview lives on the homepage #services section
      (Our Services component) — not the /immigration page which only
      lists USCIS / EOIR. Anchor jump keeps the visitor on the same page. */}
+  <a class="ai-services-link" href={`${LOCALES[lang].prefix}/schedule`}>{t.schedule}</a>
   <a class="ai-services-link" href="#services">{t.seeServices}</a>
 </div>
 
