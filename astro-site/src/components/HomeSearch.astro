@@ -293,7 +293,7 @@ const t = STRINGS[lang] || STRINGS.en;
   // pick a form from a description (Cal. Bus. & Prof. Code § 6400(g)).
   const NAV_T: Record<string, Record<string, string>> = {
     en: {
-      lead: 'Choose your form in the official list. It opens in a new tab, and this page stays open. Then enter the form number here and we will start preparing it.',
+      lead: 'Choose your form there (opens in a new tab) and enter its number here:',
       topics: 'Official information on this topic',
       directories: 'Official form lists',
       numberLabel: 'Form number you chose',
@@ -309,7 +309,7 @@ const t = STRINGS[lang] || STRINGS.en;
       startShort: 'Start'
     },
     ru: {
-      lead: 'Выберите свою форму в официальном списке: он откроется в новой вкладке, а эта страница останется открытой. Затем введите здесь номер формы, и мы начнём подготовку.',
+      lead: 'Выберите там свою форму (откроется в новой вкладке) и введите её номер здесь:',
       topics: 'Официальная информация по теме',
       directories: 'Официальные списки форм',
       numberLabel: 'Номер выбранной формы',
@@ -325,7 +325,7 @@ const t = STRINGS[lang] || STRINGS.en;
       startShort: 'Начать'
     },
     uk: {
-      lead: 'Оберіть свою форму в офіційному списку: він відкриється в новій вкладці, а ця сторінка залишиться відкритою. Потім введіть тут номер форми, і ми почнемо підготовку.',
+      lead: 'Оберіть там свою форму (відкриється в новій вкладці) і введіть її номер тут:',
       topics: 'Офіційна інформація за темою',
       directories: 'Офіційні списки форм',
       numberLabel: 'Номер обраної форми',
@@ -341,7 +341,7 @@ const t = STRINGS[lang] || STRINGS.en;
       startShort: 'Почати'
     },
     es: {
-      lead: 'Elija su formulario en la lista oficial: se abre en una pestaña nueva y esta página sigue abierta. Luego escriba aquí el número del formulario y empezamos a prepararlo.',
+      lead: 'Elija allí su formulario (se abre en una pestaña nueva) y escriba su número aquí:',
       topics: 'Información oficial sobre este tema',
       directories: 'Listas oficiales de formularios',
       numberLabel: 'Número del formulario que eligió',
@@ -369,9 +369,8 @@ const t = STRINGS[lang] || STRINGS.en;
     const dirs: NavLink[] = Array.isArray(nav.directories) ? nav.directories : [];
     const help: NavLink[] = Array.isArray(nav.freeHelp) ? nav.freeHelp : [];
     setResult(`
-      <p>${escapeHtml(n.lead)}</p>
-      ${topics.length ? `<p class="ai-nav-h"><strong>${escapeHtml(n.topics)}</strong></p><ul class="ai-nav-list">${navLinks(topics)}</ul>` : ''}
-      ${dirs.length ? `<p class="ai-nav-h"><strong>${escapeHtml(n.directories)}</strong></p><ul class="ai-nav-list">${navLinks(dirs)}</ul>` : ''}
+      <ul class="ai-nav-list ai-nav-first">${navLinks([...topics, ...dirs])}</ul>
+      <p class="ai-nav-lead">${escapeHtml(n.lead)}</p>
       <form class="ai-nav-form" data-ai-nav-form>
         <label>${escapeHtml(n.numberLabel)}
           <input type="text" name="code" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(n.numberPlaceholder)}" />
