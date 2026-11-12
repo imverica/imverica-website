@@ -1503,11 +1503,63 @@ async function handler(event) {
   if (routed.some((code) => /^EOIR-/i.test(String(code || '')))) {
     result = attorneyOnlyResult(String(query).trim(), result.language || detectLanguage(String(query)), 'eoir');
   }
+  result = clientChosenFormOnly(result, String(query));
   return json(result.ok ? 200 : 404, result, { 'Cache-Control': 'public, max-age=300' });
 }
 
+// Imverica prepares the form the client chooses (Cal. Bus. & Prof. Code
+// § 6400(g): no recommendation on the selection of forms; § 22441(a)).
+// A form is returned only when the client wrote its number; a description
+// of a situation gets official topic pages and form directories instead,
+// and no package of companion forms is ever added. Matters only an
+// attorney can take are still flagged as such.
+function clientChosenFormOnly(result, query) {
+  const lang = result.language || detectLanguage(query);
+  const navigation = navigationFor(query, lang);
+  if (result.attorneyOnly) return { ...result, navigation };
+  const route = result.route || {};
+  const flat = (c) => String(c || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const named = explicitFormCodes(query);
+  // A bare number ("485") is also a number the client typed.
+  const bare = String(query).trim().match(/^\d{2,4}[a-z]?$/i);
+  if (route.formCode && (named.some((c) => flat(c) === flat(route.formCode)) || (bare && flat(route.formCode).endsWith(flat(bare[0]))))) {
+    return { ...result, route: { ...route, packageForms: [route.formCode] }, navigation };
+  }
+  // The client wrote a number but the router read another form: route the
+  // client's number itself.
+  if (named.length) {
+    const own = routeQuery(named[0], {});
+    if (own && own.route && flat(own.route.formCode) === flat(named[0]) && !own.attorneyOnly) {
+      return { ...own, query, route: { ...own.route, packageForms: [own.route.formCode] }, navigation };
+    }
+  }
+  return {
+    ...result,
+    ok: true,
+    clientMustChoose: true,
+    needsCounty: false,
+    needsIntent: false,
+    navigation,
+    route: {
+      ...route,
+      catalog: '',
+      formCode: '',
+      formTitle: '',
+      officialEndpoint: '',
+      flowEndpoint: '',
+      flowStatus: 'client-chooses-form',
+      packageForms: [],
+      confidence: 0,
+      reason: 'No form number given: the client chooses the form from the official directories.'
+    }
+  };
+}
+
+const { navigationFor, explicitFormCodes } = require('./lib/official-topics');
+
 module.exports = {
   handler,
+  clientChosenFormOnly,
   routeQuery,
   normalizeCode,
   detectLanguage

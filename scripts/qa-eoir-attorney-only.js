@@ -36,10 +36,17 @@ async function main() {
   const lang = await call('у мужа суд по депортации');
   check(/иммиграционном суде/.test(lang.message), 'route answers in Russian');
 
-  const uscis = [['I-485 green card', 'I-485'], ['work permit', 'I-765'], ['asylum', 'I-589'], ['remove conditions on green card', 'I-751'], ['green card renewal I-90', 'I-90'], ['FL-300 custody', 'FL-300']];
+  // A form number the client wrote still routes to that form.
+  const uscis = [['I-485 green card', 'I-485'], ['green card renewal I-90', 'I-90'], ['FL-300 custody', 'FL-300']];
   for (const [q, code] of uscis) {
     const b = await call(q);
     check(!b.attorneyOnly && b.route.formCode === code, `route still routes: ${q} -> ${code} (got ${b.route.formCode})`);
+  }
+  // A topic without a number is not attorney-only and gets official links,
+  // never a form picked for the client.
+  for (const [q, topic] of [['work permit', 'work-permit'], ['asylum', 'asylum'], ['remove conditions on green card', 'remove-conditions']]) {
+    const b = await call(q);
+    check(!b.attorneyOnly && !b.route.formCode && b.clientMustChoose && b.navigation.topics.some((t) => t.id === topic), `topic gets official links: ${q} -> ${topic}`);
   }
 
   process.env.ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || 'test';

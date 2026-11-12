@@ -804,17 +804,11 @@ export function initIntakeWizard(): void {
       var prefix = (bare[1] || 'i').toUpperCase();
       return prefix + '-' + bare[2].toUpperCase();
     }
-    if (/ворк\s+п[еэ]рмит|work\s+permit|employment authorization|ead|i-765/.test(text)) return 'I-765';
-    if (/гринк|грінк|грин[\s-]*карт|грін[\s-]*карт|green[\s-]*card|adjustment|adjust\s*status|i-485|изменени[ея]\s+статус|зміна\s*статус/.test(text)) return 'I-485';
-    if (/свадьб|брак|женит|замуж|spouse|marriage|family\s*petition|i-130/.test(text)) return 'I-130';
-    if (/трев[еэ]л|travel|advance\s*parole|разрешени[ея]\s+на\s+выезд|i-131/.test(text)) return 'I-131';
-    if (/замен[аы]\s+грин|renew\s+green|replace\s+green|i-90/.test(text)) return 'I-90';
-    if (/гражданств|citizenship|naturalization|n-400/.test(text)) return 'N-400';
-    if (/убежищ|асайл|asylum|i-589/.test(text)) return 'I-589';
-    if (/fee\s*waiver|ф[иі]\s*в[еэ]йв[еэ]р|i-912/.test(text)) return 'I-912';
-    if (/смол+\s+кле[ий]м|small\s*claims?|sc-100/.test(text)) return 'SC-100';
-    if (/ф[иі]\s*в[еэ]йв[еэ]р|fee\s*waiver|fw-001/.test(text)) return 'FW-001';
-    if (/рестре[ий]нинг|ристре[ий]нинг|ch-100/.test(text)) return 'CH-100';
+    // A form number written anywhere in the text ("I-765", "fl 100"). The
+    // form is never guessed from a description of the situation: the
+    // client chooses it (Cal. Bus. & Prof. Code § 6400(g)).
+    var written = String(value || '').match(/\b(i|n|g|ar|fl|dv|sc|ud|ch|ea|gv|wv|fw|nc|mc|civ|pos|gc|de|cr|jv)[\s._-]?(\d{1,4}[a-z]{0,4})\b/i);
+    if (written) return written[1].toUpperCase() + '-' + written[2].toUpperCase();
     return '';
   }
   function normalizeIntakeText(value) { return String(value || '').toLowerCase(); }
@@ -907,6 +901,30 @@ export function initIntakeWizard(): void {
     return usesFilePreview() ? 'https://imverica.com' + path : path;
   }
 
+  // Shown on the Details step when the request has no form number: official
+  // pages for the topic named and the official form lists (new tab). The
+  // client may enter the number above, or continue and we keep the request.
+  var NAV_COPY = {
+    en: { lead: 'Choose your form in the official list (opens in a new tab), then enter its number above. If you are not sure yet, just continue: we will save your request and contact you.', topics: 'Official information on this topic', dirs: 'Official form lists', note: 'General information, not legal advice. Imverica prepares the form you choose.' },
+    ru: { lead: 'Выберите форму в официальном списке (откроется в новой вкладке) и введите её номер выше. Если пока не уверены, просто продолжайте: мы сохраним ваш запрос и свяжемся с вами.', topics: 'Официальная информация по теме', dirs: 'Официальные списки форм', note: 'Общая информация, не юридическая консультация. Imverica готовит выбранную вами форму.' },
+    uk: { lead: 'Оберіть форму в офіційному списку (відкриється в новій вкладці) і введіть її номер вище. Якщо поки не впевнені, просто продовжуйте: ми збережемо ваш запит і зв’яжемося з вами.', topics: 'Офіційна інформація за темою', dirs: 'Офіційні списки форм', note: 'Загальна інформація, не юридична консультація. Imverica готує обрану вами форму.' },
+    es: { lead: 'Elija su formulario en la lista oficial (se abre en una pestaña nueva) y escriba su número arriba. Si aún no está seguro, simplemente continúe: guardaremos su solicitud y le contactaremos.', topics: 'Información oficial sobre este tema', dirs: 'Listas oficiales de formularios', note: 'Información general, no asesoría legal. Imverica prepara el formulario que usted elige.' }
+  };
+  function renderOfficialNavigation() {
+    var nav = state.officialNavigation;
+    if (!nav || state.formCode) return '';
+    var c = NAV_COPY[state.lang] || NAV_COPY.en;
+    var links = function (items) {
+      return (items || []).map(function (i) {
+        return '<li><a href="' + esc(i.url) + '" target="_blank" rel="noopener noreferrer">' + esc(i.label) + ' ↗</a></li>';
+      }).join('');
+    };
+    return '<div class="intake-help" style="margin-top:14px;">' + esc(c.lead) + '</div>' +
+      ((nav.topics || []).length ? '<div class="intake-help"><strong>' + esc(c.topics) + '</strong><ul style="margin:6px 0 0;padding-left:18px;">' + links(nav.topics) + '</ul></div>' : '') +
+      ((nav.directories || []).length ? '<div class="intake-help"><strong>' + esc(c.dirs) + '</strong><ul style="margin:6px 0 0;padding-left:18px;">' + links(nav.directories) + '</ul></div>' : '') +
+      '<div class="intake-help" style="font-size:12px;">' + esc(c.note) + '</div>';
+  }
+
   async function loadRoute() {
     var query = [state.formCode, state.situation].filter(Boolean).join(' ').trim();
     if (!query) return false;
@@ -922,6 +940,12 @@ export function initIntakeWizard(): void {
       if (data.language && !state.langManual) state.lang = data.language;
       if (data.route.service) state.service = data.route.service;
       if (data.route.formCode) state.formCode = data.route.formCode;
+      if (data.clientMustChoose && !state.formCode) {
+        var firstTime = !state.officialNavigation;
+        state.officialNavigation = data.navigation || null;
+        state.routeLoading = false;
+        if (firstTime && state.officialNavigation) { render(); return 'navigation'; }
+      }
       state.routeLoading = false;
       state.routeError = '';
       return true;
@@ -1573,7 +1597,8 @@ export function initIntakeWizard(): void {
       card.innerHTML = '<div class="intake-question">' + esc(copy.qDetails) + '</div><div class="intake-help">' + esc(copy.hDetails) + '</div>' +
         '<div class="intake-field"><label>' + esc(copy.formCodeLabel) + '</label><input id="intakeFormCode" value="' + esc(state.formCode) + '" placeholder="FL-300, SC-100, I-90..."></div>' +
         '<div class="intake-field" style="margin-top:14px;"><label>' + esc(copy.detailsLabel) + '</label><textarea id="intakeSituation" placeholder="' + esc(copy.hDetails) + '">' + esc(state.situation) + '</textarea></div>' +
-        '<div id="intakeStepError" class="intake-error" style="' + (state.flowError || state.routeError ? 'display:block;' : '') + '">' + esc(state.flowError || state.routeError) + '</div>';
+        '<div id="intakeStepError" class="intake-error" style="' + (state.flowError || state.routeError ? 'display:block;' : '') + '">' + esc(state.flowError || state.routeError) + '</div>' +
+        renderOfficialNavigation();
       return;
     }
 
@@ -2351,6 +2376,7 @@ export function initIntakeWizard(): void {
     if (!validateCurrentFlowStep()) return;
     if (state.step === 2) {
       var routed = await loadRoute();
+      if (routed === 'navigation') return;
       // Matters only an attorney can take (immigration court, record
       // sealing…): say so on the Details step, no intake.
       var attorneyOnly = routed && state.routeResult && state.routeResult.attorneyOnly ? state.routeResult : null;
@@ -2405,6 +2431,7 @@ export function initIntakeWizard(): void {
     state.formCode = '';
     state.situation = '';
     state.routeResult = null;
+    state.officialNavigation = null;
     state.routeLoading = false;
     state.routeError = '';
     state.flowSchema = null;

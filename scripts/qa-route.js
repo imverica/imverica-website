@@ -4,21 +4,15 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-async function callRoute(q, county = '') {
-  const response = await route.handler({
-    httpMethod: 'GET',
-    queryStringParameters: { q, county },
-    headers: {}
-  });
-
-  let body = {};
-  try {
-    body = JSON.parse(response.body || '{}');
-  } catch {
-    throw new Error(`${q}: response body is not JSON`);
-  }
-
-  return { response, body };
+// The routing engine (used for form numbers the client writes and for
+// county-specific court forms). The public endpoint wraps it with the
+// client-chooses-form policy, checked separately at the end.
+async function callRoute(q, county = '', intent = '') {
+  const body = route.routeQuery(q, { county, intent });
+  return { response: { statusCode: body.ok ? 200 : 404 }, body };
+}
+async function engine(params) {
+  return route.routeQuery(params.q, { county: params.county || '', intent: params.intent || '' });
 }
 
 async function check(q, expected) {
@@ -86,14 +80,10 @@ async function main() {
   const duiProbate = await callRoute('probate after DUI');
   assert(duiProbate.body.needsIntent === true, 'probate after DUI must clarify probate vs probation');
 
-  const probationNeedsCounty = await route.handler({
-    httpMethod: 'GET', queryStringParameters: { q: 'probate', intent: 'probation-motion' }, headers: {}
-  }).then((response) => JSON.parse(response.body));
+  const probationNeedsCounty = await engine({ q: 'probate', intent: 'probation-motion' });
   assert(probationNeedsCounty.needsCounty === true, 'criminal probation selection must ask for filing county');
 
-  const placerProbation = await route.handler({
-    httpMethod: 'GET', queryStringParameters: { q: 'probate', intent: 'probation-motion', county: 'placer' }, headers: {}
-  }).then((response) => JSON.parse(response.body));
+  const placerProbation = await engine({ q: 'probate', intent: 'probation-motion', county: 'placer' });
   assert(placerProbation.route.formCode === 'PL-CR003', 'Placer probation motion must route to PL-CR003');
   assert(placerProbation.route.localFormId === 'placer:pl-cr003-criminal-defendants-91df299f', 'Placer probation route must retain local form id');
 
@@ -105,8 +95,7 @@ async function main() {
   // returned wrong forms (CR-100 "Fingerprint Form", small-claims SC-135).
   // These are the exact wrong-form-to-court misroutes.
   for (const q of ['criminal probation Placer county', 'criminal defendant motion Placer']) {
-    const r = await route.handler({ httpMethod: 'GET', queryStringParameters: { q }, headers: {} })
-      .then((response) => JSON.parse(response.body));
+    const r = await engine({ q });
     assert(r.route.formCode === 'PL-CR003', `"${q}" must route to PL-CR003, got ${r.route.formCode}`);
     assert(!!r.route.localFormId, `"${q}" must retain the local form id`);
   }
@@ -150,11 +139,7 @@ async function main() {
     let local = 0;
     let fallback = 0;
     for (const county of reliefIndex.counties) {
-      const result = await route.handler({
-        httpMethod: 'GET',
-        queryStringParameters: { q: `criminal ${reliefType} ${county.name} county`, intent: reliefType, county: county.slug },
-        headers: {}
-      }).then((response) => JSON.parse(response.body));
+      const result = await engine({ q: `criminal ${reliefType} ${county.name} county`, intent: reliefType, county: county.slug });
       const kind = await assertExpectedReliefRoute(county, reliefType, result, `${county.name}/${reliefType}/intent`);
       if (kind === 'local') local++; else fallback++;
     }
@@ -185,9 +170,7 @@ async function main() {
   const napaProbation = await callRoute('criminal probation Napa county');
   assert(napaProbation.body.route.localFormId === 'napa:mandatory-1-ffb8bc19', 'Napa CR-100 collision must resolve to the county form by localFormId');
 
-  const estateProbate = await route.handler({
-    httpMethod: 'GET', queryStringParameters: { q: 'probate', intent: 'estate', county: 'placer' }, headers: {}
-  }).then((response) => JSON.parse(response.body));
+  const estateProbate = await engine({ q: 'probate', intent: 'estate', county: 'placer' });
   assert(estateProbate.route.formCode === 'DE-111', 'estate selection must route to DE-111');
 
   const criminalIndex = require('../assets/form-cache/ca-criminal-relief-index.json');
@@ -197,6 +180,34 @@ async function main() {
 
   const noRoute = await callRoute('zzzzzz nothing matches hopefully');
   assert(noRoute.response.statusCode === 404, `unknown query: expected 404, got ${noRoute.response.statusCode}`);
+  // Public endpoint: the client chooses the form (Cal. Bus. & Prof. Code
+  // § 6400(g)). A description gets official links and no form; a number the
+  // client wrote gets that form only, never a package.
+  async function endpoint(q) {
+    const res = await route.handler({ httpMethod: 'GET', queryStringParameters: { q }, headers: {} });
+    return { status: res.statusCode, body: JSON.parse(res.body) };
+  }
+  const descriptions = [
+    ['ворк пермит', 'work-permit'], ['хочу грин карту', 'green-card'], ['Quiero pedir asilo', 'asylum'],
+    ['My TPS from Ukraine is ending', 'tps-ukraine'], ['I want a divorce', 'divorce'], ['смол клейм нужно подать', 'small-claims'],
+    ['I am afraid to go back to my country', ''], ['I was a victim of domestic violence and helped the police', ''],
+    ['I am 17, my parents abandoned me', ''], ['My landlord gave me a 3 day notice', ''], ['на свадьбу какие доки подают в USCIS?', '']
+  ];
+  for (const [q, topic] of descriptions) {
+    const { status, body } = await endpoint(q);
+    assert(status === 200 && body.clientMustChoose === true, `${q}: expected the client to choose the form`);
+    assert(!body.route.formCode && body.route.packageForms.length === 0, `${q}: no form may be picked, got ${body.route.formCode}`);
+    assert(body.navigation && body.navigation.directories.length, `${q}: official form lists expected`);
+    if (topic) assert(body.navigation.topics.some((t) => t.id === topic), `${q}: expected official topic ${topic}`);
+    assert([...body.navigation.topics, ...body.navigation.directories].every((l) => /^https:\/\/(www\.uscis\.gov|selfhelp\.courts\.ca\.gov)\//.test(l.url)), `${q}: only official links allowed`);
+  }
+  const numbers = [['I-485', 'I-485'], ['i 485', 'I-485'], ['485', 'I-485'], ['fl 100', 'FL-100'], ['FL-300 custody support', 'FL-300'], ['I-130 for my wife', 'I-130'], ['CR-180', 'CR-180']];
+  for (const [q, code] of numbers) {
+    const { body } = await endpoint(q);
+    assert(body.route.formCode === code, `${q}: expected ${code}, got ${body.route.formCode}`);
+    assert(body.route.packageForms.length === 1 && body.route.packageForms[0] === code, `${q}: no companion forms may be added, got ${body.route.packageForms}`);
+  }
+  console.log(`client-chooses-form policy: ${descriptions.length} descriptions get official links only, ${numbers.length} written numbers route to that form only`);
   console.log('route QA passed');
 }
 

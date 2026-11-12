@@ -1,3 +1,4 @@
+const { navigationFor, explicitFormCodes } = require('./lib/official-topics');
 const fs = require('fs');
 const path = require('path');
 const { originGuard, throttleOrReject } = require('./lib/abuse-guard');
@@ -13,7 +14,7 @@ WHAT WE DO NOT PREPARE: felony-to-misdemeanor reduction (PC 17(b), Prop 47), arr
 
 IMMIGRATION COURT (EOIR) — ATTORNEY ONLY: We do not prepare immigration court (EOIR) filings for individuals: removal or deportation proceedings, cancellation of removal, BIA appeals, court motions, detention or bond. Say plainly that these need a licensed immigration attorney or a DOJ-accredited representative, that Imverica works on EOIR cases only as a paralegal under an attorney's direction, and point to the EOIR list of free legal service providers (justice.gov/eoir/list-pro-bono-legal-service-providers). Never name an EOIR form for an individual.
 
-CRITICAL — UPL COMPLIANCE (do not violate): Never give legal advice. Never tell the user which form they "need", "should", or "must" file, and never call a form the "right" one for them — choosing the form for a client is prohibited unauthorized practice of law. Use ONLY neutral informational framing: "documents commonly used for this include…" / "forms associated with this topic are…". Never say whether someone qualifies or is eligible, never predict outcomes, never explain legal strategy or what to do. The client always decides which form to file; Imverica only prepares it at their direction. If asked for advice, say: "We prepare documents at your direction — for legal advice you'll need an attorney." Every reply that names a form must also state, in the user's language, that this is general information, not legal advice, and that Imverica is not a law firm/attorney.
+CRITICAL — UPL COMPLIANCE (do not violate): Never give legal advice. The client chooses the form; Imverica prepares the form the client names. Never name, suggest or list a form number the user has not written themselves, not even as "commonly used" or "may include": choosing or narrowing forms from a person's situation is prohibited for us (Cal. Bus. & Prof. Code § 6400(g)). When the user has not given a form number, ask which form they want to prepare, and if they name a topic (green card, asylum, divorce…) give the OFFICIAL LINKS provided below so they can choose the form on the government's own site and come back with its number. If they describe their circumstances, give the same general topic link only; never choose a procedure, path or category for them. Never say whether someone qualifies or is eligible, never predict outcomes, never explain legal strategy or what to do, never add companion forms. When the user names a form number, you may say its official name and offer to start preparing it. If asked for advice, say: "We prepare documents at your direction — for legal advice you'll need an attorney." Every reply that names a form must also state, in the user's language, that this is general information, not legal advice, and that Imverica is not a law firm/attorney.
 
 STYLE: Max 3 short sentences. No markdown, no asterisks, no bold, no bullets. Plain text only. Use | instead of /. Match user's language exactly.`;
 
@@ -211,8 +212,8 @@ const { catalog: FORMS_CATALOG, index: FORMS_INDEX } = loadFormsCatalog();
 
 const SYSTEM_WITH_FORMS = `${SYSTEM_PROMPT}
 
-FORM ROUTING CATALOG:
-Use this catalog to identify likely document-preparation categories and possible form codes by user facts, language, keywords, and form names. Covers immigration/USCIS, civil, family law, small claims, unlawful detainer, restraining orders, probate, fee waiver, interpreter, accessibility, and proof of service forms. Strict routing format: if LIKELY CATALOG MATCHES is provided, the first sentence must name 2 to 5 concrete form codes and plain names using 'may include'. The second sentence must say Imverica can prepare documents at the client's direction and is not a law firm or attorney. The final sentence may ask one short clarifying question. Do not tell the user which form they legally should file; do not say the user qualifies; do not answer only with a question when possible matches exist.
+FORM CATALOG (reference only):
+Use this catalog only to give the official name of a form the user has named by number. Never use it to find forms from the user's facts or topic. Answer shape when no form number was given: one friendly sentence with the official link(s) for the topic (they open the government site), one sentence asking the user to come back with the form number they choose so we can start preparing it, and the short not-legal-advice line.
 
 ${FORMS_CATALOG}`;
 
@@ -460,18 +461,53 @@ function getLikelyMatches(queryText, limit = 8) {
     .map((item) => item.form);
 }
 
+function userNamedCodes(messages) {
+  const codes = new Set();
+  for (const m of messages || []) {
+    if (m && m.role === 'user') explicitFormCodes(String(m.content || '')).forEach((c) => codes.add(c));
+  }
+  return [...codes];
+}
+
+// Context for the model: the forms the user named (official names only) and
+// the official links for the topic they named. No form is looked up from the
+// user's circumstances.
 function buildRoutingContext(messages) {
   const queryText = getLatestUserText(messages);
-  const matches = getLikelyMatches(queryText, 8);
-  if (!matches.length) {
-    return 'LIKELY CATALOG MATCHES: none found. If the user request is vague, ask one short clarifying question and mention document preparation only.';
-  }
+  const named = userNamedCodes(messages);
+  const flat = (c) => String(c || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const rows = named
+    .map((code) => FORMS_INDEX.find((f) => flat(f.code) === flat(code)))
+    .filter(Boolean)
+    .map((form) => `${form.code} | ${form.name}`);
+  const nav = navigationFor(queryText, disclaimerLang(queryText));
+  const links = [...nav.topics, ...nav.directories].map((l) => `${l.label}: ${l.url}`);
+  return [
+    rows.length ? `FORMS THE USER NAMED:\n${rows.join('\n')}` : 'FORMS THE USER NAMED: none. Ask which form they want to prepare; do not name any form.',
+    `OFFICIAL LINKS (use only these URLs):\n${links.join('\n')}`,
+    `FREE HELP CHOOSING (mention briefly only if the user is unsure):\n${nav.freeHelp.map((l) => `${l.label}: ${l.url}`).join('\n')}`
+  ].join('\n\n');
+}
 
-  const rows = matches.map((form) => (
-    `${form.code} | ${form.name} | ${form.subcategory} | ${form.pane} | ${form.description}`
-  ));
-
-  return `LIKELY CATALOG MATCHES FOR THE LATEST USER MESSAGE:\n${rows.join('\n')}\nUse these matches first. The answer must name concrete possible form codes from this list before any clarifying question, while preserving LDA no-legal-advice language.`;
+// Deterministic net: a reply may name only forms the user wrote. Any other
+// form number means the model chose or suggested a form, so the reply is
+// replaced by the official-links answer.
+const NAV_ANSWER = {
+  en: (links) => `You can see official information and choose your form here: ${links}. Then send us the form number you chose and we will start preparing it. General information, not legal advice; Imverica is not a law firm.`,
+  ru: (links) => `Официальная информация и выбор формы здесь: ${links}. Затем пришлите нам номер выбранной формы, и мы начнём подготовку. Общая информация, не юридическая консультация; Imverica не является юридической фирмой.`,
+  uk: (links) => `Офіційна інформація та вибір форми тут: ${links}. Потім надішліть нам номер обраної форми, і ми почнемо підготовку. Загальна інформація, не юридична консультація; Imverica не є юридичною фірмою.`,
+  es: (links) => `Puede ver la información oficial y elegir su formulario aquí: ${links}. Luego envíenos el número del formulario que eligió y empezaremos a prepararlo. Información general, no asesoría legal; Imverica no es un bufete de abogados.`
+};
+function onlyUserNamedForms(reply, messages) {
+  const text = String(reply || '');
+  const named = new Set(userNamedCodes(messages).map((c) => c.replace(/[^A-Z0-9]/gi, '').toUpperCase()));
+  const inReply = explicitFormCodes(text).map((c) => c.replace(/[^A-Z0-9]/gi, '').toUpperCase());
+  if (!inReply.some((c) => !named.has(c))) return { text, rewritten: false };
+  const lastUser = getLatestUserText(messages);
+  const lang = disclaimerLang(lastUser) !== 'en' ? disclaimerLang(lastUser) : disclaimerLang(text);
+  const nav = navigationFor(lastUser, lang);
+  const links = [...nav.topics, ...nav.directories].slice(0, 3).map((l) => `${l.label} (${l.url})`).join('; ');
+  return { text: NAV_ANSWER[lang](links), rewritten: true };
 }
 
 const RATE_LIMIT = 15;
@@ -623,9 +659,11 @@ exports.handler = async function (event) {
         last = { reply: '', upstreamStatus: 200, ...(showDebug ? { stopReason: data.stop_reason || '', model: model.id } : {}) };
         continue;
       }
-      const safe = uplSafe(text);
+      const own = onlyUserNamedForms(text, messages);
+      if (own.rewritten) console.log('chat:form-not-named-by-user', model.id);
+      const safe = uplSafe(own.text);
       if (safe.rewritten) console.log('chat:upl-rewrite', model.id);
-      return json({ reply: ensureDisclaimer(safe.text), ...(showDebug ? { model: model.id, uplRewritten: safe.rewritten } : {}) });
+      return json({ reply: ensureDisclaimer(safe.text), ...(showDebug ? { model: model.id, uplRewritten: safe.rewritten || own.rewritten } : {}) });
     } catch (err) {
       // AbortError when the time budget runs out; ENETUNREACH / DNS issues if
       // Anthropic is unreachable. Either way — soft-fail to 200 so the chat

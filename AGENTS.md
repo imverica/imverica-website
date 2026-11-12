@@ -58,3 +58,16 @@ explicitly asks for that exact change in the current task. "Accuracy",
 - USCIS forms that still ask only the generic questions are paused by the
   owner. When the owner asks where the work stopped, show
   `docs/agents/uscis-forms-backlog.md`. Do not start them until asked.
+
+## The client chooses the form
+
+- The site never picks, suggests or bundles a form from a description of
+  the visitor's situation (Cal. Bus. & Prof. Code § 6400(g), § 22441(a)).
+  A form number the visitor writes opens that form; a topic ("green card",
+  "divorce") gets the official page and the official form lists from
+  `netlify/functions/lib/official-topics.js`, opened in a new tab, and the
+  visitor comes back with the number. This applies to the homepage finder,
+  `/api/route`, the wizard and the AI chat (`onlyUserNamedForms` replaces
+  any reply that names a form the user did not write).
+- Do not add companion forms ("packages") to what the client chose.
+- `npm run qa:route` and `scripts/qa-eoir-attorney-only.js` check this.

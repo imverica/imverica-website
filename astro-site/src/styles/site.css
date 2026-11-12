@@ -644,6 +644,18 @@ img { max-width: 100%; height: auto; }
   color: #536174;
   font-size: 14px;
 }
+/* Official-sources panel in the homepage finder (no form picked for the
+   visitor; links open in a new tab). */
+.ai-nav-h { margin: 14px 0 4px !important; text-align: left; }
+.ai-nav-list { list-style: none; margin: 0; padding: 0; text-align: left; display: grid; gap: 6px; }
+.ai-nav-list a { color: var(--navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.ai-nav-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-top: 16px; text-align: left; }
+.ai-nav-form label { display: grid; gap: 4px; flex: 1 1 220px; font-size: 14px; font-weight: 600; color: var(--navy); }
+.ai-nav-form input { font: inherit; padding: 11px 12px; border: 1px solid var(--border); border-radius: 6px; text-transform: uppercase; }
+.ai-nav-form button { appearance: none; border: 1px solid var(--navy); border-radius: 6px; background: var(--navy); color: #fff; padding: 12px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+.ai-nav-error { color: #b42318; font-size: 14px; margin-top: 6px !important; text-align: left; }
+.ai-nav-small { font-size: 13px; color: #536174; margin-top: 10px !important; text-align: left; }
+.ai-nav-small a { color: inherit; }
 .ai-result-actions {
   display: flex;
   justify-content: center;
