@@ -48,7 +48,12 @@ function canonicalize(value: string): string {
   return url.toString();
 }
 
-const fullTitle = title.includes('Imverica') ? title : `${title} | Imverica Legal Solutions`;
+// Search results show about 60 characters: long titles end in the short
+// brand name instead of the full one.
+const SHORT_BRAND = ' | Imverica';
+const LONG_BRAND = ' | Imverica Legal Solutions';
+let fullTitle = title.includes('Imverica') ? title : `${title}${LONG_BRAND}`;
+if (fullTitle.length > 65 && fullTitle.endsWith(LONG_BRAND)) fullTitle = fullTitle.slice(0, -LONG_BRAND.length) + SHORT_BRAND;
 const canonicalUrl = canonicalize(canonical);
 const localeMeta = LOCALES[lang];
 // Social preview card per language (public/og/og-<lang>.jpg, 1200×630).

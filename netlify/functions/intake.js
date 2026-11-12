@@ -29,6 +29,19 @@ const MAX_TEXT = 6000;
 const MAX_SHORT = 300;
 const MAX_BODY_BYTES = 50000;
 
+// Lead source sent by the wizard: page, language, landing page, external
+// referrer, UTM tags and ad click ids (no other fields are kept).
+const TRACK_KEYS = ['page', 'lang', 'landing', 'referrer', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+function cleanTracking(raw) {
+  const out = {};
+  if (!raw || typeof raw !== 'object') return out;
+  for (const k of TRACK_KEYS) {
+    const v = String(raw[k] == null ? '' : raw[k]).replace(/\s+/g, ' ').trim().slice(0, 300);
+    if (v) out[k] = v;
+  }
+  return out;
+}
+
 function json(statusCode, body, extraHeaders = {}) {
   return {
     statusCode,
@@ -125,6 +138,7 @@ async function normalizePayload(body, event) {
     serviceLabel: clean(body.serviceLabel, 160),
     formCode: clean(body.formCode, 40).toUpperCase(),
     situation: cleanLong(body.situation),
+    tracking: cleanTracking(body.tracking),
     routeResult: cleanStructured(routeResult),
     flowSchemaVersion: clean(body.flowSchemaVersion, 80),
     packageForms: cleanCodeList(body.packageForms),

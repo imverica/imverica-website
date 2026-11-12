@@ -16,6 +16,8 @@ declare global {
     __imvIntakeInit?: boolean;
     openIntakeModal?: (prefill?: string, mode?: string) => void;
     closeIntakeModal?: () => void;
+    imvTrack?: (type: string, extra?: Record<string, unknown>) => void;
+    imvLeadContext?: () => Record<string, string>;
   }
 }
 
@@ -2098,7 +2100,10 @@ export function initIntakeWizard(): void {
       packageForms: state.routeResult && state.routeResult.route ? state.routeResult.route.packageForms : (state.flowSchema ? [state.flowSchema.code] : []),
       i765: state.i765,
       contact: state.contact,
-      accountMode: state.accountMode
+      accountMode: state.accountMode,
+      // Where the visitor came from (page, landing page, referrer, UTM tags),
+      // set by BaseLayout; the same data the short request form sends.
+      tracking: typeof window.imvLeadContext === 'function' ? window.imvLeadContext() : null
     };
     localStorage.setItem('imvericaIntakeDraft', JSON.stringify({ syncStatus: 'pending', payload: payload }));
     nextBtn.disabled = true;
@@ -2112,6 +2117,8 @@ export function initIntakeWizard(): void {
       state.savedPayload = payload;
       state.orderId = result.orderId || '';
       state.completed = true;
+      // First-party conversion count (/api/analytics, no third parties).
+      if (typeof window.imvTrack === 'function') window.imvTrack('lead', { formCode: state.formCode || '' });
       render();
     } catch (err) {
       if (error) {
@@ -2382,6 +2389,9 @@ export function initIntakeWizard(): void {
   }
 
   window.openIntakeModal = function (prefill, mode) {
+    if (typeof window.imvTrack === 'function') {
+      window.imvTrack('start', { query: ('wizard ' + (typeof prefill === 'string' ? prefill : '')).trim().slice(0, 150) });
+    }
     // The visitor already picked a language on the site (header switcher).
     // Inherit it so we never re-ask "Choose your preferred language".
     var rememberedLang = detectSiteLang();
