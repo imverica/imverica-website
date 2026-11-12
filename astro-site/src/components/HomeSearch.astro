@@ -368,7 +368,6 @@ const t = STRINGS[lang] || STRINGS.en;
     const topics: NavLink[] = Array.isArray(nav.topics) ? nav.topics : [];
     const dirs: NavLink[] = Array.isArray(nav.directories) ? nav.directories : [];
     const help: NavLink[] = Array.isArray(nav.freeHelp) ? nav.freeHelp : [];
-    try { localStorage.setItem(PENDING_KEY, JSON.stringify({ query: String(query || '').slice(0, 120), topics, dirs, help, lang, ts: Date.now() })); } catch { /* storage may be blocked */ }
     setResult(`
       <p>${escapeHtml(n.lead)}</p>
       ${topics.length ? `<p class="ai-nav-h"><strong>${escapeHtml(n.topics)}</strong></p><ul class="ai-nav-list">${navLinks(topics)}</ul>` : ''}
@@ -403,47 +402,10 @@ const t = STRINGS[lang] || STRINGS.en;
       else window.location.href = 'tel:+19163993992';
     });
   }
-  // A visitor who left for the official list and came back within a day sees
-  // one short line with what they searched and a field for the form number,
-  // with the search text back in the box; "Hide" forgets it. A new visitor
-  // sees nothing here.
-  function restorePendingNavigation() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(PENDING_KEY) || 'null');
-      if (!saved || !saved.query || Date.now() - Number(saved.ts || 0) > 864e5) {
-        if (saved) localStorage.removeItem(PENDING_KEY);
-        return;
-      }
-      const n = NAV_T[saved.lang] || NAV_T.en;
-      if (input && !input.value) input.value = saved.query;
-      const topic = Array.isArray(saved.topics) && saved.topics[0];
-      setResult(`
-        <p class="ai-nav-small" style="margin-top:0 !important;">${escapeHtml(n.back.replace('{q}', saved.query))}</p>
-        <form class="ai-nav-form" data-ai-nav-form style="margin-top:8px;">
-          <label>${escapeHtml(n.numberLabel)}
-            <input type="text" name="code" autocomplete="off" spellcheck="false" placeholder="${escapeHtml(n.numberPlaceholder)}" />
-          </label>
-          <button type="submit" class="dark">${escapeHtml(n.startShort)}</button>
-        </form>
-        <p class="ai-nav-error" data-ai-nav-error hidden>${escapeHtml(n.badNumber)}</p>
-        <p class="ai-nav-small">${topic ? `<a href="${escapeHtml(topic.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(topic.label)} ↗</a> · ` : ''}<button type="button" data-ai-nav-hide style="background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer;">${escapeHtml(n.hide)}</button></p>
-      `);
-      const formEl = result?.querySelector('[data-ai-nav-form]') as HTMLFormElement | null;
-      formEl?.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const code = String((formEl.elements.namedItem('code') as HTMLInputElement)?.value || '').trim();
-        const err = result?.querySelector('[data-ai-nav-error]') as HTMLElement | null;
-        if (!/^[A-Za-z]{1,5}[\s._-]?\d{1,4}[A-Za-z]{0,4}$/.test(code)) { if (err) err.hidden = false; return; }
-        try { localStorage.removeItem(PENDING_KEY); } catch { /* ignore */ }
-        if (input) input.value = code;
-        submitQuery(code);
-      });
-      result?.querySelector('[data-ai-nav-hide]')?.addEventListener('click', () => {
-        try { localStorage.removeItem(PENDING_KEY); } catch { /* ignore */ }
-        if (input && input.value === saved.query) input.value = '';
-        setResult('', false);
-      });
-    } catch { /* ignore */ }
+  // Nothing from an earlier visit is shown: the finder opens empty every
+  // time. Older versions saved the last search; forget it.
+  function forgetSavedSearch() {
+    try { localStorage.removeItem(PENDING_KEY); } catch { /* storage may be blocked */ }
   }
 
   function renderIntentPrompt(query: string, routeData: any, lang: keyof typeof labels) {
@@ -691,5 +653,5 @@ const t = STRINGS[lang] || STRINGS.en;
     });
   });
 
-  restorePendingNavigation();
+  forgetSavedSearch();
 </script>
