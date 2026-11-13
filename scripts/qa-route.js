@@ -214,6 +214,12 @@ async function main() {
     assert(body.route.formCode === code, `${q}: expected ${code}, got ${body.route.formCode}`);
     assert(body.route.packageForms.length === 1 && body.route.packageForms[0] === code, `${q}: no companion forms may be added, got ${body.route.packageForms}`);
   }
+  // The page language breaks ties: Ukrainian without і/ї/є, Spanish without accents.
+  for (const [q, lang, label] of [['Малий позов', 'uk', 'Малі позови'], ['Reclamos menores', 'es', 'Reclamos menores'], ['Малый иск', 'uk', 'Малые иски'], ['Small claims', 'en', 'Small claims']]) {
+    const res = await route.handler({ httpMethod: 'GET', queryStringParameters: { q, lang }, headers: {} });
+    const first = JSON.parse(res.body).navigation.topics[0];
+    assert(first && first.label.startsWith(label), `${q} on the ${lang} page: expected "${label}…", got "${first && first.label}"`);
+  }
   console.log(`client-chooses-form policy: ${descriptions.length} descriptions get official links only, ${numbers.length} written numbers route to that form only`);
   console.log('route QA passed');
 }

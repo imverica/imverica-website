@@ -178,12 +178,21 @@ const t = STRINGS[lang] || STRINGS.en;
     }
   };
 
+  // The page language breaks ties the text alone cannot: Ukrainian without
+  // і/ї/є reads as Russian ("Малий позов"), Spanish without accents reads
+  // as English ("Reclamos menores").
+  function pageLang() {
+    const l = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+    return ['en', 'ru', 'uk', 'es'].includes(l) ? l : 'en';
+  }
   function detectLang(value: string) {
     const text = String(value || '').toLowerCase();
+    const page = pageLang();
     if (/[іїєґ]/i.test(text)) return 'uk';
-    if (/[а-яё]/i.test(text)) return 'ru';
+    if (/[ыэъё]/i.test(text)) return 'ru';
+    if (/[а-я]/i.test(text)) return page === 'uk' ? 'uk' : 'ru';
     if (/[ñáéíóúü¿¡]/i.test(text)) return 'es';
-    return 'en';
+    return page === 'es' ? 'es' : 'en';
   }
 
   function chatEndpoint() {
@@ -196,7 +205,8 @@ const t = STRINGS[lang] || STRINGS.en;
     const base = isLocal ? 'https://imverica.com' : '';
     return base + '/.netlify/functions/route?q=' + encodeURIComponent(query)
       + (county ? '&county=' + encodeURIComponent(county) : '')
-      + (intent ? '&intent=' + encodeURIComponent(intent) : '');
+      + (intent ? '&intent=' + encodeURIComponent(intent) : '')
+      + '&lang=' + pageLang();
   }
 
   // Human-friendly form name lookup for the answer card. Keeps the wizard

@@ -1503,7 +1503,7 @@ async function handler(event) {
   if (routed.some((code) => /^EOIR-/i.test(String(code || '')))) {
     result = attorneyOnlyResult(String(query).trim(), result.language || detectLanguage(String(query)), 'eoir');
   }
-  result = clientChosenFormOnly(result, String(query));
+  result = clientChosenFormOnly(result, String(query), event.queryStringParameters?.lang);
   return json(result.ok ? 200 : 404, result, { 'Cache-Control': 'public, max-age=300' });
 }
 
@@ -1513,8 +1513,12 @@ async function handler(event) {
 // of a situation gets official topic pages and form directories instead,
 // and no package of companion forms is ever added. Matters only an
 // attorney can take are still flagged as such.
-function clientChosenFormOnly(result, query) {
-  const lang = result.language || detectLanguage(query);
+function clientChosenFormOnly(result, query, pageLang = '') {
+  // The page language breaks ties the text cannot: Ukrainian without і/ї/є
+  // reads as Russian, Spanish without accents as English.
+  const detected = result.language || detectLanguage(query);
+  const hint = String(pageLang || '').slice(0, 2).toLowerCase();
+  const lang = (detected === 'ru' && hint === 'uk' && !/[ыэъё]/i.test(query)) || (detected === 'en' && hint === 'es') ? hint : detected;
   const navigation = navigationFor(query, lang);
   if (result.attorneyOnly) return { ...result, navigation };
   const route = result.route || {};
