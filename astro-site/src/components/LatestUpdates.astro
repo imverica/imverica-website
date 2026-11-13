@@ -79,16 +79,15 @@ const {
         .filter((item: NewsItem) => item.source && item.title && item.url)
         .slice(0, 6);
 
-      if (!cleanItems.length) {
-        status.textContent = 'No official updates are available right now.';
-        return;
-      }
+      if (!cleanItems.length) throw new Error('No news items');
 
       list.replaceChildren(...cleanItems.map(renderItem));
       status.textContent = `Updated automatically · ${new Date(data.updated || Date.now()).toLocaleString()}`;
       panel.dataset.loaded = 'true';
     } catch (_error) {
-      status.textContent = 'Official updates are temporarily unavailable. Please check uscis.gov or courts.ca.gov directly.';
+      // An empty news box on the homepage looks broken: hide the section.
+      const section = panel.closest<HTMLElement>('.news-section');
+      if (section) section.hidden = true;
     }
   }
 

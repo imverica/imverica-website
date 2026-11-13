@@ -214,7 +214,6 @@ html.v2 :is(.imm-cat-price, .cat-tile-price) { font-size: 14px; font-weight: 600
 html.v2 :is(.imm-cat-price--ask, .cat-tile-price--ask) { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: -0.01em; }
 html.v2 :is(.imm-cat-arrow, .cat-tile-arrow) { color: var(--navy); }
 html.v2 .ourserv-num { color: var(--muted) !important; letter-spacing: -0.01em; }
-html.v2 .ourserv-note { border-top-color: var(--border); }
 html.v2 .svc-card { padding: 30px; }
 html.v2 .svc-card-forms li { border-top-color: #e3e3e8; }
 html.v2 .svc-card-forms li a { color: var(--ink); }
@@ -395,13 +394,11 @@ html.v2 .ourserv-section .ourserv-grid { gap: 20px; }
 html.v2 .ourserv-section .ourserv-card { border-radius: 30px; padding: 40px 34px 34px; }
 html.v2 .ourserv-section .ourserv-title { font-size: 28px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; }
 html.v2 .ourserv-section .ourserv-desc { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; color: #424245; }
-html.v2 .ourserv-section .ourserv-card:is(:first-child, :last-child) .ourserv-title { color: #fff; }
+/* One accent card (immigration, the main service); the rest stay alike. */
+html.v2 .ourserv-section .ourserv-card:first-child .ourserv-title { color: #fff; }
 html.v2 .ourserv-section .ourserv-card:first-child,
 html.v2 .ourserv-section .ourserv-card:first-child:hover { background: var(--navy); }
-html.v2 .ourserv-section .ourserv-card:last-child,
-html.v2 .ourserv-section .ourserv-card:last-child:hover { background: #1d1d1f; }
-html.v2 .ourserv-section .ourserv-card:is(:first-child, :last-child) :is(.ourserv-num, .ourserv-desc, .ourserv-note) { color: rgba(255, 255, 255, 0.74) !important; }
-html.v2 .ourserv-section .ourserv-card:is(:first-child, :last-child) .ourserv-note { border-top-color: rgba(255, 255, 255, 0.16); }
+html.v2 .ourserv-section .ourserv-card:first-child :is(.ourserv-num, .ourserv-desc) { color: rgba(255, 255, 255, 0.74) !important; }
 
 /* news + visa bulletin */
 html.v2 .news-section .news-panel { border-radius: 28px; }
@@ -614,7 +611,6 @@ html.v2 body .site-footer-bottom, html.v2 body .site-footer-bottom > div { color
 html.v2 body cite { color: #6e6e73 !important; }
 html.v2 body .imm-cats-footnote :is(p, span) { color: #a1a1a6 !important; }
 html.v2 body .price-card :is(thead th, .price-card-disclaimer) { color: #5c5c61 !important; }
-html.v2 body .ourserv-note { color: #8e4b4b !important; border-top-color: #e5e5ea !important; }
 html.v2 body .price-row-meta { color: #5c5c61 !important; }
 html.v2 body .testimonial-meta { color: #6e6e73 !important; }
 html.v2 body :is(.visa-meta, [data-visa-note], .visa-disclaimer) { color: #a9b8c6 !important; }
@@ -658,3 +654,12 @@ html.v2 body .site-footer.site-footer--lean .site-footer-bottom div + div::befor
 @media (max-width: 720px) { html.v2 body .site-footer.site-footer--lean { padding-bottom: 92px; } }
 /* and clear of the "New design preview" badge while v2 is opt-in */
 @media (min-width: 721px) { html.v2.v2-pre body .site-footer.site-footer--lean { padding-bottom: 64px; } }
+
+/* Phones: service cards were five screens long; tighter cards, same look. */
+@media (max-width: 733px) {
+  html.v2 .ourserv-section .ourserv-grid { gap: 12px; }
+  html.v2 .ourserv-section .ourserv-card { min-height: 0; border-radius: 22px; padding: 24px 22px 22px; }
+  html.v2 .ourserv-section .ourserv-num { margin-bottom: 8px; }
+  html.v2 .ourserv-section .ourserv-title { font-size: 22px; }
+  html.v2 .ourserv-section .ourserv-desc { font-size: 15px; line-height: 1.45; }
+}

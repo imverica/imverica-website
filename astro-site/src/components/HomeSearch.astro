@@ -15,9 +15,8 @@ const STRINGS = {
     examples: ['Family petition', 'Response to divorce', 'Small claims', 'Expungement'],
     metaA: 'Document preparation only',
     metaB: 'No legal advice',
-    metaC: 'English · Russian · Ukrainian · Spanish',
     callAria: 'Call Imverica +1 (916) 399-3992',
-    seeServices: 'See services',
+    prices: 'Prices',
     schedule: 'Schedule an appointment'
   },
   ru: {
@@ -28,9 +27,8 @@ const STRINGS = {
     examples: ['Семейная петиция', 'Ответ на развод', 'Малый иск', 'Снятие судимости'],
     metaA: 'Только подготовка документов',
     metaB: 'Юридических консультаций не даём',
-    metaC: 'English · Русский · Українська · Español',
     callAria: 'Позвонить в Imverica +1 (916) 399-3992',
-    seeServices: 'Услуги',
+    prices: 'Цены',
     schedule: 'Записаться на встречу'
   },
   uk: {
@@ -41,9 +39,8 @@ const STRINGS = {
     examples: ['Сімейна петиція', 'Відповідь на розлучення', 'Малий позов', 'Record cleanup'],
     metaA: 'Лише підготовка документів',
     metaB: 'Юридичних порад не надаємо',
-    metaC: 'English · Русский · Українська · Español',
     callAria: 'Зателефонувати до Imverica +1 (916) 399-3992',
-    seeServices: 'Послуги',
+    prices: 'Ціни',
     schedule: 'Записатися на зустріч'
   },
   es: {
@@ -54,9 +51,8 @@ const STRINGS = {
     examples: ['Petición familiar', 'Respuesta a divorcio', 'Reclamos menores', 'Limpiar record'],
     metaA: 'Solo preparación de documentos',
     metaB: 'No brindamos asesoría legal',
-    metaC: 'English · Русский · Українська · Español',
     callAria: 'Llamar a Imverica +1 (916) 399-3992',
-    seeServices: 'Servicios',
+    prices: 'Precios',
     schedule: 'Agendar una cita'
   }
 } as const;
@@ -89,9 +85,6 @@ const t = STRINGS[lang] || STRINGS.en;
 <div class="ai-finder-meta">
   <span>{t.metaA}</span>
   <span>{t.metaB}</span>
-  {/* Languages get one span each so every item carries the same gold dot
-      (a single span left the inner separators as plain dark middots). */}
-  {t.metaC.split(' · ').map((language) => <span>{language}</span>)}
 </div>
 
 <div class="ai-hero-contact">
@@ -106,7 +99,7 @@ const t = STRINGS[lang] || STRINGS.en;
      (Our Services component) — not the /immigration page which only
      lists USCIS / EOIR. Anchor jump keeps the visitor on the same page. */}
   <a class="ai-services-link" href={`${LOCALES[lang].prefix}/schedule`}>{t.schedule}</a>
-  <a class="ai-services-link" href="#services">{t.seeServices}</a>
+  <a class="ai-services-link" href="/pricing">{t.prices}</a>
 </div>
 
 <script>

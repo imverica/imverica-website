@@ -4,48 +4,43 @@ const services = [
   {
     num: '01 — USCIS Immigration',
     title: 'Immigration Forms & Petitions',
-    desc: 'Adjustment of status, work permits, green cards, asylum, TPS, U visas, naturalization, and travel documents at the client’s specific direction. EOIR support is available only to law firms under a supervising attorney’s direction. Remote service throughout California.',
+    desc: 'Green card, work permit, travel document, citizenship, asylum, TPS and U visa forms: the forms you choose, filled in from your answers. Remote, anywhere in California. Immigration court (EOIR) work is for attorneys only.',
     href: '/immigration',
     color: 'var(--navy)'
   },
   {
     num: '02 — California Family Law',
     title: 'Divorce & Family Forms',
-    desc: 'Dissolution of marriage, summary dissolution, legal separation, child custody, and child support forms. Per California Family Code §2320 et seq.',
+    desc: 'Divorce, summary dissolution, legal separation, custody and child support forms, prepared from your answers and ready to file with your county court.',
     href: '/fl',
-    note: 'California residents only.',
     color: 'var(--terracotta-deep)'
   },
   {
     num: '03 — Small Claims & Civil',
     title: 'California Court Forms',
-    desc: 'Small claims document preparation (current CA limit: $12,500 for individuals per CCP §116.221) and Superior Court civil forms.',
+    desc: 'Small claims forms (claims up to $12,500 for individuals) and other Superior Court civil forms.',
     href: '/sc',
-    note: 'California residents only.',
     color: 'var(--sage)'
   },
   {
     num: '04 — Unlawful Detainer',
     title: 'Landlord & Tenant Documents',
-    desc: 'Eviction (unlawful detainer) document preparation for landlords and tenants — complaints, responses, and related California court forms. Per CCP §1161 et seq.',
+    desc: 'Eviction paperwork for landlords and for tenants: the complaint, the answer and the court forms that go with them.',
     href: '/california-unlawful-detainer',
-    note: 'California residents only.',
     color: 'var(--gold)'
   },
   {
     num: '05 — Restraining Orders',
     title: 'Protective Order Packets',
-    desc: 'Domestic violence, civil harassment, elder-abuse, gun-violence, and workplace-violence restraining-order packages.',
+    desc: 'Restraining order forms for domestic violence, civil harassment, elder abuse, gun violence and workplace violence.',
     href: '/california-restraining-orders',
-    note: 'California residents only.',
     color: 'var(--navy-light)'
   },
   {
     num: '06 — Probate & Expungement',
     title: 'Estates & Record-Cleanup Forms',
-    desc: 'Probate opening and closing packets, final distribution/discharge documents, small-estate affidavits, and California expungement/dismissal packets for DUI and other eligible cases.',
+    desc: 'Probate from opening to closing, small-estate affidavits, and expungement forms for DUI and other eligible convictions.',
     href: '/california-expungement',
-    note: 'California residents only.',
     color: 'var(--terracotta)'
   },
   {
@@ -58,17 +53,15 @@ const services = [
   {
     num: '08 — Name Change & Identity',
     title: 'Name Change Court Packets',
-    desc: 'California legal name-change document preparation, NC-100 series court packets, gender-marker updates, and supporting identity-document paperwork.',
+    desc: 'Name change and gender marker court forms (NC-100 series) for adults and children, plus the ID paperwork that follows.',
     href: '/#get-started?form=NC-100',
-    note: 'California residents only.',
     color: 'var(--terracotta-deep)'
   },
   {
     num: '09 — Traffic, DMV & Collections',
     title: 'Ticket, Title & Judgment Forms',
-    desc: 'Traffic ticket paperwork, DMV title and license forms, fee waivers, and post-judgment collection packets such as EJ-001 and WG-001.',
+    desc: 'Traffic ticket paperwork, DMV title and license forms, court fee waivers, and judgment collection forms such as EJ-001 and WG-001.',
     href: '/#get-started?form=DMV',
-    note: 'California residents only.',
     color: 'var(--sage)'
   }
 ];
@@ -77,15 +70,14 @@ const services = [
   <div class="ourserv-inner">
     <div class="ourserv-kicker">What we do</div>
     <h2>Our Services</h2>
-    <p class="ourserv-sub">Document preparation at the client’s specific direction. No legal advice.</p>
+    <p class="ourserv-sub">Document preparation at your specific direction. No legal advice. California court forms are for California residents.</p>
     <div class="ourserv-grid">
       {services.map((s) => (
         <a class="ourserv-card" href={s.href}>
           <div class="ourserv-num" style={`color:${s.color}`}>{s.num}</div>
           <div class="ourserv-title">{s.title}</div>
           <div class="ourserv-desc">{s.desc}</div>
-          {s.note && <div class="ourserv-note">{s.note}</div>}
-        </a>
+                  </a>
       ))}
     </div>
   </div>
@@ -106,5 +98,4 @@ const services = [
   .ourserv-num { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: none; color: var(--gold) !important; margin-bottom: 14px; }
   .ourserv-title { font-family: var(--font-display); font-size: 21px; font-weight: 500; letter-spacing: -0.01em; color: var(--navy-dark); margin-bottom: 10px; }
   .ourserv-desc { font-size: 14px; line-height: 1.55; color: var(--text-2); flex: 1; }
-  .ourserv-note { font-size: 11.5px; font-weight: 600; color: var(--ca-only); margin-top: 14px; font-style: normal; border-top: 1px solid #EFE8DB; padding-top: 12px; }
 </style>

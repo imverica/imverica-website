@@ -21,9 +21,9 @@ interface Props {
   lang?: Locale;
   eyebrow: string;
   heading: string;
-  sub: string;
+  sub?: string;
 }
-const { lang = 'en', eyebrow, heading, sub } = Astro.props;
+const { lang = 'en', eyebrow, heading } = Astro.props;
 
 const COPY: Record<Locale, { altHeading: string; altSub: string; capA: string; capB: string; statement: string; scroll: string }> = {
   en: {
@@ -70,9 +70,9 @@ const words = heading.split(/\s+/);
       <div class="hv2-swap" data-hv2-swap>
         <div class="hv2-variant is-on">
           <h1 class="hv2-h1" id="hv2-title">{words.map((word, i) => <><span class="w" style={`--i: ${i}`}>{word}</span>{i < words.length - 1 ? ' ' : ''}</>)}</h1>
-          <p class="hv2-sub hv2-sub--long">{sub}</p>
-          {/* phones: the short line, so the finder fits mid-screen */}
-          <p class="hv2-sub hv2-sub--phone">{t.altSub}</p>
+          {/* One short line on every screen; the full scope and the
+              "no legal advice" notice sit under the finder and in the footer. */}
+          <p class="hv2-sub">{t.altSub}</p>
         </div>
         <div class="hv2-variant" aria-hidden="true">
           <p class="hv2-h1">{t.altHeading}</p>
@@ -151,7 +151,6 @@ const words = heading.split(/\s+/);
     transition: opacity 0.9s ease, transform 1s var(--hv2-ease), filter 0.9s ease;
   }
   .hv2-hero .hv2-variant:not(.is-on) { opacity: 0; transform: translateY(14px); filter: blur(8px); pointer-events: none; }
-  .hv2-hero .hv2-sub--phone { display: none; }
   .hv2-hero .hv2-sub {
     max-width: 680px;
     margin: 22px auto 0;
@@ -259,8 +258,6 @@ const words = heading.split(/\s+/);
     html.v2 .hv2-hero.hv2-tight .hv2-h1 { margin-top: 6px; font-size: clamp(27px, 7.6vw, 36px); }
     .hv2-hero.hv2-tight .hv2-sub { margin-top: 8px; font-size: 15px; }
     .hv2-hero.hv2-tight .hv2-finder .ai-finder { margin-top: 14px; }
-    .hv2-hero .hv2-sub--long { display: none; }
-    .hv2-hero .hv2-sub--phone { display: block; }
     .hv2-hero .hv2-sub { margin-top: 12px; font-size: 16px; line-height: 1.42; letter-spacing: -0.016em; }
     .hv2-hero .hv2-finder .ai-finder { margin-top: 18px; }
     html.v2 .hv2-hero .hv2-finder .ai-examples { margin-top: 12px; gap: 8px; }
@@ -278,7 +275,7 @@ const words = heading.split(/\s+/);
   html.hv2-motion .hv2-hero .hv2-finder { animation: hv2-fade-up 0.6s var(--hv2-ease) 0.28s both; }
   html.hv2-motion .hv2-hero .hv2-stack-in { animation: hv2-stack-in 0.85s var(--hv2-ease) 0.22s both; }
   @media (min-width: 734px) {
-    html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) { height: 225vh; }
+    html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) { height: 165vh; }
     html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) .hv2-hint { display: flex; }
     html.hv2-motion:not(.hv2-calm) .hv2-hero:not(.is-static) .hv2-pin {
       position: sticky;
