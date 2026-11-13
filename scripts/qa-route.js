@@ -191,7 +191,14 @@ async function main() {
     ['ворк пермит', 'work-permit'], ['хочу грин карту', 'green-card'], ['Quiero pedir asilo', 'asylum'],
     ['My TPS from Ukraine is ending', 'tps-ukraine'], ['I want a divorce', 'divorce'], ['смол клейм нужно подать', 'small-claims'],
     ['I am afraid to go back to my country', ''], ['I was a victim of domestic violence and helped the police', ''],
-    ['I am 17, my parents abandoned me', ''], ['My landlord gave me a 3 day notice', ''], ['на свадьбу какие доки подают в USCIS?', '']
+    ['I am 17, my parents abandoned me', ''], ['My landlord gave me a 3 day notice', ''], ['на свадьбу какие доки подают в USCIS?', ''],
+    // The example buttons under the homepage search, in all four languages:
+    // each must open its own official topic page.
+    ['Family petition', 'family'], ['Response to divorce', 'divorce'], ['Small claims', 'small-claims'], ['Expungement', 'record-clearing'],
+    ['Семейная петиция', 'family'], ['Ответ на развод', 'divorce'], ['Малый иск', 'small-claims'], ['Снятие судимости', 'record-clearing'],
+    ['Сімейна петиція', 'family'], ['Відповідь на розлучення', 'divorce'], ['Малий позов', 'small-claims'], ['Зняття судимості', 'record-clearing'],
+    ['Petición familiar', 'family'], ['Respuesta a divorcio', 'divorce'], ['Reclamos menores', 'small-claims'], ['Limpiar record', 'record-clearing'],
+    ['разрешение на работу', 'work-permit'], ['замена грин карты', 'replace-green-card'], ['временная защита', 'tps']
   ];
   for (const [q, topic] of descriptions) {
     const { status, body } = await endpoint(q);

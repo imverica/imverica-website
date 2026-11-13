@@ -42,7 +42,7 @@ const TOPICS = [
     match: /travel\s+document|advance\s+parole|re-?entry\s+permit|тр[еэ]в[еэ]л|разрешени\w+\s+на\s+(выезд|поездк)|дозв[іо]л\w*\s+на\s+(виїзд|подорож)|documento\s+de\s+viaje|permiso\s+de\s+viaje/i,
     label: L('Travel documents', 'Документы для поездок (travel document)', 'Документи для подорожей (travel document)', 'Documentos de viaje') },
   { id: 'family', agency: 'uscis', url: 'https://www.uscis.gov/family',
-    match: /family[\s-]*based|petition\s+for\s+(a\s+)?relative|family\s+immigration|семейн\w+\s+(иммиграц|петици)|сімейн\w+\s+(імміграц|петиці)|petici[oó]n\s+familiar|inmigraci[oó]n\s+familiar/i,
+    match: /family[\s-]*based|family\s+petition|petition\s+for\s+(a\s+)?relative|family\s+immigration|семейн\w+\s+(иммиграц|петици)|сімейн\w+\s+(імміграц|петиці)|petici[oó]n\s+familiar|inmigraci[oó]n\s+familiar/i,
     label: L('Family-based immigration', 'Иммиграция через семью', 'Імміграція через родину', 'Inmigración por familia') },
   { id: 'asylum', agency: 'uscis', url: 'https://www.uscis.gov/humanitarian/refugees-and-asylum/asylum',
     match: /asylum|убежищ|асайл|притулок|азил|asilo/i,
@@ -51,7 +51,7 @@ const TOPICS = [
     match: /tps[^.]{0,40}(ukrain|украин|україн|ucrania)|(ukrain|украин|україн|ucrania)[^.]{0,40}tps/i,
     label: L('TPS for Ukraine', 'TPS для Украины', 'TPS для України', 'TPS para Ucrania') },
   { id: 'tps', agency: 'uscis', url: 'https://www.uscis.gov/humanitarian/temporary-protected-status',
-    match: /\btps\b|temporary\s+protected|временн\w+\s+защищ|тимчасов\w+\s+захищ|estatus\s+de\s+protecci[oó]n\s+temporal/i,
+    match: /\btps\b|temporary\s+protected|временн\w+\s+защи|тимчасов\w+\s+захи|estatus\s+de\s+protecci[oó]n\s+temporal/i,
     label: L('Temporary Protected Status (TPS)', 'Временный защищённый статус (TPS)', 'Тимчасовий захищений статус (TPS)', 'Estatus de Protección Temporal (TPS)') },
   { id: 'u-visa', agency: 'uscis', url: 'https://www.uscis.gov/humanitarian/victims-of-human-trafficking-and-other-crimes',
     match: /\bu[\s-]*visa\b|u\s+nonimmigrant|t[\s-]*visa|виз\w*\s+u\b|u[\s-]*виз|віз\w*\s+u\b|visa\s+u\b/i,
@@ -98,6 +98,13 @@ const TOPICS = [
     label: L('Clearing a criminal record (California courts forms by category)', 'Снятие судимости (формы судов Калифорнии по категориям)', 'Зняття судимості (форми судів Каліфорнії за категоріями)', 'Limpiar antecedentes (formularios de las cortes por categoría)') }
 ];
 
+// In a JavaScript regex \w is Latin-only, so "семейн\w+" never matched
+// "семейная". Every \w in the topic patterns also takes Cyrillic letters.
+const WORD_CHAR = '[\\wА-Яа-яЁёІіЇїЄєҐґ]';
+for (const topic of TOPICS) {
+  topic.match = new RegExp(topic.match.source.replace(/\\w/g, WORD_CHAR), topic.match.flags);
+}
+
 // Example form number shown in the number field: a procedural form from the
 // same series (proof of service, notice, attachment, e-notification). It
 // shows the number format and is never a suggestion of what to file.
@@ -123,18 +130,18 @@ function pickLang(lang) { const l = String(lang || 'en').slice(0, 2).toLowerCase
 function topicsFor(text, lang = 'en', limit = 2) {
   const t = String(text || '');
   const l = pickLang(lang);
-  const found = [];
-  for (const topic of TOPICS) {
-    if (!topic.match.test(t)) continue;
-    // A more specific topic (TPS for Ukraine, replacing a green card)
-    // supersedes the general one it contains.
-    if (topic.id === 'tps' && found.some((f) => f.id === 'tps-ukraine')) continue;
-    if (topic.id === 'green-card' && found.some((f) => f.id === 'replace-green-card' || f.id === 'remove-conditions')) continue;
-    if (topic.id === 'court-fee-waiver' && found.some((f) => f.id === 'uscis-fee-waiver')) continue;
-    found.push({ id: topic.id, agency: topic.agency, url: topic.url, label: topic.label[l] });
-    if (found.length >= limit) break;
-  }
-  return found;
+  const hits = TOPICS.filter((topic) => topic.match.test(t));
+  const has = (id) => hits.some((topic) => topic.id === id);
+  // A more specific topic (TPS for Ukraine, replacing a green card)
+  // supersedes the general one it contains, wherever it sits in the list.
+  const superseded = (id) =>
+    (id === 'tps' && has('tps-ukraine')) ||
+    (id === 'green-card' && (has('replace-green-card') || has('remove-conditions'))) ||
+    (id === 'court-fee-waiver' && has('uscis-fee-waiver'));
+  return hits
+    .filter((topic) => !superseded(topic.id))
+    .slice(0, limit)
+    .map((topic) => ({ id: topic.id, agency: topic.agency, url: topic.url, label: topic.label[l] }));
 }
 
 /** Topic pages plus the official directories and free-help links, localized. */
