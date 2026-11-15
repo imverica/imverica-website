@@ -105,7 +105,7 @@ const PACKAGE_RULES = [
     patterns: [
       /security\s+deposit/i,
       /\bdeposit\b[\s\S]{0,60}\b(landlord|tenant|renter|lessor|lessee|rent|lease|apartment|rental)\b|\b(landlord|tenant|renter|lessor|lessee|rent|lease|apartment|rental)\b[\s\S]{0,60}\bdeposit\b/i,
-      /(депозит|завдаток|застав\w*)[\s\S]{0,50}(оренд|аренд|квартир|жил|лендлорд|арендодател|арендатор|орендар|орендодав|tenant|landlord)|(оренд|аренд|квартир|жил|лендлорд|арендодател|арендатор|орендар|орендодав)[\s\S]{0,50}(депозит|завдаток|застав\w*)/i,
+      /(депозит|завдаток|застав[\wа-яёіїєґА-ЯЁІЇЄҐ]*)[\s\S]{0,50}(оренд|аренд|квартир|жил|лендлорд|арендодател|арендатор|орендар|орендодав|tenant|landlord)|(оренд|аренд|квартир|жил|лендлорд|арендодател|арендатор|орендар|орендодав)[\s\S]{0,50}(депозит|завдаток|застав[\wа-яёіїєґА-ЯЁІЇЄҐ]*)/i,
       /dep[oó]sito\s+(de\s+(seguridad|garant\w*)|de\s+alquiler|del\s+inquilino)|dep[oó]sito[\s\S]{0,50}(arrendador|arrendatario|inquilino|alquiler|renta)/i
     ],
     reason: 'Security-deposit dispute (tenant vs landlord) → SC-100 small claims — must beat the broad unlawful-detainer rule.'
@@ -134,7 +134,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['CR-180', 'CR-181', 'POS-030', 'FW-001'],
     confidence: 0.92,
-    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|early\s+termination\s+of\s+probation|terminat\w*\s+(my\s+)?probation|end\s+(my\s+)?probation\s+early|1203\.[34]|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|досрочн\w*\s+(прекращ|окончан)|прекрат\w*\s+испытат|опечат\w*\s+арест|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes|terminaci[oó]n\s+anticipada|sellar\s+(mi\s+)?(arresto|registro))/i],
+    patterns: [/(cr-?180|cr-?181|expung(e|ement)|record\s+(clean|cleanup|clear|clearance|cleaning)|clean\s+(my\s+)?record|petition\s+for\s+dismissal|dismiss\s+(my\s+)?conviction|dui\s+(expungement|dismissal|record|cleanup|clean|clear)|early\s+termination\s+of\s+probation|terminat[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(my\s+)?probation|end\s+(my\s+)?probation\s+early|1203\.[34]|снять\s+судим|снятие\s+судим|погашение\s+судим|очистить\s+(запись|рекорд)|досрочн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(прекращ|окончан)|прекрат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+испытат|опечат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+арест|экспандж|экспундж|видалити\s+судим|очистити\s+запис|limpiar\s+(mi\s+)?(record|antecedentes)|borrar\s+antecedentes|terminaci[oó]n\s+anticipada|sellar\s+(mi\s+)?(arresto|registro))/i],
     reason: 'California record-clearing language (expungement/dismissal, early termination of probation) maps to the CR-180 record-cleanup intake.'
   },
 
@@ -154,7 +154,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-918', 'I-918A'],
     confidence: 0.93,
-    patterns: [/u-?visa|u\s+visa|i-?918|crime\s+victim|жертв[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+преступл|жертв[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+злочин|v[ií]ctima\s+de\s+(delito|crimen)/i],
+    patterns: [/u-?visa|u\s+visa|i-?918|crime\s+victim|жертв[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+преступл|жертв[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+злочин|v[ií]ctima\s+de\s+(delito|crimen)/i],
     reason: 'U-visa / crime-victim language maps to Form I-918.'
   },
   {
@@ -163,7 +163,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-360'],
     confidence: 0.93,
-    patterns: [/vawa|violence\s+against\s+women|i-?360|self-?petition|насили[ея]\s+в\s+семь|домашн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+насили|домашн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+насильств|abuso\s+(dom[eé]stico|conyugal)|battered\s+spouse|battered\s+sp/i],
+    patterns: [/vawa|violence\s+against\s+women|i-?360|self-?petition|насили[ея]\s+в\s+семь|домашн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+насили|домашн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+насильств|abuso\s+(dom[eé]stico|conyugal)|battered\s+spouse|battered\s+sp/i],
     reason: 'VAWA / domestic-violence-survivor language maps to Form I-360.'
   },
   {
@@ -172,7 +172,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-821', 'I-765'],
     confidence: 0.95,
-    patterns: [/\btps\b|temporary\s+protected\s+status|i-?821(?!d)|временн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+защищ[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+статус|тимчасов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+захист|estatus\s+(temporal\s+)?protegido|estado\s+de\s+protecci[oó]n\s+temporal/i],
+    patterns: [/\btps\b|temporary\s+protected\s+status|i-?821(?!d)|временн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+защищ[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+статус|тимчасов[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+захист|estatus\s+(temporal\s+)?protegido|estado\s+de\s+protecci[oó]n\s+temporal/i],
     reason: 'TPS language maps to Form I-821 + EAD.'
   },
   {
@@ -190,7 +190,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-134A'],
     confidence: 0.93,
-    patterns: [/u4u|uniting\s+for\s+ukraine|програма\s+u4u|об[єе]днан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+за\s+україну|за\s+украин|sponsor\s+from\s+ukraine|спонсор\s+украин/i],
+    patterns: [/u4u|uniting\s+for\s+ukraine|програма\s+u4u|об[єе]днан[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+за\s+україну|за\s+украин|sponsor\s+from\s+ukraine|спонсор\s+украин/i],
     reason: 'Uniting for Ukraine sponsor language maps to Form I-134A.'
   },
 
@@ -201,7 +201,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-751'],
     confidence: 0.93,
-    patterns: [/i-?751|remove?\s+conditions?|removal\s+of\s+conditions|10-?year\s+card|conditional\s+(green\s*card|resident)|снят[ьие]\s+услов|снять\s+условн|условн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(резидент|green)|умов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+резидент|зняти\s+умов/i],
+    patterns: [/i-?751|remove?\s+conditions?|removal\s+of\s+conditions|10-?year\s+card|conditional\s+(green\s*card|resident)|снят[ьие]\s+услов|снять\s+условн|условн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(резидент|green)|умов[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+резидент|зняти\s+умов/i],
     reason: 'Conditional-residence language maps to Form I-751.'
   },
   {
@@ -210,7 +210,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-90'],
     confidence: 0.93,
-    patterns: [/i-?90\b|renew\s+green\s*card|replace\s+green\s*card|green\s*card\s+(renew|replace|lost|stolen|expir)|обнов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|замен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|потер[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|поновлен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грін)|renovar\s+(green\s*card|tarjeta\s+verde)|reemplaz\w*\s+(green|tarjeta\s+verde)|(lost|stolen|damaged|потерял|украли|повредил|загубив)[\s\S]{0,25}(green ?card|грин[- ]?карт)(?![\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон))|(green ?card|грин[- ]?карт)[\s\S]{0,25}(lost|stolen|damaged|потерял|украли)(?![\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон))/i],
+    patterns: [/i-?90\b|renew\s+green\s*card|replace\s+green\s*card|green\s*card\s+(renew|replace|lost|stolen|expir)|обнов[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|замен[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|потер[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грин)|поновлен[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|грін)|renovar\s+(green\s*card|tarjeta\s+verde)|reemplaz[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(green|tarjeta\s+verde)|(lost|stolen|damaged|потерял|украли|повредил|загубив)[\s\S]{0,25}(green ?card|грин[- ]?карт)(?![\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон))|(green ?card|грин[- ]?карт)[\s\S]{0,25}(lost|stolen|damaged|потерял|украли)(?![\s\S]{0,30}(abroad|overseas|outside|за границ|за кордон))/i],
     reason: 'Green card renewal / replacement language maps to Form I-90.'
   },
   {
@@ -228,7 +228,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-130', 'I-130A'],
     confidence: 0.88,
-    patterns: [/i-?130|family\s+petition|petition\s+for\s+(relative|spouse|parent|child|brother|sister)|петиц[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(для\s+)?(семь|родственник|супруг|родител|жен|муж|ребен|брат|сестр|дет)|петиц[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(для\s+)?родич|перевезт[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(родител|жен|муж|ребен|брат|сестр|дет|семь)|вызвать\s+(родител|жен|муж|ребен|брат|сестр|дет)|переїхати\s+(жінк|чоловік|дитин|брат|сестр|батьк)|petici[oó]n\s+(de|para)\s+(familiar|hijo|padre|c[oó]nyuge|esposo|esposa|hermano)/i],
+    patterns: [/i-?130|family\s+petition|petition\s+for\s+(relative|spouse|parent|child|brother|sister)|петиц[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(для\s+)?(семь|родственник|супруг|родител|жен|муж|ребен|брат|сестр|дет)|петиц[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(для\s+)?родич|перевезт[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(родител|жен|муж|ребен|брат|сестр|дет|семь)|вызвать\s+(родител|жен|муж|ребен|брат|сестр|дет)|переїхати\s+(жінк|чоловік|дитин|брат|сестр|батьк)|petici[oó]n\s+(de|para)\s+(familiar|hijo|padre|c[oó]nyuge|esposo|esposa|hermano)/i],
     reason: 'Family-petition language maps to Form I-130 + I-130A.'
   },
   {
@@ -237,7 +237,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-131'],
     confidence: 0.9,
-    patterns: [/i-?131(?!a)|advance\s+parole|reentry\s+permit|re-?entry|travel\s+document|refugee\s+travel\s+doc|выехать\s+за\s+границ|выезд\s+(временн|долго)|разрешен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+(поездк|выезд|въезд|въезжа)|тревел\s+документ|документ\s+(на\s+)?поездк|advance\s+parol|adelantado\s+de\s+permiso|permiso\s+de\s+viaje|документ\s+на\s+поверненн/i],
+    patterns: [/i-?131(?!a)|advance\s+parole|reentry\s+permit|re-?entry|travel\s+document|refugee\s+travel\s+doc|выехать\s+за\s+границ|выезд\s+(временн|долго)|разрешен[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+(поездк|выезд|въезд|въезжа)|тревел\s+документ|документ\s+(на\s+)?поездк|advance\s+parol|adelantado\s+de\s+permiso|permiso\s+de\s+viaje|документ\s+на\s+поверненн/i],
     reason: 'Advance Parole / Re-entry Permit language maps to Form I-131.'
   },
   {
@@ -255,7 +255,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-864', 'I-864A'],
     confidence: 0.9,
-    patterns: [/i-?864|affidavit\s+of\s+support|sponsor(\s+immigrant)?|спонсор[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(на\s+|для\s+)?(иммигрант|семь|родственник)|финансов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+поручительств|финансов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+гарант|поручительств[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иммигр|спонсорств|patrocinador|declaraci[oó]n\s+jurada\s+de\s+(apoyo|patrocinio)/i],
+    patterns: [/i-?864|affidavit\s+of\s+support|sponsor(\s+immigrant)?|спонсор[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(на\s+|для\s+)?(иммигрант|семь|родственник)|финансов[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+поручительств|финансов[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+гарант|поручительств[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+иммигр|спонсорств|patrocinador|declaraci[oó]n\s+jurada\s+de\s+(apoyo|patrocinio)/i],
     reason: 'Affidavit-of-Support language maps to Form I-864.'
   },
   {
@@ -264,7 +264,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-539', 'I-539A'],
     confidence: 0.93,
-    patterns: [/i-?539|change\s+of\s+status|extend\s+(non-?immigrant\s+)?status|extension\s+of\s+stay|продл(ить|и|е|евая|ева|евае|ит|и)\w*\s+(статус|виз|пребыв)|сменить\s+статус|сменить\s+виз|change\s+status\s+(to\s+)?(b|f|h|l|j)|продовж[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(статус|віз)|сменить\s+(в|на)\s+(студент|h-?\d|туристичн|рабоч)|extender\s+(estatus|visa)|cambiar\s+estatus/i],
+    patterns: [/i-?539|change\s+of\s+status|extend\s+(non-?immigrant\s+)?status|extension\s+of\s+stay|продл(ить|и|е|евая|ева|евае|ит|и)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(статус|виз|пребыв)|сменить\s+статус|сменить\s+виз|change\s+status\s+(to\s+)?(b|f|h|l|j)|продовж[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(статус|віз)|сменить\s+(в|на)\s+(студент|h-?\d|туристичн|рабоч)|extender\s+(estatus|visa)|cambiar\s+estatus/i],
     reason: 'Status change / extension language maps to Form I-539.'
   },
   {
@@ -273,7 +273,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-693'],
     confidence: 0.93,
-    patterns: [/i-?693|medical\s+exam(ination)?|civil\s+surgeon|медицин[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(осмотр|обследован|прохожден)|пройти\s+мед|медогляд|examen\s+m[eé]dico/i],
+    patterns: [/i-?693|medical\s+exam(ination)?|civil\s+surgeon|медицин[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(осмотр|обследован|прохожден)|пройти\s+мед|медогляд|examen\s+m[eé]dico/i],
     reason: 'Medical examination language maps to Form I-693.'
   },
   {
@@ -282,7 +282,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-824'],
     confidence: 0.93,
-    patterns: [/i-?824|duplicate\s+approval|follow-?to-?join|action\s+on\s+approved|дублика[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+approval|дублика[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+i-?797|повторн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+approval|follow\s+to\s+join|воссоединен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+семь/i],
+    patterns: [/i-?824|duplicate\s+approval|follow-?to-?join|action\s+on\s+approved|дублика[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+approval|дублика[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+i-?797|повторн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+approval|follow\s+to\s+join|воссоединен[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+семь/i],
     reason: 'Duplicate approval / follow-to-join language maps to Form I-824.'
   },
   {
@@ -291,7 +291,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-912'],
     confidence: 0.9,
-    patterns: [/i-?912|fee\s+waiver\s+(uscis|immigration)|освобожден[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+от\s+пошлин[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+uscis|не\s+могу\s+заплатить\s+uscis|exenci[oó]n\s+de\s+cuota\s+uscis/i],
+    patterns: [/i-?912|fee\s+waiver\s+(uscis|immigration)|освобожден[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+от\s+пошлин[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+uscis|не\s+могу\s+заплатить\s+uscis|exenci[oó]n\s+de\s+cuota\s+uscis/i],
     reason: 'USCIS fee waiver language maps to Form I-912.'
   },
 
@@ -311,7 +311,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['I-485', 'I-765', 'I-131', 'I-864', 'I-693'],
     confidence: 0.84,
-    patterns: [/i-?485|adjustment\s+of\s+status|adjust\s+status|грин\s*карт|green\s*card|изменени[ея]\s+статус|изменить\s+статус\s+на\s+резидент|получить\s+грин|получить\s+green|оформ[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+грин|оформ[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+green|зміна\s+статусу|отримати\s+green|tarjeta\s+verde|residencia\s+permanente|ajustar?\s+(de\s+)?estatus/i],
+    patterns: [/i-?485|adjustment\s+of\s+status|adjust\s+status|грин\s*карт|green\s*card|изменени[ея]\s+статус|изменить\s+статус\s+на\s+резидент|получить\s+грин|получить\s+green|оформ[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+грин|оформ[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+green|зміна\s+статусу|отримати\s+green|tarjeta\s+verde|residencia\s+permanente|ajustar?\s+(de\s+)?estatus/i],
     reason: 'Adjustment of status / green card in the US maps to Form I-485.'
   },
   {
@@ -323,7 +323,7 @@ const PACKAGE_RULES = [
     // Require BOTH a marriage term AND an immigration signal in proximity (either
     // order) so a bare spouse word ("муж", "развестись с мужем") no longer pulls
     // an immigration petition, while real "marriage + USCIS/green card" queries do.
-    patterns: [/(?:marriage|married|spouse|husband|wife|fianc|свадьб|брак|замуж|женит|вийти\s+заміж|одружит|matrimonio|esposo|esposa|c[oó]nyuge|муж|жен|супруг)[\s\S]{0,45}(?:uscis|green\s*card|citizen|residen|\bvisa\b|petition|immigrat|грин[\s-]?карт|гражданств|иммигра|петиц|\bвиз[аыу]|спонсир|іммігра|громадянств)|(?:uscis|green\s*card|citizen|residen|\bvisa\b|petition\s+for|immigrat|грин[\s-]?карт|гражданств|иммигра|петиц|спонсир|іммігра|громадянств)[\s\S]{0,45}(?:marriage|married|spouse|husband|wife|свадьб|брак|замуж|женит|matrimonio|esposo|esposa|c[oó]nyuge|муж|жен|супруг)/i],
+    patterns: [/(?:marriage|married|spouse|husband|wife|fianc|свадьб|брак|замуж|женит|вийти\s+заміж|одружит|matrimonio|esposo|esposa|c[oó]nyuge|муж|жен|супруг)[\s\S]{0,45}(?:uscis|green\s*card|citizen|residen|\bvisa\b|petition|immigrat|грин[\s-]?карт|гражданств|иммигра|петиц|(?<![а-яёіїєґ])виз[аыу]|спонсир|іммігра|громадянств)|(?:uscis|green\s*card|citizen|residen|\bvisa\b|petition\s+for|immigrat|грин[\s-]?карт|гражданств|иммигра|петиц|спонсир|іммігра|громадянств)[\s\S]{0,45}(?:marriage|married|spouse|husband|wife|свадьб|брак|замуж|женит|matrimonio|esposo|esposa|c[oó]nyuge|муж|жен|супруг)/i],
     reason: 'Marriage/family immigration language maps to a family petition + AOS package.'
   },
 
@@ -334,7 +334,7 @@ const PACKAGE_RULES = [
     service: 'family',
     packageForms: ['FL-120', 'FL-150'],
     confidence: 0.9,
-    patterns: [/fl-?120|response\s+to\s+(divorce|petition|dissolution)|respond\s+to\s+(divorce|petition)|ответ\s+на\s+(развод|иск\s+на\s+развод|петиц[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+о\s+развод)|відповід[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+розлуч|contestar\s+(divorcio|petici[oó]n\s+de\s+divorcio)/i],
+    patterns: [/fl-?120|response\s+to\s+(divorce|petition|dissolution)|respond\s+to\s+(divorce|petition)|ответ\s+на\s+(развод|иск\s+на\s+развод|петиц[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+о\s+развод)|відповід[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+розлуч|contestar\s+(divorcio|petici[oó]n\s+de\s+divorcio)/i],
     reason: 'Response-to-divorce language maps to Form FL-120.'
   },
   {
@@ -343,7 +343,7 @@ const PACKAGE_RULES = [
     service: 'family',
     packageForms: ['FL-160', 'FL-150'],
     confidence: 0.88,
-    patterns: [/fl-?160|property\s+(division|declaration)|division\s+of\s+(assets|property|community\s+property)|раздел\s+(имуществ|собственност|совместн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+имуществ)|поділ\s+майна|divisi[oó]n\s+de\s+(bienes|propiedad|comunidad)/i],
+    patterns: [/fl-?160|property\s+(division|declaration)|division\s+of\s+(assets|property|community\s+property)|раздел\s+(имуществ|собственност|совместн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+имуществ)|поділ\s+майна|divisi[oó]n\s+de\s+(bienes|propiedad|comunidad)/i],
     reason: 'Property division language maps to Form FL-160.'
   },
   {
@@ -352,7 +352,7 @@ const PACKAGE_RULES = [
     service: 'family',
     packageForms: ['FL-150'],
     confidence: 0.93,
-    patterns: [/fl-?150|income\s+(and\s+)?expense|income.expense\s+declaration|декларац[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(доход|расход)|доход[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+и\s+расход[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(декл|для\s+суд)|declaraci[oó]n\s+de\s+(ingresos|gastos)/i],
+    patterns: [/fl-?150|income\s+(and\s+)?expense|income.expense\s+declaration|декларац[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(доход|расход)|доход[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+и\s+расход[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(декл|для\s+суд)|declaraci[oó]n\s+de\s+(ingresos|gastos)/i],
     reason: 'Income/expense declaration maps to Form FL-150.'
   },
   {
@@ -361,7 +361,7 @@ const PACKAGE_RULES = [
     service: 'family',
     packageForms: ['FL-105'],
     confidence: 0.85,
-    patterns: [/fl-?105|uccjea|child(ren)?\s+(jurisdiction|custody\s+jurisdiction)|interstate\s+custody|юрисдикц[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+по\s+(ребен|дет)|переезд\s+с\s+ребен|переехать\s+с\s+ребен/i],
+    patterns: [/fl-?105|uccjea|child(ren)?\s+(jurisdiction|custody\s+jurisdiction)|interstate\s+custody|юрисдикц[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+по\s+(ребен|дет)|переезд\s+с\s+ребен|переехать\s+с\s+ребен/i],
     reason: 'UCCJEA / interstate custody jurisdiction maps to Form FL-105.'
   },
   {
@@ -385,7 +385,7 @@ const PACKAGE_RULES = [
     service: 'probate',
     packageForms: ['GC-210', 'GC-110', 'GC-310'],
     confidence: 0.86,
-    patterns: [/guardianship|conservatorship|legal\s+guardian|become\s+(a\s+)?guardian|guardian\s+of\s+(a\s+)?(minor|child|grandchild|grandson|granddaughter)|conservator(ship)?\s+(of|for)|опек[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(внук|несовершеннолетн|недееспособн|онук)|попечительств|опіка\s+над\s+(онук|дитин|неповнолітн)|tutela\s+(legal|de\s+un\s+menor|de\s+menor)|curadur[ií]a|conservadur[ií]a/i],
+    patterns: [/guardianship|conservatorship|legal\s+guardian|become\s+(a\s+)?guardian|guardian\s+of\s+(a\s+)?(minor|child|grandchild|grandson|granddaughter)|conservator(ship)?\s+(of|for)|опек[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(внук|несовершеннолетн|недееспособн|онук)|попечительств|опіка\s+над\s+(онук|дитин|неповнолітн)|tutela\s+(legal|de\s+un\s+menor|de\s+menor)|curadur[ií]a|conservadur[ií]a/i],
     reason: 'Guardianship of a minor / conservatorship of an adult → GC series (CA probate).'
   },
   {
@@ -394,7 +394,7 @@ const PACKAGE_RULES = [
     service: 'family',
     packageForms: ['FL-300', 'FL-311', 'FL-150'],
     confidence: 0.82,
-    patterns: [/fl-?300|request\s+for\s+order|custody|visitation|child\s+support|spousal\s+support|(see|visit)\s+my\s+(kid|child|son|daughter|children)|won'?t\s+let\s+me\s+see\s+(my\s+)?(kid|child)|кастоди|опек(?![\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(внук|онук))|алимент|алімент|содержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ребен|содержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+супруг|делить\s+дет|раздел[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+дет|видеть\s+(детей|ребён|ребен)|не\s+да[её]т\s+видеть|поділ\s+(діт|опік)|с\s+кем\s+(будут|останут)\s+дет|pensi[oó]n\s+(alimenticia|de\s+manutenci[oó]n)|custodia|visitas/i],
+    patterns: [/fl-?300|request\s+for\s+order|custody|visitation|child\s+support|spousal\s+support|(see|visit)\s+my\s+(kid|child|son|daughter|children)|won'?t\s+let\s+me\s+see\s+(my\s+)?(kid|child)|кастоди|опек(?![\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(внук|онук))|алимент|алімент|содержан[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+ребен|содержан[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+супруг|делить\s+дет|раздел[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+дет|видеть\s+(детей|ребён|ребен)|не\s+да[её]т\s+видеть|поділ\s+(діт|опік)|с\s+кем\s+(будут|останут)\s+дет|pensi[oó]n\s+(alimenticia|de\s+manutenci[oó]n)|custodia|visitas/i],
     reason: 'Family-law request (custody / support / visitation) maps to Form FL-300.'
   },
   {
@@ -412,7 +412,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['FW-001'],
     confidence: 0.9,
-    patterns: [/fw-?001|fee\s+waiver\s+(court|california|c[ao])|waive\s+(court\s+|filing\s+)?fees|(can'?t|cannot|unable\s+to)\s+afford\s+(the\s+)?(court\s+|filing\s+){0,2}fee|afford\s+the\s+(court|filing)\s+fee|(court|filing)\s+fees?\b.{0,15}(waiv|afford|can'?t\s+pay|too\s+expensive)|waive\s+.{0,12}court\s+fee|освобожден[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+от\s+(пошлин|судебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+сбор)|не\s+могу\s+(за)?платить\s+(пошлин|судебн|сбор\s+в\s+суд)|exenci[oó]n\s+de\s+cuota\s+(de\s+corte|judicial)/i],
+    patterns: [/fw-?001|fee\s+waiver\s+(court|california|c[ao])|waive\s+(court\s+|filing\s+)?fees|(can'?t|cannot|unable\s+to)\s+afford\s+(the\s+)?(court\s+|filing\s+){0,2}fee|afford\s+the\s+(court|filing)\s+fee|(court|filing)\s+fees?\b.{0,15}(waiv|afford|can'?t\s+pay|too\s+expensive)|waive\s+.{0,12}court\s+fee|освобожден[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+от\s+(пошлин|судебн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+сбор)|не\s+могу\s+(за)?платить\s+(пошлин|судебн|сбор\s+в\s+суд)|exenci[oó]n\s+de\s+cuota\s+(de\s+corte|judicial)/i],
     reason: 'Court fee waiver language maps to Form FW-001.'
   },
 
@@ -425,7 +425,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['CH-100', 'CH-109', 'CH-110', 'CH-130'],
     confidence: 0.9,
-    patterns: [/civil\s+harassment|harassment\s+(order|restraining).*(neighbor|stranger|co-?worker|roommate|landlord)|(neighbor|stranger|roommate)\s+.{0,20}(harass|threaten|stalk)|non-?domestic\s+harass|гражданск[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+преслед|сосед[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+.{0,15}(угрож|преслед|домога|пресліду)|(угрож|преслед|домога)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+.{0,10}сосед|vecino\s+.{0,15}(amenaz|acos|hostig)|acoso\s+civil/i],
+    patterns: [/civil\s+harassment|harassment\s+(order|restraining).*(neighbor|stranger|co-?worker|roommate|landlord)|(neighbor|stranger|roommate)\s+.{0,20}(harass|threaten|stalk)|non-?domestic\s+harass|гражданск[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+преслед|сосед[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+.{0,15}(угрож|преслед|домога|пресліду)|(угрож|преслед|домога)[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+.{0,10}сосед|vecino\s+.{0,15}(amenaz|acos|hostig)|acoso\s+civil/i],
     reason: 'Civil (non-domestic) harassment → CH-100.'
   },
   {
@@ -434,7 +434,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['WV-100', 'WV-109', 'WV-110'],
     confidence: 0.9,
-    patterns: [/workplace\s+violence|violence\s+(at|in)\s+(the\s+)?work(place)?|(co-?worker|colleague|employee|boss|supervisor)\s+.{0,25}(threat|violen|harass|assault|stalk)|(threat|violen|harass|assault)[\wa-z]*\s+.{0,15}(at\s+work|workplace|co-?worker|colleague)|employer\s+(seeking|filing).*(restraining|protective)|коллег[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(угрож|насил)|угрож[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|violencia\s+(en\s+el\s+)?(trabajo|lugar\s+de\s+trabajo)|compañero\s+de\s+trabajo\s+.{0,20}(amenaz|acos)/i],
+    patterns: [/workplace\s+violence|violence\s+(at|in)\s+(the\s+)?work(place)?|(co-?worker|colleague|employee|boss|supervisor)\s+.{0,25}(threat|violen|harass|assault|stalk)|(threat|violen|harass|assault)[\wа-яёіїєґА-ЯЁІЇЄҐa-z]*\s+.{0,15}(at\s+work|workplace|co-?worker|colleague)|employer\s+(seeking|filing).*(restraining|protective)|коллег[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(угрож|насил)|угрож[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|насили[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+работе|violencia\s+(en\s+el\s+)?(trabajo|lugar\s+de\s+trabajo)|compañero\s+de\s+trabajo\s+.{0,20}(amenaz|acos)/i],
     reason: 'Workplace violence restraining order → WV-100.'
   },
   {
@@ -443,7 +443,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['EA-100', 'EA-109', 'EA-110'],
     confidence: 0.9,
-    patterns: [/elder\s+(or\s+dependent\s+adult\s+)?abuse|abus(e|ed|ing|er)\s+.{0,20}(elder|elderly|senior|grandparent|grandmother|grandfather|aging\s+(parent|mother|father))|(elder|elderly|senior|grandparent|grandmother|grandfather|dependent\s+adult)\s+.{0,20}abus|abuse\s+of\s+(an?\s+)?(elder|elderly|senior|dependent)|насили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(пожил|престарел|літн)|обижа[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(пожил|престарел)|abuso\s+de\s+(ancian|adulto\s+mayor|persona\s+mayor)|(abuelo|abuela|anciano|adulto\s+mayor|persona\s+mayor)\s+.{0,25}(abus|maltrat)|(abus|maltrat)[\wa-zá-ú]*\s+.{0,15}(abuelo|abuela|anciano|adulto\s+mayor)/i],
+    patterns: [/elder\s+(or\s+dependent\s+adult\s+)?abuse|abus(e|ed|ing|er)\s+.{0,20}(elder|elderly|senior|grandparent|grandmother|grandfather|aging\s+(parent|mother|father))|(elder|elderly|senior|grandparent|grandmother|grandfather|dependent\s+adult)\s+.{0,20}abus|abuse\s+of\s+(an?\s+)?(elder|elderly|senior|dependent)|насили[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+над\s+(пожил|престарел|літн)|обижа[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(пожил|престарел)|abuso\s+de\s+(ancian|adulto\s+mayor|persona\s+mayor)|(abuelo|abuela|anciano|adulto\s+mayor|persona\s+mayor)\s+.{0,25}(abus|maltrat)|(abus|maltrat)[\wа-яёіїєґА-ЯЁІЇЄҐa-zá-ú]*\s+.{0,15}(abuelo|abuela|anciano|adulto\s+mayor)/i],
     reason: 'Elder/dependent-adult abuse restraining order → EA-100.'
   },
   {
@@ -461,7 +461,7 @@ const PACKAGE_RULES = [
     service: 'restraining',
     packageForms: ['DV-100', 'CH-100', 'EA-100', 'GV-100', 'WV-100'],
     confidence: 0.9,
-    patterns: [/restraining\s+order|protective\s+order|harass|stalk|domestic\s+(violence|abuse)|hits?\s+me|beat(s|en|ing)?\s+me|abus(e|ed|ing)\s+(me|by\s+my)|afraid\s+of\s+my\s+(husband|wife|partner|boyfriend|girlfriend|ex)|need\s+protection\s+from|рестре[ий]нинг|ристре[ий]нинг|защитн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ордер|охоронн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+наказ|угрож|преслед[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+меня|бьёт|бьет|избива|побои|домашн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+насил|нужна\s+защит|боюсь\s+(муж|парт|сожит|бывш)|orden\s+(de\s+)?(restricci[oó]n|protecci[oó]n|alejamiento)|acoso|violencia\s+(dom[eé]stica|de\s+pareja|familiar)|me\s+(pega|golpea)/i],
+    patterns: [/restraining\s+order|protective\s+order|harass|stalk|domestic\s+(violence|abuse)|hits?\s+me|beat(s|en|ing)?\s+me|abus(e|ed|ing)\s+(me|by\s+my)|afraid\s+of\s+my\s+(husband|wife|partner|boyfriend|girlfriend|ex)|need\s+protection\s+from|рестре[ий]нинг|ристре[ий]нинг|защитн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+ордер|охоронн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+наказ|угрож|преслед[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+меня|бьёт|бьет|избива|побои|домашн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+насил|нужна\s+защит|боюсь\s+(муж|парт|сожит|бывш)|orden\s+(de\s+)?(restricci[oó]n|protecci[oó]n|alejamiento)|acoso|violencia\s+(dom[eé]stica|de\s+pareja|familiar)|me\s+(pega|golpea)/i],
     reason: 'Restraining-order / harassment language maps to the DV-100/CH-100 family.'
   },
   // Tenant / DEFENDANT side of an eviction — MUST fire BEFORE the broad
@@ -484,8 +484,8 @@ const PACKAGE_RULES = [
       /\bud-?105\b/i,
       /(меня|мене|нас|нам|мне|мені)[\s\S]{0,25}(высел|висел)/i,
       /(мо[йя]|мій)\s+(арендодател|хозяин|лендлорд|орендодав|господар)/i,
-      /(ответ\w*|відповіст\w*|оспор\w*|оскарж\w*)[\s\S]{0,30}(высел|висел|иск|позов)/i,
-      /(получил\w*|пришл\w*|отримав\w*)[\s\S]{0,25}(повестк|повістк)[\s\S]{0,30}(высел|висел|оренд|аренд|квартир)/i,
+      /(ответ[\wа-яёіїєґА-ЯЁІЇЄҐ]*|відповіст[\wа-яёіїєґА-ЯЁІЇЄҐ]*|оспор[\wа-яёіїєґА-ЯЁІЇЄҐ]*|оскарж[\wа-яёіїєґА-ЯЁІЇЄҐ]*)[\s\S]{0,30}(высел|висел|иск|позов)/i,
+      /(получил[\wа-яёіїєґА-ЯЁІЇЄҐ]*|пришл[\wа-яёіїєґА-ЯЁІЇЄҐ]*|отримав[\wа-яёіїєґА-ЯЁІЇЄҐ]*)[\s\S]{0,25}(повестк|повістк)[\s\S]{0,30}(высел|висел|оренд|аренд|квартир)/i,
       /me\s+est[aá]n?\s+desaloj|responder[\s\S]{0,30}desalojo|mi\s+(arrendador|casero|propietario)[\s\S]{0,25}desaloj|recib[ií][\s\S]{0,20}desalojo/i
     ],
     reason: 'Tenant/defendant side of an eviction (being evicted / served / responding) → UD-105 Answer, not the landlord complaint.'
@@ -496,7 +496,7 @@ const PACKAGE_RULES = [
     service: 'ud',
     packageForms: ['UD-100', 'UD-105', 'UD-110'],
     confidence: 0.92,
-    patterns: [/unlawful\s+detainer|eviction|evicted|высел[\wа-яёіїєґА-ЯЁІЇЄҐ]*|эвикш|tenant|landlord|арендатор|арендодател|орендар|висел[\wа-яёіїєґА-ЯЁІЇЄҐ]*|выгон[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+из\s+квартир|desalojo|inquilino|propietario|3-?day\s+notice|30-?day\s+notice|notice\s+to\s+(quit|vacate|pay)/i],
+    patterns: [/unlawful\s+detainer|eviction|evicted|высел[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*|эвикш|tenant|landlord|арендатор|арендодател|орендар|висел[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*|выгон[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+из\s+квартир|desalojo|inquilino|propietario|3-?day\s+notice|30-?day\s+notice|notice\s+to\s+(quit|vacate|pay)/i],
     reason: 'Eviction / unlawful detainer language maps to UD-100 (landlord/plaintiff side).'
   },
 
@@ -517,12 +517,12 @@ const PACKAGE_RULES = [
     packageForms: ['SC-100', 'SC-104'],
     confidence: 0.9,
     patterns: [
-      /sc-?100|smol+\s*кле[ий]м|small\s+claims?|подать\s+в\s+(суд\s+по\s+)?мал[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|мал(ый|ые|ого)?\s+иск|невозвращ[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(долг|деньг)|не\s+вернул\s+(долг|деньг)|депозит\s+не\s+вернул|reclamos?\s+menores?|deuda\s+(no\s+pagada|peque[ñn]a)/i,
+      /sc-?100|smol+\s*кле[ий]м|small\s+claims?|подать\s+в\s+(суд\s+по\s+)?мал[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|мал(ый|ые|ого)?\s+иск|невозвращ[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(долг|деньг)|не\s+вернул\s+(долг|деньг)|депозит\s+не\s+вернул|reclamos?\s+menores?|deuda\s+(no\s+pagada|peque[ñn]a)/i,
       // "sue someone" / money owed → a money dispute = small claims (NOT an
       // immigration or family form). \bsue\b excludes "sued" (defendant) and "issue".
       /\bsue\b(?!\s+(me|us|by))|someone\s+owes\s+me|owes?\s+me\s+(money|\$|\d)|money\s+(owed|owes\s+to\s+me)|должен\s+мне\s+деньг|мне\s+должны\s+(деньг|\d)|взыскать\s+долг|винен\s+мені\s+грош|стягнути\s+борг|me\s+debe\s+(dinero|\$|\d)|reclamar\s+(una\s+)?deuda/i,
       // unpaid wages / employer didn't pay → small-claims money dispute
-      /unpaid\s+wages?|wage\s+claim|didn'?t\s+pay\s+(me|my\s+(wages?|salary))|(employer|boss|company|client)\s+(didn'?t|won'?t|never|hasn'?t)\s+pa(y|id)|не\s+(за)?плат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(зарплат|за\s+работ)|не\s+виплат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(зарплат|за\s+робот)|позов\s+(на|до)\s+роботодав[\wа-яёіїєґА-ЯЁІЇЄҐ]*|salario\s+no\s+pagado|no\s+me\s+pag[oó]\s+(el\s+)?(salario|sueldo)/i
+      /unpaid\s+wages?|wage\s+claim|didn'?t\s+pay\s+(me|my\s+(wages?|salary))|(employer|boss|company|client)\s+(didn'?t|won'?t|never|hasn'?t)\s+pa(y|id)|не\s+(за)?плат[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(зарплат|за\s+работ)|не\s+виплат[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(зарплат|за\s+робот)|позов\s+(на|до)\s+роботодав[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*|salario\s+no\s+pagado|no\s+me\s+pag[oó]\s+(el\s+)?(salario|sueldo)/i
     ],
     reason: 'Small claims plaintiff language (sue / money owed / unpaid wages) maps to Form SC-100.'
   },
@@ -532,7 +532,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-120'],
     confidence: 0.95,
-    patterns: [/sc-?120|defendant'?s?\s+claim|countersuit\s+small\s+claims|встречн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|контріск/i],
+    patterns: [/sc-?120|defendant'?s?\s+claim|countersuit\s+small\s+claims|встречн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|контріск/i],
     reason: 'Small-claims defendant counterclaim maps to Form SC-120.'
   },
   {
@@ -541,7 +541,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-104'],
     confidence: 0.93,
-    patterns: [/sc-?104|proof\s+of\s+service\s+small|small\s+claims\s+service|подтвержд[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+вруч[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+малы[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|proof\s+of\s+service.*small/i],
+    patterns: [/sc-?104|proof\s+of\s+service\s+small|small\s+claims\s+service|подтвержд[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+вруч[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+малы[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|proof\s+of\s+service.*small/i],
     reason: 'Small-claims proof of service maps to Form SC-104.'
   },
   {
@@ -550,7 +550,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['DEMAND-LETTER'],
     confidence: 0.92,
-    patterns: [/demand\s+letter|pre-?suit\s+demand|претензи[\wа-яёіїєґА-ЯЁІЇЄҐ]*|досудебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+претензи|досудов[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+претенз|carta\s+de\s+demanda|requerimiento\s+previo/i],
+    patterns: [/demand\s+letter|pre-?suit\s+demand|претензи[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*|досудебн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+претензи|досудов[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+претенз|carta\s+de\s+demanda|requerimiento\s+previo/i],
     reason: 'Pre-suit demand letter language maps to the demand-letter package.'
   },
   // ===== High-value scenarios that need routing even without a CA-court
@@ -581,7 +581,7 @@ const PACKAGE_RULES = [
     service: 'translation',
     packageForms: ['TRANSLATION'],
     confidence: 0.94,
-    patterns: [/(translat\w+|translation\s+(service|certified|notari[zs]ed))|certifi(ed|cate(d)?)\s+translat|translate\s+(my\s+)?(birth|marriage|divorce|diploma|degree|certificate|passport)|перевод\s+(документ|свидетельств|паспорт|диплом)|нотариальн\w*\s+перевод|переклад\s+(документ|свідоцт|паспорт)|traducci[oó]n\s+(certificada|jurada|de\s+documentos)/i],
+    patterns: [/(translat[\wа-яёіїєґА-ЯЁІЇЄҐ]+|translation\s+(service|certified|notari[zs]ed))|certifi(ed|cate(d)?)\s+translat|translate\s+(my\s+)?(birth|marriage|divorce|diploma|degree|certificate|passport)|перевод\s+(документ|свидетельств|паспорт|диплом)|нотариальн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+перевод|переклад\s+(документ|свідоцт|паспорт)|traducci[oó]n\s+(certificada|jurada|de\s+documentos)/i],
     reason: 'Document translation → translation package.'
   },
   {
@@ -590,7 +590,7 @@ const PACKAGE_RULES = [
     service: 'notary',
     packageForms: ['NOTARY'],
     confidence: 0.92,
-    patterns: [/notar(y|ize|ization|ized)|need\s+(it\s+|to\s+be\s+)?notari[zs]ed|notary\s+(public|service)|нотариально\s+заверить|нотариальн\w*\s+(заверени|услуг)|у\s+нотариус|нотаріальн\w*|notar(io|izar|izaci[oó]n)/i],
+    patterns: [/notar(y|ize|ization|ized)|need\s+(it\s+|to\s+be\s+)?notari[zs]ed|notary\s+(public|service)|нотариально\s+заверить|нотариальн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(заверени|услуг)|у\s+нотариус|нотаріальн[\wа-яёіїєґА-ЯЁІЇЄҐ]*|notar(io|izar|izaci[oó]n)/i],
     reason: 'Notary request → notary service package.'
   },
   {
@@ -599,7 +599,7 @@ const PACKAGE_RULES = [
     service: 'immigration',
     packageForms: ['G-639'],
     confidence: 0.93,
-    patterns: [/foia|g-?639|freedom\s+of\s+information|uscis\s+(file|records|a-?file|alien\s+file)|copy\s+of\s+(my\s+)?(uscis|immigration)\s+(file|records)|мой\s+иммиграционн\w*\s+файл|записи\s+(uscis|иммиграц)|solicitar\s+(mi\s+)?archivo\s+uscis|(request|get|copy of|запрос)[\s\S]{0,25}(my )?(immigration|uscis|иммиграцион)[\s\S]{0,15}(file|record|history|файл|дел[оа]|истори)/i],
+    patterns: [/foia|g-?639|freedom\s+of\s+information|uscis\s+(file|records|a-?file|alien\s+file)|copy\s+of\s+(my\s+)?(uscis|immigration)\s+(file|records)|мой\s+иммиграционн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+файл|записи\s+(uscis|иммиграц)|solicitar\s+(mi\s+)?archivo\s+uscis|(request|get|copy of|запрос)[\s\S]{0,25}(my )?(immigration|uscis|иммиграцион)[\s\S]{0,15}(file|record|history|файл|дел[оа]|истори)/i],
     reason: 'FOIA / USCIS records request → Form G-639.'
   },
   {
@@ -619,7 +619,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['NC-100', 'NC-110', 'NC-120', 'NC-130'],
     confidence: 0.93,
-    patterns: [/name\s+chang|change\s+(my\s+)?(legal\s+)?name|change\s+(my\s+)?(child|kid|son|daughter|minor)('?s)?\s+name|change\s+the\s+name\s+of\s+my\s+(child|son|daughter|kid)|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили|имя\s+ребен)|змін[іиа][\wа-яёіїєґ'’]*\s+(ім|прізвищ)|зміна\s+(імен|прізвищ)|поміня[\wа-яёіїєґ'’]*\s+(ім|прізвищ)|cambio\s+de\s+nombre|cambiar\s+(mi\s+|el\s+)?nombre/i],
+    patterns: [/name\s+chang|change\s+(my\s+)?(legal\s+)?name|change\s+(my\s+)?(child|kid|son|daughter|minor)('?s)?\s+name|change\s+the\s+name\s+of\s+my\s+(child|son|daughter|kid)|(nc-?100|nc-?110|nc-?120|nc-?130)|legally\s+change\s+name|сменить\s+имя|поменять\s+(имя|фамили)|изменить\s+(имя|фамили|имя\s+ребен)|змін[іиа][\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґ'’]*\s+(ім|прізвищ)|зміна\s+(імен|прізвищ)|поміня[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґ'’]*\s+(ім|прізвищ)|cambio\s+de\s+nombre|cambiar\s+(mi\s+|el\s+)?nombre/i],
     reason: 'Legal name change → NC-100 series (CA).'
   },
   {
@@ -628,7 +628,7 @@ const PACKAGE_RULES = [
     service: 'family',
     packageForms: ['FL-100'],
     confidence: 0.7,
-    patterns: [/(got|after)\s+(married|marriage).*change\s+(my\s+)?(last\s+)?name|change\s+(my\s+)?(last\s+)?name\s+after\s+(marriage|wedding)|сменить\s+фамили\w*\s+после\s+(брак|свадьб)|cambiar\s+(mi\s+)?apellido\s+(despu[eé]s\s+del?\s+)?matrimonio/i],
+    patterns: [/(got|after)\s+(married|marriage).*change\s+(my\s+)?(last\s+)?name|change\s+(my\s+)?(last\s+)?name\s+after\s+(marriage|wedding)|сменить\s+фамили[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+после\s+(брак|свадьб)|cambiar\s+(mi\s+)?apellido\s+(despu[eé]s\s+del?\s+)?matrimonio/i],
     reason: 'Surname change after marriage usually happens through the marriage certificate; only flag here if explicit court order needed.'
   },
   {
@@ -637,7 +637,7 @@ const PACKAGE_RULES = [
     service: 'dmv',
     packageForms: ['DMV'],
     confidence: 0.93,
-    patterns: [/dmv|driver(\'?s)?\s+licen[cs]e|lost\s+(my\s+)?licen[cs]e|car\s+title|vehicle\s+title|transfer\s+(the\s+)?title|smog\s+check|registration\s+(of\s+)?(car|vehicle)|водительск\w*\s+(удостоверени|прав)|потер\w*\s+прав|техосмотр|регистраци\w*\s+автомобил|licencia\s+de\s+conducir|registro\s+vehicular/i],
+    patterns: [/dmv|driver(\'?s)?\s+licen[cs]e|lost\s+(my\s+)?licen[cs]e|car\s+title|vehicle\s+title|transfer\s+(the\s+)?title|smog\s+check|registration\s+(of\s+)?(car|vehicle)|водительск[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(удостоверени|прав)|потер[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+прав|техосмотр|регистраци[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+автомобил|licencia\s+de\s+conducir|registro\s+vehicular/i],
     reason: 'DMV-related (license / title) → CA DMV form packet.'
   },
   {
@@ -655,7 +655,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['WG-001'],
     confidence: 0.93,
-    patterns: [/wg-?001|wage\s+garnish|garnish(ment)?\s+(of\s+)?wages?|удержан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+зарплат|стяг[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+із\s+зарплат|embargo\s+(de\s+)?salario/i],
+    patterns: [/wg-?001|wage\s+garnish|garnish(ment)?\s+(of\s+)?wages?|удержан[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+зарплат|стяг[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+із\s+зарплат|embargo\s+(de\s+)?salario/i],
     reason: 'Wage garnishment language maps to Form WG-001.'
   },
   {
@@ -664,7 +664,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['EJ-001'],
     confidence: 0.93,
-    patterns: [/ej-?001|abstract\s+of\s+judgment|judgment\s+lien|выписк[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+судебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+решен|регистрац[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+судебн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+решен|gravamen\s+por\s+sentencia|abstracto\s+de\s+(juicio|sentencia)/i],
+    patterns: [/ej-?001|abstract\s+of\s+judgment|judgment\s+lien|выписк[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+судебн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+решен|регистрац[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+судебн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+решен|gravamen\s+por\s+sentencia|abstracto\s+de\s+(juicio|sentencia)/i],
     reason: 'Abstract-of-judgment / judgment-lien language maps to Form EJ-001.'
   },
   {
@@ -673,7 +673,7 @@ const PACKAGE_RULES = [
     service: 'civil',
     packageForms: ['SC-140'],
     confidence: 0.93,
-    patterns: [/sc-?140|pay\s+in\s+installments|installment\s+(plan|payment)|оплат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+в\s+рассрочк|расрочк[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+судебн|pago\s+a\s+plazos/i],
+    patterns: [/sc-?140|pay\s+in\s+installments|installment\s+(plan|payment)|оплат[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+в\s+рассрочк|расрочк[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+судебн|pago\s+a\s+plazos/i],
     reason: 'Installment-payment request maps to Form SC-140.'
   },
 
@@ -684,7 +684,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['LLC-1', 'LLC-12', 'OPERATING-AGREEMENT', 'SS-4'],
     confidence: 0.92,
-    patterns: [/llc-?1\b|form\s+(an?\s+)?llc|start\s+(an?\s+)?(llc|business|company)|open\s+(an?\s+)?(llc|business|company)|create\s+(an?\s+)?(llc|business|company)|register\s+(an?\s+)?(llc|business|company)|article\s+of\s+organization|open\s+business|открыть\s+(ооо|бизнес|компани|llc|фирм)|зарегистрир[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(ооо|бизнес|компани|llc|фирм)|создат[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(ооо|компани|llc|фирм)|відкрит[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(бізнес|llc|тов|компані|фірм)|crear?\s+(llc|empresa|negocio|compa[ñn][ií]a)|abrir\s+(empresa|negocio|llc)/i],
+    patterns: [/llc-?1\b|form\s+(an?\s+)?llc|start\s+(an?\s+)?(llc|business|company)|open\s+(an?\s+)?(llc|business|company)|create\s+(an?\s+)?(llc|business|company)|register\s+(an?\s+)?(llc|business|company)|article\s+of\s+organization|open\s+business|открыть\s+(ооо|бизнес|компани|llc|фирм)|зарегистрир[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(ооо|бизнес|компани|llc|фирм)|создат[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(ооо|компани|llc|фирм)|відкрит[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(бізнес|llc|тов|компані|фірм)|crear?\s+(llc|empresa|negocio|compa[ñn][ií]a)|abrir\s+(empresa|negocio|llc)/i],
     reason: 'Form-LLC / open-business language maps to Form LLC-1.'
   },
   {
@@ -693,7 +693,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['LLC-12'],
     confidence: 0.95,
-    patterns: [/llc-?12|statement\s+of\s+information|biennial\s+statement|biennial\s+(filing|report)|информац[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+отчет\s+(llc|ооо)|двух?годичн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+отчет|informe\s+bienal|declaraci[oó]n\s+de\s+informaci[oó]n/i],
+    patterns: [/llc-?12|statement\s+of\s+information|biennial\s+statement|biennial\s+(filing|report)|информац[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+отчет\s+(llc|ооо)|двух?годичн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+отчет|informe\s+bienal|declaraci[oó]n\s+de\s+informaci[oó]n/i],
     reason: 'Biennial statement of information maps to Form LLC-12.'
   },
   {
@@ -702,7 +702,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['ARTS-GS', 'SI-550', 'SS-4'],
     confidence: 0.92,
-    patterns: [/arts-?gs|articles?\s+of\s+incorporation|inc(orporate|orporation)|form\s+a\s+corporation|открыть\s+корпорац|зарегистр[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+корпорац|створит[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+корпорац|crear?\s+(corporaci[oó]n|inc)|abrir\s+corporaci[oó]n|si-?550/i],
+    patterns: [/arts-?gs|articles?\s+of\s+incorporation|inc(orporate|orporation)|form\s+a\s+corporation|открыть\s+корпорац|зарегистр[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+корпорац|створит[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+корпорац|crear?\s+(corporaci[oó]n|inc)|abrir\s+corporaci[oó]n|si-?550/i],
     reason: 'Incorporation language maps to Form ARTS-GS.'
   },
   {
@@ -711,7 +711,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['FBN'],
     confidence: 0.93,
-    patterns: [/\bdba\b|d\.b\.a\.|fbn|fictitious\s+business\s+name|doing\s+business\s+as|вымышлен[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(назван|им)\s+бизнес|вигадан[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+назв|nombre\s+(ficticio|comercial|de\s+negocio)|dba\s+registration/i],
+    patterns: [/\bdba\b|d\.b\.a\.|fbn|fictitious\s+business\s+name|doing\s+business\s+as|вымышлен[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(назван|им)\s+бизнес|вигадан[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+назв|nombre\s+(ficticio|comercial|de\s+negocio)|dba\s+registration/i],
     reason: 'Fictitious-business-name / DBA language maps to FBN packet.'
   },
   {
@@ -720,7 +720,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['SS-4'],
     confidence: 0.95,
-    patterns: [/\bein\b|ss-?4|employer\s+identification\s+number|tax\s+id\s+(for\s+)?business|идентификац[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+номер\s+работодател|ИНН\s+для\s+бизнес|n[uú]mero\s+de\s+identificaci[oó]n\s+(de\s+empleador|patronal)/i],
+    patterns: [/\bein\b|ss-?4|employer\s+identification\s+number|tax\s+id\s+(for\s+)?business|идентификац[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+номер\s+работодател|ИНН\s+для\s+бизнес|n[uú]mero\s+de\s+identificaci[oó]n\s+(de\s+empleador|patronal)/i],
     reason: 'EIN / employer identification number maps to Form SS-4.'
   },
   {
@@ -729,7 +729,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['OPERATING-AGREEMENT'],
     confidence: 0.92,
-    patterns: [/operating\s+agreement|llc\s+(operating\s+)?agreement|оперативн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+соглашен|соглашение\s+llc|устав\s+llc|устав\s+ооо|acuerdo\s+operativo|acuerdo\s+de\s+operaci[oó]n/i],
+    patterns: [/operating\s+agreement|llc\s+(operating\s+)?agreement|оперативн[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+соглашен|соглашение\s+llc|устав\s+llc|устав\s+ооо|acuerdo\s+operativo|acuerdo\s+de\s+operaci[oó]n/i],
     reason: 'LLC operating agreement language maps to the operating-agreement package.'
   },
   {
@@ -738,7 +738,7 @@ const PACKAGE_RULES = [
     service: 'business',
     packageForms: ['LLC-1A'],
     confidence: 0.93,
-    patterns: [/llc-?1a|foreign\s+llc|register\s+(my\s+)?out-?of-?state\s+(llc|business)|зарегистр[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(llc|компани)\s+из\s+друг[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+штат|llc\s+(из|от)\s+друг[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+штат|llc\s+(extranjera|de\s+otro\s+estado)/i],
+    patterns: [/llc-?1a|foreign\s+llc|register\s+(my\s+)?out-?of-?state\s+(llc|business)|зарегистр[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+(llc|компани)\s+из\s+друг[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+штат|llc\s+(из|от)\s+друг[\wа-яёіїєґА-ЯЁІЇЄҐа-яёіїєґА-ЯЁІЇЄҐ]*\s+штат|llc\s+(extranjera|de\s+otro\s+estado)/i],
     reason: 'Foreign / out-of-state LLC registration maps to Form LLC-1A.'
   },
 
@@ -749,7 +749,7 @@ const PACKAGE_RULES = [
     service: 'probate',
     packageForms: ['DE-295', 'DE-160', 'DE-165'],
     confidence: 0.9,
-    patterns: [/(de-?295|close\s+(probate|estate)|closing\s+(probate|estate)|probate\s+closing|final\s+(distribution|discharge|accounting|account|report)|discharge\s+(personal\s+representative|executor|administrator)|закрыть\s+probate|закрытие\s+(probate|наследств)|финальн\w*\s+(распредел|отчет)|final\s+distribution|закриття\s+probate|cerrar\s+probate|descargo\s+final|distribuci[oó]n\s+final)/i],
+    patterns: [/(de-?295|close\s+(probate|estate)|closing\s+(probate|estate)|probate\s+closing|final\s+(distribution|discharge|accounting|account|report)|discharge\s+(personal\s+representative|executor|administrator)|закрыть\s+probate|закрытие\s+(probate|наследств)|финальн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(распредел|отчет)|final\s+distribution|закриття\s+probate|cerrar\s+probate|descargo\s+final|distribuci[oó]n\s+final)/i],
     reason: 'Probate closing / final discharge language maps to Form DE-295 packet.'
   },
   {
@@ -1028,7 +1028,7 @@ function routeFromLocalForm(hit, lang, requestedCounty) {
 
 const PROBATE_WORD = /\bprobate\b|пробейт|пробат/i;
 const ESTATE_CONTEXT = /estate|decedent|inherit|inheritance|heir|will\b|testament|someone\s+(died|passed away)|death|final\s+(distribution|discharge)|executor|administrator\s+of\s+estate|наслед|наследств|завещан|умер|помер|спадщин|заповіт|herencia|sucesi[oó]n|testamento/i;
-const GUARDIANSHIP_CONTEXT = /guardianship|conservatorship|guardian\s+of|conservator\s+of|опек\w*\s+над|попечительств|опіка\s+над|tutela|curadur[ií]a|conservadur[ií]a/i;
+const GUARDIANSHIP_CONTEXT = /guardianship|conservatorship|guardian\s+of|conservator\s+of|опек[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+над|попечительств|опіка\s+над|tutela|curadur[ií]a|conservadur[ií]a/i;
 const INTENT_OPTIONS = {
   en: [
     { id: 'estate', label: 'Estate after someone died', description: 'Opening, administering, or closing a decedent estate.' },
@@ -1062,7 +1062,7 @@ const INTENT_OPTIONS = {
 // criminal-defense attorney, so the finder says so instead of routing them
 // into the CR-180 intake. Expungement and early probation termination are
 // still prepared.
-const ATTORNEY_ONLY_RELIEF = /\b17\s*\(\s*b\s*\)|wobbler|reduc\w*\s+(?:my\s+|a\s+|the\s+)?felony|felony\s+(?:reduction|to\s+(?:a\s+)?misdemeanor)|\bseal\w*\s+(?:my\s+|an?\s+|the\s+)?(?:arrest|juvenile|record)|(?:arrest|juvenile)\s+(?:record\s+)?seal|851\.91|\b(?:wic|w&i|w\s*&\s*i)\s*781\b|\bprop(?:osition)?\s*(?:64|47)\b|11361\.8|1170\.18|redesignat|resentenc|reclassif|cannabis\s+conviction|marijuana\s+conviction|\bCR-?409\b|\bCR-?410\b|\bJV-?595\b|запечат|засекре|переквалифик|сниз[а-яёіїєґ]*\s+(?:фелон|тяжк)|перекваліфік|зниз[а-яёіїєґ]*\s+(?:фелон|тяжк)|sell(?:ar|ado|o)\s+(?:de\s+|el\s+|mis\s+)?(?:antecedentes|arresto|record|registro)|reducir\s+(?:un\s+|mi\s+)?delito/i;
+const ATTORNEY_ONLY_RELIEF = /\b17\s*\(\s*b\s*\)|wobbler|reduc[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(?:my\s+|a\s+|the\s+)?felony|felony\s+(?:reduction|to\s+(?:a\s+)?misdemeanor)|\bseal[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(?:my\s+|an?\s+|the\s+)?(?:arrest|juvenile|record)|(?:arrest|juvenile)\s+(?:record\s+)?seal|851\.91|\b(?:wic|w&i|w\s*&\s*i)\s*781\b|\bprop(?:osition)?\s*(?:64|47)\b|11361\.8|1170\.18|redesignat|resentenc|reclassif|cannabis\s+conviction|marijuana\s+conviction|\bCR-?409\b|\bCR-?410\b|\bJV-?595\b|запечат|засекре|переквалифик|сниз[а-яёіїєґ]*\s+(?:фелон|тяжк)|перекваліфік|зниз[а-яёіїєґ]*\s+(?:фелон|тяжк)|sell(?:ar|ado|o)\s+(?:de\s+|el\s+|mis\s+)?(?:antecedentes|arresto|record|registro)|reducir\s+(?:un\s+|mi\s+)?delito/i;
 const ATTORNEY_ONLY_MESSAGE = {
   en: 'We don’t prepare felony reductions, arrest or juvenile record sealing, or Prop 64 petitions — these usually need a criminal-defense attorney. At your direction we can prepare an expungement (dismissal) or an early probation termination petition. General information, not legal advice.',
   ru: 'Мы не готовим документы для снижения фелонии до мисдиминора, засекречивания записей об аресте или о несовершеннолетних и по Prop 64 — для этого обычно нужен адвокат по уголовным делам. По вашему поручению мы можем подготовить ходатайство о снятии судимости (expungement) или о досрочном прекращении probation. Общая информация, не юридическая консультация.',
@@ -1338,12 +1338,12 @@ function routeQuery(queryValue, options = {}) {
     return intentPrompt(originalQuery, lang);
   }
 
-  const explicitProbationMotion = /(?:modify|modification|terminate|termination|end|shorten|reduce|early)[\s\S]{0,35}probation|probation[\s\S]{0,35}(?:modify|modification|terminate|termination|end|shorten|reduce|early)|dui[\s\S]{0,35}probation|пробаци|пробаці|испытательн[\wа-яё]*\s+срок|умовн[\wа-яії]*\s+(?:строк|термін)|досрочн[\wа-яё]*\s+прекращ|дострокове\s+припинен|libertad\s+condicional/i.test(originalQuery);
+  const explicitProbationMotion = /(?:modify|modification|terminate|termination|end|shorten|reduce|early)[\s\S]{0,35}probation|probation[\s\S]{0,35}(?:modify|modification|terminate|termination|end|shorten|reduce|early)|dui[\s\S]{0,35}probation|пробаци|пробаці|испытательн[\wа-яёіїєґА-ЯЁІЇЄҐа-яё]*\s+срок|умовн[\wа-яёіїєґА-ЯЁІЇЄҐа-яії]*\s+(?:строк|термін)|досрочн[\wа-яёіїєґА-ЯЁІЇЄҐа-яё]*\s+прекращ|дострокове\s+припинен|libertad\s+condicional/i.test(originalQuery);
   if (explicitProbationMotion) {
     return routeCriminalRelief(originalQuery, lang, 'probation-motion', options.county);
   }
 
-  const explicitRecordCleanup = /expung|record\s+(?:clean|clear)|clean\s+(?:my\s+)?record|petition\s+for\s+dismissal|dismiss\w*\s+(?:a\s+)?conviction|1203\.4|set\s+aside\s+(?:a\s+)?conviction|снят\w*\s+судимост|очист\w*\s+(?:запис|судимост)|зня[а-яёіїєґ]*\s+судим|очищ[а-яёіїєґ]*\s+(?:запис|судим)|eliminar\w*\s+(?:mis\s+|los\s+)?antecedentes|borrar\s+(?:mis\s+|los\s+)?antecedentes|limpiar\s+(?:mi\s+)?(?:record|r[eé]cord|historial|antecedentes)|cancelaci[oó]n\s+de\s+antecedentes/i.test(originalQuery);
+  const explicitRecordCleanup = /expung|record\s+(?:clean|clear)|clean\s+(?:my\s+)?record|petition\s+for\s+dismissal|dismiss[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(?:a\s+)?conviction|1203\.4|set\s+aside\s+(?:a\s+)?conviction|снят[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+судимост|очист[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(?:запис|судимост)|зня[а-яёіїєґ]*\s+судим|очищ[а-яёіїєґ]*\s+(?:запис|судим)|eliminar[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(?:mis\s+|los\s+)?antecedentes|borrar\s+(?:mis\s+|los\s+)?antecedentes|limpiar\s+(?:mi\s+)?(?:record|r[eé]cord|historial|antecedentes)|cancelaci[oó]n\s+de\s+antecedentes/i.test(originalQuery);
   if (explicitRecordCleanup) {
     return routeCriminalRelief(originalQuery, lang, 'record-cleanup', options.county);
   }

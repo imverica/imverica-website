@@ -823,8 +823,8 @@ export function initIntakeWizard(): void {
     var text = normalizeIntakeText(value);
     if (/uscis|eoir|immigration|иммиграц|імміграц|гринк|грінк|грин|грін|green\s*card|ворк\s+п[еэ]рмит|work\s+permit|i-\d+|n-\d+|g-\d+|свадьб|брак|женит|замуж|marriage|spouse|супруг|супруга|чоловік|дружин|убежищ|асайл|asylum|гражданств|громадянств|citizenship/.test(text)) return 'immigration';
     if (/fl-\d+|dv-\d+|divorce|family|custody|развод|розлуч|алим[еє]нт|кастоди|опек|сімейн|семейн/.test(text)) return 'family';
-    if (/small\s*claims?|смол+\s+кле[ий]м|мал\w*\s+иск|sc-\d+|civil|complaint|компле[ий]нт|суд/.test(text)) return 'civil';
-    if (/restraining|рестре[ий]нинг|ристре[ий]нинг|защитн\w*\s+ордер|ch-\d+|ea-\d+|gv-\d+|wv-\d+|угрож|преслед|harass|stalk/.test(text)) return 'restraining';
+    if (/small\s*claims?|смол+\s+кле[ий]м|мал[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+иск|sc-\d+|civil|complaint|компле[ий]нт|суд/.test(text)) return 'civil';
+    if (/restraining|рестре[ий]нинг|ристре[ий]нинг|защитн[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+ордер|ch-\d+|ea-\d+|gv-\d+|wv-\d+|угрож|преслед|harass|stalk/.test(text)) return 'restraining';
     if (/eviction|unlawful|detainer|уд-\d+|ud-\d+|выселен|аренд|tenant|landlord/.test(text)) return 'ud';
     if (/llc|dba|ein|business|бизнес|компан|корпорац/.test(text)) return 'business';
     return '';
