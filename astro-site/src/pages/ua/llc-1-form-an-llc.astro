@@ -13,7 +13,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California LLC Formation (LLC-1) Document Preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  provider: { '@id': 'https://imverica.com/#organization' },
   description: 'Підготовка документів для створення каліфорнійської LLC (форма LLC-1, Articles of Organization), за дорученням клієнта.'
 };
 ---
@@ -59,7 +59,7 @@ const schema = {
       <li>Унікальне ім'я LLC за правилами Каліфорнії.</li>
       <li>Каліфорнійський agent for service of process (registered agent).</li>
       <li>Структура управління — member-managed або manager-managed.</li>
-      <li>LLC-12 Statement of Information протягом 90 днів, плюс щорічний податок $800 до FTB.</li>
+      <li>Актуальний строк LLC-12 Statement of Information і податкові зобов’язання, перевірені безпосередньо в Secretary of State та FTB.</li>
     </ul>
 
     <h2>Що ми готуємо</h2>
@@ -82,7 +82,7 @@ const schema = {
     <cite>
       <strong>Джерело:</strong> California Corporations Code §17702.01 (Articles
       of Organization) та §17701 і далі (Revised Uniform LLC Act); Revenue
-      &amp; Taxation Code §17941 (щорічний податок $800). Лише підготовка
+      &amp; Taxation Code §17941 (актуальний податок перевірте безпосередньо у FTB). Лише підготовка
       документів — не юридичні чи податкові консультації.
     </cite>
   </LandingBody>

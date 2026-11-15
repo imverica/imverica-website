@@ -1,0 +1,96 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+
+const title = 'Direct document preparation vs. attorney-directed paralegal support | Imverica';
+const description =
+  'Imverica explains its two separate working relationships: client-directed document preparation for California self-represented clients and paralegal support directed and reviewed by a licensed attorney.';
+
+const faq: FaqItem[] = [
+  {
+    q: 'Does Imverica represent direct document-preparation clients?',
+    a: 'No. A direct client remains self-represented. Imverica does not appear for the client before USCIS or a court and does not create an attorney-client relationship.'
+  },
+  {
+    q: 'Can Imverica tell a direct client which form or legal option to choose?',
+    a: 'No. The direct client must decide what to file and provide specific instructions. Questions about eligibility, legal options, rights, or strategy belong with a licensed attorney.'
+  },
+  {
+    q: 'Who controls the work in an attorney-directed engagement?',
+    a: 'The licensed attorney defines the assignment, directs and reviews the work, communicates legal advice to the client, and remains responsible for the legal matter and representation.'
+  },
+  {
+    q: 'Does attorney-directed support make Imverica a law firm?',
+    a: 'No. Imverica remains a non-law-firm service provider. Attorney-directed support is a separate business-to-business engagement performed under the responsible attorney’s supervision.'
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/direct-document-preparation-vs-attorney-supervised-paralegal"
+  slug="/direct-document-preparation-vs-attorney-supervised-paralegal"
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[faqSchema(faq)]}
+>
+  <Hero
+    eyebrow="Two separate working relationships"
+    heading="Direct document preparation and attorney-directed support are not the same service"
+    sub="The person who makes legal decisions, directs the work, and remains responsible changes depending on the engagement. Imverica keeps the two relationships separate."
+  />
+
+  <LandingBody related={[
+    { href: '/about-imverica-legal-solutions', label: 'Verified facts about Imverica' },
+    { href: '/lda', label: 'What is a California Legal Document Assistant?' },
+    { href: '/pricing', label: 'Published direct-service fees' }
+  ]}>
+    <p class="lead">
+      Imverica Legal Solutions is not a law firm. It may work in one of two
+      clearly separated ways: directly for a California self-represented
+      client who supplies specific instructions, or as a nonlawyer support
+      provider on an assignment directed and reviewed by a licensed attorney.
+    </p>
+
+    <h2>1. Direct document preparation for a self-represented client</h2>
+    <ul>
+      <li>The service is offered remotely to California self-represented clients.</li>
+      <li>The client decides what form or document to prepare and gives specific instructions.</li>
+      <li>Imverica may type information, assemble client-selected materials, organize documents, and provide certified translations within the written scope.</li>
+      <li>Imverica does not determine eligibility, select a remedy or form, advise on rights or strategy, predict an outcome, or represent the client.</li>
+      <li>The written direct-service agreement identifies the work and fees.</li>
+    </ul>
+
+    <h2>2. Paralegal support directed by a licensed attorney</h2>
+    <ul>
+      <li>This is a separate business-to-business engagement with a licensed attorney or law firm.</li>
+      <li>The attorney defines the assignment and supplies the legal direction.</li>
+      <li>The attorney reviews the work, communicates legal advice, and remains responsible for the client relationship, legal judgment, filings, and representation.</li>
+      <li>Imverica performs only the nonlawyer support tasks assigned within the written scope.</li>
+      <li>Availability depends on the engagement and the rules that apply to the responsible attorney.</li>
+    </ul>
+
+    <h2>The two relationships do not overlap</h2>
+    <p>
+      An attorney’s separate engagement of Imverica does not mean that an
+      attorney represents an Imverica direct-service client. If a direct client
+      needs help deciding what to file or how the law applies, that person
+      should consult a licensed attorney under a separate attorney-client
+      agreement.
+    </p>
+
+    <h2>Why the distinction matters</h2>
+    <p>
+      A self-represented client controls a direct document-preparation request.
+      A licensed attorney controls an attorney-directed assignment. Stating
+      that difference plainly protects clients, attorneys, and the accuracy of
+      public descriptions of Imverica’s work.
+    </p>
+  </LandingBody>
+
+  <FaqBlock heading="Frequently asked questions" items={faq} />
+  <CTAStrip primaryHref="/#get-started" primaryText="Request document preparation" />
+</BaseLayout>

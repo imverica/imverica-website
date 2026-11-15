@@ -1,0 +1,309 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import type { Locale } from '~/data/i18n';
+
+interface Props { lang?: Locale }
+const { lang = 'en' } = Astro.props as Props;
+
+const PREFIX: Record<Locale, string> = { en: '', ru: '/ru', uk: '/ua', es: '/mx' };
+const prefix = PREFIX[lang];
+const slug = '/tps';
+
+const COPY = {
+  en: {
+    title: 'TPS-Related Document Preparation in California | Imverica',
+    description: 'Client-directed, non-lawyer preparation of TPS-related forms and documents for California self-represented clients who already chose the requested forms, categories, and materials.',
+    eyebrow: 'USCIS · Temporary Protected Status · Client-directed preparation',
+    heading: 'TPS-related document preparation for California consumers',
+    hero: 'Already chose the TPS-related form, category, and documents you want prepared? Imverica can type your answers and organize the materials you select. We do not decide TPS eligibility, select forms or evidence, interpret registration windows, or give legal advice.',
+    start: 'Identify my chosen document',
+    lead: 'Imverica provides non-lawyer document preparation for California self-represented clients who have already selected the TPS-related form or forms, filing category, and documents they want included. Work is performed only at the client’s specific direction. Imverica does not determine eligibility, select a filing path, choose evidence, interpret deadlines or government notices, represent clients before USCIS, or promise an outcome.',
+    currentHeading: 'Check current TPS information before requesting preparation',
+    currentP1: 'TPS country designations, extensions, termination dates, registration periods, court orders, form editions, fees, filing methods, and addresses can change. The client must verify the current country-specific TPS page and the current instructions for every selected form immediately before filing.',
+    currentP2: 'Imverica does not maintain or present a substitute list of currently designated countries or open registration periods on this page. If you are unsure whether TPS applies, whether a late filing is permitted, or which form or employment-authorization category to use, consult a licensed immigration attorney or DOJ-accredited representative before requesting document preparation.',
+    scopeHeading: 'What Imverica can do after you make the decisions',
+    scope: [
+      ['Typing', 'Enter the answers you provide into the current draft of the form you identify.'],
+      ['Organization', 'Arrange the documents and labels you select into a draft packet.'],
+      ['Clerical review', 'Flag blank fields, conflicting dates, and missing signatures for you to correct without interpreting legal meaning.'],
+      ['Translations', 'Coordinate certified English translations of documents you provide when requested.'],
+      ['Delivery', 'Provide a draft for your review, approval, signature, and filing.']
+    ],
+    limitsHeading: 'What this service does not include',
+    limits: [
+      'Determining whether a person, country, entry date, residence history, or prior filing qualifies for TPS.',
+      'Choosing between initial registration, re-registration, late filing, employment authorization, travel authorization, fee relief, or another process.',
+      'Selecting a form, category, filing method, filing address, deadline, or evidence package.',
+      'Deciding whether evidence is legally sufficient or advising how to answer a legal question.',
+      'Entering an appearance, communicating as a legal representative, predicting processing time, or promising approval.'
+    ],
+    processHeading: 'How client-directed preparation works',
+    process: [
+      ['You verify', 'You review the current USCIS country-specific notice and instructions or obtain legal advice.'],
+      ['You identify', 'You tell us the exact form, category, and documents you already selected.'],
+      ['We prepare', 'We type your answers and organize only the materials you direct us to include.'],
+      ['You decide', 'You review every answer, confirm current instructions, sign, and choose whether and where to file.']
+    ],
+    faqHeading: 'Frequently asked questions',
+    faqs: [
+      ['Can Imverica tell me whether I qualify for TPS?', 'No. Eligibility analysis and interpretation of country-specific notices require legal advice. Consult a licensed immigration attorney or DOJ-accredited representative.'],
+      ['Can Imverica choose the TPS forms or work-permit category?', 'No. You identify the exact forms and categories. Imverica can prepare them only after your selection.'],
+      ['Does this page list every currently designated country or registration window?', 'No. Those facts can change. Use the official USCIS TPS hub and the applicable country page immediately before filing.'],
+      ['Can Imverica choose my evidence or fee request?', 'No. You select the documents, fee category, and any fee-relief request. Imverica does not determine legal sufficiency or qualification.'],
+      ['How long will preparation take?', 'Imverica confirms an estimated preparation schedule in writing after the requested scope, intake, and client-selected documents are complete. It does not control USCIS processing time.']
+    ],
+    sourcesHeading: 'Official sources to verify',
+    sourcesIntro: 'Official USCIS source links reviewed November 14, 2026. Their live content controls; verify it again immediately before filing.',
+    ctaHeading: 'Already chose the TPS-related document?',
+    ctaSub: 'Tell us the exact form, category, and preparation scope you selected. We confirm the fee and estimated schedule in writing after complete intake.'
+  },
+  ru: {
+    title: 'Подготовка документов по TPS в Калифорнии | Imverica',
+    description: 'Неюридическая подготовка выбранных клиентом документов по TPS для жителей Калифорнии, которые уже определили формы, категории и материалы.',
+    eyebrow: 'USCIS · Temporary Protected Status · По поручению клиента',
+    heading: 'Подготовка выбранных документов по TPS в Калифорнии',
+    hero: 'Уже выбрали связанную с TPS форму, категорию и документы? Imverica может внести ваши ответы и организовать выбранные материалы. Мы не определяем eligibility, не выбираем формы или доказательства, не толкуем registration windows и не даём юридических советов.',
+    start: 'Указать выбранный документ',
+    lead: 'Imverica оказывает неюридическую услугу по подготовке документов для жителей Калифорнии, которые представляют себя самостоятельно и уже выбрали связанные с TPS формы, категории и материалы. Работа выполняется только по конкретному поручению клиента. Imverica не определяет eligibility, не выбирает путь подачи или доказательства, не толкует сроки и правительственные уведомления, не представляет клиента перед USCIS и не обещает результат.',
+    currentHeading: 'Проверьте актуальные сведения о TPS до заказа подготовки',
+    currentP1: 'Обозначения стран для TPS, продления, даты прекращения, периоды регистрации, судебные решения, редакции форм, сборы, способы и адреса подачи могут меняться. Клиент должен проверить актуальную страницу USCIS по своей стране и инструкции к каждой выбранной форме непосредственно перед подачей.',
+    currentP2: 'Imverica не публикует здесь заменяющий официальный источник список стран или открытых периодов регистрации. Если вы не уверены, применим ли TPS, возможна ли поздняя подача или какую форму либо категорию разрешения на работу использовать, обратитесь к лицензированному иммиграционному адвокату или DOJ-accredited representative до заказа подготовки.',
+    scopeHeading: 'Что может сделать Imverica после ваших решений',
+    scope: [
+      ['Заполнение', 'Внести предоставленные вами ответы в актуальный черновик указанной вами формы.'],
+      ['Организация', 'Собрать выбранные вами документы и подписи в черновой пакет.'],
+      ['Техническая проверка', 'Отметить пустые поля, несовпадающие даты и пропущенные подписи без толкования юридического смысла.'],
+      ['Переводы', 'По запросу координировать заверенный перевод предоставленных документов на английский.'],
+      ['Передача', 'Передать черновик для вашей проверки, одобрения, подписи и подачи.']
+    ],
+    limitsHeading: 'Что не входит в услугу',
+    limits: [
+      'Определение, соответствует ли человек, страна, дата въезда, история проживания или предыдущая подача условиям TPS.',
+      'Выбор между initial registration, re-registration, late filing, разрешением на работу или поездку, fee relief и другим процессом.',
+      'Выбор формы, категории, способа или адреса подачи, срока либо пакета доказательств.',
+      'Оценка юридической достаточности доказательств или совет по ответу на юридический вопрос.',
+      'Представительство, общение как legal representative, прогноз срока рассмотрения или обещание одобрения.'
+    ],
+    processHeading: 'Как проходит подготовка по поручению клиента',
+    process: [
+      ['Вы проверяете', 'Вы изучаете актуальное уведомление USCIS по стране и инструкции или получаете юридическую консультацию.'],
+      ['Вы указываете', 'Вы сообщаете точную форму, категорию и документы, которые уже выбрали.'],
+      ['Мы готовим', 'Мы вносим ваши ответы и организуем только материалы, которые вы поручили включить.'],
+      ['Вы решаете', 'Вы проверяете каждый ответ и актуальные инструкции, подписываете и решаете, подавать ли документы и куда.']
+    ],
+    faqHeading: 'Частые вопросы',
+    faqs: [
+      ['Может ли Imverica определить, подхожу ли я для TPS?', 'Нет. Анализ eligibility и толкование уведомлений по странам требуют юридического совета. Обратитесь к лицензированному иммиграционному адвокату или DOJ-accredited representative.'],
+      ['Может ли Imverica выбрать формы TPS или категорию work permit?', 'Нет. Точные формы и категории указываете вы. Imverica может подготовить их только после вашего выбора.'],
+      ['Есть ли здесь полный актуальный список стран и периодов регистрации?', 'Нет. Эти сведения меняются. Непосредственно перед подачей используйте официальный TPS hub USCIS и страницу своей страны.'],
+      ['Может ли Imverica выбрать доказательства или fee request?', 'Нет. Документы, категорию сбора и любой запрос fee relief выбираете вы. Imverica не определяет юридическую достаточность или право на льготу.'],
+      ['Сколько занимает подготовка?', 'Imverica письменно подтверждает ориентировочный график после согласования объёма и получения полной анкеты и выбранных клиентом документов. Срок USCIS мы не контролируем.']
+    ],
+    sourcesHeading: 'Официальные источники для проверки',
+    sourcesIntro: 'Ссылки на официальные источники USCIS проверены 14 ноября 2026 года. Их актуальное содержание имеет приоритет; перепроверьте его перед подачей.',
+    ctaHeading: 'Уже выбрали связанный с TPS документ?',
+    ctaSub: 'Укажите точную форму, категорию и выбранный объём подготовки. После полного intake мы письменно подтвердим стоимость и ориентировочный график.'
+  },
+  uk: {
+    title: 'Підготовка документів щодо TPS у Каліфорнії | Imverica',
+    description: 'Неюридична підготовка обраних клієнтом документів щодо TPS для мешканців Каліфорнії, які вже визначили форми, категорії та матеріали.',
+    eyebrow: 'USCIS · Temporary Protected Status · За дорученням клієнта',
+    heading: 'Підготовка обраних документів щодо TPS у Каліфорнії',
+    hero: 'Уже обрали пов’язану з TPS форму, категорію та документи? Imverica може внести ваші відповіді й упорядкувати обрані матеріали. Ми не визначаємо eligibility, не обираємо форми чи докази, не тлумачимо registration windows і не надаємо юридичних порад.',
+    start: 'Вказати обраний документ',
+    lead: 'Imverica надає неюридичну послугу з підготовки документів для мешканців Каліфорнії, які представляють себе самостійно й уже обрали пов’язані з TPS форми, категорії та матеріали. Робота виконується лише за конкретним дорученням клієнта. Imverica не визначає eligibility, не обирає шлях подання чи докази, не тлумачить строки й урядові повідомлення, не представляє клієнта перед USCIS і не обіцяє результат.',
+    currentHeading: 'Перевірте актуальні відомості про TPS до замовлення підготовки',
+    currentP1: 'Позначення країн для TPS, продовження, дати припинення, періоди реєстрації, судові рішення, редакції форм, збори, способи й адреси подання можуть змінюватися. Клієнт має перевірити актуальну сторінку USCIS щодо своєї країни та інструкції до кожної обраної форми безпосередньо перед поданням.',
+    currentP2: 'Imverica не публікує тут замінний офіційному джерелу список країн або відкритих періодів реєстрації. Якщо ви не впевнені, чи застосовується TPS, чи можлива пізня подача або яку форму чи категорію дозволу на роботу використовувати, зверніться до ліцензованого імміграційного адвоката чи DOJ-accredited representative до замовлення підготовки.',
+    scopeHeading: 'Що може зробити Imverica після ваших рішень',
+    scope: [
+      ['Внесення даних', 'Внести надані вами відповіді до актуальної чернетки вказаної вами форми.'],
+      ['Організація', 'Скласти обрані вами документи й підписи в чернетковий пакет.'],
+      ['Технічна перевірка', 'Позначити порожні поля, неузгоджені дати й пропущені підписи без тлумачення юридичного значення.'],
+      ['Переклади', 'За запитом координувати засвідчений переклад наданих документів англійською.'],
+      ['Передача', 'Надати чернетку для вашої перевірки, схвалення, підпису й подання.']
+    ],
+    limitsHeading: 'Що не входить до послуги',
+    limits: [
+      'Визначення, чи відповідає людина, країна, дата в’їзду, історія проживання або попереднє подання умовам TPS.',
+      'Вибір між initial registration, re-registration, late filing, дозволом на роботу чи поїздку, fee relief та іншим процесом.',
+      'Вибір форми, категорії, способу або адреси подання, строку чи пакета доказів.',
+      'Оцінка юридичної достатності доказів або порада щодо відповіді на юридичне запитання.',
+      'Представництво, спілкування як legal representative, прогноз строку розгляду або обіцянка схвалення.'
+    ],
+    processHeading: 'Як відбувається підготовка за дорученням клієнта',
+    process: [
+      ['Ви перевіряєте', 'Ви читаєте актуальне повідомлення USCIS щодо країни та інструкції або отримуєте юридичну консультацію.'],
+      ['Ви вказуєте', 'Ви повідомляєте точну форму, категорію та документи, які вже обрали.'],
+      ['Ми готуємо', 'Ми вносимо ваші відповіді й упорядковуємо лише матеріали, які ви доручили включити.'],
+      ['Ви вирішуєте', 'Ви перевіряєте кожну відповідь і чинні інструкції, підписуєте та вирішуєте, чи подавати документи й куди.']
+    ],
+    faqHeading: 'Поширені запитання',
+    faqs: [
+      ['Чи може Imverica визначити, чи підходжу я для TPS?', 'Ні. Аналіз eligibility і тлумачення повідомлень щодо країн потребують юридичної поради. Зверніться до ліцензованого імміграційного адвоката чи DOJ-accredited representative.'],
+      ['Чи може Imverica обрати форми TPS або категорію work permit?', 'Ні. Точні форми й категорії вказуєте ви. Imverica може підготувати їх лише після вашого вибору.'],
+      ['Чи є тут повний актуальний список країн і періодів реєстрації?', 'Ні. Ці відомості змінюються. Безпосередньо перед поданням використовуйте офіційний TPS hub USCIS і сторінку своєї країни.'],
+      ['Чи може Imverica обрати докази або fee request?', 'Ні. Документи, категорію збору й будь-який запит fee relief обираєте ви. Imverica не визначає юридичну достатність або право на пільгу.'],
+      ['Скільки триває підготовка?', 'Imverica письмово підтверджує орієнтовний графік після узгодження обсягу й отримання повної анкети та обраних клієнтом документів. Строк USCIS ми не контролюємо.']
+    ],
+    sourcesHeading: 'Офіційні джерела для перевірки',
+    sourcesIntro: 'Посилання на офіційні джерела USCIS перевірено 14 листопада 2026 року. Їх актуальний зміст має пріоритет; перевірте його знову перед поданням.',
+    ctaHeading: 'Уже обрали пов’язаний із TPS документ?',
+    ctaSub: 'Вкажіть точну форму, категорію та обраний обсяг підготовки. Після повного intake ми письмово підтвердимо вартість і орієнтовний графік.'
+  },
+  es: {
+    title: 'Preparación de documentos relacionados con TPS en California | Imverica',
+    description: 'Preparación no legal y dirigida por el cliente de documentos de TPS para residentes de California que ya eligieron formularios, categorías y materiales.',
+    eyebrow: 'USCIS · Temporary Protected Status · Bajo dirección del cliente',
+    heading: 'Preparación de documentos de TPS para consumidores de California',
+    hero: '¿Ya eligió el formulario, la categoría y los documentos relacionados con TPS? Imverica puede ingresar sus respuestas y organizar los materiales que usted selecciona. No determinamos elegibilidad, elegimos formularios o evidencia, interpretamos periodos de registro ni brindamos asesoría legal.',
+    start: 'Identificar mi documento elegido',
+    lead: 'Imverica ofrece preparación no legal de documentos para residentes de California que se representan a sí mismos y ya eligieron los formularios, categorías y materiales relacionados con TPS. El trabajo se realiza solo bajo instrucciones específicas del cliente. Imverica no determina elegibilidad, elige una vía de presentación o evidencia, interpreta plazos o avisos del gobierno, representa ante USCIS ni promete resultados.',
+    currentHeading: 'Verifique la información vigente de TPS antes de solicitar preparación',
+    currentP1: 'Las designaciones de países, extensiones, fechas de terminación, periodos de registro, órdenes judiciales, ediciones, tarifas, métodos y direcciones de presentación pueden cambiar. El cliente debe verificar la página vigente de USCIS para su país y las instrucciones de cada formulario elegido inmediatamente antes de presentar.',
+    currentP2: 'Imverica no publica aquí una lista que sustituya la fuente oficial de países o periodos abiertos. Si no sabe si TPS corresponde, si se permite una presentación tardía o qué formulario o categoría de autorización de empleo usar, consulte a un abogado de inmigración con licencia o representante acreditado por DOJ antes de solicitar preparación.',
+    scopeHeading: 'Qué puede hacer Imverica después de sus decisiones',
+    scope: [
+      ['Captura', 'Ingresar las respuestas que proporciona en el borrador vigente del formulario que identifica.'],
+      ['Organización', 'Ordenar los documentos y etiquetas que usted selecciona en un borrador.'],
+      ['Revisión técnica', 'Señalar espacios en blanco, fechas incompatibles y firmas faltantes sin interpretar significado legal.'],
+      ['Traducciones', 'Coordinar traducciones certificadas al inglés de los documentos que proporciona, cuando se solicite.'],
+      ['Entrega', 'Entregar un borrador para su revisión, aprobación, firma y presentación.']
+    ],
+    limitsHeading: 'Qué no incluye este servicio',
+    limits: [
+      'Determinar si una persona, país, fecha de entrada, historial de residencia o presentación anterior cumple los requisitos de TPS.',
+      'Elegir entre registro inicial, reinscripción, presentación tardía, autorización de empleo o viaje, fee relief u otro proceso.',
+      'Seleccionar formulario, categoría, método o dirección de presentación, plazo o paquete de evidencia.',
+      'Decidir suficiencia legal de la evidencia o aconsejar cómo responder una pregunta legal.',
+      'Comparecer, comunicarse como representante legal, predecir plazos o prometer aprobación.'
+    ],
+    processHeading: 'Cómo funciona la preparación dirigida por el cliente',
+    process: [
+      ['Usted verifica', 'Revisa el aviso vigente de USCIS para el país y las instrucciones u obtiene asesoría legal.'],
+      ['Usted identifica', 'Indica el formulario, la categoría y los documentos exactos que ya eligió.'],
+      ['Preparamos', 'Ingresamos sus respuestas y organizamos solo los materiales que nos indica incluir.'],
+      ['Usted decide', 'Revisa cada respuesta y las instrucciones vigentes, firma y decide si presenta y dónde.']
+    ],
+    faqHeading: 'Preguntas frecuentes',
+    faqs: [
+      ['¿Puede Imverica decirme si califico para TPS?', 'No. El análisis de elegibilidad y la interpretación de avisos por país requieren asesoría legal. Consulte a un abogado de inmigración con licencia o representante acreditado por DOJ.'],
+      ['¿Puede Imverica elegir formularios de TPS o la categoría de permiso de trabajo?', 'No. Usted identifica formularios y categorías exactos. Imverica solo puede prepararlos después de su elección.'],
+      ['¿Esta página enumera todos los países y periodos de registro vigentes?', 'No. Esos datos pueden cambiar. Use el TPS hub oficial de USCIS y la página correspondiente al país inmediatamente antes de presentar.'],
+      ['¿Puede Imverica elegir mi evidencia o solicitud de tarifa?', 'No. Usted selecciona documentos, categoría de tarifa y cualquier solicitud de fee relief. Imverica no determina suficiencia legal ni elegibilidad.'],
+      ['¿Cuánto tarda la preparación?', 'Imverica confirma por escrito un plazo estimado después de completar el alcance, la entrevista y los documentos elegidos por el cliente. No controla el tiempo de USCIS.']
+    ],
+    sourcesHeading: 'Fuentes oficiales que debe verificar',
+    sourcesIntro: 'Enlaces oficiales de USCIS revisados el 14 de noviembre de 2026. Su contenido vigente controla; verifíquelo de nuevo inmediatamente antes de presentar.',
+    ctaHeading: '¿Ya eligió el documento relacionado con TPS?',
+    ctaSub: 'Indique el formulario, la categoría y el alcance exactos que eligió. Confirmamos por escrito la tarifa y el plazo estimado después de la entrevista completa.'
+  }
+} as const;
+
+const T = COPY[lang];
+const canonical = `https://imverica.com${prefix}${slug}`;
+const intakeHref = `${prefix}/#get-started`;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: T.heading,
+  serviceType: 'Client-directed TPS-related document preparation',
+  url: canonical,
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
+  audience: { '@type': 'Audience', audienceType: 'California self-represented consumers who already selected the requested forms and documents' },
+  availableLanguage: ['English', 'Russian', 'Ukrainian', 'Spanish'],
+  description: T.description
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${canonical}#faq`,
+  mainEntity: T.faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
+};
+---
+<BaseLayout
+  title={T.title}
+  description={T.description}
+  canonical={canonical}
+  slug={slug}
+  lang={lang}
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[serviceSchema, faqSchema]}
+>
+  <Hero
+    lang={lang}
+    eyebrow={T.eyebrow}
+    heading={T.heading}
+    sub={T.hero}
+    ctaPrimary={{ href: intakeHref, text: T.start }}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: `${prefix}/i-765-work-permit-help`, label: 'I-765 — Employment Authorization' },
+    { href: `${prefix}/uscis-document-review`, label: 'USCIS clerical completeness check' },
+    { href: `${prefix}/lda`, label: 'California Legal Document Assistant' }
+  ]}>
+    <p class="lead">{T.lead}</p>
+
+    <h2>{T.currentHeading}</h2>
+    <p>{T.currentP1}</p>
+    <p>{T.currentP2}</p>
+
+    <h2>{T.scopeHeading}</h2>
+    <div class="form-list">
+      <ul>{T.scope.map(([label, text]) => <li><strong>{label}:</strong> {text}</li>)}</ul>
+    </div>
+
+    <h2>{T.limitsHeading}</h2>
+    <ul>{T.limits.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>{T.processHeading}</h2>
+    <ol>{T.process.map(([label, text]) => <li><strong>{label}.</strong> {text}</li>)}</ol>
+
+    <h2>{T.faqHeading}</h2>
+    {T.faqs.map(([question, answer]) => (
+      <section class="tps-faq">
+        <h3>{question}</h3>
+        <p>{answer}</p>
+      </section>
+    ))}
+
+    <h2>{T.sourcesHeading}</h2>
+    <p>{T.sourcesIntro}</p>
+    <ul>
+      <li><a href="https://www.uscis.gov/humanitarian/temporary-protected-status">USCIS — Temporary Protected Status hub</a></li>
+      <li><a href="https://www.uscis.gov/i-821">USCIS — Form I-821</a></li>
+      <li><a href="https://www.uscis.gov/i-765">USCIS — Form I-765</a></li>
+      <li><a href="https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf">USCIS — Form G-1055 Fee Schedule (PDF)</a></li>
+      <li><a href="https://www.uscis.gov/scams-fraud-and-misconduct/avoid-scams/find-legal-services">USCIS — Find Legal Services</a></li>
+    </ul>
+    <cite>
+      Official source links were reviewed on November 14, 2026. Imverica is not a law firm and does not provide legal advice. Documents are prepared only at the client’s specific direction.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading={T.ctaHeading}
+    sub={T.ctaSub}
+    primaryHref={intakeHref}
+    primaryText={T.start}
+  />
+</BaseLayout>
+
+<style is:global>
+  .tps-faq { margin: 0 0 18px; padding: 18px 20px; background: #fffaf2; border: 1px solid rgba(40,30,20,0.08); border-radius: 10px; }
+  .tps-faq h3 { margin: 0 0 7px; color: var(--navy-dark); }
+  .tps-faq p { margin: 0; }
+</style>

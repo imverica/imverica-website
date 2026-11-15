@@ -12,14 +12,7 @@ const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'I-589 Asylum Document Preparation',
-  provider: {
-    '@type': 'LegalService',
-    name: 'Imverica Legal Solutions',
-    url: 'https://imverica.com',
-    telephone: '+1-916-399-3992',
-    areaServed: { '@type': 'State', name: 'California' },
-    disambiguatingDescription: 'Imverica no es una firma jurídica. Solo preparación de documentos bajo la dirección del cliente.'
-  },
+  provider: { '@id': 'https://imverica.com/#organization' },
   description: 'Imverica prepara la solicitud I-589 de asilo, withholding of removal y protección bajo la Convención contra la Tortura bajo la dirección del solicitante.'
 };
 ---

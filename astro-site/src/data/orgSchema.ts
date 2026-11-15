@@ -22,6 +22,12 @@ export const organizationSchema = {
   logo: 'https://imverica.com/logo-nav.png',
   telephone: '+1-916-399-3992',
   email: 'info@imverica.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Sacramento',
+    addressRegion: 'CA',
+    addressCountry: 'US'
+  },
   areaServed: [
     { '@type': 'State', name: 'California' }
   ],
@@ -39,15 +45,16 @@ export const organizationSchema = {
     'https://t.me/imverica'
   ],
   description:
-    'Imverica Legal Solutions, the trade name of Imverica LLC, is a document-preparation company based in Sacramento. Its founder is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant. Imverica provides remote document preparation throughout California in English, Russian, Ukrainian, and Spanish. Imverica has more than 10 years of immigration-document preparation experience, including prior paralegal work under the direction of California-licensed attorneys. Documents are prepared only at the client\'s specific direction; Imverica does not provide legal advice.',
+    'Imverica Legal Solutions, the trade name of Imverica LLC, is a Sacramento-based document-preparation company. Its founder is a California-registered and bonded Legal Document Assistant (LDA Reg. No. 2026-010, Sacramento County, expires 09/27/2028) and Immigration Consultant. Direct services are delivered remotely to California self-represented clients in English, Russian, Ukrainian, and Spanish, only at the client\'s specific direction. In a separate business-to-business engagement, nonlawyer support may be provided to licensed attorneys under their direction and review.',
   knowsAbout: [
-    'USCIS immigration form preparation',
-    'U4U Uniting for Ukraine re-parole document preparation',
-    'TPS document preparation',
-    'Work permit (I-765) document preparation',
-    'Green card and adjustment of status (I-485) document preparation',
-    'Family-based petition (I-130) document preparation',
-    'Citizenship (N-400) document preparation',
+    'Client-selected USCIS form preparation for California consumers',
+    'Client-selected U4U-related document preparation for California consumers',
+    'Client-selected TPS-related document preparation for California consumers',
+    'Client-selected work permit (I-765) form preparation',
+    'Client-selected adjustment of status (I-485) form preparation',
+    'Client-selected family petition (I-130) form preparation',
+    'Client-selected fiance petition (I-129F) form preparation',
+    'Client-selected citizenship (N-400) form preparation',
     'Paralegal support for attorneys in immigration court (EOIR) cases',
     'Certified document translation (Russian, Ukrainian, Spanish)',
     'California family law document preparation',
@@ -57,7 +64,7 @@ export const organizationSchema = {
     'California expungement and record-cleanup document preparation'
   ],
   disambiguatingDescription:
-    "Imverica Legal Solutions is not a law firm and does not provide legal advice or court representation. Documents are prepared at the client's direction."
+    "Imverica Legal Solutions is not a law firm. For direct clients it does not provide legal advice, select forms or strategy, determine eligibility, predict outcomes, or provide representation. In a separate attorney engagement, the licensed attorney directs and reviews the work and remains responsible for the legal matter."
 };
 
 /** Stable site-name entity linked to the canonical organization. */

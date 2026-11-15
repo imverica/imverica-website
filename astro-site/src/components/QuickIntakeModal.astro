@@ -34,7 +34,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 
   <div class="qi-head">
     <h2 id="qiTitle" data-i18n="title">Tell us what you need</h2>
-    <p class="qi-sub" data-i18n="sub">We'll reply within one business day. Document preparation only — not legal advice.</p>
+    <p class="qi-sub" data-i18n="sub">We'll follow up after reviewing your request. Document preparation only — not legal advice.</p>
   </div>
 
   <form id="quickIntakeForm" class="qi-form" novalidate>
@@ -122,20 +122,20 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
   <!-- Success pane — replaces the form after a successful intake submit.
        Gives the user two paths: passive (wait for our call) or DIY
        (open the client portal, sign in, fill the long wizard for a
-       1-2-day faster turnaround). Lets us keep the long wizard's
+       more complete details). Lets us keep the long wizard's
        conversion value without forcing it on every visitor. -->
   <div id="qiSuccessPane" class="qi-success-pane" hidden>
     <div class="qi-success-icon" aria-hidden="true">✓</div>
     <h3 class="qi-success-title" data-i18n="successTitle">Got it — your request is in.</h3>
     <p class="qi-success-order" data-i18n="successOrder">
-      Reference: <strong id="qiOrderIdShown">—</strong>. Keep it for any follow-up. We'll reply within one business day.
+      Reference: <strong id="qiOrderIdShown">—</strong>. Keep it for any follow-up. We'll contact you after reviewing the request.
     </p>
     <p class="qi-success-prompt" data-i18n="successPrompt">
-      Want to save us 1–2 days? Sign in to your client portal with the same email and fill in the rest of the details yourself. Otherwise we'll call and do it together — your choice.
+      Want to provide the remaining details now? Sign in to your client portal with the same email. Otherwise we'll contact you after review — your choice.
     </p>
     <div class="qi-success-actions">
       <a class="qi-success-cta" id="qiOpenPortal" href="/account.html" data-i18n="successOpenPortal">
-        Open client portal · save 1–2 days
+        Open client portal · add details
       </a>
       <button type="button" class="qi-success-skip" id="qiSuccessClose" data-i18n="successSkip">
         OK, wait for the call
@@ -374,7 +374,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
   const i18n: Record<string, Record<string, string>> = {
     en: {
       title: 'Tell us what you need',
-      sub: "We'll reply within one business day. Document preparation only — not legal advice.",
+      sub: "We'll follow up after reviewing your request. Document preparation only — not legal advice.",
       lblName: 'Your name *',
       lblEmail: 'Email *',
       lblPhone: 'Phone',
@@ -384,11 +384,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       filesCta: 'Choose files (PDF | JPG | PNG | DOCX — up to 5 MB each, 5 MB total)',
       submit: 'Send request',
       sending: 'Sending…',
-      success: 'Got it! Your request was sent. We will reply at the email above within one business day.',
+      success: 'Got it! Your request was sent. We will follow up at the contact information above after review.',
       successTitle: 'Got it — your request is in.',
-      successOrder: 'Reference: <strong>{id}</strong>. Keep it for any follow-up. We will reply within one business day.',
-      successPrompt: 'Want to save us 1–2 days? Sign in to your client portal with the same email and fill in the rest of the details yourself. Otherwise we will call and do it together — your choice.',
-      successOpenPortal: 'Open client portal · save 1–2 days',
+      successOrder: 'Reference: <strong>{id}</strong>. Keep it for any follow-up. We will contact you after reviewing the request.',
+      successPrompt: 'Want to provide the remaining details now? Sign in to your client portal with the same email. Otherwise we will contact you after review — your choice.',
+      successOpenPortal: 'Open client portal · add details',
       successSkip: 'OK, wait for the call',
       errFields: 'Please fill all required fields.',
       errNetwork: 'Could not reach the server. Please check your connection or call +1 (916) 399-3992.',
@@ -400,7 +400,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     },
     ru: {
       title: 'Расскажите что вам нужно',
-      sub: 'Ответим в течение одного рабочего дня. Только подготовка документов — не юридическая консультация.',
+      sub: 'Свяжемся после проверки запроса. Только подготовка документов — не юридическая консультация.',
       lblName: 'Ваше имя *',
       lblEmail: 'Email *',
       lblPhone: 'Телефон',
@@ -410,11 +410,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       filesCta: 'Выбрать файлы (PDF | JPG | PNG | DOCX — до 5 МБ за файл, всего 5 МБ)',
       submit: 'Отправить запрос',
       sending: 'Отправляем…',
-      success: 'Готово! Запрос отправлен. Мы ответим на указанный email в течение одного рабочего дня.',
+      success: 'Готово! Запрос отправлен. После проверки мы свяжемся по указанным контактам.',
       successTitle: 'Готово — заявка принята.',
-      successOrder: 'Номер заявки: <strong>{id}</strong>. Укажите его при обращении. Мы ответим в течение одного рабочего дня.',
-      successPrompt: 'Хотите сэкономить 1–2 дня? Войдите в личный кабинет с тем же email и заполните оставшиеся данные сами. Иначе мы перезвоним и заполним вместе — как удобнее.',
-      successOpenPortal: 'Открыть кабинет · сэкономить 1–2 дня',
+      successOrder: 'Номер заявки: <strong>{id}</strong>. Укажите его при обращении. Мы свяжемся после проверки запроса.',
+      successPrompt: 'Хотите сразу добавить остальные данные? Войдите в личный кабинет с тем же email. Иначе мы свяжемся после проверки — как удобнее.',
+      successOpenPortal: 'Открыть кабинет · добавить данные',
       successSkip: 'Хорошо, жду звонка',
       errFields: 'Заполните, пожалуйста, обязательные поля.',
       errNetwork: 'Не удалось связаться с сервером. Проверьте интернет или позвоните +1 (916) 399-3992.',
@@ -426,7 +426,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     },
     uk: {
       title: 'Розкажіть, що вам потрібно',
-      sub: 'Відповімо протягом одного робочого дня. Лише підготовка документів — не юридична консультація.',
+      sub: 'Зв’яжемося після перевірки запиту. Лише підготовка документів — не юридична консультація.',
       lblName: "Ваше ім'я *",
       lblEmail: 'Email *',
       lblPhone: 'Телефон',
@@ -436,11 +436,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       filesCta: 'Обрати файли (PDF | JPG | PNG | DOCX — до 5 МБ за файл, всего 5 МБ)',
       submit: 'Надіслати запит',
       sending: 'Надсилаємо…',
-      success: 'Готово! Запит надіслано. Ми відповімо на вказаний email протягом одного робочого дня.',
+      success: 'Готово! Запит надіслано. Після перевірки ми зв’яжемося за вказаними контактами.',
       successTitle: 'Готово — заявку прийнято.',
-      successOrder: 'Номер заявки: <strong>{id}</strong>. Вкажіть його при зверненні. Ми відповімо протягом одного робочого дня.',
-      successPrompt: 'Хочете заощадити 1–2 дні? Увійдіть до особистого кабінету з тим самим email і заповніть решту даних самостійно. Інакше ми зателефонуємо й заповнимо разом — як зручніше.',
-      successOpenPortal: 'Відкрити кабінет · заощадити 1–2 дні',
+      successOrder: 'Номер заявки: <strong>{id}</strong>. Вкажіть його при зверненні. Ми зв’яжемося після перевірки запиту.',
+      successPrompt: 'Хочете одразу додати решту даних? Увійдіть до особистого кабінету з тим самим email. Інакше ми зв’яжемося після перевірки — як зручніше.',
+      successOpenPortal: 'Відкрити кабінет · додати дані',
       successSkip: 'Гаразд, чекаю дзвінка',
       errFields: "Будь ласка, заповніть обов'язкові поля.",
       errNetwork: "Не вдалося зв'язатися із сервером. Перевірте інтернет або зателефонуйте +1 (916) 399-3992.",
@@ -452,7 +452,7 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
     },
     es: {
       title: 'Cuéntenos qué necesita',
-      sub: 'Responderemos en un día laborable. Solo preparación de documentos — no asesoría legal.',
+      sub: 'Nos comunicaremos después de revisar su solicitud. Solo preparación de documentos — no asesoría legal.',
       lblName: 'Su nombre *',
       lblEmail: 'Email *',
       lblPhone: 'Teléfono',
@@ -462,11 +462,11 @@ const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       filesCta: 'Elegir archivos (PDF | JPG | PNG | DOCX — hasta 5 MB cada uno, 5 MB total)',
       submit: 'Enviar solicitud',
       sending: 'Enviando…',
-      success: '¡Listo! Solicitud enviada. Le responderemos al email indicado en un día laborable.',
+      success: '¡Listo! Solicitud enviada. Después de revisarla, nos comunicaremos usando los datos indicados.',
       successTitle: 'Listo — su solicitud fue recibida.',
-      successOrder: 'Referencia: <strong>{id}</strong>. Guárdela para cualquier seguimiento. Responderemos en un día laborable.',
-      successPrompt: '¿Quiere ahorrar 1–2 días? Inicie sesión en su portal con el mismo email y complete los demás datos usted mismo. De lo contrario lo llamaremos y lo haremos juntos — usted decide.',
-      successOpenPortal: 'Abrir portal · ahorrar 1–2 días',
+      successOrder: 'Referencia: <strong>{id}</strong>. Guárdela para cualquier seguimiento. Nos comunicaremos después de revisar la solicitud.',
+      successPrompt: '¿Quiere agregar ahora los demás datos? Inicie sesión en su portal con el mismo email. De lo contrario nos comunicaremos después de la revisión — usted decide.',
+      successOpenPortal: 'Abrir portal · agregar datos',
       successSkip: 'Está bien, espero la llamada',
       errFields: 'Complete los campos obligatorios.',
       errNetwork: 'No pudimos conectar con el servidor. Revise su conexión o llame al +1 (916) 399-3992.',

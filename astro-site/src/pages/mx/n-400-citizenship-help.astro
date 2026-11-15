@@ -13,14 +13,7 @@ const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'N-400 Application for Naturalization Document Preparation',
-  provider: {
-    '@type': 'LegalService',
-    name: 'Imverica Legal Solutions',
-    url: 'https://imverica.com',
-    telephone: '+1-916-399-3992',
-    areaServed: { '@type': 'State', name: 'California' },
-    disambiguatingDescription: 'Imverica no es una firma jurídica. Solo preparación de documentos bajo la dirección del cliente.'
-  },
+  provider: { '@id': 'https://imverica.com/#organization' },
   description: 'Imverica prepara la solicitud N-400 de naturalización bajo la dirección del solicitante.'
 };
 ---
@@ -109,12 +102,12 @@ const serviceSchema = {
     <h2>Lo que NO hacemos</h2>
     <p>
       Como LDA de California y consultor de inmigración no damos asesoría
-      legal. Si su historial de carácter moral incluye arrestos,
-      condenas penales, violaciones migratorias, o manutención / impuestos
-      no pagados — aún preparamos la N-400, pero recomendaremos que también
-      consulte a un profesional jurídico de inmigración con licencia antes de
-      presentar. Algunas negaciones de naturalización pueden llevar al
-      removal, así que no presente un caso limítrofe sin revisión legal.
+      legal, no determinamos elegibilidad ni decidimos si corresponde presentar.
+      Las preguntas sobre arrestos, condenas, historial migratorio, manutención,
+      impuestos o posibles consecuencias jurídicas requieren el criterio de una
+      persona con licencia para ejercer el derecho migratorio. Imverica prepara
+      la N-400 solo después de que el cliente toma la decisión de presentar y
+      proporciona instrucciones específicas.
     </p>
 
     <cite>

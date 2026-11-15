@@ -1,0 +1,85 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import QuickFacts from '~/components/QuickFacts.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+
+type Lang = 'ru' | 'uk' | 'es';
+interface Props { lang: Lang }
+const { lang } = Astro.props as Props;
+
+const COPY = {
+  ru: {
+    prefix: '/ru', title: 'О компании Imverica — California LDA и Immigration Consultant',
+    description: 'Imverica Legal Solutions — зарегистрированный и bonded California Legal Document Assistant и Immigration Consultant. Дистанционная подготовка документов для self-represented клиентов Калифорнии. Не юридическая фирма.',
+    eyebrow: 'О Imverica Legal Solutions', heading: 'Подготовка документов по поручению клиента — на четырёх языках',
+    hero: 'База в Сакраменто; прямые услуги оказываются дистанционно self-represented клиентам в Калифорнии. Отдельная paralegal-поддержка адвокатов выполняется только под руководством и проверкой лицензированного адвоката.',
+    start: 'Начать запрос', lead: 'Imverica Legal Solutions — торговое имя Imverica LLC, компании из Калифорнии. Imverica зарегистрирована и bonded как California Legal Document Assistant и Immigration Consultant. Мы не являемся юридической фирмой и не заменяем адвоката.',
+    whoH: 'Два отдельных формата работы', directH: 'Прямая подготовка документов', direct: 'Для self-represented клиентов в Калифорнии клиент сам выбирает форму, категорию и документы и даёт конкретные инструкции. Imverica может внести предоставленные данные, собрать выбранные материалы, отметить технические пропуски и координировать заверенные переводы. Мы не определяем eligibility, не выбираем форму или стратегию, не оцениваем юридическую достаточность доказательств и не представляем клиента.',
+    attorneyH: 'Поддержка лицензированных адвокатов', attorney: 'В отдельном B2B-договоре лицензированный адвокат определяет задание, даёт юридические указания, проверяет работу, консультирует клиента и остаётся ответственным за дело и представительство. Это не означает, что адвокат представляет прямого клиента Imverica.',
+    servicesH: 'Что мы готовим по поручению клиента', services: ['выбранные клиентом формы USCIS и сопроводительные материалы;', 'выбранные документы для судов Калифорнии;', 'организация документов и техническая проверка пустых полей, дат и подписей;', 'заверенные переводы с русского, украинского и испанского на английский.'],
+    languagesH: 'Языки и формат', languages: 'Работаем на английском, русском, украинском и испанском. Прямые услуги оказываются дистанционно по Калифорнии. После полной анкеты и определения объёма письменно подтверждаем цену и ориентировочный срок подготовки; государственные сроки мы не контролируем.',
+    registrationH: 'Регистрация и прозрачность', registration: 'Регистрация и bond указываются в применимом письменном договоре и могут проверяться по официальным реестрам. Imverica не публикует резидентный адрес как адрес офиса и не заявляет о наличии walk-in офиса.',
+    contactH: 'Контакты', contact: 'Телефон и SMS: +1 (916) 399-3992 · Email: info@imverica.com · Telegram: t.me/imverica.',
+    cite: 'Imverica не является юридической фирмой, не даёт юридических консультаций, не выбирает формы или стратегию, не определяет eligibility и не обещает результат.',
+    cta: 'Форму выбираете вы; подготовку выполняет Imverica', ctaSub: 'Укажите выбранный документ и желаемый объём работы. Цена и ориентировочный срок подтверждаются письменно после полной анкеты.'
+  },
+  uk: {
+    prefix: '/ua', title: 'Про Imverica — California LDA та Immigration Consultant',
+    description: 'Imverica Legal Solutions — зареєстрований і bonded California Legal Document Assistant та Immigration Consultant. Дистанційна підготовка документів для self-represented клієнтів Каліфорнії. Не юридична фірма.',
+    eyebrow: 'Про Imverica Legal Solutions', heading: 'Підготовка документів за дорученням клієнта — чотирма мовами',
+    hero: 'База в Сакраменто; прямі послуги надаються дистанційно self-represented клієнтам у Каліфорнії. Окрема paralegal-підтримка адвокатів виконується лише під керівництвом і перевіркою ліцензованого адвоката.',
+    start: 'Почати запит', lead: 'Imverica Legal Solutions — торгове ім’я Imverica LLC, компанії з Каліфорнії. Imverica зареєстрована й bonded як California Legal Document Assistant та Immigration Consultant. Ми не є юридичною фірмою й не замінюємо адвоката.',
+    whoH: 'Два окремі формати роботи', directH: 'Пряма підготовка документів', direct: 'Для self-represented клієнтів у Каліфорнії клієнт сам обирає форму, категорію й документи та дає конкретні інструкції. Imverica може внести надані дані, зібрати обрані матеріали, позначити технічні пропуски й координувати засвідчені переклади. Ми не визначаємо eligibility, не обираємо форму чи стратегію, не оцінюємо юридичну достатність доказів і не представляємо клієнта.',
+    attorneyH: 'Підтримка ліцензованих адвокатів', attorney: 'В окремому B2B-договорі ліцензований адвокат визначає завдання, надає юридичні вказівки, перевіряє роботу, консультує клієнта й залишається відповідальним за справу та представництво. Це не означає, що адвокат представляє прямого клієнта Imverica.',
+    servicesH: 'Що ми готуємо за дорученням клієнта', services: ['обрані клієнтом форми USCIS і супровідні матеріали;', 'обрані документи для судів Каліфорнії;', 'упорядкування документів і технічна перевірка порожніх полів, дат і підписів;', 'засвідчені переклади з української, російської та іспанської англійською.'],
+    languagesH: 'Мови й формат', languages: 'Працюємо англійською, російською, українською та іспанською. Прямі послуги надаються дистанційно в Каліфорнії. Після повної анкети й визначення обсягу письмово підтверджуємо ціну та орієнтовний строк підготовки; державні строки ми не контролюємо.',
+    registrationH: 'Реєстрація й прозорість', registration: 'Реєстрація та bond зазначаються в застосовному письмовому договорі й можуть перевірятися за офіційними реєстрами. Imverica не публікує резидентну адресу як адресу офісу й не заявляє про наявність walk-in офісу.',
+    contactH: 'Контакти', contact: 'Телефон і SMS: +1 (916) 399-3992 · Email: info@imverica.com · Telegram: t.me/imverica.',
+    cite: 'Imverica не є юридичною фірмою, не надає юридичних порад, не обирає форми чи стратегію, не визначає eligibility та не обіцяє результат.',
+    cta: 'Форму обираєте ви; підготовку виконує Imverica', ctaSub: 'Укажіть обраний документ і бажаний обсяг роботи. Ціна та орієнтовний строк письмово підтверджуються після повної анкети.'
+  },
+  es: {
+    prefix: '/mx', title: 'Acerca de Imverica — California LDA e Immigration Consultant',
+    description: 'Imverica Legal Solutions es un California Legal Document Assistant e Immigration Consultant registrado y afianzado. Preparación remota para clientes autorrepresentados de California. No es un bufete.',
+    eyebrow: 'Acerca de Imverica Legal Solutions', heading: 'Preparación de documentos bajo instrucciones del cliente — en cuatro idiomas',
+    hero: 'Con base en Sacramento; los servicios directos se prestan de forma remota a clientes autorrepresentados de California. El apoyo paralegal separado para abogados se realiza únicamente bajo la dirección y revisión del abogado con licencia.',
+    start: 'Iniciar solicitud', lead: 'Imverica Legal Solutions es el nombre comercial de Imverica LLC, una empresa de California. Imverica está registrada y afianzada como California Legal Document Assistant e Immigration Consultant. No es un bufete de abogados ni sustituye a un abogado.',
+    whoH: 'Dos relaciones de trabajo separadas', directH: 'Preparación directa de documentos', direct: 'Para clientes autorrepresentados de California, el cliente elige el formulario, la categoría y los documentos y da instrucciones específicas. Imverica puede ingresar los datos proporcionados, organizar materiales seleccionados, señalar omisiones administrativas y coordinar traducciones certificadas. No determina elegibilidad, no elige formularios ni estrategia, no evalúa suficiencia legal de evidencia y no representa al cliente.',
+    attorneyH: 'Apoyo para abogados con licencia', attorney: 'En un acuerdo B2B separado, el abogado con licencia define la tarea, da instrucciones legales, revisa el trabajo, asesora al cliente y conserva la responsabilidad del asunto y la representación. Esto no significa que un abogado represente a un cliente directo de Imverica.',
+    servicesH: 'Qué preparamos bajo sus instrucciones', services: ['formularios de USCIS y materiales seleccionados por el cliente;', 'documentos seleccionados para cortes de California;', 'organización y revisión administrativa de espacios, fechas y firmas;', 'traducciones certificadas de ruso, ucraniano y español al inglés.'],
+    languagesH: 'Idiomas y modalidad', languages: 'Trabajamos en inglés, ruso, ucraniano y español. Los servicios directos son remotos dentro de California. Después de recibir la entrevista completa y definir el alcance, confirmamos por escrito la tarifa y el plazo estimado de preparación; no controlamos los tiempos del gobierno.',
+    registrationH: 'Registro y transparencia', registration: 'El registro y bond se indican en el contrato escrito aplicable y pueden verificarse en registros oficiales. Imverica no publica una dirección residencial como oficina ni afirma tener una oficina walk-in.',
+    contactH: 'Contacto', contact: 'Teléfono y SMS: +1 (916) 399-3992 · Email: info@imverica.com · Telegram: t.me/imverica.',
+    cite: 'Imverica no es un bufete, no brinda asesoría legal, no elige formularios ni estrategia, no determina elegibilidad y no promete resultados.',
+    cta: 'Usted elige el formulario; Imverica prepara el documento', ctaSub: 'Indique el documento seleccionado y el alcance solicitado. Confirmamos por escrito la tarifa y el plazo estimado después de la entrevista completa.'
+  }
+} as const;
+
+const T = COPY[lang];
+---
+<BaseLayout title={T.title} description={T.description} canonical={`https://imverica.com${T.prefix}/about`}
+  slug="/about" lang={lang} availableLocales={['en', 'ru', 'uk', 'es']}>
+  <Hero lang={lang} eyebrow={T.eyebrow} heading={T.heading} sub={T.hero}
+    ctaPrimary={{ href: `${T.prefix}/#get-started`, text: T.start }} />
+  <LandingBody lang={lang} related={[
+    { href: `${T.prefix}/about-imverica-legal-solutions`, label: 'Imverica Legal Solutions — facts' },
+    { href: `${T.prefix}/direct-document-preparation-vs-attorney-supervised-paralegal`, label: 'Direct service vs. attorney-directed support' },
+    { href: `${T.prefix}/lda`, label: 'California Legal Document Assistant' },
+    { href: `${T.prefix}/for-attorneys`, label: 'For attorneys' }
+  ]}>
+    <p class="lead">{T.lead}</p>
+    <h2>{T.whoH}</h2>
+    <h3>{T.directH}</h3><p>{T.direct}</p>
+    <h3>{T.attorneyH}</h3><p>{T.attorney}</p>
+    <h2>{T.servicesH}</h2><ul>{T.services.map((item) => <li>{item}</li>)}</ul>
+    <h2>{T.languagesH}</h2><p>{T.languages}</p>
+    <h2>{T.registrationH}</h2><p>{T.registration}</p>
+    <h2>{T.contactH}</h2><p>{T.contact}</p>
+    <cite>{T.cite}</cite>
+  </LandingBody>
+  <QuickFacts lang={lang} />
+  <CTAStrip lang={lang} heading={T.cta} sub={T.ctaSub}
+    primaryHref={`${T.prefix}/#get-started`} primaryText={T.start} />
+</BaseLayout>

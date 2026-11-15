@@ -21,7 +21,7 @@ const schema = {
   name: page.heading,
   url: `https://imverica.com${prefix}${slug}`,
   inLanguage: lang,
-  publisher: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com' }
+  publisher: { '@id': 'https://imverica.com/#organization' }
 };
 ---
 <BaseLayout title={page.title} description={page.description} canonical={`https://imverica.com${prefix}${slug}`}

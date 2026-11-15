@@ -1,0 +1,266 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import type { Locale } from '~/data/i18n';
+
+interface Props { lang?: Locale }
+const { lang = 'en' } = Astro.props as Props;
+const PREFIX: Record<Locale, string> = { en: '', ru: '/ru', uk: '/ua', es: '/mx' };
+const prefix = PREFIX[lang];
+const slug = '/u4u';
+
+const COPY = {
+  en: {
+    title: 'U4U document preparation for California consumers | Imverica',
+    description: 'Client-directed, non-lawyer preparation of U4U-related USCIS forms for California consumers who already chose their forms and documents. No legal advice or eligibility decisions.',
+    eyebrow: 'USCIS · Uniting for Ukraine · client-directed preparation',
+    heading: 'U4U-related document preparation in California',
+    hero: 'Already chose the USCIS form you want prepared? Imverica can type your answers and organize the documents you select into a draft for your review. We do not decide eligibility, choose a form or category, select evidence, or give legal advice.',
+    start: 'Request document preparation',
+    lead: 'Imverica provides non-lawyer, client-directed document preparation for California consumers who are representing themselves and have already identified the U4U-related form or document they want prepared. At your specific direction, we type the answers you provide, organize the documents you select, and return a draft for your review, approval, signature, and filing.',
+    officialHeading: 'Start with current USCIS information',
+    officialText: 'Uniting for Ukraine policies, filing options, form editions, fees, and instructions can change. Review the current USCIS Ukraine information and the official page for each form immediately before filing. An official page describes government requirements; it does not establish that a particular filing is right for you.',
+    scopeHeading: 'What client-directed preparation can include',
+    scope: [
+      ['Typing', 'Enter the answers you provide into the form you identify.'],
+      ['Organization', 'Arrange the documents and labels you select into a clear draft packet.'],
+      ['Clerical check', 'Flag blanks, conflicting dates, and missing signatures for you to correct, without interpreting legal meaning.'],
+      ['Translations', 'Coordinate English translations of documents you provide when requested.'],
+      ['Draft delivery', 'Return a draft for your final review, approval, signature, and filing.']
+    ],
+    limitsHeading: 'What Imverica cannot decide',
+    limits: [
+      'Whether U4U, re-parole, TPS, work authorization, travel permission, adjustment of status, asylum, or another process applies to you.',
+      'Which USCIS form, filing category, deadline, fee, filing address, or legal strategy you should use.',
+      'Which evidence is required or legally sufficient, or how to strengthen a case.',
+      'Whether you qualify for a benefit, fee waiver, exemption, or favorable decision.',
+      'How USCIS will decide a filing or how long the government will take.'
+    ],
+    attorneyHeading: 'When to ask a qualified legal professional',
+    attorneyText: 'If you are unsure which process, form, category, fee, deadline, or evidence applies, consult a licensed immigration attorney or a DOJ-accredited representative before ordering document preparation. Imverica is not a law firm and does not represent consumers before USCIS.',
+    processHeading: 'How the service works',
+    process: [
+      ['You identify the request', 'Tell us the specific form or document you already chose and the materials you want included.'],
+      ['You provide the answers', 'Complete the intake and upload the documents you selected.'],
+      ['We prepare a draft', 'We type and organize your information and flag clerical gaps for your correction.'],
+      ['You make the decisions', 'Review every answer, verify current USCIS instructions and fees, then approve, sign, and file.']
+    ],
+    faqHeading: 'Frequently asked questions',
+    faqs: [
+      ['Can Imverica tell me whether I should request re-parole?', 'No. That is a legal and eligibility decision. Ask a licensed immigration attorney or DOJ-accredited representative. Imverica can prepare the document you identify after you decide.'],
+      ['Can Imverica choose my form or filing category?', 'No. You identify the form and category. We can type your answers and organize the documents you select.'],
+      ['Can Imverica confirm the government fee?', 'Fees and exemptions can change and may depend on the filing. Verify the current USCIS fee schedule and form instructions immediately before filing.'],
+      ['Does Imverica serve direct U4U consumers nationwide?', 'Direct self-help document preparation on this page is offered to California consumers. Work for law firms is a separate attorney-directed business service.'],
+      ['How long does preparation take?', 'We confirm an estimated preparation schedule in writing after the scope, intake, and client-selected documents are complete. We do not control USCIS processing time.']
+    ],
+    sourcesHeading: 'Official sources',
+    sourcesIntro: 'Use current primary sources immediately before filing. These links were reviewed on November 14, 2026; USCIS may update them later.',
+    ctaHeading: 'Already chose the form or document?',
+    ctaSub: 'Tell us the exact preparation task you want. We confirm the scope, fee, and estimated schedule in writing after complete intake.',
+    related: ['I-765 work permit information', 'USCIS clerical document check', 'California Legal Document Assistant']
+  },
+  ru: {
+    title: 'Подготовка документов U4U для клиентов в Калифорнии | Imverica',
+    description: 'Неюридическая подготовка связанных с U4U форм USCIS для жителей Калифорнии, уже выбравших формы и документы. Без определения eligibility и юридических советов.',
+    eyebrow: 'USCIS · Uniting for Ukraine · подготовка по поручению клиента',
+    heading: 'Подготовка документов, связанных с U4U, в Калифорнии',
+    hero: 'Уже выбрали форму USCIS? Imverica внесёт ваши ответы и организует выбранные вами документы в черновик. Мы не определяем eligibility, не выбираем форму, категорию или доказательства и не даём юридических советов.',
+    start: 'Запросить подготовку',
+    lead: 'Imverica оказывает неюридическую подготовку документов по конкретному поручению жителей Калифорнии, которые представляют себя самостоятельно и уже определили связанную с U4U форму или документ. Мы вносим предоставленные вами ответы, организуем выбранные вами материалы и передаём черновик для вашей проверки, одобрения, подписи и подачи.',
+    officialHeading: 'Начните с актуальной информации USCIS',
+    officialText: 'Правила Uniting for Ukraine, варианты подачи, редакции форм, сборы и инструкции могут меняться. Перед подачей проверьте актуальную страницу USCIS об Украине и официальную страницу каждой формы. Государственная страница не подтверждает, что конкретная подача подходит именно вам.',
+    scopeHeading: 'Что может включать подготовка по поручению клиента',
+    scope: [
+      ['Заполнение', 'Внести ваши ответы в указанную вами форму.'],
+      ['Организация', 'Собрать выбранные вами документы в понятный черновой пакет.'],
+      ['Техническая проверка', 'Отметить пустые поля, несовпадающие даты и пропущенные подписи без толкования юридического смысла.'],
+      ['Переводы', 'По запросу координировать перевод предоставленных вами документов на английский.'],
+      ['Передача черновика', 'Передать черновик для вашей окончательной проверки, подписи и подачи.']
+    ],
+    limitsHeading: 'Что Imverica не может определять',
+    limits: [
+      'Подходит ли вам U4U, re-parole, TPS, разрешение на работу, travel permission, adjustment of status, asylum или другой процесс.',
+      'Какую форму USCIS, категорию, срок, сбор, адрес подачи или юридическую стратегию выбрать.',
+      'Какие доказательства необходимы или юридически достаточны и как усилить дело.',
+      'Имеете ли вы право на benefit, fee waiver, exemption или положительное решение.',
+      'Как USCIS решит дело или сколько займёт рассмотрение.'
+    ],
+    attorneyHeading: 'Когда нужен квалифицированный юридический специалист',
+    attorneyText: 'Если вы не уверены в выборе процесса, формы, категории, сбора, срока или доказательств, обратитесь к иммиграционному адвокату или DOJ-accredited representative до заказа подготовки. Imverica не является юридической фирмой и не представляет клиентов перед USCIS.',
+    processHeading: 'Как проходит услуга',
+    process: [
+      ['Вы определяете запрос', 'Сообщаете конкретную форму или документ, который уже выбрали, и материалы для включения.'],
+      ['Вы предоставляете ответы', 'Заполняете анкету и загружаете выбранные вами документы.'],
+      ['Мы готовим черновик', 'Вносим информацию и отмечаем технические пробелы для вашего исправления.'],
+      ['Вы принимаете решения', 'Проверяете ответы, актуальные инструкции и сбор USCIS, затем одобряете, подписываете и подаёте.']
+    ],
+    faqHeading: 'Частые вопросы',
+    faqs: [
+      ['Может ли Imverica сказать, нужно ли мне запрашивать re-parole?', 'Нет. Это юридическое решение и вопрос eligibility. Обратитесь к адвокату или DOJ-accredited representative. После вашего решения мы можем подготовить указанный вами документ.'],
+      ['Может ли Imverica выбрать форму или категорию?', 'Нет. Форму и категорию указываете вы. Мы можем внести ваши ответы и организовать выбранные вами документы.'],
+      ['Может ли Imverica подтвердить государственный сбор?', 'Сборы и исключения могут меняться и зависеть от подачи. Перед подачей проверьте актуальный fee schedule и инструкции USCIS.'],
+      ['Работает ли Imverica напрямую с U4U-клиентами по всей стране?', 'Прямая услуга на этой странице предназначена для жителей Калифорнии. Работа для юридических фирм — отдельная attorney-directed B2B-услуга.'],
+      ['Сколько занимает подготовка?', 'Ориентировочный срок письменно подтверждается после получения полного запроса, анкеты и выбранных клиентом документов. Срок USCIS мы не контролируем.']
+    ],
+    sourcesHeading: 'Официальные источники',
+    sourcesIntro: 'Перед подачей используйте актуальные первичные источники. Ссылки проверены 14 ноября 2026 года; USCIS может обновить их позже.',
+    ctaHeading: 'Уже выбрали форму или документ?',
+    ctaSub: 'Опишите точную задачу. После полной анкеты мы письменно подтвердим объём, стоимость и ориентировочный срок.',
+    related: ['Информация о разрешении на работу I-765', 'Техническая проверка документов USCIS', 'California Legal Document Assistant']
+  },
+  uk: {
+    title: 'Підготовка документів U4U для клієнтів у Каліфорнії | Imverica',
+    description: 'Неюридична підготовка пов’язаних з U4U форм USCIS для мешканців Каліфорнії, які вже обрали форми й документи. Без визначення eligibility.',
+    eyebrow: 'USCIS · Uniting for Ukraine · підготовка за дорученням клієнта',
+    heading: 'Підготовка документів, пов’язаних з U4U, у Каліфорнії',
+    hero: 'Уже обрали форму USCIS? Imverica внесе ваші відповіді та впорядкує обрані вами документи в чернетку. Ми не визначаємо eligibility, не обираємо форму, категорію чи докази й не надаємо юридичних порад.',
+    start: 'Запросити підготовку',
+    lead: 'Imverica надає неюридичну підготовку документів за конкретним дорученням мешканців Каліфорнії, які представляють себе самостійно та вже визначили пов’язану з U4U форму або документ. Ми вносимо ваші відповіді, впорядковуємо обрані матеріали й повертаємо чернетку для перевірки, підпису та подання.',
+    officialHeading: 'Почніть з актуальної інформації USCIS',
+    officialText: 'Правила Uniting for Ukraine, варіанти подання, редакції форм, збори та інструкції можуть змінюватися. Перед поданням перевірте актуальну сторінку USCIS про Україну й сторінку кожної форми. Урядова сторінка не підтверджує, що конкретне подання підходить саме вам.',
+    scopeHeading: 'Що може включати підготовка за дорученням клієнта',
+    scope: [
+      ['Заповнення', 'Внести ваші відповіді до зазначеної вами форми.'],
+      ['Організація', 'Скласти обрані вами документи в зрозумілий проєкт пакета.'],
+      ['Технічна перевірка', 'Позначити порожні поля, суперечливі дати й відсутні підписи без юридичного тлумачення.'],
+      ['Переклади', 'За запитом координувати переклад наданих вами документів англійською.'],
+      ['Передача чернетки', 'Передати чернетку для вашої остаточної перевірки, підпису та подання.']
+    ],
+    limitsHeading: 'Що Imverica не може визначати',
+    limits: [
+      'Чи підходить вам U4U, re-parole, TPS, дозвіл на роботу, travel permission, adjustment of status, asylum або інший процес.',
+      'Яку форму USCIS, категорію, строк, збір, адресу подання або юридичну стратегію обрати.',
+      'Які докази потрібні або юридично достатні та як посилити справу.',
+      'Чи маєте ви право на benefit, fee waiver, exemption або позитивне рішення.',
+      'Як USCIS вирішить справу або скільки триватиме розгляд.'
+    ],
+    attorneyHeading: 'Коли потрібен кваліфікований юридичний фахівець',
+    attorneyText: 'Якщо ви не впевнені у виборі процесу, форми, категорії, збору, строку чи доказів, зверніться до імміграційного адвоката або DOJ-accredited representative до замовлення підготовки. Imverica не є юридичною фірмою та не представляє клієнтів перед USCIS.',
+    processHeading: 'Як працює послуга',
+    process: [
+      ['Ви визначаєте запит', 'Повідомляєте конкретну форму або документ, який уже обрали, і матеріали для включення.'],
+      ['Ви надаєте відповіді', 'Заповнюєте анкету та завантажуєте обрані документи.'],
+      ['Ми готуємо чернетку', 'Вносимо інформацію та позначаємо технічні прогалини для вашого виправлення.'],
+      ['Ви ухвалюєте рішення', 'Перевіряєте відповіді, актуальні інструкції та збір USCIS, потім схвалюєте, підписуєте й подаєте.']
+    ],
+    faqHeading: 'Поширені запитання',
+    faqs: [
+      ['Чи може Imverica сказати, чи потрібно мені просити re-parole?', 'Ні. Це юридичне рішення та питання eligibility. Зверніться до адвоката або DOJ-accredited representative. Після вашого рішення ми можемо підготувати зазначений документ.'],
+      ['Чи може Imverica обрати форму або категорію?', 'Ні. Форму й категорію зазначаєте ви. Ми можемо внести ваші відповіді та впорядкувати обрані документи.'],
+      ['Чи може Imverica підтвердити державний збір?', 'Збори та винятки можуть змінюватися й залежати від подання. Перед поданням перевірте актуальний fee schedule та інструкції USCIS.'],
+      ['Чи працює Imverica безпосередньо з U4U-клієнтами по всій країні?', 'Пряма послуга на цій сторінці призначена для мешканців Каліфорнії. Робота для юридичних фірм — окрема attorney-directed B2B-послуга.'],
+      ['Скільки триває підготовка?', 'Орієнтовний строк письмово підтверджується після отримання повного запиту, анкети й обраних клієнтом документів. Строк USCIS ми не контролюємо.']
+    ],
+    sourcesHeading: 'Офіційні джерела',
+    sourcesIntro: 'Перед поданням використовуйте актуальні первинні джерела. Посилання перевірено 14 листопада 2026 року; USCIS може оновити їх пізніше.',
+    ctaHeading: 'Уже обрали форму або документ?',
+    ctaSub: 'Опишіть точне завдання. Після повної анкети ми письмово підтвердимо обсяг, вартість та орієнтовний строк.',
+    related: ['Інформація про дозвіл на роботу I-765', 'Технічна перевірка документів USCIS', 'California Legal Document Assistant']
+  },
+  es: {
+    title: 'Preparación de documentos U4U para consumidores de California | Imverica',
+    description: 'Preparación no legal de formularios USCIS relacionados con U4U para consumidores de California que ya eligieron formularios y documentos. Sin decisiones de elegibilidad.',
+    eyebrow: 'USCIS · Uniting for Ukraine · preparación dirigida por el cliente',
+    heading: 'Preparación de documentos relacionados con U4U en California',
+    hero: '¿Ya eligió el formulario de USCIS? Imverica puede ingresar sus respuestas y organizar los documentos que seleccione en un borrador. No decidimos elegibilidad, formulario, categoría o pruebas ni damos asesoría legal.',
+    start: 'Solicitar preparación',
+    lead: 'Imverica ofrece preparación no legal y dirigida por el cliente a consumidores de California que se representan a sí mismos y ya identificaron el formulario o documento relacionado con U4U que desean preparar. Ingresamos sus respuestas, organizamos los documentos que seleccione y entregamos un borrador para su revisión, firma y presentación.',
+    officialHeading: 'Comience con información actual de USCIS',
+    officialText: 'Las políticas de Uniting for Ukraine, opciones de presentación, ediciones, tarifas e instrucciones pueden cambiar. Revise la información actual de USCIS sobre Ucrania y la página de cada formulario antes de presentar. Una página oficial no determina que una presentación sea adecuada para usted.',
+    scopeHeading: 'Qué puede incluir la preparación dirigida por el cliente',
+    scope: [
+      ['Ingreso de datos', 'Ingresar sus respuestas en el formulario que identifique.'],
+      ['Organización', 'Ordenar los documentos que seleccione en un paquete borrador claro.'],
+      ['Revisión administrativa', 'Señalar espacios en blanco, fechas contradictorias y firmas faltantes sin interpretación legal.'],
+      ['Traducciones', 'Coordinar traducciones al inglés de los documentos que proporcione.'],
+      ['Entrega del borrador', 'Entregar un borrador para su revisión final, firma y presentación.']
+    ],
+    limitsHeading: 'Lo que Imverica no puede decidir',
+    limits: [
+      'Si U4U, re-parole, TPS, autorización de empleo, permiso de viaje, ajuste de estatus, asilo u otro proceso se aplica a usted.',
+      'Qué formulario, categoría, plazo, tarifa, dirección de presentación o estrategia legal debe usar.',
+      'Qué pruebas son necesarias o legalmente suficientes, o cómo fortalecer un caso.',
+      'Si califica para un beneficio, exención de tarifa o decisión favorable.',
+      'Cómo decidirá USCIS o cuánto tardará el gobierno.'
+    ],
+    attorneyHeading: 'Cuándo consultar a un profesional legal calificado',
+    attorneyText: 'Si no sabe qué proceso, formulario, categoría, tarifa, plazo o prueba se aplica, consulte a un abogado de inmigración o representante acreditado por el DOJ antes de pedir preparación. Imverica no es un bufete y no representa a consumidores ante USCIS.',
+    processHeading: 'Cómo funciona el servicio',
+    process: [
+      ['Usted identifica la solicitud', 'Indica el formulario o documento que ya eligió y los materiales que desea incluir.'],
+      ['Usted proporciona las respuestas', 'Completa la entrevista y carga los documentos que seleccionó.'],
+      ['Preparamos un borrador', 'Ingresamos su información y señalamos faltantes administrativos para que los corrija.'],
+      ['Usted toma las decisiones', 'Revisa las respuestas, instrucciones y tarifa actuales de USCIS, y luego aprueba, firma y presenta.']
+    ],
+    faqHeading: 'Preguntas frecuentes',
+    faqs: [
+      ['¿Puede Imverica decirme si debo pedir re-parole?', 'No. Esa es una decisión legal y de elegibilidad. Consulte a un abogado o representante acreditado por el DOJ. Después podemos preparar el documento que identifique.'],
+      ['¿Puede Imverica elegir mi formulario o categoría?', 'No. Usted identifica el formulario y la categoría. Podemos ingresar sus respuestas y organizar los documentos que seleccione.'],
+      ['¿Puede Imverica confirmar la tarifa gubernamental?', 'Las tarifas y exenciones pueden cambiar y depender de la presentación. Verifique la tabla de tarifas e instrucciones actuales de USCIS antes de presentar.'],
+      ['¿Imverica atiende directamente a consumidores U4U en todo el país?', 'La preparación directa descrita aquí se ofrece a consumidores de California. El trabajo para bufetes es un servicio B2B separado y dirigido por abogados.'],
+      ['¿Cuánto tarda la preparación?', 'Confirmamos un plazo estimado por escrito después de recibir el alcance, la entrevista y los documentos seleccionados. No controlamos el tiempo de USCIS.']
+    ],
+    sourcesHeading: 'Fuentes oficiales',
+    sourcesIntro: 'Use fuentes primarias actuales antes de presentar. Estos enlaces se revisaron el 14 de noviembre de 2026; USCIS puede actualizarlos después.',
+    ctaHeading: '¿Ya eligió el formulario o documento?',
+    ctaSub: 'Indique la tarea exacta. Confirmamos por escrito el alcance, la tarifa y el plazo estimado después de una entrevista completa.',
+    related: ['Información del permiso de trabajo I-765', 'Revisión administrativa de documentos USCIS', 'California Legal Document Assistant']
+  }
+} as const;
+
+const T = COPY[lang];
+const canonical = `https://imverica.com${prefix}${slug}`;
+const intakeHref = `${prefix}/#get-started?topic=U4U`;
+const serviceSchema = {
+  '@context': 'https://schema.org', '@type': 'Service', '@id': `${canonical}#service`,
+  name: T.heading, serviceType: 'Client-directed U4U-related document preparation',
+  url: canonical, description: T.description,
+  areaServed: { '@type': 'State', name: 'California' },
+  provider: { '@id': 'https://imverica.com/#organization' }
+};
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage', '@id': `${canonical}#faq`,
+  mainEntity: T.faqs.map(([question, answer]) => ({
+    '@type': 'Question', name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
+};
+---
+<BaseLayout title={T.title} description={T.description} canonical={canonical} slug={slug}
+  lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[serviceSchema, faqSchema]}>
+  <Hero lang={lang} eyebrow={T.eyebrow} heading={T.heading} sub={T.hero}
+    ctaPrimary={{ href: intakeHref, text: T.start }} />
+  <LandingBody lang={lang} related={[
+    { href: `${prefix}/i-765-work-permit-help`, label: T.related[0] },
+    { href: `${prefix}/uscis-document-review`, label: T.related[1] },
+    { href: `${prefix}/lda`, label: T.related[2] }
+  ]}>
+    <p class="lead">{T.lead}</p>
+    <h2>{T.officialHeading}</h2><p>{T.officialText}</p>
+    <h2>{T.scopeHeading}</h2>
+    <div class="form-list"><ul>{T.scope.map(([label, text]) => <li><strong>{label}:</strong> {text}</li>)}</ul></div>
+    <h2>{T.limitsHeading}</h2><ul>{T.limits.map((item) => <li>{item}</li>)}</ul>
+    <h2>{T.attorneyHeading}</h2><p>{T.attorneyText}</p>
+    <h2>{T.processHeading}</h2><ol>{T.process.map(([label, text]) => <li><strong>{label}.</strong> {text}</li>)}</ol>
+    <h2>{T.faqHeading}</h2>
+    {T.faqs.map(([question, answer]) => <section class="u4u-faq"><h3>{question}</h3><p>{answer}</p></section>)}
+    <h2>{T.sourcesHeading}</h2><p>{T.sourcesIntro}</p>
+    <ul>
+      <li><a href="https://www.uscis.gov/ukraine">USCIS — Ukraine</a></li>
+      <li><a href="https://www.uscis.gov/forms/all-forms">USCIS — All Forms</a></li>
+      <li><a href="https://www.uscis.gov/g-1055">USCIS — Fee Schedule (Form G-1055)</a></li>
+      <li><a href="https://www.uscis.gov/scams-fraud-and-misconduct/avoid-scams/find-legal-services">USCIS — Find Legal Services</a></li>
+    </ul>
+    <cite>Official links reviewed November 14, 2026. Imverica is not a law firm and provides only client-directed document preparation to California consumers.</cite>
+  </LandingBody>
+  <CTAStrip lang={lang} heading={T.ctaHeading} sub={T.ctaSub}
+    primaryHref={intakeHref} primaryText={T.start} />
+</BaseLayout>
+
+<style is:global>
+  .u4u-faq { margin: 0 0 18px; padding: 18px 20px; background: #fffaf2; border: 1px solid rgba(40,30,20,0.08); border-radius: 10px; }
+  .u4u-faq h3 { margin: 0 0 7px; color: var(--navy-dark); }
+  .u4u-faq p { margin: 0; }
+</style>

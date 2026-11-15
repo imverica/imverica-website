@@ -1,0 +1,313 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import type { Locale } from '~/data/i18n';
+
+interface Props { lang?: Locale }
+const { lang = 'en' } = Astro.props as Props;
+
+const PREFIX: Record<Locale, string> = { en: '', ru: '/ru', uk: '/ua', es: '/mx' };
+const prefix = PREFIX[lang];
+const slug = '/i-765-work-permit-help';
+
+const COPY = {
+  en: {
+    title: 'I-765 Document Preparation for California Clients | Imverica',
+    description: 'Client-directed Form I-765 document preparation for California self-represented consumers who already selected the form, eligibility category, and supporting documents.',
+    eyebrow: 'USCIS · Form I-765 · California clients',
+    heading: 'Client-directed Form I-765 document preparation',
+    hero: 'Already decided to use Form I-765 and selected your eligibility category and supporting documents? Imverica can type your answers and organize the materials you identify. We do not choose the category, evidence, fee, filing address, or legal strategy.',
+    start: 'Start an I-765 intake',
+    lead: 'Imverica provides non-lawyer Form I-765 document preparation for California consumers who represent themselves and have already chosen Form I-765, the eligibility category to enter, and the documents to include. At the client’s specific direction, we type client-provided answers, organize client-selected materials, and flag clerical gaps for the client to correct. We do not determine whether a person may work, decide eligibility, select a category or evidence, interpret legal questions, or represent anyone before USCIS.',
+    officialHeading: 'Use current USCIS instructions for every filing decision',
+    officialP1: 'USCIS publishes the current Form I-765, instructions, filing information, and Form G-1055 fee schedule. The required category, evidence, fee, filing method, and filing address can depend on the applicant’s circumstances and can change. Verify each item in the current official sources immediately before filing.',
+    officialP2: 'Imverica does not decide which category applies, whether a fee or fee exemption applies, or whether the selected evidence is legally sufficient. If you are unsure, consult a licensed immigration attorney or a DOJ-accredited representative before requesting document preparation.',
+    scopeHeading: 'What Imverica can do after you make the filing decisions',
+    scopeLabel: 'Client-directed preparation may include',
+    scope: [
+      ['Typing', 'Enter the answers and category you provide into a Form I-765 draft.'],
+      ['Organization', 'Arrange the documents and labels you select into a draft packet.'],
+      ['Clerical check', 'Flag blank fields, inconsistent dates, or missing signatures for you to correct, without interpreting their legal meaning.'],
+      ['Translations', 'Coordinate certified English translations of documents you provide when requested.'],
+      ['Final draft', 'Deliver the draft for your review, approval, signature, and filing.']
+    ],
+    limitsHeading: 'What this service does not include',
+    limits: [
+      'Determining whether you qualify for employment authorization or may file Form I-765.',
+      'Selecting or changing an eligibility category, fee option, fee-exemption request, or filing address.',
+      'Choosing evidence or deciding whether evidence is legally sufficient.',
+      'Giving legal advice, interpreting your status, or choosing an immigration strategy.',
+      'Signing Form G-28, representing you before USCIS, or promising approval or a timeline.'
+    ],
+    processHeading: 'How preparation works',
+    process: [
+      ['You identify the request', 'You confirm that you selected Form I-765, the category to enter, and the documents to include.'],
+      ['You provide the information', 'You complete the intake and upload the materials you selected.'],
+      ['We prepare a draft', 'We type your answers and flag clerical gaps for your correction.'],
+      ['You approve and file', 'You make the final decisions, verify current USCIS requirements, review every answer, sign, and file.']
+    ],
+    faqHeading: 'Frequently asked questions',
+    faqs: [
+      ['Can Imverica choose my I-765 eligibility category?', 'No. The client must provide the category already selected. If you are unsure, consult a licensed immigration attorney or DOJ-accredited representative.'],
+      ['Can Imverica tell me which evidence to submit?', 'No. You select the documents. Imverica can organize what you identify and flag clerical gaps, but does not decide legal sufficiency.'],
+      ['What is the government filing fee?', 'The amount can depend on the category and filing circumstances and can change. Check the current USCIS Form I-765 page, instructions, and Form G-1055 immediately before filing.'],
+      ['How long will preparation take?', 'Imverica confirms an estimated preparation schedule in writing after the intake and requested materials are complete. It does not promise or control USCIS processing time.'],
+      ['Will Imverica represent me before USCIS?', 'No. Imverica does not enter an appearance, sign Form G-28, or communicate as your legal representative.']
+    ],
+    sourcesHeading: 'Official sources',
+    sourcesIntro: 'Use the current USCIS pages and documents immediately before filing. No fee, edition, category, evidence list, or filing address is quoted on this page as a current fact.',
+    cite: 'Imverica is not a law firm and does not provide legal advice. Direct document-preparation services are for California clients and follow the client’s specific direction.',
+    ctaHeading: 'Have you already chosen Form I-765 and the category?',
+    ctaSub: 'Tell us the preparation scope you selected. After complete intake, we confirm the fee and estimated preparation schedule in writing.'
+  },
+  ru: {
+    title: 'Подготовка формы I-765 для клиентов из Калифорнии | Imverica',
+    description: 'Подготовка I-765 по поручению клиентов из Калифорнии, которые уже выбрали форму, категорию eligibility и документы. Без юридических консультаций.',
+    eyebrow: 'USCIS · Форма I-765 · Клиенты из Калифорнии',
+    heading: 'Подготовка формы I-765 по вашему поручению',
+    hero: 'Уже решили использовать I-765 и сами выбрали категорию eligibility и подтверждающие документы? Imverica внесёт ваши ответы и организует указанные вами материалы. Мы не выбираем категорию, доказательства, сбор, адрес подачи или юридическую стратегию.',
+    start: 'Начать анкету I-765',
+    lead: 'Imverica оказывает неюридическую услугу по подготовке I-765 жителям Калифорнии, которые представляют себя самостоятельно и уже выбрали форму I-765, категорию eligibility для внесения и документы для включения. По конкретному поручению клиента мы вносим предоставленные ответы, организуем выбранные материалы и отмечаем технические пробелы для исправления клиентом. Мы не определяем право на работу или eligibility, не выбираем категорию или доказательства, не толкуем юридические вопросы и не представляем клиента перед USCIS.',
+    officialHeading: 'Все решения сверяйте с актуальными инструкциями USCIS',
+    officialP1: 'USCIS публикует актуальную I-765, инструкции, сведения о подаче и форму G-1055 со сборами. Категория, доказательства, сбор, способ и адрес подачи могут зависеть от обстоятельств заявителя и меняться. Перепроверьте каждый пункт по текущим официальным источникам непосредственно перед подачей.',
+    officialP2: 'Imverica не решает, какая категория подходит, применяется ли сбор или освобождение от него и являются ли выбранные доказательства юридически достаточными. Если вы не уверены, обратитесь к лицензированному иммиграционному адвокату или DOJ-accredited representative до заказа подготовки документов.',
+    scopeHeading: 'Что может сделать Imverica после ваших решений',
+    scopeLabel: 'Подготовка по поручению клиента может включать',
+    scope: [
+      ['Заполнение', 'Внести предоставленные вами ответы и категорию в черновик I-765.'],
+      ['Организация', 'Собрать выбранные вами документы и подписи к ним в черновой пакет.'],
+      ['Техническая проверка', 'Отметить пустые поля, несовпадающие даты или пропущенные подписи для вашего исправления без юридического толкования.'],
+      ['Переводы', 'По запросу координировать заверенный перевод предоставленных вами документов на английский.'],
+      ['Финальный черновик', 'Передать черновик для вашей проверки, одобрения, подписи и подачи.']
+    ],
+    limitsHeading: 'Что не входит в услугу',
+    limits: [
+      'Определение права на разрешение на работу или возможности подать I-765.',
+      'Выбор или изменение категории eligibility, варианта сбора, запроса об освобождении от сбора или адреса подачи.',
+      'Выбор доказательств или оценка их юридической достаточности.',
+      'Юридические советы, толкование статуса или выбор иммиграционной стратегии.',
+      'Подписание G-28, представительство перед USCIS или обещание одобрения и сроков.'
+    ],
+    processHeading: 'Как проходит подготовка',
+    process: [
+      ['Вы указываете запрос', 'Вы подтверждаете, что выбрали I-765, категорию для внесения и документы для включения.'],
+      ['Вы предоставляете данные', 'Вы заполняете анкету и загружаете выбранные материалы.'],
+      ['Мы готовим черновик', 'Мы вносим ваши ответы и отмечаем технические пробелы для вашего исправления.'],
+      ['Вы одобряете и подаёте', 'Вы принимаете окончательные решения, проверяете актуальные требования USCIS, каждый ответ, подписываете и подаёте.']
+    ],
+    faqHeading: 'Частые вопросы',
+    faqs: [
+      ['Может ли Imverica выбрать категорию eligibility для I-765?', 'Нет. Клиент сообщает уже выбранную категорию. Если вы не уверены, обратитесь к лицензированному иммиграционному адвокату или DOJ-accredited representative.'],
+      ['Может ли Imverica сказать, какие доказательства подавать?', 'Нет. Документы выбираете вы. Imverica может организовать указанные материалы и отметить технические пробелы, но не оценивает юридическую достаточность.'],
+      ['Каков государственный сбор?', 'Сумма может зависеть от категории и обстоятельств подачи и может измениться. Проверьте актуальную страницу I-765, инструкции USCIS и G-1055 непосредственно перед подачей.'],
+      ['Сколько занимает подготовка?', 'Imverica письменно подтверждает ориентировочный график после получения полной анкеты и запрошенных материалов. Компания не обещает и не контролирует срок USCIS.'],
+      ['Будет ли Imverica представлять меня перед USCIS?', 'Нет. Imverica не вступает в дело, не подписывает G-28 и не общается как ваш legal representative.']
+    ],
+    sourcesHeading: 'Официальные источники',
+    sourcesIntro: 'Используйте актуальные страницы и документы USCIS непосредственно перед подачей. На этой странице нет заявлений о текущей сумме сбора, редакции, категории, списке доказательств или адресе подачи.',
+    cite: 'Imverica не является юридической фирмой и не даёт юридических советов. Прямые услуги по подготовке документов оказываются клиентам из Калифорнии по их конкретному поручению.',
+    ctaHeading: 'Вы уже выбрали I-765 и категорию?',
+    ctaSub: 'Укажите выбранный объём подготовки. После полной анкеты мы письменно подтвердим стоимость и ориентировочный график.'
+  },
+  uk: {
+    title: 'Підготовка форми I-765 для клієнтів із Каліфорнії | Imverica',
+    description: 'Підготовка I-765 за дорученням клієнтів із Каліфорнії, які вже обрали форму, категорію eligibility та документи. Без юридичних порад.',
+    eyebrow: 'USCIS · Форма I-765 · Клієнти з Каліфорнії',
+    heading: 'Підготовка форми I-765 за вашим дорученням',
+    hero: 'Уже вирішили використовувати I-765 і самі обрали категорію eligibility та підтвердні документи? Imverica внесе ваші відповіді й упорядкує вказані вами матеріали. Ми не обираємо категорію, докази, збір, адресу подання чи юридичну стратегію.',
+    start: 'Почати анкету I-765',
+    lead: 'Imverica надає неюридичну послугу з підготовки I-765 мешканцям Каліфорнії, які представляють себе самостійно й уже обрали форму I-765, категорію eligibility для внесення та документи для включення. За конкретним дорученням клієнта ми вносимо надані відповіді, упорядковуємо обрані матеріали й позначаємо технічні прогалини для виправлення клієнтом. Ми не визначаємо право на роботу чи eligibility, не обираємо категорію або докази, не тлумачимо юридичні питання й не представляємо клієнта перед USCIS.',
+    officialHeading: 'Усі рішення звіряйте з актуальними інструкціями USCIS',
+    officialP1: 'USCIS публікує актуальну I-765, інструкції, відомості про подання та форму G-1055 зі зборами. Категорія, докази, збір, спосіб і адреса подання можуть залежати від обставин заявника та змінюватися. Перевірте кожен пункт за поточними офіційними джерелами безпосередньо перед поданням.',
+    officialP2: 'Imverica не вирішує, яка категорія підходить, чи застосовується збір або звільнення від нього та чи є обрані докази юридично достатніми. Якщо ви не впевнені, зверніться до ліцензованого імміграційного адвоката або DOJ-accredited representative до замовлення підготовки документів.',
+    scopeHeading: 'Що може зробити Imverica після ваших рішень',
+    scopeLabel: 'Підготовка за дорученням клієнта може включати',
+    scope: [
+      ['Внесення даних', 'Внести надані вами відповіді та категорію до чернетки I-765.'],
+      ['Організація', 'Скласти обрані вами документи й підписи до чернеткового пакета.'],
+      ['Технічна перевірка', 'Позначити порожні поля, неузгоджені дати або пропущені підписи для вашого виправлення без юридичного тлумачення.'],
+      ['Переклади', 'За запитом координувати засвідчений переклад наданих вами документів англійською.'],
+      ['Фінальна чернетка', 'Надати чернетку для вашої перевірки, схвалення, підпису й подання.']
+    ],
+    limitsHeading: 'Що не входить до послуги',
+    limits: [
+      'Визначення права на дозвіл на роботу або можливості подати I-765.',
+      'Вибір або зміна категорії eligibility, варіанта збору, запиту про звільнення від збору чи адреси подання.',
+      'Вибір доказів або оцінка їх юридичної достатності.',
+      'Юридичні поради, тлумачення статусу або вибір імміграційної стратегії.',
+      'Підписання G-28, представництво перед USCIS або обіцянка схвалення й строків.'
+    ],
+    processHeading: 'Як відбувається підготовка',
+    process: [
+      ['Ви вказуєте запит', 'Ви підтверджуєте, що обрали I-765, категорію для внесення та документи для включення.'],
+      ['Ви надаєте дані', 'Ви заповнюєте анкету й завантажуєте обрані матеріали.'],
+      ['Ми готуємо чернетку', 'Ми вносимо ваші відповіді й позначаємо технічні прогалини для вашого виправлення.'],
+      ['Ви схвалюєте й подаєте', 'Ви приймаєте остаточні рішення, перевіряєте актуальні вимоги USCIS, кожну відповідь, підписуєте й подаєте.']
+    ],
+    faqHeading: 'Поширені запитання',
+    faqs: [
+      ['Чи може Imverica обрати категорію eligibility для I-765?', 'Ні. Клієнт повідомляє вже обрану категорію. Якщо ви не впевнені, зверніться до ліцензованого імміграційного адвоката або DOJ-accredited representative.'],
+      ['Чи може Imverica сказати, які докази подавати?', 'Ні. Документи обираєте ви. Imverica може впорядкувати вказані матеріали й позначити технічні прогалини, але не оцінює юридичну достатність.'],
+      ['Який державний збір?', 'Сума може залежати від категорії та обставин подання й може змінитися. Перевірте актуальну сторінку I-765, інструкції USCIS і G-1055 безпосередньо перед поданням.'],
+      ['Скільки триває підготовка?', 'Imverica письмово підтверджує орієнтовний графік після отримання повної анкети й запитаних матеріалів. Компанія не обіцяє та не контролює строк USCIS.'],
+      ['Чи представлятиме мене Imverica перед USCIS?', 'Ні. Imverica не вступає у справу, не підписує G-28 і не спілкується як ваш legal representative.']
+    ],
+    sourcesHeading: 'Офіційні джерела',
+    sourcesIntro: 'Використовуйте актуальні сторінки та документи USCIS безпосередньо перед поданням. На цій сторінці немає тверджень про поточну суму збору, редакцію, категорію, список доказів чи адресу подання.',
+    cite: 'Imverica не є юридичною фірмою й не надає юридичних порад. Прямі послуги з підготовки документів надаються клієнтам із Каліфорнії за їхнім конкретним дорученням.',
+    ctaHeading: 'Ви вже обрали I-765 і категорію?',
+    ctaSub: 'Вкажіть обраний обсяг підготовки. Після повної анкети ми письмово підтвердимо вартість та орієнтовний графік.'
+  },
+  es: {
+    title: 'Preparación del Formulario I-765 para clientes de California | Imverica',
+    description: 'Preparación de I-765 dirigida por clientes de California que ya eligieron el formulario, la categoría de elegibilidad y los documentos. Sin asesoría legal.',
+    eyebrow: 'USCIS · Formulario I-765 · Clientes de California',
+    heading: 'Preparación del Formulario I-765 bajo su dirección',
+    hero: '¿Ya decidió usar I-765 y seleccionó por su cuenta la categoría de elegibilidad y los documentos de respaldo? Imverica puede ingresar sus respuestas y organizar los materiales que usted identifica. No elegimos categoría, evidencia, tarifa, dirección de presentación ni estrategia legal.',
+    start: 'Iniciar entrevista I-765',
+    lead: 'Imverica ofrece preparación no legal del Formulario I-765 para consumidores de California que se representan a sí mismos y ya eligieron I-765, la categoría de elegibilidad que se ingresará y los documentos que se incluirán. Bajo instrucciones específicas del cliente, ingresamos sus respuestas, organizamos los materiales que seleccionó y señalamos vacíos administrativos para que los corrija. No determinamos autorización de empleo o elegibilidad, no elegimos categoría ni evidencia, no interpretamos preguntas legales y no representamos ante USCIS.',
+    officialHeading: 'Use instrucciones vigentes de USCIS para cada decisión',
+    officialP1: 'USCIS publica el Formulario I-765 vigente, sus instrucciones, información de presentación y el Formulario G-1055 con las tarifas. La categoría, evidencia, tarifa, método y dirección de presentación pueden depender de las circunstancias y cambiar. Verifique cada punto en las fuentes oficiales vigentes inmediatamente antes de presentar.',
+    officialP2: 'Imverica no decide qué categoría corresponde, si aplica una tarifa o exención, ni si la evidencia seleccionada es legalmente suficiente. Si tiene dudas, consulte a un abogado de inmigración con licencia o representante acreditado por DOJ antes de solicitar preparación de documentos.',
+    scopeHeading: 'Qué puede hacer Imverica después de sus decisiones',
+    scopeLabel: 'La preparación dirigida por el cliente puede incluir',
+    scope: [
+      ['Captura', 'Ingresar las respuestas y la categoría que usted proporciona en un borrador del I-765.'],
+      ['Organización', 'Ordenar los documentos y etiquetas que usted selecciona en un borrador.'],
+      ['Revisión administrativa', 'Señalar espacios en blanco, fechas inconsistentes o firmas faltantes para que usted corrija, sin interpretación legal.'],
+      ['Traducciones', 'Coordinar traducciones certificadas al inglés de los documentos que proporciona, cuando se solicite.'],
+      ['Borrador final', 'Entregar el borrador para su revisión, aprobación, firma y presentación.']
+    ],
+    limitsHeading: 'Qué no incluye este servicio',
+    limits: [
+      'Determinar si califica para autorización de empleo o puede presentar I-765.',
+      'Seleccionar o cambiar categoría de elegibilidad, opción de tarifa, solicitud de exención o dirección de presentación.',
+      'Elegir evidencia o decidir si es legalmente suficiente.',
+      'Brindar asesoría legal, interpretar su estatus o elegir estrategia migratoria.',
+      'Firmar G-28, representar ante USCIS o prometer aprobación o plazo.'
+    ],
+    processHeading: 'Cómo funciona la preparación',
+    process: [
+      ['Usted identifica la solicitud', 'Confirma que eligió I-765, la categoría que se ingresará y los documentos que se incluirán.'],
+      ['Usted proporciona la información', 'Completa la entrevista y carga los materiales que seleccionó.'],
+      ['Preparamos el borrador', 'Ingresamos sus respuestas y señalamos vacíos administrativos para que los corrija.'],
+      ['Usted aprueba y presenta', 'Toma las decisiones finales, verifica requisitos vigentes de USCIS, revisa cada respuesta, firma y presenta.']
+    ],
+    faqHeading: 'Preguntas frecuentes',
+    faqs: [
+      ['¿Puede Imverica elegir mi categoría de elegibilidad de I-765?', 'No. El cliente debe proporcionar la categoría que ya seleccionó. Si tiene dudas, consulte a un abogado de inmigración con licencia o representante acreditado por DOJ.'],
+      ['¿Puede Imverica decirme qué evidencia presentar?', 'No. Usted selecciona los documentos. Imverica puede organizar lo que identifica y señalar vacíos administrativos, pero no decide suficiencia legal.'],
+      ['¿Cuál es la tarifa gubernamental?', 'El monto puede depender de la categoría y las circunstancias de presentación y puede cambiar. Revise la página I-765, las instrucciones de USCIS y G-1055 vigentes inmediatamente antes de presentar.'],
+      ['¿Cuánto tarda la preparación?', 'Imverica confirma por escrito un plazo estimado después de recibir la entrevista y materiales completos. No promete ni controla el tiempo de USCIS.'],
+      ['¿Imverica me representará ante USCIS?', 'No. Imverica no comparece, no firma G-28 y no se comunica como su representante legal.']
+    ],
+    sourcesHeading: 'Fuentes oficiales',
+    sourcesIntro: 'Use las páginas y documentos vigentes de USCIS inmediatamente antes de presentar. Esta página no afirma una tarifa, edición, categoría, lista de evidencia o dirección de presentación como dato vigente.',
+    cite: 'Imverica no es un bufete de abogados y no brinda asesoría legal. Los servicios directos de preparación son para clientes de California y siguen instrucciones específicas del cliente.',
+    ctaHeading: '¿Ya eligió I-765 y la categoría?',
+    ctaSub: 'Indique el alcance de preparación que seleccionó. Después de la entrevista completa, confirmamos por escrito la tarifa y el plazo estimado.'
+  }
+} as const;
+
+const T = COPY[lang];
+const canonical = `https://imverica.com${prefix}${slug}`;
+const intakeHref = `${prefix}/#get-started?form=I-765`;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: T.heading,
+  serviceType: 'Form I-765 client-directed document preparation',
+  url: canonical,
+  description: T.description,
+  areaServed: { '@type': 'State', name: 'California' },
+  provider: { '@id': 'https://imverica.com/#organization' }
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${canonical}#faq`,
+  mainEntity: T.faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
+};
+---
+<BaseLayout
+  title={T.title}
+  description={T.description}
+  canonical={canonical}
+  slug={slug}
+  lang={lang}
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[serviceSchema, faqSchema]}
+>
+  <Hero
+    lang={lang}
+    eyebrow={T.eyebrow}
+    heading={T.heading}
+    sub={T.hero}
+    ctaPrimary={{ href: intakeHref, text: T.start }}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: `${prefix}/uscis-document-review`, label: 'USCIS document review' },
+    { href: `${prefix}/direct-document-preparation-vs-attorney-supervised-paralegal`, label: 'Direct preparation vs. attorney-supervised work' },
+    { href: `${prefix}/lda`, label: 'California Legal Document Assistant' }
+  ]}>
+    <p class="lead">{T.lead}</p>
+
+    <h2>{T.officialHeading}</h2>
+    <p>{T.officialP1}</p>
+    <p>{T.officialP2}</p>
+
+    <h2>{T.scopeHeading}</h2>
+    <div class="form-list">
+      <strong>{T.scopeLabel}</strong>
+      <ul>{T.scope.map(([label, text]) => <li><strong>{label}:</strong> {text}</li>)}</ul>
+    </div>
+
+    <h2>{T.limitsHeading}</h2>
+    <ul>{T.limits.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>{T.processHeading}</h2>
+    <ol>{T.process.map(([label, text]) => <li><strong>{label}.</strong> {text}</li>)}</ol>
+
+    <h2>{T.faqHeading}</h2>
+    {T.faqs.map(([question, answer]) => (
+      <section class="i765-faq">
+        <h3>{question}</h3>
+        <p>{answer}</p>
+      </section>
+    ))}
+
+    <h2>{T.sourcesHeading}</h2>
+    <p>{T.sourcesIntro}</p>
+    <ul>
+      <li><a href="https://www.uscis.gov/i-765">USCIS — Form I-765 page</a></li>
+      <li><a href="https://www.uscis.gov/sites/default/files/document/forms/i-765instr.pdf">USCIS — Form I-765 Instructions (PDF)</a></li>
+      <li><a href="https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf">USCIS — Form G-1055 Fee Schedule (PDF)</a></li>
+      <li><a href="https://www.uscis.gov/scams-fraud-and-misconduct/avoid-scams/find-legal-services">USCIS — Find Legal Services</a></li>
+    </ul>
+    <cite>{T.cite}</cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading={T.ctaHeading}
+    sub={T.ctaSub}
+    primaryHref={intakeHref}
+    primaryText={T.start}
+  />
+</BaseLayout>
+
+<style is:global>
+  .i765-faq { margin: 0 0 18px; padding: 18px 20px; background: #fffaf2; border: 1px solid rgba(40,30,20,0.08); border-radius: 10px; }
+  .i765-faq h3 { margin: 0 0 7px; color: var(--navy-dark); }
+  .i765-faq p { margin: 0; }
+</style>

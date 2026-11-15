@@ -1,0 +1,215 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+import type { Locale } from '~/data/i18n';
+
+type Kind =
+  | 'i693'
+  | 'i824'
+  | 'i131'
+  | 'i131a'
+  | 'i90'
+  | 'eoir'
+  | 'eoir29'
+  | 'eoir40'
+  | 'eoir42a'
+  | 'eoir42b'
+  | 'sc'
+  | 'probate';
+
+interface Props { lang?: Locale; kind: Kind }
+const { lang = 'en', kind } = Astro.props as Props;
+
+const PREFIX: Record<Locale, string> = { en: '', ru: '/ru', uk: '/ua', es: '/mx' };
+const prefix = PREFIX[lang];
+
+const VARIANTS: Record<Kind, {
+  code: string;
+  slug: string;
+  agency: 'USCIS' | 'EOIR' | 'California Courts';
+  official: string;
+  name: Record<Locale, string>;
+  purpose: Record<Locale, string>;
+}> = {
+  i693: {
+    code: 'I-693', slug: '/i-693-medical-examination', agency: 'USCIS', official: 'https://www.uscis.gov/i-693',
+    name: { en: 'Report of Immigration Medical Examination and Vaccination Record', ru: 'медицинское заключение и запись о вакцинации', uk: 'медичний висновок і запис про вакцинацію', es: 'informe de examen médico y registro de vacunación' },
+    purpose: {
+      en: 'USCIS labels Form I-693 as the Report of Immigration Medical Examination and Vaccination Record. A designated civil surgeon completes the medical portions; Imverica does not perform or interpret the examination.',
+      ru: 'USCIS называет I-693 отчётом об иммиграционном медицинском обследовании и вакцинации. Медицинскую часть заполняет назначенный civil surgeon; Imverica не проводит и не толкует обследование.',
+      uk: 'USCIS називає I-693 звітом про імміграційне медичне обстеження та вакцинацію. Медичну частину заповнює призначений civil surgeon; Imverica не проводить і не тлумачить обстеження.',
+      es: 'USCIS denomina al I-693 Informe de Examen Médico de Inmigración y Registro de Vacunación. Un civil surgeon designado completa la parte médica; Imverica no realiza ni interpreta el examen.'
+    }
+  },
+  i824: {
+    code: 'I-824', slug: '/i-824-action-on-approved-application', agency: 'USCIS', official: 'https://www.uscis.gov/i-824',
+    name: { en: 'Application for Action on an Approved Application or Petition', ru: 'заявление о действии по одобренной заявке или петиции', uk: 'заява про дію щодо схваленої заяви або петиції', es: 'solicitud de acción sobre una solicitud o petición aprobada' },
+    purpose: {
+      en: 'USCIS labels Form I-824 as the Application for Action on an Approved Application or Petition. The official instructions control which requests may use it.',
+      ru: 'USCIS называет I-824 заявлением о действии по одобренной заявке или петиции. Только официальные инструкции определяют, для каких запросов она используется.',
+      uk: 'USCIS називає I-824 заявою про дію щодо схваленої заяви або петиції. Лише офіційні інструкції визначають, для яких запитів її використовують.',
+      es: 'USCIS denomina al I-824 Solicitud de Acción sobre una Solicitud o Petición Aprobada. Las instrucciones oficiales controlan qué solicitudes pueden usarlo.'
+    }
+  },
+  i131: {
+    code: 'I-131', slug: '/i-131-travel-document', agency: 'USCIS', official: 'https://www.uscis.gov/i-131',
+    name: { en: 'Application for Travel Documents, Parole Documents, and Arrival/Departure Records', ru: 'заявление на travel/parole documents и записи о въезде/выезде', uk: 'заява на travel/parole documents і записи про в’їзд/виїзд', es: 'solicitud de documentos de viaje, parole y registros de entrada/salida' },
+    purpose: {
+      en: 'USCIS uses Form I-131 for several different travel, parole, and arrival/departure requests. The client must determine the requested document and filing basis before asking Imverica to type the form.',
+      ru: 'USCIS использует I-131 для разных запросов о travel, parole и въезде/выезде. До заказа подготовки клиент сам определяет нужный документ и основание подачи.',
+      uk: 'USCIS використовує I-131 для різних запитів щодо travel, parole та в’їзду/виїзду. До замовлення підготовки клієнт сам визначає потрібний документ і підставу подання.',
+      es: 'USCIS usa el I-131 para distintas solicitudes de viaje, parole y entrada/salida. Antes de pedir preparación, el cliente determina el documento y la base de presentación.'
+    }
+  },
+  i131a: {
+    code: 'I-131A', slug: '/i-131a-returning-resident', agency: 'USCIS', official: 'https://www.uscis.gov/i-131a',
+    name: { en: 'Application for Carrier Documentation', ru: 'заявление на carrier documentation', uk: 'заява на carrier documentation', es: 'solicitud de documentación para transportista' },
+    purpose: {
+      en: 'USCIS labels Form I-131A as the Application for Carrier Documentation. The client must confirm from current official instructions that this is the requested filing.',
+      ru: 'USCIS называет I-131A заявлением на carrier documentation. Клиент должен по актуальным официальным инструкциям подтвердить, что ему нужна именно эта подача.',
+      uk: 'USCIS називає I-131A заявою на carrier documentation. Клієнт має за актуальними офіційними інструкціями підтвердити, що йому потрібне саме це подання.',
+      es: 'USCIS denomina al I-131A Solicitud de Documentación para Transportista. El cliente confirma en las instrucciones oficiales que esta es la presentación solicitada.'
+    }
+  },
+  i90: {
+    code: 'I-90', slug: '/i-90-green-card-renewal', agency: 'USCIS', official: 'https://www.uscis.gov/i-90',
+    name: { en: 'Application to Replace Permanent Resident Card', ru: 'заявление на замену карты постоянного жителя', uk: 'заява на заміну картки постійного мешканця', es: 'solicitud para reemplazar la tarjeta de residente permanente' },
+    purpose: {
+      en: 'USCIS labels Form I-90 as the Application to Replace Permanent Resident Card. The client selects the filing reason from current official instructions.',
+      ru: 'USCIS называет I-90 заявлением на замену карты постоянного жителя. Причину подачи клиент выбирает по актуальным официальным инструкциям.',
+      uk: 'USCIS називає I-90 заявою на заміну картки постійного мешканця. Причину подання клієнт обирає за актуальними офіційними інструкціями.',
+      es: 'USCIS denomina al I-90 Solicitud para Reemplazar la Tarjeta de Residente Permanente. El cliente elige el motivo según las instrucciones oficiales vigentes.'
+    }
+  },
+  eoir: {
+    code: 'EOIR', slug: '/eoir-immigration-court', agency: 'EOIR', official: 'https://www.justice.gov/eoir/forms',
+    name: { en: 'immigration-court forms', ru: 'формы иммиграционного суда', uk: 'форми імміграційного суду', es: 'formularios de la corte de inmigración' },
+    purpose: {
+      en: 'EOIR publishes the current immigration-court forms and instructions. Imverica can type a form already selected by a California self-represented client, but cannot choose relief, defenses, motions, evidence, or appellate strategy.',
+      ru: 'EOIR публикует актуальные формы и инструкции иммиграционного суда. Imverica может внести данные в форму, уже выбранную клиентом из Калифорнии, но не выбирает relief, защиту, motions, доказательства или стратегию апелляции.',
+      uk: 'EOIR публікує актуальні форми та інструкції імміграційного суду. Imverica може внести дані до форми, уже обраної клієнтом із Каліфорнії, але не обирає relief, захист, motions, докази чи стратегію апеляції.',
+      es: 'EOIR publica los formularios e instrucciones vigentes. Imverica puede escribir en un formulario ya elegido por un cliente de California, pero no elige alivio, defensas, mociones, pruebas ni estrategia de apelación.'
+    }
+  },
+  eoir29: {
+    code: 'EOIR-29', slug: '/eoir-29-notice-of-appeal', agency: 'EOIR', official: 'https://www.justice.gov/eoir/forms',
+    name: { en: 'Notice of Appeal to the Board of Immigration Appeals from a Decision of a DHS Officer', ru: 'уведомление об апелляции в BIA на решение сотрудника DHS', uk: 'повідомлення про апеляцію до BIA на рішення працівника DHS', es: 'aviso de apelación ante la BIA de una decisión de un oficial de DHS' },
+    purpose: { en: 'EOIR lists EOIR-29 among its official forms. Appeal deadlines, jurisdiction, issues, and strategy are legal questions for an attorney.', ru: 'EOIR публикует EOIR-29 среди официальных форм. Срок, юрисдикция, вопросы и стратегия апелляции — юридические вопросы для адвоката.', uk: 'EOIR публікує EOIR-29 серед офіційних форм. Строк, юрисдикція, питання та стратегія апеляції — юридичні питання для адвоката.', es: 'EOIR incluye EOIR-29 entre sus formularios oficiales. El plazo, la jurisdicción, los asuntos y la estrategia son preguntas legales para un abogado.' }
+  },
+  eoir40: {
+    code: 'EOIR-40', slug: '/eoir-40-suspension-of-deportation', agency: 'EOIR', official: 'https://www.justice.gov/eoir/forms',
+    name: { en: 'Application for Suspension of Deportation', ru: 'заявление о suspension of deportation', uk: 'заява про suspension of deportation', es: 'solicitud de suspensión de deportación' },
+    purpose: { en: 'EOIR lists EOIR-40 among its official forms. Whether this legacy form or any related framework applies is a legal eligibility question for an attorney.', ru: 'EOIR публикует EOIR-40 среди официальных форм. Применимость этой legacy-формы или связанного режима — юридический вопрос eligibility для адвоката.', uk: 'EOIR публікує EOIR-40 серед офіційних форм. Застосовність цієї legacy-форми чи пов’язаного режиму — юридичне питання eligibility для адвоката.', es: 'EOIR incluye EOIR-40 entre sus formularios oficiales. La aplicabilidad de este formulario heredado o su marco es una cuestión legal de elegibilidad para un abogado.' }
+  },
+  eoir42a: {
+    code: 'EOIR-42A', slug: '/eoir-42a-cancellation-lpr', agency: 'EOIR', official: 'https://www.justice.gov/eoir/forms',
+    name: { en: 'Application for Cancellation of Removal for Certain Permanent Residents', ru: 'заявление о cancellation of removal для некоторых permanent residents', uk: 'заява про cancellation of removal для деяких permanent residents', es: 'solicitud de cancelación de remoción para ciertos residentes permanentes' },
+    purpose: { en: 'EOIR lists EOIR-42A among its official forms. Eligibility, burden of proof, evidence, deadlines, and litigation strategy require legal advice.', ru: 'EOIR публикует EOIR-42A среди официальных форм. Eligibility, burden of proof, доказательства, сроки и судебная стратегия требуют юридической консультации.', uk: 'EOIR публікує EOIR-42A серед офіційних форм. Eligibility, burden of proof, докази, строки й судова стратегія потребують юридичної консультації.', es: 'EOIR incluye EOIR-42A entre sus formularios oficiales. Elegibilidad, carga de prueba, evidencia, plazos y estrategia requieren asesoría legal.' }
+  },
+  eoir42b: {
+    code: 'EOIR-42B', slug: '/eoir-42b-cancellation-non-lpr', agency: 'EOIR', official: 'https://www.justice.gov/eoir/forms',
+    name: { en: 'Application for Cancellation of Removal and Adjustment of Status for Certain Nonpermanent Residents', ru: 'заявление о cancellation of removal для некоторых nonpermanent residents', uk: 'заява про cancellation of removal для деяких nonpermanent residents', es: 'solicitud de cancelación de remoción para ciertos no residentes permanentes' },
+    purpose: { en: 'EOIR lists EOIR-42B among its official forms. Eligibility, hardship analysis, evidence, deadlines, and litigation strategy require legal advice.', ru: 'EOIR публикует EOIR-42B среди официальных форм. Eligibility, hardship analysis, доказательства, сроки и судебная стратегия требуют юридической консультации.', uk: 'EOIR публікує EOIR-42B серед офіційних форм. Eligibility, hardship analysis, докази, строки й судова стратегія потребують юридичної консультації.', es: 'EOIR incluye EOIR-42B entre sus formularios oficiales. Elegibilidad, análisis de dificultad, evidencia, plazos y estrategia requieren asesoría legal.' }
+  },
+  sc: {
+    code: 'California Small Claims', slug: '/sc', agency: 'California Courts', official: 'https://selfhelp.courts.ca.gov/small-claims-california',
+    name: { en: 'small-claims document preparation', ru: 'подготовка документов small claims', uk: 'підготовка документів small claims', es: 'preparación de documentos de reclamos menores' },
+    purpose: { en: 'California Courts publishes current small-claims limits, deadlines, fees, venue rules, service rules, and forms. The client must select the claim and forms before asking Imverica for clerical preparation.', ru: 'California Courts публикует актуальные лимиты, сроки, сборы, правила venue, service и формы small claims. До заказа технической подготовки клиент сам выбирает требование и формы.', uk: 'California Courts публікує актуальні ліміти, строки, збори, правила venue, service та форми small claims. До замовлення технічної підготовки клієнт сам обирає вимогу й форми.', es: 'California Courts publica límites, plazos, tarifas, reglas de venue y service y formularios vigentes. Antes de pedir preparación técnica, el cliente elige el reclamo y los formularios.' }
+  },
+  probate: {
+    code: 'California Probate', slug: '/california-probate', agency: 'California Courts', official: 'https://selfhelp.courts.ca.gov/probate',
+    name: { en: 'probate document preparation', ru: 'подготовка документов probate', uk: 'підготовка документів probate', es: 'preparación de documentos de sucesiones' },
+    purpose: { en: 'California Courts publishes current probate and small-estate information, forms, thresholds, and procedures. Choosing between probate, a small-estate procedure, a spousal petition, or another path is a legal decision Imverica does not make.', ru: 'California Courts публикует актуальную информацию, формы, пороги и процедуры probate и small estate. Выбор между probate, small-estate procedure, spousal petition или другим путём — юридическое решение, которое Imverica не принимает.', uk: 'California Courts публікує актуальну інформацію, форми, пороги й процедури probate та small estate. Вибір між probate, small-estate procedure, spousal petition чи іншим шляхом — юридичне рішення, якого Imverica не ухвалює.', es: 'California Courts publica información, formularios, umbrales y procedimientos vigentes de probate y small estate. Elegir entre probate, un procedimiento de pequeña herencia, petición conyugal u otra vía es una decisión legal que Imverica no toma.' }
+  }
+};
+
+const COPY: Record<Locale, {
+  title: string; description: string; eyebrow: string; heading: string; hero: string;
+  officialHeading: string; officialText: string; scopeHeading: string; limitsHeading: string;
+  processHeading: string; faqHeading: string; sourcesHeading: string; sourcesIntro: string;
+  ctaHeading: string; ctaSub: string; start: string;
+  scope: string[]; limits: string[]; process: [string, string][]; faqs: [string, string][];
+}> = {
+  en: {
+    title: 'client-directed document preparation for California consumers',
+    description: 'Client-directed, non-lawyer preparation for California consumers who already selected the form and documents. No legal advice, eligibility decisions, or representation.',
+    eyebrow: 'Client-selected form · California direct clients · no legal advice',
+    heading: 'document preparation at your direction',
+    hero: 'Already selected this form and the filing basis? Imverica can type your answers and organize the documents you select into a draft. We do not choose the form, basis, category, evidence, fee, deadline, filing address, or strategy.',
+    officialHeading: 'Start with current official instructions',
+    officialText: 'Form editions, instructions, fees, deadlines, filing methods, and agency procedures can change. Review the live agency page immediately before filing. General agency information does not establish that this filing is right for you.',
+    scopeHeading: 'What client-directed preparation can include',
+    limitsHeading: 'What Imverica cannot decide',
+    processHeading: 'How the service works', faqHeading: 'Frequently asked questions',
+    sourcesHeading: 'Official sources', sourcesIntro: 'Links reviewed November 14, 2026. Recheck the live agency page immediately before filing.',
+    ctaHeading: 'Already chose the form and documents?', ctaSub: 'Tell us the exact clerical preparation requested. Scope, fee, and estimated schedule are confirmed in writing after complete intake.', start: 'Request document preparation',
+    scope: ['Type the answers you provide into the form you identify.', 'Organize the documents and labels you select.', 'Flag blanks, conflicting dates, and missing signatures for your correction.', 'Return a draft for your review, approval, signature, and filing.'],
+    limits: ['Whether the form, remedy, filing basis, or category applies to you.', 'Which evidence, legal argument, deadline, fee, or filing address to use.', 'How to answer a question when legal interpretation is required.', 'Whether an agency or court will accept, approve, or decide the filing favorably.', 'Government processing time or a preparation deadline before complete intake.'],
+    process: [['You choose', 'Identify the exact form, filing basis, and documents you want prepared.'], ['You provide', 'Complete intake and upload the documents you selected.'], ['We type', 'We enter your information and flag clerical gaps.'], ['You decide', 'Verify current instructions, review every answer, sign, and file.']],
+    faqs: [['Can Imverica tell me whether this form applies?', 'No. Ask a licensed attorney or DOJ-accredited representative when you need legal advice or an eligibility decision.'], ['Can Imverica choose my category, evidence, fee, or filing address?', 'No. The client or supervising attorney supplies those instructions.'], ['Does Imverica represent me?', 'No. Direct service is clerical document preparation for California self-represented clients.'], ['Is nationwide service available?', 'Only as a separate attorney-directed B2B service for law firms; direct consumer service on this page is for California clients.'], ['How long does preparation take?', 'An estimated schedule is confirmed in writing after the requested scope, intake, and client-selected documents are complete.']]
+  },
+  ru: {
+    title: 'подготовка документов по поручению клиента в Калифорнии', description: 'Неюридическая подготовка для жителей Калифорнии, уже выбравших форму и документы. Без определения eligibility, юридических советов или представительства.', eyebrow: 'Форма выбрана клиентом · Калифорния · без юридических советов', heading: 'подготовка документов по вашему поручению', hero: 'Уже выбрали эту форму и основание подачи? Imverica может внести ваши ответы и организовать выбранные вами документы в черновик. Мы не выбираем форму, основание, категорию, доказательства, сбор, срок, адрес подачи или стратегию.', officialHeading: 'Начните с актуальных официальных инструкций', officialText: 'Редакции форм, инструкции, сборы, сроки, способы подачи и процедуры ведомства могут меняться. Перед подачей проверьте актуальную официальную страницу. Общая информация ведомства не подтверждает, что эта подача подходит вам.', scopeHeading: 'Что может включать подготовка по поручению', limitsHeading: 'Что Imverica не может определять', processHeading: 'Как проходит услуга', faqHeading: 'Частые вопросы', sourcesHeading: 'Официальные источники', sourcesIntro: 'Ссылки проверены 14 ноября 2026 года. Перед подачей снова проверьте актуальную страницу ведомства.', ctaHeading: 'Уже выбрали форму и документы?', ctaSub: 'Укажите точную техническую задачу. После полного intake мы письменно подтвердим объём, цену и ориентировочный график.', start: 'Запросить подготовку', scope: ['Внести предоставленные вами ответы в указанную вами форму.', 'Организовать выбранные вами документы и ярлыки.', 'Отметить пустые поля, несовпадающие даты и пропущенные подписи для вашего исправления.', 'Передать черновик для вашей проверки, подписи и подачи.'], limits: ['Подходит ли вам форма, remedy, основание или категория.', 'Какие доказательства, аргументы, срок, сбор или адрес подачи использовать.', 'Как отвечать, если требуется юридическое толкование.', 'Примет или одобрит ли ведомство либо суд подачу.', 'Срок государственного рассмотрения или срок подготовки до полного intake.'], process: [['Вы выбираете', 'Указываете точную форму, основание и документы.'], ['Вы предоставляете', 'Заполняете intake и загружаете выбранные документы.'], ['Мы вносим данные', 'Вводим информацию и отмечаем технические пробелы.'], ['Вы решаете', 'Проверяете инструкции и ответы, подписываете и подаёте.']], faqs: [['Может ли Imverica сказать, подходит ли эта форма?', 'Нет. Для юридического совета или определения eligibility обратитесь к адвокату или DOJ-accredited representative.'], ['Может ли Imverica выбрать категорию, доказательства, сбор или адрес?', 'Нет. Эти инструкции даёт клиент или supervising attorney.'], ['Представляет ли Imverica клиента?', 'Нет. Прямая услуга — техническая подготовка для самостоятельно действующих клиентов из Калифорнии.'], ['Есть ли nationwide-услуга?', 'Только как отдельная attorney-directed B2B-услуга для юридических фирм; прямая услуга на этой странице — для Калифорнии.'], ['Сколько занимает подготовка?', 'Ориентировочный график письменно подтверждается после полного запроса, intake и выбранных клиентом документов.']]
+  },
+  uk: {
+    title: 'підготовка документів за дорученням клієнта в Каліфорнії', description: 'Неюридична підготовка для мешканців Каліфорнії, які вже обрали форму й документи. Без визначення eligibility, юридичних порад чи представництва.', eyebrow: 'Форма обрана клієнтом · Каліфорнія · без юридичних порад', heading: 'підготовка документів за вашим дорученням', hero: 'Уже обрали цю форму й підставу подання? Imverica може внести ваші відповіді та впорядкувати обрані вами документи в чернетку. Ми не обираємо форму, підставу, категорію, докази, збір, строк, адресу подання чи стратегію.', officialHeading: 'Почніть з актуальних офіційних інструкцій', officialText: 'Редакції форм, інструкції, збори, строки, способи подання та процедури відомства можуть змінюватися. Перед поданням перевірте актуальну офіційну сторінку. Загальна інформація відомства не підтверджує, що це подання підходить вам.', scopeHeading: 'Що може включати підготовка за дорученням', limitsHeading: 'Що Imverica не може визначати', processHeading: 'Як працює послуга', faqHeading: 'Поширені запитання', sourcesHeading: 'Офіційні джерела', sourcesIntro: 'Посилання перевірені 14 листопада 2026 року. Перед поданням знову перевірте актуальну сторінку відомства.', ctaHeading: 'Уже обрали форму й документи?', ctaSub: 'Вкажіть точне технічне завдання. Після повного intake ми письмово підтвердимо обсяг, ціну й орієнтовний графік.', start: 'Запросити підготовку', scope: ['Внести надані вами відповіді до вказаної вами форми.', 'Упорядкувати обрані вами документи й позначки.', 'Позначити порожні поля, суперечливі дати та відсутні підписи для вашого виправлення.', 'Передати чернетку для вашої перевірки, підпису й подання.'], limits: ['Чи підходить вам форма, remedy, підстава або категорія.', 'Які докази, аргументи, строк, збір чи адресу подання використовувати.', 'Як відповідати, якщо потрібне юридичне тлумачення.', 'Чи прийме або схвалить відомство чи суд подання.', 'Строк державного розгляду або строк підготовки до повного intake.'], process: [['Ви обираєте', 'Зазначаєте точну форму, підставу й документи.'], ['Ви надаєте', 'Заповнюєте intake та завантажуєте обрані документи.'], ['Ми вносимо дані', 'Вводимо інформацію й позначаємо технічні прогалини.'], ['Ви вирішуєте', 'Перевіряєте інструкції та відповіді, підписуєте й подаєте.']], faqs: [['Чи може Imverica сказати, чи підходить ця форма?', 'Ні. Для юридичної поради або визначення eligibility зверніться до адвоката чи DOJ-accredited representative.'], ['Чи може Imverica обрати категорію, докази, збір або адресу?', 'Ні. Ці інструкції надає клієнт або supervising attorney.'], ['Чи представляє Imverica клієнта?', 'Ні. Пряма послуга — технічна підготовка для клієнтів із Каліфорнії, які представляють себе самостійно.'], ['Чи є nationwide-послуга?', 'Лише як окрема attorney-directed B2B-послуга для юридичних фірм; пряма послуга на цій сторінці — для Каліфорнії.'], ['Скільки триває підготовка?', 'Орієнтовний графік письмово підтверджується після повного запиту, intake та обраних клієнтом документів.']]
+  },
+  es: {
+    title: 'preparación de documentos bajo dirección del cliente en California', description: 'Preparación no legal para residentes de California que ya eligieron el formulario y los documentos. Sin decisiones de elegibilidad, asesoría legal ni representación.', eyebrow: 'Formulario elegido por el cliente · California · sin asesoría legal', heading: 'preparación de documentos bajo su dirección', hero: '¿Ya eligió este formulario y la base de presentación? Imverica puede escribir sus respuestas y organizar los documentos que seleccione en un borrador. No elegimos formulario, base, categoría, evidencia, tarifa, plazo, dirección ni estrategia.', officialHeading: 'Comience con instrucciones oficiales vigentes', officialText: 'Ediciones, instrucciones, tarifas, plazos, métodos y procedimientos pueden cambiar. Revise la página oficial vigente inmediatamente antes de presentar. La información general no determina que esta presentación sea adecuada para usted.', scopeHeading: 'Qué puede incluir la preparación dirigida por el cliente', limitsHeading: 'Lo que Imverica no puede decidir', processHeading: 'Cómo funciona', faqHeading: 'Preguntas frecuentes', sourcesHeading: 'Fuentes oficiales', sourcesIntro: 'Enlaces revisados el 14 de noviembre de 2026. Vuelva a verificar la página oficial antes de presentar.', ctaHeading: '¿Ya eligió el formulario y los documentos?', ctaSub: 'Indique la tarea técnica exacta. Tras completar la entrevista confirmamos por escrito alcance, precio y calendario estimado.', start: 'Solicitar preparación', scope: ['Escribir sus respuestas en el formulario que usted identifica.', 'Organizar los documentos y rótulos que usted seleccione.', 'Señalar espacios, fechas contradictorias y firmas faltantes para su corrección.', 'Entregar un borrador para su revisión, firma y presentación.'], limits: ['Si el formulario, remedio, base o categoría se aplica a usted.', 'Qué evidencia, argumento, plazo, tarifa o dirección utilizar.', 'Cómo responder cuando se requiere interpretación legal.', 'Si la agencia o corte aceptará o aprobará la presentación.', 'El tiempo gubernamental o un plazo de preparación antes de la entrevista completa.'], process: [['Usted elige', 'Identifica formulario, base y documentos exactos.'], ['Usted proporciona', 'Completa la entrevista y sube los documentos elegidos.'], ['Nosotros escribimos', 'Ingresamos información y señalamos vacíos técnicos.'], ['Usted decide', 'Verifica instrucciones y respuestas, firma y presenta.']], faqs: [['¿Puede Imverica decirme si este formulario se aplica?', 'No. Consulte a un abogado o representante acreditado por DOJ para asesoría o elegibilidad.'], ['¿Puede Imverica elegir categoría, evidencia, tarifa o dirección?', 'No. El cliente o supervising attorney proporciona esas instrucciones.'], ['¿Imverica me representa?', 'No. El servicio directo es preparación técnica para clientes autorrepresentados de California.'], ['¿Hay servicio nacional?', 'Solo como servicio B2B separado y dirigido por un abogado para bufetes; el servicio directo de esta página es para California.'], ['¿Cuánto tarda?', 'El calendario estimado se confirma por escrito después de completar alcance, entrevista y documentos elegidos.']]
+  }
+};
+
+const v = VARIANTS[kind];
+const t = COPY[lang];
+const canonical = `https://imverica.com${prefix}${v.slug}`;
+const heading = `${v.code} — ${t.heading}`;
+const title = `${v.code}: ${t.title} | Imverica`;
+const description = `${v.code} — ${t.description}`;
+const faq: FaqItem[] = t.faqs.map(([q, a]) => ({ q, a }));
+const serviceSchema = {
+  '@context': 'https://schema.org', '@type': 'Service',
+  name: `${v.code} ${v.name[lang]} — client-directed document preparation`,
+  url: canonical, provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
+  availableLanguage: ['English', 'Russian', 'Ukrainian', 'Spanish'],
+  description
+};
+const agencySources = v.agency === 'USCIS'
+  ? [
+      [v.official, `${v.code} — USCIS`],
+      ['https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf', 'USCIS Form G-1055 — Fee Schedule'],
+      ['https://www.uscis.gov/scams-fraud-and-misconduct/avoid-scams/find-legal-services', 'USCIS — Find Legal Services']
+    ]
+  : v.agency === 'EOIR' ? [
+      [v.official, 'EOIR — Downloadable Forms'],
+      ['https://www.justice.gov/eoir/types-appeals-motions-and-required-fees', 'EOIR — Types of Appeals, Motions, and Required Fees'],
+      ['https://www.justice.gov/eoir/find-legal-representation', 'EOIR — Find Legal Representation']
+    ] : [
+      [v.official, 'California Courts Self-Help'],
+      ['https://selfhelp.courts.ca.gov/find-forms', 'California Courts — Find Your Court Forms'],
+      ['https://selfhelp.courts.ca.gov/fee-waiver', 'California Courts — Fee Waivers']
+    ];
+if (kind === 'i693') agencySources.splice(1, 0, ['https://www.uscis.gov/tools/find-a-civil-surgeon', 'USCIS — Find a Civil Surgeon']);
+---
+<BaseLayout title={title} description={description} canonical={canonical} slug={v.slug} lang={lang} availableLocales={['en', 'ru', 'uk', 'es']} jsonLd={[serviceSchema, faqSchema(faq)]}>
+  <Hero lang={lang} eyebrow={`${v.agency} · ${t.eyebrow}`} heading={heading} sub={t.hero} ctaPrimary={{ href: `${prefix}/#get-started`, text: t.start }} />
+  <LandingBody related={[
+    { href: `${prefix}/direct-document-preparation-vs-attorney-supervised-paralegal`, label: lang === 'en' ? 'Direct preparation vs. attorney-directed support' : v.code },
+    { href: `${prefix}/uscis-document-review`, label: lang === 'en' ? 'Clerical document check' : 'Clerical document check' },
+    { href: `${prefix}/lda`, label: 'California Legal Document Assistant' }
+  ]}>
+    <p class="lead">{v.purpose[lang]}</p>
+    <h2>{t.officialHeading}</h2><p>{t.officialText}</p>
+    <h2>{t.scopeHeading}</h2><ul>{t.scope.map((item) => <li>{item}</li>)}</ul>
+    <h2>{t.limitsHeading}</h2><ul>{t.limits.map((item) => <li>{item}</li>)}</ul>
+    <h2>{t.processHeading}</h2><ol>{t.process.map(([label, text]) => <li><strong>{label}:</strong> {text}</li>)}</ol>
+    <h2>{t.sourcesHeading}</h2><p>{t.sourcesIntro}</p>
+    <ul>{agencySources.map(([href, label]) => <li><a href={href}>{label}</a></li>)}</ul>
+  </LandingBody>
+  <FaqBlock heading={t.faqHeading} items={faq} />
+  <CTAStrip lang={lang} heading={t.ctaHeading} sub={t.ctaSub} primaryHref={`${prefix}/#get-started`} primaryText={t.start} />
+</BaseLayout>

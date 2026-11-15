@@ -794,12 +794,12 @@ html.v2 :is(a,button,[role="button"],select):focus-visible{outline:2px solid #3a
       <div class="qt-sub" data-i18n="tileRoSub">DV, civil harassment &amp; elder abuse</div>
     </button>
 
-    <button class="qt" type="button" onclick="openUdPacket()" aria-label="Eviction (unlawful detainer) packet">
+    <button class="qt" type="button" onclick="openSmallClaimsWizard('all')" aria-label="Browse California court forms already selected by the client">
       <div class="qt-icon-wrap">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
       </div>
       <div class="qt-title" data-i18n="tileEvTitle">Eviction</div>
-      <div class="qt-sub" data-i18n="tileEvSub">Unlawful detainer — landlord or tenant</div>
+      <div class="qt-sub" data-i18n="tileEvSub">Choose a form code you already selected</div>
     </button>
 
     <button class="qt" type="button" onclick="openCabinetForms('probate')" aria-label="California probate">
@@ -1002,7 +1002,7 @@ html.v2 :is(a,button,[role="button"],select):focus-visible{outline:2px solid #3a
     <div class="sc-head">
       <div>
         <h3 id="ud-title">California Eviction (Unlawful Detainer) packet</h3>
-        <p>Answer once about your case; we prepare the matching Judicial Council forms for each stage. Document preparation only · no legal advice · not a law firm.</p>
+        <p>This guided packet is unavailable because Imverica does not choose forms or filing stages. Use the court-form catalog only after you have selected the form code yourself.</p>
       </div>
       <button class="sc-close" type="button" aria-label="Close" onclick="closeUdPacket()">×</button>
     </div>
@@ -1110,7 +1110,7 @@ const STRINGS = {
     tileBizTitle: 'Business', tileBizSub: 'LLC, EIN, DBA & corporate filings',
     tileEoirTitle: 'Immigration Court', tileEoirSub: 'Attorneys only: we help as a paralegal',
     tileRoTitle: 'Restraining Orders', tileRoSub: 'DV, civil harassment & elder abuse',
-    tileEvTitle: 'Eviction', tileEvSub: 'Unlawful detainer — landlord or tenant',
+    tileEvTitle: 'Eviction forms', tileEvSub: 'Choose a form code you already selected',
     tileProbTitle: 'Probate', tileProbSub: 'Estate & inheritance filings',
     tileExpTitle: 'Expungement', tileExpSub: 'Clear & seal criminal records',
     tileHelpTitle: 'Help & FAQ', tileHelpSub: 'What is a California LDA?',
@@ -1249,7 +1249,7 @@ const STRINGS = {
     tileBizTitle: 'Бизнес', tileBizSub: 'LLC, EIN, DBA и корпоративные документы',
     tileEoirTitle: 'Иммиграционный суд', tileEoirSub: 'Только через адвоката: мы помогаем как paralegal',
     tileRoTitle: 'Запретительные приказы', tileRoSub: 'Насилие в семье и преследование',
-    tileEvTitle: 'Выселение', tileEvSub: 'Unlawful detainer — арендодатель или арендатор',
+    tileEvTitle: 'Формы по выселению', tileEvSub: 'Выберите код формы, который вы уже определили',
     tileProbTitle: 'Наследство (Probate)', tileProbSub: 'Оформление наследства и имущества',
     tileExpTitle: 'Очистка судимости', tileExpSub: 'Снятие и опечатывание судимостей',
     tileHelpTitle: 'Помощь и FAQ', tileHelpSub: 'Кто такой California LDA?',
@@ -1388,7 +1388,7 @@ const STRINGS = {
     tileBizTitle: 'Бізнес', tileBizSub: 'LLC, EIN, DBA та корпоративні документи',
     tileEoirTitle: 'Імміграційний суд', tileEoirSub: 'Лише через адвоката: ми допомагаємо як paralegal',
     tileRoTitle: 'Заборонні приписи', tileRoSub: 'Домашнє насильство та переслідування',
-    tileEvTitle: 'Виселення', tileEvSub: 'Unlawful detainer — орендодавець або орендар',
+    tileEvTitle: 'Форми щодо виселення', tileEvSub: 'Оберіть код форми, який ви вже визначили',
     tileProbTitle: 'Спадщина (Probate)', tileProbSub: 'Оформлення спадщини та майна',
     tileExpTitle: 'Очищення судимості', tileExpSub: 'Зняття та опечатування судимостей',
     tileHelpTitle: 'Допомога і FAQ', tileHelpSub: 'Хто такий California LDA?',
@@ -1527,7 +1527,7 @@ const STRINGS = {
     tileBizTitle: 'Negocios', tileBizSub: 'LLC, EIN, DBA y trámites corporativos',
     tileEoirTitle: 'Corte de Inmigración', tileEoirSub: 'Solo con representación autorizada: apoyo paralegal',
     tileRoTitle: 'Órdenes de Restricción', tileRoSub: 'Violencia doméstica y acoso',
-    tileEvTitle: 'Desalojo', tileEvSub: 'Unlawful detainer — arrendador o inquilino',
+    tileEvTitle: 'Formularios de desalojo', tileEvSub: 'Elija un código de formulario que ya seleccionó',
     tileProbTitle: 'Sucesiones (Probate)', tileProbSub: 'Herencias y bienes',
     tileExpTitle: 'Eliminación de Antecedentes', tileExpSub: 'Borrar y sellar antecedentes',
     tileHelpTitle: 'Ayuda y FAQ', tileHelpSub: '¿Qué es un California LDA?',
@@ -2994,21 +2994,9 @@ function udProgress(text){ document.getElementById('ud-progress').textContent = 
 function udStatus(kind, msg){ var s=document.getElementById('ud-status'); if(!s)return; s.className='sc-status '+kind; s.style.display='block'; s.textContent=msg; }
 
 async function openUdPacket(){
-  udState = { packet:null, intake:null, stepIndex:0, answers:{}, view:'intake' };
-  document.getElementById('ud-overlay').classList.remove('hidden');
-  document.getElementById('ud-body').innerHTML = '<div class="sc-status info" style="display:block">Loading…</div>';
-  setUdFooter(false, false);
-  try {
-    var r = await fetch('/api/court-flow?category=unlawful-detainer', { credentials:'include', headers:{Accept:'application/json'} });
-    if (r.status === 401){ closeUdPacket(); show('step-email'); return; }
-    var data = await r.json();
-    if (!data || !data.ok) throw new Error((data && data.error) || 'Could not load the packet');
-    udState.packet = data;
-    if (!data.intake || (!data.intake.landlord && !data.intake.tenant)) throw new Error('Intake unavailable');
-    renderUdRoleChoice();
-  } catch(e){
-    document.getElementById('ud-body').innerHTML = '<div class="sc-status error" style="display:block">'+escText(e.message||'Could not load')+'</div>';
-  }
+  // A guided role/stage flow could amount to choosing forms for the client.
+  // Keep form selection with the client and open the neutral catalog instead.
+  openSmallClaimsWizard('all');
 }
 function closeUdPacket(){ document.getElementById('ud-overlay').classList.add('hidden'); }
 

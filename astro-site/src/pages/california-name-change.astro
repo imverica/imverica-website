@@ -12,7 +12,8 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California Name Change Document Preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  provider: { '@id': 'https://imverica.com/#organization' },
+  areaServed: { '@type': 'State', name: 'California' },
   description: "Self-represented California name-change petition preparation at the client's direction — NC-100, NC-120, publication, and NC-130 decree. No legal advice; not a law firm."
 };
 ---

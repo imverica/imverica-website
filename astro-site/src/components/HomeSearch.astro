@@ -10,7 +10,7 @@ const STRINGS = {
   en: {
     placeholder: 'Ask Imverica: “green card”…',
     aria: 'Describe the document you need prepared',
-    submit: 'Find possible forms',
+    submit: 'Browse related form information',
     examplesLabel: 'Common document preparation examples',
     examples: ['Family petition', 'Response to divorce', 'Small claims', 'Expungement'],
     metaA: 'Document preparation only',
@@ -22,7 +22,7 @@ const STRINGS = {
   ru: {
     placeholder: 'Ask Imverica: «грин-карта»…',
     aria: 'Опишите документ, который нужно подготовить',
-    submit: 'Найти подходящие формы',
+    submit: 'Посмотреть информацию о формах',
     examplesLabel: 'Примеры запросов',
     examples: ['Семейная петиция', 'Ответ на развод', 'Малый иск', 'Снятие судимости'],
     metaA: 'Только подготовка документов',
@@ -34,7 +34,7 @@ const STRINGS = {
   uk: {
     placeholder: 'Ask Imverica: «грін-карта»…',
     aria: 'Опишіть документ, який потрібно підготувати',
-    submit: 'Знайти відповідні форми',
+    submit: 'Переглянути інформацію про форми',
     examplesLabel: 'Приклади запитів',
     examples: ['Сімейна петиція', 'Відповідь на розлучення', 'Малий позов', 'Зняття судимості'],
     metaA: 'Лише підготовка документів',
@@ -46,7 +46,7 @@ const STRINGS = {
   es: {
     placeholder: 'Ask Imverica: “green card”…',
     aria: 'Describa el documento que necesita preparar',
-    submit: 'Encontrar formularios posibles',
+    submit: 'Ver información relacionada',
     examplesLabel: 'Ejemplos comunes',
     examples: ['Petición familiar', 'Respuesta a divorcio', 'Reclamos menores', 'Limpiar record'],
     metaA: 'Solo preparación de documentos',
@@ -109,7 +109,7 @@ const t = STRINGS[lang] || STRINGS.en;
 
   const labels = {
     en: {
-      checking: 'Checking possible forms...',
+      checking: 'Looking up official form information...',
       countyQuestion: 'Which California county will you file in?',
       countyHelp: 'Local Superior Court forms vary by county. Choose the filing court before we continue.',
       countyPlaceholder: 'Select county',
@@ -126,7 +126,7 @@ const t = STRINGS[lang] || STRINGS.en;
       call: 'Call +1 (916) 399-3992'
     },
     ru: {
-      checking: 'Проверяем возможные формы...',
+      checking: 'Ищем официальную информацию о формах...',
       countyQuestion: 'В каком county Калифорнии вы будете подавать документы?',
       countyHelp: 'Локальные формы Superior Court отличаются по округам. Сначала выберите суд подачи.',
       countyPlaceholder: 'Выберите county',
@@ -143,7 +143,7 @@ const t = STRINGS[lang] || STRINGS.en;
       call: 'Позвонить +1 (916) 399-3992'
     },
     uk: {
-      checking: 'Перевіряємо можливі форми...',
+      checking: 'Шукаємо офіційну інформацію про форми...',
       countyQuestion: 'У якому county Каліфорнії ви подаватимете документи?',
       countyHelp: 'Локальні форми Superior Court відрізняються за округами. Спочатку оберіть суд подання.',
       countyPlaceholder: 'Оберіть county',
@@ -160,7 +160,7 @@ const t = STRINGS[lang] || STRINGS.en;
       call: 'Подзвонити +1 (916) 399-3992'
     },
     es: {
-      checking: 'Revisando posibles formularios...',
+      checking: 'Buscando información oficial de formularios...',
       countyQuestion: '¿En qué condado de California presentará los documentos?',
       countyHelp: 'Los formularios locales del Superior Court varían por condado. Seleccione el tribunal de presentación.',
       countyPlaceholder: 'Seleccione el condado',
@@ -610,7 +610,9 @@ const t = STRINGS[lang] || STRINGS.en;
           <a href="tel:+19163993992">${t.call}</a>
         </div>
       `);
-      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery, formCode));
+      // This is general information, not a form selection. Continue without
+      // preselecting the related form; the client enters the form they chose.
+      result?.querySelector('[data-ai-continue]')?.addEventListener('click', () => continueToWizard(enrichedQuery));
 
       const chatData = await chatPromise;
       const reply = String(chatData?.reply || '').trim();

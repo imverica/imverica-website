@@ -12,7 +12,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'I-864 Affidavit of Support Document Preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
+  provider: { '@id': 'https://imverica.com/#organization' },
   description: 'Document preparation for Form I-864 (Affidavit of Support) and the I-864A, I-864EZ, and I-864W variants — at the client direction.'
 };
 ---
@@ -58,7 +58,7 @@ const schema = {
     <ul>
       <li>The U.S. citizen or LPR petitioner on most family-based immigrant petitions (I-130, I-129F that converts to AOS).</li>
       <li>Employment-based applicants where a U.S.-citizen or LPR relative owns 5% or more of the petitioning entity.</li>
-      <li>Orphans and Hague Convention adoption cases (Form I-864W exemption commonly applies — we'll prepare the right form).</li>
+      <li>Orphans and Hague Convention adoption cases — if the client has already selected Form I-864W, we can prepare that form at the client's direction.</li>
     </ul>
 
     <h2>Income threshold and ways to meet it</h2>

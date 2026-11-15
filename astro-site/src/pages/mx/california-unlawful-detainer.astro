@@ -12,14 +12,7 @@ const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California Unlawful Detainer Document Preparation',
-  provider: {
-    '@type': 'LegalService',
-    name: 'Imverica Legal Solutions',
-    url: 'https://imverica.com',
-    telephone: '+1-916-399-3992',
-    areaServed: { '@type': 'State', name: 'California' },
-    disambiguatingDescription: 'Imverica no es una firma jurídica. Solo preparación de documentos bajo la dirección del cliente.'
-  },
+  provider: { '@id': 'https://imverica.com/#organization' },
   description: 'Imverica prepara documentos de unlawful detainer (desalojo) en California bajo la dirección del cliente. UD-100, SUM-130, avisos previos a la presentación, UD-105 respuesta, UD-110 sentencia, POS-010 prueba de notificación.'
 };
 ---

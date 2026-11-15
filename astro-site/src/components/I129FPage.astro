@@ -1,0 +1,362 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import type { Locale } from '~/data/i18n';
+
+interface Props { lang?: Locale }
+const { lang = 'en' } = Astro.props as Props;
+
+const PREFIX: Record<Locale, string> = { en: '', ru: '/ru', uk: '/ua', es: '/mx' };
+const prefix = PREFIX[lang];
+const slug = '/i-129f-fiance-visa-document-preparation';
+
+const COPY = {
+  en: {
+    title: 'I-129F Fiancé(e) Visa Document Preparation in California | Imverica',
+    description: 'Non-lawyer Form I-129F document preparation for California consumers who have already chosen the form. Client-directed typing and organization; no legal advice or eligibility decisions.',
+    eyebrow: 'USCIS · Form I-129F · K-1 / K-3',
+    heading: 'I-129F document preparation for California consumers',
+    hero: 'Already decided to use Form I-129F? Imverica types your answers and organizes the documents you select into a draft package for your review and signature. We do not choose the form, decide eligibility, select evidence, or give legal advice.',
+    start: 'Start an I-129F intake',
+    related: 'Related services',
+    lead: 'Imverica provides non-lawyer Form I-129F document preparation for California consumers who are representing themselves and have already decided to use Form I-129F. At the client’s specific direction, Imverica types client-provided answers and organizes client-selected documents into a draft package for the client’s review and signature. Imverica does not decide eligibility, select forms or evidence, interpret form questions, give legal advice, represent clients before USCIS, or promise an outcome.',
+    officialHeading: 'What USCIS says Form I-129F is for',
+    officialP1: 'USCIS describes Form I-129F as the petition a U.S. citizen may use to request K-1 classification for a foreign fiancé(e), or in some circumstances K-3 classification for a spouse. The current USCIS instructions describe requirements that can include being legally free to marry, intending to marry within 90 days after K-1 admission, and generally having met in person during the two years before filing, subject to exceptions described by USCIS.',
+    officialP2: 'That summary is general government information, not an eligibility assessment. If you are unsure whether the K-1 route, a spouse petition, an exception, or another filing applies to you, consult a licensed immigration attorney or a DOJ-accredited representative before asking Imverica to prepare documents.',
+    scopeHeading: 'What Imverica can do after you choose the form',
+    scopeLabel: 'Client-directed document preparation may include',
+    scope: [
+      ['Typing', 'Enter the answers you provide into the current Form I-129F draft.'],
+      ['Organization', 'Arrange the documents and labels you select into a clear draft packet.'],
+      ['Consistency check', 'Flag blank fields, conflicting dates, or missing signatures for you to correct; we do not interpret the legal meaning of an answer.'],
+      ['Translations', 'Coordinate certified English translations of documents you provide when requested.'],
+      ['Final draft', 'Deliver a draft for your review, approval, signature, and filing.']
+    ],
+    limitsHeading: 'What this service does not include',
+    limits: [
+      'Choosing between a fiancé(e), spouse, or other immigration process.',
+      'Determining whether either person qualifies or whether an exception applies.',
+      'Selecting which evidence is legally sufficient or advising how to strengthen a case.',
+      'Signing Form G-28, appearing as a representative, or communicating with USCIS as your legal representative.',
+      'Promising approval, avoiding a request for evidence, or predicting a USCIS timeline.'
+    ],
+    currentHeading: 'Current official form facts',
+    currentIntro: 'Checked November 14, 2026 against current USCIS primary sources:',
+    current: [
+      ['Form edition', '01/20/25. USCIS can reject an outdated edition, so verify again immediately before filing.'],
+      ['General USCIS filing fee', '$675 in Form G-1055, edition 10/26/26. Government fees are paid separately and can change.'],
+      ['K-3 filing category', 'G-1055 lists $0 when Form I-129F is filed for K-3 status based on a Form I-130 already filed.'],
+      ['Imverica fee', 'Confirmed in writing after the requested scope and intake are complete; it is separate from government fees.']
+    ],
+    processHeading: 'How client-directed preparation works',
+    process: [
+      ['Confirm the scope', 'You tell us that you have chosen Form I-129F and identify the documents you want included.'],
+      ['Provide information', 'You answer the intake questions and upload the documents you selected.'],
+      ['Review the draft', 'We prepare the draft and flag clerical gaps for your correction.'],
+      ['Approve and sign', 'You make the final decisions, review every answer, sign, and file using current USCIS instructions.']
+    ],
+    faqHeading: 'Frequently asked questions',
+    faqs: [
+      ['Is Imverica a law firm?', 'No. Imverica is a registered and bonded California Legal Document Assistant and Immigration Consultant. It does not provide legal advice and is not a substitute for an attorney.'],
+      ['Can Imverica tell me whether to use the K-1 or spouse process?', 'No. Choosing a process or form is a legal decision. A licensed immigration attorney or DOJ-accredited representative can advise you; Imverica can prepare the form after you choose it.'],
+      ['Can Imverica choose my relationship evidence?', 'No. You choose the documents. Imverica can organize the items you identify and flag clerical gaps, but it does not determine whether evidence is legally sufficient.'],
+      ['What is the current government filing fee?', 'The general Form I-129F filing fee was $675 when checked on November 14, 2026 in USCIS Form G-1055, edition 10/26/26. Verify the current fee immediately before filing.'],
+      ['How long will preparation take?', 'Imverica confirms an estimated preparation schedule in writing after the intake and requested documents are complete. It does not promise or control USCIS processing time.'],
+      ['Will Imverica represent me before USCIS?', 'No. Imverica does not enter an appearance, sign Form G-28, or communicate as your legal representative.']
+    ],
+    sourcesHeading: 'Primary sources and last review',
+    sourcesIntro: 'Official USCIS sources reviewed November 14, 2026. Always verify the current form, fee, and filing instructions before submission.',
+    ctaHeading: 'Have you already chosen Form I-129F?',
+    ctaSub: 'Tell us the document-preparation scope you want. We confirm the fee and estimated preparation schedule in writing before work begins.'
+  },
+  ru: {
+    title: 'Подготовка формы I-129F для визы K-1 в Калифорнии | Imverica',
+    description: 'Неюридическая подготовка формы I-129F для жителей Калифорнии, которые уже выбрали эту форму. Заполнение по данным клиента и сборка пакета без юридических консультаций.',
+    eyebrow: 'USCIS · Форма I-129F · K-1 / K-3',
+    heading: 'Подготовка I-129F для клиентов в Калифорнии',
+    hero: 'Уже решили использовать форму I-129F? Imverica вносит ваши ответы и организует выбранные вами документы в черновой пакет для вашей проверки и подписи. Мы не выбираем форму или доказательства, не определяем eligibility и не даём юридических советов.',
+    start: 'Начать анкету I-129F',
+    related: 'Связанные услуги',
+    lead: 'Imverica оказывает неюридическую услугу по подготовке формы I-129F для жителей Калифорнии, которые представляют себя самостоятельно и уже решили использовать эту форму. По конкретному поручению клиента Imverica вносит предоставленные клиентом ответы и организует выбранные клиентом документы в черновой пакет для проверки и подписи. Imverica не определяет eligibility, не выбирает формы или доказательства, не толкует вопросы формы, не даёт юридических советов, не представляет клиента перед USCIS и не обещает результат.',
+    officialHeading: 'Для чего USCIS использует форму I-129F',
+    officialP1: 'USCIS описывает I-129F как петицию, которую гражданин США может использовать для запроса классификации K-1 для иностранного жениха или невесты, а в некоторых обстоятельствах — K-3 для супруга или супруги. В действующих инструкциях USCIS перечислены условия, которые могут включать юридическую свободу вступить в брак, намерение заключить брак в течение 90 дней после въезда по K-1 и, как правило, личную встречу в течение двух лет до подачи, с исключениями, описанными USCIS.',
+    officialP2: 'Это краткое изложение общей государственной информации, а не оценка eligibility. Если вы не уверены, подходит ли K-1, петиция за супруга, исключение или другой процесс, обратитесь к лицензированному иммиграционному адвокату или DOJ-accredited representative до заказа подготовки документов.',
+    scopeHeading: 'Что может сделать Imverica после того, как вы выбрали форму',
+    scopeLabel: 'Подготовка документов по поручению клиента может включать',
+    scope: [
+      ['Заполнение', 'Внести предоставленные вами ответы в актуальный черновик I-129F.'],
+      ['Организация', 'Собрать выбранные вами документы и подписи к ним в понятный черновой пакет.'],
+      ['Техническая проверка', 'Отметить пустые поля, несовпадающие даты или пропущенные подписи для вашего исправления без толкования юридического смысла ответа.'],
+      ['Переводы', 'По запросу координировать заверенный перевод предоставленных вами документов на английский.'],
+      ['Финальный черновик', 'Передать пакет для вашей проверки, одобрения, подписи и подачи.']
+    ],
+    limitsHeading: 'Что не входит в услугу',
+    limits: [
+      'Выбор между процессом для жениха/невесты, супруга или другим иммиграционным процессом.',
+      'Определение eligibility или применимости исключения.',
+      'Выбор юридически достаточных доказательств или советы по усилению дела.',
+      'Подписание G-28, представительство или общение с USCIS как ваш legal representative.',
+      'Обещание одобрения, отсутствия RFE или сроков рассмотрения USCIS.'
+    ],
+    currentHeading: 'Актуальные официальные данные',
+    currentIntro: 'Проверено 14 ноября 2026 года по первичным источникам USCIS:',
+    current: [
+      ['Редакция формы', '01/20/25. USCIS может отклонить устаревшую редакцию, поэтому перепроверьте её непосредственно перед подачей.'],
+      ['Общий сбор USCIS', '$675 по форме G-1055, редакция 10/26/26. Государственные сборы оплачиваются отдельно и могут измениться.'],
+      ['Категория K-3', 'G-1055 указывает $0 при подаче I-129F для K-3 на основании уже поданной I-130.'],
+      ['Стоимость Imverica', 'Подтверждается письменно после определения объёма работы и получения анкеты; государственные сборы в неё не входят.']
+    ],
+    processHeading: 'Как проходит подготовка по поручению клиента',
+    process: [
+      ['Определяем объём', 'Вы сообщаете, что уже выбрали I-129F, и указываете документы, которые хотите включить.'],
+      ['Получаем данные', 'Вы отвечаете на вопросы анкеты и загружаете выбранные документы.'],
+      ['Проверяем черновик', 'Мы готовим черновик и отмечаем технические пробелы для вашего исправления.'],
+      ['Вы одобряете и подписываете', 'Вы принимаете окончательные решения, проверяете каждый ответ, подписываете и подаёте по актуальным инструкциям USCIS.']
+    ],
+    faqHeading: 'Частые вопросы',
+    faqs: [
+      ['Imverica — юридическая фирма?', 'Нет. Imverica — зарегистрированный и bonded California Legal Document Assistant и Immigration Consultant. Компания не даёт юридических советов и не заменяет адвоката.'],
+      ['Может ли Imverica выбрать между K-1 и процессом для супруга?', 'Нет. Выбор процесса или формы — юридическое решение. За советом обратитесь к лицензированному иммиграционному адвокату или DOJ-accredited representative; Imverica подготовит форму после вашего выбора.'],
+      ['Может ли Imverica выбрать доказательства отношений?', 'Нет. Документы выбираете вы. Imverica может организовать указанные вами материалы и отметить технические пробелы, но не определяет их юридическую достаточность.'],
+      ['Каков текущий государственный сбор?', 'Общий сбор за I-129F составлял $675 по состоянию на 14 ноября 2026 года по USCIS G-1055, редакция 10/26/26. Перепроверьте сумму перед подачей.'],
+      ['Сколько занимает подготовка?', 'Imverica письменно подтверждает ориентировочный срок после получения полной анкеты и запрошенных документов. Компания не обещает и не контролирует срок USCIS.'],
+      ['Будет ли Imverica представлять меня перед USCIS?', 'Нет. Imverica не вступает в дело, не подписывает G-28 и не общается как ваш legal representative.']
+    ],
+    sourcesHeading: 'Первичные источники и дата проверки',
+    sourcesIntro: 'Официальные источники USCIS проверены 14 ноября 2026 года. Перед подачей всегда перепроверяйте форму, сбор и инструкции.',
+    ctaHeading: 'Вы уже выбрали форму I-129F?',
+    ctaSub: 'Опишите нужный объём подготовки. До начала работы мы письменно подтвердим стоимость и ориентировочный срок.'
+  },
+  uk: {
+    title: 'Підготовка форми I-129F для візи K-1 у Каліфорнії | Imverica',
+    description: 'Неюридична підготовка I-129F для мешканців Каліфорнії, які вже обрали форму. Внесення даних і складання пакета за дорученням клієнта.',
+    eyebrow: 'USCIS · Форма I-129F · K-1 / K-3',
+    heading: 'Підготовка I-129F для клієнтів у Каліфорнії',
+    hero: 'Уже вирішили використовувати форму I-129F? Imverica вносить ваші відповіді та впорядковує обрані вами документи в чернетку пакета для перевірки й підпису. Ми не обираємо форму чи докази, не визначаємо eligibility і не надаємо юридичних порад.',
+    start: 'Почати анкету I-129F',
+    related: 'Пов’язані послуги',
+    lead: 'Imverica надає неюридичну послугу з підготовки форми I-129F для мешканців Каліфорнії, які представляють себе самостійно й уже вирішили використовувати цю форму. За конкретним дорученням клієнта Imverica вносить надані відповіді та впорядковує обрані клієнтом документи в чернетку пакета для перевірки й підпису. Imverica не визначає eligibility, не обирає форми чи докази, не тлумачить запитання, не надає юридичних порад, не представляє клієнта перед USCIS і не обіцяє результат.',
+    officialHeading: 'Для чого USCIS використовує форму I-129F',
+    officialP1: 'USCIS описує I-129F як петицію, яку громадянин США може використовувати для запиту класифікації K-1 для іноземного нареченого або нареченої, а за певних обставин — K-3 для чоловіка або дружини. Чинні інструкції USCIS описують умови, що можуть включати юридичну можливість укласти шлюб, намір одружитися протягом 90 днів після в’їзду за K-1 та, як правило, особисту зустріч протягом двох років до подання, з винятками, описаними USCIS.',
+    officialP2: 'Це стислий виклад загальної урядової інформації, а не оцінка eligibility. Якщо ви не впевнені, чи підходить K-1, петиція за чоловіка/дружину, виняток або інший процес, зверніться до ліцензованого імміграційного адвоката чи DOJ-accredited representative до замовлення підготовки документів.',
+    scopeHeading: 'Що може зробити Imverica після вашого вибору форми',
+    scopeLabel: 'Підготовка за дорученням клієнта може включати',
+    scope: [
+      ['Внесення даних', 'Внести надані вами відповіді до актуальної чернетки I-129F.'],
+      ['Організація', 'Скласти обрані вами документи й підписи до зрозумілого чернеткового пакета.'],
+      ['Технічна перевірка', 'Позначити порожні поля, неузгоджені дати або пропущені підписи для вашого виправлення без тлумачення юридичного значення.'],
+      ['Переклади', 'За запитом координувати засвідчений переклад наданих вами документів англійською.'],
+      ['Фінальна чернетка', 'Надати пакет для вашої перевірки, схвалення, підпису й подання.']
+    ],
+    limitsHeading: 'Що не входить до послуги',
+    limits: [
+      'Вибір між процесом для нареченого/нареченої, чоловіка/дружини або іншим імміграційним процесом.',
+      'Визначення eligibility або застосовності винятку.',
+      'Вибір юридично достатніх доказів чи поради щодо посилення справи.',
+      'Підписання G-28, представництво або спілкування з USCIS як ваш legal representative.',
+      'Обіцянка схвалення, відсутності RFE або строку розгляду USCIS.'
+    ],
+    currentHeading: 'Актуальні офіційні дані',
+    currentIntro: 'Перевірено 14 листопада 2026 року за первинними джерелами USCIS:',
+    current: [
+      ['Редакція форми', '01/20/25. USCIS може відхилити застарілу редакцію, тому перевірте її безпосередньо перед поданням.'],
+      ['Загальний збір USCIS', '$675 за формою G-1055, редакція 10/26/26. Державні збори сплачуються окремо й можуть змінитися.'],
+      ['Категорія K-3', 'G-1055 вказує $0 для I-129F на K-3 на підставі вже поданої I-130.'],
+      ['Вартість Imverica', 'Письмово підтверджується після визначення обсягу й отримання анкети; державні збори не включено.']
+    ],
+    processHeading: 'Як відбувається підготовка за дорученням клієнта',
+    process: [
+      ['Узгоджуємо обсяг', 'Ви повідомляєте, що вже обрали I-129F, і вказуєте документи, які бажаєте включити.'],
+      ['Отримуємо дані', 'Ви відповідаєте на запитання анкети й завантажуєте обрані документи.'],
+      ['Перевіряємо чернетку', 'Ми готуємо чернетку та позначаємо технічні прогалини для вашого виправлення.'],
+      ['Ви схвалюєте й підписуєте', 'Ви приймаєте остаточні рішення, перевіряєте кожну відповідь, підписуєте й подаєте за чинними інструкціями USCIS.']
+    ],
+    faqHeading: 'Поширені запитання',
+    faqs: [
+      ['Imverica — юридична фірма?', 'Ні. Imverica — зареєстрований і bonded California Legal Document Assistant та Immigration Consultant. Компанія не надає юридичних порад і не замінює адвоката.'],
+      ['Чи може Imverica обрати між K-1 і процесом для чоловіка/дружини?', 'Ні. Вибір процесу або форми є юридичним рішенням. Зверніться до ліцензованого імміграційного адвоката чи DOJ-accredited representative; Imverica підготує форму після вашого вибору.'],
+      ['Чи може Imverica обрати докази стосунків?', 'Ні. Документи обираєте ви. Imverica може впорядкувати вказані вами матеріали й позначити технічні прогалини, але не визначає їх юридичну достатність.'],
+      ['Який поточний державний збір?', 'Загальний збір I-129F становив $675 станом на 14 листопада 2026 року за USCIS G-1055, редакція 10/26/26. Перевірте суму перед поданням.'],
+      ['Скільки триває підготовка?', 'Imverica письмово підтверджує орієнтовний строк після отримання повної анкети й запитаних документів. Компанія не обіцяє та не контролює строк USCIS.'],
+      ['Чи представлятиме мене Imverica перед USCIS?', 'Ні. Imverica не вступає у справу, не підписує G-28 і не спілкується як ваш legal representative.']
+    ],
+    sourcesHeading: 'Первинні джерела та дата перевірки',
+    sourcesIntro: 'Офіційні джерела USCIS перевірено 14 листопада 2026 року. Перед поданням завжди перевіряйте форму, збір та інструкції.',
+    ctaHeading: 'Ви вже обрали форму I-129F?',
+    ctaSub: 'Опишіть потрібний обсяг підготовки. До початку роботи ми письмово підтвердимо вартість та орієнтовний строк.'
+  },
+  es: {
+    title: 'Preparación del Formulario I-129F para visa K-1 en California | Imverica',
+    description: 'Preparación no legal del Formulario I-129F para consumidores de California que ya eligieron el formulario. Captura y organización bajo dirección del cliente.',
+    eyebrow: 'USCIS · Formulario I-129F · K-1 / K-3',
+    heading: 'Preparación de I-129F para consumidores de California',
+    hero: '¿Ya decidió usar el Formulario I-129F? Imverica ingresa sus respuestas y organiza los documentos que usted selecciona en un borrador para su revisión y firma. No elegimos el formulario ni la evidencia, no determinamos elegibilidad y no brindamos asesoría legal.',
+    start: 'Iniciar entrevista I-129F',
+    related: 'Servicios relacionados',
+    lead: 'Imverica ofrece preparación no legal del Formulario I-129F para consumidores de California que se representan a sí mismos y ya decidieron usar este formulario. Bajo instrucciones específicas del cliente, Imverica ingresa las respuestas proporcionadas y organiza los documentos seleccionados por el cliente en un borrador para su revisión y firma. Imverica no determina elegibilidad, no elige formularios ni evidencia, no interpreta preguntas, no brinda asesoría legal, no representa ante USCIS y no promete resultados.',
+    officialHeading: 'Para qué usa USCIS el Formulario I-129F',
+    officialP1: 'USCIS describe el I-129F como la petición que un ciudadano estadounidense puede usar para solicitar clasificación K-1 para un prometido o prometida extranjero, o en algunas circunstancias clasificación K-3 para un cónyuge. Las instrucciones vigentes describen condiciones que pueden incluir estar legalmente libres para casarse, la intención de casarse dentro de 90 días de la admisión K-1 y, por regla general, haberse conocido en persona durante los dos años anteriores a la presentación, con excepciones descritas por USCIS.',
+    officialP2: 'Este resumen es información general del gobierno, no una evaluación de elegibilidad. Si no sabe si corresponde K-1, una petición de cónyuge, una excepción u otro trámite, consulte a un abogado de inmigración con licencia o un representante acreditado por DOJ antes de pedir preparación de documentos.',
+    scopeHeading: 'Qué puede hacer Imverica después de que usted elige el formulario',
+    scopeLabel: 'La preparación bajo dirección del cliente puede incluir',
+    scope: [
+      ['Captura', 'Ingresar las respuestas que usted proporciona en el borrador vigente del I-129F.'],
+      ['Organización', 'Ordenar los documentos y etiquetas que usted selecciona en un borrador claro.'],
+      ['Revisión técnica', 'Señalar espacios en blanco, fechas inconsistentes o firmas faltantes para que usted corrija, sin interpretar su significado legal.'],
+      ['Traducciones', 'Coordinar traducciones certificadas al inglés de los documentos que usted proporciona, cuando se solicite.'],
+      ['Borrador final', 'Entregar el paquete para su revisión, aprobación, firma y presentación.']
+    ],
+    limitsHeading: 'Qué no incluye este servicio',
+    limits: [
+      'Elegir entre un proceso de prometido, cónyuge u otro proceso migratorio.',
+      'Determinar si alguna persona califica o si corresponde una excepción.',
+      'Seleccionar evidencia legalmente suficiente o aconsejar cómo fortalecer un caso.',
+      'Firmar G-28, comparecer o comunicarse con USCIS como su representante legal.',
+      'Prometer aprobación, evitar una solicitud de evidencia o predecir el plazo de USCIS.'
+    ],
+    currentHeading: 'Datos oficiales vigentes',
+    currentIntro: 'Verificados el 14 de noviembre de 2026 con fuentes primarias de USCIS:',
+    current: [
+      ['Edición del formulario', '01/20/25. USCIS puede rechazar una edición anterior; verifique nuevamente justo antes de presentar.'],
+      ['Tarifa general de USCIS', '$675 en el Formulario G-1055, edición 10/26/26. Las tarifas gubernamentales se pagan por separado y pueden cambiar.'],
+      ['Categoría K-3', 'G-1055 indica $0 para I-129F de K-3 basado en un I-130 ya presentado.'],
+      ['Tarifa de Imverica', 'Se confirma por escrito cuando estén completos el alcance y la entrevista; es separada de las tarifas gubernamentales.']
+    ],
+    processHeading: 'Cómo funciona la preparación dirigida por el cliente',
+    process: [
+      ['Confirmamos el alcance', 'Usted indica que ya eligió I-129F e identifica los documentos que desea incluir.'],
+      ['Proporciona información', 'Usted responde la entrevista y carga los documentos seleccionados.'],
+      ['Revisa el borrador', 'Preparamos el borrador y señalamos vacíos técnicos para que usted los corrija.'],
+      ['Aprueba y firma', 'Usted toma las decisiones finales, revisa cada respuesta, firma y presenta según las instrucciones vigentes de USCIS.']
+    ],
+    faqHeading: 'Preguntas frecuentes',
+    faqs: [
+      ['¿Imverica es un bufete de abogados?', 'No. Imverica es un California Legal Document Assistant e Immigration Consultant registrado y afianzado. No brinda asesoría legal ni sustituye a un abogado.'],
+      ['¿Puede Imverica decirme si debo usar K-1 o el proceso de cónyuge?', 'No. Elegir un proceso o formulario es una decisión legal. Consulte a un abogado de inmigración con licencia o representante acreditado por DOJ; Imverica puede preparar el formulario después de su elección.'],
+      ['¿Puede Imverica elegir mi evidencia de relación?', 'No. Usted elige los documentos. Imverica puede organizar los materiales que identifica y señalar vacíos técnicos, pero no determina suficiencia legal.'],
+      ['¿Cuál es la tarifa gubernamental actual?', 'La tarifa general del I-129F era de $675 al 14 de noviembre de 2026 según USCIS G-1055, edición 10/26/26. Verifique la tarifa antes de presentar.'],
+      ['¿Cuánto tarda la preparación?', 'Imverica confirma por escrito un plazo estimado después de recibir la entrevista y documentos completos. No promete ni controla el tiempo de USCIS.'],
+      ['¿Imverica me representará ante USCIS?', 'No. Imverica no comparece, no firma G-28 y no se comunica como su representante legal.']
+    ],
+    sourcesHeading: 'Fuentes primarias y última revisión',
+    sourcesIntro: 'Fuentes oficiales de USCIS revisadas el 14 de noviembre de 2026. Verifique siempre formulario, tarifa e instrucciones antes de presentar.',
+    ctaHeading: '¿Ya eligió el Formulario I-129F?',
+    ctaSub: 'Describa el alcance de preparación que necesita. Confirmamos por escrito la tarifa y el plazo estimado antes de comenzar.'
+  }
+} as const;
+
+const T = COPY[lang];
+const canonical = `https://imverica.com${prefix}${slug}`;
+const intakeHref = `${prefix || ''}/#get-started?form=I-129F`;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonical}#service`,
+  name: T.heading,
+  serviceType: 'Form I-129F client-directed document preparation',
+  url: canonical,
+  description: T.description,
+  areaServed: { '@type': 'State', name: 'California' },
+  provider: { '@id': 'https://imverica.com/#organization' }
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${canonical}#faq`,
+  mainEntity: T.faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
+};
+---
+<BaseLayout
+  title={T.title}
+  description={T.description}
+  canonical={canonical}
+  slug={slug}
+  lang={lang}
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[serviceSchema, faqSchema]}
+>
+  <Hero
+    lang={lang}
+    eyebrow={T.eyebrow}
+    heading={T.heading}
+    sub={T.hero}
+    ctaPrimary={{ href: intakeHref, text: T.start }}
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: `${prefix}/i-130-family-petition`, label: 'I-130 — Petition for Alien Relative' },
+    { href: `${prefix}/uscis-document-review`, label: 'USCIS document review' },
+    { href: `${prefix}/lda`, label: 'California Legal Document Assistant' }
+  ]}>
+    <p class="lead">{T.lead}</p>
+
+    <h2>{T.officialHeading}</h2>
+    <p>{T.officialP1}</p>
+    <p>{T.officialP2}</p>
+
+    <h2>{T.scopeHeading}</h2>
+    <div class="form-list">
+      <strong>{T.scopeLabel}</strong>
+      <ul>
+        {T.scope.map(([label, text]) => <li><strong>{label}:</strong> {text}</li>)}
+      </ul>
+    </div>
+
+    <h2>{T.limitsHeading}</h2>
+    <ul>{T.limits.map((item) => <li>{item}</li>)}</ul>
+
+    <h2>{T.currentHeading}</h2>
+    <p>{T.currentIntro}</p>
+    <div class="form-list">
+      <strong>USCIS · 2026-11-14</strong>
+      <ul>
+        {T.current.map(([label, text]) => <li><strong>{label}:</strong> {text}</li>)}
+      </ul>
+    </div>
+
+    <h2>{T.processHeading}</h2>
+    <ol>{T.process.map(([label, text]) => <li><strong>{label}.</strong> {text}</li>)}</ol>
+
+    <h2>{T.faqHeading}</h2>
+    {T.faqs.map(([question, answer]) => (
+      <section class="k1-faq">
+        <h3>{question}</h3>
+        <p>{answer}</p>
+      </section>
+    ))}
+
+    <h2>{T.sourcesHeading}</h2>
+    <p>{T.sourcesIntro}</p>
+    <ul>
+      <li><a href="https://www.uscis.gov/i-129f">USCIS — Form I-129F page</a></li>
+      <li><a href="https://www.uscis.gov/sites/default/files/document/forms/i-129finstr.pdf">USCIS — Form I-129F Instructions (PDF)</a></li>
+      <li><a href="https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf">USCIS — Form G-1055 Fee Schedule (PDF)</a></li>
+      <li><a href="https://www.uscis.gov/scams-fraud-and-misconduct/avoid-scams/find-legal-services">USCIS — Find Legal Services</a></li>
+    </ul>
+    <cite>
+      Form and fee facts were checked against USCIS on November 14, 2026. Imverica is not a law firm and does not provide legal advice. Documents are prepared only at the client’s specific direction.
+    </cite>
+  </LandingBody>
+
+  <CTAStrip
+    lang={lang}
+    heading={T.ctaHeading}
+    sub={T.ctaSub}
+    primaryHref={intakeHref}
+    primaryText={T.start}
+  />
+</BaseLayout>
+
+<style is:global>
+  .k1-faq { margin: 0 0 18px; padding: 18px 20px; background: #fffaf2; border: 1px solid rgba(40,30,20,0.08); border-radius: 10px; }
+  .k1-faq h3 { margin: 0 0 7px; color: var(--navy-dark); }
+  .k1-faq p { margin: 0; }
+</style>

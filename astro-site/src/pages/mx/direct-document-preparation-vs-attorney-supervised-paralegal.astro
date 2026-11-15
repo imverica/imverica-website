@@ -1,0 +1,101 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import LandingBody from '~/components/LandingBody.astro';
+import FaqBlock from '~/components/FaqBlock.astro';
+import CTAStrip from '~/components/CTAStrip.astro';
+import { faqSchema, type FaqItem } from '~/data/orgSchema';
+
+const lang = 'es' as const;
+const title = 'Preparación directa de documentos y apoyo dirigido por un abogado | Imverica';
+const description =
+  'Las dos relaciones de trabajo separadas de Imverica: preparación de documentos para clientes autorrepresentados de California y apoyo paralegal dirigido y revisado por un abogado con licencia.';
+
+const faq: FaqItem[] = [
+  {
+    q: '¿Imverica representa a sus clientes directos?',
+    a: 'No. El cliente directo sigue autorrepresentado. Imverica no comparece por él ante USCIS ni en corte y no crea una relación abogado-cliente.'
+  },
+  {
+    q: '¿Puede Imverica decirle a un cliente directo qué formulario u opción legal elegir?',
+    a: 'No. El cliente directo decide qué presentar y da instrucciones específicas. Las preguntas sobre elegibilidad, opciones legales, derechos o estrategia corresponden a un abogado con licencia.'
+  },
+  {
+    q: '¿Quién controla el trabajo en un servicio dirigido por un abogado?',
+    a: 'El abogado con licencia define la tarea, dirige y revisa el trabajo, comunica el asesoramiento legal al cliente y conserva la responsabilidad del asunto y la representación.'
+  },
+  {
+    q: '¿El apoyo dirigido por un abogado convierte a Imverica en un bufete?',
+    a: 'No. Imverica sigue siendo un proveedor que no es bufete de abogados. El apoyo dirigido por un abogado es una relación comercial separada realizada bajo la supervisión del abogado responsable.'
+  }
+];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="https://imverica.com/mx/direct-document-preparation-vs-attorney-supervised-paralegal"
+  slug="/direct-document-preparation-vs-attorney-supervised-paralegal"
+  lang={lang}
+  availableLocales={['en', 'ru', 'uk', 'es']}
+  jsonLd={[faqSchema(faq)]}
+>
+  <Hero
+    lang={lang}
+    eyebrow="Dos relaciones de trabajo separadas"
+    heading="La preparación directa de documentos y el apoyo de un abogado son servicios distintos"
+    sub="La persona que toma decisiones legales, dirige el trabajo y conserva la responsabilidad cambia según la relación. Imverica mantiene separados ambos servicios."
+  />
+
+  <LandingBody lang={lang} related={[
+    { href: '/mx/about-imverica-legal-solutions', label: 'Datos verificables sobre Imverica' },
+    { href: '/mx/lda', label: '¿Qué es un Legal Document Assistant de California?' },
+    { href: '/pricing', label: 'Tarifas publicadas del servicio directo' }
+  ]}>
+    <p class="lead">
+      Imverica Legal Solutions no es un bufete de abogados. Puede trabajar de
+      una de dos formas claramente separadas: directamente para un cliente
+      autorrepresentado de California que da instrucciones específicas, o como
+      proveedor de apoyo no jurídico en una tarea dirigida y revisada por un
+      abogado con licencia.
+    </p>
+
+    <h2>1. Preparación directa para un cliente autorrepresentado</h2>
+    <ul>
+      <li>El servicio se ofrece de forma remota a clientes autorrepresentados de California.</li>
+      <li>El cliente decide qué formulario o documento preparar y da instrucciones específicas.</li>
+      <li>Dentro del alcance escrito, Imverica puede transcribir información, organizar materiales seleccionados por el cliente y proporcionar traducciones certificadas.</li>
+      <li>Imverica no determina elegibilidad, no elige remedios o formularios, no aconseja sobre derechos o estrategia, no predice resultados y no representa al cliente.</li>
+      <li>El contrato escrito de servicio directo identifica el trabajo y las tarifas.</li>
+    </ul>
+
+    <h2>2. Apoyo paralegal dirigido por un abogado con licencia</h2>
+    <ul>
+      <li>Esta es una relación comercial separada con un abogado o bufete con licencia.</li>
+      <li>El abogado define la tarea y proporciona la dirección legal.</li>
+      <li>El abogado revisa el trabajo, comunica el asesoramiento legal y conserva la responsabilidad de la relación con el cliente, el criterio jurídico, las presentaciones y la representación.</li>
+      <li>Imverica realiza únicamente las tareas de apoyo no jurídico asignadas dentro del alcance escrito.</li>
+      <li>La disponibilidad depende de la relación y de las reglas aplicables al abogado responsable.</li>
+    </ul>
+
+    <h2>Las dos relaciones no se superponen</h2>
+    <p>
+      Que un abogado contrate a Imverica por separado no significa que ese
+      abogado represente a un cliente directo de Imverica. Si un cliente
+      directo necesita decidir qué presentar o cómo se aplica la ley, debe
+      consultar a un abogado con licencia mediante un acuerdo abogado-cliente
+      separado.
+    </p>
+
+    <h2>Por qué importa esta diferencia</h2>
+    <p>
+      El cliente autorrepresentado controla una solicitud directa de
+      preparación de documentos. El abogado con licencia controla una tarea
+      dirigida por un abogado. Explicar claramente esa diferencia protege al
+      cliente, al abogado y la exactitud de la información pública sobre
+      Imverica.
+    </p>
+  </LandingBody>
+
+  <FaqBlock heading="Preguntas frecuentes" items={faq} />
+  <CTAStrip lang={lang} primaryHref="/mx/#get-started" primaryText="Solicitar preparación de documentos" />
+</BaseLayout>

@@ -4,23 +4,21 @@ import Hero from '~/components/Hero.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 
 const title = 'Pricing — Flat-Fee Document Preparation | Imverica Legal Solutions';
-const description = 'Transparent flat-fee pricing for USCIS, California family law, small claims, probate, record cleanup, and business document preparation. Simple forms from $79. Probate from $249. Record clearing from $349. Complex cases by custom quote. Imverica is not a law firm.';
+const description = 'Transparent pricing for client-selected USCIS and California documents, plus separate attorney-directed EOIR support. Larger document packets are quoted after complete intake. Imverica is not a law firm.';
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   name: 'Imverica Document Preparation Pricing',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', legalName: 'Imverica LLC', url: 'https://imverica.com', telephone: '+1-916-399-3992' },
-  description: 'Flat-fee document preparation for USCIS and California state-court forms. Imverica is a California-registered Legal Document Assistant and Immigration Consultant — not a law firm. Documents prepared at client direction. Government filing fees are separate.',
-  areaServed: [
-    { '@type': 'State', name: 'California' }
-  ],
+  provider: { '@id': 'https://imverica.com/#organization' },
+  description: 'Flat-fee document preparation for USCIS, EOIR, and California state-court forms. Imverica is a California-registered Legal Document Assistant and Immigration Consultant — not a law firm. Documents prepared at client direction. Government filing fees are separate.',
+  areaServed: { '@type': 'State', name: 'California' },
   offers: [
     { '@type': 'Offer', name: 'I-90 Green Card Renewal',       priceCurrency: 'USD', price: '199' },
     { '@type': 'Offer', name: 'I-765 Work Permit',             priceCurrency: 'USD', price: '199' },
     { '@type': 'Offer', name: 'I-130 Family Petition',         priceCurrency: 'USD', price: '499' },
     { '@type': 'Offer', name: 'I-485 Adjustment (single)',     priceCurrency: 'USD', price: '999' },
-    { '@type': 'Offer', name: 'I-130 + I-485 + I-765 + I-864 bundle', priceCurrency: 'USD', price: '1799' },
+    { '@type': 'Offer', name: 'I-485 Marriage AOS Package',    priceCurrency: 'USD', price: '1799' },
     { '@type': 'Offer', name: 'N-400 Naturalization',          priceCurrency: 'USD', price: '599' },
     { '@type': 'Offer', name: 'SC-100 Small Claims Package',   priceCurrency: 'USD', price: '249' },
     { '@type': 'Offer', name: 'FL-100 Simple Divorce',         priceCurrency: 'USD', price: '349' },
@@ -36,8 +34,8 @@ const schema = {
     eyebrow="Flat fees · no hourly creep · no surprises"
     heading="Transparent flat-fee pricing"
     headingHtml={'Transparent <em class="hero-em">flat-fee</em> pricing'}
-    sub="Flat fees per document or matter. Government filing fees are paid separately to USCIS, the court, or the Secretary of State. Documents are prepared at your direction — Imverica is not a law firm and does not provide legal advice."
-    ctaPrimary={{ href: '/#get-started', text: 'Start your case' }}
+    sub="Flat fees per client-selected document or packet. Government filing fees are paid separately to USCIS, the court, or the Secretary of State. Documents are prepared at your direction — Imverica is not a law firm and does not provide legal advice."
+    ctaPrimary={{ href: '/#get-started', text: 'Request a written quote' }}
     ctaSecondary={{ href: 'tel:+19163993992', text: '📞 +1 (916) 399-3992' }}
   />
 
@@ -50,25 +48,25 @@ const schema = {
       <div class="price-card price-card--navy">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with a simple USCIS form." aria-label="Start simple USCIS forms intake"><span aria-hidden="true">🛂</span></button>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I already selected a USCIS form and want a preparation quote." aria-label="Request a quote for a client-selected USCIS form"><span aria-hidden="true">🛂</span></button>
           <div>
-            <div class="price-card-kicker">USCIS · California clients</div>
+            <div class="price-card-kicker">California clients · remote document preparation</div>
             <h2>Simple USCIS forms</h2>
-            <p class="price-card-sub">One form, prepared at the client's specific direction. Timing is confirmed before work begins.</p>
+            <p class="price-card-sub">For a form you have already selected. The estimated preparation schedule is confirmed after complete intake.</p>
           </div>
         </div>
         <table class="price-table">
           <thead>
-            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Gov. fee*</th></tr>
+            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Official filing fee*</th></tr>
           </thead>
           <tbody>
-            <tr data-prefill="I need help with I-90 Green Card renewal" data-formcode="I-90"><td><strong>I-90</strong> Green Card renewal / replacement</td><td class="num"><span class="price">$199</span></td><td class="num gov">$415</td></tr>
-            <tr data-prefill="I need an I-765 Work Permit (EAD)" data-formcode="I-765"><td><strong>I-765</strong> Work Permit / EAD</td><td class="num"><span class="price">$199</span></td><td class="num gov">$520</td></tr>
-            <tr data-prefill="I need an I-131 travel document / re-entry permit" data-formcode="I-131"><td><strong>I-131</strong> Travel Document / Re-entry Permit</td><td class="num"><span class="price">$179</span></td><td class="num gov">$630</td></tr>
-            <tr data-prefill="I need an I-864 Affidavit of Support" data-formcode="I-864"><td><strong>I-864</strong> Affidavit of Support (standalone)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need help coordinating the I-693 medical exam package" data-formcode="I-693"><td><strong>I-693</strong> Medical Exam package coordination</td><td class="num"><span class="price">$129</span></td><td class="num gov">—</td></tr>
-            <tr data-prefill="I need a G-639 FOIA request to USCIS" data-formcode="G-639"><td><strong>G-639</strong> FOIA Request to USCIS</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need an AR-11 change-of-address with USCIS" data-formcode="AR-11"><td><strong>AR-11</strong> Change of Address</td><td class="num"><span class="price">$79</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I selected Form I-90 and want a preparation quote" data-formcode="I-90"><td><strong>I-90</strong> Green Card renewal / replacement</td><td class="num"><span class="price">$199</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form I-765 and want a preparation quote" data-formcode="I-765"><td><strong>I-765</strong> Work Permit / EAD</td><td class="num"><span class="price">$199</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form I-131 and want a preparation quote" data-formcode="I-131"><td><strong>I-131</strong> Travel Document / Re-entry Permit</td><td class="num"><span class="price">$179</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form I-864 and want a preparation quote" data-formcode="I-864"><td><strong>I-864</strong> Affidavit of Support (standalone)</td><td class="num"><span class="price">$199</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form I-693 and want a coordination quote" data-formcode="I-693"><td><strong>I-693</strong> Medical Exam package coordination</td><td class="num"><span class="price">$129</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form G-639 and want a preparation quote" data-formcode="G-639"><td><strong>G-639</strong> FOIA Request to USCIS</td><td class="num"><span class="price">$149</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form AR-11 and want a preparation quote" data-formcode="AR-11"><td><strong>AR-11</strong> Change of Address</td><td class="num"><span class="price">$79</span></td><td class="num gov">Verify with USCIS</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -82,32 +80,32 @@ const schema = {
       <div class="price-card price-card--terracotta">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with family-based immigration forms." aria-label="Start family-based immigration intake"><span aria-hidden="true">👨‍👩‍👧</span></button>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I already selected family-based immigration forms and want a preparation quote." aria-label="Request a quote for client-selected family-based immigration forms"><span aria-hidden="true">👨‍👩‍👧</span></button>
           <div>
-            <div class="price-card-kicker">USCIS · California clients</div>
+            <div class="price-card-kicker">California clients · remote document preparation</div>
             <h2>Family-based immigration</h2>
-            <p class="price-card-sub">Petitions, adjustment of status, naturalization. Multi-form packages save money vs filing each form separately.</p>
+            <p class="price-card-sub">Clerical preparation for forms the client has already selected. Multi-form pricing applies only to the requested forms listed in the written scope.</p>
           </div>
         </div>
         <table class="price-table">
           <thead>
-            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Gov. fee*</th></tr>
+            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Official filing fee*</th></tr>
           </thead>
           <tbody>
-            <tr data-prefill="I need help with I-130 family petition" data-formcode="I-130"><td><strong>I-130</strong> Family Petition (standalone)</td><td class="num"><span class="price">$499</span></td><td class="num gov">$675</td></tr>
-            <tr data-prefill="I need help with I-485 adjustment of status (single applicant)" data-formcode="I-485"><td><strong>I-485</strong> Adjustment of Status (single applicant)</td><td class="num"><span class="price">$999</span></td><td class="num gov">$1,440</td></tr>
-            <tr class="price-row-popular" data-prefill="I chose forms I-130, I-485, I-765 and I-864" data-formcode="I-485">
-              <td><strong>Four forms, one price: I-130 + I-485 + I-765 + I-864</strong><br><span class="price-row-meta">Bundle price when you choose all four forms yourself, with an evidence binder. We do not decide which forms your case needs.</span><span class="price-popular-pill">Most popular</span></td>
+            <tr data-prefill="I selected Form I-130 and want a preparation quote" data-formcode="I-130"><td><strong>I-130</strong> Family Petition (standalone)</td><td class="num"><span class="price">$499</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form I-485 and want a preparation quote" data-formcode="I-485"><td><strong>I-485</strong> Adjustment of Status (single applicant)</td><td class="num"><span class="price">$999</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr class="price-row-popular" data-prefill="I selected I-130, I-485, I-765, and I-864 and want a preparation quote" data-formcode="I-485">
+              <td><strong>Client-selected I-485 package</strong><br><span class="price-row-meta">I-130 + I-485 + I-765 + I-864 + client-selected attachments</span></td>
               <td class="num"><span class="price">$1,799</span></td>
-              <td class="num gov">$2,090</td>
+              <td class="num gov">Verify with USCIS</td>
             </tr>
-            <tr data-prefill="I need help with I-751 remove conditions on green card" data-formcode="I-751"><td><strong>I-751</strong> Remove Conditions on Green Card</td><td class="num"><span class="price">$899</span></td><td class="num gov">$750</td></tr>
-            <tr data-prefill="I need help with N-400 naturalization application" data-formcode="N-400"><td><strong>N-400</strong> Naturalization</td><td class="num"><span class="price">$599</span></td><td class="num gov">$760</td></tr>
-            <tr data-prefill="I need an I-824 action on approved application" data-formcode="I-824"><td><strong>I-824</strong> Action on Approved Application</td><td class="num"><span class="price">$249</span></td><td class="num gov">$620</td></tr>
+            <tr data-prefill="I selected Form I-751 and want a preparation quote" data-formcode="I-751"><td><strong>I-751</strong> Remove Conditions on Green Card</td><td class="num"><span class="price">$899</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form N-400 and want a preparation quote" data-formcode="N-400"><td><strong>N-400</strong> Naturalization</td><td class="num"><span class="price">$599</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected Form I-824 and want a preparation quote" data-formcode="I-824"><td><strong>I-824</strong> Action on Approved Application</td><td class="num"><span class="price">$249</span></td><td class="num gov">Verify with USCIS</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
-          Final pricing depends on dependents, prior denials, complex history. Government filing fees paid directly to USCIS. Imverica is not a law firm.
+          Final pricing depends on the number of applicants, forms, pages, and client-selected attachments in the written scope. Government filing fees are paid directly to USCIS. Imverica is not a law firm.
         </p>
       </div>
 
@@ -117,27 +115,28 @@ const schema = {
       <div class="price-card price-card--terracotta-deep">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with a complex immigration document package." aria-label="Start complex immigration package intake"><span aria-hidden="true">📋</span></button>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I already selected an immigration form or document packet and want a clerical preparation quote." aria-label="Request a quote for a client-selected immigration document packet"><span aria-hidden="true">📋</span></button>
           <div>
-            <div class="price-card-kicker">Federal · custom quote after document review</div>
+            <div class="price-card-kicker">California direct clients · separate attorney-directed EOIR support</div>
             <h2>Complex immigration document packages</h2>
-            <p class="price-card-sub">Asylum, RFE responses, country-conditions evidence. We quote after reviewing your facts — these vary too much for fixed prices.</p>
+            <p class="price-card-sub">USCIS preparation is for forms and document packets a California client already selected. EOIR work is accepted only in a separate engagement from a licensed attorney who directs and reviews the work.</p>
           </div>
         </div>
         <table class="price-table">
           <thead>
-            <tr><th>Service</th><th class="num">Starting at</th><th class="num">Gov. fee*</th></tr>
+            <tr><th>Service</th><th class="num">Starting at</th><th class="num">Official filing fee*</th></tr>
           </thead>
           <tbody>
-            <tr data-prefill="I need I-589 asylum document preparation" data-formcode="I-589"><td><strong>I-589</strong> Asylum document preparation</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I received a USCIS Request for Evidence (RFE) and need a response prepared"><td><strong>RFE evidence</strong> package<br><small>the documents USCIS asked for, organized and indexed at your direction; legal arguments come from you or your attorney</small></td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need a country-conditions evidence packet"><td><strong>Country conditions</strong> evidence packet<br><small>published reports you or your attorney select, indexed and translated</small></td><td class="num"><span class="price">from $599</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need help with a humanitarian package (U-visa, T-visa, VAWA, or U4U)"><td><strong>U / T / VAWA / U4U</strong> humanitarian packages</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I selected Form I-589 and want a clerical preparation quote" data-formcode="I-589"><td><strong>I-589</strong> client-selected form preparation</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I received an RFE and selected the documents for a clerical response packet"><td><strong>RFE document packet</strong> at client direction</td><td class="num"><span class="price">$399–$899</span></td><td class="num gov">Verify with USCIS</td></tr>
+            <tr data-prefill="I selected documents for an evidence packet and want an assembly quote"><td><strong>Client-selected evidence packet</strong> assembly</td><td class="num"><span class="price">from $599</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I am a licensed attorney requesting EOIR filing support"><td><strong>Attorney-directed EOIR filing support</strong></td><td class="num quote">custom quote</td><td class="num gov">Verify with EOIR</td></tr>
+            <tr data-prefill="I am a licensed attorney requesting EOIR exhibit and document assembly"><td><strong>Attorney-directed EOIR exhibit and document assembly</strong></td><td class="num quote">custom quote</td><td class="num gov">Verify with EOIR</td></tr>
+            <tr data-prefill="I already selected a humanitarian form and want a clerical preparation quote"><td><strong>Client-selected humanitarian forms</strong></td><td class="num quote">custom quote</td><td class="num gov">Verify with agency</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
-          Document preparation only. We do not represent you before USCIS or EOIR. We do not give legal advice on whether you qualify, your defenses, or your strategy — for that you need an attorney. Imverica is not a law firm.
-          <strong>Immigration court (EOIR):</strong> we do not prepare court filings for individuals. We work on EOIR cases only as a paralegal under an attorney's direction (<a href="/for-attorneys">for attorneys</a>). If you are in removal proceedings, contact a licensed immigration attorney or a DOJ-accredited representative; free and low-cost providers are on the <a href="https://www.justice.gov/eoir/list-pro-bono-legal-service-providers" target="_blank" rel="noopener">EOIR list of pro bono legal service providers</a>.
+          Direct document preparation is limited to California clients who already selected the USCIS form or document. EOIR support is provided only to a licensed attorney under that attorney's direction and review. We do not give legal advice, determine eligibility, select defenses or strategy, predict outcomes, or provide representation. Imverica is not a law firm.
         </p>
       </div>
 
@@ -147,40 +146,40 @@ const schema = {
       <div class="price-card price-card--sage">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with California court forms." aria-label="Start California court forms intake"><span aria-hidden="true">⚖️</span></button>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I already selected California court forms and want a preparation quote." aria-label="Request a quote for client-selected California court forms"><span aria-hidden="true">⚖️</span></button>
           <div>
             <div class="price-card-kicker">California state courts only</div>
             <h2>California court forms</h2>
-            <p class="price-card-sub">Family law, small claims, civil, eviction, and probate packets. Packages bundle the common combinations. (Record clearing has its own section below.)</p>
+            <p class="price-card-sub">Clerical preparation of California court forms selected by the client. Package pricing covers only the forms listed in the written scope.</p>
           </div>
         </div>
         <table class="price-table">
           <thead>
-            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Court fee*</th></tr>
+            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Official court fee*</th></tr>
           </thead>
           <tbody>
-            <tr class="price-row-popular" data-prefill="I need a simple FL-100 divorce package (no kids, no property)" data-formcode="FL-100">
-              <td><strong>FL-100 Simple Divorce</strong> package<br><span class="price-row-meta">no kids, no property — FL-100/110/115 + service</span><span class="price-popular-pill">Most popular</span></td>
+            <tr class="price-row-popular" data-prefill="I selected FL-100, FL-110, and FL-115 and want a preparation quote" data-formcode="FL-100">
+              <td><strong>Client-selected FL-100 package</strong><br><span class="price-row-meta">FL-100 + FL-110 + FL-115</span></td>
               <td class="num"><span class="price">from $349</span></td>
-              <td class="num gov">$435</td>
+              <td class="num gov">Verify with court</td>
             </tr>
-            <tr data-prefill="I need a full FL-100 divorce package with kids and/or property (UCCJEA)" data-formcode="FL-100"><td><strong>FL-100 Full Divorce</strong> (kids + property, UCCJEA)</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
-            <tr data-prefill="I need an FL-300 Request for Order (custody/support/visitation)" data-formcode="FL-300"><td><strong>FL-300</strong> Request for Order (custody/support)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need FL-150 / FL-160 financial disclosures prepared" data-formcode="FL-150"><td><strong>FL-150 / FL-160</strong> Financial disclosures</td><td class="num"><span class="price">$199 each</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need a post-judgment modification (family law)"><td><strong>Post-judgment modification</strong> (family law)</td><td class="num"><span class="price">from $499</span></td><td class="num gov">$0</td></tr>
-            <tr class="price-row-popular" data-prefill="I need the SC-100 small-claims package (SC-100 + proof of service)" data-formcode="SC-100">
-              <td><strong>SC-100 Small Claims</strong> package<br><span class="price-row-meta">SC-100 + proof of service (POS-010)</span></td>
+            <tr data-prefill="I selected an FL-100 package with the forms I need" data-formcode="FL-100"><td><strong>FL-100 Full Divorce</strong> client-selected package</td><td class="num"><span class="price">from $799</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected Form FL-300 and want a preparation quote" data-formcode="FL-300"><td><strong>FL-300</strong> Request for Order</td><td class="num"><span class="price">$349</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected FL-150 or FL-160 and want a preparation quote" data-formcode="FL-150"><td><strong>FL-150 / FL-160</strong> Financial disclosures</td><td class="num"><span class="price">$199 each</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I already selected post-judgment forms and want a preparation quote"><td><strong>Client-selected post-judgment forms</strong></td><td class="num"><span class="price">from $499</span></td><td class="num gov">Verify with court</td></tr>
+            <tr class="price-row-popular" data-prefill="I selected SC-100 and POS-010 and want a preparation quote" data-formcode="SC-100">
+              <td><strong>Client-selected SC-100 package</strong><br><span class="price-row-meta">SC-100 + POS-010</span></td>
               <td class="num"><span class="price">$249</span></td>
-              <td class="num gov">$30–$75</td>
+              <td class="num gov">Verify with court</td>
             </tr>
-            <tr data-prefill="I need a demand letter prepared before filing in court"><td><strong>Demand letter</strong> (pre-litigation)</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need help collecting on a court judgment (WG-001 wage garnishment / EJ-001 abstract)"><td><strong>WG-001 / EJ-001</strong> Judgment collection</td><td class="num"><span class="price">$199</span></td><td class="num gov">$40</td></tr>
-            <tr data-prefill="I need an unlawful-detainer (eviction) response prepared — I'm the tenant"><td><strong>UD response</strong> (tenant defense)</td><td class="num"><span class="price">$349</span></td><td class="num gov">$240</td></tr>
-            <tr data-prefill="I need a restraining order document package (DV / CH / EA / GV / WV)"><td><strong>Restraining order</strong> document package</td><td class="num quote">custom quote</td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need probate document preparation starting at $249 / small-estate affidavit" data-formcode="DE-111"><td><strong>Probate starter</strong> / small-estate affidavit</td><td class="num"><span class="price">from $249</span></td><td class="num gov">$0+</td></tr>
-            <tr data-prefill="I need a DE-111 probate petition" data-formcode="DE-111"><td><strong>DE-111 Probate</strong> petition</td><td class="num"><span class="price">from $799</span></td><td class="num gov">$435</td></tr>
-            <tr data-prefill="I need the full California probate package (DE-111 / 121 / 160 / 221)" data-formcode="DE-111"><td><strong>Full Probate</strong> package (DE-111/121/160/221)</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">$435+</td></tr>
-            <tr data-prefill="I need help closing probate / final distribution / DE-295 final discharge" data-formcode="DE-295"><td><strong>Probate closing</strong> final distribution / DE-295</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I selected a demand-letter document and want a preparation quote"><td><strong>Client-directed demand letter</strong></td><td class="num"><span class="price">$149</span></td><td class="num gov">Verify if applicable</td></tr>
+            <tr data-prefill="I selected WG-001 or EJ-001 and want a preparation quote"><td><strong>WG-001 / EJ-001</strong> client-selected forms</td><td class="num"><span class="price">$199</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected an unlawful-detainer response form and want a preparation quote"><td><strong>Client-selected UD response form</strong></td><td class="num"><span class="price">$349</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected restraining-order forms and want a preparation quote"><td><strong>Client-selected restraining-order forms</strong></td><td class="num quote">custom quote</td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected a small-estate or probate document and want a preparation quote" data-formcode="DE-111"><td><strong>Client-selected probate starter</strong> / small-estate document</td><td class="num"><span class="price">from $249</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected Form DE-111 and want a preparation quote" data-formcode="DE-111"><td><strong>DE-111 Probate</strong> petition</td><td class="num"><span class="price">from $799</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected DE-111, DE-121, DE-160, or DE-221 and want a package quote" data-formcode="DE-111"><td><strong>Client-selected probate forms</strong> package</td><td class="num"><span class="price">from $1,599</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected Form DE-295 and want a preparation quote" data-formcode="DE-295"><td><strong>DE-295</strong> client-selected probate form</td><td class="num"><span class="price">from $499</span></td><td class="num gov">Verify with court</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -203,19 +202,23 @@ const schema = {
         </div>
         <table class="price-table">
           <thead>
-            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Court fee*</th></tr>
+            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Official court fee*</th></tr>
           </thead>
           <tbody>
-            <tr data-prefill="I need a misdemeanor expungement / dismissal (Penal Code 1203.4, CR-180 / CR-181)" data-formcode="CR-180"><td><strong>Misdemeanor expungement</strong> dismissal · PC §1203.4 (CR-180/181)</td><td class="num"><span class="price">from $449</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need a DUI / wet-reckless expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>DUI | wet-reckless expungement</strong> PC §1203.4</td><td class="num"><span class="price">from $449</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need a felony expungement / dismissal (Penal Code 1203.4)" data-formcode="CR-180"><td><strong>Felony expungement</strong> dismissal · PC §1203.4</td><td class="num"><span class="price">from $499</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need an infraction dismissal" data-formcode="CR-180"><td><strong>Infraction dismissal</strong></td><td class="num"><span class="price">from $349</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need to terminate probation early (Penal Code 1203.3)"><td><strong>Early termination of probation</strong> PC §1203.3</td><td class="num"><span class="price">from $449</span></td><td class="num gov">varies</td></tr>
-            <tr data-prefill="I need help with a large record-clearing case with multiple convictions or a big docket" data-formcode="CR-180"><td><strong>Complex record clearing</strong> multiple cases / large docket</td><td class="num quote">custom quote</td><td class="num gov">varies</td></tr>
+            <tr data-prefill="I selected CR-180 or CR-181 and want a preparation quote" data-formcode="CR-180"><td><strong>CR-180 / CR-181</strong> client-selected forms</td><td class="num"><span class="price">from $449</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected CR-180 for a DUI-related matter and want a preparation quote" data-formcode="CR-180"><td><strong>CR-180</strong> client-selected form · DUI-related matter</td><td class="num"><span class="price">from $449</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected CR-180 for a felony matter and want a preparation quote" data-formcode="CR-180"><td><strong>CR-180</strong> client-selected form · felony matter</td><td class="num"><span class="price">from $499</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected CR-180 for an infraction matter and want a preparation quote" data-formcode="CR-180"><td><strong>CR-180</strong> client-selected form · infraction matter</td><td class="num"><span class="price">from $349</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="An attorney advised me to request a PC 17(b) reduction and I want a clerical preparation quote" data-formcode="CR-180"><td><strong>Attorney-advised PC §17(b) document preparation</strong></td><td class="num"><span class="price">from $499</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="An attorney advised me to request early termination of probation and I want a clerical preparation quote"><td><strong>Attorney-advised PC §1203.3 document preparation</strong></td><td class="num"><span class="price">from $449</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected CR-409 or CR-410 and want a preparation quote" data-formcode="CR-409"><td><strong>CR-409 / CR-410</strong> client-selected forms</td><td class="num"><span class="price">from $499</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected JV-595 and want a preparation quote" data-formcode="JV-595"><td><strong>JV-595</strong> client-selected form</td><td class="num"><span class="price">from $499</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="An attorney advised me about Prop 64 relief and I want a clerical preparation quote"><td><strong>Attorney-advised Prop 64 document preparation</strong></td><td class="num"><span class="price">from $399</span></td><td class="num gov">Verify with court</td></tr>
+            <tr data-prefill="I selected record-clearing forms for multiple matters and want a preparation quote" data-formcode="CR-180"><td><strong>Multiple client-selected record-clearing forms</strong></td><td class="num quote">custom quote</td><td class="num gov">Verify with court</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
-          Self-help document preparation under your direction. We do not decide eligibility, give legal advice, or appear in court. We do <strong>not</strong> handle felony reductions (PC 17(b)), arrest or juvenile record sealing, Prop 64 relief, Certificates of Rehabilitation, Governor's Pardons, ending PC 290 registration, or firearm-rights restoration — those need a criminal-defense attorney. <em>Cal. Bus. & Prof. Code §§6400–6415.</em>
+          Self-help document preparation under your direction. We do not decide eligibility, give legal advice, or appear in court. We do <strong>not</strong> handle Certificates of Rehabilitation, Governor's Pardons, ending PC 290 registration, or firearm-rights restoration — those need a criminal-defense attorney. <em>Cal. Bus. & Prof. Code §§6400–6415.</em>
         </p>
       </div>
 
@@ -225,36 +228,36 @@ const schema = {
       <div class="price-card price-card--gold">
         <div class="price-card-stripe"></div>
         <div class="price-card-head">
-          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I need help with business filings, translation, or notary support." aria-label="Start business filings and document support intake"><span aria-hidden="true">🏢</span></button>
+          <button type="button" class="price-card-icon price-card-icon-button" data-prefill="I already selected a business filing, translation, or notary service and want a quote." aria-label="Request a quote for a selected business filing or document service"><span aria-hidden="true">🏢</span></button>
           <div>
             <div class="price-card-kicker">California business + service add-ons</div>
             <h2>Business filings · translation · notary</h2>
-            <p class="price-card-sub">Launch your LLC or corporation, register a DBA, file for an EIN. Plus certified translation and mobile notary.</p>
+            <p class="price-card-sub">For clients who have already selected the entity and filing. Entity choice and tax questions require an attorney or CPA. Translation and mobile-notary services are also available.</p>
           </div>
         </div>
         <table class="price-table">
           <thead>
-            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">State fee*</th></tr>
+            <tr><th>Service</th><th class="num">Imverica fee</th><th class="num">Official filing fee*</th></tr>
           </thead>
           <tbody>
-            <tr class="price-row-popular" data-prefill="I want the LLC Launch Package (LLC-1 + LLC-12 + EIN + operating agreement)" data-formcode="LLC-1">
-              <td><strong>LLC Launch Package</strong><br><span class="price-row-meta">LLC-1 + LLC-12 + EIN + operating agreement</span><span class="price-popular-pill">Best value</span></td>
+            <tr class="price-row-popular" data-prefill="I selected LLC-1, LLC-12, SS-4, and an operating-agreement template and want a preparation quote" data-formcode="LLC-1">
+              <td><strong>Client-selected LLC forms package</strong><br><span class="price-row-meta">LLC-1 + LLC-12 + SS-4 + operating-agreement template</span></td>
               <td class="num"><span class="price">$449</span></td>
-              <td class="num gov">$90</td>
+              <td class="num gov">Verify with agency</td>
             </tr>
-            <tr data-prefill="I want the Corporation Launch Package (ARTS-GS + SI-550 + EIN + bylaws)" data-formcode="ARTS-GS"><td><strong>Corporation Launch Package</strong><br><span class="price-row-meta">ARTS-GS + SI-550 + EIN + bylaws</span></td><td class="num"><span class="price">$549</span></td><td class="num gov">$125</td></tr>
-            <tr data-prefill="I need to form an LLC (LLC-1 only)" data-formcode="LLC-1"><td><strong>LLC-1</strong> Form an LLC (standalone)</td><td class="num"><span class="price">$199</span></td><td class="num gov">$70</td></tr>
-            <tr data-prefill="I need to file LLC-12 Statement of Information" data-formcode="LLC-12"><td><strong>LLC-12</strong> Statement of Information</td><td class="num"><span class="price">$129</span></td><td class="num gov">$20</td></tr>
-            <tr data-prefill="I need help getting an EIN (SS-4)" data-formcode="SS-4"><td><strong>SS-4 EIN</strong> application</td><td class="num"><span class="price">$99</span></td><td class="num gov">$0</td></tr>
-            <tr data-prefill="I need to file a DBA / Fictitious Business Name" data-formcode="FBN"><td><strong>DBA / FBN</strong> (Fictitious Business Name)</td><td class="num"><span class="price">$129</span></td><td class="num gov">varies (county)</td></tr>
-            <tr data-prefill="I need to register a foreign LLC in California" data-formcode="LLC-1A"><td><strong>Foreign-LLC registration</strong></td><td class="num"><span class="price">$299</span></td><td class="num gov">$70</td></tr>
-            <tr data-prefill="I need an operating agreement template customised for my LLC"><td><strong>Operating agreement</strong> (customised template)</td><td class="num"><span class="price">$149</span></td><td class="num gov">$0</td></tr>
+            <tr data-prefill="I selected ARTS-GS and SI-550 and want a preparation quote" data-formcode="ARTS-GS"><td><strong>Client-selected corporation forms package</strong><br><span class="price-row-meta">ARTS-GS + SI-550 + EIN + bylaws template</span></td><td class="num"><span class="price">$549</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I selected LLC-1 and want a preparation quote" data-formcode="LLC-1"><td><strong>LLC-1</strong> standalone preparation</td><td class="num"><span class="price">$199</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I selected LLC-12 and want a preparation quote" data-formcode="LLC-12"><td><strong>LLC-12</strong> Statement of Information</td><td class="num"><span class="price">$129</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I selected SS-4 and want a preparation quote" data-formcode="SS-4"><td><strong>SS-4 EIN</strong> application</td><td class="num"><span class="price">$99</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I selected a DBA or FBN filing and want a preparation quote" data-formcode="FBN"><td><strong>DBA / FBN</strong> (Fictitious Business Name)</td><td class="num"><span class="price">$129</span></td><td class="num gov">Verify with county</td></tr>
+            <tr data-prefill="I selected LLC-1A and want a preparation quote" data-formcode="LLC-1A"><td><strong>LLC-1A</strong> foreign-LLC registration</td><td class="num"><span class="price">$299</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I selected an operating-agreement template and want a document-preparation quote"><td><strong>Operating agreement</strong> (client-selected template)</td><td class="num"><span class="price">$149</span></td><td class="num gov">Verify if applicable</td></tr>
             <tr><td colspan="3" class="price-table-divider">Translation & notary</td></tr>
-            <tr data-prefill="I need a certified translation (Russian / Ukrainian / Spanish ↔ English)"><td><strong>Certified translation</strong> (Russian / Ukrainian / Spanish ↔ English)</td><td class="num"><span class="price">from $35/page</span></td><td class="num gov">—</td></tr>
-            <tr data-prefill="I need a certified translation of a birth / marriage / divorce / death certificate"><td><strong>Standard certificate</strong> (birth/marriage/divorce)</td><td class="num"><span class="price">$45 each</span></td><td class="num gov">—</td></tr>
-            <tr data-prefill="I need a certified translation of a diploma / academic transcript"><td><strong>Diploma / transcript</strong> translation</td><td class="num"><span class="price">$75 each</span></td><td class="num gov">—</td></tr>
-            <tr data-prefill="I need apostille coordination through California Secretary of State"><td><strong>Apostille coordination</strong> (CA Secretary of State)</td><td class="num"><span class="price">$129</span></td><td class="num gov">$26+</td></tr>
-            <tr data-prefill="I need a mobile notary in the Sacramento area"><td><strong>Mobile notary</strong> (Sacramento metro, up to 3 signatures)</td><td class="num"><span class="price">from $75</span></td><td class="num gov">—</td></tr>
+            <tr data-prefill="I need a certified translation (Russian / Ukrainian / Spanish ↔ English)"><td><strong>Certified translation</strong> (RU / UA / ES ↔ EN)</td><td class="num"><span class="price">from $35/page</span></td><td class="num gov">Not applicable</td></tr>
+            <tr data-prefill="I need a certified translation of a birth / marriage / divorce / death certificate"><td><strong>Standard certificate</strong> (birth/marriage/divorce)</td><td class="num"><span class="price">$45 each</span></td><td class="num gov">Not applicable</td></tr>
+            <tr data-prefill="I need a certified translation of a diploma / academic transcript"><td><strong>Diploma / transcript</strong> translation</td><td class="num"><span class="price">$75 each</span></td><td class="num gov">Not applicable</td></tr>
+            <tr data-prefill="I need apostille coordination through California Secretary of State"><td><strong>Apostille coordination</strong> (CA Secretary of State)</td><td class="num"><span class="price">$129</span></td><td class="num gov">Verify with agency</td></tr>
+            <tr data-prefill="I need a mobile notary in the Sacramento area"><td><strong>Mobile notary</strong> (Sacramento metro, up to 3 signatures)</td><td class="num"><span class="price">from $75</span></td><td class="num gov">Not applicable</td></tr>
           </tbody>
         </table>
         <p class="price-card-disclaimer">
@@ -291,10 +294,10 @@ const schema = {
             <div class="discount-title">Referral credit</div>
             <div class="discount-desc">You refer a new client to Imverica — both of you get a credit on the next invoice.</div>
           </button>
-          <button type="button" class="discount-card" data-prefill="I qualify for the USCIS fee waiver (I-912) or California court fee waiver — please apply the fee-waiver discount.">
+          <button type="button" class="discount-card" data-prefill="I independently selected a fee-waiver request and want to ask whether an Imverica service discount is available.">
             <div class="discount-pct">−25%</div>
-            <div class="discount-title">Fee-waiver verified</div>
-            <div class="discount-desc">If your household qualifies for the USCIS fee waiver (I-912) or California court fee waiver — we reduce our fee too.</div>
+            <div class="discount-title">Client-selected fee-waiver request</div>
+            <div class="discount-desc">If you independently choose to submit a government fee-waiver request, ask whether a separate discount on Imverica's preparation fee is available. We do not determine eligibility.</div>
           </button>
           <a class="discount-card discount-card--b2b" href="/for-attorneys">
             <div class="discount-pct">B2B</div>
@@ -328,7 +331,7 @@ const schema = {
             <div class="compare-name">Document preparation at your direction</div>
             <ul>
               <li>Flat fee confirmed before work begins</li>
-              <li>Human intake and document review</li>
+              <li>Human intake and clerical completeness review</li>
               <li>English, Russian, Ukrainian, and Spanish</li>
               <li>Forms, attachments, exhibits, and filing packets</li>
               <li>No legal advice or court representation</li>
@@ -371,7 +374,7 @@ const schema = {
         </details>
         <details>
           <summary>When is the final price locked?</summary>
-          <p>The final price is locked in the written engagement agreement. If new facts or extra work appear later, we quote the add-on first and only proceed after you approve it.</p>
+          <p>The final price is locked in the written engagement agreement. If the client later requests additional documents or clerical work, we quote the add-on first and only proceed after approval.</p>
         </details>
         <details>
           <summary>When should I talk to an attorney?</summary>
@@ -385,9 +388,9 @@ const schema = {
       <div class="pricing-legal">
         <h3>Important — please read</h3>
         <p>
-          All prices above are for <strong>document preparation only</strong>. They are
-          quoted in US dollars, exclude government filing fees (USCIS / court / Secretary
-          of State / county clerk), and exclude any optional services like mailing,
+          All prices above are for <strong>document preparation only</strong> for California
+          clients. They are quoted in US dollars, exclude government filing fees (USCIS /
+          court / Secretary of State / county clerk), and exclude optional services like mailing,
           translation certification, or attorney review. A written engagement agreement
           locks the final price before any work begins, in your language (English,
           Russian, Ukrainian, or Spanish), per Cal. Bus. &amp; Prof. Code §§6410, 6411
@@ -395,12 +398,14 @@ const schema = {
         </p>
         <p>
           <strong>Imverica Legal Solutions is not a law firm.</strong> Imverica Legal Solutions is the
-          trade name (dba) of Imverica LLC. Its founder is a California-registered Legal
-          Document Assistant (Cal. Bus. &amp; Prof. Code §§6400–6415) and Immigration
-          Consultant (§§22440–22448). We do not give legal advice, do not establish an
+          trade name (dba) of Imverica LLC, a California-registered Legal Document
+          Assistant (Cal. Bus. &amp; Prof. Code §§6400–6415) and Immigration Consultant
+          (§§22440–22448). We do not give legal advice, do not establish an
           attorney-client relationship, do not represent you in court or before
           USCIS / EOIR, and do not recommend which form you should file. All work is
-          performed under the self-represented party's direction. If your situation
+          performed under the California self-represented party's direction. Government
+          fees change and depend on filing method and category; verify the current amount
+          directly with the responsible agency immediately before filing. If your situation
           needs legal advice, consult a licensed attorney.
         </p>
       </div>
@@ -409,10 +414,10 @@ const schema = {
   </section>
 
   <CTAStrip
-    heading="Ready to start? Quote in one business day."
-    sub="Send a short intake (5 minutes) or call us. Documents prepared in 48 hours after engagement signed. Four languages. Flat fees."
+    heading="Ready to request a written quote?"
+    sub="Send a short intake or call us. After you identify the documents you selected and complete intake, we confirm the scope, flat fee, and estimated preparation schedule in writing."
     primaryHref="/#get-started"
-    primaryText="Start your case"
+    primaryText="Request a quote"
   />
 
   <!-- Wire price-table rows and discount cards to the QuickIntakeModal.
@@ -594,7 +599,6 @@ const schema = {
       vertical-align: middle;
     }
     .price-table tbody tr:last-child td { border-bottom: 0; }
-    .price-table td small { display: inline-block; margin-top: 3px; font-size: 12.5px; line-height: 1.4; color: var(--muted, #6e6e73); font-weight: 400; }
     .price-table .num { text-align: right; white-space: nowrap; }
 
     /* Clickable rows — added by JS at runtime when data-prefill is set.
@@ -708,7 +712,6 @@ const schema = {
       background: rgba(40,30,20,0.025);
       border-top: 1px solid rgba(40,30,20,0.06);
     }
-    .price-card-disclaimer a { text-decoration: underline; text-underline-offset: 2px; }
 
     /* ===== Mobile — collapse tables to vertical card rows ===== */
     @media (max-width: 640px) {

@@ -13,7 +13,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   serviceType: 'California Foreign LLC Registration (LLC-5) Document Preparation',
-  provider: { '@type': 'LegalService', name: 'Imverica Legal Solutions', url: 'https://imverica.com', telephone: '+1-916-399-3992', areaServed: { '@type': 'State', name: 'California' } },
+  provider: { '@id': 'https://imverica.com/#organization' },
   description: 'Preparación de documentos para registrar una LLC foránea (de otro estado) en California (Forma LLC-5), bajo la dirección del cliente.'
 };
 ---
@@ -58,7 +58,7 @@ const schema = {
     <ul>
       <li>Un Certificate of Good Standing vigente del estado de origen de la LLC.</li>
       <li>Un agent for service of process en California.</li>
-      <li>La LLC-12 Statement of Information tras registrarse, y el impuesto anual de $800.</li>
+      <li>El plazo vigente del LLC-12 y toda obligación fiscal, verificados con Secretary of State y FTB.</li>
     </ul>
 
     <h2>Qué preparamos</h2>

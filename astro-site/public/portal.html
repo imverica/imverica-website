@@ -123,7 +123,7 @@ footer p{font-size:12px;color:#d8e6f6;}
   <!-- "How it works" is onboarding for first-time visitors; hidden when
        the visitor is already a signed-in client (see signed-in mode below). -->
   <div class="info-box" id="how-it-works">
-    <p><strong data-i18n="howItWorksLabel">How it works:</strong> <span data-i18n="howItWorksText">Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.</span></p>
+    <p><strong data-i18n="howItWorksLabel">How it works:</strong> <span data-i18n="howItWorksText">Fill out the form below and list the documents you have. We will review your request, then contact you to securely collect documents and confirm the requested scope and pricing.</span></p>
   </div>
 
   <!-- Signed-in banner: shown only when /api/profile resolves with a valid session.
@@ -217,7 +217,7 @@ footer p{font-size:12px;color:#d8e6f6;}
 
     <div id="success-box" class="success-box">
       <h3>&#10003; <span data-i18n="successH3">Submission received!</span></h3>
-      <p data-i18n="successP">Thank you. We have received your information. A member of our team will contact you within 1 business day at the phone number you provided to securely collect your documents and discuss next steps and pricing.</p>
+      <p data-i18n="successP">Thank you. We received your information. After review, a team member will contact you using the details you provided to securely collect documents and confirm the requested scope and pricing.</p>
       <div class="order-id-row">
         <span class="order-id-label" data-i18n="refLabel">Your reference number</span>
         <span class="order-id-value" id="order-id">—</span>
@@ -255,9 +255,9 @@ const STRINGS = {
     navMyAccount: 'My Account →',
     navBack: '← Back to main site',
     headerTitle: 'Client Portal',
-    headerSub: 'Here you can securely upload and send requested documents to our office.',
+    headerSub: 'Here you can securely upload requested documents to the Imverica service team.',
     howItWorksLabel: 'How it works:',
-    howItWorksText: 'Fill out the form below and list the documents you have. We will review your request and contact you within 1 business day to securely collect your documents and discuss next steps and pricing.',
+    howItWorksText: 'Fill out the form below and list the documents you have. We will review your request, then contact you to securely collect documents and confirm the requested scope and pricing.',
     signedInAs: 'Signed in as',
     signedInHint: 'Your contact details are already on file — just tell us what you need and drop the documents below.',
     editProfile: 'Edit profile',
@@ -285,7 +285,7 @@ const STRINGS = {
     dropPre: 'Drag & drop files to list them, or', dropBrowse: 'browse files',
     dropSmall: 'We record only the file names here, not the files themselves.',
     successH3: 'Submission received!',
-    successP: 'Thank you. We have received your information. A member of our team will contact you within 1 business day at the phone number you provided to securely collect your documents and discuss next steps and pricing.',
+    successP: 'Thank you. We received your information. After review, a team member will contact you using the details you provided to securely collect documents and confirm the requested scope and pricing.',
     refLabel: 'Your reference number', copyBtn: 'Copy', copyDone: 'Copied',
     refHint: 'Save this number — quote it when you contact us so we can find your submission instantly.',
     submitBtn: 'Submit Request', submitting: 'Submitting…',
@@ -312,7 +312,7 @@ const STRINGS = {
     headerTitle: 'Клиентский портал',
     headerSub: 'Здесь вы можете безопасно загружать и отправлять запрашиваемые документы к нам в офис.',
     howItWorksLabel: 'Как это работает:',
-    howItWorksText: 'Заполните форму ниже и перечислите документы, которые у вас есть. Мы рассмотрим вашу заявку и свяжемся с вами в течение 1 рабочего дня, чтобы безопасно получить документы и обсудить следующие шаги и цену.',
+    howItWorksText: 'Заполните форму ниже и перечислите документы, которые у вас есть. После проверки запроса мы свяжемся с вами, чтобы безопасно получить документы и подтвердить запрошенный объём работы и цену.',
     signedInAs: 'Вы вошли как',
     signedInHint: 'Ваши контактные данные уже у нас — просто опишите, что нужно, и приложите документы ниже.',
     editProfile: 'Редактировать профиль',
@@ -340,7 +340,7 @@ const STRINGS = {
     dropPre: 'Перетащите файлы для списка или', dropBrowse: 'выберите файлы',
     dropSmall: 'Мы записываем здесь только названия файлов, а не сами файлы.',
     successH3: 'Заявка получена!',
-    successP: 'Спасибо. Мы получили вашу информацию. Член нашей команды свяжется с вами в течение 1 рабочего дня по указанному номеру, чтобы безопасно получить документы и обсудить следующие шаги и цену.',
+    successP: 'Спасибо. Мы получили вашу информацию. После проверки запроса сотрудник свяжется с вами по указанным контактам, чтобы безопасно получить документы и подтвердить запрошенный объём работы и цену.',
     refLabel: 'Ваш номер заявки', copyBtn: 'Копировать', copyDone: 'Скопировано',
     refHint: 'Сохраните этот номер — упомяните его при обращении, и мы мгновенно найдём вашу заявку.',
     submitBtn: 'Отправить заявку', submitting: 'Отправка…',
@@ -367,7 +367,7 @@ const STRINGS = {
     headerTitle: 'Клієнтський портал',
     headerSub: 'Тут ви можете безпечно завантажувати та надсилати запитувані документи до нашого офісу.',
     howItWorksLabel: 'Як це працює:',
-    howItWorksText: 'Заповніть форму нижче і перелічіть документи, які у вас є. Ми розглянемо вашу заявку і зв\'яжемося з вами протягом 1 робочого дня, щоб безпечно отримати документи та обговорити наступні кроки і ціну.',
+    howItWorksText: 'Заповніть форму нижче і перелічіть документи, які у вас є. Після перевірки запиту ми зв\'яжемося з вами, щоб безпечно отримати документи та підтвердити запитаний обсяг роботи й ціну.',
     signedInAs: 'Ви увійшли як',
     signedInHint: 'Ваші контактні дані вже у нас — просто опишіть, що потрібно, і додайте документи нижче.',
     editProfile: 'Редагувати профіль',
@@ -395,7 +395,7 @@ const STRINGS = {
     dropPre: 'Перетягніть файли для списку або', dropBrowse: 'оберіть файли',
     dropSmall: 'Ми записуємо тут лише назви файлів, а не самі файли.',
     successH3: 'Заявку отримано!',
-    successP: 'Дякуємо. Ми отримали вашу інформацію. Член нашої команди зв\'яжеться з вами протягом 1 робочого дня за вказаним номером, щоб безпечно отримати документи та обговорити наступні кроки і ціну.',
+    successP: 'Дякуємо. Ми отримали вашу інформацію. Після перевірки запиту працівник зв\'яжеться з вами за вказаними контактами, щоб безпечно отримати документи та підтвердити запитаний обсяг роботи й ціну.',
     refLabel: 'Ваш номер заявки', copyBtn: 'Копіювати', copyDone: 'Скопійовано',
     refHint: 'Збережіть цей номер — згадайте його при зверненні, і ми миттєво знайдемо вашу заявку.',
     submitBtn: 'Надіслати заявку', submitting: 'Надсилання…',
@@ -422,7 +422,7 @@ const STRINGS = {
     headerTitle: 'Portal del cliente',
     headerSub: 'Aquí puede cargar y enviar de forma segura los documentos solicitados a nuestra oficina.',
     howItWorksLabel: 'Cómo funciona:',
-    howItWorksText: 'Complete el formulario a continuación y liste los documentos que tiene. Revisaremos su solicitud y lo contactaremos en 1 día hábil para recolectar sus documentos de forma segura y discutir los siguientes pasos y precio.',
+    howItWorksText: 'Complete el formulario y enumere los documentos que tiene. Después de revisar la solicitud, lo contactaremos para recopilar los documentos de forma segura y confirmar el alcance solicitado y el precio.',
     signedInAs: 'Sesión iniciada como',
     signedInHint: 'Sus datos de contacto ya están en el archivo — solo díganos qué necesita y suba los documentos abajo.',
     editProfile: 'Editar perfil',
@@ -450,7 +450,7 @@ const STRINGS = {
     dropPre: 'Arrastre y suelte archivos para listarlos, o', dropBrowse: 'examinar archivos',
     dropSmall: 'Solo registramos los nombres de los archivos aquí, no los archivos en sí.',
     successH3: '¡Solicitud recibida!',
-    successP: 'Gracias. Recibimos su información. Un miembro de nuestro equipo lo contactará en 1 día hábil al número que proporcionó para recolectar los documentos de forma segura y discutir los próximos pasos y precio.',
+    successP: 'Gracias. Recibimos su información. Después de revisarla, un miembro del equipo lo contactará usando los datos proporcionados para recopilar documentos de forma segura y confirmar el alcance solicitado y el precio.',
     refLabel: 'Su número de referencia', copyBtn: 'Copiar', copyDone: 'Copiado',
     refHint: 'Guarde este número — menciónelo al contactarnos y encontraremos su solicitud al instante.',
     submitBtn: 'Enviar solicitud', submitting: 'Enviando…',
