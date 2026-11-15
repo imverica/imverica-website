@@ -27,7 +27,7 @@ const TOPICS = [
     match: /green[\s-]*card|permanent\s+resid|грин[\s-]*карт|гринкарт|грін[\s-]*карт|грінкарт|вид\s+на\s+жительств|tarjeta\s+verde|residencia\s+permanente/i,
     label: L('Green card', 'Грин-карта', 'Грін-карта', 'Green card (residencia permanente)') },
   { id: 'replace-green-card', agency: 'uscis', url: 'https://www.uscis.gov/green-card/after-we-grant-your-green-card/replace-your-green-card',
-    match: /(replace|renew|lost|expired?)\s+(my\s+)?green[\s-]*card|green[\s-]*card\s+(renewal|replacement)|(замен|продл|потерял|утерян)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+грин|(замін|продовж|загуби)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+грін|(renovar|reemplazar)\s+(la\s+)?(green\s*card|tarjeta)/i,
+    match: /(replace|renew|lost|expired?)\s+(my\s+)?green[\s-]*card|green[\s-]*card\s+(renewal|replacement)|(замен|продл|потерял|утерян)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+грин|(замін|продовж|загуби)[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+грін|(renovar|reemplazar|perd[ií])\s+(la\s+|mi\s+)?(green\s*card|tarjeta)/i,
     label: L('Replace or renew a green card', 'Замена или продление грин-карты', 'Заміна або продовження грін-карти', 'Reemplazar o renovar la green card') },
   { id: 'remove-conditions', agency: 'uscis', url: 'https://www.uscis.gov/green-card/after-we-grant-your-green-card/conditional-permanent-residence/removing-conditions-on-permanent-residence-based-on-marriage',
     match: /remov[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+(the\s+)?conditions|conditional\s+(green\s*card|residen)|снят[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+услови|условн[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+грин|зняття\s+умов|умовн[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+грін|condiciones\s+de\s+(la\s+)?residencia/i,
@@ -42,7 +42,7 @@ const TOPICS = [
     match: /travel\s+document|advance\s+parole|re-?entry\s+permit|тр[еэ]в[еэ]л|разрешени[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+на\s+(выезд|поездк)|дозв[іо]л[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+(виїзд|подорож)|documento\s+de\s+viaje|permiso\s+de\s+viaje/i,
     label: L('Travel documents', 'Документы для поездок (travel document)', 'Документи для подорожей (travel document)', 'Documentos de viaje') },
   { id: 'family', agency: 'uscis', url: 'https://www.uscis.gov/family',
-    match: /family[\s-]*based|family\s+petition|petition\s+for\s+(a\s+)?relative|family\s+immigration|семейн[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(иммиграц|петици)|сімейн[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(імміграц|петиці)|petici[oó]n\s+familiar|inmigraci[oó]n\s+familiar/i,
+    match: /family[\s-]*based|family\s+petition|petition\s+for\s+(my\s+)?(wife|husband|spouse|fianc[eé]e?|mother|father|parents?|son|daughter|brother|sister|child(ren)?)|петици[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+(жену|мужа|супруг|мать|маму|отца|папу|родител|сына|дочь|брата|сестру|ребенк|детей)|петиці[\wа-яёіїєґА-ЯЁІЇЄҐ]*\s+на\s+(дружину|чоловіка|матір|маму|батька|тата|батьків|сина|доньку|дочку|брата|сестру|дитин|дітей)|petici[oó]n\s+(para|por)\s+(mi\s+|mis\s+)?(esposa|esposo|madre|padre|padres|hij[oa]s?|herman[oa]s?)|petition\s+for\s+(a\s+)?relative|family\s+immigration|семейн[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(иммиграц|петици)|сімейн[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(імміграц|петиці)|petici[oó]n\s+familiar|inmigraci[oó]n\s+familiar/i,
     label: L('Family-based immigration', 'Иммиграция через семью', 'Імміграція через родину', 'Inmigración por familia') },
   { id: 'asylum', agency: 'uscis', url: 'https://www.uscis.gov/humanitarian/refugees-and-asylum/asylum',
     match: /asylum|убежищ|асайл|притулок|азил|asilo/i,
@@ -88,13 +88,13 @@ const TOPICS = [
     match: /small\s+claims?|смол+\s*кле[ий]м|мал[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+иск|мал[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+позов|reclamos\s+menores|demandas\s+peque/i,
     label: L('Small claims (California courts forms by category)', 'Малые иски (формы судов Калифорнии по категориям)', 'Малі позови (форми судів Каліфорнії за категоріями)', 'Reclamos menores (formularios de las cortes por categoría)') },
   { id: 'name-change', agency: 'courts', example: 'MC-025', url: COURTS_ALL_FORMS,
-    match: /name\s+change|change\s+(my\s+)?name|смен[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(имени|фамил)|змін[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(імені|прізвищ)|cambio\s+de\s+nombre/i,
+    match: /name\s+change|change\s+(my\s+)?name|смен[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(имени|имя|фамил)|змін[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+(імені|ім[’'ʼ]?я|прізвищ)|cambio\s+de\s+nombre/i,
     label: L('Name change (California courts forms by category)', 'Смена имени (формы судов Калифорнии по категориям)', 'Зміна імені (форми судів Каліфорнії за категоріями)', 'Cambio de nombre (formularios de las cortes por categoría)') },
   { id: 'guardianship-probate', agency: 'courts', example: 'DE-120', url: COURTS_ALL_FORMS,
     match: /guardianship|probate|conservatorship|опекунств|наследств|спадщин|опікунств|tutela|sucesi[oó]n|herencia/i,
     label: L('Guardianship and probate (California courts forms by category)', 'Опекунство и наследство (формы судов Калифорнии по категориям)', 'Опікунство та спадщина (форми судів Каліфорнії за категоріями)', 'Tutela y sucesiones (formularios de las cortes por categoría)') },
   { id: 'record-clearing', agency: 'courts', example: 'MC-025', url: COURTS_ALL_FORMS,
-    match: /expunge|clean\s+(my\s+)?record|record\s+clear|1203\.4|снят[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+судимост|зняття\s+судимост|limpiar\s+(mi\s+)?(record|historial|antecedentes)/i,
+    match: /expunge|clean\s+(my\s+)?record|record\s+clear|1203\.4|снят[\wа-яёіїєґА-ЯЁІЇЄҐ]+\s+судимост|зняття\s+судимост|limpiar\s+(mis?\s+)?(r[eé]cord|historial|antecedentes)/i,
     label: L('Clearing a criminal record (California courts forms by category)', 'Снятие судимости (формы судов Калифорнии по категориям)', 'Зняття судимості (форми судів Каліфорнії за категоріями)', 'Limpiar antecedentes (formularios de las cortes por categoría)') }
 ];
 

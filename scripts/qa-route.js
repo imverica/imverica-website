@@ -198,7 +198,8 @@ async function main() {
     ['Семейная петиция', 'family'], ['Ответ на развод', 'divorce'], ['Малый иск', 'small-claims'], ['Снятие судимости', 'record-clearing'],
     ['Сімейна петиція', 'family'], ['Відповідь на розлучення', 'divorce'], ['Малий позов', 'small-claims'], ['Зняття судимості', 'record-clearing'],
     ['Petición familiar', 'family'], ['Respuesta a divorcio', 'divorce'], ['Reclamos menores', 'small-claims'], ['Limpiar record', 'record-clearing'],
-    ['разрешение на работу', 'work-permit'], ['замена грин карты', 'replace-green-card'], ['временная защита', 'tps']
+    ['разрешение на работу', 'work-permit'], ['замена грин карты', 'replace-green-card'], ['временная защита', 'tps'],
+    ['perdí mi tarjeta verde', 'replace-green-card'], ['renovar mi green card', 'replace-green-card'], ['limpiar mis antecedentes', 'record-clearing']
   ];
   for (const [q, topic] of descriptions) {
     const { status, body } = await endpoint(q);
@@ -214,6 +215,23 @@ async function main() {
     assert(body.route.formCode === code, `${q}: expected ${code}, got ${body.route.formCode}`);
     assert(body.route.packageForms.length === 1 && body.route.packageForms[0] === code, `${q}: no companion forms may be added, got ${body.route.packageForms}`);
   }
+  // Everyday phrasing in four languages must reach some official topic page
+  // (not only the general form lists).
+  const { navigationFor } = require('../netlify/functions/lib/official-topics');
+  const everyday = {
+    en: ['I need a green card', 'renew my green card', 'apply for citizenship', 'work permit renewal', 'travel document', 'petition for my wife', 'asylum application', 'TPS Ukraine re-registration', 'U visa', 'DACA renewal', 'fee waiver for USCIS', 'file for divorce', 'custody and child support', 'restraining order against my ex', 'eviction notice from landlord', 'sue in small claims court', 'change my name', 'probate for my father estate', 'expunge my DUI', 'guardianship of my nephew', 'remove conditions on my green card', 're-parole for Ukrainians', 'fee waiver for court'],
+    ru: ['хочу грин карту', 'продлить грин карту', 'подать на гражданство', 'разрешение на работу', 'тревел документ', 'петиция на жену', 'подать на убежище', 'перерегистрация TPS Украина', 'виза U', 'продление DACA', 'освобождение от пошлины USCIS', 'подать на развод', 'опека и алименты', 'запретительный ордер на бывшего', 'выселение от арендодателя', 'малый иск в суд', 'сменить имя', 'наследство после отца', 'снять судимость за DUI', 'опекунство над племянником', 'снятие условий с грин карты', 'репароль для украинцев', 'освобождение от судебных сборов'],
+    uk: ['хочу грін карту', 'продовжити грін карту', 'подати на громадянство', 'дозвіл на роботу', 'тревел документ', 'петиція на дружину', 'подати на притулок', 'перереєстрація TPS Україна', 'продовження DACA', 'подати на розлучення', 'опіка та аліменти', 'заборонний ордер на колишнього', 'виселення від орендодавця', 'малий позов до суду', 'змінити ім’я', 'спадщина після батька', 'зняття судимості за DUI', 'зняття умов з грін карти', 'репароль для українців', 'звільнення від судових зборів'],
+    es: ['quiero la green card', 'renovar mi tarjeta verde', 'solicitar la ciudadanía', 'permiso de trabajo', 'documento de viaje', 'petición para mi esposa', 'pedir asilo', 'TPS Ucrania', 'visa U', 'renovar DACA', 'pedir el divorcio', 'custodia y manutención', 'orden de restricción contra mi ex', 'desalojo del casero', 'demanda de reclamos menores', 'cambio de nombre', 'herencia de mi padre', 'limpiar mi récord de DUI', 'tutela de mi sobrino', 'quitar condiciones de la residencia', 'exención de cuotas de la corte']
+  };
+  let everydayCount = 0;
+  for (const [lang, phrases] of Object.entries(everyday)) {
+    for (const q of phrases) {
+      everydayCount++;
+      assert(navigationFor(q, lang).topics.length, `${lang} "${q}": expected an official topic page`);
+    }
+  }
+  console.log(`everyday phrasing: ${everydayCount} phrases in 4 languages reach a topic page`);
   // The page language breaks ties: Ukrainian without і/ї/є, Spanish without accents.
   for (const [q, lang, label] of [['Малий позов', 'uk', 'Малі позови'], ['Reclamos menores', 'es', 'Reclamos menores'], ['Малый иск', 'uk', 'Малые иски'], ['Small claims', 'en', 'Small claims']]) {
     const res = await route.handler({ httpMethod: 'GET', queryStringParameters: { q, lang }, headers: {} });
