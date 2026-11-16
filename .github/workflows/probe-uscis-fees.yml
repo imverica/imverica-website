@@ -1,0 +1,18 @@
+name: Probe USCIS fee data (one-off)
+
+# Started by hand only. Reads uscis.gov/g-1055 and prints where the page
+# gets its fee data. No deploy, no commit.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe G-1055
+        run: bash scripts/probe-uscis-g1055.sh
