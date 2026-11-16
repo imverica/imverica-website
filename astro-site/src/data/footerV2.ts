@@ -68,11 +68,11 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'USCIS', links: [['/immigration', 'Все иммиграционные формы'], ['/i-485-help', 'Грин-карта | I-485'], ['/i-765-work-permit-help', 'Разрешение на работу | EAD'], ['/n-400-citizenship-help', 'Гражданство | N-400'], ['/i-130-family-petition', 'Семейная петиция | I-130'], ['/i-589-asylum-help', 'Убежище | I-589'], ['/eoir-immigration-court', 'Иммиграционный суд | для адвокатов'], ['/u4u', 'Uniting for Ukraine | U4U'], ['/tps', 'TPS']] },
       { title: 'Суды Калифорнии', links: [['/fl', 'Семейное право | развод'], ['/california-restraining-orders', 'Защитные ордера | DVRO'], ['/sc', 'Малые иски | SC-100'], ['/california-unlawful-detainer', 'Выселение | UD-100'], ['/california-probate', 'Наследство | DE-111'], ['/california-expungement', 'Снятие судимости | CR-180'], ['/fw-001-fee-waiver', 'Освобождение от пошлины | FW-001']] },
       { title: 'Бизнес', links: [['/business', 'Все документы для бизнеса'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Корпорация | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement (устав LLC)']] },
-      { title: 'Imverica', links: [['/about', 'О компании'], ['/about-imverica-legal-solutions', 'Реквизиты и регистрация компании'], ['/pricing', 'Цены'], ['/for-attorneys', 'Адвокатам'], ['/lda', 'Что такое LDA'], ['/schedule', 'Записаться на звонок'], ['/account.html', 'Кабинет клиента']] }
+      { title: 'Imverica', links: [['/about', 'О компании'], ['/about-imverica-legal-solutions', 'Реквизиты и регистрация компании'], ['/ru/pricing', 'Цены'], ['/for-attorneys', 'Адвокатам'], ['/lda', 'Что такое LDA'], ['/schedule', 'Записаться на звонок'], ['/account.html', 'Кабинет клиента']] }
     ],
     reach: { lead: 'Другие способы связаться', call: 'Позвонить', email: 'Написать на почту' },
     copyright: 'Copyright © {year} Imverica LLC. Все права защищены.',
-    bottom: [['/terms.html', 'Условия обслуживания'], ['/ru/document-security', 'Защита документов'], ['/pricing', 'Цены'], ['/lda', 'Что такое LDA'], ['/for-attorneys', 'Адвокатам']],
+    bottom: [['/terms.html', 'Условия обслуживания'], ['/ru/document-security', 'Защита документов'], ['/ru/pricing', 'Цены'], ['/lda', 'Что такое LDA'], ['/for-attorneys', 'Адвокатам']],
     region: 'Калифорния, США',
     languages: 'Язык'
   },
@@ -89,11 +89,11 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'USCIS', links: [['/immigration', 'Усі імміграційні форми'], ['/i-485-help', 'Грін-карта | I-485'], ['/i-765-work-permit-help', 'Дозвіл на роботу | EAD'], ['/n-400-citizenship-help', 'Громадянство | N-400'], ['/i-130-family-petition', 'Сімейна петиція | I-130'], ['/i-589-asylum-help', 'Притулок | I-589'], ['/eoir-immigration-court', 'Імміграційний суд | для адвокатів'], ['/u4u', 'Uniting for Ukraine | U4U'], ['/tps', 'TPS']] },
       { title: 'Суди Каліфорнії', links: [['/fl', 'Сімейне право | розлучення'], ['/california-restraining-orders', 'Захисні ордери | DVRO'], ['/sc', 'Малі позови | SC-100'], ['/california-unlawful-detainer', 'Виселення | UD-100'], ['/california-probate', 'Спадщина | DE-111'], ['/california-expungement', 'Зняття судимості | CR-180'], ['/fw-001-fee-waiver', 'Звільнення від мита | FW-001']] },
       { title: 'Бізнес', links: [['/business', 'Усі документи для бізнесу'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Корпорація | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement (статут LLC)']] },
-      { title: 'Imverica', links: [['/about', 'Про компанію'], ['/about-imverica-legal-solutions', 'Реквізити та реєстрація компанії'], ['/pricing', 'Ціни'], ['/for-attorneys', 'Адвокатам'], ['/lda', 'Що таке LDA'], ['/schedule', 'Записатися на дзвінок'], ['/account.html', 'Кабінет клієнта']] }
+      { title: 'Imverica', links: [['/about', 'Про компанію'], ['/about-imverica-legal-solutions', 'Реквізити та реєстрація компанії'], ['/ua/pricing', 'Ціни'], ['/for-attorneys', 'Адвокатам'], ['/lda', 'Що таке LDA'], ['/schedule', 'Записатися на дзвінок'], ['/account.html', 'Кабінет клієнта']] }
     ],
     reach: { lead: 'Інші способи зв’язатися', call: 'Зателефонувати', email: 'Написати на пошту' },
     copyright: 'Copyright © {year} Imverica LLC. Усі права захищено.',
-    bottom: [['/terms.html', 'Умови обслуговування'], ['/ua/document-security', 'Захист документів'], ['/pricing', 'Ціни'], ['/lda', 'Що таке LDA'], ['/for-attorneys', 'Адвокатам']],
+    bottom: [['/terms.html', 'Умови обслуговування'], ['/ua/document-security', 'Захист документів'], ['/ua/pricing', 'Ціни'], ['/lda', 'Що таке LDA'], ['/for-attorneys', 'Адвокатам']],
     region: 'Каліфорнія, США',
     languages: 'Мова'
   },
@@ -110,11 +110,11 @@ export const FOOTER_V2: Record<Locale, FooterV2Copy> = {
       { title: 'USCIS', links: [['/immigration', 'Todos los formularios de inmigración'], ['/i-485-help', 'Green Card | I-485'], ['/i-765-work-permit-help', 'Permiso de trabajo | EAD'], ['/n-400-citizenship-help', 'Ciudadanía | N-400'], ['/i-130-family-petition', 'Petición familiar | I-130'], ['/i-589-asylum-help', 'Asilo | I-589'], ['/eoir-immigration-court', 'Corte de inmigración | para firmas jurídicas'], ['/u4u', 'Uniting for Ukraine | U4U'], ['/tps', 'TPS']] },
       { title: 'Tribunales de California', links: [['/fl', 'Derecho familiar | divorcio'], ['/california-restraining-orders', 'Órdenes de restricción | DVRO'], ['/sc', 'Reclamos menores | SC-100'], ['/california-unlawful-detainer', 'Desalojo | UD-100'], ['/california-probate', 'Sucesión | DE-111'], ['/california-expungement', 'Limpiar antecedentes | CR-180'], ['/fw-001-fee-waiver', 'Exención de cuotas | FW-001']] },
       { title: 'Negocios', links: [['/business', 'Todos los trámites de negocio'], ['/llc-1-form-an-llc', 'LLC | LLC-1'], ['/arts-gs-incorporation', 'Corporación | ARTS-GS'], ['/fbn-dba', 'FBN | DBA'], ['/ss-4-ein', 'EIN | SS-4'], ['/operating-agreement', 'Operating Agreement (acuerdo operativo)']] },
-      { title: 'Imverica', links: [['/about', 'Sobre Imverica'], ['/about-imverica-legal-solutions', 'Datos y registro de la empresa'], ['/pricing', 'Precios'], ['/for-attorneys', 'Para firmas jurídicas'], ['/lda', 'Qué es un LDA'], ['/schedule', 'Agendar una llamada'], ['/account.html', 'Portal del cliente']] }
+      { title: 'Imverica', links: [['/about', 'Sobre Imverica'], ['/about-imverica-legal-solutions', 'Datos y registro de la empresa'], ['/mx/pricing', 'Precios'], ['/for-attorneys', 'Para firmas jurídicas'], ['/lda', 'Qué es un LDA'], ['/schedule', 'Agendar una llamada'], ['/account.html', 'Portal del cliente']] }
     ],
     reach: { lead: 'Otras formas de contactarnos', call: 'Llamar', email: 'Escribir un correo' },
     copyright: 'Copyright © {year} Imverica LLC. Todos los derechos reservados.',
-    bottom: [['/terms.html', 'Términos del servicio'], ['/mx/document-security', 'Protección de documentos'], ['/pricing', 'Precios'], ['/lda', 'Qué es un LDA'], ['/for-attorneys', 'Para firmas jurídicas']],
+    bottom: [['/terms.html', 'Términos del servicio'], ['/mx/document-security', 'Protección de documentos'], ['/mx/pricing', 'Precios'], ['/lda', 'Qué es un LDA'], ['/for-attorneys', 'Para firmas jurídicas']],
     region: 'California, EE. UU.',
     languages: 'Idioma'
   }

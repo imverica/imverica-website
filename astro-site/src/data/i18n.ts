@@ -48,6 +48,7 @@ const translatedSlugs = new Set<string>([
   '/business',
   '/u4u',
   '/tps',
+  '/pricing',
   '/u-visa-help',
   '/i-539-change-of-status',
   '/i-90-green-card-renewal',

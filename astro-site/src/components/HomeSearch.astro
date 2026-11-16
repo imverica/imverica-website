@@ -99,7 +99,7 @@ const t = STRINGS[lang] || STRINGS.en;
      (Our Services component) — not the /immigration page which only
      lists USCIS / EOIR. Anchor jump keeps the visitor on the same page. */}
   <a class="ai-services-link" href={`${LOCALES[lang].prefix}/schedule`}>{t.schedule}</a>
-  <a class="ai-services-link" href="/pricing">{t.prices}</a>
+  <a class="ai-services-link" href={`${LOCALES[lang].prefix}/pricing`}>{t.prices}</a>
 </div>
 
 <script>
