@@ -8,7 +8,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 import { LOCALES, type Locale } from '~/data/i18n';
-import { CATEGORIES, DISCOUNTS, FAQ, LEGAL, PAGE, PRICING_SCHEMA, SUPPORT, UI, priceText, type Row } from '~/data/pricing';
+import { CATEGORIES, DISCOUNTS, FAQ, LEGAL, PAGE, PRICING_SCHEMA, SUPPORT, UI, priceText, uscisFeeUrl, type Row } from '~/data/pricing';
 
 interface Props { lang?: Locale }
 const { lang = 'en' } = Astro.props as Props;
@@ -61,7 +61,9 @@ const hasRest = (row: Row) => row.rest !== undefined;
                     {row.price === 'quote'
                       ? <td class="num quote">{priceText(row.price, lang)}</td>
                       : <td class="num"><span class="price">{priceText(row.price, lang)}</span></td>}
-                    <td class="num gov">{t(UI.gov[row.gov])}</td>
+                    <td class="num gov">{uscisFeeUrl(row)
+                      ? <a class="gov-link" href={uscisFeeUrl(row)} target="_blank" rel="noopener" title={t(UI.uscisFeeTitle)}>{t(UI.uscisFee)}</a>
+                      : t(UI.gov[row.gov])}</td>
                   </tr>
                 </>
               ))}
@@ -157,7 +159,9 @@ const hasRest = (row: Row) => row.rest !== undefined;
         row.classList.add('price-row-clickable');
         row.setAttribute('role', 'button');
         row.setAttribute('tabindex', '0');
-        row.addEventListener('click', function () {
+        row.addEventListener('click', function (e) {
+          // The USCIS fee link opens G-1055, not the intake.
+          if (e.target && e.target.closest && e.target.closest('a')) return;
           openIntake(row.getAttribute('data-prefill'), row.getAttribute('data-formcode'));
         });
         row.addEventListener('keydown', function (e) {
@@ -377,6 +381,14 @@ const hasRest = (row: Row) => row.rest !== undefined;
       font-size: 13px;
       font-feature-settings: 'tnum';
     }
+    .price-table .gov-link {
+      color: var(--navy);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      white-space: nowrap;
+    }
+    .price-table .gov-link:hover { color: var(--navy-dark); }
     .price-table .quote {
       font-style: italic;
       color: #6b7a8a;

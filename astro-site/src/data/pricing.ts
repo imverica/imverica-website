@@ -64,6 +64,9 @@ export const UI = {
   to: l('–', 'до', 'до', 'hasta'),
   each: l('each', 'за документ', 'за документ', 'por documento'),
   page: l('/page', 'за страницу', 'за сторінку', 'por página'),
+  /** Link to the form's current fee on USCIS G-1055, Fee Schedule. */
+  uscisFee: l('USCIS fee ↗', 'Госпошлина USCIS ↗', 'Держмито USCIS ↗', 'Tarifa de USCIS ↗'),
+  uscisFeeTitle: l('Current filing fee on the official USCIS Fee Schedule (G-1055)', 'Актуальная госпошлина в официальной таблице USCIS (G-1055)', 'Актуальне держмито в офіційній таблиці USCIS (G-1055)', 'Tarifa vigente en la tabla oficial de USCIS (G-1055)'),
   quote: l('custom quote', 'индивидуальный расчёт', 'індивідуальний розрахунок', 'cotización personalizada'),
   gov: {
     uscis: l('Verify with USCIS', 'Уточняйте в USCIS', 'Уточнюйте в USCIS', 'Verifique con USCIS'),
@@ -75,6 +78,15 @@ export const UI = {
     na: l('Not applicable', 'Не применяется', 'Не застосовується', 'No aplica')
   } as Record<Gov, L>
 };
+
+/**
+ * The official USCIS fee page for a row: G-1055 with the form preselected,
+ * or the whole schedule for a multi-form package.
+ */
+export function uscisFeeUrl(row: Row): string | null {
+  if (row.gov !== 'uscis' || !row.formCode) return null;
+  return row.meta ? 'https://www.uscis.gov/g-1055' : `https://www.uscis.gov/g-1055?form=${row.formCode.toLowerCase()}`;
+}
 
 /** The price as shown on the page in the given language. */
 export function priceText(price: Price, lang: Locale): string {
