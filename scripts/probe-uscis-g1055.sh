@@ -20,6 +20,25 @@ try() {
   echo "-- $1 => ${#out} bytes, fees: ${fees:-none}"
 }
 for p in "form=$ID" "form-fee-title=$ID" "form_fee_title=$ID" "title=$ID" "nid=$ID" "field_form_target_id=$ID" "form=i-485" "view_args=$ID"; do try "$p"; done
+
+echo "== exposed filter form inside the view response"
+curl -sS -A "$UA" -H 'X-Requested-With: XMLHttpRequest' "https://www.uscis.gov/views/ajax?$VIEW&form=i-485" | python3 -c "
+import sys, json, re
+for c in json.load(sys.stdin):
+    d = c.get('data') if isinstance(c, dict) else None
+    if isinstance(d, str) and 'views-exposed' in d:
+        for m in re.findall(r'<(?:form|input|select|option|button)[^>]*>', d): print(m[:300])
+        print('---- tail of view html ----'); print(re.sub(r'\s+', ' ', d)[-2500:])
+"
+echo "== the same view in the full page (server-rendered)"
+python3 - <<'PY'
+import re
+h = open('probe/page.html', encoding='utf-8', errors='replace').read()
+i = h.find('form-fee-listing-form_fee_items')
+print(re.sub(r'\s+', ' ', h[i:i+3500]))
+for m in re.findall(r'<form[^>]*>', h): print('FORM:', m[:300])
+PY
+
 echo "== response text for I-485"
 for p in "form=$ID" "form-fee-title=$ID" "view_args=$ID" "form_fee_title=$ID" "nid=$ID"; do
   out=$(curl -sS -A "$UA" -H 'X-Requested-With: XMLHttpRequest' "https://www.uscis.gov/views/ajax?$VIEW&$p")
