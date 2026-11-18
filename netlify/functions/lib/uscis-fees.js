@@ -94,7 +94,7 @@ function mainFee(table) {
   const paper = row.paper ?? row.fee;
   if (paper === null || paper === undefined) return null;
   // Category text: the first sentence only, and none when the cell is just an amount.
-  let category = /^\$/.test(row.category) ? '' : row.category.split(/(?<=[.)])\s/)[0];
+  let category = /^\$/.test(row.category) ? '' : row.category.split(/(?<=[a-z]\.)\s+/)[0];
   if (category.length > 90) category = category.slice(0, 87).replace(/\s+\S*$/, '') + '…';
   return { paper, online: row.online, category, title: table.title, extraFees: Boolean(table.extraFees) };
 }

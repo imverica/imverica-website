@@ -189,11 +189,11 @@ const hasRest = (row: Row) => row.rest !== undefined;
       if (feeLinks.length && window.fetch) {
         var lang = (document.documentElement.lang || 'en').slice(0, 2);
         var TIP = {
-          en: ['Paper filing', 'online', 'Source: USCIS Fee Schedule, Form G-1055.', 'Plus the separate fees required by Pub. L. 119-21 — see uscis.gov.'],
-          ru: ['Подача на бумаге', 'онлайн', 'Источник: таблица пошлин USCIS, форма G-1055.', 'Плюс отдельные сборы по закону Pub. L. 119-21 — см. uscis.gov.'],
-          uk: ['Подання на папері', 'онлайн', 'Джерело: таблиця мит USCIS, форма G-1055.', 'Плюс окремі збори за законом Pub. L. 119-21 — див. uscis.gov.'],
-          es: ['Presentación en papel', 'en línea', 'Fuente: tabla de tarifas de USCIS, formulario G-1055.', 'Más las tarifas aparte que exige la Pub. L. 119-21; vea uscis.gov.']
-        }[lang] || ['Paper filing', 'online', 'Source: USCIS Fee Schedule, Form G-1055.', 'Plus the separate fees required by Pub. L. 119-21 — see uscis.gov.'];
+          en: ['Paper filing', 'online', 'Source: USCIS Fee Schedule, Form G-1055.', 'Some filers also pay separate fees set by Pub. L. 119-21 — see uscis.gov.'],
+          ru: ['Подача на бумаге', 'онлайн', 'Источник: таблица пошлин USCIS, форма G-1055.', 'Часть заявителей также платит отдельные сборы по закону Pub. L. 119-21 — см. uscis.gov.'],
+          uk: ['Подання на папері', 'онлайн', 'Джерело: таблиця мит USCIS, форма G-1055.', 'Частина заявників також сплачує окремі збори за законом Pub. L. 119-21 — див. uscis.gov.'],
+          es: ['Presentación en papel', 'en línea', 'Fuente: tabla de tarifas de USCIS, formulario G-1055.', 'Algunos solicitantes también pagan tarifas aparte fijadas por la Pub. L. 119-21; vea uscis.gov.']
+        }[lang] || ['Paper filing', 'online', 'Source: USCIS Fee Schedule, Form G-1055.', 'Some filers also pay separate fees set by Pub. L. 119-21 — see uscis.gov.'];
         var usd = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
         fetch('/api/uscis-fees', { headers: { Accept: 'application/json' } })
           .then(function (r) { return r.ok ? r.json() : null; })
@@ -202,7 +202,7 @@ const hasRest = (row: Row) => row.rest !== undefined;
             feeLinks.forEach(function (a) {
               var fee = data.fees[a.getAttribute('data-uscis-fee')];
               if (!fee || typeof fee.paper !== 'number') return;
-              a.textContent = usd(fee.paper) + (fee.extraFees ? '+' : '') + ' ↗';
+              a.textContent = usd(fee.paper) + ' ↗';
               a.title = TIP[0] + ' ' + usd(fee.paper) + (typeof fee.online === 'number' ? ' · ' + TIP[1] + ' ' + usd(fee.online) : '') + (fee.category ? ' (' + fee.category + ')' : '') + '.' + (fee.extraFees ? ' ' + TIP[3] : '') + ' ' + TIP[2];
             });
           })
