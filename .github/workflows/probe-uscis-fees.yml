@@ -1,18 +1,37 @@
-name: Probe USCIS fee data (one-off)
+name: USCIS fees snapshot
 
-# Started by hand only. Reads uscis.gov/g-1055 and prints where the page
-# gets its fee data. No deploy, no commit.
+# Reads the current filing fees of the pricing-page forms from the official
+# USCIS Fee Schedule (G-1055) and prints them; with "commit" it also saves
+# netlify/functions/data/uscis-fees.json to the branch. Started by hand.
+# No deploy.
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: "Commit the refreshed snapshot to this branch"
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  probe:
+  fees:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Probe G-1055
-        run: bash scripts/probe-uscis-g1055.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Read G-1055
+        run: node scripts/update-uscis-fees.js --print
+      - name: Commit snapshot
+        if: ${{ inputs.commit }}
+        run: |
+          if git diff --quiet -- netlify/functions/data/uscis-fees.json; then echo "no change"; exit 0; fi
+          git config user.name "imverica-fee-updater"
+          git config user.email "actions@users.noreply.github.com"
+          git add netlify/functions/data/uscis-fees.json
+          git commit -m "USCIS fees snapshot from G-1055"
+          git push

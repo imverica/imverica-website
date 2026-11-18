@@ -170,6 +170,11 @@ included_files = [
   status = 200
 
 [[redirects]]
+  from = "/api/uscis-fees"
+  to = "/.netlify/functions/uscis-fees"
+  status = 200
+
+[[redirects]]
   from = "/api/news"
   to = "/.netlify/functions/news"
   status = 200
