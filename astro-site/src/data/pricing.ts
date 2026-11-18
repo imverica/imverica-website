@@ -9,6 +9,9 @@
  * price (the owner's rule). scripts/qa-pricing-locales.js checks both.
  */
 import type { Locale } from '~/data/i18n';
+// Last snapshot of the official USCIS fees (G-1055); the page refreshes it
+// live from /api/uscis-fees.
+import uscisSnapshot from '../../../netlify/functions/data/uscis-fees.json';
 
 export type L = Record<Locale, string>;
 
@@ -67,6 +70,18 @@ export const UI = {
   /** Link to the form's current fee on USCIS G-1055, Fee Schedule. */
   uscisFee: l('USCIS fee ↗', 'Госпошлина USCIS ↗', 'Держмито USCIS ↗', 'Tarifa de USCIS ↗'),
   uscisFeeTitle: l('Current filing fee on the official USCIS Fee Schedule (G-1055)', 'Актуальная госпошлина в официальной таблице USCIS (G-1055)', 'Актуальне держмито в офіційній таблиці USCIS (G-1055)', 'Tarifa vigente en la tabla oficial de USCIS (G-1055)'),
+  feeTip: {
+    paper: l('Paper filing', 'Подача на бумаге', 'Подання на папері', 'Presentación en papel'),
+    online: l('online', 'онлайн', 'онлайн', 'en línea'),
+    extra: l('Plus the separate fees required by Pub. L. 119-21 — see uscis.gov.', 'Плюс отдельные сборы по закону Pub. L. 119-21 — см. uscis.gov.', 'Плюс окремі збори за законом Pub. L. 119-21 — див. uscis.gov.', 'Más las tarifas aparte que exige la Pub. L. 119-21; vea uscis.gov.'),
+    source: l('Source: USCIS Fee Schedule, Form G-1055.', 'Источник: таблица пошлин USCIS, форма G-1055.', 'Джерело: таблиця мит USCIS, форма G-1055.', 'Fuente: tabla de tarifas de USCIS, formulario G-1055.')
+  },
+  feeFootnote: l(
+    '* USCIS fees are read from the official USCIS Fee Schedule (Form G-1055): the general filing category, paper filing. Other categories and online filing can cost less; click the amount to see every category on uscis.gov. Court and agency fees: verify with the court or agency.',
+    '* Госпошлины USCIS берутся из официальной таблицы USCIS (форма G-1055): общая категория, подача на бумаге. Для других категорий и онлайн-подачи сумма может быть меньше; нажмите на сумму, чтобы увидеть все категории на uscis.gov. Судебные сборы и пошлины ведомств уточняйте в суде или ведомстве.',
+    '* Держмито USCIS береться з офіційної таблиці USCIS (форма G-1055): загальна категорія, подання на папері. Для інших категорій та онлайн-подання сума може бути меншою; натисніть на суму, щоб побачити всі категорії на uscis.gov. Судові збори та мита відомств уточнюйте в суді або відомстві.',
+    '* Las tarifas de USCIS se leen de la tabla oficial de USCIS (formulario G-1055): categoría general, presentación en papel. Otras categorías y la presentación en línea pueden costar menos; haga clic en el monto para ver todas las categorías en uscis.gov. Las tarifas de la corte o de otras agencias se verifican con ellas.'
+  ),
   quote: l('custom quote', 'индивидуальный расчёт', 'індивідуальний розрахунок', 'cotización personalizada'),
   gov: {
     uscis: l('Verify with USCIS', 'Уточняйте в USCIS', 'Уточнюйте в USCIS', 'Verifique con USCIS'),
@@ -83,6 +98,30 @@ export const UI = {
  * The official USCIS fee page for a row: G-1055 with the form preselected,
  * or the whole schedule for a multi-form package.
  */
+export interface UscisFee { paper: number; online: number | null; category: string; extraFees?: boolean }
+
+/** The USCIS fee of a single-form row from the last snapshot, if known. */
+export function uscisFee(row: Row): UscisFee | null {
+  if (row.gov !== 'uscis' || !row.formCode || row.meta) return null;
+  const fees = (uscisSnapshot as { fees: Record<string, UscisFee> }).fees || {};
+  return fees[row.formCode] || null;
+}
+
+/** "$1,440" */
+export const usd = (n: number) => '$' + n.toLocaleString('en-US');
+
+/** Tooltip of a USCIS fee: paper and online amounts and the category. */
+export function uscisFeeTitle(fee: UscisFee, lang: Locale): string {
+  const L = UI.feeTip;
+  const online = fee.online === null ? '' : ` · ${L.online[lang]} ${usd(fee.online)}`;
+  const category = fee.category ? ` (${fee.category})` : '';
+  const extra = fee.extraFees ? ` ${L.extra[lang]}` : '';
+  return `${L.paper[lang]} ${usd(fee.paper)}${online}${category}.${extra} ${L.source[lang]}`;
+}
+
+/** The amount shown in the cell: "$1,440", or "$0+" when Pub. L. 119-21 fees apply too. */
+export const uscisFeeLabel = (fee: UscisFee) => `${usd(fee.paper)}${fee.extraFees ? '+' : ''} ↗`;
+
 export function uscisFeeUrl(row: Row): string | null {
   if (row.gov !== 'uscis' || !row.formCode) return null;
   return row.meta ? 'https://www.uscis.gov/g-1055' : `https://www.uscis.gov/g-1055?form=${row.formCode.toLowerCase()}`;

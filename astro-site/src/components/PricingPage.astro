@@ -8,7 +8,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/Hero.astro';
 import CTAStrip from '~/components/CTAStrip.astro';
 import { LOCALES, type Locale } from '~/data/i18n';
-import { CATEGORIES, DISCOUNTS, FAQ, LEGAL, PAGE, PRICING_SCHEMA, SUPPORT, UI, priceText, uscisFeeUrl, type Row } from '~/data/pricing';
+import { CATEGORIES, DISCOUNTS, FAQ, LEGAL, PAGE, PRICING_SCHEMA, SUPPORT, UI, priceText, uscisFee, uscisFeeTitle, uscisFeeUrl, uscisFeeLabel, type Row } from '~/data/pricing';
 
 interface Props { lang?: Locale }
 const { lang = 'en' } = Astro.props as Props;
@@ -62,7 +62,8 @@ const hasRest = (row: Row) => row.rest !== undefined;
                       ? <td class="num quote">{priceText(row.price, lang)}</td>
                       : <td class="num"><span class="price">{priceText(row.price, lang)}</span></td>}
                     <td class="num gov">{uscisFeeUrl(row)
-                      ? <a class="gov-link" href={uscisFeeUrl(row)} target="_blank" rel="noopener" title={t(UI.uscisFeeTitle)}>{t(UI.uscisFee)}</a>
+                      ? <a class="gov-link" href={uscisFeeUrl(row)} target="_blank" rel="noopener" data-uscis-fee={row.meta ? undefined : row.formCode}
+                          title={uscisFee(row) ? uscisFeeTitle(uscisFee(row)!, lang) : t(UI.uscisFeeTitle)}>{uscisFee(row) ? uscisFeeLabel(uscisFee(row)!) : t(UI.uscisFee)}</a>
                       : t(UI.gov[row.gov])}</td>
                   </tr>
                 </>
@@ -72,6 +73,8 @@ const hasRest = (row: Row) => row.rest !== undefined;
           <p class="price-card-disclaimer" set:html={t(cat.disclaimerHtml)} />
         </div>
       ))}
+
+      <p class="price-footnote">{t(UI.feeFootnote)}</p>
 
       <div class="discounts-strip">
         <div class="discounts-strip-head">
@@ -178,6 +181,33 @@ const hasRest = (row: Row) => row.rest !== undefined;
           openIntake(button.getAttribute('data-prefill'));
         });
       });
+
+      // USCIS fees: refresh the amounts live from the official G-1055
+      // (served by /api/uscis-fees, cached on the CDN). On any failure the
+      // amounts or links already in the page stay as they are.
+      var feeLinks = document.querySelectorAll('a[data-uscis-fee]');
+      if (feeLinks.length && window.fetch) {
+        var lang = (document.documentElement.lang || 'en').slice(0, 2);
+        var TIP = {
+          en: ['Paper filing', 'online', 'Source: USCIS Fee Schedule, Form G-1055.', 'Plus the separate fees required by Pub. L. 119-21 — see uscis.gov.'],
+          ru: ['Подача на бумаге', 'онлайн', 'Источник: таблица пошлин USCIS, форма G-1055.', 'Плюс отдельные сборы по закону Pub. L. 119-21 — см. uscis.gov.'],
+          uk: ['Подання на папері', 'онлайн', 'Джерело: таблиця мит USCIS, форма G-1055.', 'Плюс окремі збори за законом Pub. L. 119-21 — див. uscis.gov.'],
+          es: ['Presentación en papel', 'en línea', 'Fuente: tabla de tarifas de USCIS, formulario G-1055.', 'Más las tarifas aparte que exige la Pub. L. 119-21; vea uscis.gov.']
+        }[lang] || ['Paper filing', 'online', 'Source: USCIS Fee Schedule, Form G-1055.', 'Plus the separate fees required by Pub. L. 119-21 — see uscis.gov.'];
+        var usd = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
+        fetch('/api/uscis-fees', { headers: { Accept: 'application/json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (!data || !data.fees) return;
+            feeLinks.forEach(function (a) {
+              var fee = data.fees[a.getAttribute('data-uscis-fee')];
+              if (!fee || typeof fee.paper !== 'number') return;
+              a.textContent = usd(fee.paper) + (fee.extraFees ? '+' : '') + ' ↗';
+              a.title = TIP[0] + ' ' + usd(fee.paper) + (typeof fee.online === 'number' ? ' · ' + TIP[1] + ' ' + usd(fee.online) : '') + (fee.category ? ' (' + fee.category + ')' : '') + '.' + (fee.extraFees ? ' ' + TIP[3] : '') + ' ' + TIP[2];
+            });
+          })
+          .catch(function () {});
+      }
 
       // Discount cards (the B2B card is a real <a href> link — skip)
       document.querySelectorAll('.discount-card[data-prefill]').forEach(function (card) {
@@ -389,6 +419,12 @@ const hasRest = (row: Row) => row.rest !== undefined;
       white-space: nowrap;
     }
     .price-table .gov-link:hover { color: var(--navy-dark); }
+    .price-footnote {
+      margin: -8px 4px 28px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #6b7a8a;
+    }
     .price-table .quote {
       font-style: italic;
       color: #6b7a8a;

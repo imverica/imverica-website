@@ -81,7 +81,10 @@ function parseFeeTable(html) {
     });
   }
   if (!rows.length) return null;
-  return { title: titleMatch ? decode(titleMatch[1]) : '', rows };
+  // Fees required by Pub. L. 119-21 are listed apart from the USCIS fee and
+  // are paid in addition to it (e.g. the annual asylum fee).
+  const extraFees = /119-21/.test(html.slice(body, body + 60000));
+  return { title: titleMatch ? decode(titleMatch[1]) : '', rows, extraFees };
 }
 
 /** The headline fee of a parsed table: its first row (general filing). */
@@ -90,7 +93,10 @@ function mainFee(table) {
   const row = table.rows[0];
   const paper = row.paper ?? row.fee;
   if (paper === null || paper === undefined) return null;
-  return { paper, online: row.online, category: row.category, title: table.title };
+  // Category text: the first sentence only, and none when the cell is just an amount.
+  let category = /^\$/.test(row.category) ? '' : row.category.split(/(?<=[.)])\s/)[0];
+  if (category.length > 90) category = category.slice(0, 87).replace(/\s+\S*$/, '') + '…';
+  return { paper, online: row.online, category, title: table.title, extraFees: Boolean(table.extraFees) };
 }
 
 async function get(url, fetchImpl, timeoutMs) {
